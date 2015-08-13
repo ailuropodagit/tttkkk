@@ -1,0 +1,142 @@
+/* HTML BODY */
+
+html, body {
+    margin: 0px;
+    padding: 0px;
+    font-family: helvetica;
+    background-color: #f5f5f1;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0px;
+    padding: 0px;
+}
+
+select {
+    margin: 0px;
+    padding: 0px 0px 0px 0px;
+    outline: none;
+}
+
+input[type='text'] {
+    margin: 0px;
+    padding: 0px 5px 0px 5px;
+    outline: none;
+}
+
+input[type='submit'] {
+    margin: 0px;
+    padding: 0px 5px 0px 5px;
+    background-color: #e8060a;
+    color: white;
+    border: 0px;
+    cursor: pointer;
+    border-radius: 3px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    outline: none;
+}
+
+/* WRAPPER */
+
+#wrapper {
+    width: 85%;
+    margin: 0px auto 0px auto;
+}
+
+/* HEADER */
+
+#header {
+    background-color: #be0f01;
+}
+
+#header-logo {
+    color: white;
+    font-size: 22px;
+    font-style: italic;
+    letter-spacing: 2px;
+    font-weight: bold;
+    padding: 18px 0px 18px 0px;
+}
+
+#header-search {
+    background-color: white;
+    border-left: 1px solid #ccccc8;
+    border-right: 1px solid #ccccc8;
+}
+
+#header-search-content {
+    padding: 5px;
+}
+
+#header-search-content-box {
+    background-color: whitesmoke;
+}
+
+#header-search-content-box-content {
+    padding: 10px;
+}
+
+#header-search-content-box input[type='text'] {
+    height: 24px;
+    width: 400px;
+}
+
+#header-search-content-box select {
+    height: 28px;
+    width: 200px;
+}
+
+#header-search-content-box input[type='submit'] {
+    height: 27px;
+    width: 80px;
+}
+
+#body {
+    background-color: white;
+    height: 300px;
+    border-left: 1px solid #ccccc8;
+    border-right: 1px solid #ccccc8;
+    border-bottom: 1px solid #ccccc8;
+}
+
+#body-content {
+    padding: 15px;
+}
+
+#footer {
+    margin: 16px 0px 16px 0px;
+}
+
+#footer-menu {
+    float: left;
+}
+
+#footer-menu a {
+    font-size: 15px;
+    color: #3b69b2;
+    text-decoration: none;
+}
+
+#footer-menu a:hover {
+    text-decoration: underline;
+    color: #2e5ba1;
+}
+
+#footer-menu ul {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+#footer-menu li {
+    display: inline;
+    margin: 0px 6px 0px 6px;
+}
+
+#footer-copyright {
+    font-size: 14px;
+    float: right;
+    color: #767676;
+    margin: 0px 5px 0px 0px;
+}
