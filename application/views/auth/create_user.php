@@ -6,7 +6,7 @@
 <?php echo form_open("auth/create_user");?>
 
       <p>
-            <?php echo lang('create_user_username_label', 'first_name');?> <br />
+            <?php echo lang('create_user_username_label', 'username');?> <br />
             <?php echo form_input($username);?>
       </p>
       

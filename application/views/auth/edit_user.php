@@ -6,6 +6,11 @@
 <?php echo form_open(uri_string());?>
 
       <p>
+            <?php echo lang('edit_user_username_label', 'username');?> <br />
+            <?php echo form_input($username);?>
+      </p>
+      
+      <p>
             <?php echo lang('edit_user_fname_label', 'first_name');?> <br />
             <?php echo form_input($first_name);?>
       </p>
@@ -20,6 +25,11 @@
             <?php echo form_input($company);?>
       </p>
 
+      <p>
+            <?php echo lang('edit_user_email_label', 'email');?> <br />
+            <?php echo form_input($email);?>
+      </p>
+      
       <p>
             <?php echo lang('edit_user_phone_label', 'phone');?> <br />
             <?php echo form_input($phone);?>
