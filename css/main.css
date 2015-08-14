@@ -7,6 +7,8 @@ html, body {
     background-color: #f5f5f1;
 }
 
+/* DEFAULT */
+
 h1, h2, h3, h4, h5, h6 {
     margin: 0px;
     padding: 0px;
@@ -16,18 +18,23 @@ select {
     margin: 0px;
     padding: 0px 0px 0px 0px;
     outline: none;
+    border-radius: 3px;
+    border: 1px solid #a9a9a9;
 }
 
 input[type='text'] {
     margin: 0px;
-    padding: 0px 5px 0px 5px;
+    padding: 0px 7px 0px 7px;
     outline: none;
+    border-radius: 3px;
+    border: 1px solid #a9a9a9;
 }
 
 input[type='submit'] {
-    margin: 0px;
+    margin: 0px 0px 0px 0px;
     padding: 0px 5px 0px 5px;
     background-color: #e8060a;
+    background: linear-gradient(0deg, #d60c05, #e61100);
     color: white;
     border: 0px;
     cursor: pointer;
@@ -35,6 +42,22 @@ input[type='submit'] {
     font-weight: bold;
     letter-spacing: 1px;
     outline: none;
+    -webkit-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
+}
+
+input[type='submit']:hover {
+    background: linear-gradient(0deg, #d60c05, #f81200);
+}
+
+input[type='submit']:active {
+    background: linear-gradient(0deg, #d60c05, #e61100);
+}
+
+#float-fix {
+    clear: both;
+    display: block;
 }
 
 /* WRAPPER */
@@ -48,49 +71,103 @@ input[type='submit'] {
 
 #header {
     background-color: #be0f01;
+    -webkit-box-shadow: 0px 0px 7px 0px rgba(0,0,0,1);
+    -moz-box-shadow: 0px 0px 7px 0px rgba(0,0,0,1);
+    box-shadow: 0px 0px 7px 0px rgba(0,0,0,1);
+    position: relative;
 }
 
 #header-logo {
+    float: left;
     color: white;
     font-size: 22px;
     font-style: italic;
     letter-spacing: 2px;
     font-weight: bold;
-    padding: 18px 0px 18px 0px;
+    margin: 18px 0px 18px 0px;
 }
 
-#header-search {
+#header-menu {
+    float: right;
+    margin: 22px 0px 18px 0px;
+}
+
+#header-menu ul {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+#header-menu li {
+    float: left;
+    margin: 0px 23px 0px 0px;
+}
+
+#header-menu li a {
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-decoration: none;
+}
+    
+/* SEARCH */
+
+#search {
     background-color: white;
     border-left: 1px solid #ccccc8;
     border-right: 1px solid #ccccc8;
 }
 
-#header-search-content {
-    padding: 5px;
+#search-content {
+    padding: 19px 15px 15px 15px;
 }
 
-#header-search-content-box {
+#search-content-box {
     background-color: whitesmoke;
 }
 
-#header-search-content-box-content {
-    padding: 10px;
+#search-content-box-content {
+    padding: 15px;
 }
 
-#header-search-content-box input[type='text'] {
-    height: 24px;
-    width: 400px;
+#search-content-box input[type='text'] {
+    height: 30px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-#header-search-content-box select {
+#search-content-box select {
+    height: 30px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#search-content-box input[type='submit'] {
     height: 28px;
-    width: 200px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-#header-search-content-box input[type='submit'] {
-    height: 27px;
-    width: 80px;
+#search-box-block1, #search-box-block2, #search-box-block3 {
+    float: left;
 }
+
+#search-box-block1 {
+    width: 63%;
+    margin-right: 1%;
+}
+
+#search-box-block2 {
+    width: 20%;
+    margin-right: 1%;
+}
+
+#search-box-block3 {
+    width: 15%;
+}
+
+/* BODY */
 
 #body {
     background-color: white;
@@ -101,8 +178,10 @@ input[type='submit'] {
 }
 
 #body-content {
-    padding: 15px;
+    padding: 0px 15px 15px 15px;
 }
+
+/* FOOTER */
 
 #footer {
     margin: 16px 0px 16px 0px;
@@ -113,8 +192,8 @@ input[type='submit'] {
 }
 
 #footer-menu a {
-    font-size: 15px;
-    color: #3b69b2;
+    font-size: 14px;
+    color: #2c59a0;
     text-decoration: none;
 }
 

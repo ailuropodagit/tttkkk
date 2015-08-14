@@ -4,9 +4,9 @@
                     <ul>
                         <li><a href='#'>Home</a></li>
                         <li><a href='#'>About Keppo</a></li>
-                        <li><a href='#'>Careers</a></li>
-                        <li><a href='#'>Press</a></li>
                         <li><a href='#'>Terms of Service</a></li>
+                        <li><a href='#'>Support</a></li>
+                        <li><a href='#'>Contact Us</a></li>
                     </ul>
                 </div>
                 <div id='footer-copyright'>
