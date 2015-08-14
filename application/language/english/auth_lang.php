@@ -32,6 +32,8 @@ $lang['login_forgot_password'] = 'Forgot your password?';
 // Index
 $lang['index_heading']           = 'Users';
 $lang['index_subheading']        = 'Below is a list of the users.';
+$lang['index_username_th']       = 'Username';
+$lang['index_password_th']       = 'Password';
 $lang['index_fname_th']          = 'First Name';
 $lang['index_lname_th']          = 'Last Name';
 $lang['index_email_th']          = 'Email';

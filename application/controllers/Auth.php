@@ -378,7 +378,7 @@ class Auth extends CI_Controller {
         }
 
         $group_ids = array(
-            '1' => $main_group_id
+            $main_group_id
         );
 
         if ($this->form_validation->run() == true && $this->ion_auth->register($username, $password, $email, $additional_data, $group_ids)) {
