@@ -6,6 +6,11 @@
 <?php echo form_open("auth/create_user");?>
 
       <p>
+            <?php echo lang('create_user_username_label', 'first_name');?> <br />
+            <?php echo form_input($username);?>
+      </p>
+      
+      <p>
             <?php echo lang('create_user_fname_label', 'first_name');?> <br />
             <?php echo form_input($first_name);?>
       </p>
