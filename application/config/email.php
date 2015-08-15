@@ -3,8 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed.');
 
 $config['protocol'] = 'smtp';
 $config['smtp_host'] = 'ssl://smtp.googlemail.com';
-$config['smtp_user'] = 'xxxx@gmail.com';
-$config['smtp_pass'] = 'xxxx';
+$config['smtp_user'] = 'sklaimelakadancing@gmail.com';
+$config['smtp_pass'] = 'xxxxxxx';
 $config['smtp_port'] = '465';
 
 $config['useragent']        = 'CodeIgniter';              // Mail engine switcher: 'CodeIgniter' or 'PHPMailer'
@@ -20,7 +20,7 @@ $config['smtp_debug']       = 0;                        // PHPMailer's SMTP debu
 $config['wordwrap']         = true;
 $config['wrapchars']        = 76;
 $config['mailtype']         = 'html';                   // 'text' or 'html'
-$config['charset']          = NULL;                     // 'UTF-8', 'ISO-8859-15', ...; NULL (preferable) means config_item('charset'), i.e. the character set of the site.
+$config['charset']          = 'ISO-8859-15';                     // 'UTF-8', 'ISO-8859-15', ...; NULL (preferable) means config_item('charset'), i.e. the character set of the site.
 $config['validate']         = true;
 $config['priority']         = 3;                        // 1, 2, 3, 4, 5; on PHPMailer useragent NULL is a possible option, it means that X-priority header is not set at all, see https://github.com/PHPMailer/PHPMailer/issues/449
 $config['crlf']             = "\r\n";                     // "\r\n" or "\n" or "\r"
