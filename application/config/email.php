@@ -3,8 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed.');
 
 $config['protocol'] = 'smtp';
 $config['smtp_host'] = 'ssl://smtp.googlemail.com';
-$config['smtp_user'] = 'sklaimelakadancing@gmail.com';
-$config['smtp_pass'] = 'xxxxxxx';
+$config['smtp_user'] = 'kepposend@gmail.com';
+$config['smtp_pass'] = 'keppo123';
 $config['smtp_port'] = '465';
 
 $config['useragent']        = 'CodeIgniter';              // Mail engine switcher: 'CodeIgniter' or 'PHPMailer'

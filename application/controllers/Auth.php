@@ -598,7 +598,7 @@ class Auth extends CI_Controller {
     //Got Problem, need to fix, can go set the email setting at config/email.php
     function send_test_mail() {
         $this->load->library('email'); // Note: no $config param needed
-        $this->email->from('sklaimelakadancing@gmail.com', 'sklaimelakadancing@gmail.com');
+        $this->email->from('kepposend@gmail.com', 'kepposend@gmail.com');
         $this->email->to('t.wilkin@hotmail.com');
         $this->email->subject('Test email from CI and Gmail');
         $this->email->message('This is a test.');
