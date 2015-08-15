@@ -51,7 +51,7 @@ class Merchant extends CI_Controller {
             // check for "remember me"
             $remember = (bool) $this->input->post('remember');
 
-            if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember)) {
+            if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember, 3)) {
                 //if the login is successful
                 //redirect them back to the home page
                 $this->session->set_flashdata('message', $this->ion_auth->messages());
@@ -75,7 +75,8 @@ class Merchant extends CI_Controller {
             $this->data['password'] = array('name' => 'password',
                 'id' => 'password',
                 'type' => 'password',
-            );
+                'value' => '12345678'
+            );  //Temporary hard code password 12345678 in here for faster testing
 
             $this->_render_page('Merchant/login', $this->data);
         }

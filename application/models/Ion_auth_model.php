@@ -905,7 +905,7 @@ class Ion_auth_model extends CI_Model {
      * @return bool
      * @author Mathew
      * */
-    public function login($identity, $password, $remember = FALSE) {
+    public function login($identity, $password, $remember = FALSE, $main_group_id=NULL) {
         $this->trigger_events('pre_login');
 
         if (empty($identity) || empty($password)) {
@@ -915,8 +915,12 @@ class Ion_auth_model extends CI_Model {
 
         $this->trigger_events('extra_where');
 
+        if($main_group_id==NULL) $main_group_id = 0;  //if don't have main group id pass in, then this login can login to any group
+        
         $query = $this->db->select($this->identity_column . ', email, id, password, active, last_login')
                 ->where($this->identity_column, $identity)
+                ->or_where('username =', $identity)
+                ->where("(".$main_group_id."=0 OR main_group_id='".$main_group_id."')")
                 ->limit(1)
                 ->order_by('id', 'desc')
                 ->get($this->tables['users']);
