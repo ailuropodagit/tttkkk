@@ -342,25 +342,32 @@ class Merchant extends CI_Controller {
 
     // create a new user
     function create_user() {
-        $controller= $this->uri->segment(2);
+        $controller = $this->uri->segment(2);
+        $function_use_for = 'merchant/create_user';
 
-        if($controller == 'create_user') $this->data['title'] = "Create Merchant";
-        else $this->data['title'] = "Merchant Register";
-
-        if (!$this->ion_auth->logged_in() || !$this->ion_auth->is_admin()) {
-            redirect('Merchant', 'refresh');
+        //To set this function is use by create merchant and register merchant
+        if ($controller == 'create_user') {
+            $this->data['title'] = "Create Merchant";        
+            if (!$this->ion_auth->logged_in() || !$this->ion_auth->is_admin()) {
+                redirect('Merchant', 'refresh');
+            }
+        } else {
+            $this->data['title'] = "Merchant Register";
+            $function_use_for = "merchant/register";
         }
-
+        $this->data['function_use_for'] = $function_use_for;
+        
         $tables = $this->config->item('tables', 'ion_auth');
         $main_group_id = $this->config->item('group_id_merchant');
-        
+
         // validate form input
         $this->form_validation->set_rules('username', $this->lang->line('create_user_validation_username_label'), 'required|is_unique[' . $tables['users'] . '.username]');
         $this->form_validation->set_rules('first_name', $this->lang->line('create_user_validation_fname_label'), 'required');
-        $this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'), 'required');
         $this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'required|valid_email|is_unique[' . $tables['users'] . '.email]');
-        $this->form_validation->set_rules('phone', $this->lang->line('create_user_validation_phone_label'), 'required');
         $this->form_validation->set_rules('company', $this->lang->line('create_user_validation_company_label'), 'required');
+        $this->form_validation->set_rules('address', $this->lang->line('create_user_validation_address_label'), 'required');
+        $this->form_validation->set_rules('phone', $this->lang->line('create_user_validation_phone_label'), 'required');
+        $this->form_validation->set_rules('me_ssm', $this->lang->line('create_user_validation_companyssm_label'), 'required');       
         $this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
         $this->form_validation->set_rules('password_confirm', $this->lang->line('create_user_validation_password_confirm_label'), 'required');
 
@@ -373,9 +380,13 @@ class Merchant extends CI_Controller {
             $additional_data = array(
                 'username' => $username,
                 'first_name' => $this->input->post('first_name'),
-                'last_name' => $this->input->post('last_name'),
-                'company' => $this->input->post('company'),
-                'phone' => $this->input->post('phone'),
+                'last_name' => $this->input->post('last_name'), 
+                'company' => $this->input->post('company'),                       
+                'address' => $this->input->post('address'),
+                'me_state_id' => $this->input->post('me_state_id'), 
+                'phone' => $this->input->post('phone'),    
+                'me_ssm' => $this->input->post('me_ssm'),
+                'me_website_url' => $this->input->post('website'), 
                 'main_group_id' => $main_group_id,
                 'password_visible' => $password
             );
@@ -389,7 +400,7 @@ class Merchant extends CI_Controller {
             // check to see if we are creating the user
             // redirect them back to the admin page
             $this->session->set_flashdata('message', $this->ion_auth->messages());
-            redirect("Merchant", 'refresh');
+            redirect("/", 'refresh');
         } else {
             // display the create user form
             // set the flash data error message if there is one
@@ -425,11 +436,37 @@ class Merchant extends CI_Controller {
                 'type' => 'text',
                 'value' => $this->form_validation->set_value('company'),
             );
+            $this->data['address'] = array(
+                'name' => 'address',
+                'id' => 'address',
+                'value' => $this->form_validation->set_value('address'),
+            );
+            
+            $this->data['state_list'] = $this->ion_auth->get_static_option_list('state');
+
+            $this->data['me_state_id'] = array(
+                'name' => 'me_state_id',
+                'id' => 'me_state_id',
+                'value' => $this->form_validation->set_value('me_state_id'),
+            );
+            
             $this->data['phone'] = array(
                 'name' => 'phone',
                 'id' => 'phone',
                 'type' => 'text',
                 'value' => $this->form_validation->set_value('phone'),
+            );
+            $this->data['me_ssm'] = array(
+                'name' => 'me_ssm',
+                'id' => 'me_ssm',
+                'type' => 'text',
+                'value' => $this->form_validation->set_value('me_ssm'),
+            );
+            $this->data['website'] = array(
+                'name' => 'website',
+                'id' => 'website',
+                'type' => 'text',
+                'value' => $this->form_validation->set_value('website'),
             );
             $this->data['password'] = array(
                 'name' => 'password',
