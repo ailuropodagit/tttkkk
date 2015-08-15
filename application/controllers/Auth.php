@@ -348,7 +348,7 @@ class Auth extends CI_Controller {
         }
 
         $tables = $this->config->item('tables', 'ion_auth');
-        $main_group_id = '1';
+        $main_group_id = $this->config->item('group_id_admin');
 
         // validate form input
         $this->form_validation->set_rules('username', $this->lang->line('create_user_validation_username_label'), 'required|is_unique[' . $tables['users'] . '.username]');

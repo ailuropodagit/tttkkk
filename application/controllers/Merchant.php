@@ -51,7 +51,7 @@ class Merchant extends CI_Controller {
             // check for "remember me"
             $remember = (bool) $this->input->post('remember');
 
-            if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember, 3)) {
+            if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember, $this->config->item('group_id_merchant'))) {
                 //if the login is successful
                 //redirect them back to the home page
                 $this->session->set_flashdata('message', $this->ion_auth->messages());
@@ -342,15 +342,18 @@ class Merchant extends CI_Controller {
 
     // create a new user
     function create_user() {
-        $this->data['title'] = "Create User";
+        $controller= $this->uri->segment(2);
+
+        if($controller == 'create_user') $this->data['title'] = "Create Merchant";
+        else $this->data['title'] = "Merchant Register";
 
         if (!$this->ion_auth->logged_in() || !$this->ion_auth->is_admin()) {
             redirect('Merchant', 'refresh');
         }
 
         $tables = $this->config->item('tables', 'ion_auth');
-        $main_group_id = '3';
-
+        $main_group_id = $this->config->item('group_id_merchant');
+        
         // validate form input
         $this->form_validation->set_rules('username', $this->lang->line('create_user_validation_username_label'), 'required|is_unique[' . $tables['users'] . '.username]');
         $this->form_validation->set_rules('first_name', $this->lang->line('create_user_validation_fname_label'), 'required');
