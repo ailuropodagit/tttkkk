@@ -1,3 +1,4 @@
+
 <?php echo link_tag('css/main.css'); ?>
 
 <h1><?php echo "Merchant Login" ?></h1>
@@ -5,7 +6,7 @@
 
 <div id="infoMessage"><?php echo $message; ?></div>
 
-<?php echo form_open("auth/login"); ?>
+<?php echo form_open("merchant/login"); ?>
 
 <p>
     <?php echo lang('login_identity_label', 'identity'); ?>
