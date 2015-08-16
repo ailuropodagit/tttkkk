@@ -180,7 +180,7 @@ class Auth extends CI_Controller {
             $this->_render_page('auth/forgot_password', $this->data);
         } else {
             $identity_column = $this->config->item('identity', 'ion_auth');
-            $identity = $this->ion_auth->where($identity_column, $this->input->post('identity'))->users()->row();
+            $identity = $this->ion_auth->where($identity_column, $this->input->post('email'))->users()->row();
 
             if (empty($identity)) {
 
@@ -348,8 +348,10 @@ class Auth extends CI_Controller {
         }
 
         $tables = $this->config->item('tables', 'ion_auth');
+        $main_group_id = $this->config->item('group_id_admin');
 
         // validate form input
+        $this->form_validation->set_rules('username', $this->lang->line('create_user_validation_username_label'), 'required|is_unique[' . $tables['users'] . '.username]');
         $this->form_validation->set_rules('first_name', $this->lang->line('create_user_validation_fname_label'), 'required');
         $this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'), 'required');
         $this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'required|valid_email|is_unique[' . $tables['users'] . '.email]');
@@ -359,18 +361,27 @@ class Auth extends CI_Controller {
         $this->form_validation->set_rules('password_confirm', $this->lang->line('create_user_validation_password_confirm_label'), 'required');
 
         if ($this->form_validation->run() == true) {
-            $username = strtolower($this->input->post('first_name')) . ' ' . strtolower($this->input->post('last_name'));
+            //$username = strtolower($this->input->post('first_name')) . ' ' . strtolower($this->input->post('last_name'));
+            $username = strtolower($this->input->post('username'));
             $email = strtolower($this->input->post('email'));
             $password = $this->input->post('password');
 
             $additional_data = array(
+                'username' => $username,
                 'first_name' => $this->input->post('first_name'),
                 'last_name' => $this->input->post('last_name'),
                 'company' => $this->input->post('company'),
                 'phone' => $this->input->post('phone'),
+                'main_group_id' => $main_group_id,
+                'password_visible' => $password
             );
         }
-        if ($this->form_validation->run() == true && $this->ion_auth->register($username, $password, $email, $additional_data)) {
+
+        $group_ids = array(
+            $main_group_id
+        );
+
+        if ($this->form_validation->run() == true && $this->ion_auth->register($username, $password, $email, $additional_data, $group_ids)) {
             // check to see if we are creating the user
             // redirect them back to the admin page
             $this->session->set_flashdata('message', $this->ion_auth->messages());
@@ -380,6 +391,12 @@ class Auth extends CI_Controller {
             // set the flash data error message if there is one
             $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 
+            $this->data['username'] = array(
+                'name' => 'username',
+                'id' => 'username',
+                'type' => 'text',
+                'value' => $this->form_validation->set_value('username'),
+            );
             $this->data['first_name'] = array(
                 'name' => 'first_name',
                 'id' => 'first_name',
@@ -438,8 +455,11 @@ class Auth extends CI_Controller {
         $user = $this->ion_auth->user($id)->row();
         $groups = $this->ion_auth->groups()->result_array();
         $currentGroups = $this->ion_auth->get_users_groups($id)->result();
+        $tables = $this->config->item('tables', 'ion_auth');
 
         // validate form input
+        $this->form_validation->set_rules('username', $this->lang->line('edit_user_validation_username_label'), 'required|is_unique_edit[' . $tables['users'] . '.username.' . $id . ']');
+        $this->form_validation->set_rules('email', $this->lang->line('edit_user_validation_email_label'), 'required|valid_email|is_unique_edit[' . $tables['users'] . '.email.' . $id . ']');
         $this->form_validation->set_rules('first_name', $this->lang->line('edit_user_validation_fname_label'), 'required');
         $this->form_validation->set_rules('last_name', $this->lang->line('edit_user_validation_lname_label'), 'required');
         $this->form_validation->set_rules('phone', $this->lang->line('edit_user_validation_phone_label'), 'required');
@@ -458,7 +478,12 @@ class Auth extends CI_Controller {
             }
 
             if ($this->form_validation->run() === TRUE) {
+                $username = strtolower($this->input->post('username'));
+                $email = strtolower($this->input->post('email'));
+
                 $data = array(
+                    'username' => $username,
+                    'email' => $email,
                     'first_name' => $this->input->post('first_name'),
                     'last_name' => $this->input->post('last_name'),
                     'company' => $this->input->post('company'),
@@ -468,6 +493,7 @@ class Auth extends CI_Controller {
                 // update the password if it was posted
                 if ($this->input->post('password')) {
                     $data['password'] = $this->input->post('password');
+                    $data['password_visible'] = $this->input->post('password');
                 }
 
 
@@ -519,6 +545,12 @@ class Auth extends CI_Controller {
         $this->data['groups'] = $groups;
         $this->data['currentGroups'] = $currentGroups;
 
+        $this->data['username'] = array(
+            'name' => 'username',
+            'id' => 'username',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('username', $user->username),
+        );
         $this->data['first_name'] = array(
             'name' => 'first_name',
             'id' => 'first_name',
@@ -536,6 +568,12 @@ class Auth extends CI_Controller {
             'id' => 'company',
             'type' => 'text',
             'value' => $this->form_validation->set_value('company', $user->company),
+        );
+        $this->data['email'] = array(
+            'name' => 'email',
+            'id' => 'email',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('email', $user->email),
         );
         $this->data['phone'] = array(
             'name' => 'phone',
@@ -555,6 +593,20 @@ class Auth extends CI_Controller {
         );
 
         $this->_render_page('auth/edit_user', $this->data);
+    }
+
+    //Got Problem, need to fix, can go set the email setting at config/email.php
+    function send_test_mail() {
+        $this->load->library('email'); // Note: no $config param needed
+        $this->email->from('kepposend@gmail.com', 'kepposend@gmail.com');
+        $this->email->to('t.wilkin@hotmail.com');
+        $this->email->subject('Test email from CI and Gmail');
+        $this->email->message('This is a test.');
+        if ($this->email->send()) {
+            echo'your email was sent, just a testing email.';
+        } else {
+            show_error($this->email->print_debugger());
+        }
     }
 
     // create a new group

@@ -19,6 +19,7 @@
 
 // Errors
 $lang['error_csrf'] = 'This form post did not pass our security checks.';
+$lang['fail_to_send_email'] = 'Fail to send email!';
 
 // Login
 $lang['login_heading']         = 'Login';
@@ -32,6 +33,8 @@ $lang['login_forgot_password'] = 'Forgot your password?';
 // Index
 $lang['index_heading']           = 'Users';
 $lang['index_subheading']        = 'Below is a list of the users.';
+$lang['index_username_th']       = 'Username';
+$lang['index_password_th']       = 'Password';
 $lang['index_fname_th']          = 'First Name';
 $lang['index_lname_th']          = 'Last Name';
 $lang['index_email_th']          = 'Email';
@@ -55,39 +58,62 @@ $lang['deactivate_validation_user_id_label'] = 'user ID';
 // Create User
 $lang['create_user_heading']                           = 'Create User';
 $lang['create_user_subheading']                        = 'Please enter the user\'s information below.';
+$lang['create_user_username_label']                    = 'Username:';
 $lang['create_user_fname_label']                       = 'First Name:';
 $lang['create_user_lname_label']                       = 'Last Name:';
 $lang['create_user_company_label']                     = 'Company Name:';
+$lang['create_user_companyssm_label']                  = 'Company SSM:';
+$lang['create_user_address_label']                     = 'Address:';
+$lang['create_user_state_label']                       = 'State:';
 $lang['create_user_email_label']                       = 'Email:';
 $lang['create_user_phone_label']                       = 'Phone:';
+$lang['create_user_website_label']                     = 'Website:';
 $lang['create_user_password_label']                    = 'Password:';
 $lang['create_user_password_confirm_label']            = 'Confirm Password:';
 $lang['create_user_submit_btn']                        = 'Create User';
+
+$lang['create_user_validation_username_label']         = 'Username';
 $lang['create_user_validation_fname_label']            = 'First Name';
 $lang['create_user_validation_lname_label']            = 'Last Name';
 $lang['create_user_validation_email_label']            = 'Email Address';
 $lang['create_user_validation_phone_label']            = 'Phone';
 $lang['create_user_validation_company_label']          = 'Company Name';
+$lang['create_user_validation_companyssm_label']       = 'Company SSM';
+$lang['create_user_validation_address_label']          = 'Address';
+$lang['create_user_validation_state_label']            = 'State';
+$lang['create_user_validation_website_label']          = 'Website';
 $lang['create_user_validation_password_label']         = 'Password';
 $lang['create_user_validation_password_confirm_label'] = 'Password Confirmation';
+$lang['create_user_send_email_success']                = 'Success register account.';
 
 // Edit User
 $lang['edit_user_heading']                           = 'Edit User';
 $lang['edit_user_subheading']                        = 'Please enter the user\'s information below.';
+$lang['edit_user_username_label']                    = 'Username:';
 $lang['edit_user_fname_label']                       = 'First Name:';
 $lang['edit_user_lname_label']                       = 'Last Name:';
 $lang['edit_user_company_label']                     = 'Company Name:';
+$lang['edit_user_companyssm_label']                  = 'Company SSM:';
+$lang['edit_user_address_label']                     = 'Address:';
+$lang['edit_user_state_label']                       = 'State:';
 $lang['edit_user_email_label']                       = 'Email:';
 $lang['edit_user_phone_label']                       = 'Phone:';
+$lang['edit_user_website_label']                     = 'Website:';
 $lang['edit_user_password_label']                    = 'Password: (if changing password)';
 $lang['edit_user_password_confirm_label']            = 'Confirm Password: (if changing password)';
 $lang['edit_user_groups_heading']                    = 'Member of groups';
 $lang['edit_user_submit_btn']                        = 'Save User';
+
+$lang['edit_user_validation_username_label']         = 'Username';
 $lang['edit_user_validation_fname_label']            = 'First Name';
 $lang['edit_user_validation_lname_label']            = 'Last Name';
 $lang['edit_user_validation_email_label']            = 'Email Address';
 $lang['edit_user_validation_phone_label']            = 'Phone';
 $lang['edit_user_validation_company_label']          = 'Company Name';
+$lang['edit_user_validation_companyssm_label']       = 'Company SSM';
+$lang['edit_user_validation_address_label']          = 'Address';
+$lang['edit_user_validation_state_label']            = 'State';
+$lang['edit_user_validation_website_label']          = 'Website';
 $lang['edit_user_validation_groups_label']           = 'Groups';
 $lang['edit_user_validation_password_label']         = 'Password';
 $lang['edit_user_validation_password_confirm_label'] = 'Password Confirmation';
@@ -129,9 +155,12 @@ $lang['forgot_password_subheading']              = 'Please enter your %s so we c
 $lang['forgot_password_email_label']             = '%s:';
 $lang['forgot_password_submit_btn']              = 'Submit';
 $lang['forgot_password_validation_email_label']  = 'Email Address';
-$lang['forgot_password_identity_label'] = 'Identity';
+$lang['forgot_password_identity_label']          = 'Identity';
+$lang['forgot_password_username_email_label']    = 'Username/Email';
 $lang['forgot_password_email_identity_label']    = 'Email';
 $lang['forgot_password_email_not_found']         = 'No record of that email address.';
+$lang['forgot_password_username_email_not_found']= 'No record of this username or email address.';
+$lang['forgot_password_send_email_success']      = 'Success send login info to your email.';
 
 // Reset Password
 $lang['reset_password_heading']                               = 'Change Password';

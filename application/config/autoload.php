@@ -104,7 +104,7 @@ $autoload['helper'] = array('html','url');
 |
 */
 
-$autoload['config'] = array();
+$autoload['config'] = array('config_keppo');
 
 
 /*

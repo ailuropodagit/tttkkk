@@ -701,7 +701,24 @@ class Ion_auth_model extends CI_Model {
         return $this->db->where($this->identity_column, $identity)
                         ->count_all_results($this->tables['users']) > 0;
     }
+    
+    public function get_id_by_email_or_username($identity){
+        $query = $this->db->select('id')
+                ->where('username', $identity)
+                ->or_where('email',$identity)
+                ->limit(1)
+                ->order_by('id', 'desc')
+                ->get($this->tables['users']);
+        
+        if ($query->num_rows() !== 1) {
+            return FALSE;
+        }
 
+        $result = $query->row();
+        
+        return $result->id;
+    }
+    
     /**
      * Insert a forgotten password key.
      *
@@ -739,6 +756,16 @@ class Ion_auth_model extends CI_Model {
 
         $this->forgotten_password_code = $key;
 
+		// Users table.
+		$data = array(
+		    $this->identity_column   => $identity,
+                    'username'   => $identity,
+		    'password'   => $password,
+		    'email'      => $email,
+		    'ip_address' => $ip_address,
+		    'created_on' => time(),
+		    'active'     => ($manual_activation === false ? 1 : 0)
+		);
         $this->trigger_events('extra_where');
 
         $update = array(
@@ -895,7 +922,7 @@ class Ion_auth_model extends CI_Model {
      * @return bool
      * @author Mathew
      * */
-    public function login($identity, $password, $remember = FALSE) {
+    public function login($identity, $password, $remember = FALSE, $main_group_id=NULL) {
         $this->trigger_events('pre_login');
 
         if (empty($identity) || empty($password)) {
@@ -905,8 +932,12 @@ class Ion_auth_model extends CI_Model {
 
         $this->trigger_events('extra_where');
 
+        if($main_group_id==NULL) $main_group_id = 0;  //if don't have main group id pass in, then this login can login to any group
+        
         $query = $this->db->select($this->identity_column . ', email, id, password, active, last_login')
                 ->where($this->identity_column, $identity)
+                ->or_where('username =', $identity)
+                ->where("(".$main_group_id."=0 OR main_group_id='".$main_group_id."')")
                 ->limit(1)
                 ->order_by('id', 'desc')
                 ->get($this->tables['users']);
@@ -2053,4 +2084,26 @@ class Ion_auth_model extends CI_Model {
         return $ip_address;
     }
 
+     /**
+     * get_static_option_list
+     *
+     * Get static option from DB
+     *
+     * @return array
+     * */
+    public function get_static_option_list($option_type = NULL) {
+        $this->trigger_events('get_static_option_list');
+
+        $this->db->from('static_option')
+                 ->where('option_type', $option_type)
+                 ->order_by('option_id');
+        $result = $this->db->get();
+        $return = array();
+        if($result->num_rows() > 0) {
+        foreach($result->result_array() as $row) {
+            $return[$row['option_id']] = $row['option_text'];
+            }
+        }
+        return $return;
+    }
 }

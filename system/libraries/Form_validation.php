@@ -1135,6 +1135,26 @@ class CI_Form_validation {
 			: FALSE;
 	}
 
+        // --------------------------------------------------------------------
+
+	/**
+	 * Is Unique for Edit
+	 *
+	 * Check if the input value doesn't already exist
+	 * in the specified database field except own id row.
+	 *
+	 * @param	string	$str
+	 * @param	string	$field
+	 * @return	bool
+	 */
+	public function is_unique_edit($str, $field)
+	{
+		sscanf($field, '%[^.].%[^.].%[^.]', $table, $field, $id);
+		return isset($this->CI->db)
+			? ($this->CI->db->limit(1)->where($field, $str)->where('id != ', $id)->get($table)->num_rows() === 0)
+			: FALSE;
+	}
+        
 	// --------------------------------------------------------------------
 
 	/**
