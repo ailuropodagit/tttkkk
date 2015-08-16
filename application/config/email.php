@@ -6,7 +6,8 @@ $config['smtp_host'] = 'ssl://smtp.googlemail.com';
 $config['smtp_user'] = 'kepposend@gmail.com';
 $config['smtp_pass'] = 'keppo123';
 $config['smtp_port'] = '465';
-
+$config['from_name'] = 'Keppo';
+        
 $config['useragent']        = 'CodeIgniter';              // Mail engine switcher: 'CodeIgniter' or 'PHPMailer'
 //$config['protocol']         = 'mail';                   // 'mail', 'sendmail', or 'smtp'
 //$config['mailpath']         = '/usr/sbin/sendmail';

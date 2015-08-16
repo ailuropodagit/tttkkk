@@ -19,6 +19,7 @@
 
 // Errors
 $lang['error_csrf'] = 'This form post did not pass our security checks.';
+$lang['fail_to_send_email'] = 'Fail to send email!';
 
 // Login
 $lang['login_heading']         = 'Login';
@@ -83,6 +84,7 @@ $lang['create_user_validation_state_label']            = 'State';
 $lang['create_user_validation_website_label']          = 'Website';
 $lang['create_user_validation_password_label']         = 'Password';
 $lang['create_user_validation_password_confirm_label'] = 'Password Confirmation';
+$lang['create_user_send_email_success']                = 'Success register account.';
 
 // Edit User
 $lang['edit_user_heading']                           = 'Edit User';
@@ -153,9 +155,12 @@ $lang['forgot_password_subheading']              = 'Please enter your %s so we c
 $lang['forgot_password_email_label']             = '%s:';
 $lang['forgot_password_submit_btn']              = 'Submit';
 $lang['forgot_password_validation_email_label']  = 'Email Address';
-$lang['forgot_password_identity_label'] = 'Identity';
+$lang['forgot_password_identity_label']          = 'Identity';
+$lang['forgot_password_username_email_label']    = 'Username/Email';
 $lang['forgot_password_email_identity_label']    = 'Email';
 $lang['forgot_password_email_not_found']         = 'No record of that email address.';
+$lang['forgot_password_username_email_not_found']= 'No record of this username or email address.';
+$lang['forgot_password_send_email_success']      = 'Success send login info to your email.';
 
 // Reset Password
 $lang['reset_password_heading']                               = 'Change Password';

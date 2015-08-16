@@ -701,7 +701,24 @@ class Ion_auth_model extends CI_Model {
         return $this->db->where($this->identity_column, $identity)
                         ->count_all_results($this->tables['users']) > 0;
     }
+    
+    public function get_id_by_email_or_username($identity){
+        $query = $this->db->select('id')
+                ->where('username', $identity)
+                ->or_where('email',$identity)
+                ->limit(1)
+                ->order_by('id', 'desc')
+                ->get($this->tables['users']);
+        
+        if ($query->num_rows() !== 1) {
+            return FALSE;
+        }
 
+        $result = $query->row();
+        
+        return $result->id;
+    }
+    
     /**
      * Insert a forgotten password key.
      *

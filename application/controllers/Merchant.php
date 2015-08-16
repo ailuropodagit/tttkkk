@@ -154,6 +154,44 @@ class Merchant extends CI_Controller {
         }
     }
 
+    function retrieve_password() {
+
+        $this->form_validation->set_rules('username_email', $this->lang->line('forgot_password_username_email_label'), 'required');
+
+        if ($this->form_validation->run() == false) {
+            // setup the input
+            $this->data['username_email'] = array('name' => 'username_email',
+                'id' => 'username_email',
+            );
+
+            $this->data['identity_label'] = $this->lang->line('forgot_password_username_email_label');
+
+            // set any errors and display the form
+            $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+            $this->_render_page('Merchant/retrieve_password', $this->data);
+        } else {
+            $the_input = $this->input->post('username_email');
+            $the_id = $this->ion_auth->get_id_by_email_or_username($the_input);
+            $identity = $this->ion_auth->where('id', $the_id)->users()->row();
+            if (empty($identity)) {
+                $this->ion_auth->set_error('forgot_password_username_email_not_found');
+
+                $this->session->set_flashdata('message', $this->ion_auth->errors());
+                redirect("Merchant/retrieve_password", 'refresh');
+            } else {
+                $get_status = $this->send_mail($identity->email, 'Your Keppo Account Login Info', 'Company Name:' . $identity->company . '<br/>Username:' . $identity->username . '<br/>Email:' . $identity->email . '<br/>Password:' . $identity->password_visible, 'forgot_password_send_email_success');
+                if ($get_status) {
+                    // if there were no errors
+                    $this->session->set_flashdata('message', $this->ion_auth->messages());
+                    redirect("Merchant/login", 'refresh'); 
+                } else {
+                    $this->session->set_flashdata('message', $this->ion_auth->errors());
+                    redirect("Merchant/forgot_password", 'refresh');
+                }
+            }
+        }
+    }
+
     // forgot password
     function forgot_password() {
         // setting validation rules by checking wheather identity is username or email
@@ -340,6 +378,22 @@ class Merchant extends CI_Controller {
         }
     }
 
+    function send_mail($to_email = '', $to_subject = '', $to_message = '', $success_message = '') {
+        $this->load->library('email'); // Note: no $config param needed
+        $this->email->from($this->config->item('smtp_user'), $this->config->item('from_name'));
+        $this->email->to($to_email);
+        $this->email->subject($to_subject);
+        $this->email->message($to_message);
+        if ($this->email->send()) {
+            $this->ion_auth->set_message($success_message);
+            return TRUE;
+        } else {
+            //show_error($this->email->print_debugger());
+            $this->ion_auth->set_error('fail_to_send_email');
+            return False;
+        }
+    }
+
     // create a new user
     function create_user() {
         $controller = $this->uri->segment(2);
@@ -347,7 +401,7 @@ class Merchant extends CI_Controller {
 
         //To set this function is use by create merchant and register merchant
         if ($controller == 'create_user') {
-            $this->data['title'] = "Create Merchant";        
+            $this->data['title'] = "Create Merchant";
             if (!$this->ion_auth->logged_in() || !$this->ion_auth->is_admin()) {
                 redirect('Merchant', 'refresh');
             }
@@ -356,18 +410,20 @@ class Merchant extends CI_Controller {
             $function_use_for = "merchant/register";
         }
         $this->data['function_use_for'] = $function_use_for;
-        
+
         $tables = $this->config->item('tables', 'ion_auth');
         $main_group_id = $this->config->item('group_id_merchant');
 
         // validate form input
         $this->form_validation->set_rules('username', $this->lang->line('create_user_validation_username_label'), 'required|is_unique[' . $tables['users'] . '.username]');
         $this->form_validation->set_rules('first_name', $this->lang->line('create_user_validation_fname_label'), 'required');
+        $this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'));
         $this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'required|valid_email|is_unique[' . $tables['users'] . '.email]');
         $this->form_validation->set_rules('company', $this->lang->line('create_user_validation_company_label'), 'required');
         $this->form_validation->set_rules('address', $this->lang->line('create_user_validation_address_label'), 'required');
         $this->form_validation->set_rules('phone', $this->lang->line('create_user_validation_phone_label'), 'required');
-        $this->form_validation->set_rules('me_ssm', $this->lang->line('create_user_validation_companyssm_label'), 'required');       
+        $this->form_validation->set_rules('website', $this->lang->line('create_user_validation_website_label'));
+        $this->form_validation->set_rules('me_ssm', $this->lang->line('create_user_validation_companyssm_label'), 'required');
         $this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
         $this->form_validation->set_rules('password_confirm', $this->lang->line('create_user_validation_password_confirm_label'), 'required');
 
@@ -376,17 +432,18 @@ class Merchant extends CI_Controller {
             $username = strtolower($this->input->post('username'));
             $email = strtolower($this->input->post('email'));
             $password = $this->input->post('password');
+            $company = $this->input->post('company');
 
             $additional_data = array(
                 'username' => $username,
                 'first_name' => $this->input->post('first_name'),
-                'last_name' => $this->input->post('last_name'), 
-                'company' => $this->input->post('company'),                       
+                'last_name' => $this->input->post('last_name'),
+                'company' => $company,
                 'address' => $this->input->post('address'),
-                'me_state_id' => $this->input->post('me_state_id'), 
-                'phone' => $this->input->post('phone'),    
+                'me_state_id' => $this->input->post('me_state_id'),
+                'phone' => $this->input->post('phone'),
                 'me_ssm' => $this->input->post('me_ssm'),
-                'me_website_url' => $this->input->post('website'), 
+                'me_website_url' => $this->input->post('website'),
                 'main_group_id' => $main_group_id,
                 'password_visible' => $password
             );
@@ -400,7 +457,15 @@ class Merchant extends CI_Controller {
             // check to see if we are creating the user
             // redirect them back to the admin page
             $this->session->set_flashdata('message', $this->ion_auth->messages());
-            redirect("/", 'refresh');
+             $get_status = $this->send_mail($email, 'Your Keppo Merchant Account Success Created', 'Company Name:' . $company . '<br/>Username:' . $username . '<br/>Email:' . $email . '<br/>Password:' . $password, 'create_user_send_email_success');
+             if ($get_status) {
+                    // if there were no errors
+                    redirect("/", 'refresh');
+                } else {
+                    $this->session->set_flashdata('message', $this->ion_auth->errors());
+                    redirect("Merchant/create_user", 'refresh');
+                }
+             
         } else {
             // display the create user form
             // set the flash data error message if there is one
@@ -441,7 +506,7 @@ class Merchant extends CI_Controller {
                 'id' => 'address',
                 'value' => $this->form_validation->set_value('address'),
             );
-            
+
             $this->data['state_list'] = $this->ion_auth->get_static_option_list('state');
 
             $this->data['me_state_id'] = array(
@@ -449,7 +514,7 @@ class Merchant extends CI_Controller {
                 'id' => 'me_state_id',
                 'value' => $this->form_validation->set_value('me_state_id'),
             );
-            
+
             $this->data['phone'] = array(
                 'name' => 'phone',
                 'id' => 'phone',
