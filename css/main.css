@@ -79,17 +79,12 @@ input[type='submit']:active {
 
 #header-logo {
     float: left;
-    color: white;
-    font-size: 22px;
-    font-style: italic;
-    letter-spacing: 2px;
-    font-weight: bold;
-    margin: 18px 0px 18px 0px;
+    margin: 10px 0px 10px 15px;
 }
 
 #header-menu {
     float: right;
-    margin: 22px 0px 18px 0px;
+    margin: 26px 0px 26px 0px;
 }
 
 #header-menu ul {
@@ -100,15 +95,19 @@ input[type='submit']:active {
 
 #header-menu li {
     float: left;
-    margin: 0px 23px 0px 0px;
+    margin: 0px 30px 0px 0px;
 }
 
 #header-menu li a {
-    color: white;
+    color: #f7f7f7;
     font-size: 13px;
     font-weight: bold;
     letter-spacing: 1px;
     text-decoration: none;
+}
+
+#header-menu li a:hover {
+    color: white;
 }
     
 /* SEARCH */
@@ -125,6 +124,7 @@ input[type='submit']:active {
 
 #search-content-box {
     background-color: whitesmoke;
+    position: relative;
 }
 
 #search-content-box-content {
@@ -132,15 +132,23 @@ input[type='submit']:active {
 }
 
 #search-content-box input[type='text'] {
-    height: 30px;
+    height: 32px;
     width: 100%;
     box-sizing: border-box;
+    padding: 0px 0px 0px 32px;
+}
+
+#search-content-box input[type='text']::-webkit-input-placeholder {
+    font-size: 14px;
+    letter-spacing: 1px;
+    font-style: italic;
 }
 
 #search-content-box select {
-    height: 30px;
+    height: 32px;
     width: 100%;
     box-sizing: border-box;
+    padding: 0px 0px 0px 5px;
 }
 
 #search-content-box input[type='submit'] {
