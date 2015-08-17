@@ -11,16 +11,16 @@
             <div id='wrapper'>
                 <!--HEADER LOGO-->
                 <div id='header-logo'>
-                    <img src="image/logo.png" style="width: 170px;">
+                    <a href='home'><img src="image/logo.png" id='header-logo-img'></a>
                 </div>
                 <!--HEADER MENU-->
                 <div id="header-menu">
                     <ul>
-                        <li><a href='home'><i class="fa fa-home" style='font-size: 15px; margin-right:7px;'></i>Home</a></li>
-                        <li><a href='#'><i class="fa fa-th-large" style='font-size: 14px; margin-right:7px;'></i>About Keppo</a></li>
-                        <li><a href='#'><i class="fa fa-question-circle" style='font-size: 15px; margin-right:7px;'></i>FAQ</a></li>
-                        <li><a href='#'><i class="fa fa-user" style='font-size: 14px; margin-right:7px;'></i>Login</a></li>
-                        <li><a href='#'><i class="fa fa-user-plus" style='font-size: 14px; margin-right:7px;'></i>Register</a></li>
+                        <li><a href='home'><i class="fa fa-home header-menu-icon header-menu-icon-home"></i>Home</a></li>
+                        <li><a href='about-keppo'><i class="fa fa-th-large header-menu-icon"></i>About Keppo</a></li>
+                        <li><a href='faq'><i class="fa fa-question-circle header-menu-icon"></i>FAQ</a></li>
+                        <li><a href='#'><i class="fa fa-user header-menu-icon"></i>Login</a></li>
+                        <li><a href='#'><i class="fa fa-user-plus header-menu-icon"></i>Register</a></li>
                     </ul>
                 </div>
                 <div id="float-fix"></div>

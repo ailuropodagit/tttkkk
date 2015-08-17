@@ -14,6 +14,14 @@ h1, h2, h3, h4, h5, h6 {
     padding: 0px;
 }
 
+h1 {
+    font-size: 25px;
+    border-bottom: 1px solid lightgray;
+    padding: 0px 0px 6px 0px;
+    margin: 0px 0px 10px 0px;
+    letter-spacing: 1px;
+}
+
 select {
     margin: 0px;
     padding: 0px 0px 0px 0px;
@@ -60,6 +68,15 @@ input[type='submit']:active {
     display: block;
 }
 
+p {
+    line-height: 22px;
+}
+
+.last-paragraph {
+    padding: 0px;
+    margin: 0px;
+}
+
 /* WRAPPER */
 
 #wrapper {
@@ -79,7 +96,11 @@ input[type='submit']:active {
 
 #header-logo {
     float: left;
-    margin: 10px 0px 10px 15px;
+    margin: 10px 0px 10px 20px;
+}
+
+#header-logo-img {
+    width: 170px;
 }
 
 #header-menu {
@@ -95,7 +116,7 @@ input[type='submit']:active {
 
 #header-menu li {
     float: left;
-    margin: 0px 30px 0px 0px;
+    margin: 0px 35px 0px 0px;
 }
 
 #header-menu li a {
@@ -109,6 +130,15 @@ input[type='submit']:active {
 #header-menu li a:hover {
     color: white;
 }
+
+.header-menu-icon {
+    font-size: 14px;
+    margin-right:7px;
+}
+
+.header-menu-icon-home {
+    font-size: 20px !important;
+}
     
 /* SEARCH */
 
@@ -119,7 +149,7 @@ input[type='submit']:active {
 }
 
 #search-content {
-    padding: 19px 15px 15px 15px;
+    padding: 20px 20px 0px 20px;
 }
 
 #search-content-box {
@@ -128,7 +158,7 @@ input[type='submit']:active {
 }
 
 #search-content-box-content {
-    padding: 15px;
+    padding: 16px;
 }
 
 #search-content-box input[type='text'] {
@@ -179,14 +209,14 @@ input[type='submit']:active {
 
 #body {
     background-color: white;
-    height: 300px;
+    min-height: 300px;
     border-left: 1px solid #ccccc8;
     border-right: 1px solid #ccccc8;
     border-bottom: 1px solid #ccccc8;
 }
 
 #body-content {
-    padding: 0px 15px 15px 15px;
+    padding: 20px 20px 20px 20px;
 }
 
 /* FOOTER */

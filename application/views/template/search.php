@@ -6,12 +6,6 @@
                     
                     <div id="search-box-block1">
                         
-<script>
-    $('#filtersubmit').click(function() {
-        alert('Searching for ' + $('#filter').val());
-    });   
-</script>
-
 <style>
     #filtersubmit {
         position: absolute;
