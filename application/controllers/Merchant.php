@@ -78,7 +78,9 @@ class Merchant extends CI_Controller {
                 'value' => '12345678'
             );  //Temporary hard code password 12345678 in here for faster testing
 
+            $this->load->view('template/header');
             $this->_render_page('Merchant/login', $this->data);
+            $this->load->view('template/footer');
         }
     }
 

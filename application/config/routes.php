@@ -55,4 +55,5 @@ $route['(?i)merchant/register'] = 'merchant/create_user';
 $route['default_controller'] = 'home';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
-$route['about-keppo'] = 'about_keppo';
+$route['about-us'] = 'about_us';
+$route['contact-us'] = 'contact_us';

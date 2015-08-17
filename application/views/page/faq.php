@@ -2,12 +2,29 @@
     <div id='body'>
         <div id='body-content'>
             <h1>FAQ</h1>
-            <p><b>Advertisers get ads. Period.</b></p>
+            <p>
+                <b>Advertisers get ads. Period.</b>
+            </p>
             <p>
                 There’s no amount of money a business can pay to manipulate their reviews or rating and Yelp doesn’t skew
                 things in favor of advertisers or against businesses that don’t.
             </p>
-            <p><b>Prove it for yourself through these simple tests.</b></p>
+            <p>
+                <b>But you don’t have to take our word for it.</b>
+            </p>
+            <p>
+                An independent academic study (not commissioned or paid for by Yelp) found that advertising plays no role in 
+                how reviews are recommended on Yelp. Or as this in-depth profile of Yelp in BuzzFeed puts it: “Harvard Business
+                School professor Michael Luca has co-authored a new study that effectively debunks the extortion theory.”
+            </p>
+            <p>
+                Conspiracy theorists have had their day in court on more than one occasion, but courts have repeatedly dismissed 
+                their lawsuits claiming that ratings and reviews on Yelp are somehow tied to advertising. You can find the media 
+                reports here: PC World, WSJ, HuffPost, CNET, LA Times.
+            </p>
+            <p>
+                <b>Prove it for yourself through these simple tests.</b>
+            </p>
             <p>
                 If advertisers could control their reviews, then you’d expect them all to have perfect 5-star ratings
                 on Yelp. Spoiler alert: They don’t. To test this, do a few searches in broad categories in your area - 
