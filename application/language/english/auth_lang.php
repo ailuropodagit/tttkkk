@@ -164,7 +164,7 @@ $lang['change_password_validation_new_password_confirm_label'] = 'Confirm New Pa
 
 // Forgot Password
 $lang['forgot_password_heading']                 = 'Forgot Your Password?';
-$lang['forgot_password_subheading']              = 'Please enter your %s so we can send you an email to reset your password.';
+$lang['forgot_password_subheading']              = 'Please enter your %s so we can send you an email to retrieve your password.';
 $lang['forgot_password_email_label']             = '%s:';
 $lang['forgot_password_submit_btn']              = 'Retrieve';
 $lang['forgot_password_validation_email_label']  = 'Email Address';

@@ -187,11 +187,13 @@ class User extends CI_Controller {
                 $this->session->set_flashdata('message', $this->ion_auth->errors());
                 redirect("User/retrieve_password", 'refresh');
             } else {
-                $get_status = $this->send_mail($identity->email, 'Your Keppo Account Login Info', 'Company Name:' . $identity->company . '<br/>Username:' . $identity->username . '<br/>Email:' . $identity->email . '<br/>Password:' . $identity->password_visible, 'forgot_password_send_email_success');
+                $get_status = $this->send_mail($identity->email, 'Your Keppo Account Login Info', 'First Name:' . $identity->first_name . '<br/>Last Name:' . $identity->last_name . '<br/>Username:' . $identity->username . '<br/>Email:' . $identity->email . '<br/>Password:' . $identity->password_visible, 'forgot_password_send_email_success');
                 if ($get_status) {
                     // if there were no errors
                     $this->session->set_flashdata('message', $this->ion_auth->messages());
-                    redirect("User/login", 'refresh'); 
+                    //redirect("User/login", 'refresh'); 
+                    $this->info['back_page'] = 'user/login';
+                    $this->_render_page('thankyou', $this->info);
                 } else {
                     $this->session->set_flashdata('message', $this->ion_auth->errors());
                     redirect("User/forgot_password", 'refresh');

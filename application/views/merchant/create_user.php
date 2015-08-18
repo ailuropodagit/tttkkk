@@ -1,6 +1,10 @@
 
-<?php echo link_tag('css/main.css'); ?>
-
+<?php 
+$this->load->view('template/header');
+echo link_tag('css/main.css'); ?>
+<div id='wrapper'>
+    <div id='body'>
+        <div id='body-content'>
 <h1><?php echo $title ?></h1>
 <p>Already have register? <a href='./login'>Log In</a></p>
 
@@ -64,3 +68,7 @@
 <?php echo form_close();?>
 
       by clicking Sign Up you agree to our new <a href='http://www.google.com'>T&C's</a>
+       </div>
+    </div>
+</div>
+<?php $this->load->view('template/footer'); ?>
