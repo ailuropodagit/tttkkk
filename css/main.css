@@ -63,6 +63,12 @@ input[type='submit']:active {
     background: linear-gradient(0deg, #d60c05, #e61100);
 }
 
+input[type='text']::-webkit-input-placeholder {
+    font-size: 14px;
+    letter-spacing: 1px;
+    font-style: italic;
+}
+
 #float-fix {
     clear: both;
     display: block;
@@ -172,12 +178,6 @@ p {
     padding: 0px 0px 0px 30px;
 }
 
-#search-content-box input[type='text']::-webkit-input-placeholder {
-    font-size: 14px;
-    letter-spacing: 1px;
-    font-style: italic;
-}
-
 #search-content-box select {
     height: 32px;
     width: 100%;
@@ -230,9 +230,28 @@ p {
     width: 50%;
 }
 
+#contact-us-left-map {
+    margin: 10px 0px 0px 0px;
+}
+
 #contact-us-right {
     float: right;
-    width: 50%;
+    width: 38%;
+    margin: 0px 5% 0px 7%;
+}
+
+#contact-us-right-form {
+    margin: 10px 0px 0px 0px;
+}
+
+#contact-us-right-form-each {
+    margin: 0px 0px 15px 0px;
+}
+
+#contact-us-right-form input[type='text'] {
+    height: 32px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 /* FOOTER */
