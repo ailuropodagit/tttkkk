@@ -24,11 +24,11 @@ $lang['fail_to_send_email'] = 'Fail to send email!';
 // Login
 $lang['login_heading']         = 'Login';
 $lang['login_subheading']      = 'Please login with your email/username and password below.';
-$lang['login_identity_label']  = 'E-mail/Username';
+$lang['login_identity_label']  = 'E-mail / Username';
 $lang['login_password_label']  = 'Password';
 $lang['login_remember_label']  = 'Remember Me';
 $lang['login_submit_btn']      = 'Log In';
-$lang['login_forgot_password'] = 'Forgot your password?';
+$lang['login_forgot_password'] = 'Forgot password?';
 
 // Index
 $lang['index_heading']           = 'Users';

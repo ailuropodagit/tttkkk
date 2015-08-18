@@ -66,13 +66,6 @@ class User extends CI_Controller {
             // the user is not logging in so display the login page
             // set the flash data error message if there is one
             $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-
-            $this->data['facebook_icon'] = array(
-                'src'   => 'image/fb_icon.png',
-                'width' => '50',
-                'height'=> '50',
-                'title' => 'Log In by Facebook',
-            );
                         
             $this->data['identity'] = array('name' => 'identity',
                 'id' => 'identity',

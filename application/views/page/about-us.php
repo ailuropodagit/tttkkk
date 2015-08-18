@@ -1,19 +1,46 @@
 <div id='wrapper'>
     <div id='body'>
         <div id='body-content'>
-            <h1>About Keppo</h1>
-            <p>Our purpose: To connect people with great local businesses</p>
-            <p><b>10 Things You Should Know About Yelp</b></p>
-            <p>Yelp was founded in 2004 to help people find great local businesses like dentists, hair stylists and mechanics.</p>
-            <p>Yelp had a monthly average of 83 million unique visitors who visited Yelp via their mobile device in Q2 2015*</p>
-            <p>Yelpers have written more than 83 million reviews by the end of Q2 2015</p>
-            <p>In addition to reviews, you can use Yelp to find events, lists and to talk with other Yelpers.</p>
-            <p>Every business owner (or manager) can setup a free account to post photos and message their customers.</p>
-            <p>Yelp makes money by selling ads to local businesses - you’ll see these clearly labeled "Yelp Ads" around the site.</p>
-            <p>Paying advertisers can never change or re-order their reviews.</p>
-            <p>Yelp uses automated software to recommend the most helpful and reliable reviews for the Yelp community among the millions we get. The software looks at dozens of different signals, including various measures of quality, reliability, and activity on Yelp. The process has nothing to do with whether a business advertises on Yelp or not. Learn more here.</p>
-            <p>You can access Yelp via iPhone, Android, and more - see the full list of mobile apps here.</p>
-            <p class='last-paragraph'>The Weekly Yelp brings locals updates on the latest and greatest business openings & other happenings.</p>
+            
+            <div id="about-us">
+                <h1>About Us</h1>
+                <div id="body-content-logo">
+                    <img src="<?php echo base_url(); ?>image/logo.png" id="body-content-logo-img">
+                </div>
+                <p>
+                    Keppo.my is publish on 19 July 2015, Founder by Jimmy See. His create this to help's SME Corp to increasing
+                    sale on advertising. Keppo.my is used hybird technilogy on media social faster way to user's to know more
+                    product and services.
+                </p>
+                <p style="margin: 0px 0px 35px 0px;">
+                    Keppo.my is B2B2C marketplace on media social to boots up Malaysia economic. This platform is face-to-face
+                    delivering information to user's. User;s able to collect candy from merchants (example: likes, Rating, view 
+                    advertisement, share on facebook or instagram). 
+                </p>            
+                <p>
+                    Fuyoo Advertising & services ( 002422825-U) <br/>
+                    No. 4, Jalan Industris Mas 5, Taman Mas, 47170, Puchong, Selangor.
+                </p>
+                <p>
+                    Tel: 03- 8061 9491 <br/>
+                    Fax: 03-8061 9257 <br/>
+                    E-mail: jimmysee2005@gmail.com <br/>
+                    <a href='home'>www.keppo.my</a>
+                </p>
+                <div id="contact-us-left-social-media-icon">
+                    <div id="contact-us-left-social-media-icon-facebook">
+                        <a href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook-square"></i></a>
+                    </div>
+                    <div id="contact-us-left-social-media-icon-instagram">
+                        <a href="https://instagram.com" target="_blank"><i class="fa fa-instagram"></i></a>
+                    </div>
+                    <div id="contact-us-left-social-media-icon-linkedin">
+                        <a href="https://www.linkedin.com/" target="_blank"><i class="fa fa-linkedin-square"></i></a>
+                    </div>
+                    <div id="float-fix"></div>
+                </div>
+            </div>
+            
         </div>
     </div>
 </div>

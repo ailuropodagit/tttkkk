@@ -38,9 +38,17 @@ input[type='text'] {
     border: 1px solid #a9a9a9;
 }
 
+input[type='password'] {
+    margin: 0px;
+    padding: 0px 7px 0px 7px;
+    outline: none;
+    border-radius: 3px;
+    border: 1px solid #a9a9a9;
+}
+
 input[type='submit'] {
     margin: 0px 0px 0px 0px;
-    padding: 0px 5px 0px 5px;
+    padding: 4px 14px 4px 14px;
     background-color: #e8060a;
     background: linear-gradient(0deg, #d60c05, #e61100);
     color: white;
@@ -67,6 +75,19 @@ input[type='text']::-webkit-input-placeholder {
     font-size: 14px;
     letter-spacing: 1px;
     font-style: italic;
+}
+
+textarea {
+    border-radius: 3px;
+    padding: 8px 7px 8px 7px;
+    font-size: 13.5px;
+    outline: none;
+}
+
+textarea::-webkit-input-placeholder {
+    font-style: italic;
+    font-family: helvetica;
+    letter-spacing: 1px;
 }
 
 #float-fix {
@@ -223,6 +244,105 @@ p {
     padding: 25px;
 }
 
+#body-content-logo {
+    float: left;
+}
+
+#body-content-logo-img {
+    width: 180px;
+    margin: 40px 40px 40px 0px;
+}
+
+/* LOGIN */
+
+#login {
+    text-align: center;
+}
+
+#login a {
+    text-decoration: none;
+}
+
+#login a:hover {
+    text-decoration: underline;
+}
+
+#login-link {
+    float: right;
+}
+
+#login-title {
+    font-weight: bold;
+    font-size: 19px;
+    margin: 0px 0px 15px 0px;
+}
+
+#login-signup {
+    margin: 0px 0px 15px 0px;
+    font-size: 18px;
+}
+
+#login-facebook-icon {
+    padding: 10px 0px 20px 0px;
+}
+
+#login-horizontal-line {
+    width: 450px;
+    margin: 0px auto 20px auto;
+    border-bottom: 1px solid lightgray;
+}
+
+#login-form-username-label {
+    width: 285px;
+    text-align: left;
+    margin: 0px auto 0px auto;
+}
+
+#login-form-username-text input[type='text'] {
+    height: 25px;
+    width: 270px;
+    margin: 10px 0px 0px 0px;
+}
+
+#login-form-password-label {
+    width: 285px;
+    text-align: left;
+    margin: 20px auto 0px auto;
+}
+
+#login-form-password-password input[type='password'] {
+    height: 25px;
+    width: 270px;
+    margin: 10px 0px 0px 0px;
+}
+
+#login-form-remember-me-forgot-password {
+    width: 290px;
+    margin: 0px auto 0px auto;
+}
+
+#login-form-remember-me {
+    float: left;
+    margin: 20px 0px 20px 0px;
+    font-size: 15px;
+}
+
+#login-form-forgot-password {
+    float: right;
+    margin: 20px 0px 20px 0px;
+    font-size: 15px;
+}
+
+#login-form-submit {
+    margin: 10px 0px 30px 0px;
+}
+    
+#login-tnc {
+    font-size: 14px;
+    margin: 0px 0px 30px 0px;
+    color: gray;
+}
+
 /* CONTACT US */
 
 #contact-us-left {
@@ -232,6 +352,32 @@ p {
 
 #contact-us-left-map {
     margin: 10px 0px 0px 0px;
+}
+
+#contact-us-left-social-media-icon {
+    font-size: 20px;
+}
+
+#contact-us-left-social-media-icon-facebook, #contact-us-left-social-media-icon-instagram, #contact-us-left-social-media-icon-linkedin {
+    float: left;
+    margin: 0px 10px 0px 0px;
+    cursor: pointer;
+}
+
+#contact-us-left-social-media-icon-facebook a {
+    color: #4a5e91;
+}
+
+#contact-us-left-social-media-icon-instagram a {
+    color: #7d5846;
+}
+
+#contact-us-left-social-media-icon-linkedin a {
+    color: #1379a0;
+}
+
+#contact-us-left-social-media-icon-facebook:hover, #contact-us-left-social-media-icon-instagram:hover, #contact-us-left-social-media-icon-linkedin:hover {
+    color: black;
 }
 
 #contact-us-right {
@@ -252,6 +398,17 @@ p {
     height: 32px;
     width: 100%;
     box-sizing: border-box;
+}
+
+#contact-us-right-form textarea {
+    height: 150px;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+}
+
+#contact-us-right-form input[type='submit'] {
+    float: right;
 }
 
 /* FOOTER */
