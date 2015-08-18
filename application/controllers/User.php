@@ -192,8 +192,13 @@ class User extends CI_Controller {
                     // if there were no errors
                     $this->session->set_flashdata('message', $this->ion_auth->messages());
                     //redirect("User/login", 'refresh'); 
-                    $this->info['back_page'] = 'user/login';
-                    $this->_render_page('thankyou', $this->info);
+                    $this->info['title'] = 'Thank you!';
+                    $this->info['sentence1'] = 'An email will be sent to your registered email address.<br/>';
+                    $this->info['sentence2'] = "If you don't receive in the next 10 minutes, please check your spam folder and if you still haven't received it please try again...</br>";
+                    $this->info['back_page'] = 'Go to Log In Page';
+                    $this->info['back_page_url'] = 'user/login';
+                    $this->info['back_page'] = 'Go to Log In Page';
+                    $this->_render_page('simple_message', $this->info);
                 } else {
                     $this->session->set_flashdata('message', $this->ion_auth->errors());
                     redirect("User/forgot_password", 'refresh');
