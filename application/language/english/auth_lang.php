@@ -163,13 +163,13 @@ $lang['change_password_validation_new_password_label']         = 'New Password';
 $lang['change_password_validation_new_password_confirm_label'] = 'Confirm New Password';
 
 // Forgot Password
-$lang['forgot_password_heading']                 = 'Forgot Password';
+$lang['forgot_password_heading']                 = 'Forgot Your Password?';
 $lang['forgot_password_subheading']              = 'Please enter your %s so we can send you an email to reset your password.';
 $lang['forgot_password_email_label']             = '%s:';
-$lang['forgot_password_submit_btn']              = 'Submit';
+$lang['forgot_password_submit_btn']              = 'Retrieve';
 $lang['forgot_password_validation_email_label']  = 'Email Address';
 $lang['forgot_password_identity_label']          = 'Identity';
-$lang['forgot_password_username_email_label']    = 'Username/Email';
+$lang['forgot_password_username_email_label']    = 'E-mail/Username';
 $lang['forgot_password_email_identity_label']    = 'Email';
 $lang['forgot_password_email_not_found']         = 'No record of that email address.';
 $lang['forgot_password_username_email_not_found']= 'No record of this username or email address.';

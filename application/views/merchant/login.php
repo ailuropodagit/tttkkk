@@ -21,7 +21,7 @@
 
             <p>
                 <?php echo lang('login_remember_label', 'remember'); ?>
-                <?php echo form_checkbox('remember', '1', FALSE, 'id="remember"'); ?>  <a href="forgot_password"><?php echo lang('login_forgot_password'); ?></a>
+                <?php echo form_checkbox('remember', '1', FALSE, 'id="remember"'); ?>  <a href="retrieve_password"><?php echo lang('login_forgot_password'); ?></a>
             </p>
 
             <p>

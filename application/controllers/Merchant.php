@@ -184,7 +184,8 @@ class Merchant extends CI_Controller {
                 if ($get_status) {
                     // if there were no errors
                     $this->session->set_flashdata('message', $this->ion_auth->messages());
-                    redirect("Merchant/login", 'refresh'); 
+                    $this->info['back_page'] = 'merchant/login';
+                    $this->_render_page('thankyou', $this->info);
                 } else {
                     $this->session->set_flashdata('message', $this->ion_auth->errors());
                     redirect("Merchant/forgot_password", 'refresh');
