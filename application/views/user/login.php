@@ -1,8 +1,40 @@
-<?php
+<div id='wrapper'>
+    <div id='body'>
+        <div id='body-content'>
 
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+            <h1><?php echo "User Log In" ?></h1>
+            <p>Don't have an account? <a href='./register'>Sign Up</a></p>
 
+            <div id="infoMessage"><?php echo $message; ?></div>
+
+            <?php echo img($facebook_icon); ?>
+            
+            <?php echo form_open("user/login"); ?>
+
+            <p>
+                <?php echo lang('login_identity_label', 'identity'); ?><br />
+                <?php echo form_input($identity); ?>
+            </p>
+
+            <p>
+                <?php echo lang('login_password_label', 'password'); ?><br />
+                <?php echo form_input($password); ?>
+            </p>
+
+            <p>
+                <?php echo lang('login_remember_label', 'remember'); ?>
+                <?php echo form_checkbox('remember', '1', FALSE, 'id="remember"'); ?>  <a href="forgot_password"><?php echo lang('login_forgot_password'); ?></a>
+            </p>
+
+            <p>
+                <?php echo form_submit('submit', lang('login_submit_btn')); ?>
+            </p>
+
+            <?php echo form_close(); ?>
+
+                  by clicking Log In, Facebook <br/>
+                  you agree to our new <a href='http://www.google.com'>T&C's</a>
+                  
+        </div>
+    </div>
+</div>

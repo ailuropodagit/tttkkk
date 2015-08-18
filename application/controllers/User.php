@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Merchant extends CI_Controller {
+class User extends CI_Controller {
 
     function __construct() {
         parent::__construct();
@@ -20,7 +20,7 @@ class Merchant extends CI_Controller {
 
         if (!$this->ion_auth->logged_in()) {
             // redirect them to the login page
-            redirect('Merchant/login', 'refresh');
+            redirect('User/login', 'refresh');
         } elseif (!$this->ion_auth->is_admin()) { // remove this elseif if you want to enable this for non-admins
             // redirect them to the home page because they must be an administrator to view this
             return show_error('You must be an administrator to view this page.');
@@ -34,7 +34,7 @@ class Merchant extends CI_Controller {
                 $this->data['users'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
             }
 
-            $this->_render_page('Merchant/index', $this->data);
+            $this->_render_page('User/index', $this->data);
         }
     }
 
@@ -51,7 +51,7 @@ class Merchant extends CI_Controller {
             // check for "remember me"
             $remember = (bool) $this->input->post('remember');
 
-            if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember, $this->config->item('group_id_merchant'))) {
+            if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember, $this->config->item('group_id_user'))) {
                 //if the login is successful
                 //redirect them back to the home page
                 $this->session->set_flashdata('message', $this->ion_auth->messages());
@@ -60,13 +60,20 @@ class Merchant extends CI_Controller {
                 // if the login was un-successful
                 // redirect them back to the login page
                 $this->session->set_flashdata('message', $this->ion_auth->errors());
-                redirect('Merchant/login', 'refresh'); // use redirects instead of loading views for compatibility with MY_Controller libraries
+                redirect('User/login', 'refresh'); // use redirects instead of loading views for compatibility with MY_Controller libraries
             }
         } else {
             // the user is not logging in so display the login page
             // set the flash data error message if there is one
             $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
 
+            $this->data['facebook_icon'] = array(
+                'src'   => 'image/fb_icon.png',
+                'width' => '50',
+                'height'=> '50',
+                'title' => 'Log In by Facebook',
+            );
+                        
             $this->data['identity'] = array('name' => 'identity',
                 'id' => 'identity',
                 'type' => 'text',
@@ -78,7 +85,7 @@ class Merchant extends CI_Controller {
             );  
 
             $this->load->view('template/header');
-            $this->_render_page('Merchant/login', $this->data);
+            $this->_render_page('User/login', $this->data);
             $this->load->view('template/footer');
         }
     }
@@ -92,7 +99,7 @@ class Merchant extends CI_Controller {
 
         // redirect them to the login page
         $this->session->set_flashdata('message', $this->ion_auth->messages());
-        redirect('Merchant/login', 'refresh');
+        redirect('User/login', 'refresh');
     }
 
     // change password
@@ -102,7 +109,7 @@ class Merchant extends CI_Controller {
         $this->form_validation->set_rules('new_confirm', $this->lang->line('change_password_validation_new_password_confirm_label'), 'required');
 
         if (!$this->ion_auth->logged_in()) {
-            redirect('Merchant/login', 'refresh');
+            redirect('User/login', 'refresh');
         }
 
         $user = $this->ion_auth->user()->row();
@@ -138,7 +145,7 @@ class Merchant extends CI_Controller {
             );
 
             // render
-            $this->_render_page('Merchant/change_password', $this->data);
+            $this->_render_page('User/change_password', $this->data);
         } else {
             $identity = $this->session->userdata('identity');
 
@@ -150,7 +157,7 @@ class Merchant extends CI_Controller {
                 $this->logout();
             } else {
                 $this->session->set_flashdata('message', $this->ion_auth->errors());
-                redirect('Merchant/change_password', 'refresh');
+                redirect('User/change_password', 'refresh');
             }
         }
     }
@@ -169,7 +176,7 @@ class Merchant extends CI_Controller {
 
             // set any errors and display the form
             $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-            $this->_render_page('Merchant/retrieve_password', $this->data);
+            $this->_render_page('User/retrieve_password', $this->data);
         } else {
             $the_input = $this->input->post('username_email');
             $the_id = $this->ion_auth->get_id_by_email_or_username($the_input);
@@ -178,16 +185,16 @@ class Merchant extends CI_Controller {
                 $this->ion_auth->set_error('forgot_password_username_email_not_found');
 
                 $this->session->set_flashdata('message', $this->ion_auth->errors());
-                redirect("Merchant/retrieve_password", 'refresh');
+                redirect("User/retrieve_password", 'refresh');
             } else {
                 $get_status = $this->send_mail($identity->email, 'Your Keppo Account Login Info', 'Company Name:' . $identity->company . '<br/>Username:' . $identity->username . '<br/>Email:' . $identity->email . '<br/>Password:' . $identity->password_visible, 'forgot_password_send_email_success');
                 if ($get_status) {
                     // if there were no errors
                     $this->session->set_flashdata('message', $this->ion_auth->messages());
-                    redirect("Merchant/login", 'refresh'); 
+                    redirect("User/login", 'refresh'); 
                 } else {
                     $this->session->set_flashdata('message', $this->ion_auth->errors());
-                    redirect("Merchant/forgot_password", 'refresh');
+                    redirect("User/forgot_password", 'refresh');
                 }
             }
         }
@@ -217,7 +224,7 @@ class Merchant extends CI_Controller {
 
             // set any errors and display the form
             $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-            $this->_render_page('Merchant/forgot_password', $this->data);
+            $this->_render_page('User/forgot_password', $this->data);
         } else {
             $identity_column = $this->config->item('identity', 'ion_auth');
             $identity = $this->ion_auth->where($identity_column, $this->input->post('email'))->users()->row();
@@ -231,7 +238,7 @@ class Merchant extends CI_Controller {
                 }
 
                 $this->session->set_flashdata('message', $this->ion_auth->errors());
-                redirect("Merchant/forgot_password", 'refresh');
+                redirect("User/forgot_password", 'refresh');
             }
 
             // run the forgotten password method to email an activation code to the user
@@ -240,10 +247,10 @@ class Merchant extends CI_Controller {
             if ($forgotten) {
                 // if there were no errors
                 $this->session->set_flashdata('message', $this->ion_auth->messages());
-                redirect("Merchant/login", 'refresh'); //we should display a confirmation page here instead of the login page
+                redirect("User/login", 'refresh'); //we should display a confirmation page here instead of the login page
             } else {
                 $this->session->set_flashdata('message', $this->ion_auth->errors());
-                redirect("Merchant/forgot_password", 'refresh');
+                redirect("User/forgot_password", 'refresh');
             }
         }
     }
@@ -290,7 +297,7 @@ class Merchant extends CI_Controller {
                 $this->data['code'] = $code;
 
                 // render
-                $this->_render_page('Merchant/reset_password', $this->data);
+                $this->_render_page('User/reset_password', $this->data);
             } else {
                 // do we have a valid request?
                 if ($this->_valid_csrf_nonce() === FALSE || $user->id != $this->input->post('user_id')) {
@@ -308,17 +315,17 @@ class Merchant extends CI_Controller {
                     if ($change) {
                         // if the password was successfully changed
                         $this->session->set_flashdata('message', $this->ion_auth->messages());
-                        redirect("Merchant/login", 'refresh');
+                        redirect("User/login", 'refresh');
                     } else {
                         $this->session->set_flashdata('message', $this->ion_auth->errors());
-                        redirect('Merchant/reset_password/' . $code, 'refresh');
+                        redirect('User/reset_password/' . $code, 'refresh');
                     }
                 }
             }
         } else {
             // if the code is invalid then send them back to the forgot password page
             $this->session->set_flashdata('message', $this->ion_auth->errors());
-            redirect("Merchant/forgot_password", 'refresh');
+            redirect("User/forgot_password", 'refresh');
         }
     }
 
@@ -333,11 +340,11 @@ class Merchant extends CI_Controller {
         if ($activation) {
             // redirect them to the auth page
             $this->session->set_flashdata('message', $this->ion_auth->messages());
-            redirect("Merchant", 'refresh');
+            redirect("User", 'refresh');
         } else {
             // redirect them to the forgot password page
             $this->session->set_flashdata('message', $this->ion_auth->errors());
-            redirect("Merchant/forgot_password", 'refresh');
+            redirect("User/forgot_password", 'refresh');
         }
     }
 
@@ -359,7 +366,7 @@ class Merchant extends CI_Controller {
             $this->data['csrf'] = $this->_get_csrf_nonce();
             $this->data['user'] = $this->ion_auth->user($id)->row();
 
-            $this->_render_page('Merchant/deactivate_user', $this->data);
+            $this->_render_page('User/deactivate_user', $this->data);
         } else {
             // do we really want to deactivate?
             if ($this->input->post('confirm') == 'yes') {
@@ -375,7 +382,7 @@ class Merchant extends CI_Controller {
             }
 
             // redirect them back to the auth page
-            redirect('Merchant', 'refresh');
+            redirect('User', 'refresh');
         }
     }
 
@@ -398,33 +405,33 @@ class Merchant extends CI_Controller {
     // create a new user
     function create_user() {
         $controller = $this->uri->segment(2);
-        $function_use_for = 'merchant/create_user';
+        $function_use_for = 'user/create_user';
 
-        //To set this function is use by create merchant and register merchant
+        //To set this function is use by create user and register user
         if ($controller == 'create_user') {
-            $this->data['title'] = "Create Merchant";
+            $this->data['title'] = "Create User";
             if (!$this->ion_auth->logged_in() || !$this->ion_auth->is_admin()) {
-                redirect('Merchant', 'refresh');
+                redirect('User', 'refresh');
             }
         } else {
-            $this->data['title'] = "Merchant Sign Up";
-            $function_use_for = 'merchant/register';
+            $this->data['title'] = "User Sign Up";
+            $function_use_for = 'user/register';
         }
         $this->data['function_use_for'] = $function_use_for;
 
         $tables = $this->config->item('tables', 'ion_auth');
-        $main_group_id = $this->config->item('group_id_merchant');
+        $main_group_id = $this->config->item('group_id_user');
 
         // validate form input
-        $this->form_validation->set_rules('company', $this->lang->line('create_merchant_company_label'), 'required');
-        $this->form_validation->set_rules('first_name', $this->lang->line('create_merchant_fname_label'), 'required');
-        $this->form_validation->set_rules('me_ssm', $this->lang->line('create_merchant_companyssm_label'), 'required');
-        $this->form_validation->set_rules('address', $this->lang->line('create_merchant_address_label'), 'required');
-        $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_phone_label'), 'required');
-        $this->form_validation->set_rules('username', $this->lang->line('create_merchant_username_label'), 'required|is_unique[' . $tables['users'] . '.username]');
-        $this->form_validation->set_rules('email', $this->lang->line('create_merchant_email_label'), 'required|valid_email|is_unique[' . $tables['users'] . '.email]');
-        $this->form_validation->set_rules('password', $this->lang->line('create_merchant_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
-        $this->form_validation->set_rules('password_confirm', $this->lang->line('create_merchant_password_confirm_label'), 'required');
+        $this->form_validation->set_rules('company', $this->lang->line('create_user_company_label'), 'required');
+        $this->form_validation->set_rules('first_name', $this->lang->line('create_user_fname_label'), 'required');
+        $this->form_validation->set_rules('me_ssm', $this->lang->line('create_user_companyssm_label'), 'required');
+        $this->form_validation->set_rules('address', $this->lang->line('create_user_address_label'), 'required');
+        $this->form_validation->set_rules('phone', $this->lang->line('create_user_phone_label'), 'required');
+        $this->form_validation->set_rules('username', $this->lang->line('create_user_username_label'), 'required|is_unique[' . $tables['users'] . '.username]');
+        $this->form_validation->set_rules('email', $this->lang->line('create_user_email_label'), 'required|valid_email|is_unique[' . $tables['users'] . '.email]');
+        $this->form_validation->set_rules('password', $this->lang->line('create_user_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
+        $this->form_validation->set_rules('password_confirm', $this->lang->line('create_user_password_confirm_label'), 'required');
         //$this->form_validation->set_rules('website', $this->lang->line('create_user_validation_website_label'));
         //$this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'));
         
@@ -459,20 +466,20 @@ class Merchant extends CI_Controller {
             // check to see if we are creating the user
             // redirect them back to the admin page
             $this->session->set_flashdata('message', $this->ion_auth->messages());
-             $get_status = $this->send_mail($email, 'Your Keppo Merchant Account Success Created', 'Company Name:' . $company . '<br/>Username:' . $username . '<br/>E-mail:' . $email . '<br/>Password:' . $password, 'create_user_send_email_success');
+             $get_status = $this->send_mail($email, 'Your Keppo User Account Success Created', 'Company Name:' . $company . '<br/>Username:' . $username . '<br/>E-mail:' . $email . '<br/>Password:' . $password, 'create_user_send_email_success');
              if ($get_status) {
                     // if there were no errors
                     redirect("/", 'refresh');
                 } else {
                     $this->session->set_flashdata('message', $this->ion_auth->errors());
-                    redirect("Merchant/create_user", 'refresh');
+                    redirect("User/create_user", 'refresh');
                 }
              
         } else {
             // display the create user form
             // set the flash data error message if there is one
             $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-
+                        
             $this->data['username'] = array(
                 'name' => 'username',
                 'id' => 'username',
@@ -548,7 +555,7 @@ class Merchant extends CI_Controller {
                 'value' => $this->form_validation->set_value('password_confirm'),
             );
 
-            $this->_render_page('Merchant/create_user', $this->data);
+            $this->_render_page('User/create_user', $this->data);
         }
     }
 
@@ -557,7 +564,7 @@ class Merchant extends CI_Controller {
         $this->data['title'] = "Edit User";
 
         if (!$this->ion_auth->logged_in() || (!$this->ion_auth->is_admin() && !($this->ion_auth->user()->row()->id == $id))) {
-            redirect('Merchant', 'refresh');
+            redirect('User', 'refresh');
         }
 
         $user = $this->ion_auth->user($id)->row();
@@ -626,7 +633,7 @@ class Merchant extends CI_Controller {
                     // redirect them back to the admin page if admin, or to the base url if non admin
                     $this->session->set_flashdata('message', $this->ion_auth->messages());
                     if ($this->ion_auth->is_admin()) {
-                        redirect('Merchant', 'refresh');
+                        redirect('User', 'refresh');
                     } else {
                         redirect('/', 'refresh');
                     }
@@ -634,7 +641,7 @@ class Merchant extends CI_Controller {
                     // redirect them back to the admin page if admin, or to the base url if non admin
                     $this->session->set_flashdata('message', $this->ion_auth->errors());
                     if ($this->ion_auth->is_admin()) {
-                        redirect('Merchant', 'refresh');
+                        redirect('User', 'refresh');
                     } else {
                         redirect('/', 'refresh');
                     }
@@ -700,7 +707,7 @@ class Merchant extends CI_Controller {
             'type' => 'password'
         );
 
-        $this->_render_page('Merchant/edit_user', $this->data);
+        $this->_render_page('User/edit_user', $this->data);
     }
 
     function _get_csrf_nonce() {

@@ -24,10 +24,10 @@ $lang['fail_to_send_email'] = 'Fail to send email!';
 // Login
 $lang['login_heading']         = 'Login';
 $lang['login_subheading']      = 'Please login with your email/username and password below.';
-$lang['login_identity_label']  = 'Email/Username:';
-$lang['login_password_label']  = 'Password:';
-$lang['login_remember_label']  = 'Remember Me:';
-$lang['login_submit_btn']      = 'Login';
+$lang['login_identity_label']  = 'E-mail/Username';
+$lang['login_password_label']  = 'Password';
+$lang['login_remember_label']  = 'Remember Me';
+$lang['login_submit_btn']      = 'Log In';
 $lang['login_forgot_password'] = 'Forgot your password?';
 
 // Index
@@ -117,6 +117,19 @@ $lang['edit_user_validation_website_label']          = 'Website';
 $lang['edit_user_validation_groups_label']           = 'Groups';
 $lang['edit_user_validation_password_label']         = 'Password';
 $lang['edit_user_validation_password_confirm_label'] = 'Password Confirmation';
+
+// Create Merchant
+$lang['create_merchant_company_label']                     = 'Company Name';
+$lang['create_merchant_fname_label']                       = 'Register Name';
+$lang['create_merchant_companyssm_label']                  = 'Company SSM';
+$lang['create_merchant_address_label']                     = 'Company Address';
+$lang['create_merchant_state_label']                       = 'Location';
+$lang['create_merchant_phone_label']                       = 'Contact Number';
+$lang['create_merchant_username_label']                    = 'Username';
+$lang['create_merchant_email_label']                       = 'E-mail address (personal / company)';
+$lang['create_merchant_password_label']                    = 'Password';
+$lang['create_merchant_password_confirm_label']            = 'Re-Password';
+$lang['create_merchant_website_label']                     = 'Website';
 
 // Create Group
 $lang['create_group_title']                  = 'Create Group';
