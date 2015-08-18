@@ -2,8 +2,10 @@
     <div id='body'>
         <div id='body-content'>
 
-            <h1><?php echo "User Log In" ?></h1>
+            <h1><?php echo "User Log In" ?></h1> 
             <p>Don't have an account? <a href='./register'>Sign Up</a></p>
+            
+            <div style='float:right'> <a href='../merchant/login'>Merchents Login</a></div>
 
             <div id="infoMessage"><?php echo $message; ?></div>
 
@@ -23,7 +25,7 @@
 
             <p>
                 <?php echo lang('login_remember_label', 'remember'); ?>
-                <?php echo form_checkbox('remember', '1', FALSE, 'id="remember"'); ?>  <a href="forgot_password"><?php echo lang('login_forgot_password'); ?></a>
+                <?php echo form_checkbox('remember', '1', FALSE, 'id="remember"'); ?>  <a href="retrieve_password"><?php echo lang('login_forgot_password'); ?></a>
             </p>
 
             <p>

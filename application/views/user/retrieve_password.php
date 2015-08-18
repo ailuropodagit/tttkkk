@@ -11,7 +11,7 @@ echo link_tag('css/main.css');
 
             <div id="infoMessage"><?php echo $message; ?></div>
 
-<?php echo form_open("merchant/retrieve_password"); ?>
+<?php echo form_open("user/retrieve_password"); ?>
 
             <p>
                 <label for="username_email"><?php echo sprintf(lang('forgot_password_username_email_label'), $identity_label); ?>:</label> <br />
