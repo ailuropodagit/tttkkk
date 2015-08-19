@@ -1,6 +1,4 @@
-<?php
-
-defined('BASEPATH') OR exit('No direct script access allowed');
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Merchant extends CI_Controller {
 
@@ -9,15 +7,12 @@ class Merchant extends CI_Controller {
         $this->load->database();
         $this->load->library(array('ion_auth', 'form_validation'));
         $this->load->helper(array('url', 'language'));
-
         $this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
-
         $this->lang->load('auth');
     }
 
     // redirect if needed, otherwise display the user list
     function index() {
-
         if (!$this->ion_auth->logged_in()) {
             // redirect them to the login page
             redirect('Merchant/login', 'refresh');
@@ -27,13 +22,11 @@ class Merchant extends CI_Controller {
         } else {
             // set the flash data error message if there is one
             $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-
             //list the users
             $this->data['users'] = $this->ion_auth->users()->result();
             foreach ($this->data['users'] as $k => $user) {
                 $this->data['users'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
             }
-
             $this->_render_page('Merchant/index', $this->data);
         }
     }
@@ -435,7 +428,6 @@ class Merchant extends CI_Controller {
         //$this->form_validation->set_rules('website', $this->lang->line('create_user_validation_website_label'));
         //$this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'));
         
-
         if ($this->form_validation->run() == true) {
             //$username = strtolower($this->input->post('first_name')) . ' ' . strtolower($this->input->post('last_name'));
             $username = strtolower($this->input->post('username'));
@@ -461,7 +453,7 @@ class Merchant extends CI_Controller {
         $group_ids = array(
             $main_group_id
         );
-
+        
         if ($this->form_validation->run() == true && $this->ion_auth->register($username, $password, $email, $additional_data, $group_ids)) {
             // check to see if we are creating the user
             // redirect them back to the admin page
@@ -469,9 +461,9 @@ class Merchant extends CI_Controller {
              $get_status = $this->send_mail($email, 'Your Keppo Merchant Account Success Created', 'Company Name:' . $company . '<br/>Username:' . $username . '<br/>E-mail:' . $email . '<br/>Password:' . $password, 'create_user_send_email_success');
              if ($get_status) {
                     // if there were no errors
-                    redirect("/", 'refresh');
+                    redirect("Merchant/create_user", 'refresh');
                 } else {
-                    $this->session->set_flashdata('message', $this->ion_auth->errors());
+                    //$this->session->set_flashdata('message', $this->ion_auth->errors());
                     redirect("Merchant/create_user", 'refresh');
                 }
              
@@ -555,7 +547,9 @@ class Merchant extends CI_Controller {
                 'value' => $this->form_validation->set_value('password_confirm'),
             );
 
+            $this->load->view('template/header');
             $this->_render_page('Merchant/create_user', $this->data);
+            $this->load->view('template/footer');
         }
     }
 

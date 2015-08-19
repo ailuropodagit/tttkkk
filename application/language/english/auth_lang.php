@@ -118,18 +118,25 @@ $lang['edit_user_validation_groups_label']           = 'Groups';
 $lang['edit_user_validation_password_label']         = 'Password';
 $lang['edit_user_validation_password_confirm_label'] = 'Password Confirmation';
 
+// Create User
+$lang['create_user_first_name_label']      = 'First Name:';
+$lang['create_user_last_name_label']       = 'Last Name:';
+$lang['create_user_username_label']        = 'Username:';
+$lang['create_user_contact_number_label']  = 'Contact Number:';
+$lang['create_user_email_label']           = 'E-mail address';
+
 // Create Merchant
-$lang['create_merchant_company_label']                     = 'Company Name';
-$lang['create_merchant_fname_label']                       = 'Register Name';
-$lang['create_merchant_companyssm_label']                  = 'Company SSM';
-$lang['create_merchant_address_label']                     = 'Company Address';
-$lang['create_merchant_state_label']                       = 'Location';
-$lang['create_merchant_phone_label']                       = 'Contact Number';
-$lang['create_merchant_username_label']                    = 'Username';
-$lang['create_merchant_email_label']                       = 'E-mail address (personal / company)';
-$lang['create_merchant_password_label']                    = 'Password';
-$lang['create_merchant_password_confirm_label']            = 'Re-Password';
-$lang['create_merchant_website_label']                     = 'Website';
+$lang['create_merchant_company_label']                     = 'Company Name:';
+$lang['create_merchant_fname_label']                       = 'Register Name:';
+$lang['create_merchant_companyssm_label']                  = 'Company SSM:';
+$lang['create_merchant_address_label']                     = 'Company Address:';
+$lang['create_merchant_state_label']                       = 'Location:';
+$lang['create_merchant_phone_label']                       = 'Contact Number:';
+$lang['create_merchant_username_label']                    = 'Username:';
+$lang['create_merchant_email_label']                       = 'E-mail address (personal / company):';
+$lang['create_merchant_password_label']                    = 'Password:';
+$lang['create_merchant_password_confirm_label']            = 'Re-Password:';
+$lang['create_merchant_website_label']                     = 'Website:';
 
 // Create Group
 $lang['create_group_title']                  = 'Create Group';

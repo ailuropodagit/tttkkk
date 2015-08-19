@@ -1,74 +1,86 @@
-
-<?php 
-$this->load->view('template/header');
-echo link_tag('css/main.css'); ?>
 <div id='wrapper'>
     <div id='body'>
         <div id='body-content'>
-<h1><?php echo $title ?></h1>
-<p>Already have register? <a href='./login'>Log In</a></p>
+            
+            <div id='register'>
+                
+                <div id='register-link'><a href='<?php echo base_url(); ?>user/register'>User Register</a></div>
+                <div id='float-fix'></div>
+                            
+                <div id='register-title'>Merchant Sign Up</div>
 
-<div id="infoMessage"><?php echo $message;?></div>
+                <div id='register-signup'>Already have register? <a href='<?php echo base_url(); ?>merchant/login'>Log In</a></div>
 
-<?php echo form_open($function_use_for);?>
+                <div id="infoMessage"><?php echo $message;?></div>
+                
+                <div id='register-horizontal-line'></div>
 
-      <p>
-            <?php echo lang('create_merchant_company_label', 'company');?> <br />
-            <?php echo form_input($company);?>
-      </p>
-      
-      <p>
-            <?php echo lang('create_merchant_fname_label', 'first_name');?> <br />
-            <?php echo form_input($first_name);?>
-      </p>
-      
-       <p>
-            <?php echo lang('create_merchant_companyssm_label', 'me_ssm');?> <br />
-            <?php echo form_input($me_ssm);?>
-      </p>
-      
-      <p>
-            <?php echo lang('create_merchant_address_label', 'address');?> <br />
-            <?php echo form_textarea($address);?>
-      </p>
-      
-      <p>
-            <?php echo lang('create_merchant_state_label', 'me_state_id');?> <br />
-            <?php echo form_dropdown($me_state_id,$state_list);?>
-      </p>
- 
-      <p>
-            <?php echo lang('create_merchant_phone_label', 'phone');?> <br />
-            <?php echo form_input($phone);?>
-      </p>
-      
-      <p>
-            <?php echo lang('create_merchant_username_label', 'username');?> <br />
-            <?php echo form_input($username);?>
-      </p>
-      
-      <p>
-            <?php echo lang('create_merchant_email_label', 'email');?> <br />
-            <?php echo form_input($email);?>
-      </p>
+                <?php echo form_open($function_use_for); ?>
+                
+                <div id='register-form'>
 
-      <p>
-            <?php echo lang('create_merchant_password_label', 'password');?> <br />
-            <?php echo form_input($password);?>
-      </p>
+                    <div id='register-form-each'>
+                        <div id='register-form-each-label'><?php echo lang('create_merchant_company_label', 'company'); ?></div>
+                        <div id='register-form-each-text'><?php echo form_input($company);?></div>
+                    </div>
 
-      <p>
-            <?php echo lang('create_merchant_password_confirm_label', 'password_confirm');?> <br />
-            <?php echo form_input($password_confirm);?>
-      </p>
+                    <div id='register-form-each'>
+                        <div id='register-form-each-label'><?php echo lang('create_merchant_fname_label', 'first_name'); ?></div>
+                        <div id='register-form-each-text'><?php echo form_input($first_name);?></div>
+                    </div>
 
+                    <div id='register-form-each'>
+                        <div id='register-form-each-label'><?php echo lang('create_merchant_companyssm_label', 'me_ssm'); ?></div>
+                        <div id='register-form-each-text'><?php echo form_input($me_ssm); ?></div>
+                    </div>
 
-      <p><?php echo form_submit('submit', 'Sign Up');?></p>
+                    <div id='register-form-each'>
+                        <div id='register-form-each-label'><?php echo lang('create_merchant_address_label', 'address'); ?></div>
+                        <div id='register-form-each-text'><?php echo form_input($address); ?></div>
+                    </div>
+                    
+                    <div id='register-form-each'>
+                        <div id='register-form-each-label'><?php echo lang('create_merchant_state_label', 'me_state_id'); ?></div>
+                        <div id='register-form-each-select-option'><?php echo form_dropdown($me_state_id, $state_list); ?></div>
+                    </div>
+                    
+                    <div id='register-form-each'>
+                        <div id='register-form-each-label'><?php echo lang('create_merchant_phone_label', 'phone'); ?></div>
+                        <div id='register-form-each-text'><?php echo form_input($phone);?></div>
+                    </div>
+                    
+                    <div id='register-form-each'>
+                        <div id='register-form-each-label'><?php echo lang('create_merchant_username_label', 'username'); ?></div>
+                        <div id='register-form-each-text'><?php echo form_input($username); ?></div>
+                    </div>
+                    
+                    <div id='register-form-each'>
+                        <div id='register-form-each-label'><?php echo lang('create_merchant_email_label', 'email'); ?></div>
+                        <div id='register-form-each-text'><?php echo form_input($email); ?></div>
+                    </div>
+                    
+                    <div id='register-form-each'>
+                        <div id='register-form-each-label'><?php echo lang('create_merchant_password_label', 'password'); ?></div>
+                        <div id='register-form-each-password'><?php echo form_input($password); ?></div>
+                    </div>
+                    
+                    <div id='register-form-each'>
+                        <div id='register-form-each-label'><?php echo lang('create_merchant_password_confirm_label', 'password_confirm'); ?></div>
+                        <div id='register-form-each-password'><?php echo form_input($password_confirm); ?></div>
+                    </div>
 
-<?php echo form_close();?>
+                    <div id='register-form-submit'>
+                        <?php echo form_submit('submit', 'Sign Up');?>
+                    </div>
+                    
+                </div>
 
-      by clicking Sign Up you agree to our new <a href='http://www.google.com'>T&C's</a>
+                <?php echo form_close();?>
+
+                <div id='login-tnc'>by clicking Sign Up you agree to our new <a href='<?php echo base_url(); ?>terms-and-conditions' target='_blank'>T&C's</a></div>
+            
+            </div>
+            
        </div>
     </div>
 </div>
-<?php $this->load->view('template/footer'); ?>

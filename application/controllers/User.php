@@ -1,6 +1,4 @@
-<?php
-
-defined('BASEPATH') OR exit('No direct script access allowed');
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 class User extends CI_Controller {
 
@@ -9,9 +7,7 @@ class User extends CI_Controller {
         $this->load->database();
         $this->load->library(array('ion_auth', 'form_validation'));
         $this->load->helper(array('url', 'language'));
-
         $this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
-
         $this->lang->load('auth');
     }
 
@@ -435,7 +431,6 @@ class User extends CI_Controller {
         //$this->form_validation->set_rules('website', $this->lang->line('create_user_validation_website_label'));
         //$this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'));
         
-
         if ($this->form_validation->run() == true) {
             //$username = strtolower($this->input->post('first_name')) . ' ' . strtolower($this->input->post('last_name'));
             $username = strtolower($this->input->post('username'));
@@ -466,19 +461,21 @@ class User extends CI_Controller {
             // check to see if we are creating the user
             // redirect them back to the admin page
             $this->session->set_flashdata('message', $this->ion_auth->messages());
-             $get_status = $this->send_mail($email, 'Your Keppo User Account Success Created', 'Company Name:' . $company . '<br/>Username:' . $username . '<br/>E-mail:' . $email . '<br/>Password:' . $password, 'create_user_send_email_success');
-             if ($get_status) {
-                    // if there were no errors
-                    redirect("/", 'refresh');
-                } else {
-                    $this->session->set_flashdata('message', $this->ion_auth->errors());
-                    redirect("User/create_user", 'refresh');
-                }
+            $get_status = $this->send_mail($email, 'Your Keppo User Account Success Created', 'Company Name:' . $company . '<br/>Username:' . $username . '<br/>E-mail:' . $email . '<br/>Password:' . $password, 'create_user_send_email_success');
+            if ($get_status) {
+                // if there were no errors
+                redirect("/", 'refresh');
+            } else {
+                $this->session->set_flashdata('message', $this->ion_auth->errors());
+                redirect("User/create_user", 'refresh');
+            }
              
         } else {
             // display the create user form
             // set the flash data error message if there is one
-            $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+            $this->data['message'] = (
+                validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message'))
+            );
                         
             $this->data['username'] = array(
                 'name' => 'username',
@@ -555,7 +552,9 @@ class User extends CI_Controller {
                 'value' => $this->form_validation->set_value('password_confirm'),
             );
 
-            $this->_render_page('User/create_user', $this->data);
+            $this->load->view('template/header.php');
+            $this->_render_page('user/create_user', $this->data);
+            $this->load->view('template/footer.php');
         }
     }
 
