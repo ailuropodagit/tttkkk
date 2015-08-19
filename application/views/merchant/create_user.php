@@ -25,18 +25,13 @@
                     </div>
 
                     <div id='register-form-each'>
-                        <div id='register-form-each-label'><?php echo lang('create_merchant_fname_label', 'first_name'); ?></div>
-                        <div id='register-form-each-text'><?php echo form_input($first_name);?></div>
-                    </div>
-
-                    <div id='register-form-each'>
                         <div id='register-form-each-label'><?php echo lang('create_merchant_companyssm_label', 'me_ssm'); ?></div>
                         <div id='register-form-each-text'><?php echo form_input($me_ssm); ?></div>
                     </div>
 
                     <div id='register-form-each'>
                         <div id='register-form-each-label'><?php echo lang('create_merchant_address_label', 'address'); ?></div>
-                        <div id='register-form-each-text'><?php echo form_input($address); ?></div>
+                        <div id='register-form-each-text'><?php echo form_textarea($address); ?></div>
                     </div>
                     
                     <div id='register-form-each'>

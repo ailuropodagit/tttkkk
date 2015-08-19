@@ -416,15 +416,15 @@ class Merchant extends CI_Controller {
         $main_group_id = $this->config->item('group_id_merchant');
 
         // validate form input
-        $this->form_validation->set_rules('company', $this->lang->line('create_merchant_company_label'), 'required');
-        $this->form_validation->set_rules('first_name', $this->lang->line('create_merchant_fname_label'), 'required');
-        $this->form_validation->set_rules('me_ssm', $this->lang->line('create_merchant_companyssm_label'), 'required');
-        $this->form_validation->set_rules('address', $this->lang->line('create_merchant_address_label'), 'required');
-        $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_phone_label'), 'required');
-        $this->form_validation->set_rules('username', $this->lang->line('create_merchant_username_label'), 'required|is_unique[' . $tables['users'] . '.username]');
-        $this->form_validation->set_rules('email', $this->lang->line('create_merchant_email_label'), 'required|valid_email|is_unique[' . $tables['users'] . '.email]');
-        $this->form_validation->set_rules('password', $this->lang->line('create_merchant_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
-        $this->form_validation->set_rules('password_confirm', $this->lang->line('create_merchant_password_confirm_label'), 'required');
+        $this->form_validation->set_rules('company', $this->lang->line('create_merchant_validation_company_label'), 'required');       
+        $this->form_validation->set_rules('me_ssm', $this->lang->line('create_merchant_validation_companyssm_label'), 'required');
+        $this->form_validation->set_rules('address', $this->lang->line('create_merchant_validation_address_label'), 'required');
+        $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required');
+        $this->form_validation->set_rules('username', $this->lang->line('create_merchant_validation_username_label'), 'required|is_unique[' . $tables['users'] . '.username]');
+        $this->form_validation->set_rules('email', $this->lang->line('create_merchant_validation_email_label'), 'required|valid_email|is_unique[' . $tables['users'] . '.email]');
+        $this->form_validation->set_rules('password', $this->lang->line('create_merchant_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
+        $this->form_validation->set_rules('password_confirm', $this->lang->line('create_merchant_validation_password_confirm_label'), 'required');
+        //$this->form_validation->set_rules('first_name', $this->lang->line('create_merchant_fname_label'), 'required');
         //$this->form_validation->set_rules('website', $this->lang->line('create_user_validation_website_label'));
         //$this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'));
         
@@ -437,13 +437,14 @@ class Merchant extends CI_Controller {
 
             $additional_data = array(
                 'username' => $username,
-                'first_name' => $this->input->post('first_name'),
+                //'first_name' => $this->input->post('first_name'),
                 //'last_name' => $this->input->post('last_name'),
                 'company' => $company,
                 'address' => $this->input->post('address'),
                 'me_state_id' => $this->input->post('me_state_id'),
                 'phone' => $this->input->post('phone'),
                 'me_ssm' => $this->input->post('me_ssm'),
+                'profile_image' => 'demo-logo-company.png',
                 //'me_website_url' => $this->input->post('website'),
                 'main_group_id' => $main_group_id,
                 'password_visible' => $password
@@ -478,12 +479,12 @@ class Merchant extends CI_Controller {
                 'type' => 'text',
                 'value' => $this->form_validation->set_value('username'),
             );
-            $this->data['first_name'] = array(
-                'name' => 'first_name',
-                'id' => 'first_name',
-                'type' => 'text',
-                'value' => $this->form_validation->set_value('first_name'),
-            );
+//            $this->data['first_name'] = array(
+//                'name' => 'first_name',
+//                'id' => 'first_name',
+//                'type' => 'text',
+//                'value' => $this->form_validation->set_value('first_name'),
+//            );
 //            $this->data['last_name'] = array(
 //                'name' => 'last_name',
 //                'id' => 'last_name',
