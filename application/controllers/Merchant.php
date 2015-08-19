@@ -1,4 +1,6 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php
+
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Merchant extends CI_Controller {
 
@@ -68,7 +70,7 @@ class Merchant extends CI_Controller {
             $this->data['password'] = array('name' => 'password',
                 'id' => 'password',
                 'type' => 'password',
-            );  
+            );
 
             $this->load->view('template/header');
             $this->_render_page('Merchant/login', $this->data);
@@ -416,7 +418,7 @@ class Merchant extends CI_Controller {
         $main_group_id = $this->config->item('group_id_merchant');
 
         // validate form input
-        $this->form_validation->set_rules('company', $this->lang->line('create_merchant_validation_company_label'), 'required');       
+        $this->form_validation->set_rules('company', $this->lang->line('create_merchant_validation_company_label'), 'required');
         $this->form_validation->set_rules('me_ssm', $this->lang->line('create_merchant_validation_companyssm_label'), 'required');
         $this->form_validation->set_rules('address', $this->lang->line('create_merchant_validation_address_label'), 'required');
         $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required');
@@ -427,7 +429,7 @@ class Merchant extends CI_Controller {
         //$this->form_validation->set_rules('first_name', $this->lang->line('create_merchant_fname_label'), 'required');
         //$this->form_validation->set_rules('website', $this->lang->line('create_user_validation_website_label'));
         //$this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'));
-        
+
         if ($this->form_validation->run() == true) {
             //$username = strtolower($this->input->post('first_name')) . ' ' . strtolower($this->input->post('last_name'));
             $username = strtolower($this->input->post('username'));
@@ -454,20 +456,19 @@ class Merchant extends CI_Controller {
         $group_ids = array(
             $main_group_id
         );
-        
+
         if ($this->form_validation->run() == true && $this->ion_auth->register($username, $password, $email, $additional_data, $group_ids)) {
             // check to see if we are creating the user
             // redirect them back to the admin page
             $this->session->set_flashdata('message', $this->ion_auth->messages());
-             $get_status = $this->send_mail($email, 'Your Keppo Merchant Account Success Created', 'Company Name:' . $company . '<br/>Username:' . $username . '<br/>E-mail:' . $email . '<br/>Password:' . $password, 'create_user_send_email_success');
-             if ($get_status) {
-                    // if there were no errors
-                    redirect("Merchant/create_user", 'refresh');
-                } else {
-                    //$this->session->set_flashdata('message', $this->ion_auth->errors());
-                    redirect("Merchant/create_user", 'refresh');
-                }
-             
+            $get_status = $this->send_mail($email, 'Your Keppo Merchant Account Success Created', 'Company Name:' . $company . '<br/>Username:' . $username . '<br/>E-mail:' . $email . '<br/>Password:' . $password, 'create_user_send_email_success');
+            if ($get_status) {
+                // if there were no errors
+                redirect("Merchant/create_user", 'refresh');
+            } else {
+                //$this->session->set_flashdata('message', $this->ion_auth->errors());
+                redirect("Merchant/create_user", 'refresh');
+            }
         } else {
             // display the create user form
             // set the flash data error message if there is one
@@ -529,12 +530,6 @@ class Merchant extends CI_Controller {
                 'type' => 'text',
                 'value' => $this->form_validation->set_value('me_ssm'),
             );
-//            $this->data['website'] = array(
-//                'name' => 'website',
-//                'id' => 'website',
-//                'type' => 'text',
-//                'value' => $this->form_validation->set_value('website'),
-//            );
             $this->data['password'] = array(
                 'name' => 'password',
                 'id' => 'password',
@@ -552,6 +547,108 @@ class Merchant extends CI_Controller {
             $this->_render_page('Merchant/create_user', $this->data);
             $this->load->view('template/footer');
         }
+    }
+
+    function profile($id) {
+        //Check is it login and is the url id is same with login session id
+        if (!$this->ion_auth->logged_in() || !($this->ion_auth->user()->row()->id == $id)) {
+            redirect('merchant/login', 'refresh');
+        }
+
+        $user = $this->ion_auth->user($id)->row();
+        $main_group_id = $this->config->item('group_id_merchant');
+
+        //Check is this user type can go in this page or not
+        if ($user->main_group_id != $main_group_id) {
+            redirect('merchant/login', 'refresh');
+        }
+
+        $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required');
+        $this->form_validation->set_rules('website', $this->lang->line('create_merchant_validation_website_label'));
+        $this->form_validation->set_rules('facebook_url', $this->lang->line('create_merchant_validation_facebook_url_label'));       
+        
+        if (isset($_POST) && !empty($_POST)) {
+            if($this->input->post('button_action') == "confirm") { 
+            // do we have a valid request?
+            if ($this->_valid_csrf_nonce() === FALSE || $id != $this->input->post('id')) {
+                show_error($this->lang->line('error_csrf'));
+            }
+            if ($this->form_validation->run() === TRUE) {
+
+                $data = array(
+                    'phone' => $this->input->post('phone'),
+                    'me_website_url' => $this->input->post('website'),
+                    'me_facebook_url' => $this->input->post('facebook_url'),
+                );
+
+                // check to see if we are updating the user
+                if ($this->ion_auth->update($user->id, $data)) {
+                    // redirect them back to the admin page if admin, or to the base url if non admin
+                    $this->session->set_flashdata('message', $this->ion_auth->messages());
+                     $user = $this->ion_auth->user($id)->row();
+                } else {
+                    // redirect them back to the admin page if admin, or to the base url if non admin
+                    $this->session->set_flashdata('message', $this->ion_auth->errors());
+                }
+            }
+            }else{
+                
+            }
+        }
+        
+        $this->data['logo_url'] = $this->config->item('album_merchant').$user->profile_image;
+                
+        // display the edit user form
+        $this->data['csrf'] = $this->_get_csrf_nonce();
+
+        // set the flash data error message if there is one
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+
+        // pass the user to the view
+        $this->data['user'] = $user;
+
+        $this->data['company'] = array(
+            'name' => 'company',
+            'id' => 'company',
+            'type' => 'text',
+            'readonly '=> 'true',
+            'value' => $this->form_validation->set_value('company', $user->company),
+        );
+        $this->data['me_ssm'] = array(
+            'name' => 'me_ssm',
+            'id' => 'me_ssm',
+            'type' => 'text',
+            'readonly '=> 'true',
+            'value' => $this->form_validation->set_value('me_ssm', $user->me_ssm),
+        );
+        $this->data['address'] = array(
+            'name' => 'address',
+            'id' => 'address',
+            'readonly '=> 'true',
+            'value' => $this->form_validation->set_value('address', $user->address),
+        );
+
+        $this->data['phone'] = array(
+            'name' => 'phone',
+            'id' => 'phone',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('phone', $user->phone),
+        );
+        $this->data['website'] = array(
+            'name' => 'website',
+            'id' => 'website',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('website', $user->me_website_url),
+        );
+        $this->data['facebook_url'] = array(
+            'name' => 'facebook_url',
+            'id' => 'facebook_url',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('facebook_url', $user->me_facebook_url),
+        );
+        $this->load->view('template/header');
+        $this->_render_page('merchant/profile', $this->data);
+        $this->load->view('template/footer');
     }
 
     // edit a user

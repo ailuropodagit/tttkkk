@@ -128,7 +128,7 @@ $lang['create_user_email_label']           = 'E-mail address';
 // Create Merchant
 $lang['create_merchant_company_label']                     = 'Company Name:';
 $lang['create_merchant_fname_label']                       = 'Register Name:';
-$lang['create_merchant_companyssm_label']                  = 'Register Name(SSM):';
+$lang['create_merchant_companyssm_label']                  = 'Register No(SSM):';
 $lang['create_merchant_address_label']                     = 'Company Address:';
 $lang['create_merchant_state_label']                       = 'Location:';
 $lang['create_merchant_phone_label']                       = 'Contact Number:';
@@ -137,10 +137,11 @@ $lang['create_merchant_email_label']                       = 'E-mail address (pe
 $lang['create_merchant_password_label']                    = 'Password:';
 $lang['create_merchant_password_confirm_label']            = 'Re-Password:';
 $lang['create_merchant_website_label']                     = 'Website:';
+$lang['create_merchant_facebook_url_label']                = 'Facebook URL:';
 
 $lang['create_merchant_validation_company_label']                     = 'Company Name';
 $lang['create_merchant_validation_fname_label']                       = 'Register Name';
-$lang['create_merchant_validation_companyssm_label']                  = 'Register Name(SSM)';
+$lang['create_merchant_validation_companyssm_label']                  = 'Register No(SSM)';
 $lang['create_merchant_validation_address_label']                     = 'Company Address';
 $lang['create_merchant_validation_state_label']                       = 'Location';
 $lang['create_merchant_validation_phone_label']                       = 'Contact Number';
@@ -149,6 +150,7 @@ $lang['create_merchant_validation_email_label']                       = 'E-mail 
 $lang['create_merchant_validation_password_label']                    = 'Password';
 $lang['create_merchant_validation_password_confirm_label']            = 'Re-Password';
 $lang['create_merchant_validation_website_label']                     = 'Website';
+$lang['create_merchant_validation_facebook_url_label']                = 'Facebook URL';
 
 // Create Group
 $lang['create_group_title']                  = 'Create Group';
