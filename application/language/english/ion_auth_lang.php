@@ -76,3 +76,6 @@ $lang['email_forgot_password_link']          = 'Reset Your Password';
 $lang['email_new_password_subject']          = 'New Password';
 $lang['email_new_password_heading']          = 'New Password for %s';
 $lang['email_new_password_subheading']       = 'Your password has been reset to: %s';
+
+// Upload
+$lang['image_upload_successful']             = 'Image success upload.';

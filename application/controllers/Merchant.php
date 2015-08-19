@@ -549,7 +549,10 @@ class Merchant extends CI_Controller {
         }
     }
 
-    function profile($id) {
+    //merchant profile view and edit page
+    function profile() {
+
+        $id = $this->ion_auth->user()->row()->id;
         //Check is it login and is the url id is same with login session id
         if (!$this->ion_auth->logged_in() || !($this->ion_auth->user()->row()->id == $id)) {
             redirect('merchant/login', 'refresh');
@@ -565,39 +568,41 @@ class Merchant extends CI_Controller {
 
         $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required');
         $this->form_validation->set_rules('website', $this->lang->line('create_merchant_validation_website_label'));
-        $this->form_validation->set_rules('facebook_url', $this->lang->line('create_merchant_validation_facebook_url_label'));       
-        
+        $this->form_validation->set_rules('facebook_url', $this->lang->line('create_merchant_validation_facebook_url_label'));
+
         if (isset($_POST) && !empty($_POST)) {
-            if($this->input->post('button_action') == "confirm") { 
-            // do we have a valid request?
-            if ($this->_valid_csrf_nonce() === FALSE || $id != $this->input->post('id')) {
-                show_error($this->lang->line('error_csrf'));
-            }
-            if ($this->form_validation->run() === TRUE) {
-
-                $data = array(
-                    'phone' => $this->input->post('phone'),
-                    'me_website_url' => $this->input->post('website'),
-                    'me_facebook_url' => $this->input->post('facebook_url'),
-                );
-
-                // check to see if we are updating the user
-                if ($this->ion_auth->update($user->id, $data)) {
-                    // redirect them back to the admin page if admin, or to the base url if non admin
-                    $this->session->set_flashdata('message', $this->ion_auth->messages());
-                     $user = $this->ion_auth->user($id)->row();
-                } else {
-                    // redirect them back to the admin page if admin, or to the base url if non admin
-                    $this->session->set_flashdata('message', $this->ion_auth->errors());
+            if ($this->input->post('button_action') == "confirm") {
+                // do we have a valid request?
+                if ($this->_valid_csrf_nonce() === FALSE || $id != $this->input->post('id')) {
+                    show_error($this->lang->line('error_csrf'));
                 }
-            }
-            }else{
+                if ($this->form_validation->run() === TRUE) {
 
+                    $data = array(
+                        'phone' => $this->input->post('phone'),
+                        'me_website_url' => $this->input->post('website'),
+                        'me_facebook_url' => $this->input->post('facebook_url'),
+                    );
+
+                    // check to see if we are updating the user
+                    if ($this->ion_auth->update($user->id, $data)) {
+                        // redirect them back to the admin page if admin, or to the base url if non admin
+                        $this->session->set_flashdata('message', $this->ion_auth->messages());
+                        $user = $this->ion_auth->user($id)->row();
+                    } else {
+                        // redirect them back to the admin page if admin, or to the base url if non admin
+                        $this->session->set_flashdata('message', $this->ion_auth->errors());
+                    }
+                }
+            } else if ($this->input->post('button_action') == "change_image") {
+                redirect('merchant/upload_image', 'refresh');
+            } else {
+                
             }
         }
-        
-        $this->data['logo_url'] = $this->config->item('album_merchant').$user->profile_image;
-                
+
+        $this->data['logo_url'] = $this->config->item('album_merchant') . $user->profile_image;
+
         // display the edit user form
         $this->data['csrf'] = $this->_get_csrf_nonce();
 
@@ -611,20 +616,20 @@ class Merchant extends CI_Controller {
             'name' => 'company',
             'id' => 'company',
             'type' => 'text',
-            'readonly '=> 'true',
+            'readonly ' => 'true',
             'value' => $this->form_validation->set_value('company', $user->company),
         );
         $this->data['me_ssm'] = array(
             'name' => 'me_ssm',
             'id' => 'me_ssm',
             'type' => 'text',
-            'readonly '=> 'true',
+            'readonly ' => 'true',
             'value' => $this->form_validation->set_value('me_ssm', $user->me_ssm),
         );
         $this->data['address'] = array(
             'name' => 'address',
             'id' => 'address',
-            'readonly '=> 'true',
+            'readonly ' => 'true',
             'value' => $this->form_validation->set_value('address', $user->address),
         );
 
@@ -648,6 +653,55 @@ class Merchant extends CI_Controller {
         );
         $this->load->view('template/header');
         $this->_render_page('merchant/profile', $this->data);
+        $this->load->view('template/footer');
+    }
+
+    function upload_image() {
+
+        if (!$this->ion_auth->logged_in()) {
+            redirect('merchant/login', 'refresh');
+        }
+
+        $id = $this->ion_auth->user()->row()->id;
+
+        if (isset($_POST) && !empty($_POST)) {
+            $upload_rule = array(
+                'upload_path' => $this->config->item('album_merchant'),
+                'allowed_types' => $this->config->item('allowed_types'),
+                'max_size' => $this->config->item('max_size'),
+            );
+
+            $this->load->library('upload', $upload_rule);
+
+            if (!$this->upload->do_upload()) {
+                $error = array('error' => $this->upload->display_errors());
+                $this->session->set_flashdata('message', $this->upload->display_errors());
+            } else {
+                $image_data = array('upload_data' => $this->upload->data());
+                //$this->ion_auth->set_message('image_upload_successful');
+
+                $data = array(
+                    'profile_image' => $this->upload->data('file_name'),
+                );
+
+                if ($this->ion_auth->update($id, $data)) {
+                    $this->session->set_flashdata('message', 'Merchant logo success update.');
+                    redirect('merchant/profile', 'refresh');
+                } else {
+
+                    $this->session->set_flashdata('message', $this->ion_auth->errors());
+                }
+            }
+        }
+
+        $user = $this->ion_auth->user($id)->row();
+        $this->data['logo_url'] = $this->config->item('album_merchant') . $user->profile_image;
+
+        // set the flash data error message if there is one
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+
+        $this->load->view('template/header');
+        $this->_render_page('merchant/upload_image', $this->data);
         $this->load->view('template/footer');
     }
 

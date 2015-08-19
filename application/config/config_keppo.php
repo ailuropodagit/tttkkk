@@ -14,3 +14,8 @@ $config['album_user_merchant_phy'] = realpath(APPPATH . '..\image\album_user_mer
 $config['album_merchant'] =  'image/album_merchant/';
 $config['album_user'] = 'image/album_user/';
 $config['album_user_merchant'] = 'image/album_user_merchant/';
+
+$config['allowed_types']        = 'gif|jpg|png';
+$config['max_size']             = 10000;
+$config['max_width']            = 1000;
+$config['max_height']           = 1000;
