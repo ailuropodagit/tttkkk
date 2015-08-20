@@ -1,4 +1,6 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php
+
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 class User extends CI_Controller {
 
@@ -62,7 +64,7 @@ class User extends CI_Controller {
             // the user is not logging in so display the login page
             // set the flash data error message if there is one
             $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-                        
+
             $this->data['identity'] = array('name' => 'identity',
                 'id' => 'identity',
                 'type' => 'text',
@@ -71,7 +73,7 @@ class User extends CI_Controller {
             $this->data['password'] = array('name' => 'password',
                 'id' => 'password',
                 'type' => 'password',
-            );  
+            );
 
             $this->load->view('template/header');
             $this->_render_page('User/login', $this->data);
@@ -165,11 +167,7 @@ class User extends CI_Controller {
 
             // set any errors and display the form
             $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-            
-            $this->load->view('template/header.php');
-            $this->_render_page('User/retrieve_password', $this->data);
-            $this->load->view('template/footer.php');
-            
+            $this->_render_page('user/retrieve_password', $this->data);
         } else {
             $the_input = $this->input->post('username_email');
             $the_id = $this->ion_auth->get_id_by_email_or_username($the_input);
@@ -178,26 +176,38 @@ class User extends CI_Controller {
                 $this->ion_auth->set_error('forgot_password_username_email_not_found');
 
                 $this->session->set_flashdata('message', $this->ion_auth->errors());
-                redirect("User/retrieve_password", 'refresh');
+                redirect("user/retrieve_password", 'refresh');
             } else {
-                $get_status = $this->send_mail($identity->email, 'Your Keppo Account Login Info', 'First Name:' . $identity->first_name . '<br/>Last Name:' . $identity->last_name . '<br/>Username:' . $identity->username . '<br/>Email:' . $identity->email . '<br/>Password:' . $identity->password_visible, 'forgot_password_send_email_success');
-                if ($get_status) {
-                    // if there were no errors
-                    $this->session->set_flashdata('message', $this->ion_auth->messages());
-                    //redirect("User/login", 'refresh'); 
-                    $this->info['title'] = 'Thank you!';
-                    $this->info['sentence1'] = 'An email will be sent to your registered email address.<br/>';
-                    $this->info['sentence2'] = "If you don't receive in the next 10 minutes, please check your spam folder and if you still haven't received it please try again...</br>";
-                    $this->info['back_page'] = 'Go to Log In Page';
-                    $this->info['back_page_url'] = 'user/login';
-                    $this->info['back_page'] = 'Go to Log In Page';
-                    $this->_render_page('simple_message', $this->info);
-                } else {
-                    $this->session->set_flashdata('message', $this->ion_auth->errors());
-                    redirect("User/forgot_password", 'refresh');
-                }
+                $this->session->set_flashdata('mail_info', $identity);
+                redirect('user/send_mail_process','refresh');
             }
         }
+    }
+
+    function send_mail_process(){
+        $identity = $this->session->flashdata('mail_info'); 
+        $get_status = $this->send_mail($identity->email, 'Your Keppo Account Login Info', 'First Name:' . $identity->first_name . '<br/>Last Name:' . $identity->last_name . '<br/>Username:' . $identity->username . '<br/>Email:' . $identity->email . '<br/>Password:' . $identity->password_visible, 'forgot_password_send_email_success');
+                if ($get_status) {
+                    $simple_info = array(
+                        'title' => 'Thank you!',
+                        'sentence1' => 'An email will be sent to your registered email address.<br/>',
+                        'sentence2' => "If you don't receive in the next 10 minutes, please check your spam folder and if you still haven't received it please try again...</br>",
+                        'back_page_url' => 'user/login',
+                        'back_page' => 'Go to Log In Page',
+                    );
+
+                    $this->session->set_flashdata('simple_info', $simple_info);
+                    redirect("user/simple_message", 'refresh');
+                } else {
+                    $this->session->set_flashdata('message', $this->ion_auth->errors());
+                    redirect("user/forgot_password", 'refresh');
+                }
+     }
+     
+    function simple_message() {
+         $this->load->view('template/header');
+        $this->_render_page('simple_message', $this->session->flashdata('simple_info'));
+          $this->load->view('template/footer');
     }
 
     // forgot password
@@ -433,7 +443,7 @@ class User extends CI_Controller {
         $this->form_validation->set_rules('password_confirm', $this->lang->line('create_user_password_confirm_label'), 'required');
         //$this->form_validation->set_rules('website', $this->lang->line('create_user_validation_website_label'));
         //$this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'));
-        
+
         if ($this->form_validation->run() == true) {
             //$username = strtolower($this->input->post('first_name')) . ' ' . strtolower($this->input->post('last_name'));
             $username = strtolower($this->input->post('username'));
@@ -472,14 +482,13 @@ class User extends CI_Controller {
                 $this->session->set_flashdata('message', $this->ion_auth->errors());
                 redirect("User/create_user", 'refresh');
             }
-             
         } else {
             // display the create user form
             // set the flash data error message if there is one
             $this->data['message'] = (
-                validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message'))
-            );
-                        
+                    validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message'))
+                    );
+
             $this->data['username'] = array(
                 'name' => 'username',
                 'id' => 'username',
