@@ -9,7 +9,7 @@
                 
                 <div id='register-title'>Sign Up</div>
 
-                <div id='register-signup'>Already have register? <a href='<?php echo base_url(); ?>user/login'>Log In</a></div>
+                <div id='register-subtitle'>Already have register? <a href='<?php echo base_url(); ?>user/login'>Log In</a></div>
             
                 <div id="infoMessage"><?php echo $message; ?></div>
 

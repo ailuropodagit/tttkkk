@@ -205,9 +205,9 @@ class User extends CI_Controller {
      }
      
     function simple_message() {
-         $this->load->view('template/header');
+        $this->load->view('template/header');
         $this->_render_page('simple_message', $this->session->flashdata('simple_info'));
-          $this->load->view('template/footer');
+        $this->load->view('template/footer');
     }
 
     // forgot password

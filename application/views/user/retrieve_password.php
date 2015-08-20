@@ -1,7 +1,3 @@
-<?php
-$this->load->view('template/header');
-echo link_tag('css/main.css');
-?>
 <div id='wrapper'>
     <div id='body'>
         <div id='body-content'>
@@ -13,7 +9,7 @@ echo link_tag('css/main.css');
                 <div id="login-subtitle"><?php echo sprintf(lang('forgot_password_subheading'), $identity_label); ?></div>
 
                 <div id="infoMessage"><?php echo $message; ?></div>
-                
+
                 <?php echo form_open("user/retrieve_password"); ?>
 
                 <div id="login-form">
@@ -33,7 +29,7 @@ echo link_tag('css/main.css');
                 <?php echo form_close(); ?>
                 
             </div>
-
+            
         </div>
     </div>
 </div>
