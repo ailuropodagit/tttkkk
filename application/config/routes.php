@@ -54,6 +54,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 $route['(?i)merchant/register'] = 'merchant/create_user';
 $route['user/register'] = 'user/create_user';
+$route['user/retrieve-password'] = 'user/retrieve_password';
+$route['user/simple-message'] = 'user/simple_message';
 $route['default_controller'] = 'home';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

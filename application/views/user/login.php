@@ -37,7 +37,7 @@
                             <?php echo lang('login_remember_label', 'remember'); ?>
                         </div>
                         <div id='login-form-forgot-password'>
-                            <a href="retrieve_password"><?php echo lang('login_forgot_password'); ?></a>
+                            <a href="retrieve-password"><?php echo lang('login_forgot_password'); ?></a>
                         </div>
                         <div id='float-fix'></div>
                     </div>
