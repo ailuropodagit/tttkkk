@@ -1,5 +1,3 @@
-  <?php    $this->load->view('template/header');?>
-
 <div id='wrapper'>
     <div id='body'>
         <div id='body-content'>
@@ -14,6 +12,3 @@
    </div>
     </div>
 </div>
-
-
-       <?php      $this->load->view('template/footer');?>

@@ -164,7 +164,7 @@ class Merchant extends CI_Controller {
 
             // set any errors and display the form
             $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-            $this->_render_page('Merchant/retrieve_password', $this->data);
+            $this->_render_page('merchant/retrieve_password', $this->data);
         } else {
             $the_input = $this->input->post('username_email');
             $the_id = $this->ion_auth->get_id_by_email_or_username($the_input);
@@ -173,28 +173,40 @@ class Merchant extends CI_Controller {
                 $this->ion_auth->set_error('forgot_password_username_email_not_found');
 
                 $this->session->set_flashdata('message', $this->ion_auth->errors());
-                redirect("Merchant/retrieve_password", 'refresh');
+                redirect("merchant/retrieve_password", 'refresh');
             } else {
-                $get_status = $this->send_mail($identity->email, 'Your Keppo Account Login Info', 'Company Name:' . $identity->company . '<br/>Username:' . $identity->username . '<br/>Email:' . $identity->email . '<br/>Password:' . $identity->password_visible, 'forgot_password_send_email_success');
-                if ($get_status) {
-                    // if there were no errors
-                    $this->session->set_flashdata('message', $this->ion_auth->messages());
-                    //redirect("Merchant/login", 'refresh'); 
-                    $this->info['title'] = 'Thank you!';
-                    $this->info['sentence1'] = 'An email will be sent to your registered email address.<br/>';
-                    $this->info['sentence2'] = "If you don't receive in the next 10 minutes, please check your spam folder and if you still haven't received it please try again...</br>";
-                    $this->info['back_page'] = 'Go to Log In Page';
-                    $this->info['back_page_url'] = 'merchant/login';
-                    $this->info['back_page'] = 'Go to Log In Page';
-                    $this->_render_page('simple_message', $this->info);
-                } else {
-                    $this->session->set_flashdata('message', $this->ion_auth->errors());
-                    redirect("Merchant/forgot_password", 'refresh');
-                }
+                $this->session->set_flashdata('mail_info', $identity);
+                redirect('merchant/send_mail_process','refresh');
             }
         }
     }
+    
+    function send_mail_process(){
+        $identity = $this->session->flashdata('mail_info');
+        $get_status = $this->send_mail($identity->email, 'Your Keppo Account Login Info', 'Company Name:' . $identity->company . '<br/>Username:' . $identity->username . '<br/>Email:' . $identity->email . '<br/>Password:' . $identity->password_visible, 'forgot_password_send_email_success');
+                if ($get_status) {                  
+                    $simple_info = array(
+                        'title' => 'Thank you!',
+                        'sentence1' => 'An email will be sent to your registered email address.<br/>',
+                        'sentence2' => "If you don't receive in the next 10 minutes, please check your spam folder and if you still haven't received it please try again...</br>",
+                        'back_page_url' => 'merchant/login',
+                        'back_page' => 'Go to Log In Page',
+                    );
 
+                    $this->session->set_flashdata('simple_info', $simple_info);
+                    redirect("merchant/simple_message", 'refresh');
+                } else {
+                    $this->session->set_flashdata('message', $this->ion_auth->errors());
+                    redirect("merchant/forgot_password", 'refresh');
+                }
+    }
+    
+    function simple_message() {
+         $this->load->view('template/header');
+        $this->_render_page('simple_message', $this->session->flashdata('simple_info'));
+          $this->load->view('template/footer');
+    }
+    
     // forgot password
     function forgot_password() {
         // setting validation rules by checking wheather identity is username or email
