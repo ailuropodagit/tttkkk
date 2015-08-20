@@ -176,37 +176,37 @@ class Merchant extends CI_Controller {
                 redirect("merchant/retrieve_password", 'refresh');
             } else {
                 $this->session->set_flashdata('mail_info', $identity);
-                redirect('merchant/send_mail_process','refresh');
+                redirect('merchant/send_mail_process', 'refresh');
             }
         }
     }
-    
-    function send_mail_process(){
+
+    function send_mail_process() {
         $identity = $this->session->flashdata('mail_info');
         $get_status = $this->send_mail($identity->email, 'Your Keppo Account Login Info', 'Company Name:' . $identity->company . '<br/>Username:' . $identity->username . '<br/>Email:' . $identity->email . '<br/>Password:' . $identity->password_visible, 'forgot_password_send_email_success');
-                if ($get_status) {                  
-                    $simple_info = array(
-                        'title' => 'Thank you!',
-                        'sentence1' => 'An email will be sent to your registered email address.<br/>',
-                        'sentence2' => "If you don't receive in the next 10 minutes, please check your spam folder and if you still haven't received it please try again...</br>",
-                        'back_page_url' => 'merchant/login',
-                        'back_page' => 'Go to Log In Page',
-                    );
+        if ($get_status) {
+            $simple_info = array(
+                'title' => 'Thank you!',
+                'sentence1' => 'An email will be sent to your registered email address.<br/>',
+                'sentence2' => "If you don't receive in the next 10 minutes, please check your spam folder and if you still haven't received it please try again...</br>",
+                'back_page_url' => 'merchant/login',
+                'back_page' => 'Go to Log In Page',
+            );
 
-                    $this->session->set_flashdata('simple_info', $simple_info);
-                    redirect("merchant/simple_message", 'refresh');
-                } else {
-                    $this->session->set_flashdata('message', $this->ion_auth->errors());
-                    redirect("merchant/forgot_password", 'refresh');
-                }
+            $this->session->set_flashdata('simple_info', $simple_info);
+            redirect("merchant/simple_message", 'refresh');
+        } else {
+            $this->session->set_flashdata('message', $this->ion_auth->errors());
+            redirect("merchant/forgot_password", 'refresh');
+        }
     }
-    
+
     function simple_message() {
-         $this->load->view('template/header');
+        $this->load->view('template/header');
         $this->_render_page('simple_message', $this->session->flashdata('simple_info'));
-          $this->load->view('template/footer');
+        $this->load->view('template/footer');
     }
-    
+
     // forgot password
     function forgot_password() {
         // setting validation rules by checking wheather identity is username or email
@@ -663,9 +663,47 @@ class Merchant extends CI_Controller {
             'type' => 'text',
             'value' => $this->form_validation->set_value('facebook_url', $user->me_facebook_url),
         );
+
         $this->load->view('template/header');
         $this->_render_page('merchant/profile', $this->data);
+        $this->load->view('merchant/branch_management', $this->branch_management($id));
         $this->load->view('template/footer');
+    }
+
+    public function branch_management($id = NULL) {
+        $this->load->library('grocery_CRUD');
+        try {
+            $crud = new grocery_CRUD();
+
+            $crud->set_theme('datatables');
+            $crud->set_table('merchant_branch');
+            $crud->set_subject('Branch');
+            $crud->where('merchant_id', $id);
+            $crud->columns('name', 'address', 'state_id');
+            $crud->required_fields('name', 'address', 'state_id');
+            $crud->fields('name', 'address', 'state_id', 'google_map_url');
+            $crud->display_as('state_id', 'State');
+            $crud->unset_fields('merchant_id');
+            $crud->unset_texteditor('address', 'google_map_url');
+            $crud->field_type('state_id', 'dropdown', $this->ion_auth->get_static_option_list('state'));
+            $crud->callback_insert(array($this, 'branch_insert_callback'));
+
+            if ($crud->getState() == 'read') {
+                $crud->set_relation('state_id', 'static_option', '{option_text}');
+            }
+            $output = $crud->render();
+
+            return $output;
+        } catch (Exception $e) {
+            show_error($e->getMessage() . ' --- ' . $e->getTraceAsString());
+        }
+    }
+
+    function branch_insert_callback($post_array, $primary_key) {
+
+        $post_array['merchant_id'] = $this->ion_auth->user()->row()->id;
+
+        return $this->db->insert('merchant_branch', $post_array);
     }
 
     function upload_image() {
