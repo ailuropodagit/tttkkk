@@ -1,3 +1,8 @@
+<?php
+$this->load->view('template/header');
+echo link_tag('css/main.css');
+?>
+
 <div id='wrapper'>
     <div id='body'>
         <div id='body-content'>
@@ -33,3 +38,5 @@
         </div>
     </div>
 </div>
+
+<?php $this->load->view('template/footer'); ?>
