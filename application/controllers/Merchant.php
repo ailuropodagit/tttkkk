@@ -18,7 +18,8 @@ class Merchant extends CI_Controller {
         if (!$this->ion_auth->logged_in()) {
             // redirect them to the login page
             redirect('Merchant/login', 'refresh');
-        } elseif (!$this->ion_auth->is_admin()) { // remove this elseif if you want to enable this for non-admins
+        } elseif (!$this->ion_auth->is_admin()) { 
+            // remove this elseif if you want to enable this for non-admins
             // redirect them to the home page because they must be an administrator to view this
             return show_error('You must be an administrator to view this page.');
         } else {
@@ -151,17 +152,13 @@ class Merchant extends CI_Controller {
     }
 
     function retrieve_password() {
-
         $this->form_validation->set_rules('username_email', $this->lang->line('forgot_password_username_email_label'), 'required');
-
         if ($this->form_validation->run() == false) {
             // setup the input
             $this->data['username_email'] = array('name' => 'username_email',
                 'id' => 'username_email',
             );
-
             $this->data['identity_label'] = $this->lang->line('forgot_password_username_email_label');
-
             // set any errors and display the form
             $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
             $this->_render_page('Merchant/retrieve_password', $this->data);
@@ -171,7 +168,6 @@ class Merchant extends CI_Controller {
             $identity = $this->ion_auth->where('id', $the_id)->users()->row();
             if (empty($identity)) {
                 $this->ion_auth->set_error('forgot_password_username_email_not_found');
-
                 $this->session->set_flashdata('message', $this->ion_auth->errors());
                 redirect("Merchant/retrieve_password", 'refresh');
             } else {
@@ -466,7 +462,7 @@ class Merchant extends CI_Controller {
                 // if there were no errors
                 redirect("Merchant/create_user", 'refresh');
             } else {
-                //$this->session->set_flashdata('message', $this->ion_auth->errors());
+                $this->session->set_flashdata('message', $this->ion_auth->errors());
                 redirect("Merchant/create_user", 'refresh');
             }
         } else {

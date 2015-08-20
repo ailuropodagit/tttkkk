@@ -38,6 +38,12 @@ input[type='text'] {
     border: 1px solid #a9a9a9;
 }
 
+input[type='text']::-webkit-input-placeholder {
+    font-size: 14px;
+    letter-spacing: 1px;
+    font-style: italic;
+}
+
 input[type='password'] {
     margin: 0px;
     padding: 0px 7px 0px 7px;
@@ -71,17 +77,13 @@ input[type='submit']:active {
     background: linear-gradient(0deg, #d60c05, #e61100);
 }
 
-input[type='text']::-webkit-input-placeholder {
-    font-size: 14px;
-    letter-spacing: 1px;
-    font-style: italic;
-}
-
 textarea {
+    border: 1px solid #a9a9a9;
     border-radius: 3px;
-    padding: 8px 7px 8px 7px;
-    font-size: 13.5px;
+    padding: 5px 7px 5px 7px;
+    font-size: 13px;
     outline: none;
+    font-family: helvetica;
 }
 
 textarea::-webkit-input-placeholder {
@@ -277,7 +279,7 @@ p {
     margin: 0px 0px 15px 0px;
 }
 
-#login-signup, #register-signup {
+#login-subtitle, #register-subtitle {
     margin: 0px 0px 15px 0px;
     font-size: 18px;
 }
@@ -298,19 +300,26 @@ p {
     margin: 20px auto 0px auto;
 }
 
-#login-form-each-text input[type='text'], #register-form-each-text input[type='text'] {
+#login-form-each-input input[type='text'], #register-form-each-input input[type='text'] {
     height: 25px;
     width: 270px;
     margin: 10px 0px 0px 0px;
 }
 
-#login-form-each-password input[type='password'], #register-form-each-password input[type='password'] {
+#login-form-each-input input[type='password'], #register-form-each-input input[type='password'] {
     height: 25px;
     width: 270px;
     margin: 10px 0px 0px 0px;
 }
 
-#register-form-each-select-option select {
+#register-form-each-input textarea {
+    margin: 10px 0px 0px 0px;
+    width: 270px;
+    height: 45px;
+    resize: none;
+}
+
+#register-form-each-input select {
     width: 285px;
     height: 28px;
     margin: 10px 0px 0px 0px;

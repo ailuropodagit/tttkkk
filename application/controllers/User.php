@@ -165,7 +165,11 @@ class User extends CI_Controller {
 
             // set any errors and display the form
             $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+            
+            $this->load->view('template/header.php');
             $this->_render_page('User/retrieve_password', $this->data);
+            $this->load->view('template/footer.php');
+            
         } else {
             $the_input = $this->input->post('username_email');
             $the_id = $this->ion_auth->get_id_by_email_or_username($the_input);
@@ -204,7 +208,6 @@ class User extends CI_Controller {
         } else {
             $this->form_validation->set_rules('email', $this->lang->line('forgot_password_validation_email_label'), 'required|valid_email');
         }
-
 
         if ($this->form_validation->run() == false) {
             // setup the input

@@ -23,37 +23,37 @@
                     
                     <div id='register-form-each'>
                         <div id='register-form-each-label'><?php echo lang('create_user_first_name_label', 'first name'); ?></div>
-                        <div id='register-form-each-text'><?php echo form_input($first_name); ?></div>
+                        <div id='register-form-each-input'><?php echo form_input($first_name); ?></div>
                     </div>
                     
                     <div id='register-form-each'>
                         <div id='register-form-each-label'><?php echo lang('create_user_last_name_label', 'last name'); ?></div>
-                        <div id='register-form-each-text'><?php echo form_input($first_name); ?></div>
+                        <div id='register-form-each-input'><?php echo form_input($first_name); ?></div>
                     </div>
                     
                     <div id='register-form-each'>
                         <div id='register-form-each-label'><?php echo lang('create_user_contact_number_label', 'contact number'); ?></div>
-                        <div id='register-form-each-text'><?php echo form_input($first_name); ?></div>
+                        <div id='register-form-each-input'><?php echo form_input($first_name); ?></div>
                     </div>
                    
                     <div id='register-form-each'>
                         <div id='register-form-each-label'><?php echo lang('create_user_username_label', 'username'); ?></div>
-                        <div id='register-form-each-text'><?php echo form_input($first_name); ?></div>
+                        <div id='register-form-each-input'><?php echo form_input($first_name); ?></div>
                     </div>
                     
                     <div id='register-form-each'>
                         <div id='register-form-each-label'><?php echo lang('create_user_email_label', 'email address'); ?></div>
-                        <div id='register-form-each-text'><?php echo form_input($first_name); ?></div>
+                        <div id='register-form-each-input'><?php echo form_input($first_name); ?></div>
                     </div>
                     
                     <div id='register-form-each'>
                         <div id='register-form-each-label'><?php echo lang('create_merchant_password_label', 'password');?></div>
-                        <div id='register-form-each-password'><?php echo form_input($password);?></div>
+                        <div id='register-form-each-input'><?php echo form_input($password);?></div>
                     </div>
 
                     <div id='register-form-each'>
                         <div id='register-form-each-label'><?php echo lang('create_merchant_password_confirm_label', 'password_confirm');?></div>
-                        <div id='register-form-each-password'><?php echo form_input($password_confirm);?></div>
+                        <div id='register-form-each-input'><?php echo form_input($password_confirm);?></div>
                     </div>
                     
                     <div id='register-form-submit'>

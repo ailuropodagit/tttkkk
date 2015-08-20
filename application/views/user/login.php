@@ -9,7 +9,7 @@
 
                 <div id='login-title'>Log In</div>
                 
-                <div id='login-signup'>Don't have an account? <a href='<?php echo base_url(); ?>user/register'>Sign Up</a></div>
+                <div id='login-subtitle'>Don't have an account? <a href='<?php echo base_url(); ?>user/register'>Sign Up</a></div>
 
                 <div id="infoMessage"><?php echo $message; ?></div>
 
@@ -23,12 +23,12 @@
                     
                     <div id='login-form-each'>
                         <div id='login-form-each-label'><?php echo lang('login_identity_label', 'identity'); ?></div>
-                        <div id='login-form-each-text'><?php echo form_input($identity); ?></div>
+                        <div id='login-form-each-input'><?php echo form_input($identity); ?></div>
                     </div>
 
                     <div id='login-form-each'>
                         <div id='login-form-each-label'><?php echo lang('login_password_label', 'password'); ?></div>
-                        <div id='login-form-each-password'><?php echo form_input($password); ?></div>
+                        <div id='login-form-each-input'><?php echo form_input($password); ?></div>
                     </div>
 
                     <div id='login-form-remember-me-forgot-password'>
