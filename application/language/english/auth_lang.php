@@ -60,13 +60,20 @@ $lang['create_user_heading']                           = 'Create User';
 $lang['create_user_subheading']                        = 'Please enter the user\'s information below.';
 $lang['create_user_username_label']                    = 'Username:';
 $lang['create_user_fname_label']                       = 'First Name:';
+$lang['create_user_first_name_label']                  = 'First Name:';
 $lang['create_user_lname_label']                       = 'Last Name:';
+$lang['create_user_last_name_label']                   = 'Last Name:';
 $lang['create_user_company_label']                     = 'Company Name:';
 $lang['create_user_companyssm_label']                  = 'Company SSM:';
 $lang['create_user_address_label']                     = 'Address:';
+$lang['create_user_dob_label']                         = 'Date of Birth:';
 $lang['create_user_state_label']                       = 'State:';
-$lang['create_user_email_label']                       = 'Email:';
+$lang['create_user_age_label']                         = 'Age:';
+$lang['create_user_gender_label']                      = 'Gender:';
+$lang['create_user_race_label']                        = 'Race:';
+$lang['create_user_email_label']                       = 'Your E-mail address:';
 $lang['create_user_phone_label']                       = 'Phone:';
+$lang['create_user_contact_number_label']              = 'Contact Number:';
 $lang['create_user_website_label']                     = 'Website:';
 $lang['create_user_password_label']                    = 'Password:';
 $lang['create_user_password_confirm_label']            = 'Confirm Password:';
@@ -117,13 +124,6 @@ $lang['edit_user_validation_website_label']          = 'Website';
 $lang['edit_user_validation_groups_label']           = 'Groups';
 $lang['edit_user_validation_password_label']         = 'Password';
 $lang['edit_user_validation_password_confirm_label'] = 'Password Confirmation';
-
-// Create User
-$lang['create_user_first_name_label']      = 'First Name:';
-$lang['create_user_last_name_label']       = 'Last Name:';
-$lang['create_user_username_label']        = 'Username:';
-$lang['create_user_contact_number_label']  = 'Contact Number:';
-$lang['create_user_email_label']           = 'E-mail address';
 
 // Create Merchant
 $lang['create_merchant_company_label']                     = 'Company Name:';

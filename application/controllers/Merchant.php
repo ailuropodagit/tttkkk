@@ -418,7 +418,7 @@ class Merchant extends CI_Controller {
         if ($controller == 'create_user') {
             $this->data['title'] = "Create Merchant";
             if (!$this->ion_auth->logged_in() || !$this->ion_auth->is_admin()) {
-                redirect('Merchant', 'refresh');
+                redirect('merchant', 'refresh');
             }
         } else {
             $this->data['title'] = "Merchant Sign Up";
@@ -471,15 +471,14 @@ class Merchant extends CI_Controller {
 
         if ($this->form_validation->run() == true && $this->ion_auth->register($username, $password, $email, $additional_data, $group_ids)) {
             // check to see if we are creating the user
-            // redirect them back to the admin page
             $this->session->set_flashdata('message', $this->ion_auth->messages());
             $get_status = $this->send_mail($email, 'Your Keppo Merchant Account Success Created', 'Company Name:' . $company . '<br/>Username:' . $username . '<br/>E-mail:' . $email . '<br/>Password:' . $password, 'create_user_send_email_success');
             if ($get_status) {
                 // if there were no errors
-                redirect("Merchant/create_user", 'refresh');
+                redirect("merchant/create_user", 'refresh');
             } else {
                 $this->session->set_flashdata('message', $this->ion_auth->errors());
-                redirect("Merchant/create_user", 'refresh');
+                redirect("merchant/create_user", 'refresh');
             }
         } else {
             // display the create user form
@@ -556,7 +555,7 @@ class Merchant extends CI_Controller {
             );
 
             $this->load->view('template/header');
-            $this->_render_page('Merchant/create_user', $this->data);
+            $this->_render_page('merchant/create_user', $this->data);
             $this->load->view('template/footer');
         }
     }
