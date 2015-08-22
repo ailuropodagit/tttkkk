@@ -104,7 +104,8 @@ class user extends CI_Controller {
         }
 
         $user = $this->ion_auth->user()->row();
-
+        $function_use_for = 'user/change_password';
+        
         if ($this->form_validation->run() == false) {
             // display the form
             // set the flash data error message if there is one
@@ -134,9 +135,12 @@ class user extends CI_Controller {
                 'type' => 'hidden',
                 'value' => $user->id,
             );
-
+            $this->data['function_use_for'] = $function_use_for;
+            
             // render
-            $this->_render_page('user/change_password', $this->data);
+            $this->load->view('template/header');
+            $this->_render_page('auth/change_password', $this->data);
+            $this->load->view('template/footer');
         } else {
             $identity = $this->session->userdata('identity');
 
@@ -145,10 +149,11 @@ class user extends CI_Controller {
             if ($change) {
                 //if the password was successfully changed
                 $this->session->set_flashdata('message', $this->ion_auth->messages());
-                $this->logout();
+                //$this->logout();
+                display_simple_message('Thank you!','Your Password has been saved!','','user/change_password','Back');
             } else {
                 $this->session->set_flashdata('message', $this->ion_auth->errors());
-                redirect('user/change_password', 'refresh');
+                redirect($function_use_for, 'refresh');
             }
         }
     }
@@ -179,31 +184,13 @@ class user extends CI_Controller {
 
     function send_mail_process() {
         $identity = $this->session->flashdata('mail_info');
-        $get_status = $this->send_mail($identity->email, 'Your Keppo Account Login Info', 'First Name:' . $identity->first_name . '<br/>Last Name:' . $identity->last_name . '<br/>username:' . $identity->username . '<br/>Email:' . $identity->email . '<br/>Password:' . $identity->password_visible, 'forgot_password_send_email_success');
+        $get_status = send_mail_simple($identity->email, 'Your Keppo Account Login Info', 'First Name:' . $identity->first_name . '<br/>Last Name:' . $identity->last_name . '<br/>username:' . $identity->username . '<br/>Email:' . $identity->email . '<br/>Password:' . $identity->password_visible, 'forgot_password_send_email_success');
         if ($get_status) {
-            $simple_info = array(
-                'title' => 'Thank you!',
-                'sentence1' => 'An email will be sent to your registered email address.<br/>',
-                'sentence2' => "If you don't receive in the next 10 minutes, please check your spam folder and if you still haven't received it please try again...</br>",
-                'back_page_url' => 'user/login',
-                'back_page' => 'Go to Log In Page',
-            );
-            $this->session->set_flashdata('simple_info', $simple_info);
-            redirect("user/simple-message", 'refresh');
+            display_simple_message('Thank you!','An email will be sent to your registered email address.',
+                    "If you don't receive in the next 10 minutes, please check your spam folder and if you still haven't received it please try again...",'user/login','Go to Log In Page');
         } else {
             $this->session->set_flashdata('message', $this->ion_auth->errors());
             redirect("user/retrieve-password", 'refresh');
-        }
-    }
-
-    function simple_message() {
-        $simple_info = $this->session->flashdata('simple_info');
-        if(empty($simple_info)) {
-            redirect("home", 'refresh');
-        } else {
-            $this->load->view('template/header');
-            $this->_render_page('simple_message', $this->session->flashdata('simple_info'));
-            $this->load->view('template/footer');
         }
     }
 
@@ -384,22 +371,6 @@ class user extends CI_Controller {
         }
     }
 
-    function send_mail($to_email = '', $to_subject = '', $to_message = '', $success_message = '') {
-        $this->load->library('email'); // Note: no $config param needed
-        $this->email->from($this->config->item('smtp_user'), $this->config->item('from_name'));
-        $this->email->to($to_email);
-        $this->email->subject($to_subject);
-        $this->email->message($to_message);
-        if ($this->email->send()) {
-            $this->ion_auth->set_message($success_message);
-            return TRUE;
-        } else {
-            //show_error($this->email->print_debugger());
-            $this->ion_auth->set_error('fail_to_send_email');
-            return False;
-        }
-    }
-
     // create a new user
     function create_user() {
         $controller = $this->uri->segment(2);
@@ -407,51 +378,54 @@ class user extends CI_Controller {
 
         //To set this function is use by create user and register user
         if ($controller == 'create_user') {
-            $this->data['title'] = "Create user";
+            $this->data['title'] = "Create User";
             if (!$this->ion_auth->logged_in() || !$this->ion_auth->is_admin()) {
                 redirect('user', 'refresh');
             }
         } else {
-            $this->data['title'] = "user Sign Up";
+            $this->data['title'] = "User Sign Up";
             $function_use_for = 'user/register';
         }
         $this->data['function_use_for'] = $function_use_for;
 
         $tables = $this->config->item('tables', 'ion_auth');
         $main_group_id = $this->config->item('group_id_user');
+        
+        if (isset($_POST) && !empty($_POST)) {
+            $this->d_year = $_POST['year'];
+            $this->d_month = $_POST['month'];
+            $this->d_day = $_POST['day'];
+            $_POST['dob'] = $this->d_year . '-' . $this->d_month . '-' . $this->d_day;
+        }
 
         // validate form input
-        $this->form_validation->set_rules('company', $this->lang->line('create_user_company_label'), 'required');
         $this->form_validation->set_rules('first_name', $this->lang->line('create_user_fname_label'), 'required');
-        $this->form_validation->set_rules('me_ssm', $this->lang->line('create_user_companyssm_label'), 'required');
-        $this->form_validation->set_rules('address', $this->lang->line('create_user_address_label'), 'required');
+        $this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'));
         $this->form_validation->set_rules('phone', $this->lang->line('create_user_phone_label'), 'required');
+        $this->form_validation->set_rules('dob', $this->lang->line('create_user_dob_label'), 'callback_date_check');
         $this->form_validation->set_rules('username', $this->lang->line('create_user_username_label'), 'required|is_unique[' . $tables['users'] . '.username]');
         $this->form_validation->set_rules('email', $this->lang->line('create_user_email_label'), 'required|valid_email|is_unique[' . $tables['users'] . '.email]');
         $this->form_validation->set_rules('password', $this->lang->line('create_user_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
         $this->form_validation->set_rules('password_confirm', $this->lang->line('create_user_password_confirm_label'), 'required');
-        //$this->form_validation->set_rules('website', $this->lang->line('create_user_validation_website_label'));
-        //$this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'));
 
         if ($this->form_validation->run() == true) {
-            //$username = strtolower($this->input->post('first_name')) . ' ' . strtolower($this->input->post('last_name'));
+            $first_name = $this->input->post('first_name');
+            $last_name = $this->input->post('last_name');
             $username = strtolower($this->input->post('username'));
             $email = strtolower($this->input->post('email'));
-            $password = $this->input->post('password');
-            $company = $this->input->post('company');
-
+            $password = $this->input->post('password');         
+            
             $additional_data = array(
-                'username' => $username,
-                'first_name' => $this->input->post('first_name'),
-                //'last_name' => $this->input->post('last_name'),
-                'company' => $company,
-                'address' => $this->input->post('address'),
-                'me_state_id' => $this->input->post('me_state_id'),
+                'first_name' => $first_name,
+                'last_name' =>$last_name,
                 'phone' => $this->input->post('phone'),
-                'me_ssm' => $this->input->post('me_ssm'),
-                //'me_website_url' => $this->input->post('website'),
+                'us_birthday' => $this->input->post('dob'),
+                'us_age' => $this->input->post('age'),
+                'us_gender_id' => $this->input->post('gender_id'),
+                'us_race_id' => $this->input->post('race_id'),
+                'username' => $username,
+                'password_visible' => $password,
                 'main_group_id' => $main_group_id,
-                'password_visible' => $password
             );
         }
 
@@ -463,10 +437,10 @@ class user extends CI_Controller {
             // check to see if we are creating the user
             // redirect them back to the admin page
             $this->session->set_flashdata('message', $this->ion_auth->messages());
-            $get_status = $this->send_mail($email, 'Your Keppo user Account Success Created', 'Company Name:' . $company . '<br/>username:' . $username . '<br/>E-mail:' . $email . '<br/>Password:' . $password, 'create_user_send_email_success');
+            $get_status = send_mail_simple($email, 'Your Keppo User Account Success Created', 'Name:' . $first_name . ' ' . $last_name . '<br/>username:' . $username . '<br/>E-mail:' . $email . '<br/>Password:' . $password, 'create_user_send_email_success');
             if ($get_status) {
                 // if there were no errors
-                redirect("/", 'refresh');
+                redirect("user/login", 'refresh');
             } else {
                 $this->session->set_flashdata('message', $this->ion_auth->errors());
                 redirect("user/create_user", 'refresh');
@@ -490,56 +464,57 @@ class user extends CI_Controller {
                 'type' => 'text',
                 'value' => $this->form_validation->set_value('first_name'),
             );
-//            $this->data['last_name'] = array(
-//                'name' => 'last_name',
-//                'id' => 'last_name',
-//                'type' => 'text',
-//                'value' => $this->form_validation->set_value('last_name'),
-//            );
+            $this->data['last_name'] = array(
+                'name' => 'last_name',
+                'id' => 'last_name',
+                'type' => 'text',
+                'value' => $this->form_validation->set_value('last_name'),
+            );
             $this->data['email'] = array(
                 'name' => 'email',
                 'id' => 'email',
                 'type' => 'text',
                 'value' => $this->form_validation->set_value('email'),
             );
-            $this->data['company'] = array(
-                'name' => 'company',
-                'id' => 'company',
-                'type' => 'text',
-                'value' => $this->form_validation->set_value('company'),
+            $this->data['day_list'] = generate_number_option(1,31);
+            $this->data['day'] = array(
+                'name' => 'day',
+                'id' => 'day',
             );
-            $this->data['address'] = array(
-                'name' => 'address',
-                'id' => 'address',
-                'value' => $this->form_validation->set_value('address'),
+            $this->data['month_list'] = $this->ion_auth->get_static_option_list('month');
+            $this->data['month'] = array(
+                'name' => 'month',
+                'id' => 'month',
             );
-
-            $this->data['state_list'] = $this->ion_auth->get_static_option_list('state');
-
-            $this->data['me_state_id'] = array(
-                'name' => 'me_state_id',
-                'id' => 'me_state_id',
-                'value' => $this->form_validation->set_value('me_state_id'),
+            $this->data['year_list'] = generate_number_option(1930,2010);
+            $this->data['year'] = array(
+                'name' => 'year',
+                'id' => 'year',
             );
-
+            $this->data['age_list'] = generate_number_option(10,90);
+            $this->data['age'] = array(
+                'name' => 'age',
+                'id' => 'age',
+                'value' => $this->form_validation->set_value('age'),
+            );
+            $this->data['gender_list'] = $this->ion_auth->get_static_option_list('gender');
+            $this->data['gender_id'] = array(
+                'name' => 'gender_id',
+                'id' => 'gender_id',
+                'value' => $this->form_validation->set_value('gender_id'),
+            );
+            $this->data['race_list'] = $this->ion_auth->get_static_option_list('race');
+            $this->data['race_id'] = array(
+                'name' => 'race_id',
+                'id' => 'race_id',
+                'value' => $this->form_validation->set_value('race_id'),
+            );
             $this->data['phone'] = array(
                 'name' => 'phone',
                 'id' => 'phone',
                 'type' => 'text',
                 'value' => $this->form_validation->set_value('phone'),
             );
-            $this->data['me_ssm'] = array(
-                'name' => 'me_ssm',
-                'id' => 'me_ssm',
-                'type' => 'text',
-                'value' => $this->form_validation->set_value('me_ssm'),
-            );
-//            $this->data['website'] = array(
-//                'name' => 'website',
-//                'id' => 'website',
-//                'type' => 'text',
-//                'value' => $this->form_validation->set_value('website'),
-//            );
             $this->data['password'] = array(
                 'name' => 'password',
                 'id' => 'password',
@@ -556,6 +531,16 @@ class user extends CI_Controller {
             $this->load->view('template/header.php');
             $this->_render_page('user/create_user', $this->data);
             $this->load->view('template/footer.php');
+        }
+    }
+
+    //validate is the date is correct
+    public function date_check() {
+        if (checkdate($this->d_month, $this->d_day, $this->d_year)) {
+            return TRUE;
+        } else {
+            $this->form_validation->set_message('date_check', 'Date of Birth: Incorrect date, please set a real date.');
+            return FALSE;
         }
     }
 
