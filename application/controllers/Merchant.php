@@ -235,7 +235,7 @@ class Merchant extends CI_Controller {
                 }
 
                 $this->session->set_flashdata('message', $this->ion_auth->errors());
-                redirect("Merchant/forgot_password", 'refresh');
+                redirect("merchant/forgot_password", 'refresh');
             }
 
             // run the forgotten password method to email an activation code to the user
@@ -244,10 +244,10 @@ class Merchant extends CI_Controller {
             if ($forgotten) {
                 // if there were no errors
                 $this->session->set_flashdata('message', $this->ion_auth->messages());
-                redirect("Merchant/login", 'refresh'); //we should display a confirmation page here instead of the login page
+                redirect("merchant/login", 'refresh'); //we should display a confirmation page here instead of the login page
             } else {
                 $this->session->set_flashdata('message', $this->ion_auth->errors());
-                redirect("Merchant/forgot_password", 'refresh');
+                redirect("merchant/forgot_password", 'refresh');
             }
         }
     }
@@ -312,7 +312,7 @@ class Merchant extends CI_Controller {
                     if ($change) {
                         // if the password was successfully changed
                         $this->session->set_flashdata('message', $this->ion_auth->messages());
-                        redirect("Merchant/login", 'refresh');
+                        redirect("merchant/login", 'refresh');
                     } else {
                         $this->session->set_flashdata('message', $this->ion_auth->errors());
                         redirect('Merchant/reset_password/' . $code, 'refresh');
@@ -322,7 +322,7 @@ class Merchant extends CI_Controller {
         } else {
             // if the code is invalid then send them back to the forgot password page
             $this->session->set_flashdata('message', $this->ion_auth->errors());
-            redirect("Merchant/forgot_password", 'refresh');
+            redirect("merchant/forgot_password", 'refresh');
         }
     }
 
@@ -337,11 +337,11 @@ class Merchant extends CI_Controller {
         if ($activation) {
             // redirect them to the auth page
             $this->session->set_flashdata('message', $this->ion_auth->messages());
-            redirect("Merchant", 'refresh');
+            redirect("merchant", 'refresh');
         } else {
             // redirect them to the forgot password page
             $this->session->set_flashdata('message', $this->ion_auth->errors());
-            redirect("Merchant/forgot_password", 'refresh');
+            redirect("merchant/forgot_password", 'refresh');
         }
     }
 

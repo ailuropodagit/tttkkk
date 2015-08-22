@@ -52,13 +52,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 // DEFAULT
 
-$route['(?i)merchant/register'] = 'merchant/create_user';
-$route['(?i)user/register'] = 'user/create_user';
-$route['user/retrieve-password'] = 'user/retrieve_password';
-$route['user/simple-message'] = 'user/simple_message';
+$route['merchant/register'] = 'merchant/create_user';
+$route['user/register'] = 'user/create_user';
 $route['default_controller'] = 'home';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
-$route['about-us'] = 'about_us';
-$route['contact-us'] = 'contact_us';
-$route['terms-and-conditions'] = 'terms_and_conditions';
+$route['(:any)-(:any)-(:any)'] = '$1_$2_$3';
+$route['(:any)-(:any)'] = '$1_$2';
+$route['(:any)/(:any)-(:any)'] = '$1/$2_$3';
