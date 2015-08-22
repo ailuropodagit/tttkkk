@@ -73,12 +73,8 @@ class Merchant extends CI_Controller {
                 'type' => 'password',
             );
             
-            $this->data['page_path_name'] = 'Merchant/login';
-            $this->load->view('template/template', $this->data);
-
-//            $this->load->view('template/header');
-//            $this->_render_page('Merchant/login', $this->data);
-//            $this->load->view('template/footer');
+            $this->data['page_path_name'] = 'merchant/login';
+            $this->load->view('template/layout', $this->data);
         }
     }
 
@@ -527,9 +523,12 @@ class Merchant extends CI_Controller {
                 'value' => $this->form_validation->set_value('password_confirm'),
             );
 
-            $this->load->view('template/header');
-            $this->_render_page('merchant/create_user', $this->data);
-            $this->load->view('template/footer');
+//            $this->load->view('template/header');
+//            $this->_render_page('merchant/create_user', $this->data);
+//            $this->load->view('template/footer');
+            
+            $this->data['page_path_name'] = 'merchant/create_user';
+            $this->load->view('template/layout', $this->data);
         }
     }
 
@@ -727,9 +726,8 @@ class Merchant extends CI_Controller {
         // set the flash data error message if there is one
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 
-        $this->load->view('template/header');
-        $this->_render_page('merchant/upload_image', $this->data);
-        $this->load->view('template/footer');
+            $this->data['page_path_name'] = 'merchant/upload_image';
+            $this->load->view('template/layout', $this->data);
     }
 
     // edit a user

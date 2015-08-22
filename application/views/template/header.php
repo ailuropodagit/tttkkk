@@ -47,7 +47,15 @@
                                 <i id="filtersubmit" class="fa fa-search"></i>
                             </div>
                             <div id="search-box-block2">
-                                    <?php echo form_dropdown($me_state_id, $state_list); ?>
+                                    <?php
+                                $state_list = $this->m_custom->get_static_option_array('state', '0', 'All');
+
+                                $me_state_id = array(
+                                    'name' => 'me_state_id',
+                                    'id' => 'me_state_id',
+                                );
+                                echo form_dropdown($me_state_id, $state_list);
+                                ?>
                             </div>
                             <div id="search-box-block3">
                                 <input type='submit' value='Search'>
