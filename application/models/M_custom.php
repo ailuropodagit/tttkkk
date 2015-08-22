@@ -3,21 +3,24 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class M_custom extends Ion_auth_model {
+class M_custom extends CI_Model {
     
-public function get_static_option_list($option_type = NULL) {
-    $this->trigger_events('get_static_option_list');
-    $this->db->from('static_option')
-            ->where('option_type', $option_type)
-            ->order_by('option_id');
-    $result = $this->db->get();
-    $return = array();
-    if ($result->num_rows() > 0) {
-        foreach ($result->result_array() as $row) {
-            $return[$row['option_id']] = $row['option_text'];
+    public function get_static_option_array($option_type = NULL,$default_value = NULL, $default_text = NULL) {
+
+        $query = $this->db->get_where('static_option', array('option_type' => $option_type));
+        $return = array();
+        if($default_value != NULL){
+            
+            $return[$default_value] = $default_text;
         }
+            if($query->num_rows() > 0) {
+                foreach($query->result_array() as $row) {
+                    $return[$row['option_id']] = $row['option_text'];
+                }
+            }
+            return $return;
+            
+        
     }
-    return $return;
-}
 
 }

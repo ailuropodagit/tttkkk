@@ -1,6 +1,6 @@
 <?php
 $this->load->view('template/header');
-$this->load->view('template/search');
+
 ?>
 
 <div id='wrapper'>

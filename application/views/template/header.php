@@ -47,12 +47,7 @@
                                 <i id="filtersubmit" class="fa fa-search"></i>
                             </div>
                             <div id="search-box-block2">
-                                <select>
-                                    <option>All</option>
-                                    <?php foreach ($state as $state_item): ?>
-                                        <option><?php echo $state_item['option_text'] ?></option>
-                                    <?php endforeach ?>
-                                </select>
+                                    <?php echo form_dropdown($me_state_id, $state_list); ?>
                             </div>
                             <div id="search-box-block3">
                                 <input type='submit' value='Search'>
