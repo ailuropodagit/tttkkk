@@ -149,7 +149,8 @@ class user extends CI_Controller {
             if ($change) {
                 //if the password was successfully changed
                 $this->session->set_flashdata('message', $this->ion_auth->messages());
-                $this->logout();
+                //$this->logout();
+                display_simple_message('Thank you!','Your Password has been saved!','','user/change_password','Back');
             } else {
                 $this->session->set_flashdata('message', $this->ion_auth->errors());
                 redirect($function_use_for, 'refresh');
@@ -183,31 +184,13 @@ class user extends CI_Controller {
 
     function send_mail_process() {
         $identity = $this->session->flashdata('mail_info');
-        $get_status = $this->send_mail($identity->email, 'Your Keppo Account Login Info', 'First Name:' . $identity->first_name . '<br/>Last Name:' . $identity->last_name . '<br/>username:' . $identity->username . '<br/>Email:' . $identity->email . '<br/>Password:' . $identity->password_visible, 'forgot_password_send_email_success');
+        $get_status = send_mail_simple($identity->email, 'Your Keppo Account Login Info', 'First Name:' . $identity->first_name . '<br/>Last Name:' . $identity->last_name . '<br/>username:' . $identity->username . '<br/>Email:' . $identity->email . '<br/>Password:' . $identity->password_visible, 'forgot_password_send_email_success');
         if ($get_status) {
-            $simple_info = array(
-                'title' => 'Thank you!',
-                'sentence1' => 'An email will be sent to your registered email address.<br/>',
-                'sentence2' => "If you don't receive in the next 10 minutes, please check your spam folder and if you still haven't received it please try again...</br>",
-                'back_page_url' => 'user/login',
-                'back_page' => 'Go to Log In Page',
-            );
-            $this->session->set_flashdata('simple_info', $simple_info);
-            redirect("user/simple-message", 'refresh');
+            display_simple_message('Thank you!','An email will be sent to your registered email address.',
+                    "If you don't receive in the next 10 minutes, please check your spam folder and if you still haven't received it please try again...",'user/login','Go to Log In Page');
         } else {
             $this->session->set_flashdata('message', $this->ion_auth->errors());
             redirect("user/retrieve-password", 'refresh');
-        }
-    }
-
-    function simple_message() {
-        $simple_info = $this->session->flashdata('simple_info');
-        if(empty($simple_info)) {
-            redirect("home", 'refresh');
-        } else {
-            $this->load->view('template/header');
-            $this->_render_page('simple_message', $this->session->flashdata('simple_info'));
-            $this->load->view('template/footer');
         }
     }
 
@@ -388,22 +371,6 @@ class user extends CI_Controller {
         }
     }
 
-    function send_mail($to_email = '', $to_subject = '', $to_message = '', $success_message = '') {
-        $this->load->library('email'); // Note: no $config param needed
-        $this->email->from($this->config->item('smtp_user'), $this->config->item('from_name'));
-        $this->email->to($to_email);
-        $this->email->subject($to_subject);
-        $this->email->message($to_message);
-        if ($this->email->send()) {
-            $this->ion_auth->set_message($success_message);
-            return TRUE;
-        } else {
-            //show_error($this->email->print_debugger());
-            $this->ion_auth->set_error('fail_to_send_email');
-            return False;
-        }
-    }
-
     // create a new user
     function create_user() {
         $controller = $this->uri->segment(2);
@@ -424,7 +391,6 @@ class user extends CI_Controller {
         $tables = $this->config->item('tables', 'ion_auth');
         $main_group_id = $this->config->item('group_id_user');
         
-        $this->load->helper('dob');
         if (isset($_POST) && !empty($_POST)) {
             $this->d_year = $_POST['year'];
             $this->d_month = $_POST['month'];
@@ -471,7 +437,7 @@ class user extends CI_Controller {
             // check to see if we are creating the user
             // redirect them back to the admin page
             $this->session->set_flashdata('message', $this->ion_auth->messages());
-            $get_status = $this->send_mail($email, 'Your Keppo User Account Success Created', 'Name:' . $first_name . ' ' . $last_name . '<br/>username:' . $username . '<br/>E-mail:' . $email . '<br/>Password:' . $password, 'create_user_send_email_success');
+            $get_status = send_mail_simple($email, 'Your Keppo User Account Success Created', 'Name:' . $first_name . ' ' . $last_name . '<br/>username:' . $username . '<br/>E-mail:' . $email . '<br/>Password:' . $password, 'create_user_send_email_success');
             if ($get_status) {
                 // if there were no errors
                 redirect("user/login", 'refresh');

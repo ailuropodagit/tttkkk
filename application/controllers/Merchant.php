@@ -147,7 +147,8 @@ class Merchant extends CI_Controller {
             if ($change) {
                 //if the password was successfully changed
                 $this->session->set_flashdata('message', $this->ion_auth->messages());
-                $this->logout();
+                //$this->logout();
+                display_simple_message('Thank you!','Your Password has been saved!','','merchant/change_password','Back');
             } else {
                 $this->session->set_flashdata('message', $this->ion_auth->errors());
                 redirect($function_use_for, 'refresh');
@@ -183,28 +184,14 @@ class Merchant extends CI_Controller {
 
     function send_mail_process() {
         $identity = $this->session->flashdata('mail_info');
-        $get_status = $this->send_mail($identity->email, 'Your Keppo Account Login Info', 'Company Name:' . $identity->company . '<br/>Username:' . $identity->username . '<br/>Email:' . $identity->email . '<br/>Password:' . $identity->password_visible, 'forgot_password_send_email_success');
+        $get_status = send_mail_simple($identity->email, 'Your Keppo Account Login Info', 'Company Name:' . $identity->company . '<br/>Username:' . $identity->username . '<br/>Email:' . $identity->email . '<br/>Password:' . $identity->password_visible, 'forgot_password_send_email_success');
         if ($get_status) {
-            $simple_info = array(
-                'title' => 'Thank you!',
-                'sentence1' => 'An email will be sent to your registered email address.<br/>',
-                'sentence2' => "If you don't receive in the next 10 minutes, please check your spam folder and if you still haven't received it please try again...</br>",
-                'back_page_url' => 'merchant/login',
-                'back_page' => 'Go to Log In Page',
-            );
-
-            $this->session->set_flashdata('simple_info', $simple_info);
-            redirect("merchant/simple_message", 'refresh');
+            display_simple_message('Thank you!','An email will be sent to your registered email address.',
+                    "If you don't receive in the next 10 minutes, please check your spam folder and if you still haven't received it please try again...",'merchant/login','Go to Log In Page');
         } else {
             $this->session->set_flashdata('message', $this->ion_auth->errors());
-            redirect("merchant/forgot_password", 'refresh');
+            redirect("merchant/retrieve_password", 'refresh');
         }
-    }
-
-    function simple_message() {
-        $this->load->view('template/header');
-        $this->_render_page('simple_message', $this->session->flashdata('simple_info'));
-        $this->load->view('template/footer');
     }
 
     // forgot password
@@ -392,23 +379,7 @@ class Merchant extends CI_Controller {
             redirect('Merchant', 'refresh');
         }
     }
-
-    function send_mail($to_email = '', $to_subject = '', $to_message = '', $success_message = '') {
-        $this->load->library('email'); // Note: no $config param needed
-        $this->email->from($this->config->item('smtp_user'), $this->config->item('from_name'));
-        $this->email->to($to_email);
-        $this->email->subject($to_subject);
-        $this->email->message($to_message);
-        if ($this->email->send()) {
-            $this->ion_auth->set_message($success_message);
-            return TRUE;
-        } else {
-            //show_error($this->email->print_debugger());
-            $this->ion_auth->set_error('fail_to_send_email');
-            return False;
-        }
-    }
-
+    
     // create a new user
     function create_user() {
         $controller = $this->uri->segment(2);
@@ -472,7 +443,7 @@ class Merchant extends CI_Controller {
         if ($this->form_validation->run() == true && $this->ion_auth->register($username, $password, $email, $additional_data, $group_ids)) {
             // check to see if we are creating the user
             $this->session->set_flashdata('message', $this->ion_auth->messages());
-            $get_status = $this->send_mail($email, 'Your Keppo Merchant Account Success Created', 'Company Name:' . $company . '<br/>Username:' . $username . '<br/>E-mail:' . $email . '<br/>Password:' . $password, 'create_user_send_email_success');
+            $get_status = send_mail_simple($email, 'Your Keppo Merchant Account Success Created', 'Company Name:' . $company . '<br/>Username:' . $username . '<br/>E-mail:' . $email . '<br/>Password:' . $password, 'create_user_send_email_success');
             if ($get_status) {
                 // if there were no errors
                 redirect("merchant/create_user", 'refresh');
