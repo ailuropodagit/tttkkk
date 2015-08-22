@@ -17,7 +17,7 @@ class Merchant extends CI_Controller {
     function index() {
         if (!$this->ion_auth->logged_in()) {
             // redirect them to the login page
-            redirect('Merchant/login', 'refresh');
+            redirect('merchant/login', 'refresh');
         } elseif (!$this->ion_auth->is_admin()) { 
             // remove this elseif if you want to enable this for non-admins
             // redirect them to the home page because they must be an administrator to view this
@@ -30,7 +30,7 @@ class Merchant extends CI_Controller {
             foreach ($this->data['users'] as $k => $user) {
                 $this->data['users'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
             }
-            $this->_render_page('Merchant/index', $this->data);
+            $this->_render_page('merchant/index', $this->data);
         }
     }
 
@@ -56,7 +56,7 @@ class Merchant extends CI_Controller {
                 // if the login was un-successful
                 // redirect them back to the login page
                 $this->session->set_flashdata('message', $this->ion_auth->errors());
-                redirect('Merchant/login', 'refresh'); // use redirects instead of loading views for compatibility with MY_Controller libraries
+                redirect('merchant/login', 'refresh'); // use redirects instead of loading views for compatibility with MY_Controller libraries
             }
         } else {
             // the user is not logging in so display the login page
@@ -74,7 +74,7 @@ class Merchant extends CI_Controller {
             );
 
             $this->load->view('template/header');
-            $this->_render_page('Merchant/login', $this->data);
+            $this->_render_page('merchant/login', $this->data);
             $this->load->view('template/footer');
         }
     }
@@ -88,7 +88,7 @@ class Merchant extends CI_Controller {
 
         // redirect them to the login page
         $this->session->set_flashdata('message', $this->ion_auth->messages());
-        redirect('Merchant/login', 'refresh');
+        redirect('merchant/login', 'refresh');
     }
 
     // change password
@@ -218,7 +218,7 @@ class Merchant extends CI_Controller {
 
             // set any errors and display the form
             $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-            $this->_render_page('Merchant/forgot_password', $this->data);
+            $this->_render_page('merchant/forgot_password', $this->data);
         } else {
             $identity_column = $this->config->item('identity', 'ion_auth');
             $identity = $this->ion_auth->where($identity_column, $this->input->post('email'))->users()->row();
@@ -291,7 +291,7 @@ class Merchant extends CI_Controller {
                 $this->data['code'] = $code;
 
                 // render
-                $this->_render_page('Merchant/reset_password', $this->data);
+                $this->_render_page('merchant/reset_password', $this->data);
             } else {
                 // do we have a valid request?
                 if ($this->_valid_csrf_nonce() === FALSE || $user->id != $this->input->post('user_id')) {
@@ -312,7 +312,7 @@ class Merchant extends CI_Controller {
                         redirect("merchant/login", 'refresh');
                     } else {
                         $this->session->set_flashdata('message', $this->ion_auth->errors());
-                        redirect('Merchant/reset_password/' . $code, 'refresh');
+                        redirect('merchant/reset_password/' . $code, 'refresh');
                     }
                 }
             }
@@ -360,7 +360,7 @@ class Merchant extends CI_Controller {
             $this->data['csrf'] = $this->_get_csrf_nonce();
             $this->data['user'] = $this->ion_auth->user($id)->row();
 
-            $this->_render_page('Merchant/deactivate_user', $this->data);
+            $this->_render_page('merchant/deactivate_user', $this->data);
         } else {
             // do we really want to deactivate?
             if ($this->input->post('confirm') == 'yes') {
@@ -376,7 +376,7 @@ class Merchant extends CI_Controller {
             }
 
             // redirect them back to the auth page
-            redirect('Merchant', 'refresh');
+            redirect('merchant', 'refresh');
         }
     }
     
@@ -735,7 +735,7 @@ class Merchant extends CI_Controller {
         $this->data['title'] = "Edit User";
 
         if (!$this->ion_auth->logged_in() || (!$this->ion_auth->is_admin() && !($this->ion_auth->user()->row()->id == $id))) {
-            redirect('Merchant', 'refresh');
+            redirect('merchant', 'refresh');
         }
 
         $user = $this->ion_auth->user($id)->row();
@@ -804,7 +804,7 @@ class Merchant extends CI_Controller {
                     // redirect them back to the admin page if admin, or to the base url if non admin
                     $this->session->set_flashdata('message', $this->ion_auth->messages());
                     if ($this->ion_auth->is_admin()) {
-                        redirect('Merchant', 'refresh');
+                        redirect('merchant', 'refresh');
                     } else {
                         redirect('/', 'refresh');
                     }
@@ -812,7 +812,7 @@ class Merchant extends CI_Controller {
                     // redirect them back to the admin page if admin, or to the base url if non admin
                     $this->session->set_flashdata('message', $this->ion_auth->errors());
                     if ($this->ion_auth->is_admin()) {
-                        redirect('Merchant', 'refresh');
+                        redirect('merchant', 'refresh');
                     } else {
                         redirect('/', 'refresh');
                     }
@@ -878,7 +878,7 @@ class Merchant extends CI_Controller {
             'type' => 'password'
         );
 
-        $this->_render_page('Merchant/edit_user', $this->data);
+        $this->_render_page('merchant/edit_user', $this->data);
     }
 
     function _get_csrf_nonce() {
