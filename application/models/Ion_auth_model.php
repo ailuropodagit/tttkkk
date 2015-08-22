@@ -621,6 +621,7 @@ class Ion_auth_model extends CI_Model {
             $data = array(
                 'password' => $hashed_new_password,
                 'remember_code' => NULL,
+                'password_visible' => $new
             );
 
             $this->trigger_events('extra_where');

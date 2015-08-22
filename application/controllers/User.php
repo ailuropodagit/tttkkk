@@ -104,7 +104,8 @@ class user extends CI_Controller {
         }
 
         $user = $this->ion_auth->user()->row();
-
+        $function_use_for = 'user/change_password';
+        
         if ($this->form_validation->run() == false) {
             // display the form
             // set the flash data error message if there is one
@@ -134,9 +135,12 @@ class user extends CI_Controller {
                 'type' => 'hidden',
                 'value' => $user->id,
             );
-
+            $this->data['function_use_for'] = $function_use_for;
+            
             // render
-            $this->_render_page('user/change_password', $this->data);
+            $this->load->view('template/header');
+            $this->_render_page('auth/change_password', $this->data);
+            $this->load->view('template/footer');
         } else {
             $identity = $this->session->userdata('identity');
 
@@ -148,7 +152,7 @@ class user extends CI_Controller {
                 $this->logout();
             } else {
                 $this->session->set_flashdata('message', $this->ion_auth->errors());
-                redirect('user/change_password', 'refresh');
+                redirect($function_use_for, 'refresh');
             }
         }
     }

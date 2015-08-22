@@ -134,7 +134,8 @@ class Auth extends CI_Controller {
                 'type' => 'hidden',
                 'value' => $user->id,
             );
-
+            $this->data['function_use_for'] = 'auth/change_password';
+            
             // render
             $this->_render_page('auth/change_password', $this->data);
         } else {

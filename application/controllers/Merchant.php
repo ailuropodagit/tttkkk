@@ -98,11 +98,12 @@ class Merchant extends CI_Controller {
         $this->form_validation->set_rules('new_confirm', $this->lang->line('change_password_validation_new_password_confirm_label'), 'required');
 
         if (!$this->ion_auth->logged_in()) {
-            redirect('Merchant/login', 'refresh');
+            redirect('merchant/login', 'refresh');
         }
 
         $user = $this->ion_auth->user()->row();
-
+        $function_use_for = 'merchant/change_password';
+        
         if ($this->form_validation->run() == false) {
             // display the form
             // set the flash data error message if there is one
@@ -132,9 +133,12 @@ class Merchant extends CI_Controller {
                 'type' => 'hidden',
                 'value' => $user->id,
             );
-
+            $this->data['function_use_for'] = $function_use_for;
+            
             // render
-            $this->_render_page('Merchant/change_password', $this->data);
+            $this->load->view('template/header');
+            $this->_render_page('auth/change_password', $this->data);
+            $this->load->view('template/footer');
         } else {
             $identity = $this->session->userdata('identity');
 
@@ -146,7 +150,7 @@ class Merchant extends CI_Controller {
                 $this->logout();
             } else {
                 $this->session->set_flashdata('message', $this->ion_auth->errors());
-                redirect('Merchant/change_password', 'refresh');
+                redirect($function_use_for, 'refresh');
             }
         }
     }
