@@ -8,13 +8,11 @@ class Home extends CI_Controller {
     }
 
     public function index() {
-        
+        //
+        $data['page_path_name'] = 'home';
         $data['state'] = $this->m_state->get_state();
-        
-        $this->load->view('template/header');
-        $this->load->view('template/search', $data);
-        $this->load->view('home');
-        $this->load->view('template/footer');
+        //load template
+        $this->load->view('template/template', $data);
     }
 
 }
