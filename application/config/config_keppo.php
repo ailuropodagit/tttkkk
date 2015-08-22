@@ -16,6 +16,6 @@ $config['album_user'] = 'image/album_user/';
 $config['album_user_merchant'] = 'image/album_user_merchant/';
 
 $config['allowed_types']        = 'gif|jpg|png';
-$config['max_size']             = 10000;
+$config['max_size']             = 10000; // 10000 = 10MB
 $config['max_width']            = 1000;
 $config['max_height']           = 1000;
