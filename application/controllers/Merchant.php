@@ -72,10 +72,13 @@ class Merchant extends CI_Controller {
                 'id' => 'password',
                 'type' => 'password',
             );
+            
+            $this->data['page_path_name'] = 'Merchant/login';
+            $this->load->view('template/template', $this->data);
 
-            $this->load->view('template/header');
-            $this->_render_page('Merchant/login', $this->data);
-            $this->load->view('template/footer');
+//            $this->load->view('template/header');
+//            $this->_render_page('Merchant/login', $this->data);
+//            $this->load->view('template/footer');
         }
     }
 
@@ -359,8 +362,7 @@ class Merchant extends CI_Controller {
             // insert csrf check
             $this->data['csrf'] = $this->_get_csrf_nonce();
             $this->data['user'] = $this->ion_auth->user($id)->row();
-
-            $this->_render_page('Merchant/deactivate_user', $this->data);
+            $this->_render_page('merchant/deactivate_user', $this->data);
         } else {
             // do we really want to deactivate?
             if ($this->input->post('confirm') == 'yes') {
