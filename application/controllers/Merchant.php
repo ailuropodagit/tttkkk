@@ -647,7 +647,7 @@ class Merchant extends CI_Controller {
         try {
             $crud = new grocery_CRUD();
 
-            $crud->set_theme('datatables');
+            $crud->set_theme('bootstrap');
             $crud->set_table('merchant_branch');
             $crud->set_subject('Branch');
             $crud->where('merchant_id', $id);
