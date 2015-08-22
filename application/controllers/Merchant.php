@@ -645,7 +645,7 @@ class Merchant extends CI_Controller {
         try {
             $crud = new grocery_CRUD();
 
-            $crud->set_theme('datatables');
+            //$crud->set_theme('datatables');
             $crud->set_table('merchant_branch');
             $crud->set_subject('Branch');
             $crud->where('merchant_id', $id);
@@ -657,7 +657,8 @@ class Merchant extends CI_Controller {
             $crud->unset_texteditor('address', 'google_map_url');
             $crud->field_type('state_id', 'dropdown', $this->ion_auth->get_static_option_list('state'));
             $crud->callback_insert(array($this, 'branch_insert_callback'));
-
+            $crud->callback_column('address', array($this, '_full_text'));
+                
             if ($crud->getState() == 'read') {
                 $crud->set_relation('state_id', 'static_option', '{option_text}');
             }
@@ -667,6 +668,10 @@ class Merchant extends CI_Controller {
         } catch (Exception $e) {
             show_error($e->getMessage() . ' --- ' . $e->getTraceAsString());
         }
+    }
+
+    function _full_text($value, $row) {
+        return $value = wordwrap($row->address);
     }
 
     function branch_insert_callback($post_array, $primary_key) {
