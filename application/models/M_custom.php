@@ -33,7 +33,7 @@ class M_custom extends CI_Model {
         }
         
         $num_row = $this->db->where($the_column, $the_value)->get($the_table)->num_rows();
-        if ($num_rows > 0) {
+        if ($num_row > 0) {
             return FALSE;
         }
         return TRUE;

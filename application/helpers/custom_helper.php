@@ -85,6 +85,12 @@ if (!function_exists('send_mail_simple')) {
 
 if (!function_exists('generate_options')) {
 
+    function generate_slug($value='') {
+        return url_title($value, 'dash', TRUE);
+    }
+}
+if (!function_exists('generate_options')) {
+
     function generate_options($from, $to, $callback = false) {
         $reverse = false;
         if ($from > $to) {

@@ -408,8 +408,14 @@ class Merchant extends CI_Controller {
 
         $tables = $this->config->item('tables', 'ion_auth');
 
+        if (isset($_POST) && !empty($_POST)) {
+            $_POST['slug'] = generate_slug($_POST['company']);
+            $slug = $_POST['slug'];
+        }
+        
         // validate form input
         $this->form_validation->set_rules('company', $this->lang->line('create_merchant_validation_company_label'), 'required');
+        $this->form_validation->set_rules('slug', $this->lang->line('create_merchant_validation_company_label'), 'is_unique[' . $tables['users'] . '.slug]');
         $this->form_validation->set_rules('me_ssm', $this->lang->line('create_merchant_validation_companyssm_label'), 'required');
         $this->form_validation->set_rules('address', $this->lang->line('create_merchant_validation_address_label'), 'required');
         $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required');
@@ -427,12 +433,18 @@ class Merchant extends CI_Controller {
             $email = strtolower($this->input->post('email'));
             $password = $this->input->post('password');
             $company = $this->input->post('company');
-
+            
+//            if(!$this->m_custom->check_is_value_unique('users','slug',$slug)){               
+//                $this->ion_auth->set_error('account_creation_duplicate_company_name');
+//                redirect("merchant/register", 'refresh');
+//            }
+            
             $additional_data = array(
                 'username' => $username,
                 //'first_name' => $this->input->post('first_name'),
                 //'last_name' => $this->input->post('last_name'),
                 'company' => $company,
+                'slug' => $slug,
                 'address' => $this->input->post('address'),
                 'me_state_id' => $this->input->post('me_state_id'),
                 'phone' => $this->input->post('phone'),
@@ -454,10 +466,10 @@ class Merchant extends CI_Controller {
             $get_status = send_mail_simple($email, 'Your Keppo Merchant Account Success Created', 'Company Name:' . $company . '<br/>Username:' . $username . '<br/>E-mail:' . $email . '<br/>Password:' . $password, 'create_user_send_email_success');
             if ($get_status) {
                 // if there were no errors
-                redirect("merchant/create_user", 'refresh');
+                redirect("merchant/login", 'refresh');
             } else {
                 $this->session->set_flashdata('message', $this->ion_auth->errors());
-                redirect("merchant/create_user", 'refresh');
+                redirect("merchant/register", 'refresh');
             }
         } else {
             // display the create user form
@@ -538,6 +550,10 @@ class Merchant extends CI_Controller {
         }
     }
 
+    function dashboard($slug){
+        
+    }
+    
     //merchant profile view and edit page
     function profile() {;
         
@@ -568,6 +584,7 @@ class Merchant extends CI_Controller {
 
                     $data = array(
                         'phone' => $this->input->post('phone'),
+                        //'slug' => generate_slug($this->input->post('company')),
                         'me_website_url' => $this->input->post('website'),
                         'me_facebook_url' => $this->input->post('facebook_url'),
                     );

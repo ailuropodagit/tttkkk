@@ -1,14 +1,13 @@
-
 <div id="infoMessage"><?php echo $message; ?></div>
 
 <img src="<?php echo base_url($logo_url); ?>" id='header-logo-img'><br/>
 <?php echo form_open_multipart(uri_string()); ?>
-<?php if(check_correct_login_type($this->main_group_id)) { ?>
-<input type="file" name="userfile" size="20" />
+<?php if (check_correct_login_type($this->main_group_id)) { ?>
+    <input type="file" name="userfile" size="20" />
 
-<br /><br />
+    <br /><br />
 
-<button name="button_action" type="submit" value="change_image" >Change Logo</button>
+    <button name="button_action" type="submit" value="change_image" >Change Logo</button>
 <?php } ?>
 </form>
 <?php echo form_open(uri_string()); ?>
@@ -53,10 +52,10 @@
         <div id='register-form-submit'>
             <button name="button_action" type="submit" value="add_branch" >Add Branch</button>
             <button name="button_action" type="submit" value="view_branch" >View Branch</button>           
-            <?php if(check_correct_login_type($this->main_group_id)) { ?>
-            <button name="button_action" type="submit" value="add_supervisor" >Add Supervisor</button>
-            <button name="button_action" type="submit" value="view_supervisor" >View Supervisor</button>          
-            <button name="button_action" type="submit" value="confirm">Confirm</button>
+            <?php if (check_correct_login_type($this->main_group_id)) { ?>
+                <button name="button_action" type="submit" value="add_supervisor" >Add Supervisor</button>
+                <button name="button_action" type="submit" value="view_supervisor" >View Supervisor</button>          
+                <button name="button_action" type="submit" value="confirm">Confirm</button>
             <?php } ?>
         </div>
 
@@ -64,6 +63,6 @@
 
     <?php echo form_close(); ?>
 </div>
-<?php if(check_correct_login_type($this->main_group_id)) { ?>
-<div id='login-tnc'><a href='<?php echo base_url(); ?>' target='_blank'>Submit SSM forms</a></div>
+<?php if (check_correct_login_type($this->main_group_id)) { ?>
+    <div id='login-tnc'><a href='<?php echo base_url(); ?>' target='_blank'>Submit SSM forms</a></div>
 <?php } ?>

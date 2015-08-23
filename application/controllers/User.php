@@ -446,7 +446,7 @@ class user extends CI_Controller {
                 redirect("user/login", 'refresh');
             } else {
                 $this->session->set_flashdata('message', $this->ion_auth->errors());
-                redirect("user/create_user", 'refresh');
+                redirect("user/register", 'refresh');
             }
         } else {
             // display the create user form
