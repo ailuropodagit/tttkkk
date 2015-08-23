@@ -54,7 +54,11 @@ class Merchant extends CI_Controller {
                 //redirect them back to the home page
                 $this->session->set_flashdata('message', $this->ion_auth->messages());
                 redirect('/', 'refresh');
-            } else {
+            } else if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember, $this->supervisor_group_id)) {
+                $this->session->set_flashdata('message', $this->ion_auth->messages());
+                redirect('/', 'refresh');
+            }
+            else {
                 // if the login was un-successful
                 // redirect them back to the login page
                 $this->session->set_flashdata('message', $this->ion_auth->errors());
@@ -98,7 +102,9 @@ class Merchant extends CI_Controller {
         $this->form_validation->set_rules('new', $this->lang->line('change_password_validation_new_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[new_confirm]');
         $this->form_validation->set_rules('new_confirm', $this->lang->line('change_password_validation_new_password_confirm_label'), 'required');
 
-        check_is_correct_login_user_type();
+        if(!check_correct_login_type($this->main_group_id)){
+            redirect('/', 'refresh');
+        }
         
         $user = $this->ion_auth->user()->row();
         $function_use_for = 'merchant/change_password';
@@ -534,9 +540,19 @@ class Merchant extends CI_Controller {
 
     //merchant profile view and edit page
     function profile() {;
-        check_is_correct_login_user_type();
-        $id = $this->ion_auth->user()->row()->id;            
-        $user = $this->ion_auth->user($id)->row();
+        
+    if(!check_correct_login_type($this->main_group_id)&&!check_correct_login_type($this->supervisor_group_id)){
+            redirect('/', 'refresh');
+        }
+               
+        $merchant_id = $this->ion_auth->user()->row()->id;        
+        
+        //for supervisor view merchant profile because supervisor don't have own profile
+        if(check_correct_login_type($this->supervisor_group_id)){
+            $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;        
+        }
+        
+        $user = $this->ion_auth->user($merchant_id)->row();
 
         $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required');
         $this->form_validation->set_rules('website', $this->lang->line('create_merchant_validation_website_label'));
@@ -545,7 +561,7 @@ class Merchant extends CI_Controller {
         if (isset($_POST) && !empty($_POST)) {
             if ($this->input->post('button_action') == "confirm") {
                 // do we have a valid request?
-                if ($this->_valid_csrf_nonce() === FALSE || $id != $this->input->post('id')) {
+                if ($this->_valid_csrf_nonce() === FALSE || $merchant_id != $this->input->post('id')) {
                     show_error($this->lang->line('error_csrf'));
                 }
                 if ($this->form_validation->run() === TRUE) {
@@ -560,7 +576,7 @@ class Merchant extends CI_Controller {
                     if ($this->ion_auth->update($user->id, $data)) {
                         // redirect them back to the admin page if admin, or to the base url if non admin
                         $this->session->set_flashdata('message', $this->ion_auth->messages());
-                        $user = $this->ion_auth->user($id)->row();
+                        $user = $this->ion_auth->user($merchant_id)->row();
                     } else {
                         // redirect them back to the admin page if admin, or to the base url if non admin
                         $this->session->set_flashdata('message', $this->ion_auth->errors());
@@ -586,7 +602,7 @@ class Merchant extends CI_Controller {
                         'profile_image' => $this->upload->data('file_name'),
                     );
 
-                    if ($this->ion_auth->update($id, $data)) {
+                    if ($this->ion_auth->update($merchant_id, $data)) {
                         $this->session->set_flashdata('message', 'Merchant logo success update.');
                         redirect('merchant/profile', 'refresh');
                     } else {
@@ -669,12 +685,20 @@ class Merchant extends CI_Controller {
     }
 
     function branch() {
-        check_is_correct_login_user_type();
+       if(!check_correct_login_type($this->main_group_id)&&!check_correct_login_type($this->supervisor_group_id)){
+            redirect('/', 'refresh');
+        }
         $this->load->view('template/layout_management', $this->branch_management());
     }
     
     function branch_management() {
-        $id = $this->ion_auth->user()->row()->id;
+        $merchant_id = $this->ion_auth->user()->row()->id;
+        
+        //for supervisor view the branch of merchant
+        if(check_correct_login_type($this->supervisor_group_id)){
+            $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;        
+        }
+        
         $this->load->library('grocery_CRUD');
         try {
             $crud = new grocery_CRUD();
@@ -708,7 +732,7 @@ class Merchant extends CI_Controller {
 //                    }
 //                }
 //            } else {
-                $crud->where('merchant_id', $id);
+                $crud->where('merchant_id', $merchant_id);
 //            }
 
             if ($state == 'read') {
@@ -727,11 +751,16 @@ class Merchant extends CI_Controller {
 
     function branch_insert_callback($post_array, $primary_key) {
         $post_array['merchant_id'] = $this->ion_auth->user()->row()->id;
+        if(check_correct_login_type($this->supervisor_group_id)){
+            $post_array['merchant_id'] = $this->ion_auth->user()->row()->su_merchant_id;        
+        }
         return $this->db->insert('merchant_branch', $post_array);
     }
     
     function supervisor() {
-        check_is_correct_login_user_type();
+        if(!check_correct_login_type($this->main_group_id)){
+            redirect('/', 'refresh');
+        }
         $this->load->view('template/layout_management', $this->supervisor_management());
     }
     
