@@ -97,10 +97,8 @@ class Merchant extends CI_Controller {
         $this->form_validation->set_rules('new', $this->lang->line('change_password_validation_new_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[new_confirm]');
         $this->form_validation->set_rules('new_confirm', $this->lang->line('change_password_validation_new_password_confirm_label'), 'required');
 
-        if (!$this->ion_auth->logged_in()) {
-            redirect('merchant/login', 'refresh');
-        }
-
+        check_is_correct_login_user_type();
+        
         $user = $this->ion_auth->user()->row();
         $function_use_for = 'merchant/change_password';
 
@@ -534,20 +532,10 @@ class Merchant extends CI_Controller {
     }
 
     //merchant profile view and edit page
-    function profile() {
-
-        $id = $this->ion_auth->user()->row()->id;
-        //Check is it login and is the url id is same with login session id
-        if (!$this->ion_auth->logged_in() || !($this->ion_auth->user()->row()->id == $id)) {
-            redirect('merchant/login', 'refresh');
-        }
-
+    function profile() {;
+        check_is_correct_login_user_type();
+        $id = $this->ion_auth->user()->row()->id;            
         $user = $this->ion_auth->user($id)->row();
-
-        //Check is this user type can go in this page or not
-        if ($user->main_group_id != $this->main_group_id) {
-            redirect('merchant/login', 'refresh');
-        }
 
         $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required');
         $this->form_validation->set_rules('website', $this->lang->line('create_merchant_validation_website_label'));
@@ -672,9 +660,10 @@ class Merchant extends CI_Controller {
     }
 
     function branch() {
+        check_is_correct_login_user_type();
         $this->load->view('template/layout_management', $this->branch_management());
     }
-
+    
     function branch_management() {
         $id = $this->ion_auth->user()->row()->id;
         $this->load->library('grocery_CRUD');

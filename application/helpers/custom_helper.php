@@ -13,6 +13,7 @@ if (!function_exists('set_simple_message')) {
             'sentence2' => $sentence2 . "</br>",
             'back_page_url' => $back_page_url,
             'back_page' => $back_page,
+            'maintain_page' => $maintain_page,
         );
 
         $ci->session->set_flashdata('simple_info', $simple_info);
@@ -27,14 +28,37 @@ if (!function_exists('display_simple_message')) {
         $ci = & get_instance();
         $simple_info = $ci->session->flashdata('simple_info');
         if (!empty($simple_info)) {
-            $ci->load->view('template/header');
-            $ci->_render_page('simple_message', $simple_info);
-            $ci->load->view('template/footer');
+            $ci->data['simple_info'] = $simple_info;
+            $ci->data['page_path_name'] = 'simple_message';          
+            $ci->load->view('template/layout', $ci->data);
         } else {
             redirect('/', 'refresh');
         }
     }
 
+}
+
+if (!function_exists('check_is_correct_login_user_type')) {
+function check_is_correct_login_user_type(){
+        $ci = & get_instance();
+        
+        //Check is it login
+        if (!$ci->ion_auth->logged_in()) {
+            redirect('/', 'refresh');
+        }
+        
+        $id = $ci->ion_auth->user()->row()->id;
+        //Check is the url id is same with login session id
+        if (!($ci->ion_auth->user()->row()->id == $id)) {
+            redirect('/', 'refresh');
+        }
+        
+        $user = $ci->ion_auth->user($id)->row();
+        //Check is this user type can go in this page or not
+        if ($user->main_group_id != $ci->main_group_id) {
+            redirect('/', 'refresh');
+        }
+    }
 }
 
 if (!function_exists('send_mail_simple')) {

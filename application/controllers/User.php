@@ -99,9 +99,7 @@ class user extends CI_Controller {
         $this->form_validation->set_rules('new', $this->lang->line('change_password_validation_new_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[new_confirm]');
         $this->form_validation->set_rules('new_confirm', $this->lang->line('change_password_validation_new_password_confirm_label'), 'required');
 
-        if (!$this->ion_auth->logged_in()) {
-            redirect('user/login', 'refresh');
-        }
+        check_is_correct_login_user_type();
 
         $user = $this->ion_auth->user()->row();
         $function_use_for = 'user/change_password';
