@@ -25,6 +25,9 @@
                         <li><a href='<?php echo base_url(); ?>user/register'><i class="fa fa-user-plus header-menu-icon"></i>Register</a></li>
                     </ul>
                 </div>
+                
+                <i class="fa fa-bars"></i>
+                
                 <div id="float-fix"></div>
             </div>
         </div>
