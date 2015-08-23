@@ -23,7 +23,7 @@ if (!function_exists('set_simple_message')) {
 
 if (!function_exists('display_simple_message')) {
 
-    function display_simple_message($title = '', $sentence1 = '', $sentence2 = '', $back_page_url = '', $back_page = '') {
+    function display_simple_message() {
         $ci = & get_instance();
         $simple_info = $ci->session->flashdata('simple_info');
         if (!empty($simple_info)) {
