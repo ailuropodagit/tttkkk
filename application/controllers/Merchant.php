@@ -550,10 +550,26 @@ class Merchant extends CI_Controller {
         }
     }
 
-    function dashboard($slug){
-        
+    //View the merchant dashboard upper part
+    function dashboard($slug) {
+
+        $the_row = $this->m_custom->get_one_table_record('users', 'slug', $slug);
+        if ($the_row) {
+            $this->data['logo_url'] = $this->config->item('album_merchant') . $the_row->profile_image;
+            $this->data['company_name'] = $the_row->company;
+            $this->data['address'] = $the_row->address;
+            $this->data['phone'] = $the_row->phone;
+            $this->data['show_outlet'] = '';
+            $this->data['website_url'] = $the_row->me_website_url;
+            $this->data['facebook_url'] = $the_row->me_facebook_url;
+            $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+            $this->data['page_path_name'] = 'merchant/dashboard';
+            $this->load->view('template/layout', $this->data);
+        } else {
+            redirect('/', 'refresh');
+        }
     }
-    
+
     //merchant profile view and edit page
     function profile() {;
         

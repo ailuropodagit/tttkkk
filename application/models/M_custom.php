@@ -21,7 +21,7 @@ class M_custom extends CI_Model {
         return $return;
     }
 
-    //To check is this 
+    //To check is this value is unique in DB
     public function check_is_value_unique($the_table, $the_column, $the_value, $the_id_column = NULL, $the_id = NULL ) {
         if (empty($the_value)) {
             return FALSE;
@@ -39,4 +39,16 @@ class M_custom extends CI_Model {
         return TRUE;
     }
 
+    //To find a record in DB with one keyword
+    public function get_one_table_record($the_table, $the_column, $the_value){
+       if (empty($the_value)) {
+            return FALSE;
+        }
+        $query = $this->db->get_where($the_table, array($the_column => $the_value), 1);
+        if ($query->num_rows() !== 1) {
+            return FALSE;
+        }
+        return $query->row();
+    }
+    
 }
