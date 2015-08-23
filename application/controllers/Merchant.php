@@ -640,7 +640,7 @@ class Merchant extends CI_Controller {
     }
 
     function branch() {
-         $this->load->view('template/layout_management', $this->branch_management());
+        $this->load->view('template/layout_management', $this->branch_management());
     }
     function branch_management() {
         $id = $this->ion_auth->user()->row()->id;
