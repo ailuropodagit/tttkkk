@@ -3,9 +3,9 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-if (!function_exists('display_simple_message')) {
+if (!function_exists('set_simple_message')) {
 
-    function display_simple_message($title = '', $sentence1 = '', $sentence2 = '', $back_page_url = '', $back_page = '') {
+    function set_simple_message($title = '', $sentence1 = '', $sentence2 = '', $back_page_url = '', $back_page = '', $maintain_page = '') {
         $ci = & get_instance();
         $simple_info = array(
             'title' => $title,
@@ -14,9 +14,25 @@ if (!function_exists('display_simple_message')) {
             'back_page_url' => $back_page_url,
             'back_page' => $back_page,
         );
-        $ci->load->view('template/header');
-        $ci->_render_page('simple_message', $simple_info);
-        $ci->load->view('template/footer');
+
+        $ci->session->set_flashdata('simple_info', $simple_info);
+        redirect($maintain_page, 'refresh');
+    }
+
+}
+
+if (!function_exists('display_simple_message')) {
+
+    function display_simple_message($title = '', $sentence1 = '', $sentence2 = '', $back_page_url = '', $back_page = '') {
+        $ci = & get_instance();
+        $simple_info = $ci->session->flashdata('simple_info');
+        if (!empty($simple_info)) {
+            $ci->load->view('template/header');
+            $ci->_render_page('simple_message', $simple_info);
+            $ci->load->view('template/footer');
+        } else {
+            redirect('/', 'refresh');
+        }
     }
 
 }
@@ -54,9 +70,7 @@ if (!function_exists('generate_options')) {
         }
         $return_string = array();
         for ($i = $from; $i <= $to; $i++) {
-            $return_string[] = '
-  <option value="' . $i . '">' . ($callback ? $callback($i) : $i) . '</option>
-   ';
+            $return_string[] = '<option value="' . $i . '">' . ($callback ? $callback($i) : $i) . '</option>';
         }
 
         if ($reverse) {
@@ -69,7 +83,7 @@ if (!function_exists('generate_options')) {
 if (!function_exists('generate_number_option')) {
 
     function generate_number_option($from, $to) {
-        return array_combine(range($from,$to), range($from,$to));
+        return array_combine(range($from, $to), range($from, $to));
     }
 
 }

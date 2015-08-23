@@ -146,7 +146,7 @@ class Merchant extends CI_Controller {
                 //if the password was successfully changed
                 $this->session->set_flashdata('message', $this->ion_auth->messages());
                 //$this->logout();
-                display_simple_message('Thank you!', 'Your Password has been saved!', '', 'merchant/change_password', 'Back');
+                set_simple_message('Thank you!', 'Your Password has been saved!', '', 'merchant/change_password', 'Back', 'merchant/simple_message');
             } else {
                 $this->session->set_flashdata('message', $this->ion_auth->errors());
                 redirect($function_use_for, 'refresh');
@@ -154,6 +154,10 @@ class Merchant extends CI_Controller {
         }
     }
 
+    function simple_message(){
+        display_simple_message();
+    }
+    
     function retrieve_password() {
         $this->form_validation->set_rules('username_email', $this->lang->line('forgot_password_username_email_label'), 'required');
         if ($this->form_validation->run() == false) {
@@ -187,7 +191,8 @@ class Merchant extends CI_Controller {
         $identity = $this->session->flashdata('mail_info');
         $get_status = send_mail_simple($identity->email, 'Your Keppo Account Login Info', 'Company Name:' . $identity->company . '<br/>Username:' . $identity->username . '<br/>Email:' . $identity->email . '<br/>Password:' . $identity->password_visible, 'forgot_password_send_email_success');
         if ($get_status) {
-            display_simple_message('Thank you!', 'An email will be sent to your registered email address.', "If you don't receive in the next 10 minutes, please check your spam folder and if you still haven't received it please try again...", 'merchant/login', 'Go to Log In Page');
+            set_simple_message('Thank you!', 'An email will be sent to your registered email address.', 
+                    "If you don't receive in the next 10 minutes, please check your spam folder and if you still haven't received it please try again...", 'merchant/login', 'Go to Log In Page', 'merchant/simple_message');
         } else {
             $this->session->set_flashdata('message', $this->ion_auth->errors());
             redirect("merchant/retrieve_password", 'refresh');
@@ -730,6 +735,7 @@ class Merchant extends CI_Controller {
 
     function upload_image() {
 
+        redirect('/','refresh'); //no use currently, disable this function first
         if (!$this->ion_auth->logged_in()) {
             redirect('merchant/login', 'refresh');
         }
