@@ -5,7 +5,7 @@
 
     <div id='register-title'>Merchant Sign Up</div>
 
-    <div id='register-signup'>Already have register? <a href='<?php echo base_url(); ?>merchant/login'>Log In</a></div>
+    <div id='register-subtitle'>Already have register? <a href='<?php echo base_url(); ?>merchant/login'>Log In</a></div>
 
     <div id="infoMessage"><?php echo $message;?></div>
 
@@ -31,7 +31,7 @@
         </div>
 
         <div id='register-form-each'>
-            <div id='register-form-each-label'><?php echo lang('create_merchant_state_label', 'me_state_id'); ?></div>
+            <div id='register-form-each-label'><?php echo lang('create_merchant_state_label', 'me_state_list'); ?></div>
             <div id='register-form-each-input'><?php echo form_dropdown($me_state_id, $state_list); ?></div>
         </div>
 
