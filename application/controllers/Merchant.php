@@ -11,6 +11,7 @@ class Merchant extends CI_Controller {
         $this->load->helper(array('url', 'language'));
         $this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
         $this->lang->load('auth');
+        $this->main_group_id = $this->config->item('group_id_merchant');
     }
 
     // redirect if needed, otherwise display the user list
@@ -132,12 +133,10 @@ class Merchant extends CI_Controller {
                 'type' => 'hidden',
                 'value' => $user->id,
             );
-            $this->data['function_use_for'] = $function_use_for;
+            $this->data['function_use_for'] = $function_use_for;          
             
-            // render
-            $this->load->view('template/header');
-            $this->_render_page('auth/change_password', $this->data);
-            $this->load->view('template/footer');
+            $this->data['page_path_name'] = 'auth/change_password';
+            $this->load->view('template/layout', $this->data);
         } else {
             $identity = $this->session->userdata('identity');
 
@@ -165,11 +164,14 @@ class Merchant extends CI_Controller {
             $this->data['identity_label'] = $this->lang->line('forgot_password_username_email_label');
             // set any errors and display the form
             $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-            $this->_render_page('merchant/retrieve_password', $this->data);
+
+            $this->data['page_path_name'] = 'merchant/retrieve_password';
+            $this->load->view('template/layout', $this->data);
         } else {
             $the_input = $this->input->post('username_email');
             $the_id = $this->ion_auth->get_id_by_email_or_username($the_input);
-            $identity = $this->ion_auth->where('id', $the_id)->users()->row();
+            
+            $identity = $this->ion_auth->where('id', $the_id)->where('main_group_id', $this->main_group_id)->users()->row();
             if (empty($identity)) {
                 $this->ion_auth->set_error('forgot_password_username_email_not_found');
                 $this->session->set_flashdata('message', $this->ion_auth->errors());
@@ -396,7 +398,6 @@ class Merchant extends CI_Controller {
         $this->data['function_use_for'] = $function_use_for;
 
         $tables = $this->config->item('tables', 'ion_auth');
-        $main_group_id = $this->config->item('group_id_merchant');
 
         // validate form input
         $this->form_validation->set_rules('company', $this->lang->line('create_merchant_validation_company_label'), 'required');
@@ -429,13 +430,13 @@ class Merchant extends CI_Controller {
                 'me_ssm' => $this->input->post('me_ssm'),
                 'profile_image' => 'demo-logo-company.png',
                 //'me_website_url' => $this->input->post('website'),
-                'main_group_id' => $main_group_id,
+                'main_group_id' => $this->main_group_id,
                 'password_visible' => $password
             );
         }
 
         $group_ids = array(
-            $main_group_id
+            $this->main_group_id
         );
 
         if ($this->form_validation->run() == true && $this->ion_auth->register($username, $password, $email, $additional_data, $group_ids)) {
@@ -522,10 +523,6 @@ class Merchant extends CI_Controller {
                 'type' => 'password',
                 'value' => $this->form_validation->set_value('password_confirm'),
             );
-
-//            $this->load->view('template/header');
-//            $this->_render_page('merchant/create_user', $this->data);
-//            $this->load->view('template/footer');
             
             $this->data['page_path_name'] = 'merchant/create_user';
             $this->load->view('template/layout', $this->data);
@@ -542,10 +539,9 @@ class Merchant extends CI_Controller {
         }
 
         $user = $this->ion_auth->user($id)->row();
-        $main_group_id = $this->config->item('group_id_merchant');
 
         //Check is this user type can go in this page or not
-        if ($user->main_group_id != $main_group_id) {
+        if ($user->main_group_id != $this->main_group_id) {
             redirect('merchant/login', 'refresh');
         }
 
@@ -635,21 +631,27 @@ class Merchant extends CI_Controller {
             'value' => $this->form_validation->set_value('facebook_url', $user->me_facebook_url),
         );
 
-        $this->load->view('template/header');
-        $this->_render_page('merchant/profile', $this->data);
-        $this->load->view('merchant/branch_management', $this->branch_management($id));
-        $this->load->view('template/footer');
+        $this->data['page_path_name'] = 'merchant/profile';
+        $this->load->view('template/layout', $this->data);
+//        $this->load->view('template/header');
+//        $this->_render_page('merchant/profile', $this->data);
+//        $this->load->view('template/layout_management', $this->branch_management());
+//        $this->load->view('template/footer');
     }
 
-    public function branch_management($id = NULL) {
+    function branch() {
+         $this->load->view('template/layout_management', $this->branch_management());
+    }
+    function branch_management() {
+        $id = $this->ion_auth->user()->row()->id;
         $this->load->library('grocery_CRUD');
         try {
             $crud = new grocery_CRUD();
 
-            $crud->set_theme('bootstrap');
+            $crud->set_theme('bootstrap');    //datatables, flexigrid, bootstrap
             $crud->set_table('merchant_branch');
             $crud->set_subject('Branch');
-            $crud->where('merchant_id', $id);
+
             $crud->columns('name', 'address', 'state_id');
             $crud->required_fields('name', 'address', 'state_id');
             $crud->fields('name', 'address', 'state_id', 'google_map_url');
@@ -659,20 +661,37 @@ class Merchant extends CI_Controller {
             $crud->field_type('state_id', 'dropdown', $this->ion_auth->get_static_option_list('state'));
             $crud->callback_insert(array($this, 'branch_insert_callback'));
             $crud->callback_column('address', array($this, '_full_text'));
-                
-            if ($crud->getState() == 'read') {
+            $crud->unset_export();
+            $crud->unset_print();
+            $state = $crud->getState();
+
+            //Temporary use this to skip the bootstrap top right search not working bug after got $crud->where() function
+            if ($state == 'ajax_list'){               
+                if(!empty($crud->getStateInfo())){
+                    $state_info = $crud->getStateInfo();
+                    if(!empty($state_info->search->text)){
+                        
+                    }else{
+                        $crud->where('merchant_id', $id);
+                    }
+                }
+            }else{
+                $crud->where('merchant_id', $id);
+            }
+            
+            if ($state == 'read') {
                 $crud->set_relation('state_id', 'static_option', '{option_text}');
             }
             $output = $crud->render();
-
             return $output;
+
         } catch (Exception $e) {
             show_error($e->getMessage() . ' --- ' . $e->getTraceAsString());
         }
     }
-
+    
     function _full_text($value, $row) {
-        return $value = wordwrap($row->address);
+        return wordwrap($row->address);
     }
 
     function branch_insert_callback($post_array, $primary_key) {
