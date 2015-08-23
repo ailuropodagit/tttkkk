@@ -4,10 +4,8 @@ class News extends CI_Controller {
     
     public function index() {
         
-        $this->load->view('template/header');
-        $this->load->view('page/news');
-        $this->load->view('template/footer');
-        
+        $this->data['page_path_name'] = 'page/news';
+        $this->load->view('template/layout', $this->data);
     }
     
 }

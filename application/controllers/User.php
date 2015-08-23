@@ -11,6 +11,7 @@ class user extends CI_Controller {
         $this->load->helper(array('url', 'language'));
         $this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
         $this->lang->load('auth');
+        $this->main_group_id = $this->config->item('group_id_user');
     }
 
     // redirect if needed, otherwise display the user list
@@ -74,10 +75,9 @@ class user extends CI_Controller {
                 'id' => 'password',
                 'type' => 'password',
             );
-
-            $this->load->view('template/header');
-            $this->_render_page('user/login', $this->data);
-            $this->load->view('template/footer');
+            
+            $this->data['page_path_name'] = 'user/login';
+            $this->load->view('template/layout', $this->data);
         }
     }
 
@@ -135,12 +135,10 @@ class user extends CI_Controller {
                 'type' => 'hidden',
                 'value' => $user->id,
             );
-            $this->data['function_use_for'] = $function_use_for;
+            $this->data['function_use_for'] = $function_use_for;          
             
-            // render
-            $this->load->view('template/header');
-            $this->_render_page('auth/change_password', $this->data);
-            $this->load->view('template/footer');
+            $this->data['page_path_name'] = 'auth/change_password';
+            $this->load->view('template/layout', $this->data);
         } else {
             $identity = $this->session->userdata('identity');
 
@@ -150,7 +148,7 @@ class user extends CI_Controller {
                 //if the password was successfully changed
                 $this->session->set_flashdata('message', $this->ion_auth->messages());
                 //$this->logout();
-                display_simple_message('Thank you!','Your Password has been saved!','','user/change_password','Back');
+                set_simple_message('Thank you!', 'Your Password has been saved!', '', 'user/change_password', 'Back', 'user/simple_message');
             } else {
                 $this->session->set_flashdata('message', $this->ion_auth->errors());
                 redirect($function_use_for, 'refresh');
@@ -158,6 +156,10 @@ class user extends CI_Controller {
         }
     }
 
+    function simple_message(){
+        display_simple_message();
+    }
+    
     function retrieve_password() {
         $this->form_validation->set_rules('username_email', $this->lang->line('forgot_password_username_email_label'), 'required');
         if ($this->form_validation->run() == false) {
@@ -166,11 +168,13 @@ class user extends CI_Controller {
             $this->data['identity_label'] = $this->lang->line('forgot_password_username_email_label');
             // set any errors and display the form
             $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-            $this->_render_page('user/retrieve_password', $this->data);
+
+            $this->data['page_path_name'] = 'user/retrieve_password';
+            $this->load->view('template/layout', $this->data);
         } else {
             $the_input = $this->input->post('username_email');
             $the_id = $this->ion_auth->get_id_by_email_or_username($the_input);
-            $identity = $this->ion_auth->where('id', $the_id)->users()->row();
+            $identity = $this->ion_auth->where('id', $the_id)->where('main_group_id', $this->main_group_id)->users()->row();
             if (empty($identity)) {
                 $this->ion_auth->set_error('forgot_password_username_email_not_found');
                 $this->session->set_flashdata('message', $this->ion_auth->errors());
@@ -186,8 +190,8 @@ class user extends CI_Controller {
         $identity = $this->session->flashdata('mail_info');
         $get_status = send_mail_simple($identity->email, 'Your Keppo Account Login Info', 'First Name:' . $identity->first_name . '<br/>Last Name:' . $identity->last_name . '<br/>username:' . $identity->username . '<br/>Email:' . $identity->email . '<br/>Password:' . $identity->password_visible, 'forgot_password_send_email_success');
         if ($get_status) {
-            display_simple_message('Thank you!','An email will be sent to your registered email address.',
-                    "If you don't receive in the next 10 minutes, please check your spam folder and if you still haven't received it please try again...",'user/login','Go to Log In Page');
+            set_simple_message('Thank you!', 'An email will be sent to your registered email address.',
+                    "If you don't receive in the next 10 minutes, please check your spam folder and if you still haven't received it please try again...",'user/login','Go to Log In Page', 'user/simple_message');
         } else {
             $this->session->set_flashdata('message', $this->ion_auth->errors());
             redirect("user/retrieve-password", 'refresh');
@@ -389,7 +393,6 @@ class user extends CI_Controller {
         $this->data['function_use_for'] = $function_use_for;
 
         $tables = $this->config->item('tables', 'ion_auth');
-        $main_group_id = $this->config->item('group_id_user');
         
         if (isset($_POST) && !empty($_POST)) {
             $this->d_year = $_POST['year'];
@@ -425,12 +428,12 @@ class user extends CI_Controller {
                 'us_race_id' => $this->input->post('race_id'),
                 'username' => $username,
                 'password_visible' => $password,
-                'main_group_id' => $main_group_id,
+                'main_group_id' => $this->main_group_id,
             );
         }
 
         $group_ids = array(
-            $main_group_id
+            $this->main_group_id
         );
 
         if ($this->form_validation->run() == true && $this->ion_auth->register($username, $password, $email, $additional_data, $group_ids)) {
@@ -528,9 +531,8 @@ class user extends CI_Controller {
                 'value' => $this->form_validation->set_value('password_confirm'),
             );
 
-            $this->load->view('template/header.php');
-            $this->_render_page('user/create_user', $this->data);
-            $this->load->view('template/footer.php');
+            $this->data['page_path_name'] = 'user/create_user';
+            $this->load->view('template/layout', $this->data);
         }
     }
 

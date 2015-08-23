@@ -11,6 +11,7 @@ class Merchant extends CI_Controller {
         $this->load->helper(array('url', 'language'));
         $this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
         $this->lang->load('auth');
+        $this->main_group_id = $this->config->item('group_id_merchant');
     }
 
     // redirect if needed, otherwise display the user list
@@ -18,7 +19,7 @@ class Merchant extends CI_Controller {
         if (!$this->ion_auth->logged_in()) {
             // redirect them to the login page
             redirect('merchant/login', 'refresh');
-        } elseif (!$this->ion_auth->is_admin()) { 
+        } elseif (!$this->ion_auth->is_admin()) {
             // remove this elseif if you want to enable this for non-admins
             // redirect them to the home page because they must be an administrator to view this
             return show_error('You must be an administrator to view this page.');
@@ -72,7 +73,7 @@ class Merchant extends CI_Controller {
                 'id' => 'password',
                 'type' => 'password',
             );
-            
+
             $this->data['page_path_name'] = 'merchant/login';
             $this->load->view('template/layout', $this->data);
         }
@@ -102,7 +103,7 @@ class Merchant extends CI_Controller {
 
         $user = $this->ion_auth->user()->row();
         $function_use_for = 'merchant/change_password';
-        
+
         if ($this->form_validation->run() == false) {
             // display the form
             // set the flash data error message if there is one
@@ -133,11 +134,9 @@ class Merchant extends CI_Controller {
                 'value' => $user->id,
             );
             $this->data['function_use_for'] = $function_use_for;
-            
-            // render
-            $this->load->view('template/header');
-            $this->_render_page('auth/change_password', $this->data);
-            $this->load->view('template/footer');
+
+            $this->data['page_path_name'] = 'auth/change_password';
+            $this->load->view('template/layout', $this->data);
         } else {
             $identity = $this->session->userdata('identity');
 
@@ -147,7 +146,7 @@ class Merchant extends CI_Controller {
                 //if the password was successfully changed
                 $this->session->set_flashdata('message', $this->ion_auth->messages());
                 //$this->logout();
-                display_simple_message('Thank you!','Your Password has been saved!','','merchant/change_password','Back');
+                set_simple_message('Thank you!', 'Your Password has been saved!', '', 'merchant/change_password', 'Back', 'merchant/simple_message');
             } else {
                 $this->session->set_flashdata('message', $this->ion_auth->errors());
                 redirect($function_use_for, 'refresh');
@@ -155,6 +154,10 @@ class Merchant extends CI_Controller {
         }
     }
 
+    function simple_message(){
+        display_simple_message();
+    }
+    
     function retrieve_password() {
         $this->form_validation->set_rules('username_email', $this->lang->line('forgot_password_username_email_label'), 'required');
         if ($this->form_validation->run() == false) {
@@ -165,11 +168,14 @@ class Merchant extends CI_Controller {
             $this->data['identity_label'] = $this->lang->line('forgot_password_username_email_label');
             // set any errors and display the form
             $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-            $this->_render_page('merchant/retrieve_password', $this->data);
+
+            $this->data['page_path_name'] = 'merchant/retrieve_password';
+            $this->load->view('template/layout', $this->data);
         } else {
             $the_input = $this->input->post('username_email');
             $the_id = $this->ion_auth->get_id_by_email_or_username($the_input);
-            $identity = $this->ion_auth->where('id', $the_id)->users()->row();
+
+            $identity = $this->ion_auth->where('id', $the_id)->where('main_group_id', $this->main_group_id)->users()->row();
             if (empty($identity)) {
                 $this->ion_auth->set_error('forgot_password_username_email_not_found');
                 $this->session->set_flashdata('message', $this->ion_auth->errors());
@@ -185,8 +191,8 @@ class Merchant extends CI_Controller {
         $identity = $this->session->flashdata('mail_info');
         $get_status = send_mail_simple($identity->email, 'Your Keppo Account Login Info', 'Company Name:' . $identity->company . '<br/>Username:' . $identity->username . '<br/>Email:' . $identity->email . '<br/>Password:' . $identity->password_visible, 'forgot_password_send_email_success');
         if ($get_status) {
-            display_simple_message('Thank you!','An email will be sent to your registered email address.',
-                    "If you don't receive in the next 10 minutes, please check your spam folder and if you still haven't received it please try again...",'merchant/login','Go to Log In Page');
+            set_simple_message('Thank you!', 'An email will be sent to your registered email address.', 
+                    "If you don't receive in the next 10 minutes, please check your spam folder and if you still haven't received it please try again...", 'merchant/login', 'Go to Log In Page', 'merchant/simple_message');
         } else {
             $this->session->set_flashdata('message', $this->ion_auth->errors());
             redirect("merchant/retrieve_password", 'refresh');
@@ -377,7 +383,7 @@ class Merchant extends CI_Controller {
             redirect('merchant', 'refresh');
         }
     }
-    
+
     // create a new user
     function create_user() {
         $controller = $this->uri->segment(2);
@@ -396,7 +402,6 @@ class Merchant extends CI_Controller {
         $this->data['function_use_for'] = $function_use_for;
 
         $tables = $this->config->item('tables', 'ion_auth');
-        $main_group_id = $this->config->item('group_id_merchant');
 
         // validate form input
         $this->form_validation->set_rules('company', $this->lang->line('create_merchant_validation_company_label'), 'required');
@@ -429,13 +434,13 @@ class Merchant extends CI_Controller {
                 'me_ssm' => $this->input->post('me_ssm'),
                 'profile_image' => 'demo-logo-company.png',
                 //'me_website_url' => $this->input->post('website'),
-                'main_group_id' => $main_group_id,
+                'main_group_id' => $this->main_group_id,
                 'password_visible' => $password
             );
         }
 
         $group_ids = array(
-            $main_group_id
+            $this->main_group_id
         );
 
         if ($this->form_validation->run() == true && $this->ion_auth->register($username, $password, $email, $additional_data, $group_ids)) {
@@ -523,10 +528,6 @@ class Merchant extends CI_Controller {
                 'value' => $this->form_validation->set_value('password_confirm'),
             );
 
-//            $this->load->view('template/header');
-//            $this->_render_page('merchant/create_user', $this->data);
-//            $this->load->view('template/footer');
-            
             $this->data['page_path_name'] = 'merchant/create_user';
             $this->load->view('template/layout', $this->data);
         }
@@ -542,10 +543,9 @@ class Merchant extends CI_Controller {
         }
 
         $user = $this->ion_auth->user($id)->row();
-        $main_group_id = $this->config->item('group_id_merchant');
 
         //Check is this user type can go in this page or not
-        if ($user->main_group_id != $main_group_id) {
+        if ($user->main_group_id != $this->main_group_id) {
             redirect('merchant/login', 'refresh');
         }
 
@@ -578,7 +578,35 @@ class Merchant extends CI_Controller {
                     }
                 }
             } else if ($this->input->post('button_action') == "change_image") {
-                redirect('merchant/upload_image', 'refresh');
+                $upload_rule = array(
+                    'upload_path' => $this->config->item('album_merchant'),
+                    'allowed_types' => $this->config->item('allowed_types'),
+                    'max_size' => $this->config->item('max_size'),
+                );
+
+                $this->load->library('upload', $upload_rule);
+
+                if (!$this->upload->do_upload()) {
+                    $error = array('error' => $this->upload->display_errors());
+                    $this->session->set_flashdata('message', $this->upload->display_errors());
+                } else {
+                    $image_data = array('upload_data' => $this->upload->data());
+                    //$this->ion_auth->set_message('image_upload_successful');
+
+                    $data = array(
+                        'profile_image' => $this->upload->data('file_name'),
+                    );
+
+                    if ($this->ion_auth->update($id, $data)) {
+                        $this->session->set_flashdata('message', 'Merchant logo success update.');
+                        redirect('merchant/profile', 'refresh');
+                    } else {
+
+                        $this->session->set_flashdata('message', $this->ion_auth->errors());
+                    }
+                }
+
+                redirect('merchant/profile', 'refresh');
             } else {
                 
             }
@@ -635,21 +663,28 @@ class Merchant extends CI_Controller {
             'value' => $this->form_validation->set_value('facebook_url', $user->me_facebook_url),
         );
 
-        $this->load->view('template/header');
-        $this->_render_page('merchant/profile', $this->data);
-        $this->load->view('merchant/branch_management', $this->branch_management($id));
-        $this->load->view('template/footer');
+        $this->data['page_path_name'] = 'merchant/profile';
+        $this->load->view('template/layout', $this->data);
+//        $this->load->view('template/header');
+//        $this->_render_page('merchant/profile', $this->data);
+//        $this->load->view('template/layout_management', $this->branch_management());
+//        $this->load->view('template/footer');
     }
 
-    public function branch_management($id = NULL) {
+    function branch() {
+        $this->load->view('template/layout_management', $this->branch_management());
+    }
+
+    function branch_management() {
+        $id = $this->ion_auth->user()->row()->id;
         $this->load->library('grocery_CRUD');
         try {
             $crud = new grocery_CRUD();
 
-            $crud->set_theme('bootstrap');
+            $crud->set_theme('bootstrap');    //datatables, flexigrid, bootstrap
             $crud->set_table('merchant_branch');
             $crud->set_subject('Branch');
-            $crud->where('merchant_id', $id);
+
             $crud->columns('name', 'address', 'state_id');
             $crud->required_fields('name', 'address', 'state_id');
             $crud->fields('name', 'address', 'state_id', 'google_map_url');
@@ -659,12 +694,28 @@ class Merchant extends CI_Controller {
             $crud->field_type('state_id', 'dropdown', $this->ion_auth->get_static_option_list('state'));
             $crud->callback_insert(array($this, 'branch_insert_callback'));
             $crud->callback_column('address', array($this, '_full_text'));
-                
-            if ($crud->getState() == 'read') {
+            $crud->unset_export();
+            $crud->unset_print();
+            $state = $crud->getState();
+
+            //Temporary use this to skip the bootstrap top right search not working bug after got $crud->where() function
+            if ($state == 'ajax_list') {
+                if (!empty($crud->getStateInfo())) {
+                    $state_info = $crud->getStateInfo();
+                    if (!empty($state_info->search->text)) {
+                        
+                    } else {
+                        $crud->where('merchant_id', $id);
+                    }
+                }
+            } else {
+                $crud->where('merchant_id', $id);
+            }
+
+            if ($state == 'read') {
                 $crud->set_relation('state_id', 'static_option', '{option_text}');
             }
             $output = $crud->render();
-
             return $output;
         } catch (Exception $e) {
             show_error($e->getMessage() . ' --- ' . $e->getTraceAsString());
@@ -672,7 +723,7 @@ class Merchant extends CI_Controller {
     }
 
     function _full_text($value, $row) {
-        return $value = wordwrap($row->address);
+        return wordwrap($row->address);
     }
 
     function branch_insert_callback($post_array, $primary_key) {
@@ -684,6 +735,7 @@ class Merchant extends CI_Controller {
 
     function upload_image() {
 
+        redirect('/','refresh'); //no use currently, disable this function first
         if (!$this->ion_auth->logged_in()) {
             redirect('merchant/login', 'refresh');
         }
@@ -726,8 +778,8 @@ class Merchant extends CI_Controller {
         // set the flash data error message if there is one
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 
-            $this->data['page_path_name'] = 'merchant/upload_image';
-            $this->load->view('template/layout', $this->data);
+        $this->data['page_path_name'] = 'merchant/upload_image';
+        $this->load->view('template/layout', $this->data);
     }
 
     // edit a user
