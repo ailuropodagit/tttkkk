@@ -12,6 +12,7 @@ class Merchant extends CI_Controller {
         $this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
         $this->lang->load('auth');
         $this->main_group_id = $this->config->item('group_id_merchant');
+        $this->supervisor_group_id = $this->config->item('group_id_supervisor');
     }
 
     // redirect if needed, otherwise display the user list
@@ -48,7 +49,7 @@ class Merchant extends CI_Controller {
             // check for "remember me"
             $remember = (bool) $this->input->post('remember');
 
-            if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember, $this->config->item('group_id_merchant'))) {
+            if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember, $this->main_group_id)) {
                 //if the login is successful
                 //redirect them back to the home page
                 $this->session->set_flashdata('message', $this->ion_auth->messages());
@@ -595,6 +596,14 @@ class Merchant extends CI_Controller {
                 }
 
                 redirect('merchant/profile', 'refresh');
+            } else if ($this->input->post('button_action') == "view_branch") {
+                redirect('merchant/branch', 'refresh');
+            } else if ($this->input->post('button_action') == "add_branch") {
+                redirect('merchant/branch/add', 'refresh');
+            } else if ($this->input->post('button_action') == "view_supervisor") {
+                redirect('merchant/supervisor', 'refresh');
+            } else if ($this->input->post('button_action') == "add_supervisor") {
+                redirect('merchant/supervisor/add', 'refresh');
             } else {
                 
             }
@@ -670,7 +679,7 @@ class Merchant extends CI_Controller {
         try {
             $crud = new grocery_CRUD();
 
-            $crud->set_theme('bootstrap');    //datatables, flexigrid, bootstrap
+            $crud->set_theme('datatables');    //datatables, flexigrid, bootstrap
             $crud->set_table('merchant_branch');
             $crud->set_subject('Branch');
 
@@ -680,26 +689,27 @@ class Merchant extends CI_Controller {
             $crud->display_as('state_id', 'State');
             $crud->unset_fields('merchant_id');
             $crud->unset_texteditor('address', 'google_map_url');
-            $crud->field_type('state_id', 'dropdown', $this->ion_auth->get_static_option_list('state'));
+            $crud->field_type('state_id', 'dropdown', $this->ion_auth->get_static_option_list('state'));       
             $crud->callback_insert(array($this, 'branch_insert_callback'));
             $crud->callback_column('address', array($this, '_full_text'));
             $crud->unset_export();
             $crud->unset_print();
+            
             $state = $crud->getState();
 
             //Temporary use this to skip the bootstrap top right search not working bug after got $crud->where() function
-            if ($state == 'ajax_list') {
-                if (!empty($crud->getStateInfo())) {
-                    $state_info = $crud->getStateInfo();
-                    if (!empty($state_info->search->text)) {
-                        
-                    } else {
-                        $crud->where('merchant_id', $id);
-                    }
-                }
-            } else {
+//            if ($state == 'ajax_list') {
+//                if (!empty($crud->getStateInfo())) {
+//                    $state_info = $crud->getStateInfo();
+//                    if (!empty($state_info->search->text)) {
+//                        
+//                    } else {
+//                        $crud->where('merchant_id', $id);
+//                    }
+//                }
+//            } else {
                 $crud->where('merchant_id', $id);
-            }
+//            }
 
             if ($state == 'read') {
                 $crud->set_relation('state_id', 'static_option', '{option_text}');
@@ -716,12 +726,96 @@ class Merchant extends CI_Controller {
     }
 
     function branch_insert_callback($post_array, $primary_key) {
-
         $post_array['merchant_id'] = $this->ion_auth->user()->row()->id;
-
         return $this->db->insert('merchant_branch', $post_array);
     }
+    
+    function supervisor() {
+        check_is_correct_login_user_type();
+        $this->load->view('template/layout_management', $this->supervisor_management());
+    }
+    
+    function supervisor_management() {
+        $id = $this->ion_auth->user()->row()->id;
+        $this->load->library('grocery_CRUD');
+        try {
+            $crud = new grocery_CRUD();
 
+            $crud->set_theme('datatables');    //datatables, flexigrid, bootstrap
+            $crud->set_table('users');
+            $crud->set_subject('Supervisor');
+            $crud->columns('username', 'password_visible');
+            $crud->required_fields('username', 'password_visible');
+            $crud->fields('username', 'password_visible');
+            $crud->display_as('password_visible', 'Password');
+            $crud->callback_insert(array($this, 'supervisor_insert_callback'));
+            $crud->callback_update(array($this,'supervisor_update_callback'));
+            $crud->set_rules('username', 'Username','trim|required|callback_supervisor_username_check');
+            $crud->unset_export();
+            $crud->unset_print();
+            $crud->unset_read();
+            
+            $state = $crud->getState();
+
+            //filter that this is supervisor type user and it is under this merchant
+            $crud->where('su_merchant_id', $id);
+            $crud->where('main_group_id', $this->supervisor_group_id);
+            
+            $output = $crud->render();
+            return $output;
+        } catch (Exception $e) {
+            show_error($e->getMessage() . ' --- ' . $e->getTraceAsString());
+        }
+    }
+    
+    function supervisor_insert_callback($post_array, $primary_key) {
+        
+//        if(!$this->m_custom->check_is_value_unique('users','username',$post_array['username'])){
+//            return FALSE;
+//        }
+        
+        $additional_data = array(
+                'username' => $post_array['username'],
+                'su_merchant_id' => $this->ion_auth->user()->row()->id,
+                'main_group_id' => $this->supervisor_group_id,
+                'password_visible' => $post_array['password_visible'],
+            );
+
+        return $this->ion_auth->register($post_array['username'], $post_array['password_visible'], $post_array['username'].$this->config->item('keppo_email_domain'), $additional_data, $this->supervisor_group_id);
+    }
+
+    function supervisor_update_callback($post_array, $primary_key) {
+        
+//        if(!$this->m_custom->check_is_value_unique('users','username',$post_array['username'],'id',$primary_key)){
+//            return FALSE;
+//        }
+        
+        $additional_data = array(
+                'username' => $post_array['username'],
+                'email' => $post_array['username'].$this->config->item('keppo_email_domain'),
+                'password' => $post_array['password_visible'],
+                'password_visible' => $post_array['password_visible'],
+            );
+
+        return $this->ion_auth->update($primary_key, $additional_data);
+    }
+           
+    public function supervisor_username_check($str) {
+        $id = $this->uri->segment(4);
+        if (!empty($id) && is_numeric($id)) {
+            $username_old = $this->db->where("id", $id)->get('users')->row()->username;
+            $this->db->where("username !=", $username_old);
+        }
+
+        $num_row = $this->db->where('username', $str)->get('users')->num_rows();
+        if ($num_row >= 1) {
+            $this->form_validation->set_message('supervisor_username_check', 'The username already exists');
+            return FALSE;
+        } else {
+            return TRUE;
+        }
+    }
+    
     function upload_image() {
 
         redirect('/','refresh'); //no use currently, disable this function first

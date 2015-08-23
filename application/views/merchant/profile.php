@@ -51,6 +51,8 @@
         <div id='register-form-submit'>
             <button name="button_action" type="submit" value="add_branch" >Add Branch</button>
             <button name="button_action" type="submit" value="view_branch" >View Branch</button>
+            <button name="button_action" type="submit" value="add_supervisor" >Add Supervisor</button>
+            <button name="button_action" type="submit" value="view_supervisor" >View Supervisor</button>
             <button name="button_action" type="submit" value="confirm">Confirm</button>
         </div>
 
