@@ -38,26 +38,27 @@ if (!function_exists('display_simple_message')) {
 
 }
 
-if (!function_exists('check_is_correct_login_user_type')) {
-function check_is_correct_login_user_type(){
+if (!function_exists('check_correct_login_type')) {
+function check_correct_login_type($desired_group_id = NULL){
         $ci = & get_instance();
         
         //Check is it login
         if (!$ci->ion_auth->logged_in()) {
-            redirect('/', 'refresh');
+            return FALSE;
         }
         
         $id = $ci->ion_auth->user()->row()->id;
         //Check is the url id is same with login session id
         if (!($ci->ion_auth->user()->row()->id == $id)) {
-            redirect('/', 'refresh');
+            return FALSE;
         }
         
         $user = $ci->ion_auth->user($id)->row();
         //Check is this user type can go in this page or not
-        if ($user->main_group_id != $ci->main_group_id) {
-            redirect('/', 'refresh');
+        if ($user->main_group_id != $desired_group_id) {
+            return FALSE;
         }
+        return TRUE;
     }
 }
 
@@ -82,6 +83,12 @@ if (!function_exists('send_mail_simple')) {
 
 }
 
+if (!function_exists('generate_options')) {
+
+    function generate_slug($value='') {
+        return url_title($value, 'dash', TRUE);
+    }
+}
 if (!function_exists('generate_options')) {
 
     function generate_options($from, $to, $callback = false) {
