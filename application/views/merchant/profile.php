@@ -4,10 +4,15 @@
 
             <div id="infoMessage"><?php echo $message; ?></div>
 
-            <?php echo form_open(uri_string()); ?>
-
             <img src="<?php echo base_url($logo_url); ?>" id='header-logo-img'><br/>
-            <button name="button_action" type="submit" value="change_image" >Change Image</button>
+            <?php echo form_open_multipart(uri_string()); ?>
+
+            <input type="file" name="userfile" size="20" />
+
+            <br /><br />
+            <button name="button_action" type="submit" value="change_image" >Change Logo</button>
+            </form>
+            <?php echo form_open(uri_string()); ?>
             <div id='register'>
                 <div id='register-form'>
 
@@ -45,7 +50,7 @@
                     <?php echo form_hidden($csrf); ?>
 
 
-                    
+
                     <div id='register-form-submit'>
                         <button name="button_action" type="submit" value="add_branch" >Add Branch</button>
                         <button name="button_action" type="submit" value="view_branch" >View Branch</button>
@@ -56,7 +61,7 @@
 
                 <?php echo form_close(); ?>
             </div>
-                                <div id='login-tnc'><a href='<?php echo base_url(); ?>' target='_blank'>Submit SSM forms</a></div>
+            <div id='login-tnc'><a href='<?php echo base_url(); ?>' target='_blank'>Submit SSM forms</a></div>
         </div>
     </div>
 </div>
