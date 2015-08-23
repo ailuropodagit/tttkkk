@@ -3,8 +3,28 @@
     <head>
         <meta charset="UTF-8">
         <title>Keppo</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <?php echo link_tag('css/main.css') ?>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <script type="text/javascript" src='<?php echo base_url() ?>js/jquery/jquery-2.1.4.min.js'></script>
+        <script>
+            $(function(){
+                
+                //BROSWER RESIZE
+                $(window).resize(function(){
+                    var window_width = $(window).width();
+                    if(window_width >= 1100){
+                        $('#header-menu-mobile').hide();
+                    }
+                });   
+                
+                //HEADER MENU MOBILE 
+                $('#header-menu-mobile-icon').click(function(){
+                    $('#header-menu-mobile').toggle();
+                });
+                
+            });
+        </script>
     </head>
     <body>
         <!--HEADER-->
@@ -25,10 +45,24 @@
                         <li><a href='<?php echo base_url(); ?>user/register'><i class="fa fa-user-plus header-menu-icon"></i>Register</a></li>
                     </ul>
                 </div>
-                
-                <i class="fa fa-bars"></i>
-                
+                <!--HEADER MENU MOBILE ICON-->
+                <div id="header-menu-mobile-icon">
+                    <i class="fa fa-bars"></i>
+                </div>
                 <div id="float-fix"></div>
+            </div>
+        </div>
+        <!--HEADER MENU MOBILE-->
+        <div id="header-menu-mobile">
+            <div id="wrapper">
+                <ul>
+                    <li><a href='<?php echo base_url(); ?>home'><i class="fa fa-home header-menu-icon header-menu-icon-home"></i>Home</a></li>
+                    <li><a href='#'><i class="fa fa-th-large header-menu-icon"></i>Categories</a></li>
+                    <li><a href='#'><i class="fa fa-fire header-menu-icon"></i>Hot Deal</a></li>
+                    <li><a href='#'><i class="fa fa-diamond header-menu-icon"></i>Redemption</a></li>
+                    <li><a href='<?php echo base_url(); ?>user/login'><i class="fa fa-user header-menu-icon"></i>Login</a></li>
+                    <li><a href='<?php echo base_url(); ?>user/register'><i class="fa fa-user-plus header-menu-icon"></i>Register</a></li>
+                </ul>
             </div>
         </div>
         <!--SEARCH BAR-->
