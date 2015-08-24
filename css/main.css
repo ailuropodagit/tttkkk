@@ -346,9 +346,19 @@ p {
     margin: 10px 0px 0px 0px;
 }
 
-#register-form-each-input-small select {
+#register-form-each-input-dob {
+    width: 290px;
+    margin: 0px auto 0px auto;
+}
+
+#register-form-each-input-dob-year select, #register-form-each-input-dob-month select, #register-form-each-input-dob-day select {
+    float: left;
     width: 90px;
     height: 28px;
+    margin: 10px 10px 0px 0px;
+}
+
+#register-form-each-input-dob-year select {
     margin: 10px 0px 0px 0px;
 }
 
