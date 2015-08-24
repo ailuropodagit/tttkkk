@@ -23,6 +23,19 @@
     box-sizing: border-box;
 }
 
+#register-form-each-input textarea {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#register-form-each-input select {
+    width: 100%;
+}
+
+#register-form-each-input-dob {
+    width: auto;
+}
+
 #login-form-remember-me-forgot-password {
     width: auto;
 }
