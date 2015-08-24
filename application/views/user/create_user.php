@@ -34,9 +34,9 @@
 
         <div id='register-form-each'>
             <div id='register-form-each-label'><?php echo lang('create_user_dob_label'); ?></div>
-            <div id='register-form-each-input'><?php echo form_dropdown($day, $day_list); ?></div>
-            <div id='register-form-each-input'><?php echo form_dropdown($month, $month_list); ?></div>
-            <div id='register-form-each-input'><?php echo form_dropdown($year, $year_list); ?></div>
+            <div id='register-form-each-select'><?php echo form_dropdown($day, $day_list); ?></div>
+            <div id='register-form-each-select'><?php echo form_dropdown($month, $month_list); ?></div>
+            <div id='register-form-each-select'><?php echo form_dropdown($year, $year_list); ?></div>
         </div>
 
         <div id='register-form-each'>

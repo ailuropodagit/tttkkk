@@ -227,6 +227,13 @@ p {
     box-sizing: border-box;
 }
 
+#search-icon {
+    position: absolute;
+    left: 23px;
+    top: 23px;
+    color: #7B7B7B;
+}
+
 #search-box-block1, #search-box-block2, #search-box-block3 {
     float: left;
 }
@@ -268,7 +275,7 @@ p {
     margin: 40px 40px 40px 0px;
 }
 
-/* LOGIN
+/* LOGIN REGISTER
 ******************************/
 
 #login-link, #register-link {
@@ -362,6 +369,7 @@ p {
     
 #login-tnc, #register-tnc {
     font-size: 14px;
+    line-height: 20px;
     margin: 0px 0px 30px 0px;
     color: gray;
 }
@@ -506,7 +514,7 @@ p {
     font-size: 14px;
     float: right;
     color: #767676;
-    margin: 0px 5px 0px 0px;
+    margin: 0px 6px 0px 6px;
 }
 
 /* SUCCESS MESSAGE 
@@ -542,53 +550,4 @@ p {
 
 #success-message-link {
     margin: 30px 0px 0px 0px;
-}
-
-
-/********************************* MEDIA WIDTH 1100 PX *********************************/
-
-@media (max-width: 1100px) {
-    
-    #header-menu {
-        display: none;
-    }
-    
-    #header-menu-mobile-icon {
-        float: right;
-        color: white;
-        margin: 24px 15px 24px 0px;
-        font-size: 22px;
-        cursor: pointer;
-        display: inline;
-    }
-    
-    #header-menu-mobile ul {
-        margin: 0px;
-        padding: 0px;
-        list-style: none;
-    }
-    
-    #header-menu-mobile li {
-        border-bottom: 1px solid lightgray;
-        border-left: 1px solid lightgray;
-        border-right: 1px solid lightgray;
-        background-color: white;
-        padding: 7px 10px 7px 10px;
-    }
-    
-    #header-menu-mobile li:first-child {
-        padding: 10px 10px 7px 10px;
-    }
-    
-    #header-menu-mobile a {
-        text-decoration: none;
-        color: black;
-        font-size: 15px;
-    }
-    
-    #header-menu-mobile > #wrapper > ul > li > a > .fa {
-        width: 19px;
-        font-size: 14px;
-    }
-    
 }

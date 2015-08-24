@@ -1,0 +1,32 @@
+/* LOGIN REGISTER
+******************************/
+
+#login-link, #register-link {
+    margin: 0px 0px 20px 0px;
+}
+
+#login-horizontal-line, #register-horizontal-line {
+    width: 100%;
+}
+
+#login-form-each-label, #register-form-each-label {
+    width: 100%;
+}
+
+#login-form-each-input input[type='text'], #register-form-each-input input[type='text'] {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#login-form-each-input input[type='password'], #register-form-each-input input[type='password'] {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#login-form-remember-me-forgot-password {
+    width: auto;
+}
+
+#login-tnc, #register-tnc {
+    margin: 0px 0px 10px 0px;
+}

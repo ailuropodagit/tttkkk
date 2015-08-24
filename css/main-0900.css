@@ -1,0 +1,23 @@
+/* WRAPPER
+******************************/
+
+#wrapper {
+    width: 100%;
+}
+
+/* FOOTER
+******************************/
+
+#footer {
+    margin: 15px 0px 15px 0px;
+}
+
+#footer-menu {
+    float: none;
+    margin: 0px 0px 8px 10px;
+}
+
+#footer-copyright {
+    float: none;
+    margin: 0px 0px 0px 16px;
+}

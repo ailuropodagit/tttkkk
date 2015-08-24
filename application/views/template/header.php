@@ -5,6 +5,12 @@
         <title>Keppo</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <?php echo link_tag('css/main.css') ?>
+        <link rel="stylesheet" href="<?php echo base_url() ?>css/main-1300.css" media="screen and (max-width: 1300px)">
+        <link rel="stylesheet" href="<?php echo base_url() ?>css/main-1100.css" media="screen and (max-width: 1100px)">
+        <link rel="stylesheet" href="<?php echo base_url() ?>css/main-0900.css" media="screen and (max-width: 0900px)">
+        <link rel="stylesheet" href="<?php echo base_url() ?>css/main-0700.css" media="screen and (max-width: 0700px)">
+        <link rel="stylesheet" href="<?php echo base_url() ?>css/main-0500.css" media="screen and (max-width: 0500px)">
+        <link rel="stylesheet" href="<?php echo base_url() ?>css/main-0400.css" media="screen and (max-width: 0400px)">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
         <script type="text/javascript" src='<?php echo base_url() ?>js/jquery/jquery-2.1.4.min.js'></script>
         <script>
@@ -72,21 +78,12 @@
                     <div id="search-content-box">
                         <div id="search-content-box-content">
                             <div id="search-box-block1">
-                                <style>
-                                    #filtersubmit {
-                                        position: absolute;
-                                        left: 23px;
-                                        top: 23px;
-                                        color: #7B7B7B;
-                                    }
-                                </style>
                                 <input type="text" placeholder="Search: Tony Roma's, Vans, ChatTime">
-                                <i id="filtersubmit" class="fa fa-search"></i>
+                                <span id="search-icon"><i class="fa fa-search"></i></span>
                             </div>
                             <div id="search-box-block2">
-                                    <?php
+                                <?php
                                 $state_list = $this->m_custom->get_static_option_array('state', '0', 'All');
-
                                 $me_state_id = array(
                                     'name' => 'me_state_id',
                                     'id' => 'me_state_id',

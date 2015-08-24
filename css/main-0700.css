@@ -1,0 +1,22 @@
+/* SEARCH
+******************************/
+
+#search-box-block1, #search-box-block2, #search-box-block3 {
+    float: none;
+}
+
+#search-box-block1 {
+    width: 100%;
+    margin-right: 0%;
+}
+
+#search-box-block2 {
+    width: 100%;
+    margin-right: 0%;
+    margin: 5px 0px 0px 0px;
+}
+
+#search-box-block3 {
+    width: 100%;
+    margin: 5px 0px 0px 0px;
+}
