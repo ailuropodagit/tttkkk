@@ -747,6 +747,7 @@ class Merchant extends CI_Controller {
             $crud->required_fields('name', 'address', 'state_id');
             $crud->fields('name', 'address', 'state_id', 'google_map_url');
             $crud->display_as('state_id', 'State');
+            $crud->display_as('google_map_url', 'Google Map Coordinate');
             $crud->unset_fields('merchant_id');
             $crud->unset_texteditor('address', 'google_map_url');
             $crud->field_type('state_id', 'dropdown', $this->ion_auth->get_static_option_list('state'));       
