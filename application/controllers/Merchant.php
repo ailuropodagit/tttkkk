@@ -793,6 +793,36 @@ class Merchant extends CI_Controller {
         return $this->db->insert('merchant_branch', $post_array);
     }
     
+    function map($branch_id=NULL) {
+        if(!empty($branch_id)){
+            $the_branch = $this->m_custom->get_one_table_record('merchant_branch', 'branch_id', $branch_id);
+            if ($the_branch) {
+                $the_merchant= $this->m_custom->get_one_table_record('users', 'id', $the_branch->merchant_id);
+                $this->data['logo_url'] = $this->album_merchant . $the_merchant->profile_image;
+                $this->data['company_name'] = $the_merchant->company;              
+                $this->data['phone'] = $the_merchant->phone;
+                
+                $this->data['address'] = $the_branch->address;
+                $this->data['googlemap_url'] = 'https://www.google.com/maps/place/'.$the_branch->google_map_url;
+                $this->load->library('googlemaps');
+
+                $config['center'] = $the_branch->google_map_url;
+                $config['zoom'] = '17';
+                $this->googlemaps->initialize($config);
+
+                $marker = array();
+                $marker['position'] = $the_branch->google_map_url;
+                $this->googlemaps->add_marker($marker);
+                $this->data['map'] = $this->googlemaps->create_map();
+                $this->data['page_path_name'] = 'merchant/map';
+                $this->load->view('template/layout', $this->data);
+            }
+        }else{
+            redirect('/','refresh');
+        }
+           
+    }
+
     function supervisor() {
         if(!check_correct_login_type($this->main_group_id)){
             redirect('/', 'refresh');
