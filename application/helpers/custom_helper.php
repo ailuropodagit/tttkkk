@@ -134,3 +134,11 @@ if (!function_exists('format_date')) {
     }
 
 }
+
+if (!function_exists('IsNullOrEmptyString')) {
+
+    function IsNullOrEmptyString($value) {
+        return (!isset($value) || trim($value) === '' || empty($value));
+    }
+
+}
