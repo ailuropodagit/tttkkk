@@ -12,6 +12,7 @@ class user extends CI_Controller {
         $this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
         $this->lang->load('auth');
         $this->main_group_id = $this->config->item('group_id_user');
+        $this->album_user = $this->config->item('album_user');
     }
 
     // redirect if needed, otherwise display the user list
@@ -429,6 +430,7 @@ class user extends CI_Controller {
                 'username' => $username,
                 'password_visible' => $password,
                 'main_group_id' => $this->main_group_id,
+                'profile_image' => $this->config->item['user_default_image'],
             );
         }
 
@@ -546,6 +548,189 @@ class user extends CI_Controller {
         }
     }
 
+     //user profile view and edit page
+    function profile() {;
+        
+    if(!check_correct_login_type($this->main_group_id)){
+            redirect('/', 'refresh');
+        }
+               
+        $user_id = $this->ion_auth->user()->row()->id;        
+        
+        $user = $this->ion_auth->user($user_id)->row();
+
+        if (isset($_POST) && !empty($_POST)) {
+            if ($this->input->post('button_action') == "confirm") {
+            $this->d_year = $_POST['year'];
+            $this->d_month = $_POST['month'];
+            $this->d_day = $_POST['day'];
+            $_POST['dob'] = $this->d_year . '-' . $this->d_month . '-' . $this->d_day;
+            }
+        }
+        
+        $tables = $this->config->item('tables', 'ion_auth');
+        
+        // validate form input
+        $this->form_validation->set_rules('first_name', $this->lang->line('create_user_fname_label'), 'required');
+        $this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'));
+        $this->form_validation->set_rules('phone', $this->lang->line('create_user_phone_label'), 'required');
+        $this->form_validation->set_rules('dob', $this->lang->line('create_user_dob_label'), 'callback_date_check');
+        $this->form_validation->set_rules('username', $this->lang->line('create_user_username_label'), 'required|is_unique_edit[' . $tables['users'] . '.username.' . $user_id . ']');
+        $this->form_validation->set_rules('email', $this->lang->line('create_user_email_label'), 'required|valid_email|is_unique_edit[' . $tables['users'] . '.email.' . $user_id . ']');
+        
+        if (isset($_POST) && !empty($_POST)) {
+            if ($this->input->post('button_action') == "confirm") {
+                // do we have a valid request?
+                if ($this->_valid_csrf_nonce() === FALSE || $user_id != $this->input->post('id')) {
+                    show_error($this->lang->line('error_csrf'));
+                }
+                if ($this->form_validation->run() === TRUE) {
+
+                    $first_name = $this->input->post('first_name');
+                    $last_name = $this->input->post('last_name');
+                    $username = strtolower($this->input->post('username'));
+                    $email = strtolower($this->input->post('email'));
+
+                    $data = array(
+                        'first_name' => $first_name,
+                        'last_name' => $last_name,
+                        'phone' => $this->input->post('phone'),
+                        'us_birthday' => $this->input->post('dob'),
+                        'us_age' => $this->input->post('age'),
+                        'us_gender_id' => $this->input->post('gender_id'),
+                        'us_race_id' => $this->input->post('race_id'),
+                        'username' => $username,
+                        'email' => $email,
+                    );
+
+                    // check to see if we are updating the user
+                    if ($this->ion_auth->update($user->id, $data)) {
+                        // redirect them back to the admin page if admin, or to the base url if non admin
+                        $this->session->set_flashdata('message', $this->ion_auth->messages());
+                        $user = $this->ion_auth->user($user_id)->row();
+                    } else {
+                        // redirect them back to the admin page if admin, or to the base url if non admin
+                        $this->session->set_flashdata('message', $this->ion_auth->errors());
+                    }
+                }
+            } else if ($this->input->post('button_action') == "change_image") {
+                $upload_rule = array(
+                    'upload_path' => $this->album_user,
+                    'allowed_types' => $this->config->item('allowed_types'),
+                    'max_size' => $this->config->item('max_size'),
+                    'max_width' => $this->config->item('max_width'),
+                    'max_height' => $this->config->item('max_height'),
+                );
+
+                $this->load->library('upload', $upload_rule);
+
+                if (!$this->upload->do_upload()) {
+                    $error = array('error' => $this->upload->display_errors());
+                    $this->session->set_flashdata('message', $this->upload->display_errors());
+                } else {
+                    $image_data = array('upload_data' => $this->upload->data());
+                    //$this->ion_auth->set_message('image_upload_successful');
+
+                    $data = array(
+                        'profile_image' => $this->upload->data('file_name'),
+                    );
+
+                    if ($this->ion_auth->update($user_id, $data)) {
+                        $this->session->set_flashdata('message', 'User profile image success update.');
+                        redirect('user/profile', 'refresh');
+                    } else {
+
+                        $this->session->set_flashdata('message', $this->ion_auth->errors());
+                    }
+                }
+
+                redirect('user/profile', 'refresh');           
+            } else {
+                
+            }
+        }
+
+        $this->data['logo_url'] = $this->album_user . $user->profile_image;
+
+        // display the edit user form
+        $this->data['csrf'] = $this->_get_csrf_nonce();
+
+        // set the flash data error message if there is one
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+
+        // pass the user to the view
+        $this->data['user'] = $user;
+        
+        $the_date = explode('-',$user->us_birthday);
+        $this->data['b_year'] = $the_date[0];
+        $this->data['b_month'] = $the_date[1];
+        $this->data['b_day'] = $the_date[2];
+        
+        $this->data['username'] = array(
+                'name' => 'username',
+                'id' => 'username',
+                'type' => 'text',
+                'value' => $this->form_validation->set_value('username', $user->username),
+            );
+            $this->data['first_name'] = array(
+                'name' => 'first_name',
+                'id' => 'first_name',
+                'type' => 'text',
+                'value' => $this->form_validation->set_value('first_name', $user->first_name),
+            );
+            $this->data['last_name'] = array(
+                'name' => 'last_name',
+                'id' => 'last_name',
+                'type' => 'text',
+                'value' => $this->form_validation->set_value('last_name', $user->last_name),
+            );
+            $this->data['email'] = array(
+                'name' => 'email',
+                'id' => 'email',
+                'type' => 'text',
+                'value' => $this->form_validation->set_value('email', $user->email),
+            );
+            $this->data['day_list'] = generate_number_option(1,31);
+            $this->data['day'] = array(
+                'name' => 'day',
+                'id' => 'day',
+            );
+            $this->data['month_list'] = $this->ion_auth->get_static_option_list('month');
+            $this->data['month'] = array(
+                'name' => 'month',
+                'id' => 'month',
+            );
+            $this->data['year_list'] = generate_number_option(1930,2010);
+            $this->data['year'] = array(
+                'name' => 'year',
+                'id' => 'year',
+            );
+            $this->data['age_list'] = generate_number_option(10,90);
+            $this->data['age'] = array(
+                'name' => 'age',
+                'id' => 'age',
+            );
+            $this->data['gender_list'] = $this->ion_auth->get_static_option_list('gender');
+            $this->data['gender_id'] = array(
+                'name' => 'gender_id',
+                'id' => 'gender_id',
+            );
+            $this->data['race_list'] = $this->ion_auth->get_static_option_list('race');
+            $this->data['race_id'] = array(
+                'name' => 'race_id',
+                'id' => 'race_id',
+            );
+            $this->data['phone'] = array(
+                'name' => 'phone',
+                'id' => 'phone',
+                'type' => 'text',
+                'value' => $this->form_validation->set_value('phone', $user->phone),
+            );
+
+        $this->data['page_path_name'] = 'user/profile';
+        $this->load->view('template/layout', $this->data);
+    }
+    
     // edit a user
     function edit_user($id) {
         $this->data['title'] = "Edit user";

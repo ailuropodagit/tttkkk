@@ -1,20 +1,17 @@
-<div id="register">
+<div id="infoMessage"><?php echo $message; ?></div>
 
-    <div id='login-link'><a href='<?php echo base_url(); ?>merchant/register'>Merchant Register</a></div>
-    <div id='float-fix'></div>
+<img src="<?php echo base_url($logo_url); ?>" id='header-logo-img'><br/>
+<?php echo form_open_multipart(uri_string()); ?>
 
-    <div id='register-title'>User Sign Up</div>
+    <input type="file" name="userfile" size="20" />
 
-    <div id='register-subtitle'>Already have register? <a href='<?php echo base_url(); ?>user/login'>Log In</a></div>
+    <br /><br />
 
-    <div id="infoMessage"><?php echo $message; ?></div>
+    <button name="button_action" type="submit" value="change_image" >Change Logo</button>
 
-    <div id='register-facebook-icon'><img src='<?php echo base_url(); ?>image/facebook-icon.png'></div>
-
-    <div id='register-horizontal-line'></div>
-
-    <?php echo form_open("user/register"); ?>       
-
+</form>
+<?php echo form_open(uri_string()); ?>
+<div id='register'>
     <div id='register-form'>
 
         <div id='register-form-each'>
@@ -34,24 +31,24 @@
 
         <div id='register-form-each'>
             <div id='register-form-each-label'><?php echo lang('create_user_dob_label'); ?></div>
-            <div id='register-form-each-input-small'><?php echo form_dropdown($day, $day_list); ?></div>
-            <div id='register-form-each-input-small'><?php echo form_dropdown($month, $month_list); ?></div>
-            <div id='register-form-each-input-small'><?php echo form_dropdown($year, $year_list); ?></div>
+            <div id='register-form-each-input-small'><?php echo form_dropdown($day, $day_list,$b_day); ?></div>
+            <div id='register-form-each-input-small'><?php echo form_dropdown($month, $month_list,$b_month); ?></div>
+            <div id='register-form-each-input-small'><?php echo form_dropdown($year, $year_list,$b_year); ?></div>
         </div>
 
         <div id='register-form-each'>
             <div id='register-form-each-label'><?php echo lang('create_user_age_label', 'age'); ?></div>
-            <div id='register-form-each-input'><?php echo form_dropdown($age, $age_list); ?></div>
+            <div id='register-form-each-input'><?php echo form_dropdown($age, $age_list, $user->us_age); ?></div>
         </div>
 
         <div id='register-form-each'>
             <div id='register-form-each-label'><?php echo lang('create_user_gender_label', 'gender_id'); ?></div>
-            <div id='register-form-each-input'><?php echo form_dropdown($gender_id, $gender_list); ?></div>
+            <div id='register-form-each-input'><?php echo form_dropdown($gender_id, $gender_list, $user->us_gender_id); ?></div>
         </div>
 
         <div id='register-form-each'>
             <div id='register-form-each-label'><?php echo lang('create_user_race_label', 'race_id'); ?></div>
-            <div id='register-form-each-input'><?php echo form_dropdown($race_id, $race_list); ?></div>
+            <div id='register-form-each-input'><?php echo form_dropdown($race_id, $race_list, $user->us_race_id); ?></div>
         </div>
 
         <div id='register-form-each'>
@@ -64,24 +61,14 @@
             <div id='register-form-each-input'><?php echo form_input($email); ?></div>
         </div>
 
-        <div id='register-form-each'>
-            <div id='register-form-each-label'><?php echo lang('create_merchant_password_label', 'password');?></div>
-            <div id='register-form-each-input'><?php echo form_input($password);?></div>
-        </div>
+        <?php echo form_hidden('id', $user->id); ?>
+        <?php echo form_hidden($csrf); ?>
 
-        <div id='register-form-each'>
-            <div id='register-form-each-label'><?php echo lang('create_merchant_password_confirm_label', 'password_confirm');?></div>
-            <div id='register-form-each-input'><?php echo form_input($password_confirm);?></div>
-        </div>
-
-        <div id='register-form-submit'>
-            <?php echo form_submit('submit', 'Sign Up');?>
+        <div id='register-form-submit'>     
+                <button name="button_action" type="submit" value="confirm">Confirm</button>
         </div>
 
     </div>
 
     <?php echo form_close(); ?>
-
-    <div id='login-tnc'>by clicking Log In, Facebook you agree to our new <a href='<?php echo base_url(); ?>terms-and-conditions' target='_blank'>T&C's</a></div>
-
 </div>

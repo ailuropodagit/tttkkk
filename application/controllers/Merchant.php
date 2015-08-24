@@ -13,6 +13,7 @@ class Merchant extends CI_Controller {
         $this->lang->load('auth');
         $this->main_group_id = $this->config->item('group_id_merchant');
         $this->supervisor_group_id = $this->config->item('group_id_supervisor');
+        $this->album_merchant = $this->config->item('album_merchant');
     }
 
     // redirect if needed, otherwise display the user list
@@ -53,7 +54,7 @@ class Merchant extends CI_Controller {
                 //if the login is successful
                 //redirect them back to the home page
                 $this->session->set_flashdata('message', $this->ion_auth->messages());
-                redirect('/', 'refresh');
+                redirect('merchant/dashboard/'.generate_slug($this->session->userdata('company_name')), 'refresh');
             } else if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember, $this->supervisor_group_id)) {
                 $this->session->set_flashdata('message', $this->ion_auth->messages());
                 redirect('/', 'refresh');
@@ -449,7 +450,7 @@ class Merchant extends CI_Controller {
                 'me_state_id' => $this->input->post('me_state_id'),
                 'phone' => $this->input->post('phone'),
                 'me_ssm' => $this->input->post('me_ssm'),
-                'profile_image' => 'demo-logo-company.png',
+                'profile_image' => $this->config->item['merchant_default_image'],
                 //'me_website_url' => $this->input->post('website'),
                 'main_group_id' => $this->main_group_id,
                 'password_visible' => $password
@@ -555,7 +556,7 @@ class Merchant extends CI_Controller {
 
         $the_row = $this->m_custom->get_one_table_record('users', 'slug', $slug);
         if ($the_row) {
-            $this->data['logo_url'] = $this->config->item('album_merchant') . $the_row->profile_image;
+            $this->data['logo_url'] = $this->album_merchant . $the_row->profile_image;
             $this->data['company_name'] = $the_row->company;
             $this->data['address'] = $the_row->address;
             $this->data['phone'] = $the_row->phone;
@@ -617,9 +618,11 @@ class Merchant extends CI_Controller {
                 }
             } else if ($this->input->post('button_action') == "change_image") {
                 $upload_rule = array(
-                    'upload_path' => $this->config->item('album_merchant'),
+                    'upload_path' => $this->album_merchant,
                     'allowed_types' => $this->config->item('allowed_types'),
                     'max_size' => $this->config->item('max_size'),
+                    'max_width' => $this->config->item('max_width'),
+                    'max_height' => $this->config->item('max_height'),
                 );
 
                 $this->load->library('upload', $upload_rule);
@@ -658,7 +661,7 @@ class Merchant extends CI_Controller {
             }
         }
 
-        $this->data['logo_url'] = $this->config->item('album_merchant') . $user->profile_image;
+        $this->data['logo_url'] = $this->album_merchant . $user->profile_image;
 
         // display the edit user form
         $this->data['csrf'] = $this->_get_csrf_nonce();
@@ -889,7 +892,7 @@ class Merchant extends CI_Controller {
 
         if (isset($_POST) && !empty($_POST)) {
             $upload_rule = array(
-                'upload_path' => $this->config->item('album_merchant'),
+                'upload_path' => $this->album_merchant,
                 'allowed_types' => $this->config->item('allowed_types'),
                 'max_size' => $this->config->item('max_size'),
             );
@@ -918,7 +921,7 @@ class Merchant extends CI_Controller {
         }
 
         $user = $this->ion_auth->user($id)->row();
-        $this->data['logo_url'] = $this->config->item('album_merchant') . $user->profile_image;
+        $this->data['logo_url'] = $this->album_merchant . $user->profile_image;
 
         // set the flash data error message if there is one
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
