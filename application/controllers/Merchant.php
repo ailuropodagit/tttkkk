@@ -806,12 +806,17 @@ class Merchant extends CI_Controller {
                 $this->data['googlemap_url'] = 'https://www.google.com/maps/place/'.$the_branch->google_map_url;
                 $this->load->library('googlemaps');
 
-                $config['center'] = $the_branch->google_map_url;
+                $location = $the_branch->google_map_url;
+                if(IsNullOrEmptyString($location)){
+                    $location = $the_branch->address;
+                }
+                
+                $config['center'] = $location;
                 $config['zoom'] = '17';
                 $this->googlemaps->initialize($config);
 
                 $marker = array();
-                $marker['position'] = $the_branch->google_map_url;
+                $marker['position'] = $location;
                 $this->googlemaps->add_marker($marker);
                 $this->data['map'] = $this->googlemaps->create_map();
                 $this->data['page_path_name'] = 'merchant/map';
