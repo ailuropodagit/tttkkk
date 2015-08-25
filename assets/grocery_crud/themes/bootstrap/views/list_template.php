@@ -103,11 +103,16 @@
                                         <div class="clear"></div>
                                     </a>
                                 <?php }?>
-
+                                
+                                <?php if ( !$unset_search ){ ?>
                                 <a class="btn btn-primary search-button t5">
+                                <?php }else{ ?>
+                                <a class="btn btn-primary search-button t5" style="display:none;">    
+                                <?php } ?>
                                     <i class="fa fa-search"></i>
                                     <input type="text" name="search" class="search-input" />
                                 </a>
+                                
                             </div>
                             <div class="clear"></div>
                         </div>

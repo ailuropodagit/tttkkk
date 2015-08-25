@@ -737,7 +737,16 @@ class Merchant extends CI_Controller {
         try {
             $crud = new grocery_CRUD();
 
-            $crud->set_theme('datatables');    //datatables, flexigrid, bootstrap
+            $this->load->library('user_agent');
+            if ($this->agent->is_mobile() && $this->agent->is_tablet() === FALSE) {              
+                $crud->set_theme('bootstrap');
+                $crud->unset_search();
+            } else {
+                $crud->set_theme('datatables');    //datatables, flexigrid, bootstrap
+            }
+            
+            //($this->agent->is_tablet() === TRUE) ? $is_tablet = "Yes" : $is_tablet = "No"; echo "Using tablet: $is_tablet";
+            
             $crud->set_table('merchant_branch');
             $crud->set_subject('Branch');
 
@@ -752,7 +761,7 @@ class Merchant extends CI_Controller {
             $crud->callback_insert(array($this, 'branch_insert_callback'));
             $crud->callback_column('address', array($this, '_full_text'));
             $crud->unset_export();
-            $crud->unset_print();
+            $crud->unset_print();            
             
             $state = $crud->getState();
 
@@ -840,7 +849,14 @@ class Merchant extends CI_Controller {
         try {
             $crud = new grocery_CRUD();
 
-            $crud->set_theme('datatables');    //datatables, flexigrid, bootstrap
+            $this->load->library('user_agent');
+            if ($this->agent->is_mobile() && $this->agent->is_tablet() === FALSE) {              
+                $crud->set_theme('bootstrap');
+                $crud->unset_search();
+            } else {
+                $crud->set_theme('datatables');    //datatables, flexigrid, bootstrap
+            }
+            
             $crud->set_table('users');
             $crud->set_subject('Supervisor');
             $crud->columns('username', 'password_visible');
