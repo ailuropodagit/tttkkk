@@ -25,11 +25,11 @@
     border-left: 1px solid lightgray;
     border-right: 1px solid lightgray;
     background-color: white;
-    padding: 7px 10px 7px 10px;
+    padding: 7px 25px 7px 25px;
 }
 
 #header-menu-mobile li:first-child {
-    padding: 10px 10px 7px 10px;
+    padding: 10px 25px 7px 25px;
 }
 
 #header-menu-mobile a {

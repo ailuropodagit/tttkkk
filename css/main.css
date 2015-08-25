@@ -266,13 +266,54 @@ p {
     padding: 25px;
 }
 
-#body-content-logo {
-    float: left;
+#body-right-sidebar {
+    float: right;
+    width: 200px;
 }
 
-#body-content-logo-img {
-    width: 180px;
-    margin: 40px 40px 40px 0px;
+#body-right-sidebar ul {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+.body-right-sidebar-bar {
+    border-top: 1px solid lightgray;
+    padding: 7px 15px 7px 15px;
+    display: block;
+}
+
+.body-right-sidebar-bar-active {
+    background-color: #e8060a;
+    color: white !important;
+}
+
+#body-right-sidebar li a {
+    text-decoration: none;
+    color: black;
+    font-size: 14px;
+}
+
+#body-right-sidebar li a:hover {
+    text-decoration: underline;
+}
+
+#body-left-main {
+    float: left;
+    width: calc(100% - 230px);
+    border: 1px solid red;
+}
+
+#body-left-main-content {
+
+}
+
+.arrow-right {
+    width: 0; 
+    height: 0; 
+    border-top: 60px solid transparent;
+    border-bottom: 60px solid transparent;
+    border-left: 60px solid green;
 }
 
 /* LOGIN REGISTER
@@ -388,6 +429,18 @@ p {
     line-height: 20px;
     margin: 0px 0px 30px 0px;
     color: gray;
+}
+
+/* ABOUT US
+******************************/
+
+#about-us-logo {
+    float: left;
+}
+
+#about-us-logo-img {
+    width: 180px;
+    margin: 40px 40px 40px 0px;
 }
 
 /* CONTACT US

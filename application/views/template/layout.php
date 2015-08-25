@@ -1,7 +1,4 @@
-<?php
-$this->load->view('template/header');
-
-?>
+<?php $this->load->view('template/header'); ?>
 
 <div id='wrapper'>
     <div id='body'>
@@ -11,6 +8,4 @@ $this->load->view('template/header');
     </div>
 </div>
 
-<?php
-$this->load->view('template/footer');
-?>
+<?php $this->load->view('template/footer'); ?>

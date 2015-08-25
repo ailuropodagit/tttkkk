@@ -58,8 +58,7 @@ class Merchant extends CI_Controller {
             } else if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember, $this->supervisor_group_id)) {
                 $this->session->set_flashdata('message', $this->ion_auth->messages());
                 redirect('/', 'refresh');
-            }
-            else {
+            } else {
                 // if the login was un-successful
                 // redirect them back to the login page
                 $this->session->set_flashdata('message', $this->ion_auth->errors());
@@ -553,7 +552,6 @@ class Merchant extends CI_Controller {
 
     //View the merchant dashboard upper part
     function dashboard($slug) {
-
         $the_row = $this->m_custom->get_one_table_record('users', 'slug', $slug);
         if ($the_row) {
             $this->data['logo_url'] = $this->album_merchant . $the_row->profile_image;
@@ -565,16 +563,16 @@ class Merchant extends CI_Controller {
             $this->data['facebook_url'] = $the_row->me_facebook_url;
             $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
             $this->data['page_path_name'] = 'merchant/dashboard';
-            $this->load->view('template/layout', $this->data);
+            $this->load->view('template/layout_right', $this->data);
         } else {
             redirect('/', 'refresh');
         }
     }
 
     //merchant profile view and edit page
-    function profile() {;
+    function profile() {
         
-    if(!check_correct_login_type($this->main_group_id)&&!check_correct_login_type($this->supervisor_group_id)){
+        if(!check_correct_login_type($this->main_group_id)&&!check_correct_login_type($this->supervisor_group_id)){
             redirect('/', 'refresh');
         }
                
@@ -713,7 +711,7 @@ class Merchant extends CI_Controller {
         );
 
         $this->data['page_path_name'] = 'merchant/profile';
-        $this->load->view('template/layout', $this->data);
+        $this->load->view('template/layout_right', $this->data);
 //        $this->load->view('template/header');
 //        $this->_render_page('merchant/profile', $this->data);
 //        $this->load->view('template/layout_management', $this->branch_management());

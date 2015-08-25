@@ -1,3 +1,10 @@
+<?php
+//IF MERCHANT LOGGED IN
+if($this->ion_auth->logged_in()){
+    redirect('merchant/profile');
+}
+?>
+
 <div id="login">
 
     <div id='login-link'><a href='<?php echo base_url(); ?>user/login'>User Login</a></div>
