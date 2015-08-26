@@ -15,4 +15,9 @@ class Home extends CI_Controller {
         $this->load->view('template/layout_both', $data);
     }
 
+    public function category(){
+        $data['page_path_name'] = 'page/category';
+        $this->load->view('template/layout', $data);
+    }
+    
 }

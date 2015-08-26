@@ -25,4 +25,3 @@ foreach ($cat_list as $t_cat) {
 <?php
 } 
 ?>
-
