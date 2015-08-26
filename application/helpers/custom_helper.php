@@ -62,6 +62,19 @@ function check_correct_login_type($desired_group_id = NULL){
     }
 }
 
+if (!function_exists('check_is_login')) {
+function check_is_login(){
+        $ci = & get_instance();
+        $ci->load->library('ion_auth');
+        
+        //Check is it login
+        if (!$ci->ion_auth->logged_in()) {
+            return FALSE;
+        }
+        return TRUE;
+    }
+}
+
 if (!function_exists('send_mail_simple')) {
 
     function send_mail_simple($to_email = '', $to_subject = '', $to_message = '', $success_message = '') {

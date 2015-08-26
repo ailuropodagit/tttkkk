@@ -22,16 +22,16 @@ class M_custom extends CI_Model {
     }
 
     //To check is this value is unique in DB
-    public function check_is_value_unique($the_table, $the_column, $the_value, $the_id_column = NULL, $the_id = NULL ) {
+    public function check_is_value_unique($the_table, $the_column, $the_value, $the_id_column = NULL, $the_id = NULL) {
         if (empty($the_value)) {
             return FALSE;
         }
-        
+
         if (!empty($the_id) && is_numeric($the_id)) {
             $username_old = $this->db->where($the_id_column, $the_id)->get($the_table)->row()->$the_column;
-            $this->db->where($the_column. "!=", $username_old);
+            $this->db->where($the_column . "!=", $username_old);
         }
-        
+
         $num_row = $this->db->where($the_column, $the_value)->get($the_table)->num_rows();
         if ($num_row > 0) {
             return FALSE;
@@ -40,8 +40,8 @@ class M_custom extends CI_Model {
     }
 
     //To find a record in DB with one keyword
-    public function get_one_table_record($the_table, $the_column, $the_value){
-       if (empty($the_value)) {
+    public function get_one_table_record($the_table, $the_column, $the_value) {
+        if (empty($the_value)) {
             return FALSE;
         }
         $query = $this->db->get_where($the_table, array($the_column => $the_value), 1);
@@ -50,5 +50,17 @@ class M_custom extends CI_Model {
         }
         return $query->row();
     }
-    
+
+    //To get all main category
+    function getCategory() {
+        $query = $this->db->get_where('category', array('category_level' => '0'));
+        return $query->result();
+    }
+
+    //To get related sub category by pass in the main category id
+    function getSubCategory($id) {
+        $query = $this->db->get_where('category', array('main_category_id' => $id, 'category_level' => '1'));
+        return $query->result();
+    }
+
 }

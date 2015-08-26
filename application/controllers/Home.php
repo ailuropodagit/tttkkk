@@ -11,7 +11,7 @@ class Home extends CI_Controller {
     }
 
     public function index() {
-
+        $data['left_path_name'] = 'template/sidebar_left';
         $data['page_path_name'] = 'home';
 //            $data['state_list'] = $this->m_custom->get_static_option_array('state','0','All');
 //
@@ -20,7 +20,7 @@ class Home extends CI_Controller {
 //                'id' => 'me_state_id',
 //            );
         //load template
-        $this->load->view('template/layout', $data);
+        $this->load->view('template/layout_both', $data);
     }
 
 }

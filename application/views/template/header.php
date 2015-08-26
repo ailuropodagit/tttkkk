@@ -47,7 +47,7 @@
                         <li><a href='#'><i class="fa fa-th-large header-menu-icon"></i>Categories</a></li>
                         <li><a href='#'><i class="fa fa-fire header-menu-icon"></i>Hot Deal</a></li>
                         <li><a href='#'><i class="fa fa-diamond header-menu-icon"></i>Redemption</a></li>
-                        <?php if($this->ion_auth->logged_in()){ ?>                    
+                        <?php if(check_is_login()){ ?>                    
                         <li><a href='<?php echo base_url(); ?>user/logout'><i class="fa fa-user header-menu-icon"></i>Logout</a></li>
                         <?php } else { ?>
                         <li><a href='<?php echo base_url(); ?>user/login'><i class="fa fa-user header-menu-icon"></i>Login</a></li>
@@ -70,7 +70,7 @@
                     <li><a href='#'><i class="fa fa-th-large header-menu-icon"></i>Categories</a></li>
                     <li><a href='#'><i class="fa fa-fire header-menu-icon"></i>Hot Deal</a></li>
                     <li><a href='#'><i class="fa fa-diamond header-menu-icon"></i>Redemption</a></li>
-                    <?php if($this->ion_auth->logged_in()){ ?>                    
+                    <?php if(check_is_login()){ ?>                    
                     <li><a href='<?php echo base_url(); ?>user/logout'><i class="fa fa-user header-menu-icon"></i>Logout</a></li>
                     <?php } else { ?>
                     <li><a href='<?php echo base_url(); ?>user/login'><i class="fa fa-user header-menu-icon"></i>Login</a></li>
