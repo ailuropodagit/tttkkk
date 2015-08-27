@@ -549,10 +549,20 @@ class user extends CI_Controller {
 
     //View the user dashboard upper part
     function dashboard($user_id) {
-        
+        $the_row = $this->m_custom->get_one_table_record('users', 'id', $user_id);
+        if ($the_row) {
+            $this->data['image_url'] = $this->album_user . $the_row->profile_image;
+            $this->data['first_name'] = $the_row->first_name;
+            $this->data['last_name'] = $the_row->last_name; 
+            $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+            $this->data['page_path_name'] = 'user/dashboard';
+            $this->load->view('template/layout_right', $this->data);
+        } else {
+            redirect('/', 'refresh');
+        }
     }
-    
-     //user profile view and edit page
+
+    //user profile view and edit page
     function profile() {;
         
     if(!check_correct_login_type($this->main_group_id)){
