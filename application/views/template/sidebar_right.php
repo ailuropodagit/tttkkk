@@ -17,6 +17,19 @@
         
         
         <?php
+        }else if($this->session->userdata('user_group_id')==$this->config->item('group_id_supervisor')){
+            $the_row = $this->m_custom->get_parent_table_record('users', 'id', $this->session->userdata('user_id'),'su_merchant_id','users','id');  
+
+        $dashboard = base_url() . 'merchant/dashboard/' . generate_slug($the_row->company);
+        ?>
+        
+          <li><a href='<?php echo $dashboard ?>' class='body-right-sidebar-bar body-right-sidebar-bar-active'>Dashboard</a></li>
+          <li><a href='<?php echo base_url(); ?>merchant/profile' class='body-right-sidebar-bar'>Profile</a></li>
+          <li><a href='' class='body-right-sidebar-bar'>Hot Deal Advertise</a></li>
+        <li><a href='' class='body-right-sidebar-bar'>Candie Promotion</a></li>
+        <li><a href='' class='body-right-sidebar-bar'>Picture</a></li>
+        <li><a href='' class='body-right-sidebar-bar'>User Redemption</a></li>
+        <?php
         }else{
         $dashboard = base_url() . 'user/dashboard/' . generate_slug($this->session->userdata('user_id'));
         ?>
