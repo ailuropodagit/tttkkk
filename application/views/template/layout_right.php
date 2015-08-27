@@ -3,12 +3,12 @@
 <div id='wrapper'>
     <div id='body'>
         <div id='body-content'>
-           
+            
             <!--BODY RIGHT SIDEBAR-->
             <div id="body-right-sidebar">
                 <ul>
-                    <li><a href='<?php echo base_url(); ?>merchant/dashboard' class='body-right-sidebar-bar body-right-sidebar-bar-active'>Dashboard</a></li>
-                    <li><a href='<?php echo base_url(); ?>merchant/profile' class='body-right-sidebar-bar'>Profile</a></li>
+                    <li><a href='<?php echo base_url(); ?>merchant/dashboard/<?php echo generate_slug($this->session->userdata('company_name')) ?>' class='body-right-sidebar-bar <?php if($this->router->fetch_method() == 'dashboard'){ echo "body-right-sidebar-bar-active"; } ?>'>Dashboard</a></li>
+                    <li><a href='<?php echo base_url(); ?>merchant/profile' class='body-right-sidebar-bar <?php if($this->router->fetch_method() == 'profile'){ echo "body-right-sidebar-bar-active"; } ?>'>Profile</a></li>
                     <li><a href='' class='body-right-sidebar-bar'>Password</a></li>
                     <li><a href='' class='body-right-sidebar-bar'>Hot Deal Advertise</a></li>
                     <li><a href='' class='body-right-sidebar-bar'>Candie Promotion</a></li>
