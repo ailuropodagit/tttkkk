@@ -12,7 +12,7 @@
 <div id='wrapper'>
     <div id='body'>
         <div id='body-content'>
-            <?php $this->load->view('template/sidebar'); ?>
+            <?php $this->load->view('template/sidebar_right'); ?>
 
             <!--BODY LEFT MAIN-->
             <div id="body-left-main">

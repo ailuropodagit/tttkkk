@@ -139,7 +139,7 @@ class user extends CI_Controller {
             $this->data['function_use_for'] = $function_use_for;          
             
             $this->data['page_path_name'] = 'auth/change_password';
-            $this->load->view('template/layout', $this->data);
+            $this->load->view('template/layout_right', $this->data);
         } else {
             $identity = $this->session->userdata('identity');
 
@@ -547,6 +547,11 @@ class user extends CI_Controller {
         }
     }
 
+    //View the user dashboard upper part
+    function dashboard($user_id) {
+        
+    }
+    
      //user profile view and edit page
     function profile() {;
         
@@ -727,7 +732,7 @@ class user extends CI_Controller {
             );
 
         $this->data['page_path_name'] = 'user/profile';
-        $this->load->view('template/layout', $this->data);
+        $this->load->view('template/layout_right', $this->data);
     }
     
     // edit a user
