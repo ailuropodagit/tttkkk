@@ -36,7 +36,7 @@ class M_custom extends CI_Model {
         return TRUE;
     }
 
-    //To find a record in DB with one keyword
+    //To find one record in DB with one keyword
     public function get_one_table_record($the_table, $the_column, $the_value) {
         if (empty($the_value)) {
             return FALSE;
@@ -48,6 +48,32 @@ class M_custom extends CI_Model {
         return $query->row();
     }
 
+    //To find many records in DB with one keyword
+    public function get_many_table_record($the_table, $the_column, $the_value){
+        $query = $this->db->get_where($the_table, array($the_column => $the_value));
+        return $query->result();
+    }
+    
+    //To find one record in DB of parent table with one keyword
+    public function get_parent_table_record($the_table, $the_column, $the_value, $foreign_column, $parent_table, $primary_column) {
+        if (empty($the_value)) {
+            return FALSE;
+        }
+        $query = $this->db->get_where($the_table, array($the_column => $the_value), 1);
+        if ($query->num_rows() !== 1) {
+            return FALSE;
+        }
+        
+        $foreign_row = $query->row();
+        $foreign_key = $foreign_row->$foreign_column;
+        $parent_query = $this->db->get_where($parent_table, array($primary_column => $foreign_key), 1);
+        if ($parent_query->num_rows() !== 1) {
+            return FALSE;
+        }
+        
+        return $parent_query->row();
+    }
+    
     //To get all main category
     function getCategory() {
         $query = $this->db->get_where('category', array('category_level' => '0'));
@@ -60,4 +86,9 @@ class M_custom extends CI_Model {
         return $query->result();
     }
 
+    function getBranchList($id){
+        $query = $this->db->get_where('merchant_branch', array('merchant_id' => $id));
+        return $query->result();
+    }
+    
 }

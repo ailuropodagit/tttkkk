@@ -3,6 +3,8 @@
 <div id='wrapper'>
     <div id='body'>
         <div id='body-content'>
+           
+            <?php $this->load->view('template/sidebar_right'); ?>
             
             <!--BODY RIGHT SIDEBAR-->
             <div id="body-right-sidebar">

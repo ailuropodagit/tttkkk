@@ -141,7 +141,7 @@ class Merchant extends CI_Controller {
             $this->data['function_use_for'] = $function_use_for;
 
             $this->data['page_path_name'] = 'auth/change_password';
-            $this->load->view('template/layout', $this->data);
+            $this->load->view('template/layout_right', $this->data);
         } else {
             $identity = $this->session->userdata('identity');
 
@@ -558,7 +558,7 @@ class Merchant extends CI_Controller {
             $this->data['company_name'] = $the_row->company;
             $this->data['address'] = $the_row->address;
             $this->data['phone'] = $the_row->phone;
-            $this->data['show_outlet'] = '';
+            $this->data['show_outlet'] = base_url().'merchant/outlet/'.$slug;
             $this->data['website_url'] = $the_row->me_website_url;
             $this->data['facebook_url'] = $the_row->me_facebook_url;
             $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
@@ -569,6 +569,29 @@ class Merchant extends CI_Controller {
         }
     }
 
+    //View the merchant dashboard upper part
+    function outlet($slug) {
+        $the_row = $this->m_custom->get_one_table_record('users', 'slug', $slug);
+        if ($the_row) {
+            $this->data['logo_url'] = $this->album_merchant . $the_row->profile_image;
+            $this->data['company_name'] = $the_row->company;
+            $this->data['address'] = $the_row->address;
+            $this->data['phone'] = $the_row->phone;
+            $this->data['show_outlet'] = '';
+            $this->data['website_url'] = $the_row->me_website_url;
+            $this->data['facebook_url'] = $the_row->me_facebook_url;
+            $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+            $this->data['page_path_name'] = 'merchant/outlet';
+            
+            $this->load->library('table');
+            $this->table->set_heading(array('Name','Address', 'Phone', 'View Map'));
+            $this->data['branch_list'] = $this->m_custom->getBranchList($the_row->id); 
+            $this->load->view('template/layout_right', $this->data);
+        } else {
+            redirect('/', 'refresh');
+        }
+    }
+    
     //merchant profile view and edit page
     function profile() {
         
@@ -750,9 +773,9 @@ class Merchant extends CI_Controller {
             $crud->set_table('merchant_branch');
             $crud->set_subject('Branch');
 
-            $crud->columns('name', 'address', 'state_id');
+            $crud->columns('name', 'address', 'phone', 'state_id');
             $crud->required_fields('name', 'address', 'state_id');
-            $crud->fields('name', 'address', 'state_id', 'google_map_url');
+            $crud->fields('name', 'address','phone', 'state_id', 'google_map_url');
             $crud->display_as('state_id', 'State');
             $crud->display_as('google_map_url', 'Google Map Coordinate');
             $crud->unset_fields('merchant_id');
@@ -931,54 +954,54 @@ class Merchant extends CI_Controller {
         }
     }
     
-    function upload_image() {
-
-        redirect('/','refresh'); //no use currently, disable this function first
-        if (!$this->ion_auth->logged_in()) {
-            redirect('merchant/login', 'refresh');
-        }
-
-        $id = $this->ion_auth->user()->row()->id;
-
-        if (isset($_POST) && !empty($_POST)) {
-            $upload_rule = array(
-                'upload_path' => $this->album_merchant,
-                'allowed_types' => $this->config->item('allowed_types'),
-                'max_size' => $this->config->item('max_size'),
-            );
-
-            $this->load->library('upload', $upload_rule);
-
-            if (!$this->upload->do_upload()) {
-                $error = array('error' => $this->upload->display_errors());
-                $this->session->set_flashdata('message', $this->upload->display_errors());
-            } else {
-                $image_data = array('upload_data' => $this->upload->data());
-                //$this->ion_auth->set_message('image_upload_successful');
-
-                $data = array(
-                    'profile_image' => $this->upload->data('file_name'),
-                );
-
-                if ($this->ion_auth->update($id, $data)) {
-                    $this->session->set_flashdata('message', 'Merchant logo success update.');
-                    redirect('merchant/profile', 'refresh');
-                } else {
-
-                    $this->session->set_flashdata('message', $this->ion_auth->errors());
-                }
-            }
-        }
-
-        $user = $this->ion_auth->user($id)->row();
-        $this->data['logo_url'] = $this->album_merchant . $user->profile_image;
-
-        // set the flash data error message if there is one
-        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-
-        $this->data['page_path_name'] = 'merchant/upload_image';
-        $this->load->view('template/layout', $this->data);
-    }
+//    function upload_image() {
+//
+//        redirect('/','refresh'); //no use currently, disable this function first
+//        if (!$this->ion_auth->logged_in()) {
+//            redirect('merchant/login', 'refresh');
+//        }
+//
+//        $id = $this->ion_auth->user()->row()->id;
+//
+//        if (isset($_POST) && !empty($_POST)) {
+//            $upload_rule = array(
+//                'upload_path' => $this->album_merchant,
+//                'allowed_types' => $this->config->item('allowed_types'),
+//                'max_size' => $this->config->item('max_size'),
+//            );
+//
+//            $this->load->library('upload', $upload_rule);
+//
+//            if (!$this->upload->do_upload()) {
+//                $error = array('error' => $this->upload->display_errors());
+//                $this->session->set_flashdata('message', $this->upload->display_errors());
+//            } else {
+//                $image_data = array('upload_data' => $this->upload->data());
+//                //$this->ion_auth->set_message('image_upload_successful');
+//
+//                $data = array(
+//                    'profile_image' => $this->upload->data('file_name'),
+//                );
+//
+//                if ($this->ion_auth->update($id, $data)) {
+//                    $this->session->set_flashdata('message', 'Merchant logo success update.');
+//                    redirect('merchant/profile', 'refresh');
+//                } else {
+//
+//                    $this->session->set_flashdata('message', $this->ion_auth->errors());
+//                }
+//            }
+//        }
+//
+//        $user = $this->ion_auth->user($id)->row();
+//        $this->data['logo_url'] = $this->album_merchant . $user->profile_image;
+//
+//        // set the flash data error message if there is one
+//        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+//
+//        $this->data['page_path_name'] = 'merchant/upload_image';
+//        $this->load->view('template/layout', $this->data);
+//    }
 
     // edit a user
     function edit_user($id) {
