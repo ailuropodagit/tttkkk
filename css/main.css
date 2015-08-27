@@ -263,6 +263,7 @@ a:active {
     border-left: 1px solid #ccccc8;
     border-right: 1px solid #ccccc8;
     border-bottom: 1px solid #ccccc8;
+    min-height: 500px;
 }
 
 #body-content {
