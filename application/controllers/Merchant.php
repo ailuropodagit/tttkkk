@@ -581,10 +581,8 @@ class Merchant extends CI_Controller {
             $this->data['website_url'] = $the_row->me_website_url;
             $this->data['facebook_url'] = $the_row->me_facebook_url;
             $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-            $this->data['page_path_name'] = 'merchant/outlet';
+            $this->data['page_path_name'] = 'merchant/outlet';         
             
-            $this->load->library('table');
-            $this->table->set_heading(array('Name','Address', 'Phone', 'View Map'));
             $this->data['branch_list'] = $this->m_custom->getBranchList($the_row->id); 
             $this->load->view('template/layout_right', $this->data);
         } else {
@@ -831,7 +829,7 @@ class Merchant extends CI_Controller {
                 $the_merchant= $this->m_custom->get_one_table_record('users', 'id', $the_branch->merchant_id);
                 $this->data['logo_url'] = $this->album_merchant . $the_merchant->profile_image;
                 $this->data['company_name'] = $the_merchant->company;              
-                $this->data['phone'] = $the_merchant->phone;
+                $this->data['phone'] = $the_branch->phone;
                 
                 $this->data['address'] = $the_branch->address;
                 $this->data['googlemap_url'] = 'https://www.google.com/maps/place/'.$the_branch->google_map_url;
