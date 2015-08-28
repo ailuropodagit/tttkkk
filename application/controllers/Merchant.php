@@ -589,7 +589,6 @@ class Merchant extends CI_Controller {
                 $this->data['branch_list'] = $this->m_custom->getBranchList($the_row->id);
             }
 
-            $this->load->view('template/layout_right_menu', $this->data);
             $this->data['page_path_name'] = 'merchant/outlet';         
             
             $this->data['branch_list'] = $this->m_custom->getBranchList($the_row->id); 

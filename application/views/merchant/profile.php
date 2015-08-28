@@ -68,13 +68,6 @@
                 <?php } ?>
                 
                 <br/><br/>
-                
-                <button name="button_action" type="submit" value="add_branch" >Add Branch</button>
-                <button name="button_action" type="submit" value="view_branch" >View Branch</button>           
-                <?php if (check_correct_login_type($this->main_group_id)) { ?>
-                    <button name="button_action" type="submit" value="add_supervisor" >Add Supervisor</button>
-                    <button name="button_action" type="submit" value="view_supervisor" >View Supervisor</button>          
-                <?php } ?>
             </div>
 
         </div>
@@ -86,5 +79,14 @@
 <div id="float-fix"></div>
 
 <?php if (check_correct_login_type($this->main_group_id)) { ?>
-    <div id='login-tnc'><a href='<?php echo base_url(); ?>' target='_blank'>Submit SSM forms</a></div>
+    <a href='<?php echo base_url(); ?>' target='_blank'>Submit SSM forms</a>
 <?php } ?>
+
+    <div style="float:right">
+        <a href="<?php echo base_url() ?>merchant/branch/add">Add Branch</a> &nbsp;
+        <a href="<?php echo base_url() ?>merchant/branch">View Branch</a> &nbsp;
+        <?php if (check_correct_login_type($this->main_group_id)) { ?> 
+        <a href="<?php echo base_url() ?>merchant/supervisor/add">Add Supervisor</a> &nbsp;
+        <a href="<?php echo base_url() ?>merchant/merchant/supervisor">View Supervisor</a>
+        <?php } ?>
+    </div>
