@@ -1,15 +1,17 @@
 <div id="infoMessage"><?php echo $message; ?></div>
 
-<img src="<?php echo base_url($logo_url); ?>" id='header-logo-img'><br/>
-<?php echo form_open_multipart(uri_string()); ?>
-<?php if (check_correct_login_type($this->main_group_id)) { ?>
-    <input type="file" name="userfile" size="20" />
-
-    <br /><br />
-
-    <button name="button_action" type="submit" value="change_image" >Change Logo</button>
-<?php } ?>
-</form>
+<div style="margin: 0px auto 0px auto; width: 200px; padding: 0px 0px 15px 0px; text-align: center;">
+    <img src="<?php echo base_url($logo_url); ?>" id='header-logo-img'>
+    <br/>
+    <?php echo form_open_multipart(uri_string()); ?>
+        <?php if (check_correct_login_type($this->main_group_id)) { ?>
+            <input type="file" name="userfile" size="20" />
+            <br /><br />
+            <button name="button_action" type="submit" value="change_image" >Change Logo</button>
+        <?php } ?>
+    <?php echo form_close(); ?>
+</div>
+    
 <?php echo form_open(uri_string()); ?>
 <div id='register'>
     <div id='register-form'>
@@ -46,8 +48,6 @@
 
         <?php echo form_hidden('id', $user->id); ?>
         <?php echo form_hidden($csrf); ?>
-
-
 
         <div id='register-form-submit'>
             <button name="button_action" type="submit" value="add_branch" >Add Branch</button>

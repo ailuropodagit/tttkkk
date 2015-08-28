@@ -7,17 +7,24 @@ class Home extends CI_Controller {
     }
 
     public function index() {
+        
         //DATA
         $data['left_path_name'] = 'template/sidebar_left';
         $data['page_path_name'] = 'home';
         
         //LOAD TEMPLATE
-        $this->load->view('template/layout_both', $data);
+        $this->load->view('template/layout_advertisement', $data);
+        
     }
 
-    public function category(){
-        $data['page_path_name'] = 'page/category';
-        $this->load->view('template/layout', $data);
+    public function category() {
+        
+        //DATA
+        $data['page_path_name'] = 'category';
+        
+        //LOAD TEMPLATE
+        $this->load->view('template/layout_advertisement', $data);
+        
     }
     
 }

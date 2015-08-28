@@ -1,15 +1,15 @@
 <div id="infoMessage"><?php echo $message; ?></div>
 
-<img src="<?php echo base_url($logo_url); ?>" id='header-logo-img'><br/>
-<?php echo form_open_multipart(uri_string()); ?>
-
-    <input type="file" name="userfile" size="20" />
-
-    <br /><br />
-
-    <button name="button_action" type="submit" value="change_image" >Change Logo</button>
-
-</form>
+<div style="margin: 0px auto 0px auto; width: 200px; padding: 0px 0px 15px 0px;">
+    <img src="<?php echo base_url($logo_url); ?>" id='header-logo-img'>
+    <br/>
+    <?php echo form_open_multipart(uri_string()); ?>
+        <input type="file" name="userfile" size="20" />
+        <br /><br />
+        <button name="button_action" type="submit" value="change_image" >Change Logo</button>
+    <?php echo form_close(); ?>
+</div>
+    
 <?php echo form_open(uri_string()); ?>
 <div id='register'>
     <div id='register-form'>
@@ -31,9 +31,12 @@
 
         <div id='register-form-each'>
             <div id='register-form-each-label'><?php echo lang('create_user_dob_label'); ?></div>
-            <div id='register-form-each-input-small'><?php echo form_dropdown($day, $day_list,$b_day); ?></div>
-            <div id='register-form-each-input-small'><?php echo form_dropdown($month, $month_list,$b_month); ?></div>
-            <div id='register-form-each-input-small'><?php echo form_dropdown($year, $year_list,$b_year); ?></div>
+            <div id="register-form-each-input-dob">
+                <div id='register-form-each-input-dob-day'><?php echo form_dropdown($day, $day_list,$b_day); ?></div>
+                <div id='register-form-each-input-dob-month'><?php echo form_dropdown($month, $month_list,$b_month); ?></div>
+                <div id='register-form-each-input-dob-year'><?php echo form_dropdown($year, $year_list,$b_year); ?></div>
+                <div id="float-fix"></div>
+            </div>
         </div>
 
         <div id='register-form-each'>
