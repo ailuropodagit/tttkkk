@@ -432,7 +432,10 @@ class Merchant extends CI_Controller {
             $email = strtolower($this->input->post('email'));
             $password = $this->input->post('password');
             $company = $this->input->post('company');
-
+            $me_ssm = $this->input->post('me_ssm');
+            $address = $this->input->post('address');
+            $phone = $this->input->post('phone');
+            
 //            if(!$this->m_custom->check_is_value_unique('users','slug',$slug)){               
 //                $this->ion_auth->set_error('account_creation_duplicate_company_name');
 //                redirect("merchant/register", 'refresh');
@@ -444,11 +447,11 @@ class Merchant extends CI_Controller {
                 //'last_name' => $this->input->post('last_name'),
                 'company' => $company,
                 'slug' => $slug,
-                'address' => $this->input->post('address'),
+                'address' => $address,
                 'me_state_id' => $this->input->post('me_state_id'),
-                'phone' => $this->input->post('phone'),
-                'me_ssm' => $this->input->post('me_ssm'),
-                'profile_image' => $this->config->item['merchant_default_image'],
+                'phone' => $phone,
+                'me_ssm' => $me_ssm,
+                'profile_image' => $this->config->item('merchant_default_image'),
                 //'me_website_url' => $this->input->post('website'),
                 'main_group_id' => $this->main_group_id,
                 'password_visible' => $password
@@ -462,7 +465,13 @@ class Merchant extends CI_Controller {
         if ($this->form_validation->run() == true && $this->ion_auth->register($username, $password, $email, $additional_data, $group_ids)) {
             // check to see if we are creating the user
             $this->session->set_flashdata('message', $this->ion_auth->messages());
-            $get_status = send_mail_simple($email, 'Your Keppo Merchant Account Success Created', 'Company Name:' . $company . '<br/>Username:' . $username . '<br/>E-mail:' . $email . '<br/>Password:' . $password, 'create_user_send_email_success');
+            $get_status = send_mail_simple($email, 'Your Keppo Merchant Account Success Created', 'Company Name : ' . $company . 
+                    '<br/>Register No(SSM) : ' . $me_ssm . 
+                    '<br/>Company Address : ' . $address . 
+                    '<br/>Contact Number : ' . $phone . 
+                    '<br/>Username : ' . $username . 
+                    '<br/>E-mail : ' . $email . 
+                    '<br/>Password : ' . $password, 'create_user_send_email_success');
             if ($get_status) {
                 // if there were no errors
                 redirect("merchant/login", 'refresh');

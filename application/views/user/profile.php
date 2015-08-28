@@ -6,8 +6,9 @@
     <?php echo form_open_multipart(uri_string()); ?>
         <input type="file" name="userfile" size="20" />
         <br /><br />
-        <button name="button_action" type="submit" value="change_image" >Change Logo</button>
-    <?php echo form_close(); ?>
+        <button name="button_action" type="submit" value="change_image" >Change Image</button>
+    <?php echo "<span class='image-upload-guide'>".$this->config->item('image_upload_guide')."</span>";
+    echo form_close(); ?>
 </div>
     
 <?php echo form_open(uri_string()); ?>

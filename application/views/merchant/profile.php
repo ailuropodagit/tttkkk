@@ -18,8 +18,10 @@
             <br/>
             <input type="file" name="userfile" size="20" />
             <br /><br />
-            <button name="button_action" type="submit" value="change_image" >Change Logo</button>
-        <?php } ?>
+            <button name="button_action" type="submit" value="change_image" >Change Logo</button><br />         
+        <?php 
+        echo "<span class='image-upload-guide'>".$this->config->item('image_upload_guide')."</span>";
+        } ?>
     <?php echo form_close(); ?>
 </div>
 

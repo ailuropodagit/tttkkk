@@ -113,6 +113,11 @@ a:active {
     color: #178497;
 }
 
+.image-upload-guide{
+    font-size:smaller;
+    font-style: italic;
+}
+
 /* WRAPPER
 ******************************/
 

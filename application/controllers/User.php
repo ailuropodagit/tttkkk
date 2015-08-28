@@ -430,7 +430,7 @@ class user extends CI_Controller {
                 'username' => $username,
                 'password_visible' => $password,
                 'main_group_id' => $this->main_group_id,
-                'profile_image' => $this->config->item['user_default_image'],
+                'profile_image' => $this->config->item('user_default_image'),
             );
         }
 

@@ -20,6 +20,7 @@
       </p>
 
       <?php echo form_input($user_id);?>
-      <p><?php echo form_submit('submit', lang('change_password_submit_btn'));?></p>
+      <p><?php echo form_checkbox('show_password', 'show_password'); ?> Show Password(Not Yet Done) </p>
+      <p><?php echo form_submit('submit', lang('change_password_submit_btn'));?> </p>
 
 <?php echo form_close();?>

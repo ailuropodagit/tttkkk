@@ -3,7 +3,7 @@
     <div id='login-link'><a href='<?php echo base_url(); ?>merchant/login'>Merchant Login</a></div>
     <div id='float-fix'></div>
 
-    <div id='login-title'>Log In</div>
+    <div id='login-title'>User Log In</div>
 
     <div id='login-subtitle'>Don't have an account? <a href='<?php echo base_url(); ?>user/register'>Sign Up</a></div>
 
