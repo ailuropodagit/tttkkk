@@ -83,10 +83,10 @@
 <?php } ?>
 
     <div style="float:right">
+        <?php if (check_correct_login_type($this->main_group_id)) { ?>
         <a href="<?php echo base_url() ?>merchant/branch/add">Add Branch</a> &nbsp;
-        <a href="<?php echo base_url() ?>merchant/branch">View Branch</a> &nbsp;
-        <?php if (check_correct_login_type($this->main_group_id)) { ?> 
+        <a href="<?php echo base_url() ?>merchant/branch">View Branch</a> &nbsp;        
         <a href="<?php echo base_url() ?>merchant/supervisor/add">Add Supervisor</a> &nbsp;
-        <a href="<?php echo base_url() ?>merchant/merchant/supervisor">View Supervisor</a>
+        <a href="<?php echo base_url() ?>merchant/supervisor">View Supervisor</a>
         <?php } ?>
     </div>

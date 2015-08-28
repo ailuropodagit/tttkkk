@@ -591,7 +591,6 @@ class Merchant extends CI_Controller {
 
             $this->data['page_path_name'] = 'merchant/outlet';         
             
-            $this->data['branch_list'] = $this->m_custom->getBranchList($the_row->id); 
             $this->load->view('template/layout_right_menu', $this->data);
         } else {
             redirect('/', 'refresh');
@@ -748,7 +747,7 @@ class Merchant extends CI_Controller {
     }
 
     function branch() {
-        if (!check_correct_login_type($this->main_group_id) && !check_correct_login_type($this->supervisor_group_id)) {
+        if (!check_correct_login_type($this->main_group_id)) {
             redirect('/', 'refresh');
         }
         $this->load->view('template/layout_management', $this->branch_management());

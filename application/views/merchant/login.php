@@ -46,6 +46,6 @@ if($this->ion_auth->logged_in()){
 
     <?php echo form_close(); ?>
 
-    <div id='login-tnc'>by clicking Log In, Facebook you agree to our new <a href='<?php echo base_url(); ?>terms-and-conditions' target='_blank'>T&C's</a></div>
+    <div id='login-tnc'>by clicking Log In, you agree to our new <a href='<?php echo base_url(); ?>terms-and-conditions' target='_blank'>T&C's</a></div>
 
 </div>
