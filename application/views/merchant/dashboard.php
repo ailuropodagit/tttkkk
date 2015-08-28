@@ -8,7 +8,7 @@
     <img src="<?php echo base_url($logo_url); ?>" id='header-logo-img'>
 </div>
 
-<div style="float: left; width: 400px;">
+<div style="float: left; width: 500px;">
     <div id="success-message-title">
         <?php echo $company_name; ?>
     </div>
