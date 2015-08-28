@@ -11,7 +11,7 @@
 
 <div id='wrapper'>
     <div id='body'>
-        <div id='body-content'>
+        <div id='body-content' style="min-height:600px">
             <?php $this->load->view('template/sidebar_right'); ?>
 
             <!--BODY LEFT MAIN-->
