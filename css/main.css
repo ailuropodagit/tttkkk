@@ -405,7 +405,7 @@ a:active {
 #register-form-each-input textarea {
     margin: 10px 0px 0px 0px;
     width: 270px;
-    height: 45px;
+    height: 100px;
     resize: none;
 }
 
