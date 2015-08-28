@@ -47,7 +47,7 @@ class M_custom extends CI_Model {
         }
         return $query->row();
     }
-
+    
     //To find many records in DB with one keyword
     public function get_many_table_record($the_table, $the_column, $the_value){
         $query = $this->db->get_where($the_table, array($the_column => $the_value));
@@ -88,6 +88,19 @@ class M_custom extends CI_Model {
 
     function getBranchList($id){
         $query = $this->db->get_where('merchant_branch', array('merchant_id' => $id));
+        return $query->result();
+    }
+    
+    public function getBranchList_with_search($id, $search_word) {
+        if (IsNullOrEmptyString($search_word)) {           
+            return $this->getBranchList($id);
+        }
+        $this->db->like('name', $search_word);
+        $this->db->or_like('address', $search_word);
+        $query = $this->db->get_where('merchant_branch', array('merchant_id' => $id));
+        if ($query->num_rows() == 0) {
+            return $this->getBranchList(0);
+        }
         return $query->result();
     }
     

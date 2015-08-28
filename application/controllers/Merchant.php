@@ -54,7 +54,7 @@ class Merchant extends CI_Controller {
                 //if the login is successful
                 //redirect them back to the home page
                 $this->session->set_flashdata('message', $this->ion_auth->messages());
-                redirect('merchant/dashboard/'.generate_slug($this->session->userdata('company_name')), 'refresh');
+                redirect('merchant/dashboard/' . generate_slug($this->session->userdata('company_name')), 'refresh');
             } else if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember, $this->supervisor_group_id)) {
                 $this->session->set_flashdata('message', $this->ion_auth->messages());
                 redirect('/', 'refresh');
@@ -102,10 +102,10 @@ class Merchant extends CI_Controller {
         $this->form_validation->set_rules('new', $this->lang->line('change_password_validation_new_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[new_confirm]');
         $this->form_validation->set_rules('new_confirm', $this->lang->line('change_password_validation_new_password_confirm_label'), 'required');
 
-        if(!check_correct_login_type($this->main_group_id)){
+        if (!check_correct_login_type($this->main_group_id)) {
             redirect('/', 'refresh');
         }
-        
+
         $user = $this->ion_auth->user()->row();
         $function_use_for = 'merchant/change_password';
 
@@ -159,10 +159,10 @@ class Merchant extends CI_Controller {
         }
     }
 
-    function simple_message(){
+    function simple_message() {
         display_simple_message();
     }
-    
+
     function retrieve_password() {
         $this->form_validation->set_rules('username_email', $this->lang->line('forgot_password_username_email_label'), 'required');
         if ($this->form_validation->run() == false) {
@@ -196,8 +196,7 @@ class Merchant extends CI_Controller {
         $identity = $this->session->flashdata('mail_info');
         $get_status = send_mail_simple($identity->email, 'Your Keppo Account Login Info', 'Company Name:' . $identity->company . '<br/>Username:' . $identity->username . '<br/>Email:' . $identity->email . '<br/>Password:' . $identity->password_visible, 'forgot_password_send_email_success');
         if ($get_status) {
-            set_simple_message('Thank you!', 'An email will be sent to your registered email address.', 
-                    "If you don't receive in the next 10 minutes, please check your spam folder and if you still haven't received it please try again...", 'merchant/login', 'Go to Log In Page', 'merchant/simple_message');
+            set_simple_message('Thank you!', 'An email will be sent to your registered email address.', "If you don't receive in the next 10 minutes, please check your spam folder and if you still haven't received it please try again...", 'merchant/login', 'Go to Log In Page', 'merchant/simple_message');
         } else {
             $this->session->set_flashdata('message', $this->ion_auth->errors());
             redirect("merchant/retrieve_password", 'refresh');
@@ -412,7 +411,7 @@ class Merchant extends CI_Controller {
             $_POST['slug'] = generate_slug($_POST['company']);
             $slug = $_POST['slug'];
         }
-        
+
         // validate form input
         $this->form_validation->set_rules('company', $this->lang->line('create_merchant_validation_company_label'), 'required');
         $this->form_validation->set_rules('slug', $this->lang->line('create_merchant_validation_company_label'), 'is_unique[' . $tables['users'] . '.slug]');
@@ -433,12 +432,12 @@ class Merchant extends CI_Controller {
             $email = strtolower($this->input->post('email'));
             $password = $this->input->post('password');
             $company = $this->input->post('company');
-            
+
 //            if(!$this->m_custom->check_is_value_unique('users','slug',$slug)){               
 //                $this->ion_auth->set_error('account_creation_duplicate_company_name');
 //                redirect("merchant/register", 'refresh');
 //            }
-            
+
             $additional_data = array(
                 'username' => $username,
                 //'first_name' => $this->input->post('first_name'),
@@ -558,7 +557,7 @@ class Merchant extends CI_Controller {
             $this->data['company_name'] = $the_row->company;
             $this->data['address'] = $the_row->address;
             $this->data['phone'] = $the_row->phone;
-            $this->data['show_outlet'] = base_url().'merchant/outlet/'.$slug;
+            $this->data['show_outlet'] = base_url() . 'merchant/outlet/' . $slug;
             $this->data['website_url'] = $the_row->me_website_url;
             $this->data['facebook_url'] = $the_row->me_facebook_url;
             $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
@@ -581,29 +580,35 @@ class Merchant extends CI_Controller {
             $this->data['website_url'] = $the_row->me_website_url;
             $this->data['facebook_url'] = $the_row->me_facebook_url;
             $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-            $this->data['page_path_name'] = 'merchant/outlet';         
-            
-            $this->data['branch_list'] = $this->m_custom->getBranchList($the_row->id); 
+            $this->data['page_path_name'] = 'merchant/outlet';
+
+            if (isset($_POST) && !empty($_POST)) {
+                $search_word = $this->input->post('search_word');
+                $this->data['branch_list'] = $this->m_custom->getBranchList_with_search($the_row->id, $search_word);
+            } else {
+                $this->data['branch_list'] = $this->m_custom->getBranchList($the_row->id);
+            }
+
             $this->load->view('template/layout_right', $this->data);
         } else {
             redirect('/', 'refresh');
         }
     }
-    
+
     //merchant profile view and edit page
     function profile() {
-        
-        if(!check_correct_login_type($this->main_group_id)&&!check_correct_login_type($this->supervisor_group_id)){
+
+        if (!check_correct_login_type($this->main_group_id) && !check_correct_login_type($this->supervisor_group_id)) {
             redirect('/', 'refresh');
         }
-               
-        $merchant_id = $this->ion_auth->user()->row()->id;        
-        
+
+        $merchant_id = $this->ion_auth->user()->row()->id;
+
         //for supervisor view merchant profile because supervisor don't have own profile
-        if(check_correct_login_type($this->supervisor_group_id)){
-            $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;        
+        if (check_correct_login_type($this->supervisor_group_id)) {
+            $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;
         }
-        
+
         $user = $this->ion_auth->user($merchant_id)->row();
 
         $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required');
@@ -740,50 +745,50 @@ class Merchant extends CI_Controller {
     }
 
     function branch() {
-       if(!check_correct_login_type($this->main_group_id)&&!check_correct_login_type($this->supervisor_group_id)){
+        if (!check_correct_login_type($this->main_group_id) && !check_correct_login_type($this->supervisor_group_id)) {
             redirect('/', 'refresh');
         }
         $this->load->view('template/layout_management', $this->branch_management());
     }
-    
+
     function branch_management() {
         $merchant_id = $this->ion_auth->user()->row()->id;
-        
+
         //for supervisor view the branch of merchant
-        if(check_correct_login_type($this->supervisor_group_id)){
-            $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;        
+        if (check_correct_login_type($this->supervisor_group_id)) {
+            $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;
         }
-        
+
         $this->load->library('grocery_CRUD');
         try {
             $crud = new grocery_CRUD();
 
             $this->load->library('user_agent');
-            if ($this->agent->is_mobile() && $this->agent->is_tablet() === FALSE) {              
+            if ($this->agent->is_mobile() && $this->agent->is_tablet() === FALSE) {
                 $crud->set_theme('bootstrap');
                 $crud->unset_search();
             } else {
                 $crud->set_theme('datatables');    //datatables, flexigrid, bootstrap
             }
-            
+
             //($this->agent->is_tablet() === TRUE) ? $is_tablet = "Yes" : $is_tablet = "No"; echo "Using tablet: $is_tablet";
-            
+
             $crud->set_table('merchant_branch');
             $crud->set_subject('Branch');
 
             $crud->columns('name', 'address', 'phone', 'state_id');
             $crud->required_fields('name', 'address', 'state_id');
-            $crud->fields('name', 'address','phone', 'state_id', 'google_map_url');
+            $crud->fields('name', 'address', 'phone', 'state_id', 'google_map_url');
             $crud->display_as('state_id', 'State');
             $crud->display_as('google_map_url', 'Google Map Coordinate');
             $crud->unset_fields('merchant_id');
             $crud->unset_texteditor('address', 'google_map_url');
-            $crud->field_type('state_id', 'dropdown', $this->ion_auth->get_static_option_list('state'));       
+            $crud->field_type('state_id', 'dropdown', $this->ion_auth->get_static_option_list('state'));
             $crud->callback_insert(array($this, 'branch_insert_callback'));
             $crud->callback_column('address', array($this, '_full_text'));
             $crud->unset_export();
-            $crud->unset_print();            
-            
+            $crud->unset_print();
+
             $state = $crud->getState();
 
             //Temporary use this to skip the bootstrap top right search not working bug after got $crud->where() function
@@ -797,7 +802,7 @@ class Merchant extends CI_Controller {
 //                    }
 //                }
 //            } else {
-                $crud->where('merchant_id', $merchant_id);
+            $crud->where('merchant_id', $merchant_id);
 //            }
 
             if ($state == 'read') {
@@ -816,30 +821,30 @@ class Merchant extends CI_Controller {
 
     function branch_insert_callback($post_array, $primary_key) {
         $post_array['merchant_id'] = $this->ion_auth->user()->row()->id;
-        if(check_correct_login_type($this->supervisor_group_id)){
-            $post_array['merchant_id'] = $this->ion_auth->user()->row()->su_merchant_id;        
+        if (check_correct_login_type($this->supervisor_group_id)) {
+            $post_array['merchant_id'] = $this->ion_auth->user()->row()->su_merchant_id;
         }
         return $this->db->insert('merchant_branch', $post_array);
     }
-    
-    function map($branch_id=NULL) {
-        if(!empty($branch_id)){
+
+    function map($branch_id = NULL) {
+        if (!empty($branch_id)) {
             $the_branch = $this->m_custom->get_one_table_record('merchant_branch', 'branch_id', $branch_id);
             if ($the_branch) {
-                $the_merchant= $this->m_custom->get_one_table_record('users', 'id', $the_branch->merchant_id);
+                $the_merchant = $this->m_custom->get_one_table_record('users', 'id', $the_branch->merchant_id);
                 $this->data['logo_url'] = $this->album_merchant . $the_merchant->profile_image;
-                $this->data['company_name'] = $the_merchant->company;              
+                $this->data['company_name'] = $the_merchant->company;
                 $this->data['phone'] = $the_branch->phone;
-                
+
                 $this->data['address'] = $the_branch->address;
-                $this->data['googlemap_url'] = 'https://www.google.com/maps/place/'.$the_branch->google_map_url;
+                $this->data['googlemap_url'] = 'https://www.google.com/maps/place/' . $the_branch->google_map_url;
                 $this->load->library('googlemaps');
 
                 $location = $the_branch->google_map_url;
-                if(IsNullOrEmptyString($location)){
+                if (IsNullOrEmptyString($location)) {
                     $location = $the_branch->address;
                 }
-                
+
                 $config['center'] = $location;
                 $config['zoom'] = '17';
                 $this->googlemaps->initialize($config);
@@ -851,19 +856,18 @@ class Merchant extends CI_Controller {
                 $this->data['page_path_name'] = 'merchant/map';
                 $this->load->view('template/layout', $this->data);
             }
-        }else{
-            redirect('/','refresh');
+        } else {
+            redirect('/', 'refresh');
         }
-           
     }
 
     function supervisor() {
-        if(!check_correct_login_type($this->main_group_id)){
+        if (!check_correct_login_type($this->main_group_id)) {
             redirect('/', 'refresh');
         }
         $this->load->view('template/layout_management', $this->supervisor_management());
     }
-    
+
     function supervisor_management() {
         $id = $this->ion_auth->user()->row()->id;
         $this->load->library('grocery_CRUD');
@@ -871,13 +875,13 @@ class Merchant extends CI_Controller {
             $crud = new grocery_CRUD();
 
             $this->load->library('user_agent');
-            if ($this->agent->is_mobile() && $this->agent->is_tablet() === FALSE) {              
+            if ($this->agent->is_mobile() && $this->agent->is_tablet() === FALSE) {
                 $crud->set_theme('bootstrap');
                 $crud->unset_search();
             } else {
                 $crud->set_theme('datatables');    //datatables, flexigrid, bootstrap
             }
-            
+
             $crud->set_table('users');
             $crud->set_subject('Supervisor');
             $crud->columns('username', 'password_visible');
@@ -885,57 +889,57 @@ class Merchant extends CI_Controller {
             $crud->fields('username', 'password_visible');
             $crud->display_as('password_visible', 'Password');
             $crud->callback_insert(array($this, 'supervisor_insert_callback'));
-            $crud->callback_update(array($this,'supervisor_update_callback'));
-            $crud->set_rules('username', 'Username','trim|required|callback_supervisor_username_check');
+            $crud->callback_update(array($this, 'supervisor_update_callback'));
+            $crud->set_rules('username', 'Username', 'trim|required|callback_supervisor_username_check');
             $crud->unset_export();
             $crud->unset_print();
             $crud->unset_read();
-            
+
             $state = $crud->getState();
 
             //filter that this is supervisor type user and it is under this merchant
             $crud->where('su_merchant_id', $id);
             $crud->where('main_group_id', $this->supervisor_group_id);
-            
+
             $output = $crud->render();
             return $output;
         } catch (Exception $e) {
             show_error($e->getMessage() . ' --- ' . $e->getTraceAsString());
         }
     }
-    
+
     function supervisor_insert_callback($post_array, $primary_key) {
-        
+
 //        if(!$this->m_custom->check_is_value_unique('users','username',$post_array['username'])){
 //            return FALSE;
 //        }
-        
-        $additional_data = array(
-                'username' => $post_array['username'],
-                'su_merchant_id' => $this->ion_auth->user()->row()->id,
-                'main_group_id' => $this->supervisor_group_id,
-                'password_visible' => $post_array['password_visible'],
-            );
 
-        return $this->ion_auth->register($post_array['username'], $post_array['password_visible'], $post_array['username'].$this->config->item('keppo_email_domain'), $additional_data, $this->supervisor_group_id);
+        $additional_data = array(
+            'username' => $post_array['username'],
+            'su_merchant_id' => $this->ion_auth->user()->row()->id,
+            'main_group_id' => $this->supervisor_group_id,
+            'password_visible' => $post_array['password_visible'],
+        );
+
+        return $this->ion_auth->register($post_array['username'], $post_array['password_visible'], $post_array['username'] . $this->config->item('keppo_email_domain'), $additional_data, $this->supervisor_group_id);
     }
 
     function supervisor_update_callback($post_array, $primary_key) {
-        
+
 //        if(!$this->m_custom->check_is_value_unique('users','username',$post_array['username'],'id',$primary_key)){
 //            return FALSE;
 //        }
-        
+
         $additional_data = array(
-                'username' => $post_array['username'],
-                'email' => $post_array['username'].$this->config->item('keppo_email_domain'),
-                'password' => $post_array['password_visible'],
-                'password_visible' => $post_array['password_visible'],
-            );
+            'username' => $post_array['username'],
+            'email' => $post_array['username'] . $this->config->item('keppo_email_domain'),
+            'password' => $post_array['password_visible'],
+            'password_visible' => $post_array['password_visible'],
+        );
 
         return $this->ion_auth->update($primary_key, $additional_data);
     }
-           
+
     public function supervisor_username_check($str) {
         $id = $this->uri->segment(4);
         if (!empty($id) && is_numeric($id)) {
@@ -951,7 +955,7 @@ class Merchant extends CI_Controller {
             return TRUE;
         }
     }
-    
+
 //    function upload_image() {
 //
 //        redirect('/','refresh'); //no use currently, disable this function first
@@ -1000,7 +1004,6 @@ class Merchant extends CI_Controller {
 //        $this->data['page_path_name'] = 'merchant/upload_image';
 //        $this->load->view('template/layout', $this->data);
 //    }
-
     // edit a user
     function edit_user($id) {
         $this->data['title'] = "Edit User";
