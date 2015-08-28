@@ -1,3 +1,5 @@
+<h1>Profile</h1>
+
 <div id="infoMessage"><?php echo $message; ?></div>
 
 <div style="margin: 0px auto 0px auto; width: 200px; padding: 0px 0px 15px 0px; text-align: center;">
