@@ -141,7 +141,7 @@ class Merchant extends CI_Controller {
             $this->data['function_use_for'] = $function_use_for;
 
             $this->data['page_path_name'] = 'auth/change_password';
-            $this->load->view('template/layout_right', $this->data);
+            $this->load->view('template/layout_right_menu', $this->data);
         } else {
             $identity = $this->session->userdata('identity');
 
@@ -563,7 +563,7 @@ class Merchant extends CI_Controller {
             $this->data['facebook_url'] = $the_row->me_facebook_url;
             $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
             $this->data['page_path_name'] = 'merchant/dashboard';
-            $this->load->view('template/layout_right', $this->data);
+            $this->load->view('template/layout_right_menu', $this->data);
         } else {
             redirect('/', 'refresh');
         }
@@ -584,7 +584,7 @@ class Merchant extends CI_Controller {
             $this->data['page_path_name'] = 'merchant/outlet';         
             
             $this->data['branch_list'] = $this->m_custom->getBranchList($the_row->id); 
-            $this->load->view('template/layout_right', $this->data);
+            $this->load->view('template/layout_right_menu', $this->data);
         } else {
             redirect('/', 'refresh');
         }
@@ -732,7 +732,7 @@ class Merchant extends CI_Controller {
         );
 
         $this->data['page_path_name'] = 'merchant/profile';
-        $this->load->view('template/layout_right', $this->data);
+        $this->load->view('template/layout_right_menu', $this->data);
 //        $this->load->view('template/header');
 //        $this->_render_page('merchant/profile', $this->data);
 //        $this->load->view('template/layout_management', $this->branch_management());

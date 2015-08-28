@@ -1,6 +1,6 @@
 <div id="infoMessage"><?php echo $message; ?></div>
 
-<img src="<?php echo base_url($logo_url); ?>" id='header-logo-img'><br/>
+<img src="<?php echo base_url($logo_url); ?>" id='header-logo-img'>
 
 <div id="success-message-title">
     <?php echo $company_name; ?>

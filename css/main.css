@@ -262,7 +262,6 @@ a:active {
     border-left: 1px solid #ccccc8;
     border-right: 1px solid #ccccc8;
     border-bottom: 1px solid #ccccc8;
-    min-height: 500px;
 }
 
 #body-content {
@@ -307,16 +306,42 @@ a:active {
     width: calc(100% - 230px);
 }
 
-#body-left-main-content {
-
-}
-
 .arrow-right {
     width: 0; 
     height: 0; 
     border-top: 60px solid transparent;
     border-bottom: 60px solid transparent;
     border-left: 60px solid green;
+}
+
+/* LAYOUT
+******************************/
+
+#layout-advertisement-left {
+    float: left;
+    width: 100%;
+    border: 1px solid lightgray;
+    width: calc(100% - 300px);
+}
+
+#layout-advertisement-left-content {
+    padding: 20px;
+}
+
+#layout-advertisement-right {
+    float: right;
+    width: 280px;
+}
+
+#layout-advertisement-right-banner-box {
+    border: 1px dotted gray;
+    width: 100%; 
+    height: 180px; 
+    line-height: 180px;
+    text-align: center; 
+    color: gray; 
+    font-size: 15px; 
+    letter-spacing: 1px;
 }
 
 /* LOGIN REGISTER
