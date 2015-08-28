@@ -263,7 +263,7 @@ a:active {
     border-left: 1px solid #ccccc8;
     border-right: 1px solid #ccccc8;
     border-bottom: 1px solid #ccccc8;
-    min-height: 500px;
+    min-height: 600px;
 }
 
 #body-content {
@@ -305,7 +305,7 @@ a:active {
 #body-left-main {
     float: left;
     width: calc(100% - 230px);
-    border: 1px solid red;
+    //border: 1px solid red;
 }
 
 #body-left-main-content {
@@ -381,7 +381,7 @@ a:active {
 #register-form-each-input textarea {
     margin: 10px 0px 0px 0px;
     width: 270px;
-    height: 45px;
+    height: 100px;
     resize: none;
 }
 
