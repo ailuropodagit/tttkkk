@@ -118,4 +118,18 @@ class M_custom extends CI_Model {
         return $query->result();
     }
     
+    public function getMerchantList_by_category($category_id=0, $category_level=0) {
+        if($category_level==1){
+            $sub_category = $this->get_one_table_record('category','category_id',$category_id);
+            if($sub_category){
+                $category_id = $sub_category->main_category_id;
+            }
+        }       
+        $query = $this->db->get_where('users', array('me_category_id' => $category_id));
+        if ($query->num_rows() == 0) {
+            $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant')));
+        }
+        return $query->result();
+    }
+    
 }
