@@ -170,3 +170,14 @@ if (!function_exists('IsNullOrEmptyString')) {
     }
 
 }
+
+if (!function_exists('RemoveLastComma')) {
+
+    function RemoveLastComma($value) {
+        if (substr($value, -1, 1) == ',') {
+            $value = substr($value, 0, -1);
+        }
+        return $value;
+    }
+
+}

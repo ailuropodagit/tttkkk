@@ -805,6 +805,7 @@ class Merchant extends CI_Controller {
                 $crud->unset_search();
             } else {
                 $crud->set_theme('datatables');    //datatables, flexigrid, bootstrap
+                //$crud->add_action('Add Supervisor', '', 'merchant/supervisor/add','ui-icon-pencil');  //No use this because cannot open new tab
             }
 
             //($this->agent->is_tablet() === TRUE) ? $is_tablet = "Yes" : $is_tablet = "No"; echo "Using tablet: $is_tablet";
@@ -812,7 +813,7 @@ class Merchant extends CI_Controller {
             $crud->set_table('merchant_branch');
             $crud->set_subject('Branch');
 
-            $crud->columns('name', 'address', 'phone', 'state_id');
+            $crud->columns('name', 'address', 'phone', 'state_id', 'supervisor');
             $crud->required_fields('name', 'address', 'state_id');
             $crud->fields('name', 'address', 'phone', 'state_id', 'google_map_url');
             $crud->display_as('state_id', 'State');
@@ -822,6 +823,7 @@ class Merchant extends CI_Controller {
             $crud->field_type('state_id', 'dropdown', $this->ion_auth->get_static_option_list('state'));
             $crud->callback_insert(array($this, 'branch_insert_callback'));
             $crud->callback_column('address', array($this, '_full_text'));
+            $crud->callback_column('supervisor',array($this,'_branch_supervisor'));
             $crud->unset_export();
             $crud->unset_print();
 
@@ -853,6 +855,11 @@ class Merchant extends CI_Controller {
 
     function _full_text($value, $row) {
         return wordwrap($row->address);
+    }
+
+    function _branch_supervisor($value, $row)
+    {
+        return $this->ion_auth->get_branch_supervisor_list($row->branch_id);
     }
 
     function branch_insert_callback($post_array, $primary_key) {
@@ -915,15 +922,18 @@ class Merchant extends CI_Controller {
                 $crud->set_theme('bootstrap');
                 $crud->unset_search();
             } else {
-                $crud->set_theme('datatables');    //datatables, flexigrid, bootstrap
+                $crud->set_theme('datatables');    //datatables, flexigrid, bootstrap             
             }
 
             $crud->set_table('users');
             $crud->set_subject('Supervisor');
-            $crud->columns('username', 'password_visible');
-            $crud->required_fields('username', 'password_visible');
-            $crud->fields('username', 'password_visible');
+            $crud->columns('username', 'password_visible', 'su_branch_id');
+            $crud->required_fields('username', 'password_visible', 'su_branch_id');
+            $crud->fields('username', 'password_visible', 'su_branch_id');
             $crud->display_as('password_visible', 'Password');
+            $crud->display_as('su_branch_id', 'Branch');          
+            $crud->callback_add_field('su_branch_id',array($this,'_selected_branch_callback'));   //For add page set pre-selected value if got pass in brach id
+            $crud->field_type('su_branch_id', 'dropdown', $this->ion_auth->get_merchant_branch_list($id));  //For view show the branch list text
             $crud->callback_insert(array($this, 'supervisor_insert_callback'));
             $crud->callback_update(array($this, 'supervisor_update_callback'));
             $crud->set_rules('username', 'Username', 'trim|required|callback_supervisor_username_check');
@@ -944,6 +954,12 @@ class Merchant extends CI_Controller {
         }
     }
 
+    function _selected_branch_callback($post_array) {
+        $id = $this->ion_auth->user()->row()->id;
+        $selected = $this->uri->segment(4);
+        return form_dropdown('su_branch_id', $this->ion_auth->get_merchant_branch_list($id), $selected);
+    }
+
     function supervisor_insert_callback($post_array, $primary_key) {
 
 //        if(!$this->m_custom->check_is_value_unique('users','username',$post_array['username'])){
@@ -953,6 +969,7 @@ class Merchant extends CI_Controller {
         $additional_data = array(
             'username' => $post_array['username'],
             'su_merchant_id' => $this->ion_auth->user()->row()->id,
+            'su_branch_id' => $post_array['su_branch_id'],
             'main_group_id' => $this->supervisor_group_id,
             'password_visible' => $post_array['password_visible'],
         );
@@ -971,6 +988,7 @@ class Merchant extends CI_Controller {
             'email' => $post_array['username'] . $this->config->item('keppo_email_domain'),
             'password' => $post_array['password_visible'],
             'password_visible' => $post_array['password_visible'],
+            'su_branch_id' => $post_array['su_branch_id'],
         );
 
         return $this->ion_auth->update($primary_key, $additional_data);

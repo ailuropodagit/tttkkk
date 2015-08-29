@@ -2158,4 +2158,55 @@ class Ion_auth_model extends CI_Model {
         }
         return $return;
     }
+    
+    /**
+     * get_merchant_branch_list
+     *
+     * Get merchant branchs from DB
+     *
+     * @return array
+     * */
+    public function get_merchant_branch_list($option_type = NULL) {
+        $this->trigger_events('get_merchant_branch_list');
+        $this->db->from('merchant_branch')
+                 ->where('merchant_id', $option_type)
+                 ->order_by('name');
+        $result = $this->db->get();
+        $return = array();
+        if($result->num_rows() > 0) {
+            foreach($result->result_array() as $row) {
+                $return[$row['branch_id']] = $row['name'];
+            }
+        }
+        return $return;
+    } 
+    
+    /**
+     * get_merchant_branch_list
+     *
+     * Get merchant branchs from DB
+     *
+     * @return string
+     * */
+    public function get_branch_supervisor_list($option_type = NULL) {
+        $this->trigger_events('get_branch_supervisor_list');
+        $this->db->from('users')
+                 ->where('main_group_id', $this->config->item('group_id_supervisor'))
+                 ->where('su_branch_id', $option_type)
+                 ->order_by('username');
+        $result = $this->db->get();
+        $return = '';
+        if($result->num_rows() > 0) {
+            foreach($result->result_array() as $row) {
+                $return .= "<a href='".base_url()."merchant/supervisor/edit/".$row['id']."' target='_blank'>".$row['username']."</a>,";
+            }
+        }
+        
+        if($return==''){
+            $return = "<a href='".base_url()."merchant/supervisor/add/".$option_type."' target='_blank'>Add Supervisor</a>,";;
+        }
+        
+        return RemoveLastComma($return);
+    } 
+    
 }
