@@ -154,6 +154,14 @@ $lang['create_merchant_validation_password_confirm_label']            = 'Re-Pass
 $lang['create_merchant_validation_website_label']                     = 'Website';
 $lang['create_merchant_validation_facebook_url_label']                = 'Facebook URL';
 
+// Branch
+$lang['branch_name_label']                   = 'Branch Name:';
+$lang['branch_address_label']                = 'Branch Address:';
+$lang['branch_phone_label']                  = 'Branch Phone:';
+$lang['branch_state_label']                  = 'Branch State:';
+$lang['supervisor_username_label']           = 'Supervisor Username:';
+$lang['supervisor_password_label']           = 'Supervisor Password:';
+
 // Create Group
 $lang['create_group_title']                  = 'Create Group';
 $lang['create_group_heading']                = 'Create Group';

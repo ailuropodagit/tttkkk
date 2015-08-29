@@ -622,9 +622,14 @@ class Merchant extends CI_Controller {
 
         $merchant_id = $this->ion_auth->user()->row()->id;
 
+        $is_supervisor = 0;
+        $branch = FALSE;
         //for supervisor view merchant profile because supervisor don't have own profile
         if (check_correct_login_type($this->supervisor_group_id)) {
             $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;
+            $is_supervisor = 1;
+            $supervisor = $this->ion_auth->user()->row();
+            $branch = $this->m_custom->get_one_table_record('merchant_branch','branch_id',$supervisor->su_branch_id);
         }
 
         $user = $this->ion_auth->user($merchant_id)->row();
@@ -714,7 +719,8 @@ class Merchant extends CI_Controller {
 
         // pass the user to the view
         $this->data['user'] = $user;
-
+        $this->data['is_supervisor'] = $is_supervisor;
+        
         $this->data['company'] = array(
             'name' => 'company',
             'id' => 'company',
@@ -771,6 +777,50 @@ class Merchant extends CI_Controller {
             'type' => 'text',
             'value' => $this->form_validation->set_value('facebook_url', $user->me_facebook_url),
         );
+
+        
+        $this->data['branch_name'] = array(
+            'name' => 'branch_name',
+            'id' => 'branch_name',
+            'readonly ' => 'true',
+            'value' => ($branch)? $branch->name : '',
+        );
+        
+        $this->data['branch_address'] = array(
+            'name' => 'branch_address',
+            'id' => 'branch_address',
+            'readonly ' => 'true',
+            'value' => ($branch)? $branch->address : '',
+        );
+        
+        $this->data['branch_phone'] = array(
+            'name' => 'branch_phone',
+            'id' => 'branch_phone',
+            'readonly ' => 'true',
+            'value' => ($branch)? $branch->phone : '',
+        );
+        
+        $this->data['branch_state'] = array(
+            'name' => 'branch_state',
+            'id' => 'branch_state',
+            'readonly ' => 'true',
+            'value' => ($branch)? $this->m_custom->get_one_static_option_text($branch->state_id) : '',
+        );
+        
+        $this->data['supervisor_username'] = array(
+            'name' => 'supervisor_username',
+            'id' => 'supervisor_username',
+            'readonly ' => 'true',
+            'value' => $is_supervisor == 1 ? $supervisor->username : $user->username,
+        );
+        
+        $this->data['supervisor_password'] = array(
+            'name' => 'supervisor_password',
+            'id' => 'supervisor_password',
+            'readonly ' => 'true',
+            'value' => $is_supervisor == 1 ? $supervisor->password_visible : $user->password_visible,
+        );
+
 
         $this->data['page_path_name'] = 'merchant/profile';
         $this->load->view('template/layout_right_menu', $this->data);

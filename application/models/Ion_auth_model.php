@@ -2182,9 +2182,9 @@ class Ion_auth_model extends CI_Model {
     } 
     
     /**
-     * get_merchant_branch_list
+     * get_branch_supervisor_list
      *
-     * Get merchant branchs from DB
+     * Get supervisor list that under this branch
      *
      * @return string
      * */

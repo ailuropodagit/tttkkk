@@ -83,7 +83,48 @@
         <?php echo form_close(); ?>
     </div>
 </div>
-    
+
+<?php if($is_supervisor==1){ ?>
+
+<div style="float: right; width: 400px; border: 0px solid red;"> 
+    <div id='register' style="text-align: left;">
+        <div id='register-form'>
+
+            <div id='register-form-each'>
+                <div id='register-form-each-label'><?php echo lang('branch_name_label', 'branch_name'); ?></div>
+                <div id='register-form-each-input'><?php echo form_input($branch_name); ?></div>
+            </div>
+            
+            <div id='register-form-each'>
+                <div id='register-form-each-label'><?php echo lang('branch_address_label', 'branch_address'); ?></div>
+                <div id='register-form-each-input'><?php echo form_textarea($branch_address); ?></div>
+            </div>
+            
+            <div id='register-form-each'>
+                <div id='register-form-each-label'><?php echo lang('branch_phone_label', 'branch_phone'); ?></div>
+                <div id='register-form-each-input'><?php echo form_input($branch_phone); ?></div>
+            </div>
+
+            <div id='register-form-each'>
+                <div id='register-form-each-label'><?php echo lang('branch_state_label', 'branch_state'); ?></div>
+                <div id='register-form-each-input'><?php echo form_input($branch_state); ?></div>
+            </div>
+
+            <div id='register-form-each'>
+                <div id='register-form-each-label'><?php echo lang('supervisor_username_label', 'supervisor_username'); ?></div>
+                <div id='register-form-each-input'><?php echo form_input($supervisor_username); ?></div>
+            </div>
+            
+            <div id='register-form-each'>
+                <div id='register-form-each-label'><?php echo lang('supervisor_password_label', 'supervisor_password'); ?></div>
+                <div id='register-form-each-input'><?php echo form_input($supervisor_password); ?></div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<?php } ?>
 <div id="float-fix"></div>
 
 <?php if (check_correct_login_type($this->main_group_id)) { ?>
