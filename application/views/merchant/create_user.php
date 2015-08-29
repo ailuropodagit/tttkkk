@@ -1,6 +1,10 @@
 <div id='register'>
 
-    <div id='register-link'><a href='<?php echo base_url(); ?>user/register'>User Register</a></div>
+    <div id='register-link'>
+        <a href='<?php echo base_url(); ?>user/register'>
+            <i class="fa fa-user-plus" id="register-link-icon"></i>User Register
+        </a>
+    </div>
     <div id='float-fix'></div>
 
     <div id='register-title'>Merchant Sign Up</div>

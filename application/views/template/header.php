@@ -38,7 +38,7 @@
             <div id='wrapper'>
                 <!--HEADER LOGO-->
                 <div id='header-logo'>
-                    <a href='<?php echo base_url(); ?>home'><img src="<?php echo base_url(); ?>image/header-logo.png" id='header-logo-img'></a>
+                    <a href='<?php echo base_url(); ?>home'><img src="<?php echo base_url(); ?>image/header-logo-red.png" id='header-logo-img'></a>
                 </div>
                 <!--HEADER MENU-->
                 <div id="header-menu">

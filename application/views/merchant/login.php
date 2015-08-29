@@ -19,7 +19,11 @@ if ($this->ion_auth->logged_in()) {
 
 <div id="login">
 
-    <div id='login-link'><a href='<?php echo base_url(); ?>user/login'>User Login</a></div>
+    <div id='login-link'>
+        <a href='<?php echo base_url(); ?>user/login'>
+            <i class="fa fa-user" id="login-link-icon"></i>User Login
+        </a>
+    </div>
     <div id='float-fix'></div>
 
     <div id='login-title'>Merchant Log In</div>

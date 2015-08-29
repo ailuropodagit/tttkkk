@@ -16,7 +16,11 @@
 
 <div id="register">
 
-    <div id='login-link'><a href='<?php echo base_url(); ?>merchant/register'>Merchant Register</a></div>
+    <div id='register-link'>
+        <a href='<?php echo base_url(); ?>merchant/register'>
+            <i class="fa fa-user-plus" id="register-link-icon"></i>Merchant Register
+        </a>
+    </div>
     <div id='float-fix'></div>
 
     <div id='register-title'>User Sign Up</div>
