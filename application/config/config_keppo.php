@@ -7,13 +7,15 @@ $config['group_id_merchant'] = '3';
 $config['group_id_supervisor'] = '4';
 $config['group_id_user'] = '5';
 
-$config['album_merchant_phy'] = realpath(APPPATH . '..\image\album_merchant');
-$config['album_user_phy'] = realpath(APPPATH . '..\image\album_user');
-$config['album_user_merchant_phy'] = realpath(APPPATH . '..\image\album_user_merchant');
+$config['album_merchant_phy'] = realpath(APPPATH . '..\folder_upload\album_merchant');
+$config['album_user_phy'] = realpath(APPPATH . '..\folder_upload\album_user');
+$config['album_user_merchant_phy'] = realpath(APPPATH . '..\folder_upload\album_user_merchant');
+$config['folder_merchant_ssm_phy'] = realpath(APPPATH . '..\folder_upload\merchant_ssm');
 
-$config['album_merchant'] =  'image/album_merchant/';
-$config['album_user'] = 'image/album_user/';
-$config['album_user_merchant'] = 'image/album_user_merchant/';
+$config['album_merchant'] =  'folder_upload/album_merchant/';
+$config['album_user'] = 'folder_upload/album_user/';
+$config['album_user_merchant'] = 'folder_upload/album_user_merchant/';
+$config['folder_merchant_ssm'] = 'folder_upload/merchant_ssm/';
 
 $config['user_default_image'] = 'demo-profile-user.png';
 $config['merchant_default_image'] = 'demo-logo-company.png';

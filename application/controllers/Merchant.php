@@ -61,7 +61,10 @@ class Merchant extends CI_Controller {
             } else {
                 // if the login was un-successful
                 // redirect them back to the login page
-                $this->session->set_flashdata('message', $this->ion_auth->errors());
+                if($this->ion_auth->errors() != ""){
+                       $this->session->set_flashdata('message', $this->lang->line('login_unsuccessful'));
+                }
+                //$this->session->set_flashdata('message', $this->ion_auth->errors());
                 redirect('merchant/login', 'refresh'); // use redirects instead of loading views for compatibility with MY_Controller libraries
             }
         } else {
@@ -1059,7 +1062,7 @@ class Merchant extends CI_Controller {
             return TRUE;
         }
     }
-
+   
 //    function upload_image() {
 //
 //        redirect('/','refresh'); //no use currently, disable this function first
