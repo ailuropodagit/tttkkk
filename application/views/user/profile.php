@@ -1,3 +1,19 @@
+<script type="text/javascript">
+    function showraceother()
+    {
+        var race_id_selected = document.getElementById("race_id");
+        var selectedText = race_id_selected.options[race_id_selected.selectedIndex].text;
+        if (selectedText == 'Other')
+        {
+            document.getElementById('race_other_label').style.display = 'inline';
+            document.getElementById('race_other').style.display = 'inline';
+        } else {
+            document.getElementById('race_other_label').style.display = 'none';
+            document.getElementById('race_other').style.display = 'none';
+        }
+    }
+</script>
+
 <div id="infoMessage"><?php echo $message; ?></div>
 
 <div style="margin: 0px auto 0px auto; width: 200px; padding: 0px 0px 15px 0px;">
@@ -55,6 +71,13 @@
             <div id='register-form-each-input'><?php echo form_dropdown($race_id, $race_list, $user->us_race_id); ?></div>
         </div>
 
+        <div id='register-form-each'>
+            <div id='register-form-each-label'>
+                <?php echo form_label(lang('create_user_race_other_label', 'race_other'), 'race_other_label', $race_other_attributes); ?>
+            </div>
+            <div id='register-form-each-input'><?php echo form_input($race_other); ?></div>
+        </div>
+        
         <div id='register-form-each'>
             <div id='register-form-each-label'><?php echo lang('create_user_username_label', 'username'); ?></div>
             <div id='register-form-each-input'><?php echo form_input($username); ?></div>

@@ -71,6 +71,7 @@ $lang['create_user_state_label']                       = 'State:';
 $lang['create_user_age_label']                         = 'Age:';
 $lang['create_user_gender_label']                      = 'Gender:';
 $lang['create_user_race_label']                        = 'Race:';
+$lang['create_user_race_other_label']                  = 'Race Other:';
 $lang['create_user_email_label']                       = 'Your E-mail address:';
 $lang['create_user_phone_label']                       = 'Phone:';
 $lang['create_user_contact_number_label']              = 'Contact Number:';

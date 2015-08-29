@@ -2,6 +2,7 @@
 
 class M_custom extends CI_Model {
 
+    //Get all the static option of an option type
     public function get_static_option_array($option_type = NULL, $default_value = NULL, $default_text = NULL) {
 
         $query = $this->db->get_where('static_option', array('option_type' => $option_type));
@@ -18,6 +19,19 @@ class M_custom extends CI_Model {
         return $return;
     }
 
+    //Get one static option text by it option id
+    public function get_one_static_option_text($option_id = NULL) {
+        if (IsNullOrEmptyString($option_id)) {           
+            return '';
+        }
+        
+        $query = $this->db->get_where('static_option', array('option_id' => $option_id));
+        if ($query->num_rows() !== 1) {
+            return '';
+        }
+        return $query->row()->option_text;
+    }
+    
     //To check is this value is unique in DB
     public function check_is_value_unique($the_table, $the_column, $the_value, $the_id_column = NULL, $the_id = NULL) {
         if (empty($the_value)) {

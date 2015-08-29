@@ -407,26 +407,30 @@ class user extends CI_Controller {
         $this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'));
         $this->form_validation->set_rules('phone', $this->lang->line('create_user_phone_label'), 'required');
         $this->form_validation->set_rules('dob', $this->lang->line('create_user_dob_label'), 'callback_date_check');
+        $this->form_validation->set_rules('race_other', $this->lang->line('create_user_race_other_label'));
         $this->form_validation->set_rules('username', $this->lang->line('create_user_username_label'), 'required|is_unique[' . $tables['users'] . '.username]');
         $this->form_validation->set_rules('email', $this->lang->line('create_user_email_label'), 'required|valid_email|is_unique[' . $tables['users'] . '.email]');
         $this->form_validation->set_rules('password', $this->lang->line('create_user_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
         $this->form_validation->set_rules('password_confirm', $this->lang->line('create_user_password_confirm_label'), 'required');
-
+        
         if ($this->form_validation->run() == true) {
             $first_name = $this->input->post('first_name');
             $last_name = $this->input->post('last_name');
+            $phone = $this->input->post('phone');
             $username = strtolower($this->input->post('username'));
             $email = strtolower($this->input->post('email'));
             $password = $this->input->post('password');         
+            $race_other = $this->input->post('race_other');
             
             $additional_data = array(
                 'first_name' => $first_name,
                 'last_name' =>$last_name,
-                'phone' => $this->input->post('phone'),
+                'phone' => $phone,
                 'us_birthday' => $this->input->post('dob'),
                 'us_age' => $this->input->post('age'),
                 'us_gender_id' => $this->input->post('gender_id'),
                 'us_race_id' => $this->input->post('race_id'),
+                'us_race_other' => $race_other,
                 'username' => $username,
                 'password_visible' => $password,
                 'main_group_id' => $this->main_group_id,
@@ -442,7 +446,11 @@ class user extends CI_Controller {
             // check to see if we are creating the user
             // redirect them back to the admin page
             $this->session->set_flashdata('message', $this->ion_auth->messages());
-            $get_status = send_mail_simple($email, 'Your Keppo User Account Success Created', 'Name:' . $first_name . ' ' . $last_name . '<br/>username:' . $username . '<br/>E-mail:' . $email . '<br/>Password:' . $password, 'create_user_send_email_success');
+            $get_status = send_mail_simple($email, 'Your Keppo User Account Success Created', 'Name:' . $first_name . ' ' . $last_name . 
+                    '<br/>Contact Number:' . $phone . 
+                    '<br/>username:' . $username . 
+                    '<br/>E-mail:' . $email .                     
+                    '<br/>Password:' . $password, 'create_user_send_email_success');
             if ($get_status) {
                 // if there were no errors
                 redirect("user/login", 'refresh');
@@ -511,7 +519,15 @@ class user extends CI_Controller {
             $this->data['race_id'] = array(
                 'name' => 'race_id',
                 'id' => 'race_id',
+                'onchange' => 'showraceother()',
                 'value' => $this->form_validation->set_value('race_id'),
+            );
+            $this->data['race_other'] = array(
+                'name' => 'race_other',
+                'id' => 'race_other',
+                'type' => 'text',
+                'style' => 'display:none',
+                'value' => $this->form_validation->set_value('race_other'),
             );
             $this->data['phone'] = array(
                 'name' => 'phone',
@@ -591,6 +607,7 @@ class user extends CI_Controller {
         $this->form_validation->set_rules('dob', $this->lang->line('create_user_dob_label'), 'callback_date_check');
         $this->form_validation->set_rules('username', $this->lang->line('create_user_username_label'), 'required|is_unique_edit[' . $tables['users'] . '.username.' . $user_id . ']');
         $this->form_validation->set_rules('email', $this->lang->line('create_user_email_label'), 'required|valid_email|is_unique_edit[' . $tables['users'] . '.email.' . $user_id . ']');
+        $this->form_validation->set_rules('race_other', $this->lang->line('create_user_race_other_label'));
         
         if (isset($_POST) && !empty($_POST)) {
             if ($this->input->post('button_action') == "confirm") {
@@ -604,7 +621,8 @@ class user extends CI_Controller {
                     $last_name = $this->input->post('last_name');
                     $username = strtolower($this->input->post('username'));
                     $email = strtolower($this->input->post('email'));
-
+                    $race_other = $this->input->post('race_other');
+                            
                     $data = array(
                         'first_name' => $first_name,
                         'last_name' => $last_name,
@@ -613,6 +631,7 @@ class user extends CI_Controller {
                         'us_age' => $this->input->post('age'),
                         'us_gender_id' => $this->input->post('gender_id'),
                         'us_race_id' => $this->input->post('race_id'),
+                        'us_race_other' => $race_other,
                         'username' => $username,
                         'email' => $email,
                     );
@@ -733,7 +752,22 @@ class user extends CI_Controller {
             $this->data['race_id'] = array(
                 'name' => 'race_id',
                 'id' => 'race_id',
+                'onchange' => 'showraceother()',
             );
+            
+            $this->data['race_other'] = array(
+                'name' => 'race_other',
+                'id' => 'race_other',
+                'type' => 'text',
+                'style' => $this->m_custom->get_one_static_option_text($user->us_race_id) == 'Other'? 'display:inline' : 'display:none',
+                'value' => $this->form_validation->set_value('race_other', $user->us_race_other),
+            );
+            
+            $this->data['race_other_attributes'] = array(
+                'id' => 'race_other_label',
+                'style' => $this->m_custom->get_one_static_option_text($user->us_race_id) == 'Other'? 'display:inline' : 'display:none',
+            );
+            
             $this->data['phone'] = array(
                 'name' => 'phone',
                 'id' => 'phone',

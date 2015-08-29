@@ -118,6 +118,9 @@ a:active {
     font-style: italic;
 }
 
+.checkbox-text{
+    font-size:15px;
+}
 /* WRAPPER
 ******************************/
 

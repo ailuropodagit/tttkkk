@@ -1,9 +1,21 @@
 <?php
 //IF MERCHANT LOGGED IN
-if($this->ion_auth->logged_in()){
+if ($this->ion_auth->logged_in()) {
     redirect('merchant/profile');
 }
 ?>
+
+<script type="text/javascript">
+    function showpassword()
+    {
+        if (document.getElementById('show_password').checked)
+        {
+            document.getElementById('password').type = 'text';
+        } else {
+            document.getElementById('password').type = 'password';
+        }
+    }
+</script>
 
 <div id="login">
 
@@ -28,9 +40,15 @@ if($this->ion_auth->logged_in()){
 
         <div id='login-form-each'>
             <div id='login-form-each-label'><?php echo lang('login_password_label', 'password'); ?></div>
-            <div id='login-form-each-input'><?php echo form_input($password); ?></div>
-        </div>
+            <div id='login-form-each-input'><?php echo form_input($password); ?> </div>
 
+        </div>
+        <div id='login-form-remember-me-forgot-password'>
+            <div id='login-form-forgot-password'>
+                <input type="checkbox" id="show_password" name="show_password" onclick="showpassword();"/><span class="checkbox-text"> Show Password </span>
+            </div>   
+            <div id='float-fix'></div>
+        </div>
         <div id='login-form-remember-me-forgot-password'>
             <div id='login-form-remember-me'>
                 <?php echo form_checkbox('remember', '1', FALSE, 'id="remember"'); ?> 

@@ -1,3 +1,19 @@
+<script type="text/javascript">
+    function showraceother()
+    {
+        var race_id_selected = document.getElementById("race_id");
+        var selectedText = race_id_selected.options[race_id_selected.selectedIndex].text;
+        if (selectedText == 'Other')
+        {
+            document.getElementById('race_other_label').style.display = 'inline';
+            document.getElementById('race_other').style.display = 'inline';
+        } else {
+            document.getElementById('race_other_label').style.display = 'none';
+            document.getElementById('race_other').style.display = 'none';
+        }
+    }
+</script>
+
 <div id="register">
 
     <div id='login-link'><a href='<?php echo base_url(); ?>merchant/register'>Merchant Register</a></div>
@@ -58,6 +74,11 @@
         </div>
 
         <div id='register-form-each'>
+            <div id='register-form-each-label'><span id="race_other_label" style="display:none"><?php echo lang('create_user_race_other_label', 'race_other'); ?></span></div>
+            <div id='register-form-each-input'><?php echo form_input($race_other); ?></div>
+        </div>
+
+        <div id='register-form-each'>
             <div id='register-form-each-label'><?php echo lang('create_user_username_label', 'username'); ?></div>
             <div id='register-form-each-input'><?php echo form_input($username); ?></div>
         </div>
@@ -68,17 +89,17 @@
         </div>
 
         <div id='register-form-each'>
-            <div id='register-form-each-label'><?php echo lang('create_merchant_password_label', 'password');?></div>
-            <div id='register-form-each-input'><?php echo form_input($password);?></div>
+            <div id='register-form-each-label'><?php echo lang('create_merchant_password_label', 'password'); ?></div>
+            <div id='register-form-each-input'><?php echo form_input($password); ?></div>
         </div>
 
         <div id='register-form-each'>
-            <div id='register-form-each-label'><?php echo lang('create_merchant_password_confirm_label', 'password_confirm');?></div>
-            <div id='register-form-each-input'><?php echo form_input($password_confirm);?></div>
+            <div id='register-form-each-label'><?php echo lang('create_merchant_password_confirm_label', 'password_confirm'); ?></div>
+            <div id='register-form-each-input'><?php echo form_input($password_confirm); ?></div>
         </div>
 
         <div id='register-form-submit'>
-            <?php echo form_submit('submit', 'Sign Up');?>
+            <?php echo form_submit('submit', 'Sign Up'); ?>
         </div>
 
     </div>
