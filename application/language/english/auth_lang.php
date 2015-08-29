@@ -131,6 +131,7 @@ $lang['create_merchant_company_label']                     = 'Company Name:';
 $lang['create_merchant_fname_label']                       = 'Register Name:';
 $lang['create_merchant_companyssm_label']                  = 'Register No(SSM):';
 $lang['create_merchant_address_label']                     = 'Company Address:';
+$lang['create_merchant_category_label']                    = 'Company Category:';
 $lang['create_merchant_state_label']                       = 'Location:';
 $lang['create_merchant_phone_label']                       = 'Contact Number:';
 $lang['create_merchant_username_label']                    = 'Username:';

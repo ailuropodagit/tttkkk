@@ -435,7 +435,7 @@ class Merchant extends CI_Controller {
             $me_ssm = $this->input->post('me_ssm');
             $address = $this->input->post('address');
             $phone = $this->input->post('phone');
-            
+
 //            if(!$this->m_custom->check_is_value_unique('users','slug',$slug)){               
 //                $this->ion_auth->set_error('account_creation_duplicate_company_name');
 //                redirect("merchant/register", 'refresh');
@@ -448,6 +448,7 @@ class Merchant extends CI_Controller {
                 'company' => $company,
                 'slug' => $slug,
                 'address' => $address,
+                'me_category_id' => $this->input->post('me_category_id'),
                 'me_state_id' => $this->input->post('me_state_id'),
                 'phone' => $phone,
                 'me_ssm' => $me_ssm,
@@ -465,12 +466,12 @@ class Merchant extends CI_Controller {
         if ($this->form_validation->run() == true && $this->ion_auth->register($username, $password, $email, $additional_data, $group_ids)) {
             // check to see if we are creating the user
             $this->session->set_flashdata('message', $this->ion_auth->messages());
-            $get_status = send_mail_simple($email, 'Your Keppo Merchant Account Success Created', 'Company Name : ' . $company . 
-                    '<br/>Register No(SSM) : ' . $me_ssm . 
-                    '<br/>Company Address : ' . $address . 
-                    '<br/>Contact Number : ' . $phone . 
-                    '<br/>Username : ' . $username . 
-                    '<br/>E-mail : ' . $email . 
+            $get_status = send_mail_simple($email, 'Your Keppo Merchant Account Success Created', 'Company Name : ' . $company .
+                    '<br/>Register No(SSM) : ' . $me_ssm .
+                    '<br/>Company Address : ' . $address .
+                    '<br/>Contact Number : ' . $phone .
+                    '<br/>Username : ' . $username .
+                    '<br/>E-mail : ' . $email .
                     '<br/>Password : ' . $password, 'create_user_send_email_success');
             if ($get_status) {
                 // if there were no errors
@@ -520,8 +521,14 @@ class Merchant extends CI_Controller {
                 'value' => $this->form_validation->set_value('address'),
             );
 
-            $this->data['state_list'] = $this->ion_auth->get_static_option_list('state');
+            $this->data['category_list'] = $this->ion_auth->get_main_category_list();
+            $this->data['me_category_id'] = array(
+                'name' => 'me_category_id',
+                'id' => 'me_category_id',
+                'value' => $this->form_validation->set_value('me_category_id'),
+            );
 
+            $this->data['state_list'] = $this->ion_auth->get_static_option_list('state');
             $this->data['me_state_id'] = array(
                 'name' => 'me_state_id',
                 'id' => 'me_state_id',
@@ -598,8 +605,8 @@ class Merchant extends CI_Controller {
                 $this->data['branch_list'] = $this->m_custom->getBranchList($the_row->id);
             }
 
-            $this->data['page_path_name'] = 'merchant/outlet';         
-            
+            $this->data['page_path_name'] = 'merchant/outlet';
+
             $this->load->view('template/layout_right_menu', $this->data);
         } else {
             redirect('/', 'refresh');
@@ -637,6 +644,7 @@ class Merchant extends CI_Controller {
                     $data = array(
                         'phone' => $this->input->post('phone'),
                         //'slug' => generate_slug($this->input->post('company')),
+                        //'me_category_id' => $this->input->post('me_category_id'),
                         'me_website_url' => $this->input->post('website'),
                         'me_facebook_url' => $this->input->post('facebook_url'),
                     );
@@ -721,6 +729,23 @@ class Merchant extends CI_Controller {
             'readonly ' => 'true',
             'value' => $this->form_validation->set_value('me_ssm', $user->me_ssm),
         );
+
+        //If is not changeable then change to text box read only
+//        $this->data['category_list'] = $this->ion_auth->get_main_category_list();
+//        $this->data['me_category_id'] = array(
+//            'name' => 'me_category_id',
+//            'id' => 'me_category_id',
+//            'value' => $this->form_validation->set_value('me_category_id'),
+//        );
+
+        $this->data['me_category_id'] = array(
+            'name' => 'me_category_id',
+            'id' => 'me_category_id',
+            'type' => 'text',
+            'readonly ' => 'true',
+            'value' => $this->m_custom->get_one_table_record('category', 'category_id',$user->me_category_id)->category_label,
+        );
+        
         $this->data['address'] = array(
             'name' => 'address',
             'id' => 'address',

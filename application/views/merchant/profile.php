@@ -41,6 +41,12 @@
             </div>
 
             <div id='register-form-each'>
+                <div id='register-form-each-label'><?php echo lang('create_merchant_category_label', 'me_category_id'); ?></div>
+<!--                <div id='register-form-each-input'><?php //echo form_dropdown($me_category_id, $category_list, $user->me_category_id); ?></div>-->
+                <div id='register-form-each-input'><?php echo form_input($me_category_id); ?></div>
+            </div>
+            
+            <div id='register-form-each'>
                 <div id='register-form-each-label'><?php echo lang('create_merchant_address_label', 'address'); ?></div>
                 <div id='register-form-each-input'><?php echo form_textarea($address); ?></div>
             </div>
