@@ -20,10 +20,13 @@ $config['folder_merchant_ssm'] = 'folder_upload/merchant_ssm/';
 $config['user_default_image'] = 'demo-profile-user.png';
 $config['merchant_default_image'] = 'demo-logo-company.png';
 
-$config['allowed_types']        = 'gif|jpg|png|bmp|ico|jpeg|jpe';
+$config['allowed_types_image']        = 'gif|jpg|png|bmp|ico|jpeg|jpe';
 $config['max_size']             = 10240;  //10mb = 10240kb
 $config['max_width']            = 1000;
 $config['max_height']           = 1000;
-$config['image_upload_guide']   = '10MB, 1000x1000 size image file';
+$config['upload_guide_image']   = '10MB, 1000x1000 size image file';
+
+$config['allowed_types_file']   = 'gif|jpg|png|jpeg|pdf|doc|docx|txt';
+$config['upload_guide_file']   = '10MB Image/PDF/Doc/Txt file';
 
 $config['keppo_email_domain'] = '@keppo.my';

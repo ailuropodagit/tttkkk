@@ -20,7 +20,7 @@
             <br /><br />
             <button name="button_action" type="submit" value="change_image" >Change Logo</button><br />         
         <?php 
-        echo "<span class='image-upload-guide'>".$this->config->item('image_upload_guide')."</span>";
+        echo "<span class='image-upload-guide'>".$this->config->item('upload_guide_image')."</span>";
         } ?>
     <?php echo form_close(); ?>
 </div>
@@ -128,7 +128,7 @@
 <div id="float-fix"></div>
 
 <?php if (check_correct_login_type($this->main_group_id)) { ?>
-    <a href='<?php echo base_url(); ?>' target='_blank'>Submit SSM forms</a>
+    <a href='<?php echo base_url(); ?>merchant/upload_ssm'>Submit SSM forms</a>
 <?php } ?>
 
     <div style="float:right">

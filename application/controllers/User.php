@@ -649,7 +649,7 @@ class user extends CI_Controller {
             } else if ($this->input->post('button_action') == "change_image") {
                 $upload_rule = array(
                     'upload_path' => $this->album_user,
-                    'allowed_types' => $this->config->item('allowed_types'),
+                    'allowed_types' => $this->config->item('allowed_types_image'),
                     'max_size' => $this->config->item('max_size'),
                     'max_width' => $this->config->item('max_width'),
                     'max_height' => $this->config->item('max_height'),
