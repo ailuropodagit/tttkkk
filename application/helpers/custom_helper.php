@@ -148,6 +148,21 @@ if (!function_exists('format_date')) {
 
 }
 
+if (!function_exists('age_count')) {
+
+// input $date string format: YYYY-MM-DD
+    function age_count($date) {
+        list($year, $month, $day) = explode("-", $date);
+        $year_diff = date("Y") - $year;
+        $month_diff = date("m") - $month;
+        $day_diff = date("d") - $day;
+        if ($day_diff < 0 || $month_diff < 0)
+            $year_diff--;
+        return $year_diff;
+    }
+
+}
+
 if (!function_exists('IsNullOrEmptyString')) {
 
     function IsNullOrEmptyString($value) {

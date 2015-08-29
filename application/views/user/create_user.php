@@ -58,10 +58,10 @@
             </div>
         </div>
 
-        <div id='register-form-each'>
-            <div id='register-form-each-label'><?php echo lang('create_user_age_label', 'age'); ?></div>
-            <div id='register-form-each-input'><?php echo form_dropdown($age, $age_list); ?></div>
-        </div>
+<!--        <div id='register-form-each'>
+            <div id='register-form-each-label'><?php //echo lang('create_user_age_label', 'age'); ?></div>
+            <div id='register-form-each-input'><?php //echo form_dropdown($age, $age_list); ?></div>
+        </div>-->
 
         <div id='register-form-each'>
             <div id='register-form-each-label'><?php echo lang('create_user_gender_label', 'gender_id'); ?></div>

@@ -427,7 +427,7 @@ class user extends CI_Controller {
                 'last_name' =>$last_name,
                 'phone' => $phone,
                 'us_birthday' => $this->input->post('dob'),
-                'us_age' => $this->input->post('age'),
+                'us_age' => age_count($this->input->post('dob')),
                 'us_gender_id' => $this->input->post('gender_id'),
                 'us_race_id' => $this->input->post('race_id'),
                 'us_race_other' => $race_other,
@@ -503,12 +503,12 @@ class user extends CI_Controller {
                 'name' => 'year',
                 'id' => 'year',
             );
-            $this->data['age_list'] = generate_number_option(10,90);
-            $this->data['age'] = array(
-                'name' => 'age',
-                'id' => 'age',
-                'value' => $this->form_validation->set_value('age'),
-            );
+//            $this->data['age_list'] = generate_number_option(10,90);
+//            $this->data['age'] = array(
+//                'name' => 'age',
+//                'id' => 'age',
+//                'value' => $this->form_validation->set_value('age'),
+//            );
             $this->data['gender_list'] = $this->ion_auth->get_static_option_list('gender');
             $this->data['gender_id'] = array(
                 'name' => 'gender_id',
@@ -738,11 +738,19 @@ class user extends CI_Controller {
                 'name' => 'year',
                 'id' => 'year',
             );
-            $this->data['age_list'] = generate_number_option(10,90);
+//            $this->data['age_list'] = generate_number_option(10,90);
+//            $this->data['age'] = array(
+//                'name' => 'age',
+//                'id' => 'age',
+//            );
             $this->data['age'] = array(
-                'name' => 'age',
-                'id' => 'age',
+            'name' => 'age',
+            'id' => 'age',
+            'type' => 'text',
+            'readonly ' => 'true',
+            'value' => age_count($user->us_birthday),
             );
+            
             $this->data['gender_list'] = $this->ion_auth->get_static_option_list('gender');
             $this->data['gender_id'] = array(
                 'name' => 'gender_id',
