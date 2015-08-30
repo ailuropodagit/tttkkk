@@ -9,8 +9,9 @@ class Home extends CI_Controller {
     public function index() {
         
         //DATA
-        $data['left_path_name'] = 'template/sidebar_left';
         $data['page_path_name'] = 'home';
+        $data['category_array'] = $this->m_custom->getCategory();
+        $data['category_merchant_array'] = $this->m_custom->getMerchantList_by_category('1');
         
         //LOAD TEMPLATE
         $this->load->view('template/layout_advertisement', $data);

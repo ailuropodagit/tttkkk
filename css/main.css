@@ -332,12 +332,11 @@ a {
 #layout-advertisement-left {
     float: left;
     width: 100%;
-    border: 1px solid lightgray;
     width: calc(100% - 300px);
 }
 
 #layout-advertisement-left-content {
-    padding: 20px;
+    padding: 0px;
 }
 
 #layout-advertisement-right {
@@ -345,7 +344,7 @@ a {
     width: 280px;
 }
 
-#layout-advertisement-right-banner-box {
+#layout-advertisement-right-banner-box1, #layout-advertisement-right-banner-box2 {
     border: 1px dotted gray;
     width: 280px; 
     height: 180px; 
@@ -354,6 +353,32 @@ a {
     color: gray; 
     font-size: 15px; 
     letter-spacing: 1px;
+}
+
+/* HOME
+******************************/
+
+#home-navigation-c1 {
+    border: 1px solid gray;
+    width: 140px;
+    float: left;
+}
+
+#home-navigation-c2 {
+    border: 1px solid gray;
+    width: 140px;
+    float: left;
+}
+
+#home-navigation-c3 {
+    border: 1px solid gray;
+    float: left;
+    width: 100%;
+    width: calc(100% - 290px);
+}
+
+#home-navigation-c3-content {
+    padding: 3px;
 }
 
 /* LOGIN REGISTER

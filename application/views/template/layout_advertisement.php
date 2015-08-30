@@ -17,7 +17,7 @@ $this->load->view('template/header');
                 </div>
                 
                 <div id="layout-advertisement-right">
-                    <div id="layout-advertisement-right-banner-box">
+                    <div id="layout-advertisement-right-banner-box1">
                         <table style="width: 100%; height: 100%; vertical-align: middle;">
                             <tr>
                                 <td>Advertisement <br/> 280px (W) x 180px (H)</td>
@@ -25,7 +25,7 @@ $this->load->view('template/header');
                         </table>
                     </div>
                     <br/>
-                    <div id="layout-advertisement-right-banner-box">
+                    <div id="layout-advertisement-right-banner-box2">
                         <table style="width: 100%; height: 100%; vertical-align: middle;">
                             <tr>
                                 <td>Advertisement <br/> 280px (W) x 180px (H)</td>
