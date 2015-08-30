@@ -12,7 +12,7 @@ class user extends CI_Controller {
         $this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
         $this->lang->load('auth');
         $this->main_group_id = $this->config->item('group_id_user');
-        $this->album_user = $this->config->item('album_user');
+        $this->album_user_profile = $this->config->item('album_user_profile');
     }
 
     // redirect if needed, otherwise display the user list
@@ -567,7 +567,7 @@ class user extends CI_Controller {
     function dashboard($user_id) {
         $the_row = $this->m_custom->get_one_table_record('users', 'id', $user_id);
         if ($the_row) {
-            $this->data['image_url'] = $this->album_user . $the_row->profile_image;
+            $this->data['image_url'] = $this->album_user_profile . $the_row->profile_image;
             $this->data['first_name'] = $the_row->first_name;
             $this->data['last_name'] = $the_row->last_name; 
             $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
@@ -648,8 +648,8 @@ class user extends CI_Controller {
                 }
             } else if ($this->input->post('button_action') == "change_image") {
                 $upload_rule = array(
-                    'upload_path' => $this->album_user,
-                    'allowed_types' => $this->config->item('allowed_types'),
+                    'upload_path' => $this->album_user_profile,
+                    'allowed_types' => $this->config->item('allowed_types_image'),
                     'max_size' => $this->config->item('max_size'),
                     'max_width' => $this->config->item('max_width'),
                     'max_height' => $this->config->item('max_height'),
@@ -683,7 +683,7 @@ class user extends CI_Controller {
             }
         }
 
-        $this->data['logo_url'] = $this->album_user . $user->profile_image;
+        $this->data['logo_url'] = $this->album_user_profile . $user->profile_image;
 
         // display the edit user form
         $this->data['csrf'] = $this->_get_csrf_nonce();

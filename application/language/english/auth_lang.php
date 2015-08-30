@@ -162,6 +162,10 @@ $lang['branch_state_label']                  = 'Branch State:';
 $lang['supervisor_username_label']           = 'Supervisor Username:';
 $lang['supervisor_password_label']           = 'Supervisor Password:';
 
+// Hot Deal
+$lang['hotdeal_description_label']         = 'Description:';
+$lang['hotdeal_hour_label']                = 'Countdown Hour:';
+
 // Create Group
 $lang['create_group_title']                  = 'Create Group';
 $lang['create_group_heading']                = 'Create Group';
