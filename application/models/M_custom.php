@@ -62,6 +62,18 @@ class M_custom extends CI_Model {
         return $query->row();
     }
     
+    //To find one record in DB with one keyword
+    public function get_one_table_record_array($the_table, $the_column, $the_value) {
+        if (empty($the_value)) {
+            return FALSE;
+        }
+        $query = $this->db->get_where($the_table, array($the_column => $the_value), 1);
+        if ($query->num_rows() !== 1) {
+            return FALSE;
+        }
+        return $query->row_array();
+    }
+    
     //To find many records in DB with one keyword
     public function get_many_table_record($the_table, $the_column, $the_value){
         $query = $this->db->get_where($the_table, array($the_column => $the_value));
@@ -139,14 +151,27 @@ class M_custom extends CI_Model {
         return FALSE;
     }
 
-    public function simple_update($the_table, $the_data, $id_column, $id_value) {
-        $this->db->where($id_column, $id_value);
-        if ($this->db->update($the_table, $the_data)) {
+    public function compare_before_update($the_table, $the_data, $id_column, $id_value) {
+        $record = $this->get_one_table_record_array($the_table,$id_column, $id_value);
+        $result = array_diff_assoc($the_data, $record);
+        if(empty($result)){
+            return FALSE;
+        }else{
             return TRUE;
+        }
+        
+    }
+    
+    public function simple_update($the_table, $the_data, $id_column, $id_value) {
+        if ($this->compare_before_update($the_table, $the_data, $id_column, $id_value)) {
+            $this->db->where($id_column, $id_value);
+            if ($this->db->update($the_table, $the_data)) {
+                return TRUE;
+            }
         }
         return FALSE;
     }
-    
+
     public function insert_row_log($the_table, $new_id, $do_by = NULL, $do_by_type = NULL){
         $the_data = array(
             'table_type' => $the_table,

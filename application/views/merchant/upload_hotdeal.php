@@ -20,7 +20,7 @@
 <?php
 $hotdeal_per_day = $this->config->item("hotdeal_per_day");
 echo 'Server Date Time : ' . date($this->config->item('keppo_format_date_time_display')) . '<br/>';
-echo 'Today Hot Deal : ' . $hotdeal_today_count . ' / ' . $hotdeal_per_day . ' per day';
+echo 'Today Hot Deal : ' . $hotdeal_today_count . ' / ' . $hotdeal_per_day . ' per day<br/>';
 echo "<span class='image-upload-guide'>Upload Image Rule : " . $this->config->item('upload_guide_image') . "</span>";
 ?>
 <br/><br/>
