@@ -1111,7 +1111,7 @@ class Merchant extends CI_Controller {
     }
 
     function upload_hotdeal() {
-        if (!check_correct_login_type($this->main_group_id)) {
+        if (!check_correct_login_type($this->main_group_id) && !check_correct_login_type($this->supervisor_group_id)) {
             redirect('/', 'refresh');
         }
         $merchant_id = $this->ion_auth->user()->row()->id;
