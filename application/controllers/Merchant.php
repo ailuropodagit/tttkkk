@@ -13,7 +13,7 @@ class Merchant extends CI_Controller {
         $this->lang->load('auth');
         $this->main_group_id = $this->config->item('group_id_merchant');
         $this->supervisor_group_id = $this->config->item('group_id_supervisor');
-        $this->album_merchant = $this->config->item('album_merchant');
+        $this->album_merchant_profile = $this->config->item('album_merchant_profile');
         $this->folder_merchant_ssm = $this->config->item('folder_merchant_ssm');
     }
 
@@ -573,7 +573,7 @@ class Merchant extends CI_Controller {
     function dashboard($slug) {
         $the_row = $this->m_custom->get_one_table_record('users', 'slug', $slug);
         if ($the_row) {
-            $this->data['logo_url'] = $this->album_merchant . $the_row->profile_image;
+            $this->data['logo_url'] = $this->album_merchant_profile . $the_row->profile_image;
             $this->data['company_name'] = $the_row->company;
             $this->data['address'] = $the_row->address;
             $this->data['phone'] = $the_row->phone;
@@ -592,7 +592,7 @@ class Merchant extends CI_Controller {
     function outlet($slug) {
         $the_row = $this->m_custom->get_one_table_record('users', 'slug', $slug);
         if ($the_row) {
-            $this->data['logo_url'] = $this->album_merchant . $the_row->profile_image;
+            $this->data['logo_url'] = $this->album_merchant_profile . $the_row->profile_image;
             $this->data['company_name'] = $the_row->company;
             $this->data['address'] = $the_row->address;
             $this->data['phone'] = $the_row->phone;
@@ -670,7 +670,7 @@ class Merchant extends CI_Controller {
                 }
             } else if ($this->input->post('button_action') == "change_image") {
                 $upload_rule = array(
-                    'upload_path' => $this->album_merchant,
+                    'upload_path' => $this->album_merchant_profile,
                     'allowed_types' => $this->config->item('allowed_types_image'),
                     'max_size' => $this->config->item('max_size'),
                     'max_width' => $this->config->item('max_width'),
@@ -713,7 +713,7 @@ class Merchant extends CI_Controller {
             }
         }
 
-        $this->data['logo_url'] = $this->album_merchant . $user->profile_image;
+        $this->data['logo_url'] = $this->album_merchant_profile . $user->profile_image;
 
         // display the edit user form
         $this->data['csrf'] = $this->_get_csrf_nonce();
@@ -928,7 +928,7 @@ class Merchant extends CI_Controller {
             $the_branch = $this->m_custom->get_one_table_record('merchant_branch', 'branch_id', $branch_id);
             if ($the_branch) {
                 $the_merchant = $this->m_custom->get_one_table_record('users', 'id', $the_branch->merchant_id);
-                $this->data['logo_url'] = $this->album_merchant . $the_merchant->profile_image;
+                $this->data['logo_url'] = $this->album_merchant_profile . $the_merchant->profile_image;
                 $this->data['company_name'] = $the_merchant->company;
                 $this->data['phone'] = $the_branch->phone;
 
@@ -1071,38 +1071,38 @@ class Merchant extends CI_Controller {
         $me_ssm_file = $this->ion_auth->user()->row()->me_ssm_file;
         $this->data['me_ssm_file'] = $me_ssm_file;
         if (isset($_POST) && !empty($_POST)) {
-             if ($this->input->post('button_action') == "upload_ssm") {           
-            $upload_rule = array(
-                'upload_path' => $this->folder_merchant_ssm,
-                'allowed_types' => $this->config->item('allowed_types_file'),
-                'max_size' => $this->config->item('max_size'),
-            );
-
-            $this->load->library('upload', $upload_rule);
-
-            if (!$this->upload->do_upload()) {
-                $error = array('error' => $this->upload->display_errors());
-                $this->session->set_flashdata('message', $this->upload->display_errors());
-            } else {
-                $image_data = array('upload_data' => $this->upload->data());
-                //$this->ion_auth->set_message('image_upload_successful');
-
-                $data = array(
-                    'me_ssm_file' => $this->upload->data('file_name'),
+            if ($this->input->post('button_action') == "upload_ssm") {
+                $upload_rule = array(
+                    'upload_path' => $this->folder_merchant_ssm,
+                    'allowed_types' => $this->config->item('allowed_types_file'),
+                    'max_size' => $this->config->item('max_size'),
                 );
 
-                if ($this->ion_auth->update($merchant_id, $data)) {
-                    $this->session->set_flashdata('message', 'Merchant SSM success update.');
-                    redirect('merchant/profile', 'refresh');
+                $this->load->library('upload', $upload_rule);
+
+                if (!$this->upload->do_upload()) {
+                    $error = array('error' => $this->upload->display_errors());
+                    $this->session->set_flashdata('message', $this->upload->display_errors());
                 } else {
-                    $this->session->set_flashdata('message', $this->ion_auth->errors());
+                    $image_data = array('upload_data' => $this->upload->data());
+                    //$this->ion_auth->set_message('image_upload_successful');
+
+                    $data = array(
+                        'me_ssm_file' => $this->upload->data('file_name'),
+                    );
+
+                    if ($this->ion_auth->update($merchant_id, $data)) {
+                        $this->session->set_flashdata('message', 'Merchant SSM success update.');
+                        redirect('merchant/profile', 'refresh');
+                    } else {
+                        $this->session->set_flashdata('message', $this->ion_auth->errors());
+                    }
                 }
-            }
-            }else if ($this->input->post('button_action') == "download_ssm")  {
+            } else if ($this->input->post('button_action') == "download_ssm") {
                 $this->load->helper('download');
-                $file_path = $this->folder_merchant_ssm.$me_ssm_file;
+                $file_path = $this->folder_merchant_ssm . $me_ssm_file;
                 force_download($file_path, NULL);
-            }else{
+            } else {
                 
             }
         }
@@ -1110,6 +1110,48 @@ class Merchant extends CI_Controller {
         $this->load->view('template/layout_right_menu', $this->data);
     }
 
+    function upload_hotdeal() {
+        if (!check_correct_login_type($this->main_group_id)) {
+            redirect('/', 'refresh');
+        }
+        $merchant_id = $this->ion_auth->user()->row()->id;
+        $hotdeal_per_day = $this->config->item("hotdeal_per_day");
+        
+        if (isset($_POST) && !empty($_POST)) {
+             if ($this->input->post('button_action') == "upload_hotdeal") {        
+                 $upload_rule = array(
+                    'upload_path' => $this->album_merchant,
+                    'allowed_types' => $this->config->item('allowed_types_image'),
+                    'max_size' => $this->config->item('max_size'),
+                    'max_width' => $this->config->item('max_width'),
+                    'max_height' => $this->config->item('max_height'),
+                );
+
+                $this->load->library('upload', $upload_rule);
+             }   
+        }
+        
+        $this->data['hour_list'] = generate_number_option(1, 24);
+        for ($i = 1; $i <= $hotdeal_per_day; $i++) {
+            $hotdeal_desc = 'hotdeal_desc' . $i;
+            $this->data[$hotdeal_desc] = array(
+                'name' => 'desc-' . $i,
+                'id' => 'desc-' . $i,
+            );
+            
+            $hotdeal_hour = 'hotdeal_hour' . $i;
+            $this->data[$hotdeal_hour] = array(
+                'name' => 'hour-'. $i,
+                'id' => 'hour-'. $i,
+            );
+            
+            //$hotdeal_hour_selected = 'hotdeal_hour_selected' . $i;
+            //$this->data[$hotdeal_hour_selected] = '3';
+        }
+
+        $this->data['page_path_name'] = 'merchant/upload_hotdeal';
+        $this->load->view('template/layout_right_menu', $this->data);
+    }
 //    function upload_image() {
 //
 //        redirect('/','refresh'); //no use currently, disable this function first
@@ -1121,7 +1163,7 @@ class Merchant extends CI_Controller {
 //
 //        if (isset($_POST) && !empty($_POST)) {
 //            $upload_rule = array(
-//                'upload_path' => $this->album_merchant,
+//                'upload_path' => $this->album_merchant_profile,
 //                'allowed_types' => $this->config->item('allowed_types_image'),
 //                'max_size' => $this->config->item('max_size'),
 //            );
@@ -1150,7 +1192,7 @@ class Merchant extends CI_Controller {
 //        }
 //
 //        $user = $this->ion_auth->user($id)->row();
-//        $this->data['logo_url'] = $this->album_merchant . $user->profile_image;
+//        $this->data['logo_url'] = $this->album_merchant_profile . $user->profile_image;
 //
 //        // set the flash data error message if there is one
 //        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
