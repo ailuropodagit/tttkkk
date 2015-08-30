@@ -22,6 +22,7 @@ $config['album_user_merchant'] = 'folder_upload/album_user_merchant/';
 $config['folder_merchant_ssm'] = 'folder_upload/merchant_ssm/';
 
 $config['user_default_image'] = 'demo-profile-user.png';
+$config['other_default_image'] = 'demo-image.png';
 $config['merchant_default_image'] = 'demo-logo-company.png';
 
 $config['allowed_types_image']        = 'gif|jpg|png|bmp|ico|jpeg|jpe';
@@ -33,6 +34,9 @@ $config['upload_guide_image']   = '10MB, 1000x1000 size image file';
 $config['allowed_types_file']   = 'gif|jpg|png|jpeg|pdf|doc|docx|txt';
 $config['upload_guide_file']   = '10MB Image/PDF/Doc/Txt file';
 
-$config['keppo_date_format'] = 'd-m-Y';
+$config['keppo_format_date_display'] = 'd-m-Y';
+$config['keppo_format_date_time_display'] = 'd-m-Y H:i';
+$config['keppo_format_date_db'] = 'Y-m-d';
+$config['keppo_format_date_time_db'] = 'Y-m-d H:i:s';
 $config['keppo_email_domain'] = '@keppo.my';
 $config['hotdeal_per_day'] = 5;

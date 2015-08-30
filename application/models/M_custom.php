@@ -131,5 +131,84 @@ class M_custom extends CI_Model {
         }
         return $query->result();
     }
+    public function get_id_after_insert($the_table, $the_data) {
+        if ($this->db->insert($the_table, $the_data)) {
+            $new_id = $this->db->insert_id();
+            return $new_id;
+        }
+        return FALSE;
+    }
+
+    public function simple_update($the_table, $the_data, $id_column, $id_value) {
+        $this->db->where($id_column, $id_value);
+        if ($this->db->update($the_table, $the_data)) {
+            return TRUE;
+        }
+        return FALSE;
+    }
+    
+    public function insert_row_log($the_table, $new_id, $do_by = NULL, $do_by_type = NULL){
+        $the_data = array(
+            'table_type' => $the_table,
+            'table_row_id' => $new_id,
+            'create_time' => get_part_of_date('all'),
+            'create_by' => $do_by,
+            'create_by_type' => $do_by_type,
+        );
+        $this->db->insert('table_row_activity', $the_data);
+    }
+    
+    public function update_row_log($the_table, $the_id, $do_by = NULL, $do_by_type = NULL){
+        
+        $query = $this->db->get_where('table_row_activity', array('table_type' => $the_table, 'table_row_id' => $the_id), 1);
+        if ($query->num_rows() == 0) {
+            $this->insert_row_log($the_table, $the_id, $do_by, $do_by_type);
+            $query = $this->db->get_where('table_row_activity', array('table_type' => $the_table, 'table_row_id' => $the_id), 1);
+        }
+        $activity_row = $query->row();
+  
+        $the_data = array(
+            'last_modify_by' => $do_by,
+            'last_modify_by_type' => $do_by_type,
+        );
+                
+        $this->db->where('activity_id', $activity_row->activity_id);
+        $this->db->update('table_row_activity', $the_data);
+    }
+    
+    public function remove_row_log($the_table, $the_id, $do_by = NULL, $do_by_type = NULL){
+        
+        $query = $this->db->get_where('table_row_activity', array('table_type' => $the_table, 'table_row_id' => $the_id), 1);
+        if ($query->num_rows() == 0) {
+            $this->insert_row_log($the_table, $the_id, $do_by, $do_by_type);
+            $query = $this->db->get_where('table_row_activity', array('table_type' => $the_table, 'table_row_id' => $the_id), 1);
+        }
+        $activity_row = $query->row();
+  
+        $the_data = array(
+            'hide_time' => get_part_of_date('all'),
+            'hide_by' => $do_by,
+            'hide_by_type' => $do_by_type,
+        );
+                
+        $this->db->where('activity_id', $activity_row->activity_id);
+        $this->db->update('table_row_activity', $the_data);
+    }
+    
+    public function get_merchant_today_hotdeal($merchant_id, $counter_only = 0) {
+        $condition = "start_time like '%" . date(format_date_server()) . "%'";
+        $this->db->where('advertise_type', 'hot');
+        $this->db->where($condition);
+        $this->db->where('hide_flag', 0);
+        $query = $this->db->get_where('advertise', array('merchant_id' => $merchant_id));
+        if ($query->num_rows() == 0) {
+            return FALSE;
+        }
+        if ($counter_only == 0) {
+            return $query->result_array();
+        } else {
+            return $query->num_rows();
+        }
+    }
     
 }
