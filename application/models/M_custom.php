@@ -26,6 +26,22 @@ class M_custom extends CI_Model
         return $return;
     }
 
+    //To find many records in DB with one keyword
+    public function get_list_of_allow_id($the_table, $the_column, $the_value, $wanted_column)
+    {
+        $query = $this->db->get_where($the_table, array($the_column => $the_value));
+
+        $return = array();
+        if ($query->num_rows() > 0)
+        {
+            foreach ($query->result_array() as $row)
+            {
+                $return[] = $row[$wanted_column];
+            }
+        }
+        return $return;
+    }
+    
     //Get one static option text by it option id
     public function get_one_static_option_text($option_id = NULL)
     {
@@ -108,6 +124,23 @@ class M_custom extends CI_Model
         {
             return $query->result();
         }
+    }
+
+    public function generate_voucher($id)
+    {
+        $result = $this->get_one_table_record('users', 'id', $id, 1);
+        $voucher = '';
+        $counter = 0;
+        if ($result)
+        {
+            do
+            {
+                $counter += 1;
+                $voucher = strtoupper(substr($result['slug'], 0, 3)) . date('Ymd') . $counter;
+                $check_unique = $this->check_is_value_unique('advertise', 'voucher', $voucher);
+            } while (!$check_unique);
+        }
+        return $voucher;
     }
 
     //To find one record in DB of parent table with one keyword
@@ -285,6 +318,29 @@ class M_custom extends CI_Model
         $this->db->update('table_row_activity', $the_data);
     }
 
+    public function get_merchant_monthly_promotion($merchant_id, $month=NULL, $year=NULL)
+    {
+        if (empty($merchant_id))
+        {
+            return FALSE;
+        }
+        if (empty($month))
+        {
+            $month = get_part_of_date('month');
+        }
+        if (empty($year))
+        {
+            $year = get_part_of_date('year');
+        }
+        $query = $this->db->get_where('advertise', array('merchant_id' => $merchant_id, 'month_id' => $month, 'year' => $year, 'advertise_type' => 'pro'), 1);
+        if ($query->num_rows() !== 1)
+        {
+            return FALSE;
+        }
+
+        return $query->row_array();
+    }
+    
     public function get_merchant_today_hotdeal($merchant_id, $counter_only = 0)
     {
         $condition = "start_time like '%" . date(format_date_server()) . "%'";

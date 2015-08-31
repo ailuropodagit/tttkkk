@@ -50,7 +50,7 @@ class Merchant extends CI_Controller
 
     // log the user in
     function login()
-    {
+    {        
         $this->data['title'] = "Log In";
 
         //validate form input
@@ -510,13 +510,13 @@ class Merchant extends CI_Controller
         }
 
         // validate form input
-        $this->form_validation->set_rules('company', $this->lang->line('create_merchant_validation_company_label'), 'required');
-        $this->form_validation->set_rules('slug', $this->lang->line('create_merchant_validation_company_label'), 'is_unique[' . $tables['users'] . '.slug]');
+        $this->form_validation->set_rules('company', $this->lang->line('create_merchant_validation_company_label'), "trim|required|min_length[3]");
+        $this->form_validation->set_rules('slug', $this->lang->line('create_merchant_validation_company_label'), 'trim|is_unique[' . $tables['users'] . '.slug]');
         $this->form_validation->set_rules('me_ssm', $this->lang->line('create_merchant_validation_companyssm_label'), 'required');
         $this->form_validation->set_rules('address', $this->lang->line('create_merchant_validation_address_label'), 'required');
         $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required');
-        $this->form_validation->set_rules('username', $this->lang->line('create_merchant_validation_username_label'), 'required|is_unique[' . $tables['users'] . '.username]');
-        $this->form_validation->set_rules('email', $this->lang->line('create_merchant_validation_email_label'), 'required|valid_email|is_unique[' . $tables['users'] . '.email]');
+        $this->form_validation->set_rules('username', $this->lang->line('create_merchant_validation_username_label'), 'trim|required|is_unique[' . $tables['users'] . '.username]');
+        $this->form_validation->set_rules('email', $this->lang->line('create_merchant_validation_email_label'), 'trim|required|valid_email|is_unique[' . $tables['users'] . '.email]');
         $this->form_validation->set_rules('password', $this->lang->line('create_merchant_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
         $this->form_validation->set_rules('password_confirm', $this->lang->line('create_merchant_validation_password_confirm_label'), 'required');
         //$this->form_validation->set_rules('first_name', $this->lang->line('create_merchant_fname_label'), 'required');
@@ -975,7 +975,10 @@ class Merchant extends CI_Controller
 
     function branch()
     {
-        if (!check_correct_login_type($this->main_group_id))
+        $merchant_id = $this->ion_auth->user()->row()->id;
+        $allowed_list = $this->m_custom->get_list_of_allow_id('merchant_branch', 'merchant_id', $merchant_id, 'branch_id');
+        $check_id = $this->uri->segment(4);
+        if (!check_correct_login_type($this->main_group_id, $allowed_list, $check_id))
         {
             redirect('/', 'refresh');
         }
@@ -1118,7 +1121,10 @@ class Merchant extends CI_Controller
 
     function supervisor()
     {
-        if (!check_correct_login_type($this->main_group_id))
+        $merchant_id = $this->ion_auth->user()->row()->id;
+        $allowed_list = $this->m_custom->get_list_of_allow_id('users', 'su_merchant_id', $merchant_id, 'id');
+        $check_id = $this->uri->segment(4);
+        if (!check_correct_login_type($this->main_group_id, $allowed_list, $check_id))
         {
             redirect('/', 'refresh');
         }
@@ -1317,7 +1323,7 @@ class Merchant extends CI_Controller
         if (isset($_POST) && !empty($_POST))
         {
             if ($this->input->post('button_action') == "submit")
-            {
+            {             
                 $upload_rule = array(
                     'upload_path' => $this->album_merchant,
                     'allowed_types' => $this->config->item('allowed_types_image'),
@@ -1327,10 +1333,173 @@ class Merchant extends CI_Controller
                 );
 
                 $this->load->library('upload', $upload_rule);
+
+                $candie_id = $this->input->post('candie_id');                
+                $sub_category_id = $this->input->post('candie_category');
+                $title = $this->input->post('candie_title');
+                $description = $this->input->post('candie_desc');
+                $upload_file = "candie-file";
+                $start_date = validateDate($this->input->post('start_date'));
+                $end_date = validateDate($this->input->post('end_date'));
+                $candie_month = $this->input->post('candie_month');
+                $candie_point = check_is_positive_numeric($this->input->post('candie_point'));
+                $expire_date = validateDate($this->input->post('expire_date'));
+                $candie_vender = $this->input->post('candie_vender');
+                $image_data = NULL;
+                
+                if ($candie_id == 0)
+                {
+                    if (!empty($_FILES[$upload_file]['name']))
+                    {
+                        if (!$this->upload->do_upload($upload_file))
+                        {
+                            $message_info = add_message_info($message_info, $this->upload->display_errors(), $title);
+                        }
+                        else
+                        {
+                            $image_data = array('upload_data' => $this->upload->data());
+                        }
+                    }
+                    $data = array(
+                        'advertise_type' => 'pro',
+                        'merchant_id' => $merchant_id,
+                        'sub_category_id' => $sub_category_id,
+                        'title' => $title,
+                        'description' => $description,
+                        'image' => empty($image_data) ? '' : $image_data['upload_data']['file_name'],
+                        'start_time' => $start_date,
+                        'end_time' => $end_date,
+                        'month_id' => get_part_of_date('month'),  //To be change
+                        'year' => get_part_of_date('year'),
+                        'voucher' => $this->m_custom->generate_voucher($merchant_id),
+                        'voucher_candie' => $candie_point,
+                        'voucher_expire_date' => $expire_date,
+                        'extra_field' => $candie_vender
+                    );
+
+                    $new_id = $this->m_custom->get_id_after_insert('advertise', $data);
+                    if ($new_id)
+                    {
+                        $this->m_custom->insert_row_log('advertise', $new_id, $do_by_id, $do_by_type);
+                        $message_info = add_message_info($message_info, 'Candie Promotion success create.');
+                    }
+                    else
+                    {
+                        $message_info = add_message_info($message_info, $this->ion_auth->errors());
+                    }
+                }
+                else
+                {
+                    $previous_image_name = $this->m_custom->get_one_table_record('advertise', 'advertise_id', $candie_id)->image;
+
+                    //To check old deal got change image or not, if got then upload the new one and delete previous image
+                    if (!empty($_FILES[$upload_file]['name']))
+                    {
+
+                        if (!$this->upload->do_upload($upload_file))
+                        {
+                            $message_info = add_message_info($message_info, $this->upload->display_errors());
+                        }
+                        else
+                        {
+                            $image_data = array('upload_data' => $this->upload->data());
+                            delete_file($this->album_merchant . $previous_image_name);
+                        }
+                    }
+
+                    //To update previous hot deal
+                    $data = array(
+                        'sub_category_id' => $sub_category_id,
+                        'title' => $title,
+                        'description' => $description,
+                        'image' => empty($image_data) ? $previous_image_name : $image_data['upload_data']['file_name'],                
+                        'start_time' => $start_date,
+                        'end_time' => $end_date,
+                        'voucher_candie' => $candie_point,
+                        'voucher_expire_date' => $expire_date,
+                        'extra_field' => $candie_vender
+                    );
+
+                    if ($this->m_custom->simple_update('advertise', $data, 'advertise_id', $candie_id))
+                    {
+                        $this->m_custom->update_row_log('advertise', $candie_id, $do_by_id, $do_by_type);
+                        $message_info = add_message_info($message_info, 'Candie Promotion success update.');
+                    }
+                    else
+                    {
+                        $message_info = add_message_info($message_info, $this->ion_auth->errors());
+                    }
+                    
+                }
             }
             $this->session->set_flashdata('message', $message_info);
             redirect('merchant/candie_promotion', 'refresh');
         }
+
+        //To get this month candie promotion if already create before
+        $this_month_candie = $this->m_custom->get_merchant_monthly_promotion($merchant_id);
+        
+        $this->data['candie_id'] = array(
+            'candie_id' => empty($this_month_candie) ? '0' : $this_month_candie['advertise_id'],
+        );
+        
+        $this->data['sub_category_list'] = $this->ion_auth->get_sub_category_list($merchant_data->me_category_id);
+        $this->data['candie_category'] = array(
+            'name' => 'candie_category',
+            'id' => 'candie_category',
+        );
+        $this->data['candie_category_selected'] = empty($this_month_candie) ? '' : $this_month_candie['sub_category_id'];
+        
+        $this->data['candie_title'] = array(
+            'name' => 'candie_title',
+            'id' => 'candie_title',
+            'value' => empty($this_month_candie) ? '' : $this_month_candie['title'],
+        );
+
+        $this->data['candie_desc'] = array(
+            'name' => 'candie_desc',
+            'id' => 'candie_desc',
+            'value' => empty($this_month_candie) ? '' : $this_month_candie['description'],
+        );
+
+        $this->data['candie_image'] = empty($this_month_candie) ? $this->album_merchant . $this->config->item('other_default_image') : $this->album_merchant . $this_month_candie['image'];
+        
+        $this->data['start_date'] = array(
+            'name' => 'start_date',
+            'id' => 'start_date',
+            'value' => empty($this_month_candie) ? '' : displayDate($this_month_candie['start_time']),
+        );
+        
+        $this->data['end_date'] = array(
+            'name' => 'end_date',
+            'id' => 'end_date',
+            'value' => empty($this_month_candie) ? '' : displayDate($this_month_candie['end_time']),
+        );
+        
+        $this->data['month_list'] = $month_list;
+        $this->data['candie_month'] = array(
+            'name' => 'candie_month',
+            'id' => 'candie_month',
+        );
+        $this->data['candie_month_selected'] = empty($this_month_candie) ? '' : $this_month_candie['month_id'];
+       
+        $this->data['candie_point'] = array(
+            'name' => 'candie_point',
+            'id' => 'candie_point',
+            'value' => empty($this_month_candie) ? '' : $this_month_candie['voucher_candie'],
+        );      
+
+        $this->data['expire_date'] = array(
+            'name' => 'expire_date',
+            'id' => 'expire_date',
+            'value' => empty($this_month_candie) ? '' : displayDate($this_month_candie['voucher_expire_date']),
+        );
+        
+        $this->data['candie_vender'] = array(
+            'name' => 'candie_vender',
+            'id' => 'candie_vender',
+            'value' => empty($this_month_candie) ? '' : $this_month_candie['extra_field'],
+        );
 
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'merchant/candie_promotion';
@@ -1435,7 +1604,6 @@ class Merchant extends CI_Controller
                     }
                     else
                     {
-
                         $image_data = NULL;
                         $previous_image_name = $this->m_custom->get_one_table_record('advertise', 'advertise_id', $hotdeal_id)->image;
 

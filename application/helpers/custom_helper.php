@@ -3,9 +3,11 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-if (!function_exists('set_simple_message')) {
+if (!function_exists('set_simple_message'))
+{
 
-    function set_simple_message($title = '', $sentence1 = '', $sentence2 = '', $back_page_url = '', $back_page = '', $maintain_page = '', $have_session = 1) {
+    function set_simple_message($title = '', $sentence1 = '', $sentence2 = '', $back_page_url = '', $back_page = '', $maintain_page = '', $have_session = 1)
+    {
         $ci = & get_instance();
         $simple_info = array(
             'title' => $title,
@@ -16,7 +18,8 @@ if (!function_exists('set_simple_message')) {
             'maintain_page' => $maintain_page,
         );
 
-        if ($have_session == 1) {
+        if ($have_session == 1)
+        {
             $ci->session->set_flashdata('simple_info', $simple_info);
         }
         redirect($maintain_page, 'refresh');
@@ -24,56 +27,93 @@ if (!function_exists('set_simple_message')) {
 
 }
 
-if (!function_exists('display_simple_message')) {
+if (!function_exists('display_simple_message'))
+{
 
-    function display_simple_message() {
+    function display_simple_message()
+    {
         $ci = & get_instance();
         $simple_info = $ci->session->flashdata('simple_info');
-        if (!empty($simple_info)) {
+        if (!empty($simple_info))
+        {
             $ci->data['simple_info'] = $simple_info;
             $ci->data['page_path_name'] = 'simple_message';
             $ci->load->view('template/layout', $ci->data);
-        } else {
+        }
+        else
+        {
             redirect('/', 'refresh');
         }
     }
 
 }
+if (!function_exists('check_is_positive_numeric'))
+{
 
-if (!function_exists('check_correct_login_type')) {
+    function check_is_positive_numeric($i)
+    {
+        if (!is_numeric($i) || $i < 0 || $i != round($i))
+        {
+            return 0;
+        }
+        else
+        {
+            return $i;
+        }
+    }
 
-    function check_correct_login_type($desired_group_id = NULL) {
+}
+
+if (!function_exists('check_correct_login_type'))
+{
+
+    function check_correct_login_type($desired_group_id, $allowed_list = NULL, $check_id = NULL)
+    {
         $ci = & get_instance();
 
         //Check is it login
-        if (!$ci->ion_auth->logged_in()) {
+        if (!$ci->ion_auth->logged_in())
+        {
             return FALSE;
         }
 
         $id = $ci->ion_auth->user()->row()->id;
         //Check is the url id is same with login session id
-        if (!($ci->ion_auth->user()->row()->id == $id)) {
+        if (!($ci->ion_auth->user()->row()->id == $id))
+        {
             return FALSE;
         }
 
         $user = $ci->ion_auth->user($id)->row();
         //Check is this user type can go in this page or not
-        if ($user->main_group_id != $desired_group_id) {
+        if ($user->main_group_id != $desired_group_id)
+        {
             return FALSE;
+        }
+
+        if (!empty($allowed_list) && !IsNullOrEmptyString($check_id))
+        {
+            if (!in_array($check_id, $allowed_list))
+            {
+                return FALSE;
+            }
         }
         return TRUE;
     }
 
 }
 
-if (!function_exists('check_is_login')) {
+if (!function_exists('check_is_login'))
+{
 
-    function check_is_login() {
+    function check_is_login()
+    {
         $ci = & get_instance();
         $ci->load->library('ion_auth');
 
         //Check is it login
-        if (!$ci->ion_auth->logged_in()) {
+        if (!$ci->ion_auth->logged_in())
+        {
             return FALSE;
         }
         return TRUE;
@@ -81,23 +121,30 @@ if (!function_exists('check_is_login')) {
 
 }
 
-if (!function_exists('send_mail_simple')) {
+if (!function_exists('send_mail_simple'))
+{
 
-    function send_mail_simple($to_email = '', $to_subject = '', $to_message = '', $success_message = '', $have_session = 1) {
+    function send_mail_simple($to_email = '', $to_subject = '', $to_message = '', $success_message = '', $have_session = 1)
+    {
         $ci = & get_instance();
         $ci->load->library('email'); // Note: no $config param needed
         $ci->email->from($ci->config->item('smtp_user'), $ci->config->item('from_name'));
         $ci->email->to($to_email);
         $ci->email->subject($to_subject);
         $ci->email->message($to_message);
-        if ($ci->email->send()) {
-            if ($have_session == 1) {
+        if ($ci->email->send())
+        {
+            if ($have_session == 1)
+            {
                 $ci->ion_auth->set_message($success_message);
             }
             return TRUE;
-        } else {
+        }
+        else
+        {
             //show_error($this->email->print_debugger());
-            if ($have_session == 1) {
+            if ($have_session == 1)
+            {
                 $ci->ion_auth->set_error('fail_to_send_email');
             }
             return False;
@@ -106,55 +153,70 @@ if (!function_exists('send_mail_simple')) {
 
 }
 
-if (!function_exists('generate_options')) {
+if (!function_exists('generate_options'))
+{
 
-    function generate_slug($value = '') {
+    function generate_slug($value = '')
+    {
         return url_title($value, 'dash', TRUE);
     }
 
 }
-if (!function_exists('generate_options')) {
+if (!function_exists('generate_options'))
+{
 
-    function generate_options($from, $to, $callback = false) {
+    function generate_options($from, $to, $callback = false)
+    {
         $reverse = false;
-        if ($from > $to) {
+        if ($from > $to)
+        {
             $tmp = $from;
             $from = $to;
             $to = $tmp;
             $reverse = true;
         }
         $return_string = array();
-        for ($i = $from; $i <= $to; $i++) {
+        for ($i = $from; $i <= $to; $i++)
+        {
             $return_string[] = '<option value="' . $i . '">' . ($callback ? $callback($i) : $i) . '</option>';
         }
 
-        if ($reverse) {
+        if ($reverse)
+        {
             $return_string = array_reverse($return_string);
         }
         return join('', $return_string);
     }
 
 }
-if (!function_exists('generate_number_option')) {
+if (!function_exists('generate_number_option'))
+{
 
-    function generate_number_option($from, $to) {
+    function generate_number_option($from, $to)
+    {
         return array_combine(range($from, $to), range($from, $to));
     }
 
 }
-if (!function_exists('callback_month')) {
+if (!function_exists('callback_month'))
+{
 
-    function callback_month($month) {
+    function callback_month($month)
+    {
         return date('F', mktime(0, 0, 0, $month, 1));
     }
 
 }
 
-if (!function_exists('get_part_of_date')) {
+if (!function_exists('get_part_of_date'))
+{
 
-    function get_part_of_date($part, $date = NULL) {
-        if (IsNullOrEmptyString($date)) {
-            switch ($part) {
+    function get_part_of_date($part, $date = NULL)
+    {
+        if (IsNullOrEmptyString($date))
+        {
+            switch ($part)
+            {
                 case "year":
                     return date('Y');
                 case "month":
@@ -168,9 +230,12 @@ if (!function_exists('get_part_of_date')) {
                 default:
                     return date('Y-m-d H:i:s');
             }
-        } else {
+        }
+        else
+        {
             $the_date = explode('-', $date);
-            switch ($part) {
+            switch ($part)
+            {
                 case "year":
                     return $the_date[0];
                 case "month":
@@ -185,13 +250,18 @@ if (!function_exists('get_part_of_date')) {
 
 }
 
-if (!function_exists('add_hour_to_date')) {
+if (!function_exists('add_hour_to_date'))
+{
 
-    function add_hour_to_date($hour_add, $date = NULL) {
+    function add_hour_to_date($hour_add, $date = NULL)
+    {
 
-        if (IsNullOrEmptyString($date)) {
+        if (IsNullOrEmptyString($date))
+        {
             $the_date = date(format_date_time_server());
-        } else {
+        }
+        else
+        {
             $the_date = $date;
         }
 
@@ -202,14 +272,18 @@ if (!function_exists('add_hour_to_date')) {
 
 }
 
-if (!function_exists('relative_time')) {
+if (!function_exists('relative_time'))
+{
 
-    function relative_time($datetime) {
-        if (!$datetime) {
+    function relative_time($datetime)
+    {
+        if (!$datetime)
+        {
             return "no data";
         }
 
-        if (!is_numeric($datetime)) {
+        if (!is_numeric($datetime))
+        {
             $val = explode(" ", $datetime);
             $date = explode("-", $val[0]);
             $time = explode(":", $val[1]);
@@ -220,20 +294,27 @@ if (!function_exists('relative_time')) {
         $periods = array("second", "minute", "hour", "day", "week", "month", "year", "decade");
         $lengths = array("60", "60", "24", "7", "4.35", "12", "10");
 
-        if ($difference > 0) {
+        if ($difference > 0)
+        {
             $ending = 'ago';
-        } else {
+        }
+        else
+        {
             $difference = -$difference;
             $ending = 'to go';
         }
-        for ($j = 0; $difference >= $lengths[$j]; $j++) {
+        for ($j = 0; $difference >= $lengths[$j]; $j++)
+        {
             $difference /= $lengths[$j];
         }
         $difference = round($difference);
 
-        if ($difference != 1) {
+        if ($difference != 1)
+        {
             $period = strtolower($periods[$j] . 's');
-        } else {
+        }
+        else
+        {
             $period = strtolower($periods[$j]);
         }
 
@@ -242,30 +323,39 @@ if (!function_exists('relative_time')) {
 
 }
 
-if (!function_exists('format_date_time_server')) {
+if (!function_exists('format_date_time_server'))
+{
 
-    function format_date_time_server() {
+    function format_date_time_server()
+    {
         $ci = & get_instance();
         return $ci->config->item('keppo_format_date_time_db');
     }
 
 }
 
-if (!function_exists('format_date_server')) {
+if (!function_exists('format_date_server'))
+{
 
-    function format_date_server() {
+    function format_date_server()
+    {
         $ci = & get_instance();
         return $ci->config->item('keppo_format_date_db');
     }
 
 }
 
-if (!function_exists('format_date_english_month')) {
+if (!function_exists('format_date_english_month'))
+{
 
-    function format_date_english_month($date = NULL) {
-        if (IsNullOrEmptyString($date)) {
+    function format_date_english_month($date = NULL)
+    {
+        if (IsNullOrEmptyString($date))
+        {
             $the_date = date("Y-m-d H:i:s");
-        } else {
+        }
+        else
+        {
             $the_date = $date;
         }
         $parts = explode('-', $the_date);
@@ -275,26 +365,37 @@ if (!function_exists('format_date_english_month')) {
 
 }
 
-if (!function_exists('delete_file')) {
+if (!function_exists('delete_file'))
+{
 
-    function delete_file($path) {
-        if (unlink($path)) {
+    function delete_file($path)
+    {
+        if (unlink($path))
+        {
             return TRUE;
-        } else {
+        }
+        else
+        {
             return FALSE;
         }
     }
 
 }
 
-if (!function_exists('add_message_info')) {
+if (!function_exists('add_message_info'))
+{
 
-    function add_message_info($message_info, $new_info, $title = '') {
+    function add_message_info($message_info, $new_info, $title = '')
+    {
 
-        if (!IsNullOrEmptyString($new_info)) {
-            if (IsNullOrEmptyString($title)) {
+        if (!IsNullOrEmptyString($new_info))
+        {
+            if (IsNullOrEmptyString($title))
+            {
                 $message_info = $message_info . "<p>" . $new_info . "</p>";
-            } else {
+            }
+            else
+            {
                 $message_info = $message_info . "<p>" . $title . " : " . $new_info . "</p>";
             }
         }
@@ -304,10 +405,12 @@ if (!function_exists('add_message_info')) {
 
 }
 
-if (!function_exists('age_count')) {
+if (!function_exists('age_count'))
+{
 
 // input $date string format: YYYY-MM-DD
-    function age_count($date) {
+    function age_count($date)
+    {
         list($year, $month, $day) = explode("-", $date);
         $year_diff = date("Y") - $year;
         $month_diff = date("m") - $month;
@@ -319,21 +422,93 @@ if (!function_exists('age_count')) {
 
 }
 
-if (!function_exists('IsNullOrEmptyString')) {
+if (!function_exists('IsNullOrEmptyString'))
+{
 
-    function IsNullOrEmptyString($value) {
+    function IsNullOrEmptyString($value)
+    {
         return (!isset($value) || trim($value) === '' || empty($value));
     }
 
 }
 
-if (!function_exists('RemoveLastComma')) {
+if (!function_exists('RemoveLastComma'))
+{
 
-    function RemoveLastComma($value) {
-        if (substr($value, -1, 1) == ',') {
+    function RemoveLastComma($value)
+    {
+        if (substr($value, -1, 1) == ',')
+        {
             $value = substr($value, 0, -1);
         }
         return $value;
     }
 
+}
+
+if (!function_exists('displayDate'))
+{
+   function displayDate( $date )
+    {
+       if(IsNullOrEmptyString($date)){
+           return '';
+       }
+        $ci = & get_instance();
+        $return_date = date_create($date);
+        return $return_date->format($ci->config->item('keppo_format_date_display'));
+   }
+}
+
+if (!function_exists('validateDate'))
+{
+   function validateDate( $date, $format='DD-MM-YYYY')
+    {
+       if(IsNullOrEmptyString($date)){
+           return NULL;
+       }
+        switch( $format )
+        {
+            case 'YYYY/MM/DD':
+            case 'YYYY-MM-DD':
+            list( $y, $m, $d ) = preg_split( '/[-\.\/ ]/', $date );
+            break;
+
+            case 'YYYY/DD/MM':
+            case 'YYYY-DD-MM':
+            list( $y, $d, $m ) = preg_split( '/[-\.\/ ]/', $date );
+            break;
+
+            case 'DD-MM-YYYY':
+            case 'DD/MM/YYYY':
+            list( $d, $m, $y ) = preg_split( '/[-\.\/ ]/', $date );
+            break;
+
+            case 'MM-DD-YYYY':
+            case 'MM/DD/YYYY':
+            list( $m, $d, $y ) = preg_split( '/[-\.\/ ]/', $date );
+            break;
+
+            case 'YYYYMMDD':
+            $y = substr( $date, 0, 4 );
+            $m = substr( $date, 4, 2 );
+            $d = substr( $date, 6, 2 );
+            break;
+
+            case 'YYYYDDMM':
+            $y = substr( $date, 0, 4 );
+            $d = substr( $date, 4, 2 );
+            $m = substr( $date, 6, 2 );
+            break;
+
+            default:
+            throw new Exception( "Invalid Date Format" );
+        }
+        
+        if(checkdate( $m, $d, $y )){
+            return $y.'-'.$m.'-'.$d;
+        }
+        else{
+            return NULL;
+        }
+    }
 }
