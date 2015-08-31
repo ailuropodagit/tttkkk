@@ -151,6 +151,7 @@ class M_custom extends CI_Model {
         }
         return $query->result();
     }
+    
     public function get_id_after_insert($the_table, $the_data) {
         if ($this->db->insert($the_table, $the_data)) {
             $new_id = $this->db->insert_id();

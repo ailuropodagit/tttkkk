@@ -43,4 +43,4 @@ $config['keppo_format_date_time_db'] = 'Y-m-d H:i:s';
 $config['hotdeal_per_day'] = 5;
 
 $config['keppo_email_domain'] = '@keppo.my';
-$config['keppo_admin_email'] = 'wilkinwilly999@gmail.com';
+$config['keppo_admin_email'] = 'wilkinwilly999@gmail.com,weechiat.teo@hotmail.com';
