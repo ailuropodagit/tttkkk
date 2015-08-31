@@ -1111,6 +1111,42 @@ class Merchant extends CI_Controller {
         $this->load->view('template/layout_right_menu', $this->data);
     }
 
+    function candie_promotion(){
+        if (!check_correct_login_type($this->main_group_id)) {
+            redirect('/', 'refresh');
+        }
+        $message_info = '';
+        $merchant_id = $this->ion_auth->user()->row()->id;
+        $do_by_type = $this->main_group_id;
+        $do_by_id = $merchant_id;
+        $merchant_data = $this->m_custom->get_one_table_record('users', 'id', $merchant_id);
+        $branch_list = $this->m_custom->getBranchList($merchant_id);
+        $candie_term = $this->m_custom->get_dynamic_option_array('candie_term');
+        $month_list = $this->ion_auth->get_static_option_list('month');
+        
+        if (isset($_POST) && !empty($_POST)) {
+            if ($this->input->post('button_action') == "submit") {
+                $upload_rule = array(
+                    'upload_path' => $this->album_merchant,
+                    'allowed_types' => $this->config->item('allowed_types_image'),
+                    'max_size' => $this->config->item('max_size'),
+                    'max_width' => $this->config->item('max_width'),
+                    'max_height' => $this->config->item('max_height'),
+                );
+
+                $this->load->library('upload', $upload_rule);
+                
+                
+            }
+            $this->session->set_flashdata('message', $message_info);
+            redirect('merchant/candie_promotion', 'refresh');
+        }
+        
+        $this->data['message'] = $this->session->flashdata('message');
+        $this->data['page_path_name'] = 'merchant/candie_promotion';
+        $this->load->view('template/layout_right_menu', $this->data);
+    }
+    
     function upload_hotdeal() {
         if (!check_correct_login_type($this->main_group_id) && !check_correct_login_type($this->supervisor_group_id)) {
             redirect('/', 'refresh');
@@ -1119,6 +1155,7 @@ class Merchant extends CI_Controller {
         $merchant_id = $this->ion_auth->user()->row()->id;
         $do_by_type = $this->main_group_id;
         $do_by_id = $merchant_id;   //merchant or supervisor also can use this assign because this is depend on login
+        
         //for supervisor view the branch of merchant
         if (check_correct_login_type($this->supervisor_group_id)) {
             $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;
@@ -1139,6 +1176,8 @@ class Merchant extends CI_Controller {
                 );
 
                 $this->load->library('upload', $upload_rule);
+                
+                //To loop hotdeal box dynamic
                 for ($i = 0; $i < $hotdeal_per_day; $i++) {
 
                     $hotdeal_today_count = $this->m_custom->get_merchant_today_hotdeal($merchant_id, 1);
@@ -1151,12 +1190,14 @@ class Merchant extends CI_Controller {
                     $description = $this->input->post('desc-' . $i);
                     $hotdeal_hour = $this->input->post('hour-' . $i);
 
+                    //To check is this an old hot deal or new hot deal, if new hot deal is 0
                     if ($hotdeal_id == 0) {
                         if ($hotdeal_today_count >= $hotdeal_per_day) {
                             $message_info = add_message_info($message_info, 'Already reach max ' . $hotdeal_per_day . ' hot deal per day.');
                             redirect('merchant/upload_hotdeal', 'refresh');
                         }
 
+                        //To check new hot deal is it got image upload or not
                         if (!empty($_FILES[$hotdeal_file]['name'])) {
 
                             if (!$this->upload->do_upload($hotdeal_file)) {
@@ -1192,6 +1233,7 @@ class Merchant extends CI_Controller {
                         $image_data = NULL;
                         $previous_image_name = $this->m_custom->get_one_table_record('advertise', 'advertise_id', $hotdeal_id)->image;
 
+                        //To check old deal got change image or not, if got then upload the new one and delete previous image
                         if (!empty($_FILES[$hotdeal_file]['name'])) {
 
                             if (!$this->upload->do_upload($hotdeal_file)) {
@@ -1205,6 +1247,7 @@ class Merchant extends CI_Controller {
 
                         $previous_start_time = $this->m_custom->get_one_table_record('advertise', 'advertise_id', $hotdeal_id)->start_time;
 
+                        //To update previous hot deal
                         $data = array(
                             'sub_category_id' => $sub_category_id,
                             'title' => $title,
@@ -1224,6 +1267,7 @@ class Merchant extends CI_Controller {
                                 $message_info = add_message_info($message_info, $this->ion_auth->errors(), $title);
                             }
                         } else {
+                            //If this hot deal is being remove by tick the remove check box
                             $data = array(
                                 'hide_flag' => 1,
                             );
@@ -1241,11 +1285,13 @@ class Merchant extends CI_Controller {
             }
         }
 
+        //To get today hot deal result row
         $hotdeal_today_result = $this->m_custom->get_merchant_today_hotdeal($merchant_id);
         $this->data['hotdeal_today_count'] = $this->m_custom->get_merchant_today_hotdeal($merchant_id, 1);
         $this->data['hour_list'] = generate_number_option(1, 24);
         $this->data['sub_category_list'] = $this->ion_auth->get_sub_category_list($merchant_data->me_category_id);
 
+        //To dynamic create the hot deal box
         for ($i = 0; $i < $hotdeal_per_day; $i++) {
             $hotdeal_title = 'hotdeal_title' . $i;
             $this->data[$hotdeal_title] = array(

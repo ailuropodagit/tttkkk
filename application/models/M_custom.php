@@ -8,7 +8,6 @@ class M_custom extends CI_Model {
         $query = $this->db->get_where('static_option', array('option_type' => $option_type));
         $return = array();
         if ($default_value != NULL) {
-
             $return[$default_value] = $default_text;
         }
         if ($query->num_rows() > 0) {
@@ -32,6 +31,13 @@ class M_custom extends CI_Model {
         return $query->row()->option_text;
     }
     
+    //Get all the dynamic option of an option type
+    public function get_dynamic_option_array($option_type) {
+
+        $query = $this->db->get_where('dynamic_option', array('option_type' => $option_type, 'hide_flag' => 0));
+        return $query->result_array();
+    }
+    
     //To check is this value is unique in DB
     public function check_is_value_unique($the_table, $the_column, $the_value, $the_id_column = NULL, $the_id = NULL) {
         if (empty($the_value)) {
@@ -51,7 +57,7 @@ class M_custom extends CI_Model {
     }
 
     //To find one record in DB with one keyword
-    public function get_one_table_record($the_table, $the_column, $the_value) {
+    public function get_one_table_record($the_table, $the_column, $the_value, $want_array = 0) {
         if (empty($the_value)) {
             return FALSE;
         }
@@ -59,29 +65,27 @@ class M_custom extends CI_Model {
         if ($query->num_rows() !== 1) {
             return FALSE;
         }
-        return $query->row();
-    }
-    
-    //To find one record in DB with one keyword
-    public function get_one_table_record_array($the_table, $the_column, $the_value) {
-        if (empty($the_value)) {
-            return FALSE;
+        
+        if ($want_array == 1) {
+            return $query->row_array();
+        } else {
+            return $query->row();
         }
-        $query = $this->db->get_where($the_table, array($the_column => $the_value), 1);
-        if ($query->num_rows() !== 1) {
-            return FALSE;
-        }
-        return $query->row_array();
     }
     
     //To find many records in DB with one keyword
-    public function get_many_table_record($the_table, $the_column, $the_value){
+    public function get_many_table_record($the_table, $the_column, $the_value, $want_array = 0){
         $query = $this->db->get_where($the_table, array($the_column => $the_value));
-        return $query->result();
+        
+        if ($want_array == 1) {
+            return $query->result_array();
+        } else {
+            return $query->result();
+        }
     }
     
     //To find one record in DB of parent table with one keyword
-    public function get_parent_table_record($the_table, $the_column, $the_value, $foreign_column, $parent_table, $primary_column) {
+    public function get_parent_table_record($the_table, $the_column, $the_value, $foreign_column, $parent_table, $primary_column, $want_array = 0) {
         if (empty($the_value)) {
             return FALSE;
         }
@@ -97,7 +101,11 @@ class M_custom extends CI_Model {
             return FALSE;
         }
         
-        return $parent_query->row();
+        if ($want_array == 1) {
+            return $parent_query->row_array();
+        } else {
+            return $parent_query->row();
+        }
     }
     
     //To get all main category
@@ -152,7 +160,7 @@ class M_custom extends CI_Model {
     }
 
     public function compare_before_update($the_table, $the_data, $id_column, $id_value) {
-        $record = $this->get_one_table_record_array($the_table,$id_column, $id_value);
+        $record = $this->get_one_table_record($the_table,$id_column, $id_value, 1);
         $result = array_diff_assoc($the_data, $record);
         if(empty($result)){
             return FALSE;

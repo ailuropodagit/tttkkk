@@ -11,7 +11,7 @@
             <li><a href='<?php echo base_url(); ?>merchant/profile' class='body-right-sidebar-bar <?php if($this->router->fetch_method() == 'profile'){ echo "body-right-sidebar-bar-active"; } ?>'>Profile</a></li>
             <li><a href='<?php echo base_url(); ?>merchant/change_password' class='body-right-sidebar-bar <?php if($this->router->fetch_method() == 'change_password'){ echo "body-right-sidebar-bar-active"; } ?>'>Password</a></li>
             <li><a href='<?php echo base_url(); ?>merchant/upload_hotdeal' class='body-right-sidebar-bar <?php if($this->router->fetch_method() == 'upload_hotdeal'){ echo "body-right-sidebar-bar-active"; } ?>'>Hot Deal Advertise</a></li>
-            <li><a href='#' class='body-right-sidebar-bar'>Candie Promotion</a></li>
+            <li><a href='<?php echo base_url(); ?>merchant/candie_promotion' class='body-right-sidebar-bar <?php if($this->router->fetch_method() == 'candie_promotion'){ echo "body-right-sidebar-bar-active"; } ?>'>Candie Promotion</a></li>
             <li><a href='#' class='body-right-sidebar-bar'>Picture</a></li>
             <li><a href='#' class='body-right-sidebar-bar'>User Redemption</a></li>
             <li><a href='#' class='body-right-sidebar-bar'>Analysis Report</a></li>
