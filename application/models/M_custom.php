@@ -26,6 +26,22 @@ class M_custom extends CI_Model
         return $return;
     }
 
+    //To find many records in DB with one keyword
+    public function get_list_of_allow_id($the_table, $the_column, $the_value, $wanted_column)
+    {
+        $query = $this->db->get_where($the_table, array($the_column => $the_value));
+
+        $return = array();
+        if ($query->num_rows() > 0)
+        {
+            foreach ($query->result_array() as $row)
+            {
+                $return[] = $row[$wanted_column];
+            }
+        }
+        return $return;
+    }
+    
     //Get one static option text by it option id
     public function get_one_static_option_text($option_id = NULL)
     {

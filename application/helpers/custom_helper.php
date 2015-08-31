@@ -42,17 +42,17 @@ if (!function_exists('display_simple_message')) {
 
 if (!function_exists('check_correct_login_type')) {
 
-    function check_correct_login_type($desired_group_id = NULL) {
+    function check_correct_login_type($desired_group_id, $allowed_list = NULL, $check_id = NULL) {
         $ci = & get_instance();
 
         //Check is it login
-        if (!$ci->ion_auth->logged_in()) {
+        if ( ! $ci->ion_auth->logged_in()) {
             return FALSE;
         }
 
         $id = $ci->ion_auth->user()->row()->id;
         //Check is the url id is same with login session id
-        if (!($ci->ion_auth->user()->row()->id == $id)) {
+        if ( ! ($ci->ion_auth->user()->row()->id == $id)) {
             return FALSE;
         }
 
@@ -60,6 +60,14 @@ if (!function_exists('check_correct_login_type')) {
         //Check is this user type can go in this page or not
         if ($user->main_group_id != $desired_group_id) {
             return FALSE;
+        }
+        
+        if (!empty($allowed_list) && !IsNullOrEmptyString($check_id))
+        {
+            if (!in_array($check_id, $allowed_list))
+            {
+                return FALSE;
+            }
         }
         return TRUE;
     }

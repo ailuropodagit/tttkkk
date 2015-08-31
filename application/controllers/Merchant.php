@@ -975,7 +975,10 @@ class Merchant extends CI_Controller
 
     function branch()
     {
-        if (!check_correct_login_type($this->main_group_id))
+        $merchant_id = $this->ion_auth->user()->row()->id;
+        $allowed_list = $this->m_custom->get_list_of_allow_id('merchant_branch', 'merchant_id', $merchant_id, 'branch_id');
+        $check_id = $this->uri->segment(4);
+        if (!check_correct_login_type($this->main_group_id, $allowed_list, $check_id))
         {
             redirect('/', 'refresh');
         }
@@ -1118,7 +1121,10 @@ class Merchant extends CI_Controller
 
     function supervisor()
     {
-        if (!check_correct_login_type($this->main_group_id))
+        $merchant_id = $this->ion_auth->user()->row()->id;
+        $allowed_list = $this->m_custom->get_list_of_allow_id('users', 'su_merchant_id', $merchant_id, 'id');
+        $check_id = $this->uri->segment(4);
+        if (!check_correct_login_type($this->main_group_id, $allowed_list, $check_id))
         {
             redirect('/', 'refresh');
         }
