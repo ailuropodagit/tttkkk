@@ -32,7 +32,7 @@ class Contact_us extends CI_Controller {
                     $this->session->set_flashdata('mail_info', $email_data);
                     redirect('contact_us/send_mail_process', 'refresh');
                 } else {
-                    $message_info = add_message_info($message_info, 'E-mail not valid. Please use a valid email.');                   
+                    $message_info = add_message_info($message_info, 'E-mail not valid. Please use a valid email.');
                 }
             }
             $this->session->set_flashdata('message', $message_info);

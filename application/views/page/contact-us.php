@@ -29,7 +29,7 @@
     </div>
     <div id="contact-us-right">
         <div id="contact-us-right-form">
-                <?php echo form_open(uri_string()); ?>      
+            <?php echo form_open(uri_string()); ?>      
             <div id="contact-us-right-form-each">
                 <input type="text" placeholder="Name" id="name" name="name">
             </div>
@@ -45,9 +45,8 @@
             <div id="contact-us-right-form-each">
                 <textarea placeholder="Message" id="message" name="message"></textarea>
             </div>
-<!--            <input type="submit" value="Send">-->
-            <button name="button_action" type="submit" value="send">Send</button>
-               <?php echo form_close(); ?>
+            <button name="button_action" type="submit" value="send" style="float:right">Send</button>
+            <?php echo form_close(); ?>
             <div id="infoMessage"><?php echo $message; ?></div>
             <div id="float-fix"></div>
         </div>
