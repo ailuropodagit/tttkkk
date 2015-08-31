@@ -5,7 +5,7 @@ if (!defined('BASEPATH'))
 
 if (!function_exists('set_simple_message')) {
 
-    function set_simple_message($title = '', $sentence1 = '', $sentence2 = '', $back_page_url = '', $back_page = '', $maintain_page = '') {
+    function set_simple_message($title = '', $sentence1 = '', $sentence2 = '', $back_page_url = '', $back_page = '', $maintain_page = '', $have_session = 1) {
         $ci = & get_instance();
         $simple_info = array(
             'title' => $title,
@@ -16,7 +16,9 @@ if (!function_exists('set_simple_message')) {
             'maintain_page' => $maintain_page,
         );
 
-        $ci->session->set_flashdata('simple_info', $simple_info);
+        if ($have_session == 1) {
+            $ci->session->set_flashdata('simple_info', $simple_info);
+        }
         redirect($maintain_page, 'refresh');
     }
 
@@ -81,7 +83,7 @@ if (!function_exists('check_is_login')) {
 
 if (!function_exists('send_mail_simple')) {
 
-    function send_mail_simple($to_email = '', $to_subject = '', $to_message = '', $success_message = '') {
+    function send_mail_simple($to_email = '', $to_subject = '', $to_message = '', $success_message = '', $have_session = 1) {
         $ci = & get_instance();
         $ci->load->library('email'); // Note: no $config param needed
         $ci->email->from($ci->config->item('smtp_user'), $ci->config->item('from_name'));
@@ -89,11 +91,15 @@ if (!function_exists('send_mail_simple')) {
         $ci->email->subject($to_subject);
         $ci->email->message($to_message);
         if ($ci->email->send()) {
-            $ci->ion_auth->set_message($success_message);
+            if ($have_session == 1) {
+                $ci->ion_auth->set_message($success_message);
+            }
             return TRUE;
         } else {
             //show_error($this->email->print_debugger());
-            $ci->ion_auth->set_error('fail_to_send_email');
+            if ($have_session == 1) {
+                $ci->ion_auth->set_error('fail_to_send_email');
+            }
             return False;
         }
     }
@@ -182,17 +188,18 @@ if (!function_exists('get_part_of_date')) {
 if (!function_exists('add_hour_to_date')) {
 
     function add_hour_to_date($hour_add, $date = NULL) {
-        
+
         if (IsNullOrEmptyString($date)) {
             $the_date = date(format_date_time_server());
-        }else{
+        } else {
             $the_date = $date;
         }
-        
-        $argument = '+'.$hour_add.' hours';
-        $return_date = date( format_date_time_server(),strtotime($argument, strtotime( $the_date )));
+
+        $argument = '+' . $hour_add . ' hours';
+        $return_date = date(format_date_time_server(), strtotime($argument, strtotime($the_date)));
         return $return_date;
     }
+
 }
 
 if (!function_exists('relative_time')) {
@@ -236,17 +243,21 @@ if (!function_exists('relative_time')) {
 }
 
 if (!function_exists('format_date_time_server')) {
+
     function format_date_time_server() {
         $ci = & get_instance();
         return $ci->config->item('keppo_format_date_time_db');
     }
+
 }
 
 if (!function_exists('format_date_server')) {
+
     function format_date_server() {
         $ci = & get_instance();
         return $ci->config->item('keppo_format_date_db');
     }
+
 }
 
 if (!function_exists('format_date_english_month')) {
@@ -254,7 +265,7 @@ if (!function_exists('format_date_english_month')) {
     function format_date_english_month($date = NULL) {
         if (IsNullOrEmptyString($date)) {
             $the_date = date("Y-m-d H:i:s");
-        }else{
+        } else {
             $the_date = $date;
         }
         $parts = explode('-', $the_date);
@@ -280,10 +291,14 @@ if (!function_exists('add_message_info')) {
 
     function add_message_info($message_info, $new_info, $title = '') {
 
-        if(!IsNullOrEmptyString($new_info)){
-            $message_info = $message_info . "<p>" . $title . " : " . $new_info . "</p>";
+        if (!IsNullOrEmptyString($new_info)) {
+            if (IsNullOrEmptyString($title)) {
+                $message_info = $message_info . "<p>" . $new_info . "</p>";
+            } else {
+                $message_info = $message_info . "<p>" . $title . " : " . $new_info . "</p>";
+            }
         }
-        
+
         return $message_info;
     }
 

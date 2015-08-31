@@ -29,22 +29,26 @@
     </div>
     <div id="contact-us-right">
         <div id="contact-us-right-form">
+                <?php echo form_open(uri_string()); ?>      
             <div id="contact-us-right-form-each">
-                <input type="text" placeholder="Name">
+                <input type="text" placeholder="Name" id="name" name="name">
             </div>
             <div id="contact-us-right-form-each">
-                <input type="text" placeholder="E-mail">
+                <input type="text" placeholder="E-mail" id="email" name="email">
             </div>
             <div id="contact-us-right-form-each">
-                <input type="text" placeholder="Contact Number">
+                <input type="text" placeholder="Contact Number" id="phone" name="phone">
             </div>
             <div id="contact-us-right-form-each">
-                <input type="text" placeholder="Subject">
+                <input type="text" placeholder="Subject" id="subject" name="subject">
             </div>
             <div id="contact-us-right-form-each">
-                <textarea placeholder="Message"></textarea>
+                <textarea placeholder="Message" id="message" name="message"></textarea>
             </div>
-            <input type="submit" value="Send">
+<!--            <input type="submit" value="Send">-->
+            <button name="button_action" type="submit" value="send">Send</button>
+               <?php echo form_close(); ?>
+            <div id="infoMessage"><?php echo $message; ?></div>
             <div id="float-fix"></div>
         </div>
     </div>
