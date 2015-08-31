@@ -14,14 +14,14 @@
         advertisement, share on facebook or instagram). 
     </p>            
     <p>
-        Fuyoo Advertising & services ( 002422825-U) <br/>
+        <b>Fuyoo Advertising & services</b> ( 002422825-U) <br/>
         No. 4, Jalan Industris Mas 5, Taman Mas, 47170, Puchong, Selangor.
     </p>
     <p>
         Tel: 03- 8061 9491 <br/>
         Fax: 03-8061 9257 <br/>
         E-mail: jimmysee2005@gmail.com <br/>
-        <a href='home'>www.keppo.my</a>
+        Website: <a href='home'>www.keppo.my</a>
     </p>
     <div id="contact-us-left-social-media-icon">
         <div id="contact-us-left-social-media-icon-facebook">

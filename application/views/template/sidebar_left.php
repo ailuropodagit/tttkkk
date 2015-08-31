@@ -20,17 +20,16 @@ $cat_list = $this->m_custom->getCategory();
 
     <div style="font-size: 18px; font-weight: bold;">
         <?php echo $t_cat->category_label ?>
+        <?php echo $t_cat->category_id ?>
     </div>
     
     <div id="c">
         <?php 
         $subcat_list = $this->m_custom->getSubCategory($t_cat->category_id); 
-        foreach ($subcat_list as $t_subcat) { 
+        foreach ($subcat_list as $t_subcat) {
             ?>
-            <div id="cc"><a href="#"></a>
-                <div>
-                    <div><a href="#"><?= $t_subcat->category_label ?></a></div>
-                </div>
+            <div id="cc">
+                <a href="#"><?php echo $t_subcat->category_label ?></a>
             </div>
             <?php
         }

@@ -57,7 +57,7 @@ input[type='password'] {
 input[type='submit'], button[type='submit'] {
     margin: 0px 0px 0px 0px;
     padding: 5px 14px 5px 14px;
-    background: linear-gradient(0deg, #5aadbc, #48cbe2);
+    background: linear-gradient(0deg, #5a88bc, #00b4d4);
     color: white;
     border: 0px;
     cursor: pointer;
@@ -73,11 +73,11 @@ input[type='submit'], button[type='submit'] {
 }
 
 input[type='submit']:hover,button[type='submit']:hover {
-    background: linear-gradient(0deg, #3abad2, #58b7c8);
+    background: linear-gradient(0deg, #00b4d4, #5a88bc);
 }
 
 input[type='submit']:active,button[type='submit']:active {
-    background: linear-gradient(0deg, #3ea7ba, #42b2c7);
+    background: linear-gradient(0deg, #00b4d4, #00b4d4);
 }
 
 textarea {
@@ -121,6 +121,11 @@ a:active {
 .checkbox-text{
     font-size:15px;
 }
+
+a {
+    color: #4d4dff;
+}
+
 /* WRAPPER
 ******************************/
 
@@ -133,8 +138,7 @@ a:active {
 ******************************/
 
 #header {
-    background-color: #1aa7c0;
-    background: linear-gradient(0deg, #3bb7cd, #519dd5);
+    background: linear-gradient(0deg, #2a97ab, #3c7aa8);
     -webkit-box-shadow: 0px 0px 7px 0px rgba(0,0,0,1);
     -moz-box-shadow: 0px 0px 7px 0px rgba(0,0,0,1);
     box-shadow: 0px 0px 7px 0px rgba(0,0,0,1);
@@ -328,12 +332,11 @@ a:active {
 #layout-advertisement-left {
     float: left;
     width: 100%;
-    border: 1px solid lightgray;
     width: calc(100% - 300px);
 }
 
 #layout-advertisement-left-content {
-    padding: 20px;
+    padding: 0px;
 }
 
 #layout-advertisement-right {
@@ -341,22 +344,103 @@ a:active {
     width: 280px;
 }
 
-#layout-advertisement-right-banner-box {
+#layout-advertisement-right-banner-box1, #layout-advertisement-right-banner-box2 {
     border: 1px dotted gray;
-    width: 100%; 
+    width: 280px; 
     height: 180px; 
-    line-height: 180px;
+    line-height: 23px;
     text-align: center; 
     color: gray; 
     font-size: 15px; 
     letter-spacing: 1px;
 }
 
+/* HOME
+******************************/
+
+#home-navigation-c1 {
+    width: 140px;
+    float: left;
+    position: relative;
+    z-index: 99;
+}
+
+.home-navigation-c1-bar-a {
+    padding: 10px 10px 10px 10px;
+    display: block;
+    background-color: #f5f5f1;
+    border-bottom: 1px solid #e5e5e1;
+    border-right: 1px solid #ccccc8;
+}
+
+#home-navigation-c1-bar-a:first-child {
+    border-top: 1px solid #e5e5e1;
+}
+
+.home-navigation-c1-bar-a-active {
+    background-color: white;
+    border-left: 1px solid #ccccc8;
+    border-top: 1px solid #ccccc8;
+    border-bottom: 1px solid #ccccc8;
+    border-right: 1px solid white;
+}
+
+#home-navigation-c1-bar a { 
+    font-size: 13px;
+    text-decoration: none;
+    color: #3b65a7;
+    font-weight: bold;
+}
+
+#home-navigation-c2 {
+    border: 1px solid #ccccc8;
+    width: calc(100% - 150px);
+    float: left;
+    margin-left: -1px;
+}
+
+#home-navigation-c2-c1 {
+    float: left;
+    width: 190px;
+}
+
+#home-navigation-c2-c1-content {
+    padding: 10px 20px 10px 20px;
+}
+
+#home-navigation-c2-c1-bar {
+    margin: 0px 0px 10px 0px;
+}
+
+#home-navigation-c2-c1-bar a {
+    font-size: 14px;
+    text-decoration: none;
+}
+
+#home-navigation-c2-c2 {
+    float: left;
+    width: calc(100% - 190px);
+}
+
+#home-navigation-c2-c2-content {
+    padding: 4px;
+}
+    
+/*#home-navigation-c3-content {
+    padding: 3px;
+}*/
+
 /* LOGIN REGISTER
 ******************************/
 
 #login-link, #register-link {
     float: right;
+}
+
+#login-link-icon, #register-link-icon {
+    margin: 0px 8px 0px 0px;
+    color: #6262ff;
+    font-size: 14px;
 }
 
 #login, #register {
@@ -373,17 +457,17 @@ a:active {
 
 #login-title, #register-title {
     font-weight: bold;
-    font-size: 19px;
-    margin: 0px 0px 15px 0px;
+    font-size: 21px;
+    margin: 0px 0px 25px 0px;
 }
 
 #login-subtitle, #register-subtitle {
-    margin: 0px 0px 15px 0px;
+    margin: 0px 0px 30px 0px;
     font-size: 18px;
 }
 
 #login-facebook-icon, #register-facebook-icon {
-    padding: 10px 0px 0px 0px;
+    padding: 0px 0px 10px 0px;
 }
 
 #login-horizontal-line, #register-horizontal-line {

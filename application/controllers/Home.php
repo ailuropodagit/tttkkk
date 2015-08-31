@@ -6,11 +6,20 @@ class Home extends CI_Controller {
         parent::__construct();
     }
 
-    public function index() {
+    public function index($slug = NULL) {
         
         //DATA
-        $data['left_path_name'] = 'template/sidebar_left';
         $data['page_path_name'] = 'home';
+        $data['category_array'] = $this->m_custom->getCategory();
+        $data['slug'] = $slug;
+        
+        if($slug == NULL) {
+            //DATA
+            $data['category_merchant_array'] = $this->m_custom->getMerchantList_by_category('1');
+        } else {
+            //DATA
+            $data['category_merchant_array'] = $this->m_custom->getMerchantList_by_category($slug);
+        }
         
         //LOAD TEMPLATE
         $this->load->view('template/layout_advertisement', $data);

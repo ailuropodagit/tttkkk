@@ -42,3 +42,15 @@
     width: 19px;
     font-size: 14px;
 }
+
+/* LAYOUT
+******************************/
+
+#layout-advertisement-left {
+    float: none;
+    width: 100%;
+}
+
+#layout-advertisement-right {
+    float: none;
+}
