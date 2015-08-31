@@ -11,7 +11,7 @@
 
     <div id='register-subtitle'>Already have register? <a href='<?php echo base_url(); ?>merchant/login'>Log In</a></div>
 
-    <div id="infoMessage"><?php echo $message;?></div>
+    <div id="infoMessage"><?php echo $message; ?></div>
 
     <div id='register-horizontal-line'></div>
 
@@ -21,7 +21,7 @@
 
         <div id='register-form-each'>
             <div id='register-form-each-label'><?php echo lang('create_merchant_company_label', 'company'); ?></div>
-            <div id='register-form-each-input'><?php echo form_input($company);?></div>
+            <div id='register-form-each-input'><?php echo form_input($company); ?></div>
         </div>
 
         <div id='register-form-each'>
@@ -38,7 +38,7 @@
             <div id='register-form-each-label'><?php echo lang('create_merchant_category_label', 'me_category_id'); ?></div>
             <div id='register-form-each-input'><?php echo form_dropdown($me_category_id, $category_list); ?></div>
         </div>
-        
+
         <div id='register-form-each'>
             <div id='register-form-each-label'><?php echo lang('create_merchant_state_label', 'me_state_id'); ?></div>
             <div id='register-form-each-input'><?php echo form_dropdown($me_state_id, $state_list); ?></div>
@@ -46,7 +46,7 @@
 
         <div id='register-form-each'>
             <div id='register-form-each-label'><?php echo lang('create_merchant_phone_label', 'phone'); ?></div>
-            <div id='register-form-each-input'><?php echo form_input($phone);?></div>
+            <div id='register-form-each-input'><?php echo form_input($phone); ?></div>
         </div>
 
         <div id='register-form-each'>
@@ -70,12 +70,12 @@
         </div>
 
         <div id='register-form-submit'>
-            <?php echo form_submit('submit', 'Sign Up');?>
+            <?php echo form_submit('submit', 'Sign Up'); ?>
         </div>
 
     </div>
 
-    <?php echo form_close();?>
+    <?php echo form_close(); ?>
 
     <div id='login-tnc'>by clicking Sign Up you agree to our new <a href='<?php echo base_url(); ?>terms-and-conditions' target='_blank'>T&C's</a></div>
 

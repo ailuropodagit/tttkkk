@@ -25,14 +25,15 @@ echo "<span class='image-upload-guide'>Upload Image Rule : " . $this->config->it
 ?>
 <br/><br/>
 <?php echo form_open_multipart(uri_string()); ?>
-<?php for ($i = 0; $i < $hotdeal_per_day; $i++) { ?>
+<?php for ($i = 0; $i < $hotdeal_per_day; $i++)
+{ ?>
     <div style="float: left;width:250px;margin-bottom:20px">
         <div style="height:210px;">
-            <?php echo "<img src='" . base_url(${'hotdeal_image' . $i}) . "' class='image-hot-deal' id='hotdeal-img-" . $i . "'>"; ?>
+    <?php echo "<img src='" . base_url(${'hotdeal_image' . $i}) . "' class='image-hot-deal' id='hotdeal-img-" . $i . "'>"; ?>
         </div>
         <br/>
         <br/>
-        <?php echo "<input type='file' name='hotdeal-file-" . $i . "' />"; ?>
+    <?php echo "<input type='file' name='hotdeal-file-" . $i . "' />"; ?>
         <br /><br />   
         <div id='register-form-each'>
             <div id='register-form-each-label'><?php echo lang('hotdeal_title_label'); ?></div>
@@ -68,7 +69,8 @@ echo "<span class='image-upload-guide'>Upload Image Rule : " . $this->config->it
         <div id='register-form-each'>
             <div id='register-form-each-input'>
                 <?php
-                if (${'advertise_id_value' . $i} != 0) {
+                if (${'advertise_id_value' . $i} != 0)
+                {
                     echo 'Remove : ' . form_checkbox(${'hotdeal_hide' . $i});
                 }
                 ?></div>

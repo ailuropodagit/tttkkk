@@ -1,17 +1,25 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php
 
-class M_custom extends CI_Model {
+if (!defined('BASEPATH'))
+    exit('No direct script access allowed');
+
+class M_custom extends CI_Model
+{
 
     //Get all the static option of an option type
-    public function get_static_option_array($option_type = NULL, $default_value = NULL, $default_text = NULL) {
+    public function get_static_option_array($option_type = NULL, $default_value = NULL, $default_text = NULL)
+    {
 
         $query = $this->db->get_where('static_option', array('option_type' => $option_type));
         $return = array();
-        if ($default_value != NULL) {
+        if ($default_value != NULL)
+        {
             $return[$default_value] = $default_text;
         }
-        if ($query->num_rows() > 0) {
-            foreach ($query->result_array() as $row) {
+        if ($query->num_rows() > 0)
+        {
+            foreach ($query->result_array() as $row)
+            {
                 $return[$row['option_id']] = $row['option_text'];
             }
         }
@@ -19,169 +27,213 @@ class M_custom extends CI_Model {
     }
 
     //Get one static option text by it option id
-    public function get_one_static_option_text($option_id = NULL) {
-        if (IsNullOrEmptyString($option_id)) {           
+    public function get_one_static_option_text($option_id = NULL)
+    {
+        if (IsNullOrEmptyString($option_id))
+        {
             return '';
         }
-        
+
         $query = $this->db->get_where('static_option', array('option_id' => $option_id));
-        if ($query->num_rows() !== 1) {
+        if ($query->num_rows() !== 1)
+        {
             return '';
         }
         return $query->row()->option_text;
     }
-    
+
     //Get all the dynamic option of an option type
-    public function get_dynamic_option_array($option_type) {
+    public function get_dynamic_option_array($option_type)
+    {
 
         $query = $this->db->get_where('dynamic_option', array('option_type' => $option_type, 'hide_flag' => 0));
         return $query->result_array();
     }
-    
+
     //To check is this value is unique in DB
-    public function check_is_value_unique($the_table, $the_column, $the_value, $the_id_column = NULL, $the_id = NULL) {
-        if (empty($the_value)) {
+    public function check_is_value_unique($the_table, $the_column, $the_value, $the_id_column = NULL, $the_id = NULL)
+    {
+        if (empty($the_value))
+        {
             return FALSE;
         }
 
-        if (!empty($the_id) && is_numeric($the_id)) {
+        if (!empty($the_id) && is_numeric($the_id))
+        {
             $username_old = $this->db->where($the_id_column, $the_id)->get($the_table)->row()->$the_column;
             $this->db->where($the_column . "!=", $username_old);
         }
 
         $num_row = $this->db->where($the_column, $the_value)->get($the_table)->num_rows();
-        if ($num_row > 0) {
+        if ($num_row > 0)
+        {
             return FALSE;
         }
         return TRUE;
     }
 
     //To find one record in DB with one keyword
-    public function get_one_table_record($the_table, $the_column, $the_value, $want_array = 0) {
-        if (empty($the_value)) {
+    public function get_one_table_record($the_table, $the_column, $the_value, $want_array = 0)
+    {
+        if (empty($the_value))
+        {
             return FALSE;
         }
         $query = $this->db->get_where($the_table, array($the_column => $the_value), 1);
-        if ($query->num_rows() !== 1) {
+        if ($query->num_rows() !== 1)
+        {
             return FALSE;
         }
-        
-        if ($want_array == 1) {
+
+        if ($want_array == 1)
+        {
             return $query->row_array();
-        } else {
+        }
+        else
+        {
             return $query->row();
         }
     }
-    
+
     //To find many records in DB with one keyword
-    public function get_many_table_record($the_table, $the_column, $the_value, $want_array = 0){
+    public function get_many_table_record($the_table, $the_column, $the_value, $want_array = 0)
+    {
         $query = $this->db->get_where($the_table, array($the_column => $the_value));
-        
-        if ($want_array == 1) {
+
+        if ($want_array == 1)
+        {
             return $query->result_array();
-        } else {
+        }
+        else
+        {
             return $query->result();
         }
     }
-    
+
     //To find one record in DB of parent table with one keyword
-    public function get_parent_table_record($the_table, $the_column, $the_value, $foreign_column, $parent_table, $primary_column, $want_array = 0) {
-        if (empty($the_value)) {
+    public function get_parent_table_record($the_table, $the_column, $the_value, $foreign_column, $parent_table, $primary_column, $want_array = 0)
+    {
+        if (empty($the_value))
+        {
             return FALSE;
         }
         $query = $this->db->get_where($the_table, array($the_column => $the_value), 1);
-        if ($query->num_rows() !== 1) {
+        if ($query->num_rows() !== 1)
+        {
             return FALSE;
         }
-        
+
         $foreign_row = $query->row();
         $foreign_key = $foreign_row->$foreign_column;
         $parent_query = $this->db->get_where($parent_table, array($primary_column => $foreign_key), 1);
-        if ($parent_query->num_rows() !== 1) {
+        if ($parent_query->num_rows() !== 1)
+        {
             return FALSE;
         }
-        
-        if ($want_array == 1) {
+
+        if ($want_array == 1)
+        {
             return $parent_query->row_array();
-        } else {
+        }
+        else
+        {
             return $parent_query->row();
         }
     }
-    
+
     //To get all main category
-    function getCategory() {
+    function getCategory()
+    {
         $query = $this->db->get_where('category', array('category_level' => '0'));
         return $query->result();
     }
 
     //To get related sub category by pass in the main category id
-    function getSubCategory($id) {
+    function getSubCategory($id)
+    {
         $query = $this->db->get_where('category', array('main_category_id' => $id, 'category_level' => '1'));
         return $query->result();
     }
 
-    function getBranchList($id){
+    function getBranchList($id)
+    {
         $query = $this->db->get_where('merchant_branch', array('merchant_id' => $id));
         return $query->result();
     }
-    
-    public function getBranchList_with_search($id, $search_word) {
-        if (IsNullOrEmptyString($search_word)) {           
+
+    public function getBranchList_with_search($id, $search_word)
+    {
+        if (IsNullOrEmptyString($search_word))
+        {
             return $this->getBranchList($id);
         }
         $this->db->like('name', $search_word);
         $this->db->or_like('address', $search_word);
         $query = $this->db->get_where('merchant_branch', array('merchant_id' => $id));
-        if ($query->num_rows() == 0) {
+        if ($query->num_rows() == 0)
+        {
             return $this->getBranchList(0);
         }
         return $query->result();
     }
-    
-    public function getMerchantList_by_category($category_id=0, $category_level=0) {
-        if($category_level==1){
-            $sub_category = $this->get_one_table_record('category','category_id',$category_id);
-            if($sub_category){
+
+    public function getMerchantList_by_category($category_id = 0, $category_level = 0)
+    {
+        if ($category_level == 1)
+        {
+            $sub_category = $this->get_one_table_record('category', 'category_id', $category_id);
+            if ($sub_category)
+            {
                 $category_id = $sub_category->main_category_id;
             }
-        }       
+        }
         $query = $this->db->get_where('users', array('me_category_id' => $category_id));
-        if ($query->num_rows() == 0) {
+        if ($query->num_rows() == 0)
+        {
             $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant')));
         }
         return $query->result();
     }
-    
-    public function get_id_after_insert($the_table, $the_data) {
-        if ($this->db->insert($the_table, $the_data)) {
+
+    public function get_id_after_insert($the_table, $the_data)
+    {
+        if ($this->db->insert($the_table, $the_data))
+        {
             $new_id = $this->db->insert_id();
             return $new_id;
         }
         return FALSE;
     }
 
-    public function compare_before_update($the_table, $the_data, $id_column, $id_value) {
-        $record = $this->get_one_table_record($the_table,$id_column, $id_value, 1);
+    public function compare_before_update($the_table, $the_data, $id_column, $id_value)
+    {
+        $record = $this->get_one_table_record($the_table, $id_column, $id_value, 1);
         $result = array_diff_assoc($the_data, $record);
-        if(empty($result)){
+        if (empty($result))
+        {
             return FALSE;
-        }else{
+        }
+        else
+        {
             return TRUE;
         }
-        
     }
-    
-    public function simple_update($the_table, $the_data, $id_column, $id_value) {
-        if ($this->compare_before_update($the_table, $the_data, $id_column, $id_value)) {
+
+    public function simple_update($the_table, $the_data, $id_column, $id_value)
+    {
+        if ($this->compare_before_update($the_table, $the_data, $id_column, $id_value))
+        {
             $this->db->where($id_column, $id_value);
-            if ($this->db->update($the_table, $the_data)) {
+            if ($this->db->update($the_table, $the_data))
+            {
                 return TRUE;
             }
         }
         return FALSE;
     }
 
-    public function insert_row_log($the_table, $new_id, $do_by = NULL, $do_by_type = NULL){
+    public function insert_row_log($the_table, $new_id, $do_by = NULL, $do_by_type = NULL)
+    {
         $the_data = array(
             'table_type' => $the_table,
             'table_row_id' => $new_id,
@@ -191,58 +243,67 @@ class M_custom extends CI_Model {
         );
         $this->db->insert('table_row_activity', $the_data);
     }
-    
-    public function update_row_log($the_table, $the_id, $do_by = NULL, $do_by_type = NULL){
-        
+
+    public function update_row_log($the_table, $the_id, $do_by = NULL, $do_by_type = NULL)
+    {
+
         $query = $this->db->get_where('table_row_activity', array('table_type' => $the_table, 'table_row_id' => $the_id), 1);
-        if ($query->num_rows() == 0) {
+        if ($query->num_rows() == 0)
+        {
             $this->insert_row_log($the_table, $the_id, $do_by, $do_by_type);
             $query = $this->db->get_where('table_row_activity', array('table_type' => $the_table, 'table_row_id' => $the_id), 1);
         }
         $activity_row = $query->row();
-  
+
         $the_data = array(
             'last_modify_by' => $do_by,
             'last_modify_by_type' => $do_by_type,
         );
-                
+
         $this->db->where('activity_id', $activity_row->activity_id);
         $this->db->update('table_row_activity', $the_data);
     }
-    
-    public function remove_row_log($the_table, $the_id, $do_by = NULL, $do_by_type = NULL){
-        
+
+    public function remove_row_log($the_table, $the_id, $do_by = NULL, $do_by_type = NULL)
+    {
+
         $query = $this->db->get_where('table_row_activity', array('table_type' => $the_table, 'table_row_id' => $the_id), 1);
-        if ($query->num_rows() == 0) {
+        if ($query->num_rows() == 0)
+        {
             $this->insert_row_log($the_table, $the_id, $do_by, $do_by_type);
             $query = $this->db->get_where('table_row_activity', array('table_type' => $the_table, 'table_row_id' => $the_id), 1);
         }
         $activity_row = $query->row();
-  
+
         $the_data = array(
             'hide_time' => get_part_of_date('all'),
             'hide_by' => $do_by,
             'hide_by_type' => $do_by_type,
         );
-                
+
         $this->db->where('activity_id', $activity_row->activity_id);
         $this->db->update('table_row_activity', $the_data);
     }
-    
-    public function get_merchant_today_hotdeal($merchant_id, $counter_only = 0) {
+
+    public function get_merchant_today_hotdeal($merchant_id, $counter_only = 0)
+    {
         $condition = "start_time like '%" . date(format_date_server()) . "%'";
         $this->db->where('advertise_type', 'hot');
         $this->db->where($condition);
         $this->db->where('hide_flag', 0);
         $query = $this->db->get_where('advertise', array('merchant_id' => $merchant_id));
-        if ($query->num_rows() == 0) {
+        if ($query->num_rows() == 0)
+        {
             return FALSE;
         }
-        if ($counter_only == 0) {
+        if ($counter_only == 0)
+        {
             return $query->result_array();
-        } else {
+        }
+        else
+        {
             return $query->num_rows();
         }
     }
-    
+
 }

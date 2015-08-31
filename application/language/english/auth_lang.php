@@ -168,6 +168,18 @@ $lang['hotdeal_hour_label']                = 'Countdown Hour:';
 $lang['hotdeal_title_label']               = 'Title:';
 $lang['hotdeal_sub_category_label']        = 'Category:';
 
+// Candie Promotion
+$lang['candie_description_label']         = 'Description:';
+$lang['candie_title_label']               = 'Title:';
+$lang['candie_sub_category_label']        = 'Category:';
+$lang['candie_point_label']               = 'Set Point:';
+$lang['candie_start_date_label']          = 'Start Date:';
+$lang['candie_end_date_label']            = 'End Date:';
+$lang['candie_expire_date_label']         = 'Voucher Expiry Date:';
+$lang['candie_vender_label']              = 'Code Voucher Vender:';
+$lang['candie_year_label']                = 'Code Voucher Year:';
+$lang['candie_month_label']               = 'Code Voucher Months:';
+
 // Create Group
 $lang['create_group_title']                  = 'Create Group';
 $lang['create_group_heading']                = 'Create Group';
