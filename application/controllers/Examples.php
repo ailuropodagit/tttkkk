@@ -3,9 +3,11 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Examples extends CI_Controller {
+class Examples extends CI_Controller
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
 
         $this->load->database();
@@ -14,22 +16,27 @@ class Examples extends CI_Controller {
         $this->load->library('grocery_CRUD');
     }
 
-    public function _example_output($output = null) {
+    public function _example_output($output = null)
+    {
         $this->load->view('example.php', $output);
     }
 
-    public function offices() {
+    public function offices()
+    {
         $output = $this->grocery_crud->render();
 
         $this->_example_output($output);
     }
 
-    public function index() {
+    public function index()
+    {
         $this->_example_output((object) array('output' => '', 'js_files' => array(), 'css_files' => array()));
     }
 
-    public function offices_management() {
-        try {
+    public function offices_management()
+    {
+        try
+        {
             $crud = new grocery_CRUD();
 
             $crud->set_theme('datatables');
@@ -41,12 +48,14 @@ class Examples extends CI_Controller {
             $output = $crud->render();
 
             $this->_example_output($output);
-        } catch (Exception $e) {
+        } catch (Exception $e)
+        {
             show_error($e->getMessage() . ' --- ' . $e->getTraceAsString());
         }
     }
 
-    public function employees_management() {
+    public function employees_management()
+    {
         $crud = new grocery_CRUD();
 
         $crud->set_theme('datatables');
@@ -64,7 +73,8 @@ class Examples extends CI_Controller {
         $this->_example_output($output);
     }
 
-    public function customers_management() {
+    public function customers_management()
+    {
         $crud = new grocery_CRUD();
 
         $crud->set_table('customers');
@@ -80,7 +90,8 @@ class Examples extends CI_Controller {
         $this->_example_output($output);
     }
 
-    public function orders_management() {
+    public function orders_management()
+    {
         $crud = new grocery_CRUD();
 
         $crud->set_relation('customerNumber', 'customers', '{contactLastName} {contactFirstName}');
@@ -95,7 +106,8 @@ class Examples extends CI_Controller {
         $this->_example_output($output);
     }
 
-    public function products_management() {
+    public function products_management()
+    {
         $crud = new grocery_CRUD();
 
         $crud->set_table('products');
@@ -108,11 +120,13 @@ class Examples extends CI_Controller {
         $this->_example_output($output);
     }
 
-    public function valueToEuro($value, $row) {
+    public function valueToEuro($value, $row)
+    {
         return $value . ' &euro;';
     }
 
-    public function film_management() {
+    public function film_management()
+    {
         $crud = new grocery_CRUD();
 
         $crud->set_table('film');
@@ -127,8 +141,10 @@ class Examples extends CI_Controller {
         $this->_example_output($output);
     }
 
-    public function film_management_twitter_bootstrap() {
-        try {
+    public function film_management_twitter_bootstrap()
+    {
+        try
+        {
             $crud = new grocery_CRUD();
 
             $crud->set_theme('twitter-bootstrap');
@@ -141,12 +157,14 @@ class Examples extends CI_Controller {
 
             $output = $crud->render();
             $this->_example_output($output);
-        } catch (Exception $e) {
+        } catch (Exception $e)
+        {
             show_error($e->getMessage() . ' --- ' . $e->getTraceAsString());
         }
     }
 
-    function multigrids() {
+    function multigrids()
+    {
         $this->config->load('grocery_crud');
         $this->config->set_item('grocery_crud_dialog_forms', true);
         $this->config->set_item('grocery_crud_default_per_page', 10);
@@ -168,7 +186,8 @@ class Examples extends CI_Controller {
         ));
     }
 
-    public function offices_management2() {
+    public function offices_management2()
+    {
         $crud = new grocery_CRUD();
         $crud->set_table('offices');
         $crud->set_subject('Office');
@@ -177,14 +196,18 @@ class Examples extends CI_Controller {
 
         $output = $crud->render();
 
-        if ($crud->getState() != 'list') {
+        if ($crud->getState() != 'list')
+        {
             $this->_example_output($output);
-        } else {
+        }
+        else
+        {
             return $output;
         }
     }
 
-    public function employees_management2() {
+    public function employees_management2()
+    {
         $crud = new grocery_CRUD();
 
         $crud->set_theme('datatables');
@@ -201,14 +224,18 @@ class Examples extends CI_Controller {
 
         $output = $crud->render();
 
-        if ($crud->getState() != 'list') {
+        if ($crud->getState() != 'list')
+        {
             $this->_example_output($output);
-        } else {
+        }
+        else
+        {
             return $output;
         }
     }
 
-    public function customers_management2() {
+    public function customers_management2()
+    {
 
         $crud = new grocery_CRUD();
 
@@ -224,9 +251,12 @@ class Examples extends CI_Controller {
 
         $output = $crud->render();
 
-        if ($crud->getState() != 'list') {
+        if ($crud->getState() != 'list')
+        {
             $this->_example_output($output);
-        } else {
+        }
+        else
+        {
             return $output;
         }
     }

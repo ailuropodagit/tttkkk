@@ -2,9 +2,11 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Admin extends CI_Controller {
+class Admin extends CI_Controller
+{
 
-    function __construct() {
+    function __construct()
+    {
         parent::__construct();
         $this->load->database();
         $this->load->library(array('ion_auth', 'form_validation'));
@@ -16,21 +18,28 @@ class Admin extends CI_Controller {
     }
 
     // redirect if needed, otherwise display the user list
-    function index() {
+    function index()
+    {
 
-        if (!$this->ion_auth->logged_in()) {
+        if (!$this->ion_auth->logged_in())
+        {
             // redirect them to the login page
             redirect('Admin/login', 'refresh');
-        } elseif (!$this->ion_auth->is_admin()) { // remove this elseif if you want to enable this for non-admins
+        }
+        elseif (!$this->ion_auth->is_admin())
+        { // remove this elseif if you want to enable this for non-admins
             // redirect them to the home page because they must be an administrator to view this
             return show_error('You must be an administrator to view this page.');
-        } else {
+        }
+        else
+        {
             // set the flash data error message if there is one
             $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
 
             //list the users
             $this->data['users'] = $this->ion_auth->users()->result();
-            foreach ($this->data['users'] as $k => $user) {
+            foreach ($this->data['users'] as $k => $user)
+            {
                 $this->data['users'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
             }
 
@@ -39,30 +48,37 @@ class Admin extends CI_Controller {
     }
 
     // log the user in
-    function login() {
+    function login()
+    {
         $this->data['title'] = "Login";
 
         //validate form input
         $this->form_validation->set_rules('identity', 'Identity', 'required');
         $this->form_validation->set_rules('password', 'Password', 'required');
 
-        if ($this->form_validation->run() == true) {
+        if ($this->form_validation->run() == true)
+        {
             // check to see if the user is logging in
             // check for "remember me"
             $remember = (bool) $this->input->post('remember');
 
-            if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember)) {
+            if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember))
+            {
                 //if the login is successful
                 //redirect them back to the home page
                 $this->session->set_flashdata('message', $this->ion_auth->messages());
                 redirect('/', 'refresh');
-            } else {
+            }
+            else
+            {
                 // if the login was un-successful
                 // redirect them back to the login page
                 $this->session->set_flashdata('message', $this->ion_auth->errors());
                 redirect('Admin/login', 'refresh'); // use redirects instead of loading views for compatibility with MY_Controller libraries
             }
-        } else {
+        }
+        else
+        {
             // the user is not logging in so display the login page
             // set the flash data error message if there is one
             $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
@@ -82,7 +98,8 @@ class Admin extends CI_Controller {
     }
 
     // log the user out
-    function logout() {
+    function logout()
+    {
         $this->data['title'] = "Logout";
 
         // log the user out
@@ -94,18 +111,21 @@ class Admin extends CI_Controller {
     }
 
     // change password
-    function change_password() {
+    function change_password()
+    {
         $this->form_validation->set_rules('old', $this->lang->line('change_password_validation_old_password_label'), 'required');
         $this->form_validation->set_rules('new', $this->lang->line('change_password_validation_new_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[new_confirm]');
         $this->form_validation->set_rules('new_confirm', $this->lang->line('change_password_validation_new_password_confirm_label'), 'required');
 
-        if (!$this->ion_auth->logged_in()) {
+        if (!$this->ion_auth->logged_in())
+        {
             redirect('Admin/login', 'refresh');
         }
 
         $user = $this->ion_auth->user()->row();
 
-        if ($this->form_validation->run() == false) {
+        if ($this->form_validation->run() == false)
+        {
             // display the form
             // set the flash data error message if there is one
             $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
@@ -137,16 +157,21 @@ class Admin extends CI_Controller {
 
             // render
             $this->_render_page('Admin/change_password', $this->data);
-        } else {
+        }
+        else
+        {
             $identity = $this->session->userdata('identity');
 
             $change = $this->ion_auth->change_password($identity, $this->input->post('old'), $this->input->post('new'));
 
-            if ($change) {
+            if ($change)
+            {
                 //if the password was successfully changed
                 $this->session->set_flashdata('message', $this->ion_auth->messages());
                 $this->logout();
-            } else {
+            }
+            else
+            {
                 $this->session->set_flashdata('message', $this->ion_auth->errors());
                 redirect('Admin/change_password', 'refresh');
             }
@@ -154,39 +179,53 @@ class Admin extends CI_Controller {
     }
 
     // forgot password
-    function forgot_password() {
+    function forgot_password()
+    {
         // setting validation rules by checking wheather identity is username or email
-        if ($this->config->item('identity', 'ion_auth') != 'email') {
+        if ($this->config->item('identity', 'ion_auth') != 'email')
+        {
             $this->form_validation->set_rules('identity', $this->lang->line('forgot_password_identity_label'), 'required');
-        } else {
+        }
+        else
+        {
             $this->form_validation->set_rules('email', $this->lang->line('forgot_password_validation_email_label'), 'required|valid_email');
         }
 
 
-        if ($this->form_validation->run() == false) {
+        if ($this->form_validation->run() == false)
+        {
             // setup the input
             $this->data['email'] = array('name' => 'email',
                 'id' => 'email',
             );
 
-            if ($this->config->item('identity', 'ion_auth') != 'email') {
+            if ($this->config->item('identity', 'ion_auth') != 'email')
+            {
                 $this->data['identity_label'] = $this->lang->line('forgot_password_identity_label');
-            } else {
+            }
+            else
+            {
                 $this->data['identity_label'] = $this->lang->line('forgot_password_email_identity_label');
             }
 
             // set any errors and display the form
             $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
             $this->_render_page('Admin/forgot_password', $this->data);
-        } else {
+        }
+        else
+        {
             $identity_column = $this->config->item('identity', 'ion_auth');
             $identity = $this->ion_auth->where($identity_column, $this->input->post('email'))->users()->row();
 
-            if (empty($identity)) {
+            if (empty($identity))
+            {
 
-                if ($this->config->item('identity', 'ion_auth') != 'email') {
+                if ($this->config->item('identity', 'ion_auth') != 'email')
+                {
                     $this->ion_auth->set_error('forgot_password_identity_not_found');
-                } else {
+                }
+                else
+                {
                     $this->ion_auth->set_error('forgot_password_email_not_found');
                 }
 
@@ -197,11 +236,14 @@ class Admin extends CI_Controller {
             // run the forgotten password method to email an activation code to the user
             $forgotten = $this->ion_auth->forgotten_password($identity->{$this->config->item('identity', 'ion_auth')});
 
-            if ($forgotten) {
+            if ($forgotten)
+            {
                 // if there were no errors
                 $this->session->set_flashdata('message', $this->ion_auth->messages());
                 redirect("Admin/login", 'refresh'); //we should display a confirmation page here instead of the login page
-            } else {
+            }
+            else
+            {
                 $this->session->set_flashdata('message', $this->ion_auth->errors());
                 redirect("Admin/forgot_password", 'refresh');
             }
@@ -209,20 +251,24 @@ class Admin extends CI_Controller {
     }
 
     // reset password - final step for forgotten password
-    public function reset_password($code = NULL) {
-        if (!$code) {
+    public function reset_password($code = NULL)
+    {
+        if (!$code)
+        {
             show_404();
         }
 
         $user = $this->ion_auth->forgotten_password_check($code);
 
-        if ($user) {
+        if ($user)
+        {
             // if the code is valid then display the password reset form
 
             $this->form_validation->set_rules('new', $this->lang->line('reset_password_validation_new_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[new_confirm]');
             $this->form_validation->set_rules('new_confirm', $this->lang->line('reset_password_validation_new_password_confirm_label'), 'required');
 
-            if ($this->form_validation->run() == false) {
+            if ($this->form_validation->run() == false)
+            {
                 // display the form
                 // set the flash data error message if there is one
                 $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
@@ -251,31 +297,41 @@ class Admin extends CI_Controller {
 
                 // render
                 $this->_render_page('Admin/reset_password', $this->data);
-            } else {
+            }
+            else
+            {
                 // do we have a valid request?
-                if ($this->_valid_csrf_nonce() === FALSE || $user->id != $this->input->post('user_id')) {
+                if ($this->_valid_csrf_nonce() === FALSE || $user->id != $this->input->post('user_id'))
+                {
 
                     // something fishy might be up
                     $this->ion_auth->clear_forgotten_password_code($code);
 
                     show_error($this->lang->line('error_csrf'));
-                } else {
+                }
+                else
+                {
                     // finally change the password
                     $identity = $user->{$this->config->item('identity', 'ion_auth')};
 
                     $change = $this->ion_auth->reset_password($identity, $this->input->post('new'));
 
-                    if ($change) {
+                    if ($change)
+                    {
                         // if the password was successfully changed
                         $this->session->set_flashdata('message', $this->ion_auth->messages());
                         redirect("Admin/login", 'refresh');
-                    } else {
+                    }
+                    else
+                    {
                         $this->session->set_flashdata('message', $this->ion_auth->errors());
                         redirect('Admin/reset_password/' . $code, 'refresh');
                     }
                 }
             }
-        } else {
+        }
+        else
+        {
             // if the code is invalid then send them back to the forgot password page
             $this->session->set_flashdata('message', $this->ion_auth->errors());
             redirect("Admin/forgot_password", 'refresh');
@@ -283,18 +339,25 @@ class Admin extends CI_Controller {
     }
 
     // activate the user
-    function activate($id, $code = false) {
-        if ($code !== false) {
+    function activate($id, $code = false)
+    {
+        if ($code !== false)
+        {
             $activation = $this->ion_auth->activate($id, $code);
-        } else if ($this->ion_auth->is_admin()) {
+        }
+        else if ($this->ion_auth->is_admin())
+        {
             $activation = $this->ion_auth->activate($id);
         }
 
-        if ($activation) {
+        if ($activation)
+        {
             // redirect them to the auth page
             $this->session->set_flashdata('message', $this->ion_auth->messages());
             redirect("Admin", 'refresh');
-        } else {
+        }
+        else
+        {
             // redirect them to the forgot password page
             $this->session->set_flashdata('message', $this->ion_auth->errors());
             redirect("Admin/forgot_password", 'refresh');
@@ -302,8 +365,10 @@ class Admin extends CI_Controller {
     }
 
     // deactivate the user
-    function deactivate($id = NULL) {
-        if (!$this->ion_auth->logged_in() || !$this->ion_auth->is_admin()) {
+    function deactivate($id = NULL)
+    {
+        if (!$this->ion_auth->logged_in() || !$this->ion_auth->is_admin())
+        {
             // redirect them to the home page because they must be an administrator to view this
             return show_error('You must be an administrator to view this page.');
         }
@@ -314,22 +379,28 @@ class Admin extends CI_Controller {
         $this->form_validation->set_rules('confirm', $this->lang->line('deactivate_validation_confirm_label'), 'required');
         $this->form_validation->set_rules('id', $this->lang->line('deactivate_validation_user_id_label'), 'required|alpha_numeric');
 
-        if ($this->form_validation->run() == FALSE) {
+        if ($this->form_validation->run() == FALSE)
+        {
             // insert csrf check
             $this->data['csrf'] = $this->_get_csrf_nonce();
             $this->data['user'] = $this->ion_auth->user($id)->row();
 
             $this->_render_page('Admin/deactivate_user', $this->data);
-        } else {
+        }
+        else
+        {
             // do we really want to deactivate?
-            if ($this->input->post('confirm') == 'yes') {
+            if ($this->input->post('confirm') == 'yes')
+            {
                 // do we have a valid request?
-                if ($this->_valid_csrf_nonce() === FALSE || $id != $this->input->post('id')) {
+                if ($this->_valid_csrf_nonce() === FALSE || $id != $this->input->post('id'))
+                {
                     show_error($this->lang->line('error_csrf'));
                 }
 
                 // do we have the right userlevel?
-                if ($this->ion_auth->logged_in() && $this->ion_auth->is_admin()) {
+                if ($this->ion_auth->logged_in() && $this->ion_auth->is_admin())
+                {
                     $this->ion_auth->deactivate($id);
                 }
             }
@@ -340,10 +411,12 @@ class Admin extends CI_Controller {
     }
 
     // create a new user
-    function create_user() {
+    function create_user()
+    {
         $this->data['title'] = "Create User";
 
-        if (!$this->ion_auth->logged_in() || !$this->ion_auth->is_admin()) {
+        if (!$this->ion_auth->logged_in() || !$this->ion_auth->is_admin())
+        {
             redirect('Admin', 'refresh');
         }
 
@@ -360,7 +433,8 @@ class Admin extends CI_Controller {
         $this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
         $this->form_validation->set_rules('password_confirm', $this->lang->line('create_user_validation_password_confirm_label'), 'required');
 
-        if ($this->form_validation->run() == true) {
+        if ($this->form_validation->run() == true)
+        {
             //$username = strtolower($this->input->post('first_name')) . ' ' . strtolower($this->input->post('last_name'));
             $username = strtolower($this->input->post('username'));
             $email = strtolower($this->input->post('email'));
@@ -381,12 +455,15 @@ class Admin extends CI_Controller {
             $main_group_id
         );
 
-        if ($this->form_validation->run() == true && $this->ion_auth->register($username, $password, $email, $additional_data, $group_ids)) {
+        if ($this->form_validation->run() == true && $this->ion_auth->register($username, $password, $email, $additional_data, $group_ids))
+        {
             // check to see if we are creating the user
             // redirect them back to the admin page
             $this->session->set_flashdata('message', $this->ion_auth->messages());
             redirect("Admin", 'refresh');
-        } else {
+        }
+        else
+        {
             // display the create user form
             // set the flash data error message if there is one
             $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
@@ -445,10 +522,12 @@ class Admin extends CI_Controller {
     }
 
     // edit a user
-    function edit_user($id) {
+    function edit_user($id)
+    {
         $this->data['title'] = "Edit User";
 
-        if (!$this->ion_auth->logged_in() || (!$this->ion_auth->is_admin() && !($this->ion_auth->user()->row()->id == $id))) {
+        if (!$this->ion_auth->logged_in() || (!$this->ion_auth->is_admin() && !($this->ion_auth->user()->row()->id == $id)))
+        {
             redirect('Admin', 'refresh');
         }
 
@@ -465,19 +544,23 @@ class Admin extends CI_Controller {
         $this->form_validation->set_rules('phone', $this->lang->line('edit_user_validation_phone_label'), 'required');
         $this->form_validation->set_rules('company', $this->lang->line('edit_user_validation_company_label'), 'required');
 
-        if (isset($_POST) && !empty($_POST)) {
+        if (isset($_POST) && !empty($_POST))
+        {
             // do we have a valid request?
-            if ($this->_valid_csrf_nonce() === FALSE || $id != $this->input->post('id')) {
+            if ($this->_valid_csrf_nonce() === FALSE || $id != $this->input->post('id'))
+            {
                 show_error($this->lang->line('error_csrf'));
             }
 
             // update the password if it was posted
-            if ($this->input->post('password')) {
+            if ($this->input->post('password'))
+            {
                 $this->form_validation->set_rules('password', $this->lang->line('edit_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
                 $this->form_validation->set_rules('password_confirm', $this->lang->line('edit_user_validation_password_confirm_label'), 'required');
             }
 
-            if ($this->form_validation->run() === TRUE) {
+            if ($this->form_validation->run() === TRUE)
+            {
                 $username = strtolower($this->input->post('username'));
                 $email = strtolower($this->input->post('email'));
 
@@ -491,7 +574,8 @@ class Admin extends CI_Controller {
                 );
 
                 // update the password if it was posted
-                if ($this->input->post('password')) {
+                if ($this->input->post('password'))
+                {
                     $data['password'] = $this->input->post('password');
                     $data['password_visible'] = $this->input->post('password');
                 }
@@ -499,35 +583,47 @@ class Admin extends CI_Controller {
 
 
                 // Only allow updating groups if user is admin
-                if ($this->ion_auth->is_admin()) {
+                if ($this->ion_auth->is_admin())
+                {
                     //Update the groups user belongs to
                     $groupData = $this->input->post('groups');
 
-                    if (isset($groupData) && !empty($groupData)) {
+                    if (isset($groupData) && !empty($groupData))
+                    {
 
                         $this->ion_auth->remove_from_group('', $id);
 
-                        foreach ($groupData as $grp) {
+                        foreach ($groupData as $grp)
+                        {
                             $this->ion_auth->add_to_group($grp, $id);
                         }
                     }
                 }
 
                 // check to see if we are updating the user
-                if ($this->ion_auth->update($user->id, $data)) {
+                if ($this->ion_auth->update($user->id, $data))
+                {
                     // redirect them back to the admin page if admin, or to the base url if non admin
                     $this->session->set_flashdata('message', $this->ion_auth->messages());
-                    if ($this->ion_auth->is_admin()) {
+                    if ($this->ion_auth->is_admin())
+                    {
                         redirect('Admin', 'refresh');
-                    } else {
+                    }
+                    else
+                    {
                         redirect('/', 'refresh');
                     }
-                } else {
+                }
+                else
+                {
                     // redirect them back to the admin page if admin, or to the base url if non admin
                     $this->session->set_flashdata('message', $this->ion_auth->errors());
-                    if ($this->ion_auth->is_admin()) {
+                    if ($this->ion_auth->is_admin())
+                    {
                         redirect('Admin', 'refresh');
-                    } else {
+                    }
+                    else
+                    {
                         redirect('/', 'refresh');
                     }
                 }
@@ -595,7 +691,8 @@ class Admin extends CI_Controller {
         $this->_render_page('Admin/edit_user', $this->data);
     }
 
-    function _get_csrf_nonce() {
+    function _get_csrf_nonce()
+    {
         $this->load->helper('string');
         $key = random_string('alnum', 8);
         $value = random_string('alnum', 20);
@@ -605,16 +702,21 @@ class Admin extends CI_Controller {
         return array($key => $value);
     }
 
-    function _valid_csrf_nonce() {
+    function _valid_csrf_nonce()
+    {
         if ($this->input->post($this->session->flashdata('csrfkey')) !== FALSE &&
-                $this->input->post($this->session->flashdata('csrfkey')) == $this->session->flashdata('csrfvalue')) {
+                $this->input->post($this->session->flashdata('csrfkey')) == $this->session->flashdata('csrfvalue'))
+        {
             return TRUE;
-        } else {
+        }
+        else
+        {
             return FALSE;
         }
     }
 
-    function _render_page($view, $data = null, $render = false) {
+    function _render_page($view, $data = null, $render = false)
+    {
 
         $this->viewdata = (empty($data)) ? $this->data : $data;
 

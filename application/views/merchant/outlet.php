@@ -1,6 +1,6 @@
 <head>
-<!--    <link rel="stylesheet" href="<?php //echo base_url()   ?>assets/datatables/css/jquery.dataTables.css">
-<script type="text/javascript" src='<?php //echo base_url()   ?>assets/datatables/js/jquery.dataTables.js'></script>
+<!--    <link rel="stylesheet" href="<?php //echo base_url()    ?>assets/datatables/css/jquery.dataTables.css">
+<script type="text/javascript" src='<?php //echo base_url()    ?>assets/datatables/js/jquery.dataTables.js'></script>
 <script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script> -->
 </head>
 
@@ -51,7 +51,8 @@
 
 
 <?php
-foreach ($branch_list as $one_row) {
+foreach ($branch_list as $one_row)
+{
     echo '<div>';
     echo '<div class="leftbox"><b>' . $one_row->name . '</b><br/>';
     echo $one_row->address . '<br/>';
