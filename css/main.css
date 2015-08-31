@@ -359,27 +359,76 @@ a {
 ******************************/
 
 #home-navigation-c1 {
-    border: 1px solid gray;
     width: 140px;
     float: left;
+    position: relative;
+    z-index: 99;
+}
+
+.home-navigation-c1-bar-a {
+    padding: 10px 10px 10px 10px;
+    display: block;
+    background-color: #f5f5f1;
+    border-bottom: 1px solid #e5e5e1;
+    border-right: 1px solid #ccccc8;
+}
+
+#home-navigation-c1-bar-a:first-child {
+    border-top: 1px solid #e5e5e1;
+}
+
+.home-navigation-c1-bar-a-active {
+    background-color: white;
+    border-left: 1px solid #ccccc8;
+    border-top: 1px solid #ccccc8;
+    border-bottom: 1px solid #ccccc8;
+    border-right: 1px solid white;
+}
+
+#home-navigation-c1-bar a { 
+    font-size: 13px;
+    text-decoration: none;
+    color: #3b65a7;
+    font-weight: bold;
 }
 
 #home-navigation-c2 {
-    border: 1px solid gray;
-    width: 140px;
+    border: 1px solid #ccccc8;
+    width: calc(100% - 150px);
     float: left;
+    margin-left: -1px;
 }
 
-#home-navigation-c3 {
-    border: 1px solid gray;
+#home-navigation-c2-c1 {
     float: left;
-    width: 100%;
-    width: calc(100% - 290px);
+    width: 190px;
 }
 
-#home-navigation-c3-content {
+#home-navigation-c2-c1-content {
+    padding: 10px 20px 10px 20px;
+}
+
+#home-navigation-c2-c1-bar {
+    margin: 0px 0px 10px 0px;
+}
+
+#home-navigation-c2-c1-bar a {
+    font-size: 14px;
+    text-decoration: none;
+}
+
+#home-navigation-c2-c2 {
+    float: left;
+    width: calc(100% - 190px);
+}
+
+#home-navigation-c2-c2-content {
+    padding: 4px;
+}
+    
+/*#home-navigation-c3-content {
     padding: 3px;
-}
+}*/
 
 /* LOGIN REGISTER
 ******************************/
