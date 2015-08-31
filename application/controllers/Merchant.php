@@ -14,6 +14,7 @@ class Merchant extends CI_Controller {
         $this->main_group_id = $this->config->item('group_id_merchant');
         $this->supervisor_group_id = $this->config->item('group_id_supervisor');
         $this->album_merchant_profile = $this->config->item('album_merchant_profile');
+        $this->album_merchant = $this->config->item('album_merchant');
         $this->folder_merchant_ssm = $this->config->item('folder_merchant_ssm');
     }
 
@@ -1110,16 +1111,22 @@ class Merchant extends CI_Controller {
         $this->load->view('template/layout_right_menu', $this->data);
     }
 
-    function upload_hotdeal() {
-        if (!check_correct_login_type($this->main_group_id) && !check_correct_login_type($this->supervisor_group_id)) {
+    function candie_promotion(){
+        if (!check_correct_login_type($this->main_group_id)) {
             redirect('/', 'refresh');
         }
+        $message_info = '';
         $merchant_id = $this->ion_auth->user()->row()->id;
-        $hotdeal_per_day = $this->config->item("hotdeal_per_day");
+        $do_by_type = $this->main_group_id;
+        $do_by_id = $merchant_id;
+        $merchant_data = $this->m_custom->get_one_table_record('users', 'id', $merchant_id);
+        $branch_list = $this->m_custom->getBranchList($merchant_id);
+        $candie_term = $this->m_custom->get_dynamic_option_array('candie_term');
+        $month_list = $this->ion_auth->get_static_option_list('month');
         
         if (isset($_POST) && !empty($_POST)) {
-             if ($this->input->post('button_action') == "upload_hotdeal") {        
-                 $upload_rule = array(
+            if ($this->input->post('button_action') == "submit") {
+                $upload_rule = array(
                     'upload_path' => $this->album_merchant,
                     'allowed_types' => $this->config->item('allowed_types_image'),
                     'max_size' => $this->config->item('max_size'),
@@ -1128,30 +1135,221 @@ class Merchant extends CI_Controller {
                 );
 
                 $this->load->library('upload', $upload_rule);
-             }   
+                
+                
+            }
+            $this->session->set_flashdata('message', $message_info);
+            redirect('merchant/candie_promotion', 'refresh');
         }
         
+        $this->data['message'] = $this->session->flashdata('message');
+        $this->data['page_path_name'] = 'merchant/candie_promotion';
+        $this->load->view('template/layout_right_menu', $this->data);
+    }
+    
+    function upload_hotdeal() {
+        if (!check_correct_login_type($this->main_group_id) && !check_correct_login_type($this->supervisor_group_id)) {
+            redirect('/', 'refresh');
+        }
+        $message_info = '';
+        $merchant_id = $this->ion_auth->user()->row()->id;
+        $do_by_type = $this->main_group_id;
+        $do_by_id = $merchant_id;   //merchant or supervisor also can use this assign because this is depend on login
+        
+        //for supervisor view the branch of merchant
+        if (check_correct_login_type($this->supervisor_group_id)) {
+            $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;
+            $do_by_type = $this->supervisor_group_id;
+        }
+
+        $merchant_data = $this->m_custom->get_one_table_record('users', 'id', $merchant_id);
+        $hotdeal_per_day = $this->config->item("hotdeal_per_day");
+
+        if (isset($_POST) && !empty($_POST)) {
+            if ($this->input->post('button_action') == "upload_hotdeal") {
+                $upload_rule = array(
+                    'upload_path' => $this->album_merchant,
+                    'allowed_types' => $this->config->item('allowed_types_image'),
+                    'max_size' => $this->config->item('max_size'),
+                    'max_width' => $this->config->item('max_width'),
+                    'max_height' => $this->config->item('max_height'),
+                );
+
+                $this->load->library('upload', $upload_rule);
+                
+                //To loop hotdeal box dynamic
+                for ($i = 0; $i < $hotdeal_per_day; $i++) {
+
+                    $hotdeal_today_count = $this->m_custom->get_merchant_today_hotdeal($merchant_id, 1);
+
+                    $hotdeal_id = $this->input->post('hotdeal_id-' . $i);
+                    $hotdeal_file = "hotdeal-file-" . $i;
+
+                    $sub_category_id = $this->input->post('category-' . $i);
+                    $title = $this->input->post('title-' . $i);
+                    $description = $this->input->post('desc-' . $i);
+                    $hotdeal_hour = $this->input->post('hour-' . $i);
+
+                    //To check is this an old hot deal or new hot deal, if new hot deal is 0
+                    if ($hotdeal_id == 0) {
+                        if ($hotdeal_today_count >= $hotdeal_per_day) {
+                            $message_info = add_message_info($message_info, 'Already reach max ' . $hotdeal_per_day . ' hot deal per day.');
+                            redirect('merchant/upload_hotdeal', 'refresh');
+                        }
+
+                        //To check new hot deal is it got image upload or not
+                        if (!empty($_FILES[$hotdeal_file]['name'])) {
+
+                            if (!$this->upload->do_upload($hotdeal_file)) {
+                                //$error = array('error' => $this->upload->display_errors());
+                                $message_info = add_message_info($message_info, $this->upload->display_errors(), $title);
+                            } else {
+                                $image_data = array('upload_data' => $this->upload->data());
+                                $data = array(
+                                    'advertise_type' => 'hot',
+                                    'merchant_id' => $merchant_id,
+                                    'sub_category_id' => $sub_category_id,
+                                    'title' => $title,
+                                    'description' => $description,
+                                    'image' => $image_data['upload_data']['file_name'],
+                                    'post_hour' => $hotdeal_hour,
+                                    'start_time' => get_part_of_date('all'),
+                                    'end_time' => add_hour_to_date($hotdeal_hour),
+                                    'month_id' => get_part_of_date('month'),
+                                    'year' => get_part_of_date('year'),
+                                );
+
+                                $new_id = $this->m_custom->get_id_after_insert('advertise', $data);
+                                if ($new_id) {
+                                    $this->m_custom->insert_row_log('advertise', $new_id, $do_by_id, $do_by_type);
+                                    $message_info = add_message_info($message_info, 'Hot Deal success create.', $title);
+                                } else {
+                                    $message_info = add_message_info($message_info, $this->ion_auth->errors(), $title);
+                                }
+                            }
+                        }
+                    } else {
+
+                        $image_data = NULL;
+                        $previous_image_name = $this->m_custom->get_one_table_record('advertise', 'advertise_id', $hotdeal_id)->image;
+
+                        //To check old deal got change image or not, if got then upload the new one and delete previous image
+                        if (!empty($_FILES[$hotdeal_file]['name'])) {
+
+                            if (!$this->upload->do_upload($hotdeal_file)) {
+                                //$error = array('error' => $this->upload->display_errors());
+                                $message_info = add_message_info($message_info, $this->upload->display_errors(), $title);
+                            } else {
+                                $image_data = array('upload_data' => $this->upload->data());
+                                delete_file($this->album_merchant . $previous_image_name);
+                            }
+                        }
+
+                        $previous_start_time = $this->m_custom->get_one_table_record('advertise', 'advertise_id', $hotdeal_id)->start_time;
+
+                        //To update previous hot deal
+                        $data = array(
+                            'sub_category_id' => $sub_category_id,
+                            'title' => $title,
+                            'description' => $description,
+                            'image' => empty($image_data) ? $previous_image_name : $image_data['upload_data']['file_name'],
+                            'post_hour' => $hotdeal_hour,
+                            'end_time' => add_hour_to_date($hotdeal_hour, $previous_start_time),
+                        );
+
+                        $hotdeal_hide = $this->input->post('hotdeal_hide-' . $i);
+
+                        if ($hotdeal_hide == null) {
+                            if ($this->m_custom->simple_update('advertise', $data, 'advertise_id', $hotdeal_id)) {
+                                $this->m_custom->update_row_log('advertise', $hotdeal_id, $do_by_id, $do_by_type);
+                                $message_info = add_message_info($message_info, 'Hot Deal success update.', $title);
+                            } else {
+                                $message_info = add_message_info($message_info, $this->ion_auth->errors(), $title);
+                            }
+                        } else {
+                            //If this hot deal is being remove by tick the remove check box
+                            $data = array(
+                                'hide_flag' => 1,
+                            );
+                            if ($this->m_custom->simple_update('advertise', $data, 'advertise_id', $hotdeal_id)) {
+                                $this->m_custom->remove_row_log('advertise', $hotdeal_id, $do_by_id, $do_by_type);
+                                $message_info = add_message_info($message_info, 'Hot Deal success remove.', $title);
+                            } else {
+                                $message_info = add_message_info($message_info, $this->ion_auth->errors(), $title);
+                            }
+                        }
+                    }
+                }
+                $this->session->set_flashdata('message', $message_info);
+                redirect('merchant/upload_hotdeal', 'refresh');
+            }
+        }
+
+        //To get today hot deal result row
+        $hotdeal_today_result = $this->m_custom->get_merchant_today_hotdeal($merchant_id);
+        $this->data['hotdeal_today_count'] = $this->m_custom->get_merchant_today_hotdeal($merchant_id, 1);
         $this->data['hour_list'] = generate_number_option(1, 24);
-        for ($i = 1; $i <= $hotdeal_per_day; $i++) {
+        $this->data['sub_category_list'] = $this->ion_auth->get_sub_category_list($merchant_data->me_category_id);
+
+        //To dynamic create the hot deal box
+        for ($i = 0; $i < $hotdeal_per_day; $i++) {
+            $hotdeal_title = 'hotdeal_title' . $i;
+            $this->data[$hotdeal_title] = array(
+                'name' => 'title-' . $i,
+                'id' => 'title-' . $i,
+                'value' => empty($hotdeal_today_result[$i]) ? '' : $hotdeal_today_result[$i]['title'],
+            );
+
+            $hotdeal_image = 'hotdeal_image' . $i;
+            $this->data[$hotdeal_image] = empty($hotdeal_today_result[$i]) ? $this->album_merchant . $this->config->item('other_default_image') : $this->album_merchant . $hotdeal_today_result[$i]['image'];
+
+            $hotdeal_category = 'hotdeal_category' . $i;
+            $this->data[$hotdeal_category] = array(
+                'name' => 'category-' . $i,
+                'id' => 'category-' . $i,
+            );
+
+            $hotdeal_category_selected = 'hotdeal_category_selected' . $i;
+            $this->data[$hotdeal_category_selected] = empty($hotdeal_today_result[$i]) ? '' : $hotdeal_today_result[$i]['sub_category_id'];
+
             $hotdeal_desc = 'hotdeal_desc' . $i;
             $this->data[$hotdeal_desc] = array(
                 'name' => 'desc-' . $i,
                 'id' => 'desc-' . $i,
+                'value' => empty($hotdeal_today_result[$i]) ? '' : $hotdeal_today_result[$i]['description'],
             );
-            
+
             $hotdeal_hour = 'hotdeal_hour' . $i;
             $this->data[$hotdeal_hour] = array(
-                'name' => 'hour-'. $i,
-                'id' => 'hour-'. $i,
+                'name' => 'hour-' . $i,
+                'id' => 'hour-' . $i,
             );
-            
-            //$hotdeal_hour_selected = 'hotdeal_hour_selected' . $i;
-            //$this->data[$hotdeal_hour_selected] = '3';
+
+            $hotdeal_hour_selected = 'hotdeal_hour_selected' . $i;
+            $this->data[$hotdeal_hour_selected] = empty($hotdeal_today_result[$i]) ? '' : $hotdeal_today_result[$i]['post_hour'];
+
+            $advertise_id = empty($hotdeal_today_result[$i]) ? '0' : $hotdeal_today_result[$i]['advertise_id'];
+            $advertise_id_value = 'advertise_id_value' . $i;
+            $this->data[$advertise_id_value] = $advertise_id;
+
+            $hotdeal_id = 'hotdeal_id' . $i;
+            $this->data[$hotdeal_id] = array(
+                'hotdeal_id-' . $i => $advertise_id,
+            );
+
+            $hotdeal_hide = 'hotdeal_hide' . $i;
+            $this->data[$hotdeal_hide] = array(
+                'name' => 'hotdeal_hide-' . $i,
+                'id' => 'hotdeal_hide-' . $i,
+                'value' => $advertise_id,
+            );
         }
 
+        $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'merchant/upload_hotdeal';
         $this->load->view('template/layout_right_menu', $this->data);
     }
+
 //    function upload_image() {
 //
 //        redirect('/','refresh'); //no use currently, disable this function first

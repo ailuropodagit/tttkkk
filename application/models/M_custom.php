@@ -8,7 +8,6 @@ class M_custom extends CI_Model {
         $query = $this->db->get_where('static_option', array('option_type' => $option_type));
         $return = array();
         if ($default_value != NULL) {
-
             $return[$default_value] = $default_text;
         }
         if ($query->num_rows() > 0) {
@@ -32,6 +31,13 @@ class M_custom extends CI_Model {
         return $query->row()->option_text;
     }
     
+    //Get all the dynamic option of an option type
+    public function get_dynamic_option_array($option_type) {
+
+        $query = $this->db->get_where('dynamic_option', array('option_type' => $option_type, 'hide_flag' => 0));
+        return $query->result_array();
+    }
+    
     //To check is this value is unique in DB
     public function check_is_value_unique($the_table, $the_column, $the_value, $the_id_column = NULL, $the_id = NULL) {
         if (empty($the_value)) {
@@ -51,7 +57,7 @@ class M_custom extends CI_Model {
     }
 
     //To find one record in DB with one keyword
-    public function get_one_table_record($the_table, $the_column, $the_value) {
+    public function get_one_table_record($the_table, $the_column, $the_value, $want_array = 0) {
         if (empty($the_value)) {
             return FALSE;
         }
@@ -59,17 +65,27 @@ class M_custom extends CI_Model {
         if ($query->num_rows() !== 1) {
             return FALSE;
         }
-        return $query->row();
+        
+        if ($want_array == 1) {
+            return $query->row_array();
+        } else {
+            return $query->row();
+        }
     }
     
     //To find many records in DB with one keyword
-    public function get_many_table_record($the_table, $the_column, $the_value){
+    public function get_many_table_record($the_table, $the_column, $the_value, $want_array = 0){
         $query = $this->db->get_where($the_table, array($the_column => $the_value));
-        return $query->result();
+        
+        if ($want_array == 1) {
+            return $query->result_array();
+        } else {
+            return $query->result();
+        }
     }
     
     //To find one record in DB of parent table with one keyword
-    public function get_parent_table_record($the_table, $the_column, $the_value, $foreign_column, $parent_table, $primary_column) {
+    public function get_parent_table_record($the_table, $the_column, $the_value, $foreign_column, $parent_table, $primary_column, $want_array = 0) {
         if (empty($the_value)) {
             return FALSE;
         }
@@ -85,7 +101,11 @@ class M_custom extends CI_Model {
             return FALSE;
         }
         
-        return $parent_query->row();
+        if ($want_array == 1) {
+            return $parent_query->row_array();
+        } else {
+            return $parent_query->row();
+        }
     }
     
     //To get all main category
@@ -130,6 +150,98 @@ class M_custom extends CI_Model {
             $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant')));
         }
         return $query->result();
+    }
+    public function get_id_after_insert($the_table, $the_data) {
+        if ($this->db->insert($the_table, $the_data)) {
+            $new_id = $this->db->insert_id();
+            return $new_id;
+        }
+        return FALSE;
+    }
+
+    public function compare_before_update($the_table, $the_data, $id_column, $id_value) {
+        $record = $this->get_one_table_record($the_table,$id_column, $id_value, 1);
+        $result = array_diff_assoc($the_data, $record);
+        if(empty($result)){
+            return FALSE;
+        }else{
+            return TRUE;
+        }
+        
+    }
+    
+    public function simple_update($the_table, $the_data, $id_column, $id_value) {
+        if ($this->compare_before_update($the_table, $the_data, $id_column, $id_value)) {
+            $this->db->where($id_column, $id_value);
+            if ($this->db->update($the_table, $the_data)) {
+                return TRUE;
+            }
+        }
+        return FALSE;
+    }
+
+    public function insert_row_log($the_table, $new_id, $do_by = NULL, $do_by_type = NULL){
+        $the_data = array(
+            'table_type' => $the_table,
+            'table_row_id' => $new_id,
+            'create_time' => get_part_of_date('all'),
+            'create_by' => $do_by,
+            'create_by_type' => $do_by_type,
+        );
+        $this->db->insert('table_row_activity', $the_data);
+    }
+    
+    public function update_row_log($the_table, $the_id, $do_by = NULL, $do_by_type = NULL){
+        
+        $query = $this->db->get_where('table_row_activity', array('table_type' => $the_table, 'table_row_id' => $the_id), 1);
+        if ($query->num_rows() == 0) {
+            $this->insert_row_log($the_table, $the_id, $do_by, $do_by_type);
+            $query = $this->db->get_where('table_row_activity', array('table_type' => $the_table, 'table_row_id' => $the_id), 1);
+        }
+        $activity_row = $query->row();
+  
+        $the_data = array(
+            'last_modify_by' => $do_by,
+            'last_modify_by_type' => $do_by_type,
+        );
+                
+        $this->db->where('activity_id', $activity_row->activity_id);
+        $this->db->update('table_row_activity', $the_data);
+    }
+    
+    public function remove_row_log($the_table, $the_id, $do_by = NULL, $do_by_type = NULL){
+        
+        $query = $this->db->get_where('table_row_activity', array('table_type' => $the_table, 'table_row_id' => $the_id), 1);
+        if ($query->num_rows() == 0) {
+            $this->insert_row_log($the_table, $the_id, $do_by, $do_by_type);
+            $query = $this->db->get_where('table_row_activity', array('table_type' => $the_table, 'table_row_id' => $the_id), 1);
+        }
+        $activity_row = $query->row();
+  
+        $the_data = array(
+            'hide_time' => get_part_of_date('all'),
+            'hide_by' => $do_by,
+            'hide_by_type' => $do_by_type,
+        );
+                
+        $this->db->where('activity_id', $activity_row->activity_id);
+        $this->db->update('table_row_activity', $the_data);
+    }
+    
+    public function get_merchant_today_hotdeal($merchant_id, $counter_only = 0) {
+        $condition = "start_time like '%" . date(format_date_server()) . "%'";
+        $this->db->where('advertise_type', 'hot');
+        $this->db->where($condition);
+        $this->db->where('hide_flag', 0);
+        $query = $this->db->get_where('advertise', array('merchant_id' => $merchant_id));
+        if ($query->num_rows() == 0) {
+            return FALSE;
+        }
+        if ($counter_only == 0) {
+            return $query->result_array();
+        } else {
+            return $query->num_rows();
+        }
     }
     
 }

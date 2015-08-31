@@ -22,17 +22,25 @@ $config['album_user_merchant'] = 'folder_upload/album_user_merchant/';
 $config['folder_merchant_ssm'] = 'folder_upload/merchant_ssm/';
 
 $config['user_default_image'] = 'demo-profile-user.png';
+$config['other_default_image'] = 'demo-image.png';
 $config['merchant_default_image'] = 'demo-logo-company.png';
 
-$config['allowed_types_image']        = 'gif|jpg|png|bmp|ico|jpeg|jpe';
 $config['max_size']             = 10240;  //10mb = 10240kb
 $config['max_width']            = 1000;
 $config['max_height']           = 1000;
+
+$config['allowed_types_image']        = 'gif|jpg|png|bmp|ico|jpeg|jpe';
 $config['upload_guide_image']   = '10MB, 1000x1000 size image file';
 
 $config['allowed_types_file']   = 'gif|jpg|png|jpeg|pdf|doc|docx|txt';
 $config['upload_guide_file']   = '10MB Image/PDF/Doc/Txt file';
 
-$config['keppo_date_format'] = 'd-m-Y';
-$config['keppo_email_domain'] = '@keppo.my';
+$config['keppo_format_date_display'] = 'd-m-Y';
+$config['keppo_format_date_time_display'] = 'd-m-Y H:i';
+$config['keppo_format_date_db'] = 'Y-m-d';
+$config['keppo_format_date_time_db'] = 'Y-m-d H:i:s';
+
 $config['hotdeal_per_day'] = 5;
+
+$config['keppo_email_domain'] = '@keppo.my';
+$config['keppo_admin_email'] = 'wilkinwilly999@gmail.com';

@@ -165,6 +165,8 @@ $lang['supervisor_password_label']           = 'Supervisor Password:';
 // Hot Deal
 $lang['hotdeal_description_label']         = 'Description:';
 $lang['hotdeal_hour_label']                = 'Countdown Hour:';
+$lang['hotdeal_title_label']               = 'Title:';
+$lang['hotdeal_sub_category_label']        = 'Category:';
 
 // Create Group
 $lang['create_group_title']                  = 'Create Group';
@@ -217,3 +219,6 @@ $lang['reset_password_new_password_confirm_label']            = 'Confirm New Pas
 $lang['reset_password_submit_btn']                            = 'Change';
 $lang['reset_password_validation_new_password_label']         = 'New Password';
 $lang['reset_password_validation_new_password_confirm_label'] = 'Confirm New Password';
+
+// Other
+$lang['keppo_contact_us_send_email_success']      = 'Success send your inquiry to Keppo admin.';
