@@ -496,8 +496,8 @@ class user extends CI_Controller
         $this->form_validation->set_rules('phone', $this->lang->line('create_user_phone_label'), 'required');
         $this->form_validation->set_rules('dob', $this->lang->line('create_user_dob_label'), 'callback_date_check');
         $this->form_validation->set_rules('race_other', $this->lang->line('create_user_race_other_label'));
-        $this->form_validation->set_rules('username', $this->lang->line('create_user_username_label'), 'required|is_unique[' . $tables['users'] . '.username]');
-        $this->form_validation->set_rules('email', $this->lang->line('create_user_email_label'), 'required|valid_email|is_unique[' . $tables['users'] . '.email]');
+        $this->form_validation->set_rules('username', $this->lang->line('create_user_username_label'), 'trim|required|is_unique[' . $tables['users'] . '.username]');
+        $this->form_validation->set_rules('email', $this->lang->line('create_user_email_label'), 'trim|required|valid_email|is_unique[' . $tables['users'] . '.email]');
         $this->form_validation->set_rules('password', $this->lang->line('create_user_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
         $this->form_validation->set_rules('password_confirm', $this->lang->line('create_user_password_confirm_label'), 'required');
 
@@ -713,8 +713,8 @@ class user extends CI_Controller
         $this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'));
         $this->form_validation->set_rules('phone', $this->lang->line('create_user_phone_label'), 'required');
         $this->form_validation->set_rules('dob', $this->lang->line('create_user_dob_label'), 'callback_date_check');
-        $this->form_validation->set_rules('username', $this->lang->line('create_user_username_label'), 'required|is_unique_edit[' . $tables['users'] . '.username.' . $user_id . ']');
-        $this->form_validation->set_rules('email', $this->lang->line('create_user_email_label'), 'required|valid_email|is_unique_edit[' . $tables['users'] . '.email.' . $user_id . ']');
+        $this->form_validation->set_rules('username', $this->lang->line('create_user_username_label'), 'trim|required|is_unique_edit[' . $tables['users'] . '.username.' . $user_id . ']');
+        $this->form_validation->set_rules('email', $this->lang->line('create_user_email_label'), 'trim|required|valid_email|is_unique_edit[' . $tables['users'] . '.email.' . $user_id . ']');
         $this->form_validation->set_rules('race_other', $this->lang->line('create_user_race_other_label'));
 
         if (isset($_POST) && !empty($_POST))

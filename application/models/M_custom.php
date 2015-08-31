@@ -126,6 +126,23 @@ class M_custom extends CI_Model
         }
     }
 
+    public function generate_voucher($id)
+    {
+        $result = $this->get_one_table_record('users', 'id', $id, 1);
+        $voucher = '';
+        $counter = 0;
+        if ($result)
+        {
+            do
+            {
+                $counter += 1;
+                $voucher = strtoupper(substr($result['slug'], 0, 3)) . date('Ymd') . $counter;
+                $check_unique = $this->check_is_value_unique('advertise', 'voucher', $voucher);
+            } while (!$check_unique);
+        }
+        return $voucher;
+    }
+
     //To find one record in DB of parent table with one keyword
     public function get_parent_table_record($the_table, $the_column, $the_value, $foreign_column, $parent_table, $primary_column, $want_array = 0)
     {
@@ -301,6 +318,29 @@ class M_custom extends CI_Model
         $this->db->update('table_row_activity', $the_data);
     }
 
+    public function get_merchant_monthly_promotion($merchant_id, $month=NULL, $year=NULL)
+    {
+        if (empty($merchant_id))
+        {
+            return FALSE;
+        }
+        if (empty($month))
+        {
+            $month = get_part_of_date('month');
+        }
+        if (empty($year))
+        {
+            $year = get_part_of_date('year');
+        }
+        $query = $this->db->get_where('advertise', array('merchant_id' => $merchant_id, 'month_id' => $month, 'year' => $year, 'advertise_type' => 'pro'), 1);
+        if ($query->num_rows() !== 1)
+        {
+            return FALSE;
+        }
+
+        return $query->row_array();
+    }
+    
     public function get_merchant_today_hotdeal($merchant_id, $counter_only = 0)
     {
         $condition = "start_time like '%" . date(format_date_server()) . "%'";
