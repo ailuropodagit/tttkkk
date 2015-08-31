@@ -50,13 +50,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 
-// DEFAULT
-
 $route['merchant/register'] = 'merchant/create_user';
 $route['user/register'] = 'user/create_user';
 $route['default_controller'] = 'home';
 $route['404_override'] = '';
-$route['translate_uri_dashes'] = FALSE;
-$route['(:any)-(:any)-(:any)'] = '$1_$2_$3';
-$route['(:any)-(:any)'] = '$1_$2';
-$route['(:any)/(:any)-(:any)'] = '$1/$2_$3';
+$route['translate_uri_dashes'] = TRUE;
+
+//SAME FUNCTION WITH $route['translate_uri_dashes'] = TRUE;
+//$route['(:any)-(:any)-(:any)'] = '$1_$2_$3';
+//$route['(:any)-(:any)'] = '$1_$2';
+//$route['(:any)/(:any)-(:any)'] = '$1/$2_$3';

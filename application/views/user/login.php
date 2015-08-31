@@ -1,8 +1,6 @@
 <?php
 //IF MERCHANT LOGGED IN
-if ($this->ion_auth->logged_in()) {
-    redirect('user/profile');
-}
+if ($this->ion_auth->logged_in()){ redirect('user/profile'); }
 ?>
 
 <script type="text/javascript">
@@ -11,7 +9,9 @@ if ($this->ion_auth->logged_in()) {
         if (document.getElementById('show_password').checked)
         {
             document.getElementById('password').type = 'text';
-        } else {
+        } 
+        else
+        {
             document.getElementById('password').type = 'password';
         }
     }
