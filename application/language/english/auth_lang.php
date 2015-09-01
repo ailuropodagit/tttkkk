@@ -178,7 +178,7 @@ $lang['candie_end_date_label']            = 'End Date:';
 $lang['candie_expire_date_label']         = 'Voucher Expiry Date:';
 $lang['candie_vender_label']              = 'Code Voucher Vender:';
 $lang['candie_year_label']                = 'Code Voucher Year:';
-$lang['candie_month_label']               = 'Code Voucher Months:';
+$lang['candie_year_month_label']          = 'Voucher of Year & Month : ';
 
 // Create Group
 $lang['create_group_title']                  = 'Create Group';

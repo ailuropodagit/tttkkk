@@ -947,7 +947,7 @@ class Merchant extends CI_Controller
             'name' => 'branch_state',
             'id' => 'branch_state',
             'readonly ' => 'true',
-            'value' => ($branch) ? $this->m_custom->get_one_static_option_text($branch->state_id) : '',
+            'value' => ($branch) ? $this->m_custom->option_text($branch->state_id) : '',
         );
 
         $this->data['supervisor_username'] = array(
@@ -1319,7 +1319,11 @@ class Merchant extends CI_Controller
         $branch_list = $this->m_custom->getBranchList($merchant_id);
         $candie_term = $this->m_custom->get_dynamic_option_array('candie_term');
         $month_list = $this->ion_auth->get_static_option_list('month');
-
+        $year_list = generate_number_option(get_part_of_date('year',$merchant_data->created_on,1), get_part_of_date('year'));
+        $search_month = NULL;
+        $search_year = NULL;
+        $is_history = 0;
+        
         if (isset($_POST) && !empty($_POST))
         {
             if ($this->input->post('button_action') == "submit")
@@ -1341,7 +1345,8 @@ class Merchant extends CI_Controller
                 $upload_file = "candie-file";
                 $start_date = validateDate($this->input->post('start_date'));
                 $end_date = validateDate($this->input->post('end_date'));
-                $candie_month = $this->input->post('candie_month');
+                $search_month = $this->input->post('candie_month');
+                $search_year = $this->input->post('candie_year');
                 $candie_point = check_is_positive_numeric($this->input->post('candie_point'));
                 $expire_date = validateDate($this->input->post('expire_date'));
                 $candie_vender = $this->input->post('candie_vender');
@@ -1369,8 +1374,8 @@ class Merchant extends CI_Controller
                         'image' => empty($image_data) ? '' : $image_data['upload_data']['file_name'],
                         'start_time' => $start_date,
                         'end_time' => $end_date,
-                        'month_id' => get_part_of_date('month'),  //To be change
-                        'year' => get_part_of_date('year'),
+                        'month_id' => $search_month,
+                        'year' => $search_year,
                         'voucher' => $this->m_custom->generate_voucher($merchant_id),
                         'voucher_candie' => $candie_point,
                         'voucher_expire_date' => $expire_date,
@@ -1381,7 +1386,7 @@ class Merchant extends CI_Controller
                     if ($new_id)
                     {
                         $this->m_custom->insert_row_log('advertise', $new_id, $do_by_id, $do_by_type);
-                        $message_info = add_message_info($message_info, 'Candie Promotion success create.');
+                        $message_info = add_message_info($message_info, 'Candie Promotion for ' . $search_year . ' ' . $this->m_custom->option_text($search_month) . ' success create.');
                     }
                     else
                     {
@@ -1423,7 +1428,7 @@ class Merchant extends CI_Controller
                     if ($this->m_custom->simple_update('advertise', $data, 'advertise_id', $candie_id))
                     {
                         $this->m_custom->update_row_log('advertise', $candie_id, $do_by_id, $do_by_type);
-                        $message_info = add_message_info($message_info, 'Candie Promotion success update.');
+                        $message_info = add_message_info($message_info, 'Candie Promotion for ' . $search_year . ' ' . $this->m_custom->option_text($search_month) . ' success update.');
                     }
                     else
                     {
@@ -1431,16 +1436,29 @@ class Merchant extends CI_Controller
                     }
                     
                 }
+                $this->session->set_flashdata('message', $message_info);
+                redirect('merchant/candie_promotion', 'refresh');
             }
-            $this->session->set_flashdata('message', $message_info);
-            redirect('merchant/candie_promotion', 'refresh');
+            else if ($this->input->post('button_action') == "search_voucher")
+            {   
+                $search_month = $this->input->post('candie_month');
+                $search_year = $this->input->post('candie_year');
+                if ($search_year < get_part_of_date('year') || 
+                        ($search_year == get_part_of_date('year') && $search_month < get_part_of_date('month')) ||
+                        ($search_year == get_part_of_date('year') && $search_month > (get_part_of_date('month')+1)))
+                {
+                    $is_history = 1;
+                }
+            }
         }
 
         //To get this month candie promotion if already create before
-        $this_month_candie = $this->m_custom->get_merchant_monthly_promotion($merchant_id);
-        
+        $this_month_candie = $this->m_custom->get_merchant_monthly_promotion($merchant_id, $search_month, $search_year);
+        $this->data['is_history'] = $is_history;
+                
         $this->data['candie_id'] = array(
             'candie_id' => empty($this_month_candie) ? '0' : $this_month_candie['advertise_id'],
+            'current_month' => get_part_of_date('month'),
         );
         
         $this->data['sub_category_list'] = $this->ion_auth->get_sub_category_list($merchant_data->me_category_id);
@@ -1467,21 +1485,30 @@ class Merchant extends CI_Controller
         $this->data['start_date'] = array(
             'name' => 'start_date',
             'id' => 'start_date',
+            'readonly ' => 'true',
             'value' => empty($this_month_candie) ? '' : displayDate($this_month_candie['start_time']),
         );
         
         $this->data['end_date'] = array(
             'name' => 'end_date',
             'id' => 'end_date',
+            'readonly ' => 'true',
             'value' => empty($this_month_candie) ? '' : displayDate($this_month_candie['end_time']),
         );
+        
+        $this->data['year_list'] = $year_list;
+        $this->data['candie_year'] = array(
+            'name' => 'candie_year',
+            'id' => 'candie_year',
+        );
+        $this->data['candie_year_selected'] = empty($search_year) ? get_part_of_date('year') : $search_year;
         
         $this->data['month_list'] = $month_list;
         $this->data['candie_month'] = array(
             'name' => 'candie_month',
             'id' => 'candie_month',
         );
-        $this->data['candie_month_selected'] = empty($this_month_candie) ? '' : $this_month_candie['month_id'];
+        $this->data['candie_month_selected'] = empty($search_month) ? get_part_of_date('month') : $search_month;
        
         $this->data['candie_point'] = array(
             'name' => 'candie_point',
@@ -1492,6 +1519,7 @@ class Merchant extends CI_Controller
         $this->data['expire_date'] = array(
             'name' => 'expire_date',
             'id' => 'expire_date',
+            'readonly ' => 'true',
             'value' => empty($this_month_candie) ? '' : displayDate($this_month_candie['voucher_expire_date']),
         );
         

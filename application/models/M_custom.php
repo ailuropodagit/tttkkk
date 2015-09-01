@@ -43,7 +43,7 @@ class M_custom extends CI_Model
     }
     
     //Get one static option text by it option id
-    public function get_one_static_option_text($option_id = NULL)
+    public function option_text($option_id = NULL)
     {
         if (IsNullOrEmptyString($option_id))
         {

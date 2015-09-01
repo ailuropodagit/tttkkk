@@ -211,7 +211,7 @@ if (!function_exists('callback_month'))
 if (!function_exists('get_part_of_date'))
 {
 
-    function get_part_of_date($part, $date = NULL)
+    function get_part_of_date($part, $date = NULL, $is_timestamp = 0)
     {
         if (IsNullOrEmptyString($date))
         {
@@ -233,6 +233,9 @@ if (!function_exists('get_part_of_date'))
         }
         else
         {
+            if($is_timestamp==1){
+                $date = date('Y-m-d',$date);
+            }
             $the_date = explode('-', $date);
             switch ($part)
             {

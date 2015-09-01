@@ -82,7 +82,7 @@ echo "<span class='image-upload-guide'>Upload Image Rule : " . $this->config->it
 <br/>
 <br/>
 <div style="float: right;">
-    <button name="button_action" type="submit" value="upload_hotdeal" >Upload</button><br />        
+    <button name="button_action" type="submit" value="upload_hotdeal" >Save</button><br />        
 </div>
 <?php echo form_close(); ?>
 <div id="infoMessage"><?php echo $message; ?></div>
