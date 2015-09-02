@@ -977,7 +977,7 @@ class Merchant extends CI_Controller
     {
         $merchant_id = $this->ion_auth->user()->row()->id;
         $allowed_list = $this->m_custom->get_list_of_allow_id('merchant_branch', 'merchant_id', $merchant_id, 'branch_id');
-        $check_id = $this->uri->segment(4);
+        $check_id = $this->uri->segment(3) == 'success'? NULL : $this->uri->segment(4);
         if (!check_correct_login_type($this->main_group_id, $allowed_list, $check_id))
         {
             redirect('/', 'refresh');
@@ -1123,7 +1123,7 @@ class Merchant extends CI_Controller
     {
         $merchant_id = $this->ion_auth->user()->row()->id;
         $allowed_list = $this->m_custom->get_list_of_allow_id('users', 'su_merchant_id', $merchant_id, 'id');
-        $check_id = $this->uri->segment(4);
+        $check_id = $this->uri->segment(3) == 'success'? NULL : $this->uri->segment(4);
         if (!check_correct_login_type($this->main_group_id, $allowed_list, $check_id))
         {
             redirect('/', 'refresh');
@@ -1316,13 +1316,15 @@ class Merchant extends CI_Controller
         $do_by_type = $this->main_group_id;
         $do_by_id = $merchant_id;
         $merchant_data = $this->m_custom->get_one_table_record('users', 'id', $merchant_id);
-        $branch_list = $this->m_custom->getBranchList($merchant_id);
-        $candie_term = $this->m_custom->get_dynamic_option_array('candie_term');
+        $candie_branch = $this->m_custom->get_keyarray_list('merchant_branch', 'merchant_id', $merchant_id, 'branch_id', 'name');
+        $candie_term = $this->m_custom->get_dynamic_option_array('candie_term', NULL, NULL, $merchant_data->company);
         $month_list = $this->ion_auth->get_static_option_list('month');
         $year_list = generate_number_option(get_part_of_date('year',$merchant_data->created_on,1), get_part_of_date('year'));
         $search_month = NULL;
         $search_year = NULL;
         $is_history = 0;
+        $candie_term_selected = array();
+        $candie_branch_selected = array();
         
         if (isset($_POST) && !empty($_POST))
         {
@@ -1350,7 +1352,23 @@ class Merchant extends CI_Controller
                 $candie_point = check_is_positive_numeric($this->input->post('candie_point'));
                 $expire_date = validateDate($this->input->post('expire_date'));
                 $candie_vender = $this->input->post('candie_vender');
-                $image_data = NULL;
+                $image_data = NULL;                
+                
+                if (!empty($this->input->post('candie_term')))
+                {
+                    foreach ($this->input->post('candie_term') as $key => $value)
+                    {
+                        $candie_term_selected[] = $value;
+                    }
+                }
+                
+                if (!empty($this->input->post('candie_branch')))
+                {
+                    foreach ($this->input->post('candie_branch') as $key => $value)
+                    {
+                        $candie_branch_selected[] = $value;
+                    }
+                }
                 
                 if ($candie_id == 0)
                 {
@@ -1386,6 +1404,8 @@ class Merchant extends CI_Controller
                     if ($new_id)
                     {
                         $this->m_custom->insert_row_log('advertise', $new_id, $do_by_id, $do_by_type);
+                        $this->m_custom->many_insert_or_remove('candie_term', $new_id, $candie_term_selected);
+                        $this->m_custom->many_insert_or_remove('candie_branch', $new_id, $candie_branch_selected);
                         $message_info = add_message_info($message_info, 'Candie Promotion for ' . $search_year . ' ' . $this->m_custom->option_text($search_month) . ' success create.');
                     }
                     else
@@ -1408,7 +1428,10 @@ class Merchant extends CI_Controller
                         else
                         {
                             $image_data = array('upload_data' => $this->upload->data());
-                            delete_file($this->album_merchant . $previous_image_name);
+                            if(!IsNullOrEmptyString($previous_image_name))
+                            {
+                                delete_file($this->album_merchant . $previous_image_name);
+                            }
                         }
                     }
 
@@ -1428,6 +1451,8 @@ class Merchant extends CI_Controller
                     if ($this->m_custom->simple_update('advertise', $data, 'advertise_id', $candie_id))
                     {
                         $this->m_custom->update_row_log('advertise', $candie_id, $do_by_id, $do_by_type);
+                        $this->m_custom->many_insert_or_remove('candie_term', $candie_id, $candie_term_selected);
+                        $this->m_custom->many_insert_or_remove('candie_branch', $candie_id, $candie_branch_selected);
                         $message_info = add_message_info($message_info, 'Candie Promotion for ' . $search_year . ' ' . $this->m_custom->option_text($search_month) . ' success update.');
                     }
                     else
@@ -1455,7 +1480,9 @@ class Merchant extends CI_Controller
         //To get this month candie promotion if already create before
         $this_month_candie = $this->m_custom->get_merchant_monthly_promotion($merchant_id, $search_month, $search_year);
         $this->data['is_history'] = $is_history;
-                
+        $this->data['candie_term_current'] = empty($this_month_candie) ? array() : $this->m_custom->many_get_childlist('candie_term', $this_month_candie['advertise_id']);
+        $this->data['candie_branch_current'] = empty($this_month_candie) ? array() : $this->m_custom->many_get_childlist('candie_branch', $this_month_candie['advertise_id']);
+        
         $this->data['candie_id'] = array(
             'candie_id' => empty($this_month_candie) ? '0' : $this_month_candie['advertise_id'],
             'current_month' => get_part_of_date('month'),
@@ -1529,6 +1556,9 @@ class Merchant extends CI_Controller
             'value' => empty($this_month_candie) ? '' : $this_month_candie['extra_field'],
         );
 
+        $this->data['candie_term'] = $candie_term;
+        $this->data['candie_branch'] = $candie_branch;
+        
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'merchant/candie_promotion';
         $this->load->view('template/layout_right_menu', $this->data);
@@ -1647,7 +1677,10 @@ class Merchant extends CI_Controller
                             else
                             {
                                 $image_data = array('upload_data' => $this->upload->data());
-                                delete_file($this->album_merchant . $previous_image_name);
+                                if (!IsNullOrEmptyString($previous_image_name))
+                                {
+                                    delete_file($this->album_merchant . $previous_image_name);
+                                }
                             }
                         }
 

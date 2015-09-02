@@ -18,6 +18,9 @@
         top:7px;
         left:2px;
     }
+    .checkbox-list{
+        text-align:left;
+    }
 </style>
 <script type="text/javascript">
     $( document ).ready(function() {
@@ -45,8 +48,11 @@
             dateFormat: "dd-mm-yy",
         });
     });
+    
         });
+        
 </script>
+
 <?php echo form_open_multipart(uri_string()); ?>
 
 <?php
@@ -111,11 +117,53 @@ echo "<br/><span class='image-upload-guide'>Upload Image Rule : " . $this->confi
         <div id='register-form-each-input'>
             <?php echo form_input($expire_date); ?></div>
     </div>
+    <div class="checkbox-list">
+        <?php
+        foreach ($candie_term as $key => $value) :
+            if (in_array($key, $candie_term_current))
+            {
+                echo "<input type='checkbox' name='candie_term[]' value='" . $key . "' checked >&nbsp;" . $value . "<br />";
+            }
+            else
+            {
+                echo "<input type='checkbox' name='candie_term[]' value='" . $key . "' >&nbsp;" . $value . "<br />";
+            }
+        endforeach;
+        ?>  
+    </div>
     <?php if ($is_history == 0) { ?>
+    
         <div id='register-form-submit'>
             <button name="button_action" type="submit" value="submit">Save</button>
         </div>
     <?php } ?>
     <div id="infoMessage"><?php echo $message; ?></div>
 </div>
+<div class="checkbox-list">
+    Select Branch : <br/>
+    <input type="checkbox" id="candie_branch_select_all" onClick="toggle(this)"/> Select All<br/>
+    <?php
+    foreach ($candie_branch as $key => $value) :
+        if (in_array($key, $candie_branch_current))
+        {
+            echo "<input type='checkbox' name='candie_branch[]' value='" . $key . "' checked >&nbsp;" . $value . "<br />";
+        }
+        else
+        {
+            echo "<input type='checkbox' name='candie_branch[]' value='" . $key . "' >&nbsp;" . $value . "<br />";
+        }
+    endforeach;
+    ?>  
+</div>
 <?php echo form_close(); ?>
+
+<!--Have to put this javascript in lower part to work because it need wait all thing load in page-->
+<script type="text/javascript">
+    
+        function toggle(source) {
+        checkboxes = document.getElementsByName('candie_branch[]');
+  for(var i=0, n=checkboxes.length;i<n;i++) {
+    checkboxes[i].checked = source.checked;
+  }
+}
+</script>

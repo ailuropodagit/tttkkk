@@ -24,8 +24,8 @@ class M_custom extends CI_Model
             }
         }
         return $return;
-    }
-
+    }   
+    
     //To find many records in DB with one keyword
     public function get_list_of_allow_id($the_table, $the_column, $the_value, $wanted_column)
     {
@@ -59,13 +59,58 @@ class M_custom extends CI_Model
     }
 
     //Get all the dynamic option of an option type
-    public function get_dynamic_option_array($option_type)
+    public function get_dynamic_option_array($option_type, $default_value = NULL, $default_text = NULL, $prefix = NULL, $postfix = NULL, $use_option_title = 0)
     {
 
         $query = $this->db->get_where('dynamic_option', array('option_type' => $option_type, 'hide_flag' => 0));
-        return $query->result_array();
+        
+        $return = array();
+        if (!IsNullOrEmptyString($default_value))
+        {
+            $return[$default_value] = $default_text;
+        }
+        if ($query->num_rows() > 0)
+        {
+            foreach ($query->result_array() as $row)
+            {
+                if($use_option_title == 1){
+                    $the_text = $row['option_title'];
+                }else{
+                    $the_text = $row['option_desc'];
+                }
+                
+                if(!IsNullOrEmptyString($prefix) && $row['option_special'] == 1){
+                    $the_text = $prefix. ' '. $the_text;
+                }
+                if(!IsNullOrEmptyString($postfix) && $row['option_special'] == 2){
+                    $the_text = $the_text . ' ' . $postfix;
+                }
+                
+                $return[$row['option_id']] = $the_text;
+            }
+        }
+        
+        return $return;
     }
 
+    function get_keyarray_list($the_table, $id_column, $id_value, $key_column, $value_column, $default_value = NULL, $default_text = NULL)
+    {
+        $query = $this->db->get_where($the_table, array($id_column => $id_value));
+        $return = array();
+        if (!IsNullOrEmptyString($default_value))
+        {
+            $return[$default_value] = $default_text;
+        }
+        if ($query->num_rows() > 0)
+        {
+            foreach ($query->result_array() as $row)
+            {
+                $return[$row[$key_column]] = $row[$value_column];
+            }
+        }
+        return $return;
+    }
+    
     //To check is this value is unique in DB
     public function check_is_value_unique($the_table, $the_column, $the_value, $the_id_column = NULL, $the_id = NULL)
     {
@@ -188,10 +233,17 @@ class M_custom extends CI_Model
         return $query->result();
     }
 
-    function getBranchList($id)
+    function getBranchList($id, $want_array = 0)
     {
         $query = $this->db->get_where('merchant_branch', array('merchant_id' => $id));
-        return $query->result();
+        if ($want_array == 1)
+        {
+            return $query->result_array();
+        }
+        else
+        {
+            return $query->result();
+        }
     }
 
     public function getBranchList_with_search($id, $search_word)
@@ -238,6 +290,55 @@ class M_custom extends CI_Model
         return FALSE;
     }
 
+    public function many_insert_or_remove($the_type, $parent_id, $new_child_list)
+    {
+        $query = $this->db->get_where('many_to_many', array('many_type' => $the_type, 'many_parent_id' => $parent_id))->result();
+        $current_child_list = array();
+        foreach ($query as $value)
+        {
+            $current_child_list[] = $value->many_child_id;
+        }
+        $child_to_insert = array_diff($new_child_list, $current_child_list);
+        if (!empty($child_to_insert))
+        {
+            foreach ($child_to_insert as $value)
+            {
+                $the_data = array(
+                    'many_parent_id' => $parent_id,
+                    'many_child_id' => $value,
+                    'many_type' => $the_type,
+                );
+                $this->db->insert('many_to_many', $the_data);
+            }
+        }
+
+        $child_to_remove = array_diff($current_child_list, $new_child_list);
+        if (!empty($child_to_remove))
+        {
+            foreach ($child_to_remove as $value)
+            {
+                $this->db->where(array('many_parent_id' => $parent_id, 'many_child_id' => $value));
+                $this->db->delete('many_to_many');
+            }
+        }
+    }
+
+    //To get the childlist id from many table by the type and parent id
+    public function many_get_childlist($the_type, $parent_id)
+    {
+        $query = $this->db->get_where('many_to_many', array('many_type' => $the_type, 'many_parent_id' => $parent_id));
+
+        $return = array();
+        if ($query->num_rows() > 0)
+        {
+            foreach ($query->result_array() as $row)
+            {
+                $return[] = $row['many_child_id'];
+            }
+        }
+        return $return;
+    }
+    
     public function compare_before_update($the_table, $the_data, $id_column, $id_value)
     {
         $record = $this->get_one_table_record($the_table, $id_column, $id_value, 1);
@@ -350,7 +451,14 @@ class M_custom extends CI_Model
         $query = $this->db->get_where('advertise', array('merchant_id' => $merchant_id));
         if ($query->num_rows() == 0)
         {
-            return FALSE;
+            if ($counter_only == 0)
+            {
+                return FALSE;
+            }
+            else
+            {
+                return 0;
+            }
         }
         if ($counter_only == 0)
         {
