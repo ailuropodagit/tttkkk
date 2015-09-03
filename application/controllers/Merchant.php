@@ -1583,6 +1583,9 @@ class Merchant extends CI_Controller
 
         $merchant_data = $this->m_custom->get_one_table_record('users', 'id', $merchant_id);
         $hotdeal_per_day = $this->config->item("hotdeal_per_day");
+        $search_date = NULL;
+        //$search_date = '31-08-2015';
+        //$search_date = toggle_date_format($search_date);
 
         if (isset($_POST) && !empty($_POST))
         {
@@ -1602,7 +1605,7 @@ class Merchant extends CI_Controller
                 for ($i = 0; $i < $hotdeal_per_day; $i++)
                 {
 
-                    $hotdeal_today_count = $this->m_custom->get_merchant_today_hotdeal($merchant_id, 1);
+                    $hotdeal_today_count = $this->m_custom->get_merchant_today_hotdeal($merchant_id, 1, $search_date);
 
                     $hotdeal_id = $this->input->post('hotdeal_id-' . $i);
                     $hotdeal_file = "hotdeal-file-" . $i;
@@ -1610,8 +1613,13 @@ class Merchant extends CI_Controller
                     $sub_category_id = $this->input->post('category-' . $i);
                     $title = $this->input->post('title-' . $i);
                     $description = $this->input->post('desc-' . $i);
-                    $hotdeal_hour = $this->input->post('hour-' . $i);
+                    $hotdeal_hour = check_is_positive_numeric($this->input->post('hour-' . $i));
 
+                    if($hotdeal_hour > 720){
+                        $message_info = add_message_info($message_info, 'Hot Deal please put in a valid hour between 1 to 720(Max 30 days only).', $title);
+                        $hotdeal_hour = 0;
+                    }
+                    
                     //To check is this an old hot deal or new hot deal, if new hot deal is 0
                     if ($hotdeal_id == 0)
                     {
@@ -1732,11 +1740,11 @@ class Merchant extends CI_Controller
                 redirect('merchant/upload_hotdeal', 'refresh');
             }
         }
-
+        
         //To get today hot deal result row
-        $hotdeal_today_result = $this->m_custom->get_merchant_today_hotdeal($merchant_id);
-        $this->data['hotdeal_today_count'] = $this->m_custom->get_merchant_today_hotdeal($merchant_id, 1);
-        $this->data['hour_list'] = generate_number_option(1, 24);
+        $hotdeal_today_result = $this->m_custom->get_merchant_today_hotdeal($merchant_id, 0, $search_date);
+        $this->data['hotdeal_today_count'] = $this->m_custom->get_merchant_today_hotdeal($merchant_id, 1, $search_date);
+        //$this->data['hour_list'] = generate_number_option(1, 24);
         $this->data['sub_category_list'] = $this->ion_auth->get_sub_category_list($merchant_data->me_category_id);
 
         //To dynamic create the hot deal box
@@ -1772,10 +1780,11 @@ class Merchant extends CI_Controller
             $this->data[$hotdeal_hour] = array(
                 'name' => 'hour-' . $i,
                 'id' => 'hour-' . $i,
+                'value' => empty($hotdeal_today_result[$i]) ? '' : $hotdeal_today_result[$i]['post_hour'],
             );
 
-            $hotdeal_hour_selected = 'hotdeal_hour_selected' . $i;
-            $this->data[$hotdeal_hour_selected] = empty($hotdeal_today_result[$i]) ? '' : $hotdeal_today_result[$i]['post_hour'];
+            //$hotdeal_hour_selected = 'hotdeal_hour_selected' . $i;
+            //$this->data[$hotdeal_hour_selected] = empty($hotdeal_today_result[$i]) ? '' : $hotdeal_today_result[$i]['post_hour'];
 
             $advertise_id = empty($hotdeal_today_result[$i]) ? '0' : $hotdeal_today_result[$i]['advertise_id'];
             $advertise_id_value = 'advertise_id_value' . $i;

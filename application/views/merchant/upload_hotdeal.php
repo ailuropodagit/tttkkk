@@ -59,9 +59,10 @@ echo "<span class='image-upload-guide'>Upload Image Rule : " . $this->config->it
         </div>
         <div id='register-form-each'>
             <div id='register-form-each-label'><?php echo lang("hotdeal_hour_label"); ?></div>
-            <div id='register-form-each-input-dob-day'>
+            <div id='register-form-each-input'>
                 <?php
-                echo form_dropdown(${'hotdeal_hour' . $i}, $hour_list, ${'hotdeal_hour_selected' . $i});
+                //echo form_dropdown(${'hotdeal_hour' . $i}, $hour_list, ${'hotdeal_hour_selected' . $i});
+                echo form_input(${'hotdeal_hour' . $i});
                 ?></div>
         </div>
         <div id="float-fix"></div>

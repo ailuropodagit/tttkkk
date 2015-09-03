@@ -4,12 +4,16 @@
     <div id='body'>
         <div id='body-content'>
             
-            <div style="float:left">
+            <div style="float:left;width:20%">
                 <?php $this->load->view($left_path_name) ?>
             </div>
             
-            <div style="float:right">
+            <div style="float:left;width:60%">
                 <?php $this->load->view($page_path_name) ?>
+            </div>
+            
+            <div style="float:left;width:20%">
+                <?php $this->load->view($right_path_name) ?>
             </div>
             
             <div id="float-fix"></div>

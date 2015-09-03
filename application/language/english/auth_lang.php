@@ -164,7 +164,7 @@ $lang['supervisor_password_label']           = 'Supervisor Password:';
 
 // Hot Deal
 $lang['hotdeal_description_label']         = 'Description:';
-$lang['hotdeal_hour_label']                = 'Countdown Hour:';
+$lang['hotdeal_hour_label']                = 'Countdown Hour(1 to 720):';
 $lang['hotdeal_title_label']               = 'Title:';
 $lang['hotdeal_sub_category_label']        = 'Category:';
 

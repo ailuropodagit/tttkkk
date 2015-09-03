@@ -348,6 +348,21 @@ if (!function_exists('format_date_server'))
 
 }
 
+if (!function_exists('toggle_date_format'))
+{
+
+    function toggle_date_format($date = NULL)
+    {
+        $change_date = $date;
+        if (!IsNullOrEmptyString($date))
+        {
+            $the_date = explode('-', $date);
+            $change_date = $the_date[2] . '-' . $the_date[1] . '-' . $the_date[0];
+        }
+        return $change_date;
+    }
+}
+
 if (!function_exists('format_date_english_month'))
 {
 
