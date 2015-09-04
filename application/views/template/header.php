@@ -45,7 +45,7 @@
                     <ul>
                         <li><a href='<?php echo base_url(); ?>home'><i class="fa fa-home header-menu-icon header-menu-icon-home"></i>Home</a></li>
                         <li><a href='<?php echo base_url(); ?>categories'><i class="fa fa-th-large header-menu-icon"></i>Categories</a></li>
-                        <li><a href='#'><i class="fa fa-fire header-menu-icon"></i>Hot Deal</a></li>
+                        <li><a href='<?php echo base_url(); ?>all/hotdeal-list'><i class="fa fa-fire header-menu-icon"></i>Hot Deal</a></li>
                         <li><a href='#'><i class="fa fa-gift header-menu-icon"></i>Redemption</a></li>
                         <?php
                         if (check_is_login()) {
@@ -76,7 +76,7 @@
                 <ul>
                     <li><a href='<?php echo base_url(); ?>home'><i class="fa fa-home header-menu-icon header-menu-icon-home"></i>Home</a></li>
                     <li><a href='<?php echo base_url(); ?>categories'><i class="fa fa-th-large header-menu-icon"></i>Categories</a></li>
-                    <li><a href='#'><i class="fa fa-fire header-menu-icon"></i>Hot Deal</a></li>
+                    <li><a href='<?php echo base_url(); ?>all/hotdeal-list'><i class="fa fa-fire header-menu-icon"></i>Hot Deal</a></li>
                     <li><a href='#'><i class="fa fa-diamond header-menu-icon"></i>Redemption</a></li>
                     <?php if(check_is_login()){ 
                         if (check_correct_login_type($this->config->item('group_id_user'))) {

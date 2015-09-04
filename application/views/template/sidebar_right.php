@@ -5,7 +5,7 @@
         if ($this->session->userdata('user_group_id') == $this->config->item('group_id_merchant'))
         {            
             //MERCHANT SIDEBAR MENU
-            $dashboard = base_url() . 'merchant/dashboard/' . generate_slug($this->session->userdata('company_name'));
+            $dashboard = base_url() . 'all/merchant_dashboard/' . generate_slug($this->session->userdata('company_name'));
             ?>
             <li><a href='<?php echo $dashboard ?>' class='body-right-sidebar-bar <?php if ($this->router->fetch_method() == 'dashboard' || $this->router->fetch_method() == 'outlet' || $this->router->fetch_method() == 'map'){ echo "body-right-sidebar-bar-active"; } ?>'>Dashboard</a></li>
             <li><a href='<?php echo base_url(); ?>merchant/profile' class='body-right-sidebar-bar <?php if ($this->router->fetch_method() == 'profile'){ echo "body-right-sidebar-bar-active"; } ?>'>Profile</a></li>
@@ -22,7 +22,7 @@
         {
             //SUPERVISOR SIDEBAR MENU
             $the_row = $this->m_custom->get_parent_table_record('users', 'id', $this->session->userdata('user_id'), 'su_merchant_id', 'users', 'id');
-            $dashboard = base_url() . 'merchant/dashboard/' . generate_slug($the_row->company);
+            $dashboard = base_url() . 'all/merchant_dashboard/' . generate_slug($the_row->company);
             ?>
             <li><a href='<?php echo $dashboard ?>' class='body-right-sidebar-bar <?php if ($this->router->fetch_method() == 'dashboard'){ echo "body-right-sidebar-bar-active"; } ?>'>Dashboard</a></li>
             <li><a href='<?php echo base_url(); ?>merchant/profile' class='body-right-sidebar-bar <?php if ($this->router->fetch_method() == 'profile'){ echo "body-right-sidebar-bar-active"; } ?>'>Profile</a></li>
@@ -35,7 +35,7 @@
         else
         {
             //USER SIDEBAR MENU
-            $dashboard = base_url() . 'user/dashboard/' . generate_slug($this->session->userdata('user_id'));
+            $dashboard = base_url() . 'all/user_dashboard/' . generate_slug($this->session->userdata('user_id'));
             ?>
             <li><a href='<?php echo $dashboard ?>' class='body-right-sidebar-bar <?php if ($this->router->fetch_method() == 'dashboard'){ echo "body-right-sidebar-bar-active"; } ?>'>Dashboard</a></li>
             <li><a href='<?php echo base_url(); ?>user/profile' class='body-right-sidebar-bar <?php if ($this->router->fetch_method() == 'profile'){ echo "body-right-sidebar-bar-active"; } ?>'>Profile</a></li>
