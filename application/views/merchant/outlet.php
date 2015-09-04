@@ -27,7 +27,7 @@
                 <?php echo $address; ?>
             </div>
             <!--<div id="dashboard-info-outlet-address">
-                <a href="<?php echo $show_outlet ?>">Show outlet Address <i class="fa fa-map-o"></i></a>
+                <a href="<?php //echo $show_outlet ?>">Show outlet Address <i class="fa fa-map-o"></i></a>
             </div>-->
             <table border="0px" cellspacing="0px" cellpadding="5px" style="width: 100%; table-layout: fixed;">
                 <colgroup style="width:120px;"></colgroup>

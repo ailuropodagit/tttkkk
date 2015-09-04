@@ -64,7 +64,7 @@ class Merchant extends CI_Controller
                 //if the login is successful
                 //redirect them back to the home page
                 //$this->session->set_flashdata('message', $this->ion_auth->messages());
-                redirect('merchant/dashboard/' . generate_slug($this->session->userdata('company_name')), 'refresh');
+                redirect('all/merchant_dashboard/' . generate_slug($this->session->userdata('company_name')), 'refresh');
             }
             else if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember, $this->supervisor_group_id))
             {
@@ -627,69 +627,7 @@ class Merchant extends CI_Controller
             $this->load->view('template/layout', $this->data);
         }
     }
-
-    //View the merchant dashboard upper part
-    function dashboard($slug)
-    {
-        $the_row = $this->m_custom->get_one_table_record('users', 'slug', $slug);
-        if ($the_row)
-        {
-            $this->data['image_path'] = $this->album_merchant_profile;
-            $this->data['image'] = $the_row->profile_image;
-            $this->data['company_name'] = $the_row->company;
-            $this->data['address'] = $the_row->address;
-            $this->data['phone'] = $the_row->phone;
-            $this->data['show_outlet'] = base_url() . 'merchant/outlet/' . $slug;
-            $this->data['website_url'] = $the_row->me_website_url;
-            $this->data['facebook_url'] = $the_row->me_facebook_url;
-            $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-            $this->data['page_path_name'] = 'merchant/dashboard';
-            $this->load->view('template/layout_right_menu', $this->data);
-        }
-        else
-        {
-            redirect('/', 'refresh');
-        }
-    }
-
-    //View the merchant dashboard upper part
-    function outlet($slug)
-    {
-        $the_row = $this->m_custom->get_one_table_record('users', 'slug', $slug);
-        if ($the_row)
-        {
-            $this->data['image_path'] = $this->album_merchant_profile;
-            $this->data['image'] = $the_row->profile_image;
-            $this->data['company_name'] = $the_row->company;
-            $this->data['address'] = $the_row->address;
-            $this->data['phone'] = $the_row->phone;
-            $this->data['show_outlet'] = '';
-            $this->data['view_map_path'] = 'merchant/map/';
-            $this->data['website_url'] = $the_row->me_website_url;
-            $this->data['facebook_url'] = $the_row->me_facebook_url;
-            $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-            $this->data['page_path_name'] = 'merchant/outlet';
-
-            if (isset($_POST) && !empty($_POST))
-            {
-                $search_word = $this->input->post('search_word');
-                $this->data['branch_list'] = $this->m_custom->getBranchList_with_search($the_row->id, $search_word);
-            }
-            else
-            {
-                $this->data['branch_list'] = $this->m_custom->getBranchList($the_row->id);
-            }
-
-            $this->data['page_path_name'] = 'merchant/outlet';
-
-            $this->load->view('template/layout_right_menu', $this->data);
-        }
-        else
-        {
-            redirect('/', 'refresh');
-        }
-    }
-
+    
     //merchant profile view and edit page
     function profile()
     {
@@ -1006,47 +944,6 @@ class Merchant extends CI_Controller
             $post_array['merchant_id'] = $this->ion_auth->user()->row()->su_merchant_id;
         }
         return $this->db->insert('merchant_branch', $post_array);
-    }
-
-    function map($branch_id = NULL)
-    {
-        if (!empty($branch_id))
-        {
-            $the_branch = $this->m_custom->get_one_table_record('merchant_branch', 'branch_id', $branch_id);
-            if ($the_branch)
-            {
-                $the_merchant = $this->m_custom->get_one_table_record('users', 'id', $the_branch->merchant_id);
-                $this->data['image_path'] = $this->album_merchant_profile;
-                $this->data['image'] = $the_merchant->profile_image;
-                $this->data['company_name'] = $the_merchant->company;
-                $this->data['phone'] = $the_branch->phone;
-
-                $this->data['address'] = $the_branch->address;
-                $this->data['googlemap_url'] = 'https://www.google.com/maps/place/' . $the_branch->google_map_url;
-                $this->load->library('googlemaps');
-
-                $location = $the_branch->google_map_url;
-                if (IsNullOrEmptyString($location))
-                {
-                    $location = $the_branch->address;
-                }
-
-                $config['center'] = $location;
-                $config['zoom'] = '17';
-                $this->googlemaps->initialize($config);
-
-                $marker = array();
-                $marker['position'] = $location;
-                $this->googlemaps->add_marker($marker);
-                $this->data['map'] = $this->googlemaps->create_map();
-                $this->data['page_path_name'] = 'merchant/map';
-                $this->load->view('template/layout_right_menu', $this->data);
-            }
-        }
-        else
-        {
-            redirect('/', 'refresh');
-        }
     }
 
     function supervisor()

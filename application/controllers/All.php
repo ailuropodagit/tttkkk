@@ -5,7 +5,50 @@ class All extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->library(array('ion_auth'));
         $this->album_merchant_profile = $this->config->item('album_merchant_profile');
+        $this->album_merchant = $this->config->item('album_merchant');
+        $this->album_user_profile = $this->config->item('album_user_profile');
+        $this->login_type = 0;
+        if ($this->ion_auth->logged_in())
+        {
+            $this->login_type = $this->session->userdata('user_group_id');
+        }
+    }
+    
+    function hotdeal_list(){
+        
+        $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('hot');
+        $this->data['left_path_name'] = 'template/sidebar_left_full';    
+        $this->data['page_path_name'] = 'all/hotdeal_list';
+        $this->load->view('template/layout_right', $this->data);
+    }
+    
+        //View the user dashboard upper part
+    function user_dashboard($user_id)
+    {
+        $the_row = $this->m_custom->get_one_table_record('users', 'id', $user_id);
+        if ($the_row)
+        {
+            $this->data['image_path'] = $this->album_user_profile;
+            $this->data['image'] = $the_row->profile_image;
+            $this->data['first_name'] = $the_row->first_name;
+            $this->data['last_name'] = $the_row->last_name;
+            $this->data['message'] = $this->session->flashdata('message');
+            $this->data['page_path_name'] = 'user/dashboard';
+            if ($this->ion_auth->logged_in())
+            {
+                $this->load->view('template/layout_right_menu', $this->data);
+            }
+            else
+            {
+                $this->load->view('template/layout', $this->data);
+            }
+        }
+        else
+        {
+            redirect('/', 'refresh');
+        }
     }
     
     public function merchant_dashboard($slug) 
@@ -24,7 +67,14 @@ class All extends CI_Controller
             //$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
             $this->data['message'] = "";
             $this->data['page_path_name'] = 'merchant/dashboard';
-            $this->load->view('template/layout', $this->data);
+            if ($this->ion_auth->logged_in())
+            {
+                $this->load->view('template/layout_right_menu', $this->data);
+            }
+            else
+            {
+                $this->load->view('template/layout', $this->data);
+            }
         }
         else
         {
@@ -47,7 +97,7 @@ class All extends CI_Controller
             $this->data['website_url'] = $the_row->me_website_url;
             $this->data['facebook_url'] = $the_row->me_facebook_url;
             $this->data['message'] = "";
-            $this->data['page_path_name'] = 'merchant/outlet';
+
             if (isset($_POST) && !empty($_POST))
             {
                 $search_word = $this->input->post('search_word');
@@ -58,7 +108,14 @@ class All extends CI_Controller
                 $this->data['branch_list'] = $this->m_custom->getBranchList($the_row->id);
             }
             $this->data['page_path_name'] = 'merchant/outlet';
-            $this->load->view('template/layout', $this->data);
+            if ($this->ion_auth->logged_in())
+            {
+                $this->load->view('template/layout_right_menu', $this->data);
+            }
+            else
+            {
+                $this->load->view('template/layout', $this->data);
+            }
         }
         else
         {
@@ -98,7 +155,15 @@ class All extends CI_Controller
                 $this->googlemaps->add_marker($marker);
                 $this->data['map'] = $this->googlemaps->create_map();
                 $this->data['page_path_name'] = 'merchant/map';
-                $this->load->view('template/layout', $this->data);
+
+                if ($this->ion_auth->logged_in())
+                {
+                    $this->load->view('template/layout_right_menu', $this->data);
+                }
+                else
+                {
+                    $this->load->view('template/layout', $this->data);
+                }
             }
         }
         else

@@ -348,6 +348,24 @@ if (!function_exists('format_date_server'))
 
 }
 
+if (!function_exists('date_server_format'))
+{
+
+    function date_server_format($date = NULL)
+    {
+        $ci = & get_instance();
+        $the_format = $ci->config->item('keppo_format_date_db');
+        if (!IsNullOrEmptyString($date))
+        {
+            $date=date_create($date);
+            return date_format($date,$the_format);
+        }else{
+            return date($the_format);
+        }
+    }
+
+}
+
 if (!function_exists('toggle_date_format'))
 {
 
