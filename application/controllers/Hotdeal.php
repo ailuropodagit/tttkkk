@@ -20,7 +20,7 @@ class Hotdeal extends CI_Controller
     
     function hotdeal_list(){
         
-        
+        $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('hot');
         $this->data['left_path_name'] = 'template/sidebar_left_full';    
         $this->data['page_path_name'] = 'all/hotdeal_list';
         $this->load->view('template/layout_right', $this->data);

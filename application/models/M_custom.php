@@ -220,6 +220,18 @@ class M_custom extends CI_Model
     }
 
     //To get all main category
+    function getAdvertise($advertise_type, $sub_category_id = NULL)
+    {
+        if(!IsNullOrEmptyString($sub_category_id)){
+            $this->db->where('sub_category_id', $sub_category_id);
+        }
+        $this->db->where('end_time >=',get_part_of_date('all'));
+        $this->db->order_by("end_time", "asc"); 
+        $query = $this->db->get_where('advertise', array('advertise_type' => $advertise_type, 'hide_flag' => 0));
+        return $query->result_array();
+    }
+    
+    //To get all main category
     function getCategory()
     {
         $query = $this->db->get_where('category', array('category_level' => '0'));
@@ -252,8 +264,8 @@ class M_custom extends CI_Model
         {
             return $this->getBranchList($id);
         }
-        $this->db->like('name', $search_word);
-        $this->db->or_like('address', $search_word);
+        $search_word = $this->db->escape('%' . $search_word . '%');
+        $this->db->where("(`name` LIKE $search_word OR `address` LIKE $search_word)");
         $query = $this->db->get_where('merchant_branch', array('merchant_id' => $id));
         if ($query->num_rows() == 0)
         {
