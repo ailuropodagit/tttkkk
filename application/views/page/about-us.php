@@ -1,7 +1,7 @@
 <div id="about-us">
     <h1>About Us</h1>
     <div id="about-us-logo">
-        <img src="<?php echo base_url(); ?>image/logo.png" id="about-us-logo-img">
+        <img src="<?php echo base_url(); ?>image/header-logo-red-ori.png" id="about-us-logo-img">
     </div>
     <p>
         Keppo.my is publish on 19 July 2015, Founder by Jimmy See. His create this to help's SME Corp to increasing

@@ -24,6 +24,10 @@ h1 {
     letter-spacing: 1px;
 }
 
+table {
+    border-collapse: collapse;
+}
+
 select {
     margin: 0px;
     padding: 0px 0px 0px 0px;
@@ -95,11 +99,6 @@ textarea::-webkit-input-placeholder {
     letter-spacing: 1px;
 }
 
-#float-fix {
-    clear: both;
-    display: block;
-}
-
 p {
     line-height: 22px;
 }
@@ -113,17 +112,31 @@ a:active {
     color: #178497;
 }
 
-.image-upload-guide{
-    font-size:smaller;
-    font-style: italic;
-}
-
 .checkbox-text{
     font-size:15px;
 }
 
 a {
     color: #4d4dff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* ALL
+******************************/
+
+#float-fix {
+    clear: both;
+    display: block;
+}
+
+.text-ellipsis {
+    overflow: hidden; 
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 /* WRAPPER
@@ -209,7 +222,7 @@ a {
 }
 
 #search-content {
-    padding: 20px 20px 0px 20px;
+    padding: 25px 25px 0px 25px;
 }
 
 #search-content-box {
@@ -303,7 +316,7 @@ a {
 }
 
 .body-right-sidebar-bar-active {
-    background-color: #53c0d4;
+    background-color: #009ac6;
     color: white !important;
 }
 
@@ -326,7 +339,7 @@ a {
     border-left: 60px solid green;
 }
 
-/* LAYOUT
+/* LAYOUT ADVERTISEMENT
 ******************************/
 
 #layout-advertisement-left {
@@ -355,6 +368,10 @@ a {
     letter-spacing: 1px;
 }
 
+#layout-advertisement-right-banner-box1 {
+    margin: 0px 0px 20px 0px;
+}
+
 /* HOME
 ******************************/
 
@@ -369,12 +386,8 @@ a {
     padding: 10px 10px 10px 10px;
     display: block;
     background-color: #f5f5f1;
-    border-bottom: 1px solid #e5e5e1;
-    border-right: 1px solid #ccccc8;
-}
-
-#home-navigation-c1-bar-a:first-child {
     border-top: 1px solid #e5e5e1;
+    border-right: 1px solid #ccccc8;
 }
 
 .home-navigation-c1-bar-a-active {
@@ -394,7 +407,7 @@ a {
 
 #home-navigation-c2 {
     border: 1px solid #ccccc8;
-    width: calc(100% - 150px);
+    width: calc(100% - 142px);
     float: left;
     margin-left: -1px;
 }
@@ -405,7 +418,7 @@ a {
 }
 
 #home-navigation-c2-c1-content {
-    padding: 10px 20px 10px 20px;
+    padding: 15px 20px 15px 20px;
 }
 
 #home-navigation-c2-c1-bar {
@@ -425,10 +438,6 @@ a {
 #home-navigation-c2-c2-content {
     padding: 4px;
 }
-    
-/*#home-navigation-c3-content {
-    padding: 3px;
-}*/
 
 /* LOGIN REGISTER
 ******************************/
@@ -549,6 +558,255 @@ a {
     line-height: 20px;
     margin: 0px 0px 30px 0px;
     color: gray;
+}
+
+/* DASHBOARD
+******************************/
+
+#dashboard {
+    margin: 0px 0px 0px 0px;
+}
+
+#dashboard-content {
+    margin: 20px 0px 0px 0px;
+}
+
+#dashboard-photo {
+    float: left;
+    width: 200px;
+    height: 200px;
+    border: 1px solid lightgray;
+    background-color: whitesmoke;
+}
+
+#dashboard-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#dashboard-info {
+    margin: 0px 0px 0px 235px;
+}
+
+#dashboard-info-title {
+    padding: 10px 0px 5px 0px;
+    font-weight: bold;
+    font-size: 23px;
+}
+
+#dashboard-info-address {
+    font-size: 18px;
+    margin: 18px 0px 18px 0px;
+}
+
+#dashboard-info-outlet-address {
+    margin: 18px 0px 18px 0px;
+}
+
+/* OUTLET
+******************************/
+
+#outlet {
+    margin: 25px 0px 0px 0px;
+}
+
+#outlet-search {
+    margin: 20px 0px 20px 0px;
+}
+
+#outlet-search-text {
+    width: calc(100% - 135px);
+    height: 30px;
+    box-sizing: border-box;
+}
+
+#outlet-search-button {
+    width: 130px;
+    height: 28px;
+}
+
+#outlet-info {
+    margin: 0px 0px 13px 0px;
+    padding: 0px 0px 13px 0px;
+    border-bottom: 1px dotted gray;
+}
+
+#outlet-info:last-child {
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    border-bottom: 0px;
+}
+
+#outlet-info-name {
+    padding: 0px 0px 7px 0px;
+    font-weight: bold;
+    font-size: 17px;
+}
+
+#outlet-info-address {
+    padding: 0px 0px 7px 0px;
+    font-size: 15px;
+}
+
+#outlet-info-tel {
+    padding: 0px 0px 7px 0px;
+}
+
+#outlet-info-view-map {
+    font-size: 14px;
+}
+
+/* MAP
+******************************/
+
+#merchant-map {
+    margin: 30px 0px 0px 0px;
+}
+
+#merchant-map-google {
+    width: 100%;
+}
+
+#merchant-map-google-link {
+    margin: 20px 0px 0px 0px;
+    float: right;
+}
+
+/* PROFILE
+******************************/
+
+#profile {
+    margin: 0px 0px 0px 0px;
+}
+
+#profile-content {
+    margin: 20px 0px 0px 0px;
+}
+
+#profile-photo {
+    float: left;
+}
+
+#profile-photo-box {
+    width: 200px;
+    height: 200px;
+    border: 1px solid lightgray;
+    background-color: whitesmoke;
+}
+
+#profile-photo-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#profile-photo-note {
+    font-size: smaller;
+    font-style: italic;
+    margin: 5px 0px 15px 0px;
+}
+
+#profile-photo-input-file {
+    margin: 15px 0px 15px 0px;
+    width: 150px;
+}
+
+#profile-photo-button {
+    margin: 20px 0px 20px 0px;
+}
+
+#profile-info {
+    margin: 0px 0px 30px 235px;
+}
+
+#profile-info-form-each-label {
+    margin: 10px 0px 10px 0px;
+}
+
+#profile-info-form-each-input input[type='text'] {
+    height: 25px;
+    width: 290px;
+    margin: 0px 0px 10px 0px;
+    box-sizing: border-box;
+}
+
+#profile-info-form-each-input textarea {
+    margin: 0px 0px 7px 0px;
+    width: 290px;
+    height: 100px;
+    resize: none;
+    box-sizing: border-box;
+}
+
+#profile-info-form-each-input-dob {
+    width: 290px;
+}
+
+#profile-info-form-each-input-dob-year select, #profile-info-form-each-input-dob-month select, #profile-info-form-each-input-dob-day select {
+    float: left;
+    width: 30%;
+    height: 28px;
+    margin: 0px 5% 0px 0px;
+}
+
+#profile-info-form-each-input-dob-year select {
+    margin: 00px 0px 0px 0px;
+}
+
+#profile-info-form-each-input select {
+    width: 290px;
+    height: 28px;
+}
+
+#profile-info-form-submit {
+    margin: 10px 0px 10px 0px;
+}
+
+#profile-bottom-link-left {
+    float: left;
+}
+
+#profile-bottom-link-right {
+    float: right;
+}
+
+#profile-bottom-link-right-each {
+    display: inline;
+    margin: 0px 10px 0px 0px;
+}
+
+/* CHANGE PASSWORD
+******************************/
+
+#change-password-content {
+    margin: 20px 0px 0px 0px;
+}
+
+#change-password-form-each-label {
+    margin: 10px 0px 10px 0px;
+}
+
+#change-password-form-each-input input[type='text'] {
+    height: 25px;
+    width: 290px;
+    margin: 0px 0px 10px 0px;
+    box-sizing: border-box;
+}
+
+#change-password-form-each-input input[type='password'] {
+    height: 25px;
+    width: 290px;
+    margin: 0px 0px 10px 0px;
+    box-sizing: border-box;
+}
+
+#change-password-password-visible {
+    margin: 10px 0px 10px 0px;
+}
+
+#change-password-submit {
+    margin: 20px 0px 0px 0px;
 }
 
 /* ABOUT US

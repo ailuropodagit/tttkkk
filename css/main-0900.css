@@ -5,6 +5,17 @@
     width: 100%;
 }
 
+/* DASHBOARD
+******************************/
+
+#dashboard-photo {
+    float: none;
+}
+
+#dashboard-info {
+    margin: 20px 0px 0px 0px;
+}
+
 /* FOOTER
 ******************************/
 

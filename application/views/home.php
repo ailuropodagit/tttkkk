@@ -36,9 +36,10 @@
                 <?php
                 foreach ($category_merchant_array as $category_merchant) {
                     $company = $category_merchant->company;
+                    $slug = $category_merchant->slug;
                     ?>
                     <div id="home-navigation-c2-c1-bar" >
-                        <a href='#'><?php echo $company ?></a>
+                        <a href='<?php echo base_url() ?>all/merchant-dashboard/<?php echo $slug ?>'><?php echo $company ?></a>
                     </div>
                     <?php
                 }
@@ -47,9 +48,9 @@
         </div>
 
         <div id="home-navigation-c2-c2">
-            <div id="home-navigation-c3-content">
+            <div id="home-navigation-c2-c2-content">
 
-                <table border="0px" cellpadding="0px" cellspacing="5px" style="width: 100%; table-layout: fixed;">
+                <table border="0px" cellpadding="0px" cellspacing="5px" style="width: 100%; table-layout: fixed; border-collapse: separate">
                     <tr>
                         <td colspan="6">
                             <img src="<?php echo base_url() ?>folder_upload/home_banner/banner1.jpg" style="width: 100%; display: block;">

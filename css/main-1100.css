@@ -43,7 +43,7 @@
     font-size: 14px;
 }
 
-/* LAYOUT
+/* LAYOUT ADVERTISEMENT
 ******************************/
 
 #layout-advertisement-left {
@@ -53,4 +53,44 @@
 
 #layout-advertisement-right {
     float: none;
+    margin: 20px 0px 0px 0px;
+    width: 100%;
+}
+
+#layout-advertisement-right-banner-box1, #layout-advertisement-right-banner-box2 {
+    float: left;
+}
+
+#layout-advertisement-right-banner-box1 {
+    margin: 0px 20px 0px 0px;    
+}
+
+/* PROFILE
+******************************/
+
+#profile-info-form-each-input input[type='text'] {
+    height: 25px;
+    width: 100%;
+    margin: 0px 0px 10px 0px;
+    box-sizing: border-box;
+}
+
+#profile-info-form-each-input-dob {
+    width: 100%;
+}
+
+#profile-info-form-each-input select {
+    width: 100%;
+}
+
+#profile-info-form-each-input textarea {
+    margin: 0px 0px 7px 0px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#profile-bottom-link-right-each {
+    display: block;
+    text-align: right;
+    margin: 0px 0px 5px 0px;
 }

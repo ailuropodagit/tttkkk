@@ -1,10 +1,7 @@
-<?php
-
-defined('BASEPATH') OR exit('No direct script access allowed');
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Merchant extends CI_Controller
 {
-
     function __construct()
     {
         parent::__construct();
@@ -52,11 +49,10 @@ class Merchant extends CI_Controller
     function login()
     {        
         $this->data['title'] = "Log In";
-
         //validate form input
         $this->form_validation->set_rules('identity', 'Identity', 'required');
         $this->form_validation->set_rules('password', 'Password', 'required');
-
+        //validate success
         if ($this->form_validation->run() == true)
         {
             // check to see if the user is logging in
@@ -550,7 +546,7 @@ class Merchant extends CI_Controller
                 'me_state_id' => $this->input->post('me_state_id'),
                 'phone' => $phone,
                 'me_ssm' => $me_ssm,
-                'profile_image' => $this->config->item('merchant_default_image'),
+                //'profile_image' => $this->config->item(''),
                 //'me_website_url' => $this->input->post('website'),
                 'main_group_id' => $this->main_group_id,
                 'password_visible' => $password
@@ -675,7 +671,8 @@ class Merchant extends CI_Controller
         $the_row = $this->m_custom->get_one_table_record('users', 'slug', $slug);
         if ($the_row)
         {
-            $this->data['logo_url'] = $this->album_merchant_profile . $the_row->profile_image;
+            $this->data['image_path'] = $this->album_merchant_profile;
+            $this->data['image'] = $the_row->profile_image;
             $this->data['company_name'] = $the_row->company;
             $this->data['address'] = $the_row->address;
             $this->data['phone'] = $the_row->phone;
@@ -698,11 +695,13 @@ class Merchant extends CI_Controller
         $the_row = $this->m_custom->get_one_table_record('users', 'slug', $slug);
         if ($the_row)
         {
-            $this->data['logo_url'] = $this->album_merchant_profile . $the_row->profile_image;
+            $this->data['image_path'] = $this->album_merchant_profile;
+            $this->data['image'] = $the_row->profile_image;
             $this->data['company_name'] = $the_row->company;
             $this->data['address'] = $the_row->address;
             $this->data['phone'] = $the_row->phone;
             $this->data['show_outlet'] = '';
+            $this->data['view_map_path'] = 'merchant/map/';
             $this->data['website_url'] = $the_row->me_website_url;
             $this->data['facebook_url'] = $the_row->me_facebook_url;
             $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
@@ -731,14 +730,11 @@ class Merchant extends CI_Controller
     //merchant profile view and edit page
     function profile()
     {
-
         if (!check_correct_login_type($this->main_group_id) && !check_correct_login_type($this->supervisor_group_id))
         {
             redirect('/', 'refresh');
         }
-
         $merchant_id = $this->ion_auth->user()->row()->id;
-
         $is_supervisor = 0;
         $branch = FALSE;
         //for supervisor view merchant profile because supervisor don't have own profile
@@ -749,13 +745,10 @@ class Merchant extends CI_Controller
             $supervisor = $this->ion_auth->user()->row();
             $branch = $this->m_custom->get_one_table_record('merchant_branch', 'branch_id', $supervisor->su_branch_id);
         }
-
         $user = $this->ion_auth->user($merchant_id)->row();
-
         $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required');
         $this->form_validation->set_rules('website', $this->lang->line('create_merchant_validation_website_label'));
         $this->form_validation->set_rules('facebook_url', $this->lang->line('create_merchant_validation_facebook_url_label'));
-
         if (isset($_POST) && !empty($_POST))
         {
             if ($this->input->post('button_action') == "confirm")
@@ -823,11 +816,9 @@ class Merchant extends CI_Controller
                     }
                     else
                     {
-
                         $this->session->set_flashdata('message', $this->ion_auth->errors());
                     }
                 }
-
                 redirect('merchant/profile', 'refresh');
             }
             else if ($this->input->post('button_action') == "view_branch")
@@ -846,24 +837,16 @@ class Merchant extends CI_Controller
             {
                 redirect('merchant/supervisor/add', 'refresh');
             }
-            else
-            {
-                
-            }
         }
-
-        $this->data['logo_url'] = $this->album_merchant_profile . $user->profile_image;
-
+        $this->data['image_path'] = $this->album_merchant_profile;
+        $this->data['image'] = $user->profile_image;
         // display the edit user form
         $this->data['csrf'] = $this->_get_csrf_nonce();
-
         // set the flash data error message if there is one
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-
         // pass the user to the view
         $this->data['user'] = $user;
         $this->data['is_supervisor'] = $is_supervisor;
-
         $this->data['company'] = array(
             'name' => 'company',
             'id' => 'company',
@@ -878,7 +861,6 @@ class Merchant extends CI_Controller
             'readonly ' => 'true',
             'value' => $this->form_validation->set_value('me_ssm', $user->me_ssm),
         );
-
         //If is not changeable then change to text box read only
 //        $this->data['category_list'] = $this->ion_auth->get_main_category_list();
 //        $this->data['me_category_id'] = array(
@@ -886,7 +868,6 @@ class Merchant extends CI_Controller
 //            'id' => 'me_category_id',
 //            'value' => $this->form_validation->set_value('me_category_id'),
 //        );
-
         $this->data['me_category_id'] = array(
             'name' => 'me_category_id',
             'id' => 'me_category_id',
@@ -894,14 +875,12 @@ class Merchant extends CI_Controller
             'readonly ' => 'true',
             'value' => $this->m_custom->get_one_table_record('category', 'category_id', $user->me_category_id)->category_label,
         );
-
         $this->data['address'] = array(
             'name' => 'address',
             'id' => 'address',
             'readonly ' => 'true',
             'value' => $this->form_validation->set_value('address', $user->address),
         );
-
         $this->data['phone'] = array(
             'name' => 'phone',
             'id' => 'phone',
@@ -920,57 +899,44 @@ class Merchant extends CI_Controller
             'type' => 'text',
             'value' => $this->form_validation->set_value('facebook_url', $user->me_facebook_url),
         );
-
-
         $this->data['branch_name'] = array(
             'name' => 'branch_name',
             'id' => 'branch_name',
             'readonly ' => 'true',
             'value' => ($branch) ? $branch->name : '',
         );
-
         $this->data['branch_address'] = array(
             'name' => 'branch_address',
             'id' => 'branch_address',
             'readonly ' => 'true',
             'value' => ($branch) ? $branch->address : '',
         );
-
         $this->data['branch_phone'] = array(
             'name' => 'branch_phone',
             'id' => 'branch_phone',
             'readonly ' => 'true',
             'value' => ($branch) ? $branch->phone : '',
         );
-
         $this->data['branch_state'] = array(
             'name' => 'branch_state',
             'id' => 'branch_state',
             'readonly ' => 'true',
             'value' => ($branch) ? $this->m_custom->option_text($branch->state_id) : '',
         );
-
         $this->data['supervisor_username'] = array(
             'name' => 'supervisor_username',
             'id' => 'supervisor_username',
             'readonly ' => 'true',
             'value' => $is_supervisor == 1 ? $supervisor->username : $user->username,
         );
-
         $this->data['supervisor_password'] = array(
             'name' => 'supervisor_password',
             'id' => 'supervisor_password',
             'readonly ' => 'true',
             'value' => $is_supervisor == 1 ? $supervisor->password_visible : $user->password_visible,
         );
-
-
         $this->data['page_path_name'] = 'merchant/profile';
         $this->load->view('template/layout_right_menu', $this->data);
-//        $this->load->view('template/header');
-//        $this->_render_page('merchant/profile', $this->data);
-//        $this->load->view('template/layout_management', $this->branch_management());
-//        $this->load->view('template/footer');
     }
 
     function branch()
@@ -1087,7 +1053,8 @@ class Merchant extends CI_Controller
             if ($the_branch)
             {
                 $the_merchant = $this->m_custom->get_one_table_record('users', 'id', $the_branch->merchant_id);
-                $this->data['logo_url'] = $this->album_merchant_profile . $the_merchant->profile_image;
+                $this->data['image_path'] = $this->album_merchant_profile;
+                $this->data['image'] = $the_merchant->profile_image;
                 $this->data['company_name'] = $the_merchant->company;
                 $this->data['phone'] = $the_branch->phone;
 
@@ -1110,7 +1077,7 @@ class Merchant extends CI_Controller
                 $this->googlemaps->add_marker($marker);
                 $this->data['map'] = $this->googlemaps->create_map();
                 $this->data['page_path_name'] = 'merchant/map';
-                $this->load->view('template/layout', $this->data);
+                $this->load->view('template/layout_right_menu', $this->data);
             }
         }
         else

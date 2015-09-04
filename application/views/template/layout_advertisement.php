@@ -1,5 +1,5 @@
-<?php 
-$this->load->view('template/header'); 
+<?php  
+$this->load->view('template/header');
 ?>
 
 <div id='wrapper'>
@@ -24,7 +24,6 @@ $this->load->view('template/header');
                             </tr>
                         </table>
                     </div>
-                    <br/>
                     <div id="layout-advertisement-right-banner-box2">
                         <table style="width: 100%; height: 100%; vertical-align: middle;">
                             <tr>
@@ -32,8 +31,8 @@ $this->load->view('template/header');
                             </tr>
                         </table>
                     </div>
+                    <div id="float-fix"></div>
                 </div>
-                
                 <div id="float-fix"></div>
                 
             </div>
