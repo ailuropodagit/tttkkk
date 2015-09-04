@@ -1,10 +1,7 @@
-<?php
-
-defined('BASEPATH') OR exit('No direct script access allowed');
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 class user extends CI_Controller
 {
-
     function __construct()
     {
         parent::__construct();
@@ -20,7 +17,6 @@ class user extends CI_Controller
     // redirect if needed, otherwise display the user list
     function index()
     {
-
         if (!$this->ion_auth->logged_in())
         {
             // redirect them to the login page
@@ -67,7 +63,7 @@ class user extends CI_Controller
                 //if the login is successful
                 //redirect them back to the home page
                 //$this->session->set_flashdata('message', $this->ion_auth->messages());
-                redirect('/', 'refresh');
+                redirect('user/profile', 'refresh');
             }
             else
             {
@@ -82,7 +78,6 @@ class user extends CI_Controller
             // the user is not logging in so display the login page
             // set the flash data error message if there is one
             $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-
             $this->data['identity'] = array('name' => 'identity',
                 'id' => 'identity',
                 'type' => 'text',
@@ -92,7 +87,6 @@ class user extends CI_Controller
                 'id' => 'password',
                 'type' => 'password',
             );
-
             $this->data['page_path_name'] = 'user/login';
             $this->load->view('template/layout', $this->data);
         }
@@ -668,7 +662,8 @@ class user extends CI_Controller
         $the_row = $this->m_custom->get_one_table_record('users', 'id', $user_id);
         if ($the_row)
         {
-            $this->data['image_url'] = $this->album_user_profile . $the_row->profile_image;
+            $this->data['image_path'] = $this->album_user_profile;
+            $this->data['image'] = $the_row->profile_image;
             $this->data['first_name'] = $the_row->first_name;
             $this->data['last_name'] = $the_row->last_name;
             $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
@@ -684,17 +679,12 @@ class user extends CI_Controller
     //user profile view and edit page
     function profile()
     {
-;
-
         if (!check_correct_login_type($this->main_group_id))
         {
             redirect('/', 'refresh');
         }
-
         $user_id = $this->ion_auth->user()->row()->id;
-
         $user = $this->ion_auth->user($user_id)->row();
-
         if (isset($_POST) && !empty($_POST))
         {
             if ($this->input->post('button_action') == "confirm")
@@ -705,7 +695,6 @@ class user extends CI_Controller
                 $_POST['dob'] = $this->d_year . '-' . $this->d_month . '-' . $this->d_day;
             }
         }
-
         $tables = $this->config->item('tables', 'ion_auth');
 
         // validate form input
@@ -728,13 +717,11 @@ class user extends CI_Controller
                 }
                 if ($this->form_validation->run() === TRUE)
                 {
-
                     $first_name = $this->input->post('first_name');
                     $last_name = $this->input->post('last_name');
                     $username = strtolower($this->input->post('username'));
                     $email = strtolower($this->input->post('email'));
                     $race_other = $this->input->post('race_other');
-
                     $data = array(
                         'first_name' => $first_name,
                         'last_name' => $last_name,
@@ -807,23 +794,18 @@ class user extends CI_Controller
                 
             }
         }
-
-        $this->data['logo_url'] = $this->album_user_profile . $user->profile_image;
-
+        $this->data['image_path'] = $this->album_user_profile;
+        $this->data['image'] = $user->profile_image;
         // display the edit user form
         $this->data['csrf'] = $this->_get_csrf_nonce();
-
         // set the flash data error message if there is one
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-
         // pass the user to the view
         $this->data['user'] = $user;
-
         $the_date = explode('-', $user->us_birthday);
         $this->data['b_year'] = $the_date[0];
         $this->data['b_month'] = $the_date[1];
         $this->data['b_day'] = $the_date[2];
-
         $this->data['username'] = array(
             'name' => 'username',
             'id' => 'username',
@@ -875,7 +857,6 @@ class user extends CI_Controller
             'readonly ' => 'true',
             'value' => age_count($user->us_birthday),
         );
-
         $this->data['gender_list'] = $this->ion_auth->get_static_option_list('gender');
         $this->data['gender_id'] = array(
             'name' => 'gender_id',
@@ -887,7 +868,6 @@ class user extends CI_Controller
             'id' => 'race_id',
             'onchange' => 'showraceother()',
         );
-
         $this->data['race_other'] = array(
             'name' => 'race_other',
             'id' => 'race_other',
@@ -895,19 +875,16 @@ class user extends CI_Controller
             'style' => $this->m_custom->option_text($user->us_race_id) == 'Other' ? 'display:inline' : 'display:none',
             'value' => $this->form_validation->set_value('race_other', $user->us_race_other),
         );
-
         $this->data['race_other_attributes'] = array(
             'id' => 'race_other_label',
             'style' => $this->m_custom->option_text($user->us_race_id) == 'Other' ? 'display:inline' : 'display:none',
         );
-
         $this->data['phone'] = array(
             'name' => 'phone',
             'id' => 'phone',
             'type' => 'text',
             'value' => $this->form_validation->set_value('phone', $user->phone),
         );
-
         $this->data['page_path_name'] = 'user/profile';
         $this->load->view('template/layout_right_menu', $this->data);
     }

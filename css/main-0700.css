@@ -21,6 +21,77 @@
     margin: 5px 0px 0px 0px;
 }
 
+/* BODY
+******************************/
+
+#body-right-sidebar {
+    width: 100%;
+    float: none;
+    margin: 0px 0px 20px 0px;
+}
+
+#body-left-main {
+    width: 100%;
+    float: none;
+}
+
+/* LAYOUT ADVERTISEMENT
+******************************/
+
+.home-navigation-c1-bar-a { 
+    border-left: 1px solid #e5e5e1;
+    border-right: 1px solid #e5e5e1;
+}
+
+.home-navigation-c1-bar-a-active {
+    border-right: 1px solid #ccccc8;
+}
+
+#layout-advertisement-left {
+    float: none;
+    width: 100%;
+}
+
+#layout-advertisement-right {
+    float: none;
+    margin: 20px 0px 0px 0px;
+    width: auto;
+}
+
+#layout-advertisement-right-banner-box1, #layout-advertisement-right-banner-box2 {
+    float: none;
+    margin: 0px auto 0px auto;
+}
+
+#layout-advertisement-right-banner-box1 {
+    margin: 0px auto 20px auto;    
+}
+
+/* HOME
+******************************/
+
+#home-navigation-c1 {
+    width: 100%;
+}
+
+#home-navigation-c2 {
+    width: 100%;
+    box-sizing: border-box;
+    margin-left: 0px;
+}
+
+#home-navigation-c2-c1 {
+    width: 100%;
+}
+
+#home-navigation-c2-c1-bar:last-child {
+    margin: 0px;
+}
+
+#home-navigation-c2-c2 {
+    width: 100%;
+}
+
 /* CONTACT US
 ******************************/
 

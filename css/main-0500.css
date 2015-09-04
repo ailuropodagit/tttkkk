@@ -43,3 +43,27 @@
 #login-tnc, #register-tnc {
     margin: 0px 0px 10px 0px;
 }
+
+/* PROFILE
+******************************/
+
+#profile-photo {
+    float: none;
+}
+
+#profile-info {
+    margin: 0px 0px 30px 0px;
+}
+
+/* CHANGE PASSWORD
+******************************/
+
+#change-password-form-each-input input[type='text'] {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#change-password-form-each-input input[type='password'] {
+    width: 100%;
+    box-sizing: border-box;
+}
