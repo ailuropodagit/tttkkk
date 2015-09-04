@@ -1,9 +1,13 @@
 <link href="http://localhost/keppo/js/jquery-ui-1.11.4.custom/jquery-ui.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="http://localhost/keppo/js/jquery-ui-1.11.4.custom/jquery-ui.js"></script>
-<script>
+<script type="text/javascript">
     $(function () {
-        $("#basic-accordian").accordion();
+        var which_tab = parseInt(location.pathname.split('/').pop());
+        $("#basic-accordian").accordion({
+        active: which_tab
+        });
     });
+
 </script>
 
 <style>
@@ -17,6 +21,7 @@
     <!--Start of each accordion item-->
 
     <?php
+    $tab_counter = 0;
     $cat_list = $this->m_custom->getCategory();
     foreach ($cat_list as $t_cat):
         ?>
@@ -32,14 +37,18 @@
                 <div class="accordion_child"><a href="#"></a>
 
                     <div>
-                        <div class="A_menu_item"><a href="#"><?= $t_subcat->category_label ?></a></div>
+                        <div class="A_menu_item">                  
+                            <?php echo "<a href='".base_url()."all/hotdeal-list/".$t_subcat->category_id."/".$tab_counter."'> ".$t_subcat->category_label."</a>"; ?>
+                        </div>
                     </div>
                 </div>
             <?php endforeach ?>
         </div>
         <!--End of each accordion item-->
         <!--Start of each accordion item-->
-    <?php endforeach ?>
+    <?php 
+    $tab_counter = $tab_counter+1;
+    endforeach ?>
     <!--End of each accordion item-->
 </div>  
 
