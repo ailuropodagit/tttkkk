@@ -1,6 +1,9 @@
 <?php
 //IF MERCHANT LOGGED IN
-if ($this->ion_auth->logged_in()){ redirect('user/profile'); }
+if ($this->ion_auth->logged_in())
+{
+    redirect('user/profile');
+}
 ?>
 
 <script type="text/javascript">
@@ -52,7 +55,8 @@ if ($this->ion_auth->logged_in()){ redirect('user/profile'); }
 
         <div id='login-form-remember-me-forgot-password'>
             <div id='login-form-forgot-password'>
-                <input type="checkbox" id="show_password" name="show_password" onclick="showpassword();"/><span class="checkbox-text"> Show Password </span>
+                <input type="checkbox" id="show_password" name="show_password" onclick="showpassword();"/>
+                <span class="checkbox-text"><label for='show_password'>Show Password</label></span>
             </div>   
             <div id='float-fix'></div>
         </div>

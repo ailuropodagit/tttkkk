@@ -90,7 +90,7 @@
     { 
         ?>
         <div id='profile-bottom-link-left'>
-            <a href='<?php echo base_url(); ?>merchant/upload_ssm'>Submit SSM forms</a>
+            <a href='<?php echo base_url(); ?>merchant/upload-ssm'>Submit SSM forms</a>
         </div>
         <div id="profile-bottom-link-right">
             <div id="profile-bottom-link-right-each">

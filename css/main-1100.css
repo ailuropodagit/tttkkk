@@ -94,3 +94,11 @@
     text-align: right;
     margin: 0px 0px 5px 0px;
 }
+
+/* FOOTER
+******************************/
+
+#footer-server-time {
+    clear: both;
+    margin: 5px 6px 0px 0px;
+}
