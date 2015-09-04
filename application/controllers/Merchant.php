@@ -480,8 +480,6 @@ class Merchant extends CI_Controller
     {
         $controller = $this->uri->segment(2);
         $function_use_for = 'merchant/create_user';
-
-        //To set this function is use by create merchant and register merchant
         if ($controller == 'create_user')
         {
             $this->data['title'] = "Create Merchant";
@@ -496,15 +494,12 @@ class Merchant extends CI_Controller
             $function_use_for = 'merchant/register';
         }
         $this->data['function_use_for'] = $function_use_for;
-
         $tables = $this->config->item('tables', 'ion_auth');
-
         if (isset($_POST) && !empty($_POST))
         {
             $_POST['slug'] = generate_slug($_POST['company']);
             $slug = $_POST['slug'];
         }
-
         // validate form input
         $this->form_validation->set_rules('company', $this->lang->line('create_merchant_validation_company_label'), "trim|required|min_length[3]");
         $this->form_validation->set_rules('slug', $this->lang->line('create_merchant_validation_company_label'), 'trim|is_unique[' . $tables['users'] . '.slug]');
@@ -515,9 +510,6 @@ class Merchant extends CI_Controller
         $this->form_validation->set_rules('email', $this->lang->line('create_merchant_validation_email_label'), 'trim|required|valid_email|is_unique[' . $tables['users'] . '.email]');
         $this->form_validation->set_rules('password', $this->lang->line('create_merchant_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
         $this->form_validation->set_rules('password_confirm', $this->lang->line('create_merchant_validation_password_confirm_label'), 'required');
-        //$this->form_validation->set_rules('first_name', $this->lang->line('create_merchant_fname_label'), 'required');
-        //$this->form_validation->set_rules('website', $this->lang->line('create_user_validation_website_label'));
-        //$this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'));
 
         if ($this->form_validation->run() == true)
         {
@@ -529,16 +521,8 @@ class Merchant extends CI_Controller
             $me_ssm = $this->input->post('me_ssm');
             $address = $this->input->post('address');
             $phone = $this->input->post('phone');
-
-//            if(!$this->m_custom->check_is_value_unique('users','slug',$slug)){               
-//                $this->ion_auth->set_error('account_creation_duplicate_company_name');
-//                redirect("merchant/register", 'refresh');
-//            }
-
             $additional_data = array(
                 'username' => $username,
-                //'first_name' => $this->input->post('first_name'),
-                //'last_name' => $this->input->post('last_name'),
                 'company' => $company,
                 'slug' => $slug,
                 'address' => $address,
@@ -559,7 +543,6 @@ class Merchant extends CI_Controller
 
         if ($this->form_validation->run() == true && $this->ion_auth->register($username, $password, $email, $additional_data, $group_ids))
         {
-            // check to see if we are creating the user
             $this->session->set_flashdata('message', $this->ion_auth->messages());
             $get_status = send_mail_simple($email, 'Your Keppo Merchant Account Success Created', 'Company Name : ' . $company .
                     '<br/>Register No(SSM) : ' . $me_ssm .
@@ -570,7 +553,6 @@ class Merchant extends CI_Controller
                     '<br/>Password : ' . $password, 'create_user_send_email_success');
             if ($get_status)
             {
-                // if there were no errors
                 redirect("merchant/login", 'refresh');
             }
             else
@@ -581,28 +563,13 @@ class Merchant extends CI_Controller
         }
         else
         {
-            // display the create user form
-            // set the flash data error message if there is one
             $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-
             $this->data['username'] = array(
                 'name' => 'username',
                 'id' => 'username',
                 'type' => 'text',
                 'value' => $this->form_validation->set_value('username'),
             );
-//            $this->data['first_name'] = array(
-//                'name' => 'first_name',
-//                'id' => 'first_name',
-//                'type' => 'text',
-//                'value' => $this->form_validation->set_value('first_name'),
-//            );
-//            $this->data['last_name'] = array(
-//                'name' => 'last_name',
-//                'id' => 'last_name',
-//                'type' => 'text',
-//                'value' => $this->form_validation->set_value('last_name'),
-//            );
             $this->data['email'] = array(
                 'name' => 'email',
                 'id' => 'email',
@@ -620,21 +587,18 @@ class Merchant extends CI_Controller
                 'id' => 'address',
                 'value' => $this->form_validation->set_value('address'),
             );
-
             $this->data['category_list'] = $this->ion_auth->get_main_category_list();
             $this->data['me_category_id'] = array(
                 'name' => 'me_category_id',
                 'id' => 'me_category_id',
                 'value' => $this->form_validation->set_value('me_category_id'),
             );
-
             $this->data['state_list'] = $this->ion_auth->get_static_option_list('state');
             $this->data['me_state_id'] = array(
                 'name' => 'me_state_id',
                 'id' => 'me_state_id',
                 'value' => $this->form_validation->set_value('me_state_id'),
             );
-
             $this->data['phone'] = array(
                 'name' => 'phone',
                 'id' => 'phone',
@@ -659,7 +623,6 @@ class Merchant extends CI_Controller
                 'type' => 'password',
                 'value' => $this->form_validation->set_value('password_confirm'),
             );
-
             $this->data['page_path_name'] = 'merchant/create_user';
             $this->load->view('template/layout', $this->data);
         }

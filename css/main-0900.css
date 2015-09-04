@@ -30,5 +30,10 @@
 
 #footer-copyright {
     float: none;
-    margin: 0px 0px 0px 16px;
+    margin: 0px 0px 8px 16px;
+}
+
+#footer-server-time {
+    float: left;
+    margin: 0px 6px 0px 16px;
 }

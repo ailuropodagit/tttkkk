@@ -809,6 +809,49 @@ a:hover {
     margin: 20px 0px 0px 0px;
 }
 
+/* HOT DEAL ADVERTISE
+******************************/
+
+#hot-deal-advertise-content {
+    margin: 20px 0px 0px 0px;
+}
+
+#hot-deal-today {
+    float: right;
+}
+
+#hot-deal-upload-image-note {
+    padding: 10px 0px 0px 0px;
+    float: right;
+    font-size: smaller;
+    font-style: italic;
+    margin: 5px 0px 15px 0px;
+}
+
+#hot-deal-form-each {
+    float: left; 
+    width: 250px; 
+    margin: 20px 0px 20px 0px;
+}
+
+#hot-deal-photo-box {
+    width: 200px;
+    height: 200px;
+    border: 1px solid lightgray;
+    background-color: whitesmoke;
+    margin: 0px 0px 20px 0px;
+}
+
+#hot-deal-photo-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#hot-deal-input-file {
+    margin: 0px 0px 20px 0px;
+}
+    
 /* ABOUT US
 ******************************/
 
@@ -956,6 +999,13 @@ a:hover {
 #footer-menu li {
     display: inline;
     margin: 0px 6px 0px 6px;
+}
+
+#footer-server-time {
+    float: right;
+    margin: 0px 15px 0px 0px;
+    font-size: 14px;
+    color: #767676;
 }
 
 #footer-copyright {

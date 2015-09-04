@@ -457,8 +457,6 @@ class user extends CI_Controller
     {
         $controller = $this->uri->segment(2);
         $function_use_for = 'user/create_user';
-
-        //To set this function is use by create user and register user
         if ($controller == 'create_user')
         {
             $this->data['title'] = "Create User";
@@ -473,9 +471,7 @@ class user extends CI_Controller
             $function_use_for = 'user/register';
         }
         $this->data['function_use_for'] = $function_use_for;
-
         $tables = $this->config->item('tables', 'ion_auth');
-
         if (isset($_POST) && !empty($_POST))
         {
             $this->d_year = $_POST['year'];
@@ -483,7 +479,6 @@ class user extends CI_Controller
             $this->d_day = $_POST['day'];
             $_POST['dob'] = $this->d_year . '-' . $this->d_month . '-' . $this->d_day;
         }
-
         // validate form input
         $this->form_validation->set_rules('first_name', $this->lang->line('create_user_fname_label'), 'required');
         $this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'));
@@ -494,7 +489,6 @@ class user extends CI_Controller
         $this->form_validation->set_rules('email', $this->lang->line('create_user_email_label'), 'trim|required|valid_email|is_unique[' . $tables['users'] . '.email]');
         $this->form_validation->set_rules('password', $this->lang->line('create_user_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
         $this->form_validation->set_rules('password_confirm', $this->lang->line('create_user_password_confirm_label'), 'required');
-
         if ($this->form_validation->run() == true)
         {
             $first_name = $this->input->post('first_name');
@@ -504,7 +498,6 @@ class user extends CI_Controller
             $email = strtolower($this->input->post('email'));
             $password = $this->input->post('password');
             $race_other = $this->input->post('race_other');
-
             $additional_data = array(
                 'first_name' => $first_name,
                 'last_name' => $last_name,
@@ -517,18 +510,14 @@ class user extends CI_Controller
                 'username' => $username,
                 'password_visible' => $password,
                 'main_group_id' => $this->main_group_id,
-                'profile_image' => $this->config->item('user_default_image'),
+                //'profile_image' => $this->config->item('user_default_image'),
             );
         }
-
         $group_ids = array(
             $this->main_group_id
         );
-
         if ($this->form_validation->run() == true && $this->ion_auth->register($username, $password, $email, $additional_data, $group_ids))
         {
-            // check to see if we are creating the user
-            // redirect them back to the admin page
             $this->session->set_flashdata('message', $this->ion_auth->messages());
             $get_status = send_mail_simple($email, 'Your Keppo User Account Success Created', 'Name:' . $first_name . ' ' . $last_name .
                     '<br/>Contact Number:' . $phone .
@@ -537,7 +526,6 @@ class user extends CI_Controller
                     '<br/>Password:' . $password, 'create_user_send_email_success');
             if ($get_status)
             {
-                // if there were no errors
                 redirect("user/login", 'refresh');
             }
             else
@@ -548,8 +536,6 @@ class user extends CI_Controller
         }
         else
         {
-            // display the create user form
-            // set the flash data error message if there is one
             $this->data['message'] = (
                     validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message'))
                     );
@@ -592,12 +578,6 @@ class user extends CI_Controller
                 'name' => 'year',
                 'id' => 'year',
             );
-//            $this->data['age_list'] = generate_number_option(10,90);
-//            $this->data['age'] = array(
-//                'name' => 'age',
-//                'id' => 'age',
-//                'value' => $this->form_validation->set_value('age'),
-//            );
             $this->data['gender_list'] = $this->ion_auth->get_static_option_list('gender');
             $this->data['gender_id'] = array(
                 'name' => 'gender_id',
@@ -636,7 +616,6 @@ class user extends CI_Controller
                 'type' => 'password',
                 'value' => $this->form_validation->set_value('password_confirm'),
             );
-
             $this->data['page_path_name'] = 'user/create_user';
             $this->load->view('template/layout', $this->data);
         }
