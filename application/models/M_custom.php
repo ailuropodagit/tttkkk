@@ -442,9 +442,17 @@ class M_custom extends CI_Model
         return $query->row_array();
     }
     
-    public function get_merchant_today_hotdeal($merchant_id, $counter_only = 0)
+    public function get_merchant_today_hotdeal($merchant_id, $counter_only = 0, $date = NULL)
     {
-        $condition = "start_time like '%" . date(format_date_server()) . "%'";
+        if (!IsNullOrEmptyString($date))
+        {
+            $search_date = $date;
+        }
+        else
+        {
+            $search_date = date(format_date_server());
+        }
+        $condition = "start_time like '%" . $search_date . "%'";
         $this->db->where('advertise_type', 'hot');
         $this->db->where($condition);
         $this->db->where('hide_flag', 0);
