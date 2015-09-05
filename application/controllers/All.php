@@ -25,11 +25,33 @@ class All extends CI_Controller
         $this->load->view('template/layout_right', $this->data);
     }
     
-     function advertise($advertise_id){
-         $this->data['page_path_name'] = 'all/hot_deal';
-         $this->load->view('template/layout', $this->data);
-     }
+    function promotion_list(){
+        $sub_category_id = $this->uri->segment(3);
+        $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('pro',$sub_category_id);
+        $this->data['advertise_title'] = "Redemption";
+        $this->data['left_path_name'] = 'template/sidebar_left_full';    
+        $this->data['page_path_name'] = 'all/advertise_list';
+        $this->load->view('template/layout_right', $this->data);
+    }
     
+     function advertise($advertise_id)
+    {
+        $the_row = $this->m_custom->get_one_table_record('advertise', 'advertise_id', $advertise_id);
+        if ($the_row)
+        {
+            if($the_row->advertise_type == "pro"){
+                $this->data['page_path_name'] = 'all/promotion';
+            }else{
+                $this->data['page_path_name'] = 'all/hotdeal';
+            }
+            $this->load->view('template/layout', $this->data);
+        }
+        else
+        {
+            redirect('/', 'refresh');
+        }
+    }
+
     //View the user dashboard upper part
     function user_dashboard($user_id)
     {

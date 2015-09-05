@@ -831,12 +831,12 @@ class user extends CI_Controller
             'name' => 'race_other',
             'id' => 'race_other',
             'type' => 'text',
-            'style' => $this->m_custom->option_text($user->us_race_id) == 'Other' ? 'display:inline' : 'display:none',
+            'style' => $this->m_custom->display_static_option($user->us_race_id) == 'Other' ? 'display:inline' : 'display:none',
             'value' => $this->form_validation->set_value('race_other', $user->us_race_other),
         );
         $this->data['race_other_attributes'] = array(
             'id' => 'race_other_label',
-            'style' => $this->m_custom->option_text($user->us_race_id) == 'Other' ? 'display:inline' : 'display:none',
+            'style' => $this->m_custom->display_static_option($user->us_race_id) == 'Other' ? 'display:inline' : 'display:none',
         );
         $this->data['phone'] = array(
             'name' => 'phone',

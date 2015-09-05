@@ -47,8 +47,14 @@ foreach ($hotdeal_list as $row)
     echo "<div class='hot-deal-box'>";
     echo "<img src='" . base_url($this->album_merchant.$row['image']) . "' class='image-hot-deal' ><br/>";
     echo $row['title']."<br/>";
+    echo "Category : " . $this->m_custom->display_category($row['sub_category_id'])."<br/>";
     echo "<a href=''>Like</a> : 30";
     echo "<a href='".base_url()."all/advertise/".$row['advertise_id']."'>Comment</a> : 10";
     echo "<div><div data-countdown='".$row['end_time']."'></div></div>";
+    
+    if($row['advertise_type'] == 'pro'){
+        echo $row['voucher_candie']." candies";
+    }
+    
     echo "</div>";
 }

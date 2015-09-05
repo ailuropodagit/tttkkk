@@ -42,8 +42,24 @@ class M_custom extends CI_Model
         return $return;
     }
     
+     //Get one static option text by it option id
+    public function display_category($category_id = NULL)
+    {
+        if (IsNullOrEmptyString($category_id))
+        {
+            return '';
+        }
+
+        $query = $this->db->get_where('category', array('category_id' => $category_id));
+        if ($query->num_rows() !== 1)
+        {
+            return '';
+        }
+        return $query->row()->category_label;
+    }
+    
     //Get one static option text by it option id
-    public function option_text($option_id = NULL)
+    public function display_static_option($option_id = NULL)
     {
         if (IsNullOrEmptyString($option_id))
         {
@@ -58,6 +74,22 @@ class M_custom extends CI_Model
         return $query->row()->option_text;
     }
 
+    //Get one static option text by it option id
+    public function display_dynamic_option($option_id = NULL)
+    {
+        if (IsNullOrEmptyString($option_id))
+        {
+            return '';
+        }
+
+        $query = $this->db->get_where('dynamic_option', array('option_id' => $option_id));
+        if ($query->num_rows() !== 1)
+        {
+            return '';
+        }
+        return $query->row()->option_desc;
+    }
+    
     //Get all the dynamic option of an option type
     public function get_dynamic_option_array($option_type, $default_value = NULL, $default_text = NULL, $prefix = NULL, $postfix = NULL, $use_option_title = 0)
     {

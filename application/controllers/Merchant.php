@@ -822,7 +822,7 @@ class Merchant extends CI_Controller
             'name' => 'branch_state',
             'id' => 'branch_state',
             'readonly ' => 'true',
-            'value' => ($branch) ? $this->m_custom->option_text($branch->state_id) : '',
+            'value' => ($branch) ? $this->m_custom->display_static_option($branch->state_id) : '',
         );
         $this->data['supervisor_username'] = array(
             'name' => 'supervisor_username',
@@ -1233,7 +1233,7 @@ class Merchant extends CI_Controller
                         $this->m_custom->insert_row_log('advertise', $new_id, $do_by_id, $do_by_type);
                         $this->m_custom->many_insert_or_remove('candie_term', $new_id, $candie_term_selected);
                         $this->m_custom->many_insert_or_remove('candie_branch', $new_id, $candie_branch_selected);
-                        $message_info = add_message_info($message_info, 'Candie Promotion for ' . $search_year . ' ' . $this->m_custom->option_text($search_month) . ' success create.');
+                        $message_info = add_message_info($message_info, 'Candie Promotion for ' . $search_year . ' ' . $this->m_custom->display_static_option($search_month) . ' success create.');
                     }
                     else
                     {
@@ -1280,7 +1280,7 @@ class Merchant extends CI_Controller
                         $this->m_custom->update_row_log('advertise', $candie_id, $do_by_id, $do_by_type);
                         $this->m_custom->many_insert_or_remove('candie_term', $candie_id, $candie_term_selected);
                         $this->m_custom->many_insert_or_remove('candie_branch', $candie_id, $candie_branch_selected);
-                        $message_info = add_message_info($message_info, 'Candie Promotion for ' . $search_year . ' ' . $this->m_custom->option_text($search_month) . ' success update.');
+                        $message_info = add_message_info($message_info, 'Candie Promotion for ' . $search_year . ' ' . $this->m_custom->display_static_option($search_month) . ' success update.');
                     }
                     else
                     {

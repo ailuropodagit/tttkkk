@@ -38,7 +38,14 @@
 
                     <div>
                         <div class="A_menu_item">                  
-                            <?php echo "<a href='".base_url()."all/hotdeal-list/".$t_subcat->category_id."/".$tab_counter."'> ".$t_subcat->category_label."</a>"; ?>
+                            <?php 
+                            if ($this->router->fetch_method() == 'promotion_list'){
+                                $gotoURL = base_url()."all/promotion-list/".$t_subcat->category_id."/".$tab_counter;
+                            }else{
+                                $gotoURL = base_url()."all/hotdeal-list/".$t_subcat->category_id."/".$tab_counter;
+                            }
+                            echo "<a href='".$gotoURL."'> ".$t_subcat->category_label."</a>"; 
+                            ?>
                         </div>
                     </div>
                 </div>
