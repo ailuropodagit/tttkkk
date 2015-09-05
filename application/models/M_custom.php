@@ -220,14 +220,25 @@ class M_custom extends CI_Model
     }
 
     //To get all main category
-    function getAdvertise($advertise_type, $sub_category_id = NULL)
+    function getAdvertise($advertise_type, $sub_category_id = NULL, $merchant_id = NULL, $show_expired = 0)
     {
         if(!IsNullOrEmptyString($sub_category_id)){
             $this->db->where('sub_category_id', $sub_category_id);
         }
-        $this->db->where('end_time >=',get_part_of_date('all'));
+        if(!IsNullOrEmptyString($merchant_id)){
+            $this->db->where('merchant_id', $merchant_id);
+        }
+        if($show_expired == 0){
+            $this->db->where('end_time >=',get_part_of_date('all'));
+        }
         $this->db->order_by("end_time", "asc"); 
-        $query = $this->db->get_where('advertise', array('advertise_type' => $advertise_type, 'hide_flag' => 0));
+        $this->db->where('start_time is not null AND end_time is not null');
+        
+        if($advertise_type == 'all'){
+            $query = $this->db->get_where('advertise', array('hide_flag' => 0));
+        }else{
+            $query = $this->db->get_where('advertise', array('advertise_type' => $advertise_type, 'hide_flag' => 0));
+        }
         return $query->result_array();
     }
     

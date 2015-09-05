@@ -19,12 +19,18 @@ class All extends CI_Controller
     function hotdeal_list(){
         $sub_category_id = $this->uri->segment(3);
         $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('hot',$sub_category_id);
+        $this->data['advertise_title'] = "Hot Deals";
         $this->data['left_path_name'] = 'template/sidebar_left_full';    
-        $this->data['page_path_name'] = 'all/hotdeal_list';
+        $this->data['page_path_name'] = 'all/advertise_list';
         $this->load->view('template/layout_right', $this->data);
     }
     
-        //View the user dashboard upper part
+     function advertise($advertise_id){
+         $this->data['page_path_name'] = 'all/hot_deal';
+         $this->load->view('template/layout', $this->data);
+     }
+    
+    //View the user dashboard upper part
     function user_dashboard($user_id)
     {
         $the_row = $this->m_custom->get_one_table_record('users', 'id', $user_id);
@@ -51,7 +57,7 @@ class All extends CI_Controller
         }
     }
     
-    public function merchant_dashboard($slug) 
+    public function merchant_dashboard($slug, $user_picture = NULL)
     {
         $the_row = $this->m_custom->get_one_table_record('users', 'slug', $slug);        
         if ($the_row)
@@ -67,8 +73,24 @@ class All extends CI_Controller
             //$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
             $this->data['message'] = "";
             $this->data['page_path_name'] = 'merchant/dashboard';
-            if ($this->ion_auth->logged_in())
+            $this->data['offer_deal'] = base_url() . 'all/merchant-dashboard/' . $slug;
+            $this->data['user_picture'] = base_url() . 'all/merchant-dashboard/' . $slug . '/user-picture';
+            
+            $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('all', NULL, $the_row->id);
+
+            if ($user_picture == NULL)
             {
+                $this->data['advertise_title'] = "Offer Deals";
+                $this->data['bottom_path_name'] = 'all/advertise_list';
+            }
+            else
+            {
+                $this->data['advertise_title'] = "User Pictures";
+                $this->data['bottom_path_name'] = ''; //To put user uploaded merchant picture
+            }
+
+            if ($this->ion_auth->logged_in())
+            {                
                 $this->load->view('template/layout_right_menu', $this->data);
             }
             else

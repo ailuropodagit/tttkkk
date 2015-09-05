@@ -1,6 +1,6 @@
 <script type="text/javascript" src="http://localhost/keppo/js/jquery.countdown.js"></script>
 
-<h1>Hot Deal</h1>
+<h1><?php echo $advertise_title; ?></h1>
 <br/>
 <style>
     .hot-deal-box{
@@ -48,7 +48,7 @@ foreach ($hotdeal_list as $row)
     echo "<img src='" . base_url($this->album_merchant.$row['image']) . "' class='image-hot-deal' ><br/>";
     echo $row['title']."<br/>";
     echo "<a href=''>Like</a> : 30";
-    echo "<a href=''>Comment</a> : 10";
+    echo "<a href='".base_url()."all/advertise/".$row['advertise_id']."'>Comment</a> : 10";
     echo "<div><div data-countdown='".$row['end_time']."'></div></div>";
     echo "</div>";
 }

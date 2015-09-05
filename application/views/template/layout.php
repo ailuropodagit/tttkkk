@@ -5,6 +5,12 @@
         <div id='body-content'>
             <?php $this->load->view($page_path_name) ?>
         </div>
+        <div id="body-left-main-content">
+            <?php if (!empty($bottom_path_name))
+            {
+                $this->load->view($bottom_path_name);
+            } ?>
+        </div>
     </div>
 </div>
 
