@@ -19,7 +19,13 @@ class All extends CI_Controller
     function hotdeal_list(){
         $sub_category_id = $this->uri->segment(3);
         $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('hot',$sub_category_id);
-        $this->data['advertise_title'] = "Hot Deals";
+        $this->data['advertise_title'] = "Hot Deals";    
+        
+        if (!IsNullOrEmptyString($sub_category_id))
+        {
+            $this->data['sub_title'] = 'Category : ' . $this->m_custom->display_category($sub_category_id);
+        }
+
         $this->data['left_path_name'] = 'template/sidebar_left_full';    
         $this->data['page_path_name'] = 'all/advertise_list';
         $this->load->view('template/layout_right', $this->data);
@@ -29,6 +35,12 @@ class All extends CI_Controller
         $sub_category_id = $this->uri->segment(3);
         $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('pro',$sub_category_id);
         $this->data['advertise_title'] = "Redemption";
+        
+        if (!IsNullOrEmptyString($sub_category_id))
+        {
+            $this->data['sub_title'] = 'Category : ' . $this->m_custom->display_category($sub_category_id);
+        }
+        
         $this->data['left_path_name'] = 'template/sidebar_left_full';    
         $this->data['page_path_name'] = 'all/advertise_list';
         $this->load->view('template/layout_right', $this->data);
@@ -59,6 +71,10 @@ class All extends CI_Controller
                 $this->data['voucher_barcode'] = base_url("barcode/generate/".$the_row['voucher']);
                 $this->data['voucher_candie'] = $the_row['voucher_candie'];
                 $this->data['expire_date'] = displayDate($the_row['voucher_expire_date']);
+                
+                $this->data['candie_term'] = $this->m_custom->many_get_childlist_detail('candie_term',$advertise_id,'dynamic_option','option_id');
+                $this->data['candie_branch'] = $this->m_custom->many_get_childlist_detail('candie_branch',$advertise_id,'merchant_branch','branch_id');
+                
                 $this->data['page_path_name'] = 'all/promotion';
             }else{
                 $this->data['page_path_name'] = 'all/hotdeal';

@@ -20,12 +20,27 @@
 
 Description :
     <?php   echo $description . "</br>";     ?>
-
+</br>
 Terms & Condition :
 <ul>
-    
+        <?php
+        foreach ($candie_term as $value) {
+                echo "<li>".$value['option_desc'] . "</li>";
+        }
+        ?>  
 </ul>
 
-<?php echo "Expiry Date : " . $expire_date . "<br/>"; ?>
+<?php echo "Expiry Date : " . $expire_date . "<br/><br/>"; ?>
 
 Available Branch : 
+<ul>
+        <?php
+        foreach ($candie_branch as $value) {
+                echo "<li>";
+                echo "<a href='".base_url() . "all/merchant-map/". $value['branch_id']."' target='_blank'>". $value['name']."</a><br/>";
+                echo $value['address'] . "<br/>";
+                echo "Tel : <a href='tel:".$value['phone']."' >".$value['phone']."</a><br/>";
+                echo "</li><br/>";
+        }
+        ?>  
+</ul>

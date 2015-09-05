@@ -444,7 +444,7 @@ class M_custom extends CI_Model
             foreach ($query->result_array() as $row)
             {
                 $child = $this->db->get_where($child_table, array($child_id_column => $row['many_child_id']), 1);
-                if ($child->num_rows() !== 1)
+                if ($child->num_rows() == 1)
                  {
                     $return[] = $child->row_array();
                  }
