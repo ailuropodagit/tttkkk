@@ -131,14 +131,14 @@ echo "<br/><span class='image-upload-guide'>Upload Image Rule : " . $this->confi
         endforeach;
         ?>  
     </div>
-    <?php if ($is_history == 0) { ?>
+    <?php if ($is_history == 0 && $this->session->userdata('user_group_id') == $this->config->item('group_id_merchant')) { ?>
     
         <div id='register-form-submit'>
             <button name="button_action" type="submit" value="submit">Save</button>
         </div>
     <?php } ?>
     <div id="infoMessage"><?php echo $message; ?></div>
-</div>
+</div><br /><br />
 <div class="checkbox-list">
     Select Branch : <br/>
     <input type="checkbox" id="candie_branch_select_all" onClick="toggle(this)"/> Select All<br/>

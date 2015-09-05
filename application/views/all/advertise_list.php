@@ -50,7 +50,10 @@ foreach ($hotdeal_list as $row)
     echo "Category : " . $this->m_custom->display_category($row['sub_category_id'])."<br/>";
     echo "<a href=''>Like</a> : 30";
     echo "<a href='".base_url()."all/advertise/".$row['advertise_id']."'>Comment</a> : 10";
+    
+    if($row['advertise_type'] == 'hot'){
     echo "<div><div data-countdown='".$row['end_time']."'></div></div>";
+    }
     
     if($row['advertise_type'] == 'pro'){
         echo $row['voucher_candie']." candies";

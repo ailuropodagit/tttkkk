@@ -46,17 +46,19 @@ class All extends CI_Controller
                  $login_data = $this->m_custom->get_one_table_record('users', 'id', $login_id);
             }
 
-            $title = $the_row['title'];
-            $description = $the_row['description'];
-            $image_url = base_url($this->album_merchant .$the_row['image']);
-            $sub_category = $this->m_custom->display_category($the_row['sub_category_id']);
-            $start_date = displayDate($the_row['start_time']);
-            $end_date = displayDate($the_row['end_time']);
+            $this->data['name'] = $this->m_custom->display_users($the_row['merchant_id']);
+            $this->data['title'] = $the_row['title'];
+            $this->data['description'] = $the_row['description'];
+            $this->data['image_url'] = base_url($this->album_merchant .$the_row['image']);
+            $this->data['sub_category'] = $this->m_custom->display_category($the_row['sub_category_id']);
+            $this->data['start_date'] = displayDate($the_row['start_time']);
+            $this->data['end_date'] = displayDate($the_row['end_time']);
             
             if($the_row['advertise_type'] == "pro"){                              
-                $voucher = base_url("barcode/generate/".$the_row['voucher']);
-                $voucher_candie = $the_row['voucher_candie'];
-                $expire_date = displayDate($the_row['voucher_expire_date']);
+                $this->data['voucher'] = $the_row['voucher'];
+                $this->data['voucher_barcode'] = base_url("barcode/generate/".$the_row['voucher']);
+                $this->data['voucher_candie'] = $the_row['voucher_candie'];
+                $this->data['expire_date'] = displayDate($the_row['voucher_expire_date']);
                 $this->data['page_path_name'] = 'all/promotion';
             }else{
                 $this->data['page_path_name'] = 'all/hotdeal';

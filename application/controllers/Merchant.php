@@ -603,7 +603,7 @@ class Merchant extends CI_Controller
                 'name' => 'phone',
                 'id' => 'phone',
                 'type' => 'text',
-                'value' => $this->form_validation->set_value('phone'),
+                'value' => $this->form_validation->set_value('phone') == '' ? '+60' : $this->form_validation->set_value('phone'),
             );
             $this->data['me_ssm'] = array(
                 'name' => 'me_ssm',
@@ -893,6 +893,8 @@ class Merchant extends CI_Controller
             $crud->unset_texteditor('address', 'google_map_url');
             $crud->field_type('state_id', 'dropdown', $this->ion_auth->get_static_option_list('state'));
             $crud->callback_insert(array($this, 'branch_insert_callback'));
+            $crud->callback_add_field('phone',array($this,'add_field_for_phone'));
+            $crud->callback_column('name', array($this, '_branch_map'));
             $crud->callback_column('address', array($this, '_full_text'));
             $crud->callback_column('supervisor', array($this, '_branch_supervisor'));
             $crud->unset_export();
@@ -926,6 +928,16 @@ class Merchant extends CI_Controller
         }
     }
 
+    function add_field_for_phone()
+    {
+    return '<input type="text" maxlength="50" value="+60 " name="phone" >';
+    }
+
+    function _branch_map($value, $row)
+    {
+        return "<a href='".base_url() . "all/merchant-map/". $row->branch_id."' target='_blank'>". $row->name."</a>";
+    }
+    
     function _full_text($value, $row)
     {
         return wordwrap($row->address);
@@ -950,7 +962,11 @@ class Merchant extends CI_Controller
     {
         $merchant_id = $this->ion_auth->user()->row()->id;
         $allowed_list = $this->m_custom->get_list_of_allow_id('users', 'su_merchant_id', $merchant_id, 'id');
-        $check_id = $this->uri->segment(3) == 'success'? NULL : $this->uri->segment(4);
+        $have_exception_segment = 0;
+        if ($this->uri->segment(3) == 'success' || $this->uri->segment(3) == 'add'){
+            $have_exception_segment = 1;
+        }
+        $check_id = $have_exception_segment == 1? NULL : $this->uri->segment(4);
         if (!check_correct_login_type($this->main_group_id, $allowed_list, $check_id))
         {
             redirect('/', 'refresh');
@@ -1134,12 +1150,23 @@ class Merchant extends CI_Controller
 
     function candie_promotion()
     {
-        if (!check_correct_login_type($this->main_group_id))
+        if (!check_correct_login_type($this->main_group_id) && !check_correct_login_type($this->supervisor_group_id))
         {
             redirect('/', 'refresh');
         }
         $message_info = '';
         $merchant_id = $this->ion_auth->user()->row()->id;
+        
+        $is_supervisor = 0;
+
+        //for supervisor view merchant profile because supervisor don't have own profile
+        if (check_correct_login_type($this->supervisor_group_id))
+        {
+            $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;
+            $is_supervisor = 1;
+            $supervisor = $this->ion_auth->user()->row();
+        }
+        
         $do_by_type = $this->main_group_id;
         $do_by_id = $merchant_id;
         $merchant_data = $this->m_custom->get_one_table_record('users', 'id', $merchant_id);

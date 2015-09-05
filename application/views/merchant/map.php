@@ -32,7 +32,7 @@
                 <tr>
                     <td>Phone</td>
                     <td>:</td>
-                    <td><div class="text-ellipsis"><?php echo $phone; ?></div></td>
+                    <td><div class="text-ellipsis"><?php echo "<a href='tel:".$phone."' >".$phone."</a>"; ?></div></td>
                 </tr>
             </table>
         </div>

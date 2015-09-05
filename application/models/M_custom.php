@@ -59,6 +59,31 @@ class M_custom extends CI_Model
     }
     
     //Get one static option text by it option id
+    public function display_users($user_id = NULL)
+    {
+        if (IsNullOrEmptyString($user_id))
+        {
+            return '';
+        }
+
+        $query = $this->db->get_where('users', array('id' => $user_id));
+        if ($query->num_rows() !== 1)
+        {
+            return '';
+        }
+
+        $return = $query->row();
+        if ($return->main_group_id == $this->config->item('group_id_merchant') || $return->main_group_id == $this->config->item('group_id_supervisor'))
+        {
+            return $return->company;
+        }
+        else
+        {
+            return $return->first_name . ' ' . $return->last_name;
+        }
+    }
+
+    //Get one static option text by it option id
     public function display_static_option($option_id = NULL)
     {
         if (IsNullOrEmptyString($option_id))
@@ -402,6 +427,28 @@ class M_custom extends CI_Model
             foreach ($query->result_array() as $row)
             {
                 $return[] = $row['many_child_id'];
+            }
+        }
+        return $return;
+    }
+    
+    //Not Yet Full Test // To Do  //ToDo
+    //To get the childlist id from many table by the type and parent id
+    public function many_get_childlist_detail($the_type, $parent_id, $child_table, $child_id_column)
+    {
+        $query = $this->db->get_where('many_to_many', array('many_type' => $the_type, 'many_parent_id' => $parent_id));
+
+        $return = array();
+        if ($query->num_rows() > 0)
+        {
+            foreach ($query->result_array() as $row)
+            {
+                $child = $this->db->get_where($child_table, array($child_id_column => $row['many_child_id']), 1);
+                if ($child->num_rows() !== 1)
+                 {
+                    $return[] = $child->row_array();
+                 }
+                
             }
         }
         return $return;
