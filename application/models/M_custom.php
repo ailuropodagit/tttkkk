@@ -251,6 +251,19 @@ class M_custom extends CI_Model
         }
     }
 
+    //To find one record in DB with one keyword
+    public function getOneAdvertise($advertise_id)
+    {
+        $this->db->where('start_time is not null AND end_time is not null');
+        $query = $this->db->get_where('advertise', array('advertise_id' => $advertise_id, 'hide_flag' => 0), 1);
+        if ($query->num_rows() !== 1)
+        {
+            return FALSE;
+        }
+
+        return $query->row_array();
+    }
+    
     //To get all main category
     function getAdvertise($advertise_type, $sub_category_id = NULL, $merchant_id = NULL, $show_expired = 0)
     {

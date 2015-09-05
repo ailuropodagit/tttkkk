@@ -35,11 +35,28 @@ class All extends CI_Controller
     }
     
      function advertise($advertise_id)
-    {
-        $the_row = $this->m_custom->get_one_table_record('advertise', 'advertise_id', $advertise_id);
+    {     
+        $the_row = $this->m_custom->getOneAdvertise($advertise_id);
         if ($the_row)
         {
-            if($the_row->advertise_type == "pro"){
+            $message_info = '';
+            if ($this->ion_auth->logged_in())
+            {
+                 $login_id = $this->ion_auth->user()->row()->id;
+                 $login_data = $this->m_custom->get_one_table_record('users', 'id', $login_id);
+            }
+
+            $title = $the_row['title'];
+            $description = $the_row['description'];
+            $image_url = base_url($this->album_merchant .$the_row['image']);
+            $sub_category = $this->m_custom->display_category($the_row['sub_category_id']);
+            $start_date = displayDate($the_row['start_time']);
+            $end_date = displayDate($the_row['end_time']);
+            
+            if($the_row['advertise_type'] == "pro"){                              
+                $voucher = base_url("barcode/generate/".$the_row['voucher']);
+                $voucher_candie = $the_row['voucher_candie'];
+                $expire_date = displayDate($the_row['voucher_expire_date']);
                 $this->data['page_path_name'] = 'all/promotion';
             }else{
                 $this->data['page_path_name'] = 'all/hotdeal';
@@ -51,7 +68,7 @@ class All extends CI_Controller
             redirect('/', 'refresh');
         }
     }
-
+    
     //View the user dashboard upper part
     function user_dashboard($user_id)
     {
