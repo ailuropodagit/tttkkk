@@ -367,6 +367,25 @@ class M_custom extends CI_Model
         return $query->result();
     }
 
+    //Get all the static option of an option type
+    public function getMerchantList($default_value = NULL, $default_text = NULL)
+    {
+        $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant'), 'hide_flag' => 0));
+        $return = array();
+        if ($default_value != NULL)
+        {
+            $return[$default_value] = $default_text;
+        }
+        if ($query->num_rows() > 0)
+        {
+            foreach ($query->result_array() as $row)
+            {
+                $return[$row['id']] = $row['company'];
+            }
+        }
+        return $return;
+    }
+    
     public function getMerchantList_by_category($category_id = 0, $category_level = 0)
     {
         if ($category_level == 1)
@@ -380,7 +399,7 @@ class M_custom extends CI_Model
         $query = $this->db->get_where('users', array('me_category_id' => $category_id));
         if ($query->num_rows() == 0)
         {
-            $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant')));
+            $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant'), 'hide_flag' => 0));
         }
         return $query->result();
     }

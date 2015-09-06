@@ -163,21 +163,26 @@ $lang['supervisor_username_label']           = 'Supervisor Username:';
 $lang['supervisor_password_label']           = 'Supervisor Password:';
 
 // Hot Deal
-$lang['hotdeal_description_label']         = 'Description:';
-$lang['hotdeal_hour_label']                = 'Countdown Hour(1 to 720):';
-$lang['hotdeal_title_label']               = 'Title:';
-$lang['hotdeal_sub_category_label']        = 'Category:';
+$lang['hotdeal_description_label']         = 'Description : ';
+$lang['hotdeal_hour_label']                = 'Countdown Hour(1 to 720) : ';
+$lang['hotdeal_title_label']               = 'Title : ';
+$lang['hotdeal_sub_category_label']        = 'Category : ';
+
+// User Album
+$lang['album_description_label']         = 'Description : ';
+$lang['album_merchant_label']            = 'Select Merchant* : ';
+$lang['album_title_label']               = 'Title* : ';
 
 // Candie Promotion
-$lang['candie_description_label']         = 'Description:';
-$lang['candie_title_label']               = 'Title:';
-$lang['candie_sub_category_label']        = 'Category:';
-$lang['candie_point_label']               = 'Set Point:';
-$lang['candie_start_date_label']          = 'Redemption Period Start Date:';
-$lang['candie_end_date_label']            = 'Redemption Period End Date:';
-$lang['candie_expire_date_label']         = 'Voucher Expiry Date:';
-$lang['candie_vender_label']              = 'Code Voucher Vender:';
-$lang['candie_year_label']                = 'Code Voucher Year:';
+$lang['candie_description_label']         = 'Description : ';
+$lang['candie_title_label']               = 'Title : ';
+$lang['candie_sub_category_label']        = 'Category : ';
+$lang['candie_point_label']               = 'Set Point : ';
+$lang['candie_start_date_label']          = 'Redemption Period Start Date : ';
+$lang['candie_end_date_label']            = 'Redemption Period End Date : ';
+$lang['candie_expire_date_label']         = 'Voucher Expiry Date : ';
+$lang['candie_vender_label']              = 'Code Voucher Vender : ';
+$lang['candie_year_label']                = 'Code Voucher Year : ';
 $lang['candie_year_month_label']          = 'Voucher of Year & Month : ';
 
 // Create Group

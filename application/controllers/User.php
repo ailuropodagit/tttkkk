@@ -13,6 +13,7 @@ class user extends CI_Controller
         $this->main_group_id = $this->config->item('group_id_user');
         $this->album_user_profile = $this->config->item('album_user_profile');
         $this->album_user_merchant = $this->config->item('album_user_merchant');
+        $this->folder_image = $this->config->item('folder_image');
     }
 
     // redirect if needed, otherwise display the user list
@@ -861,11 +862,12 @@ class user extends CI_Controller
         $user_data = $this->m_custom->get_one_table_record('users', 'id', $user_id);
        
         if(!IsNullOrEmptyString($slug)){
-            $merchant_data = $this->m_custom->get_one_table_record('users', 'slug', $slug);        
-            $merchant_id = $merchant_data->id;    
+            $merchant_data = $this->m_custom->get_one_table_record('users', 'slug', $slug,1);        
+            $merchant_id = $merchant_data['id'];    
         }
         
         $box_number = 5;
+        $this->data['box_number'] = $box_number;
         
         if (isset($_POST) && !empty($_POST))
         {
@@ -881,6 +883,7 @@ class user extends CI_Controller
 
                 $this->load->library('upload', $upload_rule);
                 
+                $validate_fail = 0;
                 for ($i = 0; $i < $box_number; $i++)
                 {
                     $user_today_upload_count = 1; //todo
@@ -889,60 +892,81 @@ class user extends CI_Controller
                     $post_title = $this->input->post('image-title-' . $i);
                     $post_merchant_id = $this->input->post('image-merchant-' . $i);
                     $post_desc = $this->input->post('image-desc-' . $i);
-                    
+
                     if (!empty($_FILES[$post_file]['name']))
                     {
+//                        $this->form_validation->set_rules('image-title-' . $i, $this->lang->line('album_title_label'), 'required');
+//                        $this->form_validation->set_rules('image-merchant-' . $i, $this->lang->line('album_merchant_label'), 'required');
+//                        $this->form_validation->set_rules('image-desc-' . $i, $this->lang->line('album_description_label'));
 
-                        if (!$this->upload->do_upload($post_file))
-                        {
-                            //$error = array('error' => $this->upload->display_errors());
-                            $message_info = add_message_info($message_info, $this->upload->display_errors(), $post_title);
-                        }
-                        else
-                        {
-                            $image_data = array('upload_data' => $this->upload->data());
-                            $data = array(
-                                'post_type' => 'mer',
-                                'user_id' => $user_id,
-                                'merchant_id' => $post_merchant_id,
-                                'post_id' => $post_merchant_id,
-                                'title' => $post_title,
-                                'description' => $post_desc,
-                                'image' => $image_data['upload_data']['file_name'],
-                            );
-
-                            $new_id = $this->m_custom->get_id_after_insert('merchant_user_album', $data);
-                            if ($new_id)
+                        //if ($this->form_validation->run() == false)
+//                        if(IsNullOrEmptyString($post_title) || $post_merchant_id == '0')
+//                        {
+//                            $message_info = add_message_info($message_info, 'Image '.($i+1).' title and merchant cannot be empty.');
+//                            $validate_fail = 1;
+//                        }
+//                        else
+//                        {
+                            if (!$this->upload->do_upload($post_file))
                             {
-                                $message_info = add_message_info($message_info, 'Image for merchant ' . display_users($post_merchant_id) . ' success create.', $title);
+                                //$error = array('error' => $this->upload->display_errors());
+                                $message_info = add_message_info($message_info, $this->upload->display_errors(), $post_title);
                             }
                             else
                             {
-                                $message_info = add_message_info($message_info, $this->ion_auth->errors(), $title);
-                            }
+                                $image_data = array('upload_data' => $this->upload->data());
+                                $data = array(
+                                    'post_type' => 'mer',
+                                    'user_id' => $user_id,
+                                    'merchant_id' => $post_merchant_id,
+                                    'post_id' => $post_merchant_id,
+                                    'title' => $post_title,
+                                    'description' => $post_desc,
+                                    'image' => $image_data['upload_data']['file_name'],
+                                );
+
+                                $new_id = $this->m_custom->get_id_after_insert('merchant_user_album', $data);
+                                if ($new_id)
+                                {
+                                    $message_info = add_message_info($message_info, 'Image for merchant ' . $this->m_custom->display_users($post_merchant_id) . ' success create.', $post_title);
+                                }
+                                else
+                                {
+                                    $message_info = add_message_info($message_info, $this->ion_auth->errors(), $post_title);
+                                }
+                           // }
                         }
                     }
                 }
-                $this->session->set_flashdata('message', $message_info);
+                $this->session->set_flashdata('message', $message_info);               
+//                if ($validate_fail == 1)
+//                {
+//                    goto ValidateFail;
+//                }
                 redirect('user/merchant_album', 'refresh');
             }
         }
         
+//        ValidateFail:
+        $this->data['merchant_list'] = $this->m_custom->getMerchantList();
+                
         for ($i = 0; $i < $box_number; $i++)
         {
             $image_title = 'image_title' . $i;
             $this->data[$image_title] = array(
                 'name' => 'image-title-' . $i,
                 'id' => 'image-title-' . $i,
+                'value' => $this->form_validation->set_value('image-title-' . $i),
             );
 
             $image_url = 'image_url' . $i;
-            $this->data[$image_url] = $this->album_merchant . $this->config->item('other_default_image');
+            $this->data[$image_url] = $this->folder_image . $this->config->item('other_default_image');
 
             $image_merchant = 'image_merchant' . $i;
             $this->data[$image_merchant] = array(
                 'name' => 'image-merchant-' . $i,
                 'id' => 'image-merchant-' . $i,
+                'value' => $this->form_validation->set_value('image-merchant-' . $i),
             );
 
             $image_merchant_selected = 'image_merchant_selected' . $i;
@@ -952,15 +976,19 @@ class user extends CI_Controller
             $this->data[$image_desc] = array(
                 'name' => 'image-desc-' . $i,
                 'id' => 'image-desc-' . $i,
+                'value' => $this->form_validation->set_value('image-desc-' . $i),
             );  
         }
         
+        $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'user/upload_for_merchant';
         $this->load->view('template/layout_right_menu', $this->data);
     }
     
     function merchant_album(){
-        
+        $this->data['message'] = $this->session->flashdata('message');
+        $this->data['page_path_name'] = 'user/merchant_album';
+        $this->load->view('template/layout_right_menu', $this->data);
     }
     
     // edit a user

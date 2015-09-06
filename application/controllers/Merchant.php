@@ -18,6 +18,7 @@ class Merchant extends CI_Controller
         $this->album_merchant_profile = $this->config->item('album_merchant_profile');
         $this->album_merchant = $this->config->item('album_merchant');
         $this->folder_merchant_ssm = $this->config->item('folder_merchant_ssm');
+        $this->folder_image = $this->config->item('folder_image');
     }
 
     // redirect if needed, otherwise display the user list
@@ -1375,7 +1376,7 @@ class Merchant extends CI_Controller
             'value' => empty($this_month_candie) ? '' : $this_month_candie['description'],
         );
 
-        $this->data['candie_image'] = empty($this_month_candie) ? $this->album_merchant . $this->config->item('other_default_image') : $this->album_merchant . $this_month_candie['image'];
+        $this->data['candie_image'] = empty($this_month_candie) ? $this->folder_image . $this->config->item('other_default_image') : $this->album_merchant . $this_month_candie['image'];
 
         $this->data['start_date'] = array(
             'name' => 'start_date',
@@ -1574,7 +1575,7 @@ class Merchant extends CI_Controller
             'value' => empty($hotdeal_result) ? '' : $hotdeal_result['title'],
         );
 
-        $this->data['hotdeal_image'] = empty($hotdeal_result) ? $this->album_merchant . $this->config->item('other_default_image') : $this->album_merchant . $hotdeal_result['image'];
+        $this->data['hotdeal_image'] = empty($hotdeal_result) ? $this->folder_image . $this->config->item('other_default_image') : $this->album_merchant . $hotdeal_result['image'];
 
         $this->data['hotdeal_category'] = array(
             'name' => 'category',
@@ -1808,7 +1809,7 @@ class Merchant extends CI_Controller
             );
 
             $hotdeal_image = 'hotdeal_image' . $i;
-            $this->data[$hotdeal_image] = empty($hotdeal_today_result[$i]) ? $this->album_merchant . $this->config->item('other_default_image') : $this->album_merchant . $hotdeal_today_result[$i]['image'];
+            $this->data[$hotdeal_image] = empty($hotdeal_today_result[$i]) ? $this->folder_image . $this->config->item('other_default_image') : $this->album_merchant . $hotdeal_today_result[$i]['image'];
 
             $hotdeal_category = 'hotdeal_category' . $i;
             $this->data[$hotdeal_category] = array(
