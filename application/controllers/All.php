@@ -149,6 +149,7 @@ class All extends CI_Controller
             $this->data['page_path_name'] = 'merchant/dashboard';
             $this->data['offer_deal'] = base_url() . 'all/merchant-dashboard/' . $slug;
             $this->data['user_picture'] = base_url() . 'all/merchant-dashboard/' . $slug . '/user-picture';
+            $this->data['user_upload_for_merchant'] = base_url() . 'user/upload_for_merchant/' . $slug;
             
             $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('all', NULL, $the_row->id);
 

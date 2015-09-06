@@ -12,6 +12,7 @@ class user extends CI_Controller
         $this->lang->load('auth');
         $this->main_group_id = $this->config->item('group_id_user');
         $this->album_user_profile = $this->config->item('album_user_profile');
+        $this->album_user_merchant = $this->config->item('album_user_merchant');
     }
 
     // redirect if needed, otherwise display the user list
@@ -848,6 +849,120 @@ class user extends CI_Controller
         $this->load->view('template/layout_right_menu', $this->data);
     }
 
+    //To Do
+    function upload_for_merchant($slug = NULL){
+        if (!check_correct_login_type($this->main_group_id))
+        {
+            redirect('/', 'refresh');
+        }
+                     
+        $message_info = '';
+        $user_id = $this->ion_auth->user()->row()->id;
+        $user_data = $this->m_custom->get_one_table_record('users', 'id', $user_id);
+       
+        if(!IsNullOrEmptyString($slug)){
+            $merchant_data = $this->m_custom->get_one_table_record('users', 'slug', $slug);        
+            $merchant_id = $merchant_data->id;    
+        }
+        
+        $box_number = 5;
+        
+        if (isset($_POST) && !empty($_POST))
+        {
+            if ($this->input->post('button_action') == "upload_image")
+            {
+                $upload_rule = array(
+                    'upload_path' => $this->album_user_merchant,
+                    'allowed_types' => $this->config->item('allowed_types_image'),
+                    'max_size' => $this->config->item('max_size'),
+                    'max_width' => $this->config->item('max_width'),
+                    'max_height' => $this->config->item('max_height'),
+                );
+
+                $this->load->library('upload', $upload_rule);
+                
+                for ($i = 0; $i < $box_number; $i++)
+                {
+                    $user_today_upload_count = 1; //todo
+                            
+                    $post_file = "image-file-" . $i;
+                    $post_title = $this->input->post('image-title-' . $i);
+                    $post_merchant_id = $this->input->post('image-merchant-' . $i);
+                    $post_desc = $this->input->post('image-desc-' . $i);
+                    
+                    if (!empty($_FILES[$post_file]['name']))
+                    {
+
+                        if (!$this->upload->do_upload($post_file))
+                        {
+                            //$error = array('error' => $this->upload->display_errors());
+                            $message_info = add_message_info($message_info, $this->upload->display_errors(), $post_title);
+                        }
+                        else
+                        {
+                            $image_data = array('upload_data' => $this->upload->data());
+                            $data = array(
+                                'post_type' => 'mer',
+                                'user_id' => $user_id,
+                                'merchant_id' => $post_merchant_id,
+                                'post_id' => $post_merchant_id,
+                                'title' => $post_title,
+                                'description' => $post_desc,
+                                'image' => $image_data['upload_data']['file_name'],
+                            );
+
+                            $new_id = $this->m_custom->get_id_after_insert('merchant_user_album', $data);
+                            if ($new_id)
+                            {
+                                $message_info = add_message_info($message_info, 'Image for merchant ' . display_users($post_merchant_id) . ' success create.', $title);
+                            }
+                            else
+                            {
+                                $message_info = add_message_info($message_info, $this->ion_auth->errors(), $title);
+                            }
+                        }
+                    }
+                }
+                $this->session->set_flashdata('message', $message_info);
+                redirect('user/merchant_album', 'refresh');
+            }
+        }
+        
+        for ($i = 0; $i < $box_number; $i++)
+        {
+            $image_title = 'image_title' . $i;
+            $this->data[$image_title] = array(
+                'name' => 'image-title-' . $i,
+                'id' => 'image-title-' . $i,
+            );
+
+            $image_url = 'image_url' . $i;
+            $this->data[$image_url] = $this->album_merchant . $this->config->item('other_default_image');
+
+            $image_merchant = 'image_merchant' . $i;
+            $this->data[$image_merchant] = array(
+                'name' => 'image-merchant-' . $i,
+                'id' => 'image-merchant-' . $i,
+            );
+
+            $image_merchant_selected = 'image_merchant_selected' . $i;
+            $this->data[$image_merchant_selected] = empty($merchant_id) ? '' : $merchant_id;
+
+            $image_desc = 'image_desc' . $i;
+            $this->data[$image_desc] = array(
+                'name' => 'image-desc-' . $i,
+                'id' => 'image-desc-' . $i,
+            );  
+        }
+        
+        $this->data['page_path_name'] = 'user/upload_for_merchant';
+        $this->load->view('template/layout_right_menu', $this->data);
+    }
+    
+    function merchant_album(){
+        
+    }
+    
     // edit a user
     function edit_user($id)
     {
