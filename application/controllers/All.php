@@ -20,7 +20,7 @@ class All extends CI_Controller
         $sub_category_id = $this->uri->segment(3);
         $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('hot',$sub_category_id);
         $this->data['advertise_title'] = "Hot Deals";    
-        
+
         if (!IsNullOrEmptyString($sub_category_id))
         {
             $this->data['sub_title'] = 'Category : ' . $this->m_custom->display_category($sub_category_id);
@@ -46,7 +46,7 @@ class All extends CI_Controller
         $this->load->view('template/layout_right', $this->data);
     }
     
-     function advertise($advertise_id)
+    function advertise($advertise_id, $advertise_type = NULL, $sub_category_id = NULL, $merchant_id = NULL)
     {     
         $the_row = $this->m_custom->getOneAdvertise($advertise_id);
         if ($the_row)
@@ -77,10 +77,25 @@ class All extends CI_Controller
                 $this->data['candie_branch'] = $this->m_custom->many_get_childlist_detail('candie_branch',$advertise_id,'merchant_branch','branch_id');
                 
                 $this->data['page_path_name'] = 'all/promotion';
-            }else{
+            }else{               
                 $this->data['end_time'] = displayDate($the_row['end_time'], 1);
                 $this->data['page_path_name'] = 'all/hotdeal';
             }
+
+            if ($advertise_type != NULL)
+            {
+                $advertise_current_list = $this->m_custom->getAdvertise($advertise_type, $sub_category_id, $merchant_id);
+                $advertise_id_array = get_key_array_from_list_array($advertise_current_list,'advertise_id');
+                $previous_id = get_previous_id($advertise_id,$advertise_id_array);
+                $next_id = get_next_id($advertise_id,$advertise_id_array);
+                if($previous_id){
+                    $this->data['previous_url'] = base_url() . "all/advertise/".$previous_id."/".$advertise_type."/".$sub_category_id."/".$merchant_id;
+                }
+                if($next_id){
+                    $this->data['next_url'] = base_url() . "all/advertise/".$next_id."/".$advertise_type."/".$sub_category_id."/".$merchant_id;
+                }
+            }
+
             $this->load->view('template/layout', $this->data);
         }
         else

@@ -1,9 +1,19 @@
 <h1>Redemption</h1>
 <br/>
 
-<img src="<?php echo $voucher_barcode; ?>"  alt="not show" style="margin-top:20px; margin-left:70%;"/>
-
 <h2><?php  echo $name . "</br>"; ?></h2>
+
+<?php
+if(!empty($previous_url)){
+echo "<a href='" . $previous_url . "' >Previous</a> ";
+}
+if(!empty($next_url)){
+echo "<a href='" . $next_url . "' >Next</a> ";
+}
+?>
+<br/>
+
+<img src="<?php echo $voucher_barcode; ?>"  alt="not show" style="margin-top:20px; margin-left:70%;"/>
 <div id='hot-deal-photo-box'>
     <?php
     echo "<img src='" . $image_url . "' id='hotdeal-img'>";

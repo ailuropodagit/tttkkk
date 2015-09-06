@@ -28,6 +28,18 @@
 <br/>
 
 <h2><?php  echo $name . "</br>"; ?></h2>
+
+<?php
+if(!empty($previous_url)){
+echo "<a href='" . $previous_url . "' >Previous</a> ";
+}
+if(!empty($next_url)){
+echo "<a href='" . $next_url . "' >Next</a> ";
+}
+?>
+<br/>
+
+
  <?php   echo "People Reached <br/>20 users"; ?>
 <div id='hot-deal-photo-box'>
     <?php
@@ -52,6 +64,7 @@ Description :
     ?>
 
 <br/>
+
 <?php 
 if (check_is_login()) {
 if (check_correct_login_type($this->config->item('group_id_merchant'))||check_correct_login_type($this->config->item('group_id_supervisor')))

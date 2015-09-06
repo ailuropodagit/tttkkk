@@ -458,6 +458,65 @@ if (!function_exists('age_count'))
 
 }
 
+if (!function_exists('get_key_array_from_list_array'))
+{
+
+    function get_key_array_from_list_array($list_array, $column_wanted)
+    {
+        $key_array = array();
+        foreach ($list_array as $row)
+        {
+            $key_array[] = $row[$column_wanted];
+        }
+        return $key_array;
+    }
+
+}
+
+if (!function_exists('get_previous_id'))
+{
+
+    function get_previous_id($current_id, $list_array)
+    {
+        $index = array_search($current_id, $list_array);
+        if ($index !== FALSE)
+        {
+            if (array_key_exists($index - 1, $list_array))
+            {
+                $previous = $list_array[$index - 1];
+            }
+        }
+        if (!empty($previous))
+        {
+            return $previous;
+        }
+        return FALSE;
+    }
+
+}
+
+if (!function_exists('get_next_id'))
+{
+
+    function get_next_id($current_id, $list_array)
+    {
+        $index = array_search($current_id, $list_array);
+        if ($index !== FALSE)
+        {
+            if (array_key_exists($index + 1, $list_array))
+            {
+                $next = $list_array[$index + 1];
+            }
+        }
+        if (!empty($next))
+        {
+            return $next;
+        }
+        return FALSE;
+    }
+
+}
+
 if (!function_exists('IsNullOrEmptyString'))
 {
 

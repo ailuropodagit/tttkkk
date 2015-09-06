@@ -49,10 +49,19 @@ $this->album_merchant = $this->config->item('album_merchant');
 
 foreach ($hotdeal_list as $row)
 {
+    if ($this->router->fetch_method() == 'hotdeal_list'){
+        $advertise_detail_url = base_url()."all/advertise/".$row['advertise_id'] . "/hot/" . $row['sub_category_id'];
+    }else if($this->router->fetch_method() == 'merchant_dashboard'){
+        $advertise_detail_url = base_url()."all/advertise/".$row['advertise_id'] . "/all/0/" . $row['merchant_id'];
+    }else if($this->router->fetch_method() == 'promotion_list'){
+        $advertise_detail_url = base_url()."all/advertise/".$row['advertise_id'] . "/pro/" . $row['sub_category_id'];
+    }else{
+        $advertise_detail_url = base_url()."all/advertise/".$row['advertise_id'];
+    }
     echo "<div class='hot-deal-box'>";
     echo '<h2>'.$this->m_custom->display_users($row['merchant_id'])."</h2><br/>";
-    echo "<a href='".base_url()."all/advertise/".$row['advertise_id']."'><img src='" . base_url($this->album_merchant.$row['image']) . "' class='image-hot-deal' ></a><br/>";
-    echo "<a href='".base_url()."all/advertise/".$row['advertise_id']."'>".$row['title']."</a><br/>";
+    echo "<a href='".$advertise_detail_url."'><img src='" . base_url($this->album_merchant.$row['image']) . "' class='image-hot-deal' ></a><br/>";
+    echo "<a href='".$advertise_detail_url."'>".$row['title']."</a><br/>";
     echo "Category : " . $this->m_custom->display_category($row['sub_category_id'])."<br/>";
     echo "Like : 30 ";
     echo "Comment : 10";
