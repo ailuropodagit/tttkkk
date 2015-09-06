@@ -58,6 +58,7 @@ class All extends CI_Controller
                  $login_data = $this->m_custom->get_one_table_record('users', 'id', $login_id);
             }
 
+            $this->data['advertise_id'] = $advertise_id;
             $this->data['name'] = $this->m_custom->display_users($the_row['merchant_id']);
             $this->data['title'] = $the_row['title'];
             $this->data['description'] = $the_row['description'];
@@ -77,6 +78,7 @@ class All extends CI_Controller
                 
                 $this->data['page_path_name'] = 'all/promotion';
             }else{
+                $this->data['end_time'] = displayDate($the_row['end_time'], 1);
                 $this->data['page_path_name'] = 'all/hotdeal';
             }
             $this->load->view('template/layout', $this->data);

@@ -1148,7 +1148,7 @@ class Merchant extends CI_Controller
         $this->load->view('template/layout_right_menu', $this->data);
     }
 
-    function candie_promotion()
+    function candie_promotion($promotion_id = NULL)
     {
         if (!check_correct_login_type($this->main_group_id) && !check_correct_login_type($this->supervisor_group_id))
         {
@@ -1159,7 +1159,7 @@ class Merchant extends CI_Controller
         
         $is_supervisor = 0;
 
-        //for supervisor view merchant profile because supervisor don't have own profile
+         //if is login by supervisor then need change some setting
         if (check_correct_login_type($this->supervisor_group_id))
         {
             $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;
@@ -1179,7 +1179,7 @@ class Merchant extends CI_Controller
         $is_history = 0;
         $candie_term_selected = array();
         $candie_branch_selected = array();
-        
+              
         if (isset($_POST) && !empty($_POST))
         {
             if ($this->input->post('button_action') == "submit")
@@ -1261,6 +1261,7 @@ class Merchant extends CI_Controller
                         $this->m_custom->many_insert_or_remove('candie_term', $new_id, $candie_term_selected);
                         $this->m_custom->many_insert_or_remove('candie_branch', $new_id, $candie_branch_selected);
                         $message_info = add_message_info($message_info, 'Candie Promotion for ' . $search_year . ' ' . $this->m_custom->display_static_option($search_month) . ' success create.');
+                        $candie_id = $new_id;
                     }
                     else
                     {
@@ -1316,7 +1317,7 @@ class Merchant extends CI_Controller
                     
                 }
                 $this->session->set_flashdata('message', $message_info);
-                redirect('merchant/candie_promotion', 'refresh');
+                redirect('merchant/candie_promotion/'.$candie_id, 'refresh');
             }
             else if ($this->input->post('button_action') == "search_voucher")
             {   
@@ -1328,11 +1329,12 @@ class Merchant extends CI_Controller
                 {
                     $is_history = 1;
                 }
+                $promotion_id = NULL;
             }
         }
-
+        
         //To get this month candie promotion if already create before
-        $this_month_candie = $this->m_custom->get_merchant_monthly_promotion($merchant_id, $search_month, $search_year);
+        $this_month_candie = $this->m_custom->get_merchant_monthly_promotion($merchant_id, $search_month, $search_year, $promotion_id);
         $this->data['is_history'] = $is_history;
         $this->data['candie_term_current'] = empty($this_month_candie) ? array() : $this->m_custom->many_get_childlist('candie_term', $this_month_candie['advertise_id']);
         $this->data['candie_branch_current'] = empty($this_month_candie) ? array() : $this->m_custom->many_get_childlist('candie_branch', $this_month_candie['advertise_id']);
@@ -1418,6 +1420,35 @@ class Merchant extends CI_Controller
         $this->load->view('template/layout_right_menu', $this->data);
     }
 
+    function edit_hotdeal($hotdeal_id = NULL)
+    {
+        if (!check_correct_login_type($this->main_group_id) && !check_correct_login_type($this->supervisor_group_id))
+        {
+            redirect('/', 'refresh');
+        }
+        $message_info = '';
+        $merchant_id = $this->ion_auth->user()->row()->id;
+        $do_by_type = $this->main_group_id;
+        $do_by_id = $merchant_id;       
+        $is_supervisor = 0;
+
+        //if is login by supervisor then need change some setting
+        if (check_correct_login_type($this->supervisor_group_id))
+        {
+            $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;
+            $is_supervisor = 1;
+            $supervisor = $this->ion_auth->user()->row();
+            $do_by_type = $this->supervisor_group_id;
+        }
+        
+        $merchant_data = $this->m_custom->get_one_table_record('users', 'id', $merchant_id);
+        
+        
+        $this->data['message'] = $this->session->flashdata('message');
+        $this->data['page_path_name'] = 'merchant/edit_hotdeal';
+        $this->load->view('template/layout_right_menu', $this->data);
+    }
+    
     function upload_hotdeal()
     {
         if (!check_correct_login_type($this->main_group_id) && !check_correct_login_type($this->supervisor_group_id))
@@ -1428,7 +1459,7 @@ class Merchant extends CI_Controller
         $merchant_id = $this->ion_auth->user()->row()->id;
         $do_by_type = $this->main_group_id;
         $do_by_id = $merchant_id;   //merchant or supervisor also can use this assign because this is depend on login
-        //for supervisor view the branch of merchant
+         //if is login by supervisor then need change some setting
         if (check_correct_login_type($this->supervisor_group_id))
         {
             $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;

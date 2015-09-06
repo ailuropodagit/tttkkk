@@ -484,14 +484,18 @@ if (!function_exists('RemoveLastComma'))
 
 if (!function_exists('displayDate'))
 {
-   function displayDate( $date )
+   function displayDate( $date , $with_time = 0)
     {
        if(IsNullOrEmptyString($date)){
            return '';
        }
         $ci = & get_instance();
         $return_date = date_create($date);
-        return $return_date->format($ci->config->item('keppo_format_date_display'));
+        if($with_time == 0){
+            return $return_date->format($ci->config->item('keppo_format_date_display'));
+        }else{
+            return $return_date->format($ci->config->item('keppo_format_date_time_db'));
+        }
    }
 }
 

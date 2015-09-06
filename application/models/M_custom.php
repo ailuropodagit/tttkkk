@@ -232,15 +232,22 @@ class M_custom extends CI_Model
     {
         $result = $this->get_one_table_record('users', 'id', $id, 1);
         $voucher = '';
-        $counter = 0;
+        $web_setting = $this->get_one_table_record('web_setting', 'set_type', 'voucher_counter', 1);
+        $counter = $web_setting['set_value'];
         if ($result)
         {
             do
             {
-                $counter += 1;
-                $voucher = strtoupper(substr($result['slug'], 0, 3)) . date('Ymd') . $counter;
+                $voucher = strtoupper(substr($result['slug'], 0, 3)) . date('Ymd') . str_pad($counter, 3, "0", STR_PAD_LEFT);
                 $check_unique = $this->check_is_value_unique('advertise', 'voucher', $voucher);
+                $counter += 1;
             } while (!$check_unique);
+            if($counter == '1000') {$counter = '1';}
+            $the_data = array(
+                'set_value' => $counter,
+            );       
+            $this->db->where('set_id', $web_setting['set_id']);
+            $this->db->update('web_setting', $the_data);
         }
         return $voucher;
     }
@@ -301,7 +308,7 @@ class M_custom extends CI_Model
         if($show_expired == 0){
             $this->db->where('end_time >=',get_part_of_date('all'));
         }
-        $this->db->order_by("end_time", "asc"); 
+        $this->db->order_by("advertise_id", "desc"); 
         $this->db->where('start_time is not null AND end_time is not null');
         
         if($advertise_type == 'all'){
@@ -534,7 +541,7 @@ class M_custom extends CI_Model
         $this->db->update('table_row_activity', $the_data);
     }
 
-    public function get_merchant_monthly_promotion($merchant_id, $month=NULL, $year=NULL)
+    public function get_merchant_monthly_promotion($merchant_id, $month=NULL, $year=NULL, $advertise_id = NULL)
     {
         if (empty($merchant_id))
         {
@@ -548,7 +555,16 @@ class M_custom extends CI_Model
         {
             $year = get_part_of_date('year');
         }
-        $query = $this->db->get_where('advertise', array('merchant_id' => $merchant_id, 'month_id' => $month, 'year' => $year, 'advertise_type' => 'pro'), 1);
+        $get_by_advertise_id = 0;
+        if($advertise_id != NULL){
+            $query = $this->db->get_where('advertise', array('merchant_id' => $merchant_id, 'advertise_id' => $advertise_id), 1);
+            if($query->num_rows() == 1){
+                $get_by_advertise_id = 1;
+            }
+        }
+        if($get_by_advertise_id == 0){
+            $query = $this->db->get_where('advertise', array('merchant_id' => $merchant_id, 'month_id' => $month, 'year' => $year, 'advertise_type' => 'pro'), 1);
+        }
         if ($query->num_rows() !== 1)
         {
             return FALSE;

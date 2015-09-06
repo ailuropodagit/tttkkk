@@ -1,5 +1,3 @@
-<script type="text/javascript" src="http://localhost/keppo/js/jquery.countdown.js"></script>
-
 <h1>Redemption</h1>
 <br/>
 
@@ -21,6 +19,11 @@
 Description :
     <?php   echo $description . "</br>";     ?>
 </br>
+<?php
+    echo "Like : 12 ";
+    echo "Comment : 34 ";
+    echo "Share : <br/>";
+    ?>
 Terms & Condition :
 <ul>
         <?php
@@ -44,3 +47,15 @@ Available Branch :
         }
         ?>  
 </ul>
+<br/>
+<?php 
+if (check_is_login()) {
+if (check_correct_login_type($this->config->item('group_id_merchant')))
+{ ?>
+    <div id="profile-bottom-link-right">
+        <div id="profile-bottom-link-right-each">
+            <a href='<?php echo base_url() . "merchant/candie_promotion/" . $advertise_id ?>' >Edit Redemption</a>
+        </div>
+        <div id='float-fix'></div>
+    </div>
+<?php } } ?>
