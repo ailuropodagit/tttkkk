@@ -30,10 +30,11 @@
     if(selected_month > current_month) {
         day_add = 30;
     }
+    var calendar_url = window.location.origin + '/keppo/image/icon_calendar.png';
     $(function () {       
         $("#start_date,#end_date").datepicker({
             showOn: "both",
-            buttonImage: "../image/icon_calendar.png",
+            buttonImage: calendar_url,
             buttonImageOnly: true,
             minDate: -5,
             maxDate: +(31+day_add),
@@ -41,7 +42,7 @@
         });
         $("#expire_date").datepicker({
             showOn: "both",
-            buttonImage: "../image/icon_calendar.png",
+            buttonImage: calendar_url,
             buttonImageOnly: true,
             minDate: 0,
             maxDate: +(61+day_add),

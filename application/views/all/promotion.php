@@ -60,7 +60,9 @@ Available Branch :
 <br/>
 <?php 
 if (check_is_login()) {
-if (check_correct_login_type($this->config->item('group_id_merchant')))
+    $merchant_id = $this->ion_auth->user()->row()->id;
+    $allowed_list = $this->m_custom->get_list_of_allow_id('advertise', 'merchant_id', $merchant_id, 'advertise_id');
+if (check_correct_login_type($this->config->item('group_id_merchant'), $allowed_list, $advertise_id))
 { ?>
     <div id="profile-bottom-link-right">
         <div id="profile-bottom-link-right-each">

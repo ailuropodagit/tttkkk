@@ -27,10 +27,15 @@ class M_custom extends CI_Model
     }   
     
     //To find many records in DB with one keyword
-    public function get_list_of_allow_id($the_table, $the_column, $the_value, $wanted_column)
-    {
+    public function get_list_of_allow_id($the_table, $the_column, $the_value, $wanted_column, $second_column = NULL, $second_value = NULL)
+    {      
         $query = $this->db->get_where($the_table, array($the_column => $the_value));
 
+        if (!IsNullOrEmptyString($second_column) && !IsNullOrEmptyString($second_value))
+        {
+            $query = $this->db->get_where($the_table, array($the_column => $the_value, $second_column => $second_value));
+        }
+        
         $return = array();
         if ($query->num_rows() > 0)
         {

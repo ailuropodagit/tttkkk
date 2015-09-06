@@ -103,6 +103,23 @@ if (!function_exists('check_correct_login_type'))
 
 }
 
+if (!function_exists('check_allowed_list'))
+{
+
+    function check_allowed_list($allowed_list = NULL, $check_id = NULL)
+    {
+        if (!empty($allowed_list) && !IsNullOrEmptyString($check_id))
+        {
+            if (in_array($check_id, $allowed_list))
+            {
+                return TRUE;
+            }
+        }
+        return FALSE;
+    }
+
+}
+
 if (!function_exists('check_is_login'))
 {
 

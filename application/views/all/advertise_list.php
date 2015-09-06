@@ -65,7 +65,7 @@ foreach ($hotdeal_list as $row)
     echo "Category : " . $this->m_custom->display_category($row['sub_category_id'])."<br/>";
     echo "Like : 30 ";
     echo "Comment : 10";
-    
+    echo "<br/>";
     if($row['advertise_type'] == 'hot'){
     echo "<div><div data-countdown='".$row['end_time']."'></div></div>";
     }
