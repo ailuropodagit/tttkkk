@@ -1,5 +1,5 @@
 <div id="infoMessage"><?php echo $message; ?></div>
-
+<a href='<?php echo base_url(); ?>user/album_user_merchant'>Merchant Album</a><br/>
 <style>
     #register-form-each-input input[type='text'] {
         width: 190px;

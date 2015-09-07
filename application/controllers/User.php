@@ -943,7 +943,7 @@ class user extends CI_Controller
 //                {
 //                    goto ValidateFail;
 //                }
-                redirect('user/merchant_album', 'refresh');
+                redirect('user/album_user_merchant', 'refresh');
             }
         }
         
@@ -985,9 +985,21 @@ class user extends CI_Controller
         $this->load->view('template/layout_right_menu', $this->data);
     }
     
-    function merchant_album(){
+    function album_user_merchant(){
         $this->data['message'] = $this->session->flashdata('message');
-        $this->data['page_path_name'] = 'user/merchant_album';
+        $this->data['page_path_name'] = 'user/album_user_merchant';
+        $this->load->view('template/layout_right_menu', $this->data);
+    }
+    
+    function upload_image(){
+        $this->data['message'] = $this->session->flashdata('message');
+        $this->data['page_path_name'] = 'user/upload_image';
+        $this->load->view('template/layout_right_menu', $this->data);
+    }
+    
+    function album_user(){
+        $this->data['message'] = $this->session->flashdata('message');
+        $this->data['page_path_name'] = 'user/album_user';
         $this->load->view('template/layout_right_menu', $this->data);
     }
     

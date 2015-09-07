@@ -42,7 +42,7 @@
             <li><a href='<?php echo base_url(); ?>user/change_password' class='body-right-sidebar-bar <?php if ($this->router->fetch_method() == 'change_password'){ echo "body-right-sidebar-bar-active"; } ?>'>Change Password</a></li>
             <li><a href='#' class='body-right-sidebar-bar'>Follower</a></li>
             <li><a href='#' class='body-right-sidebar-bar'>Review</a></li>
-            <li><a href='#' class='body-right-sidebar-bar'>Picture</a></li>
+            <li><a href='<?php echo base_url(); ?>user/album_user' class='body-right-sidebar-bar <?php if ($this->router->fetch_method() == 'album_user'){ echo "body-right-sidebar-bar-active"; } ?>'>Picture</a></li>
             <li><a href='#' class='body-right-sidebar-bar'>Candies</a></li>
             <li><a href='#' class='body-right-sidebar-bar'>Redemption</a></li>
             <li><a href='#' class='body-right-sidebar-bar'>Invite Friend</a></li>
