@@ -23,10 +23,10 @@
         <div id="profile-photo">
             <div id="profile-photo-box">
                 <?php            
-                if($image === "")
+                if(IsNullOrEmptyString($image))
                 {
                     ?>
-                    <img src="<?php echo base_url() ?>image/image-empty.jpg">
+                    <img src="<?php echo base_url().$this->config->item('empty_image'); ?>">
                     <?php
                 }
                 else

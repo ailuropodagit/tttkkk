@@ -98,11 +98,11 @@ echo "<br/><span class='image-upload-guide'>Upload Image Rule : " . $this->confi
         <div id='register-form-each-input'>
             <?php echo form_textarea($candie_desc); ?></div>
     </div>
-    <div id='register-form-each'>
-        <div id='register-form-each-label'><?php echo lang('candie_vender_label'); ?></div>
+<!--    <div id='register-form-each'>
+        <div id='register-form-each-label'><?php //echo lang('candie_vender_label'); ?></div>
         <div id='register-form-each-input'>
-            <?php echo form_input($candie_vender); ?></div>
-    </div>
+            <?php //echo form_input($candie_vender); ?></div>
+    </div>-->
     <div id='register-form-each'>
         <div id='register-form-each-label'><?php echo lang('candie_start_date_label'); ?></div>
         <div id='register-form-each-input'>

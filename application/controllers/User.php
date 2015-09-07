@@ -960,7 +960,7 @@ class user extends CI_Controller
             );
 
             $image_url = 'image_url' . $i;
-            $this->data[$image_url] = $this->folder_image . $this->config->item('other_default_image');
+            $this->data[$image_url] = $this->config->item('empty_image');
 
             $image_merchant = 'image_merchant' . $i;
             $this->data[$image_merchant] = array(

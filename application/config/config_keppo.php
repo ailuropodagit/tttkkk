@@ -24,7 +24,7 @@ $config['folder_merchant_ssm'] = 'folder_upload/merchant_ssm/';
 $config['folder_image'] = 'image/';
 
 $config['user_default_image'] = 'demo-profile-user.png';
-$config['other_default_image'] = 'image-empty.jpg';
+$config['empty_image'] = 'image/image-empty.jpg';
 $config['merchant_default_image'] = 'demo-logo-company.png';
 
 $config['max_size'] = 10240;  //10mb = 10240kb
