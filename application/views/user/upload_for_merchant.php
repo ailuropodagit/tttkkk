@@ -13,7 +13,28 @@
         width: 205px;
     }
 </style>
+<script type="text/javascript">
+ 
+    function get_Merchant(the_I) {
 
+    var dep_selected = $('select[name=image-category-'+the_I+']').val();
+    var post_url = "<?php echo base_url(); ?>" + 'user/get_merchant_by_category/'+ the_I + '/' + dep_selected;
+    $.ajax({
+        type: 'POST',
+        url: post_url,
+        dataType: 'html',
+        success: function (data) {
+                $('#d_image_merchant-' + the_I).empty();    
+                $('#d_image_merchant-' + the_I).html(data);
+            },
+        error: function (jqXHR, textStatus, errorThrown) {
+                alert(textStatus);
+                alert(errorThrown);
+            }
+        });
+    }
+
+</script>
 <div id='hot-deal-advertise'>
     <h1>User upload image for merchant</h1>
     <div id='hot-deal-advertise-content'>       
@@ -42,21 +63,32 @@
                         </div>
                     </div>
                     <div id='register-form-each'>
+                            <div id='register-form-each-label'><?php echo lang("album_description_label"); ?></div>
+                            <div id='register-form-each-input'>
+                                <?php
+                                echo form_textarea(${'image_desc' . $i});
+                                ?>
+                            </div>
+                    </div>  
+                    <div id='register-form-each'>
+                        <div id='register-form-each-label'><?php echo lang("album_category_label"); ?></div>
+                        <div id='register-form-each-input'>
+                            <?php
+                            echo form_dropdown(${'image_category' . $i}, $category_list);
+                            ?>
+                    </div>
+                    </div>
+                    <div id='register-form-each'>
                         <div id='register-form-each-label'><?php echo lang("album_merchant_label"); ?></div>
                         <div id='register-form-each-input'>
                             <?php
-                            echo form_dropdown(${'image_merchant' . $i}, $merchant_list, ${'image_merchant_selected' . $i});
+                            //echo form_dropdown(${'image_merchant' . $i}, $merchant_list, ${'image_merchant_selected' . $i});
+                            echo "<div id='d_image_merchant-" . $i ."'>";
+                            echo form_dropdown('temporary', array());
+                            echo "</div>";
                             ?>
                         </div>
-                    </div>
-                    <div id='register-form-each'>
-                        <div id='register-form-each-label'><?php echo lang("album_description_label"); ?></div>
-                        <div id='register-form-each-input'>
-                            <?php
-                            echo form_textarea(${'image_desc' . $i});
-                            ?>
-                        </div>
-                    </div>              
+                    </div>            
                 </div>
                 <?php } ?>
                 <div id="float-fix"></div>

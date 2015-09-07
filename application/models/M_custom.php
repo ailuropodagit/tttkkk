@@ -324,6 +324,25 @@ class M_custom extends CI_Model
         return $query->result_array();
     }
     
+    //Get all the static option of an option type
+    public function getCategoryList($default_value = NULL, $default_text = NULL)
+    {
+        $query = $this->db->get_where('category', array('category_level' => '0', 'hide_flag' => 0));
+        $return = array();
+        if ($default_value != NULL)
+        {
+            $return[$default_value] = $default_text;
+        }
+        if ($query->num_rows() > 0)
+        {
+            foreach ($query->result_array() as $row)
+            {
+                $return[$row['category_id']] = $row['category_label'];
+            }
+        }
+        return $return;
+    }
+    
     //To get all main category
     function getCategory()
     {

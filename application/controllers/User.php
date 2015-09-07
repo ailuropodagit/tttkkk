@@ -14,6 +14,7 @@ class user extends CI_Controller
         $this->album_user_profile = $this->config->item('album_user_profile');
         $this->album_user_merchant = $this->config->item('album_user_merchant');
         $this->folder_image = $this->config->item('folder_image');
+        $this->box_number = 5;
     }
 
     // redirect if needed, otherwise display the user list
@@ -866,8 +867,7 @@ class user extends CI_Controller
             $merchant_id = $merchant_data['id'];    
         }
         
-        $box_number = 5;
-        $this->data['box_number'] = $box_number;
+        $this->data['box_number'] = $this->box_number;
         
         if (isset($_POST) && !empty($_POST))
         {
@@ -884,13 +884,13 @@ class user extends CI_Controller
                 $this->load->library('upload', $upload_rule);
                 
                 $validate_fail = 0;
-                for ($i = 0; $i < $box_number; $i++)
+                for ($i = 0; $i < $this->box_number; $i++)
                 {
                     $user_today_upload_count = 1; //todo
                             
                     $post_file = "image-file-" . $i;
                     $post_title = $this->input->post('image-title-' . $i);
-                    $post_merchant_id = $this->input->post('image-merchant-' . $i);
+                    $post_merchant_id = $this->input->post('d-image-merchant-' . $i);
                     $post_desc = $this->input->post('image-desc-' . $i);
 
                     if (!empty($_FILES[$post_file]['name']))
@@ -948,9 +948,10 @@ class user extends CI_Controller
         }
         
 //        ValidateFail:
+        $this->data['category_list'] = $this->m_custom->getCategoryList();
         $this->data['merchant_list'] = $this->m_custom->getMerchantList();
                 
-        for ($i = 0; $i < $box_number; $i++)
+        for ($i = 0; $i < $this->box_number; $i++)
         {
             $image_title = 'image_title' . $i;
             $this->data[$image_title] = array(
@@ -962,11 +963,18 @@ class user extends CI_Controller
             $image_url = 'image_url' . $i;
             $this->data[$image_url] = $this->config->item('empty_image');
 
+            $image_category = 'image_category' . $i;
+            $this->data[$image_category] = array(
+                'name' => 'image-category-' . $i,
+                'id' => 'image-category-' . $i,
+                'value' => $this->form_validation->set_value('image-category-' . $i),
+                'onChange' => "get_Merchant(".$i.")",
+            );
+            
             $image_merchant = 'image_merchant' . $i;
             $this->data[$image_merchant] = array(
                 'name' => 'image-merchant-' . $i,
                 'id' => 'image-merchant-' . $i,
-                'value' => $this->form_validation->set_value('image-merchant-' . $i),
             );
 
             $image_merchant_selected = 'image_merchant_selected' . $i;
@@ -985,6 +993,23 @@ class user extends CI_Controller
         $this->load->view('template/layout_right_menu', $this->data);
     }
     
+    public function get_merchant_by_category($i , $selected_category = NULL)
+    {
+        $merchant_list = array();
+        if ($selected_category != '0')
+        {
+            $query = $this->m_custom->getMerchantList_by_category($selected_category);
+
+            foreach ($query as $item){
+                $merchant_list[$item->id] = $item->company;
+            }
+        }
+        
+        $d_image_merchant = 'd-image-merchant-' . $i;
+        $output = form_dropdown($d_image_merchant, $merchant_list);
+        echo $output;
+    }
+
     function album_user_merchant(){
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'user/album_user_merchant';
