@@ -58,8 +58,10 @@ foreach ($hotdeal_list as $row)
     }else{
         $advertise_detail_url = base_url()."all/advertise/".$row['advertise_id'];
     }
+    $merchant_name = $this->m_custom->display_users($row['merchant_id']);
+    $merchant_dashboard_url = base_url()."all/merchant-dashboard/".generate_slug($merchant_name);
     echo "<div class='hot-deal-box'>";
-    echo '<h2>'.$this->m_custom->display_users($row['merchant_id'])."</h2><br/>";
+    echo "<h2><a href='".$merchant_dashboard_url."'>".$merchant_name."</a></h2><br/>";
     echo "<a href='".$advertise_detail_url."'><img src='" . base_url($this->album_merchant.$row['image']) . "' class='image-hot-deal' ></a><br/>";
     echo "<a href='".$advertise_detail_url."'>".$row['title']."</a><br/>";
     echo "Category : " . $this->m_custom->display_category($row['sub_category_id'])."<br/>";

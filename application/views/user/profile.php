@@ -68,9 +68,9 @@
                 <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_user_dob_label'); ?></div>
                     <div id='profile-info-form-each-input-dob'>
-                        <div id='profile-info-form-each-input-dob-day'><?php echo form_dropdown($day, $day_list); ?></div>
-                        <div id='profile-info-form-each-input-dob-month'><?php echo form_dropdown($month, $month_list); ?></div>
-                        <div id='profile-info-form-each-input-dob-year'><?php echo form_dropdown($year, $year_list); ?></div>
+                        <div id='profile-info-form-each-input-dob-day'><?php echo form_dropdown($day, $day_list,$b_day); ?></div>
+                        <div id='profile-info-form-each-input-dob-month'><?php echo form_dropdown($month, $month_list,$b_month); ?></div>
+                        <div id='profile-info-form-each-input-dob-year'><?php echo form_dropdown($year, $year_list,$b_year); ?></div>
                         <br/><br/>
                     </div>
                 </div>

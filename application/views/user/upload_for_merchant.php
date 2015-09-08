@@ -1,5 +1,13 @@
 <div id="infoMessage"><?php echo $message; ?></div>
-<a href='<?php echo base_url(); ?>user/album_user_merchant'>Merchant Album</a><br/>
+<?php
+echo "<h1>User upload image for merchant</h1>";
+if (check_correct_login_type($this->config->item('group_id_user')))
+{
+    $user_id = $this->ion_auth->user()->row()->id;
+
+    echo "<a href='" . base_url() . "all/album_user_merchant/" . $user_id . "'>Merchant Album</a><br/>";
+}
+?>
 <style>
     #register-form-each-input input[type='text'] {
         width: 190px;
@@ -24,8 +32,8 @@
         url: post_url,
         dataType: 'html',
         success: function (data) {
-                $('#d_image_merchant-' + the_I).empty();    
-                $('#d_image_merchant-' + the_I).html(data);
+                $('#image_merchant-' + the_I).empty();    
+                $('#image_merchant-' + the_I).html(data);
             },
         error: function (jqXHR, textStatus, errorThrown) {
                 alert(textStatus);
@@ -34,9 +42,28 @@
         });
     }
 
+function JSFunctionValidate()
+{
+    var validate_fail = 0;
+    var box_number = <?php echo $box_number; ?>;
+    for (the_I=0; the_I < box_number; the_I++) {
+        var file_upload = document.getElementById('image-file-'+ the_I).files.length;
+        var title_input = document.getElementById('image-title-'+ the_I).value;
+        var merchant_select = document.getElementById('image-merchant-' + the_I);
+        if(file_upload != 0 ){
+            if(title_input == "" || title_input.length == 0 || title_input == null || title_input.trim() == "" || merchant_select.selectedIndex==-1){
+                validate_fail = 1;
+                alert("Title and Merchant cannot be empty.");
+            }                   
+        }
+    }
+    if(validate_fail == 0){
+        return true;
+    }
+    return false;
+}
 </script>
 <div id='hot-deal-advertise'>
-    <h1>User upload image for merchant</h1>
     <div id='hot-deal-advertise-content'>       
         
         <div id='hot-deal-upload-image-note'>
@@ -52,7 +79,7 @@
                         <?php echo "<img src='" . base_url(${'image_url' . $i}) . "' id='image_url-" . $i . "'>"; ?>
                     </div>
                     <div id='hot-deal-input-file'>
-                        <?php echo "<input type='file' name='image-file-" . $i . "' />"; ?> 
+                        <?php echo "<input type='file' name='image-file-" . $i . "' id='image-file-" . $i . "' />"; ?> 
                     </div>
                     <div id='register-form-each'>
                         <div id='register-form-each-label'><?php echo lang('album_title_label'); ?></div>
@@ -82,9 +109,13 @@
                         <div id='register-form-each-label'><?php echo lang("album_merchant_label"); ?></div>
                         <div id='register-form-each-input'>
                             <?php
-                            //echo form_dropdown(${'image_merchant' . $i}, $merchant_list, ${'image_merchant_selected' . $i});
-                            echo "<div id='d_image_merchant-" . $i ."'>";
-                            echo form_dropdown('temporary', array());
+
+                            echo "<div id='image_merchant-" . $i ."'>";
+                            if(empty(${'image_merchant_selected' . $i})){
+                                echo form_dropdown(${'image_merchant' . $i}, array());
+                            }else{
+                                echo form_dropdown(${'image_merchant' . $i}, $merchant_list, ${'image_merchant_selected' . $i});
+                            }
                             echo "</div>";
                             ?>
                         </div>
@@ -92,7 +123,7 @@
                 </div>
                 <?php } ?>
                 <div id="float-fix"></div>
-                <button name="button_action" type="submit" value="upload_image" >Upload</button>
+                <button name="button_action" type="submit" value="upload_image" onclick="return JSFunctionValidate();" >Upload</button>
             <?php echo form_close(); ?>
         </div>
     </div>

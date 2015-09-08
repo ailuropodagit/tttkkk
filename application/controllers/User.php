@@ -673,10 +673,10 @@ class user extends CI_Controller
             if ($this->input->post('button_action') == "confirm")
             {
                 // do we have a valid request?
-                if ($this->_valid_csrf_nonce() === FALSE || $user_id != $this->input->post('id'))
-                {
-                    show_error($this->lang->line('error_csrf'));
-                }
+//                if ($this->_valid_csrf_nonce() === FALSE || $user_id != $this->input->post('id'))
+//                {
+//                    show_error($this->lang->line('error_csrf'));
+//                }
                 if ($this->form_validation->run() === TRUE)
                 {
                     $first_name = $this->input->post('first_name');
@@ -873,6 +873,7 @@ class user extends CI_Controller
         {
             if ($this->input->post('button_action') == "upload_image")
             {
+                $can_redirect = 0;
                 $upload_rule = array(
                     'upload_path' => $this->album_user_merchant,
                     'allowed_types' => $this->config->item('allowed_types_image'),
@@ -890,7 +891,7 @@ class user extends CI_Controller
                             
                     $post_file = "image-file-" . $i;
                     $post_title = $this->input->post('image-title-' . $i);
-                    $post_merchant_id = $this->input->post('d-image-merchant-' . $i);
+                    $post_merchant_id = $this->input->post('image-merchant-' . $i);
                     $post_desc = $this->input->post('image-desc-' . $i);
 
                     if (!empty($_FILES[$post_file]['name']))
@@ -900,16 +901,13 @@ class user extends CI_Controller
 //                        $this->form_validation->set_rules('image-desc-' . $i, $this->lang->line('album_description_label'));
 
                         //if ($this->form_validation->run() == false)
-//                        if(IsNullOrEmptyString($post_title) || $post_merchant_id == '0')
-//                        {
-//                            $message_info = add_message_info($message_info, 'Image '.($i+1).' title and merchant cannot be empty.');
-//                            $validate_fail = 1;
-//                        }
-//                        else
-//                        {
+                        if($post_merchant_id == null){
+                            $validate_fail = 1;
+                            $message_info = add_message_info($message_info, 'Merchant cannot be empty.', $post_title);
+                            goto ValidateFail;
+                        }
                             if (!$this->upload->do_upload($post_file))
                             {
-                                //$error = array('error' => $this->upload->display_errors());
                                 $message_info = add_message_info($message_info, $this->upload->display_errors(), $post_title);
                             }
                             else
@@ -934,21 +932,18 @@ class user extends CI_Controller
                                 {
                                     $message_info = add_message_info($message_info, $this->ion_auth->errors(), $post_title);
                                 }
-                           // }
                         }
                     }
+                    ValidateFail:
                 }
                 $this->session->set_flashdata('message', $message_info);               
-//                if ($validate_fail == 1)
-//                {
-//                    goto ValidateFail;
-//                }
-                redirect('user/album_user_merchant', 'refresh');
+                if($validate_fail==0){
+                    redirect('all/album_user_merchant/'.$user_id, 'refresh');
+                }
             }
         }
         
-//        ValidateFail:
-        $this->data['category_list'] = $this->m_custom->getCategoryList();
+        $this->data['category_list'] = $this->m_custom->getCategoryList('0','');
         $this->data['merchant_list'] = $this->m_custom->getMerchantList();
                 
         for ($i = 0; $i < $this->box_number; $i++)
@@ -998,35 +993,26 @@ class user extends CI_Controller
         $merchant_list = array();
         if ($selected_category != '0')
         {
-            $query = $this->m_custom->getMerchantList_by_category($selected_category);
+            $query = $this->m_custom->getMerchantList_by_category($selected_category, 0 ,1);
 
             foreach ($query as $item){
                 $merchant_list[$item->id] = $item->company;
             }
         }
         
-        $d_image_merchant = 'd-image-merchant-' . $i;
-        $output = form_dropdown($d_image_merchant, $merchant_list);
+        $image_merchant = array(
+                'name' => 'image-merchant-' . $i,
+                'id' => 'image-merchant-' . $i,
+        );
+        $output = form_dropdown($image_merchant, $merchant_list);
         echo $output;
-    }
-
-    function album_user_merchant(){
-        $this->data['message'] = $this->session->flashdata('message');
-        $this->data['page_path_name'] = 'user/album_user_merchant';
-        $this->load->view('template/layout_right_menu', $this->data);
     }
     
     function upload_image(){
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'user/upload_image';
         $this->load->view('template/layout_right_menu', $this->data);
-    }
-    
-    function album_user(){
-        $this->data['message'] = $this->session->flashdata('message');
-        $this->data['page_path_name'] = 'user/album_user';
-        $this->load->view('template/layout_right_menu', $this->data);
-    }
+    }  
     
     // edit a user
     function edit_user($id)
