@@ -46,3 +46,5 @@ $config['hotdeal_per_day'] = 5;
 
 $config['keppo_email_domain'] = '@keppo.my';
 $config['keppo_admin_email'] = 'wilkinwilly999@gmail.com,weechiat.teo@hotmail.com';
+
+$config['custom_per_page'] = '4';

@@ -12,6 +12,11 @@ if(!empty($upload_hotdeal_button)){
 echo $upload_hotdeal_button; 
 }
 ?>
+<?php
+if(!empty($links)){
+echo "<p>".$links."<p>"; 
+}
+?>
 <style>
     .hot-deal-box{
         float: left;
@@ -58,6 +63,8 @@ foreach ($hotdeal_list as $row)
         $advertise_detail_url = base_url()."all/advertise/".$row['advertise_id'] . "/hot/" . $row['sub_category_id'];
     }else if($this->router->fetch_method() == 'merchant_dashboard'){
         $advertise_detail_url = base_url()."all/advertise/".$row['advertise_id'] . "/all/0/" . $row['merchant_id'];
+    }else if($this->router->fetch_method() == 'album_merchant' ){
+        $advertise_detail_url = base_url()."all/advertise/".$row['advertise_id'] . "/all/0/" . $row['merchant_id'] . '/1';
     }else if($this->router->fetch_method() == 'promotion_list'){
         $advertise_detail_url = base_url()."all/advertise/".$row['advertise_id'] . "/pro/" . $row['sub_category_id'];
     }else{

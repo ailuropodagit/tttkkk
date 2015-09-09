@@ -50,7 +50,7 @@ class All extends CI_Controller
         $this->load->view('template/layout_right', $this->data);
     }
     
-    function advertise($advertise_id, $advertise_type = NULL, $sub_category_id = NULL, $merchant_id = NULL)
+    function advertise($advertise_id, $advertise_type = NULL, $sub_category_id = NULL, $merchant_id = NULL, $show_expired = 0)
     {     
         $the_row = $this->m_custom->getOneAdvertise($advertise_id);
         if ($the_row)
@@ -88,15 +88,15 @@ class All extends CI_Controller
 
             if ($advertise_type != NULL)
             {
-                $advertise_current_list = $this->m_custom->getAdvertise($advertise_type, $sub_category_id, $merchant_id);
+                $advertise_current_list = $this->m_custom->getAdvertise($advertise_type, $sub_category_id, $merchant_id, $show_expired);
                 $advertise_id_array = get_key_array_from_list_array($advertise_current_list,'advertise_id');
                 $previous_id = get_previous_id($advertise_id,$advertise_id_array);
                 $next_id = get_next_id($advertise_id,$advertise_id_array);
                 if($previous_id){
-                    $this->data['previous_url'] = base_url() . "all/advertise/".$previous_id."/".$advertise_type."/".$sub_category_id."/".$merchant_id;
+                    $this->data['previous_url'] = base_url() . "all/advertise/".$previous_id."/".$advertise_type."/".$sub_category_id."/".$merchant_id . "/" . $show_expired;
                 }
                 if($next_id){
-                    $this->data['next_url'] = base_url() . "all/advertise/".$next_id."/".$advertise_type."/".$sub_category_id."/".$merchant_id;
+                    $this->data['next_url'] = base_url() . "all/advertise/".$next_id."/".$advertise_type."/".$sub_category_id."/".$merchant_id. "/" . $show_expired;
                 }
             }
 
@@ -132,27 +132,52 @@ class All extends CI_Controller
         $this->load->view('template/layout_right_menu', $this->data);
     }
  
-    function album_merchant($slug = NULL)
-    {
+    function album_merchant($slug = NULL, $page = 1)
+    {     
+        $this->load->library("pagination");
+        $config = array();
+        
         $merchant_id = 0;
+        $base_url = base_url() . "all/album_merchant";
         if($slug != NULL){
             $the_row = $this->m_custom->get_one_table_record('users', 'slug', $slug);
             $merchant_id = $the_row->id ;    
+            $base_url = base_url() . "all/album_merchant/".$slug;
         }else if (check_correct_login_type($this->group_id_merchant))
         {
             $merchant_id = $this->ion_auth->user()->row()->id;
-            $this->data['upload_hotdeal_button'] =  "<a href='" . base_url() . "merchant/upload_hotdeal'>Upload</a><br/>";
+            $the_row = $this->m_custom->get_one_table_record('users', 'id', $merchant_id);
+            $base_url = base_url() . "all/album_merchant/".$the_row->slug;
         }else if(check_correct_login_type($this->group_id_supervisor)){
-            $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;
+            $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;    //For supervisor is taking different id for it merchant id
+            $the_row = $this->m_custom->get_one_table_record('users', 'id', $merchant_id);
+            $base_url = base_url() . "all/album_merchant/".$the_row->slug;          
+        }      
+        
+        if ($this->ion_auth->logged_in()){
             $this->data['upload_hotdeal_button'] =  "<a href='" . base_url() . "merchant/upload_hotdeal'>Upload</a><br/>";
         }
         
-        $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('all', NULL, $merchant_id, 1);
+        //For setting the pagination function
+        $config["per_page"] = $this->config->item('custom_per_page');             
+        $config['num_links'] = 5;
+        $config['use_page_numbers'] = TRUE;       
+        $config['num_tag_open'] = '&nbsp';
+        $config['num_tag_close'] = '&nbsp';
+        $config['next_link'] = ' Next ';
+        $config['prev_link'] = ' Previous ';    
+        $config["base_url"] = $base_url;
+        $config["total_rows"] = count($this->m_custom->getAdvertise('all', NULL, $merchant_id, 1));  //To get the total row              
+        $this->pagination->initialize($config);      
+        $this->data["links"] = $this->pagination->create_links();
+        $start_index = $page == 1? $page : (($page-1)*$config["per_page"]);  //For calculate page number to start index
+        
+        $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('all', NULL, $merchant_id, 1, $config["per_page"], $start_index);   //To get the limited result only for that current page
         
         $this->data['title'] = "Merchant Album";
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'all/advertise_list';
-
+        
         if ($this->ion_auth->logged_in())
         {
             $this->load->view('template/layout_right_menu', $this->data);
@@ -209,8 +234,9 @@ class All extends CI_Controller
             $this->data['offer_deal'] = base_url() . 'all/merchant-dashboard/' . $slug;
             $this->data['user_picture'] = base_url() . 'all/merchant-dashboard/' . $slug . '/user-picture';
             $this->data['user_upload_for_merchant'] = base_url() . 'user/upload_for_merchant/' . $slug;
+            $this->data['show_expired'] =  "<a href='" . base_url() . "all/album_merchant/'. $slug>Show Expired</a><br/>";
             
-            $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('all', NULL, $the_row->id, 1);
+            $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('all', NULL, $the_row->id);
 
             if ($user_picture == NULL)
             {
