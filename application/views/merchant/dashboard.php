@@ -49,7 +49,9 @@
                 </tr>
             </table>
         </div>
-        <div id="float-fix"></div><br/>
+        <div id="float-fix"></div>
+        
+        <br/>
         <a href="<?php echo $offer_deal; ?>" >Offer deal </a> | <a href="<?php echo $user_picture; ?>" > User's Picture</a> <br/><br/>
         <?php
         if (check_correct_login_type($this->config->item('group_id_user')))
@@ -57,5 +59,7 @@
             echo "<a href='" . $user_upload_for_merchant . "' > Upload Picture </a><br/><br/>";
         }
         ?>
-    </div>    
+        <div id="float-fix"></div>
+        
+    </div>
 </div>
