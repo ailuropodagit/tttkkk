@@ -1,12 +1,17 @@
 <script type="text/javascript" src="http://localhost/keppo/js/jquery.countdown.js"></script>
 
-<h1><?php echo $advertise_title; ?></h1>
+<h1><?php echo $title; ?></h1>
 <h2><?php 
 if(!empty($sub_title)){
 echo $sub_title; 
 }
 ?></h2>
 <br/>
+<?php
+if(!empty($upload_hotdeal_button)){
+echo $upload_hotdeal_button; 
+}
+?>
 <style>
     .hot-deal-box{
         float: left;

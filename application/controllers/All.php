@@ -11,6 +11,8 @@ class All extends CI_Controller
         $this->album_user_profile = $this->config->item('album_user_profile');
         $this->album_user_merchant = $this->config->item('album_user_merchant');
         $this->album_user = $this->config->item('album_user');
+        $this->group_id_merchant = $this->config->item('group_id_merchant');
+        $this->group_id_supervisor = $this->config->item('group_id_supervisor');
         $this->login_type = 0;
         if ($this->ion_auth->logged_in())
         {
@@ -21,7 +23,7 @@ class All extends CI_Controller
     function hotdeal_list(){
         $sub_category_id = $this->uri->segment(3);
         $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('hot',$sub_category_id);
-        $this->data['advertise_title'] = "Hot Deals";    
+        $this->data['title'] = "Hot Deals";    
 
         if (!IsNullOrEmptyString($sub_category_id))
         {
@@ -36,7 +38,7 @@ class All extends CI_Controller
     function promotion_list(){
         $sub_category_id = $this->uri->segment(3);
         $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('pro',$sub_category_id);
-        $this->data['advertise_title'] = "Redemption";
+        $this->data['title'] = "Redemption";
         
         if (!IsNullOrEmptyString($sub_category_id))
         {
@@ -129,6 +131,37 @@ class All extends CI_Controller
         $this->data['page_path_name'] = 'all/album_user';
         $this->load->view('template/layout_right_menu', $this->data);
     }
+ 
+    function album_merchant($slug = NULL)
+    {
+        $merchant_id = 0;
+        if($slug != NULL){
+            $the_row = $this->m_custom->get_one_table_record('users', 'slug', $slug);
+            $merchant_id = $the_row->id ;    
+        }else if (check_correct_login_type($this->group_id_merchant))
+        {
+            $merchant_id = $this->ion_auth->user()->row()->id;
+            $this->data['upload_hotdeal_button'] =  "<a href='" . base_url() . "merchant/upload_hotdeal'>Upload</a><br/>";
+        }else if(check_correct_login_type($this->group_id_supervisor)){
+            $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;
+            $this->data['upload_hotdeal_button'] =  "<a href='" . base_url() . "merchant/upload_hotdeal'>Upload</a><br/>";
+        }
+        
+        $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('all', NULL, $merchant_id, 1);
+        
+        $this->data['title'] = "Merchant Album";
+        $this->data['message'] = $this->session->flashdata('message');
+        $this->data['page_path_name'] = 'all/advertise_list';
+
+        if ($this->ion_auth->logged_in())
+        {
+            $this->load->view('template/layout_right_menu', $this->data);
+        }
+        else
+        {
+            $this->load->view('template/layout', $this->data);
+        }
+    }
     
     //View the user dashboard upper part
     function user_dashboard($user_id)
@@ -177,11 +210,11 @@ class All extends CI_Controller
             $this->data['user_picture'] = base_url() . 'all/merchant-dashboard/' . $slug . '/user-picture';
             $this->data['user_upload_for_merchant'] = base_url() . 'user/upload_for_merchant/' . $slug;
             
-            $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('all', NULL, $the_row->id);
+            $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('all', NULL, $the_row->id, 1);
 
             if ($user_picture == NULL)
             {
-                $this->data['advertise_title'] = "Offer Deals";
+                $this->data['title'] = "Offer Deals";
                 $this->data['bottom_path_name'] = 'all/advertise_list';
             }
             else
