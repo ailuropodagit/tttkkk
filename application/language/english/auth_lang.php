@@ -170,6 +170,7 @@ $lang['hotdeal_sub_category_label']        = 'Category : ';
 
 // User Album
 $lang['album_description_label']         = 'Description : ';
+$lang['album_category_label']            = 'Select Category* : ';
 $lang['album_merchant_label']            = 'Select Merchant* : ';
 $lang['album_title_label']               = 'Title* : ';
 

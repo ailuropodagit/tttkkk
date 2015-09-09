@@ -23,10 +23,10 @@
         <div id="profile-photo">
             <div id="profile-photo-box">
                 <?php            
-                if($image === "")
+                if(IsNullOrEmptyString($image))
                 {
                     ?>
-                    <img src="<?php echo base_url() ?>image/image-empty.jpg">
+                    <img src="<?php echo base_url().$this->config->item('empty_image'); ?>">
                     <?php
                 }
                 else
@@ -68,9 +68,9 @@
                 <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_user_dob_label'); ?></div>
                     <div id='profile-info-form-each-input-dob'>
-                        <div id='profile-info-form-each-input-dob-day'><?php echo form_dropdown($day, $day_list); ?></div>
-                        <div id='profile-info-form-each-input-dob-month'><?php echo form_dropdown($month, $month_list); ?></div>
-                        <div id='profile-info-form-each-input-dob-year'><?php echo form_dropdown($year, $year_list); ?></div>
+                        <div id='profile-info-form-each-input-dob-day'><?php echo form_dropdown($day, $day_list,$b_day); ?></div>
+                        <div id='profile-info-form-each-input-dob-month'><?php echo form_dropdown($month, $month_list,$b_month); ?></div>
+                        <div id='profile-info-form-each-input-dob-year'><?php echo form_dropdown($year, $year_list,$b_year); ?></div>
                         <br/><br/>
                     </div>
                 </div>

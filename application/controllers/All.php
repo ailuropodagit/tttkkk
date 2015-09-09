@@ -9,6 +9,8 @@ class All extends CI_Controller
         $this->album_merchant_profile = $this->config->item('album_merchant_profile');
         $this->album_merchant = $this->config->item('album_merchant');
         $this->album_user_profile = $this->config->item('album_user_profile');
+        $this->album_user_merchant = $this->config->item('album_user_merchant');
+        $this->album_user = $this->config->item('album_user');
         $this->login_type = 0;
         if ($this->ion_auth->logged_in())
         {
@@ -104,6 +106,30 @@ class All extends CI_Controller
         }
     }
     
+    function album_user_merchant($user_id = NULL, $merchant_id = NULL)
+    {
+        $this->data['album_list'] = $this->m_custom->getAlbumUserMerchant($user_id, $merchant_id);
+        
+        $this->data['title'] = "Merchant Album";
+        $this->data['message'] = $this->session->flashdata('message');
+        $this->data['page_path_name'] = 'all/album_user_merchant';
+        if ($this->ion_auth->logged_in())
+        {
+            $this->load->view('template/layout_right_menu', $this->data);
+        }
+        else
+        {
+            $this->load->view('template/layout', $this->data);
+        }
+    }
+
+    function album_user(){
+        $this->data['title'] = "User Picture Album";
+        $this->data['message'] = $this->session->flashdata('message');
+        $this->data['page_path_name'] = 'all/album_user';
+        $this->load->view('template/layout_right_menu', $this->data);
+    }
+    
     //View the user dashboard upper part
     function user_dashboard($user_id)
     {
@@ -160,8 +186,9 @@ class All extends CI_Controller
             }
             else
             {
-                $this->data['advertise_title'] = "User Pictures";
-                $this->data['bottom_path_name'] = ''; //To put user uploaded merchant picture
+                $this->data['album_list'] = $this->m_custom->getAlbumUserMerchant(NULL, $the_row->id);
+                $this->data['title'] = "User Pictures";
+                $this->data['bottom_path_name'] = 'all/album_user_merchant';
             }
 
             if ($this->ion_auth->logged_in())

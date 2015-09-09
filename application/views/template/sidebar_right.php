@@ -35,14 +35,14 @@
         else
         {
             //USER SIDEBAR MENU
-            $dashboard = base_url() . 'all/user-dashboard/' . generate_slug($this->session->userdata('user_id'));
+            $dashboard = base_url() . 'all/user_dashboard/' . $this->session->userdata('user_id');
             ?>
             <li><a href='<?php echo $dashboard ?>' class='body-right-sidebar-bar <?php if ($this->router->fetch_method() == 'dashboard'){ echo "body-right-sidebar-bar-active"; } ?>'>Dashboard</a></li>
             <li><a href='<?php echo base_url(); ?>user/profile' class='body-right-sidebar-bar <?php if ($this->router->fetch_method() == 'profile'){ echo "body-right-sidebar-bar-active"; } ?>'>Profile</a></li>
             <li><a href='<?php echo base_url(); ?>user/change-password' class='body-right-sidebar-bar <?php if ($this->router->fetch_method() == 'change_password'){ echo "body-right-sidebar-bar-active"; } ?>'>Change Password</a></li>
             <li><a href='#' class='body-right-sidebar-bar'>Follower</a></li>
             <li><a href='#' class='body-right-sidebar-bar'>Review</a></li>
-            <li><a href='#' class='body-right-sidebar-bar'>Picture</a></li>
+            <li><a href='<?php echo base_url(); ?>all/album_user' class='body-right-sidebar-bar <?php if ($this->router->fetch_method() == 'album_user'){ echo "body-right-sidebar-bar-active"; } ?>'>Picture</a></li>
             <li><a href='#' class='body-right-sidebar-bar'>Candies</a></li>
             <li><a href='#' class='body-right-sidebar-bar'>Redemption</a></li>
             <li><a href='#' class='body-right-sidebar-bar'>Invite Friend</a></li>

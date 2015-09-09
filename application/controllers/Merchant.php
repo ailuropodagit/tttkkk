@@ -1219,7 +1219,7 @@ class Merchant extends CI_Controller
                 $search_year = $this->input->post('candie_year');
                 $candie_point = check_is_positive_numeric($this->input->post('candie_point'));
                 $expire_date = validateDate($this->input->post('expire_date'));
-                $candie_vender = $this->input->post('candie_vender');
+                //$candie_vender = $this->input->post('candie_vender');
                 $image_data = NULL;
 
                 if (!empty($this->input->post('candie_term')))
@@ -1265,7 +1265,7 @@ class Merchant extends CI_Controller
                         'voucher' => $this->m_custom->generate_voucher($merchant_id),
                         'voucher_candie' => $candie_point,
                         'voucher_expire_date' => $expire_date,
-                        'extra_field' => $candie_vender
+                        //'extra_field' => $candie_vender
                     );
 
                     $new_id = $this->m_custom->get_id_after_insert('advertise', $data);
@@ -1314,7 +1314,7 @@ class Merchant extends CI_Controller
                         'end_time' => $end_date,
                         'voucher_candie' => $candie_point,
                         'voucher_expire_date' => $expire_date,
-                        'extra_field' => $candie_vender
+                        //'extra_field' => $candie_vender
                     );
 
                     if ($this->m_custom->simple_update('advertise', $data, 'advertise_id', $candie_id))
@@ -1376,7 +1376,7 @@ class Merchant extends CI_Controller
             'value' => empty($this_month_candie) ? '' : $this_month_candie['description'],
         );
 
-        $this->data['candie_image'] = empty($this_month_candie) ? $this->folder_image . $this->config->item('other_default_image') : $this->album_merchant . $this_month_candie['image'];
+        $this->data['candie_image'] = empty($this_month_candie) ? $this->config->item('empty_image') : $this->album_merchant . $this_month_candie['image'];
 
         $this->data['start_date'] = array(
             'name' => 'start_date',
@@ -1419,11 +1419,11 @@ class Merchant extends CI_Controller
             'value' => empty($this_month_candie) ? '' : displayDate($this_month_candie['voucher_expire_date']),
         );
 
-        $this->data['candie_vender'] = array(
-            'name' => 'candie_vender',
-            'id' => 'candie_vender',
-            'value' => empty($this_month_candie) ? '' : $this_month_candie['extra_field'],
-        );
+//        $this->data['candie_vender'] = array(
+//            'name' => 'candie_vender',
+//            'id' => 'candie_vender',
+//            'value' => empty($this_month_candie) ? '' : $this_month_candie['extra_field'],
+//        );
 
         $this->data['candie_term'] = $candie_term;
         $this->data['candie_branch'] = $candie_branch;
@@ -1575,7 +1575,7 @@ class Merchant extends CI_Controller
             'value' => empty($hotdeal_result) ? '' : $hotdeal_result['title'],
         );
 
-        $this->data['hotdeal_image'] = empty($hotdeal_result) ? $this->folder_image . $this->config->item('other_default_image') : $this->album_merchant . $hotdeal_result['image'];
+        $this->data['hotdeal_image'] = empty($hotdeal_result) ? $this->config->item('empty_image') : $this->album_merchant . $hotdeal_result['image'];
 
         $this->data['hotdeal_category'] = array(
             'name' => 'category',
@@ -1809,7 +1809,7 @@ class Merchant extends CI_Controller
             );
 
             $hotdeal_image = 'hotdeal_image' . $i;
-            $this->data[$hotdeal_image] = empty($hotdeal_today_result[$i]) ? $this->folder_image . $this->config->item('other_default_image') : $this->album_merchant . $hotdeal_today_result[$i]['image'];
+            $this->data[$hotdeal_image] = empty($hotdeal_today_result[$i]) ? $this->config->item('empty_image') : $this->album_merchant . $hotdeal_today_result[$i]['image'];
 
             $hotdeal_category = 'hotdeal_category' . $i;
             $this->data[$hotdeal_category] = array(
