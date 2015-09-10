@@ -24,7 +24,7 @@ class All extends CI_Controller
     function hotdeal_list(){
         $sub_category_id = $this->uri->segment(3);
         $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('hot',$sub_category_id);
-        $this->data['advertise_title'] = "Hot Deals";    
+        $this->data['title'] = "Hot Deals";    
 
         if (!IsNullOrEmptyString($sub_category_id))
         {
@@ -40,7 +40,7 @@ class All extends CI_Controller
     function promotion_list(){
         $sub_category_id = $this->uri->segment(3);
         $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('pro',$sub_category_id);
-        $this->data['advertise_title'] = "Redemption";
+        $this->data['title'] = "Redemption";
         
         if (!IsNullOrEmptyString($sub_category_id))
         {
@@ -253,7 +253,7 @@ class All extends CI_Controller
 
             if ($user_picture == NULL)
             {
-                $this->data['advertise_title'] = "Offer Deals";
+                $this->data['title'] = "Offer Deals";
                 $this->data['bottom_path_name'] = 'all/advertise_list';
             }
             else

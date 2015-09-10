@@ -26,7 +26,7 @@ $this->album_merchant = $this->config->item('album_merchant');
 ?>
 
 <div id="advertise-list">
-    <h1><?php echo $advertise_title; ?></h1>
+    <h1><?php echo $title; ?></h1>
     <div id="advertise-list-content">
         
         <!--CATEGORY BREADCRUMB-->
@@ -89,7 +89,7 @@ $this->album_merchant = $this->config->item('album_merchant');
                         <tr>
                             <td>Like</td>
                             <td>:</td>
-                            <td>30</td>
+                            <td><?php echo $this->m_custom->activity_like_count($row['advertise_id'], 'adv'); ?></td>
                         </tr>
                         <tr>
                             <td>Comment</td>
