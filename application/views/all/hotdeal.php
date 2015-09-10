@@ -1,4 +1,5 @@
 <script type="text/javascript" src="http://localhost/keppo/js/jquery.countdown.js"></script>
+<script type="text/javascript" src="http://localhost/keppo/js/js_custom.js"></script>
 
 <script type="text/javascript">
     $( document ).ready(function() {
@@ -22,6 +23,9 @@
                         });
             });
         });
+
+        
+
 </script>
 
 <h1>Hot Deal</h1>
@@ -40,7 +44,7 @@ echo "<a href='" . $next_url . "' >Next</a> ";
 <br/>
 
 
- <?php   echo "People Reached <br/>20 users"; ?>
+ <?php   echo "People Reached <br/>".$this->m_custom->activity_view_count($advertise_id)." users"; ?>
 <div id='hot-deal-photo-box'>
     <?php
     echo "<img src='" . $image_url . "' id='hotdeal-img'>";
@@ -58,7 +62,7 @@ Description :
     <?php   echo $description . "</br>";     ?>
 </br>
 <?php
-    echo "Like : 12 ";
+    echo $like_url;
     echo "Comment : 34 ";
     echo "Share : <br/>";
     ?>

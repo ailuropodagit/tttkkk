@@ -525,6 +525,94 @@ class M_custom extends CI_Model
         return $return;
     }
     
+    //To get the childlist id from many table by the type and parent id
+    public function many_get_child_count($the_type, $parent_id)
+    {
+        $query = $this->db->get_where('many_to_many', array('many_type' => $the_type, 'many_parent_id' => $parent_id));
+
+        return $query->num_rows();
+    }
+    
+    public function many_check_and_insert($the_type, $parent_id, $child_id)
+    {
+        $query = $this->db->get_where('many_to_many', array('many_type' => $the_type, 'many_parent_id' => $parent_id, 'many_child_id' => $child_id));
+        if ($query->num_rows() == 0)
+        {
+            $the_data = array(
+                'many_type' => $the_type,
+                'many_parent_id' => $parent_id,
+                'many_child_id' => $child_id,
+            );
+            $this->db->insert('many_to_many', $the_data);
+        }
+    }
+
+    public function activity_view($advertise_id){
+        if (check_correct_login_type($this->config->item('group_id_user')))
+        {
+            $user_id = $this->ion_auth->user()->row()->id;
+            $this->many_check_and_insert('view_advertise',$advertise_id,$user_id);
+        }       
+    }
+    
+    public function activity_view_count($advertise_id){
+            return $this->many_get_child_count('view_advertise',$advertise_id);
+    }
+    
+    public function activity_check_and_insert($the_type, $refer_id, $refer_type, $by_id, $by_type, $allow_duplicate = 0, $rating = NULL, $comment = NULL)
+    {
+        $search_data = array(
+            'act_type' => $the_type,
+            'act_refer_id' => $refer_id,
+            'act_refer_type' => $refer_type,
+            'act_by_id' => $by_id,
+            'act_by_type' => $by_type,
+        );
+        $query = $this->db->get_where('activity_history', $search_data);
+        if (($query->num_rows() == 0 && $allow_duplicate == 0) || $allow_duplicate != 0)
+        {
+            $the_data = array(
+                'act_type' => $the_type,
+                'act_refer_id' => $refer_id,
+                'act_refer_type' => $refer_type,
+                'act_by_id' => $by_id,
+                'act_by_type' => $by_type,
+                'rating' => $rating == NULL? NULL : $rating,
+                'comment' => $comment == NULL? NULL : $comment,
+            );
+            $this->db->insert('activity_history', $the_data);
+        }
+    }
+    
+    //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
+    public function activity_like($refer_id, $refer_type)
+    {
+        if (check_correct_login_type($this->config->item('group_id_user')))
+        {
+            $user_id = $this->ion_auth->user()->row()->id;
+            $this->activity_check_and_insert('like', $refer_id, $refer_type, $user_id, 'usr');
+        }
+    }
+
+    //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
+    public function activity_like_count($refer_id, $refer_type)
+    {
+        $query = $this->db->get_where('activity_history', array('act_type' => 'like', 'act_refer_id' => $refer_id, 'act_refer_type' => $refer_type));
+
+        return $query->num_rows();
+    }
+    
+    //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
+    public function generate_like_link($refer_id, $refer_type)
+    {
+        if (check_correct_login_type($this->config->item('group_id_user')))
+        {
+            return "<a href='' class='like-it' onclick='click_like(" . $refer_id . ");'> Like </a> : " . $this->activity_like_count($refer_id, $refer_type) . " ";
+        }else{
+            return "Like : ". $this->activity_like_count($refer_id, $refer_type) . " ";
+        }
+    }
+
     public function compare_before_update($the_table, $the_data, $id_column, $id_value)
     {
         $record = $this->get_one_table_record($the_table, $id_column, $id_value, 1);

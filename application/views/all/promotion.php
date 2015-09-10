@@ -1,3 +1,5 @@
+<script type="text/javascript" src="http://localhost/keppo/js/js_custom.js"></script>
+
 <h1>Redemption</h1>
 <br/>
 
@@ -30,7 +32,7 @@ Description :
     <?php   echo $description . "</br>";     ?>
 </br>
 <?php
-    echo "Like : 12 ";
+    echo $like_url;
     echo "Comment : 34 ";
     echo "Share : <br/>";
     ?>

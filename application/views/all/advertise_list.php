@@ -77,7 +77,7 @@ foreach ($hotdeal_list as $row)
     echo "<a href='".$advertise_detail_url."'><img src='" . base_url($this->album_merchant.$row['image']) . "' class='image-hot-deal' ></a><br/>";
     echo "<a href='".$advertise_detail_url."'>".$row['title']."</a><br/>";
     echo "Category : " . $this->m_custom->display_category($row['sub_category_id'])."<br/>";
-    echo "Like : 30 ";
+    echo "Like : ". $this->m_custom->activity_like_count($row['advertise_id'], 'adv')."<br/>";
     echo "Comment : 10";
     echo "<br/>";
     if($row['advertise_type'] == 'hot'){

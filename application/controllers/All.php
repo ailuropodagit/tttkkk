@@ -13,6 +13,7 @@ class All extends CI_Controller
         $this->album_user = $this->config->item('album_user');
         $this->group_id_merchant = $this->config->item('group_id_merchant');
         $this->group_id_supervisor = $this->config->item('group_id_supervisor');
+        $this->group_id_user = $this->config->item('group_id_user');
         $this->login_type = 0;
         if ($this->ion_auth->logged_in())
         {
@@ -60,6 +61,7 @@ class All extends CI_Controller
             {
                  $login_id = $this->ion_auth->user()->row()->id;
                  $login_data = $this->m_custom->get_one_table_record('users', 'id', $login_id);
+                 $this->m_custom->activity_view($advertise_id);
             }
 
             $this->data['advertise_id'] = $advertise_id;
@@ -69,8 +71,10 @@ class All extends CI_Controller
             $this->data['image_url'] = base_url($this->album_merchant .$the_row['image']);
             $this->data['sub_category'] = $this->m_custom->display_category($the_row['sub_category_id']);
             $this->data['start_date'] = displayDate($the_row['start_time']);
-            $this->data['end_date'] = displayDate($the_row['end_time']);
+            $this->data['end_date'] = displayDate($the_row['end_time']);          
             
+            $this->data['like_url'] = $this->m_custom->generate_like_link($advertise_id,'adv');
+
             if($the_row['advertise_type'] == "pro"){                              
                 $this->data['voucher'] = $the_row['voucher'];
                 $this->data['voucher_barcode'] = base_url("barcode/generate/".$the_row['voucher']);
@@ -186,6 +190,12 @@ class All extends CI_Controller
         {
             $this->load->view('template/layout', $this->data);
         }
+    }
+    
+    //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
+    function user_click_like($refer_id, $refer_type){
+        $this->m_custom->activity_like($refer_id, $refer_type);
+        return $this->m_custom->generate_like_link($refer_id, $refer_type);
     }
     
     //View the user dashboard upper part
