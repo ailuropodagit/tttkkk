@@ -24,6 +24,11 @@ h1 {
     letter-spacing: 1px;
 }
 
+h2 {
+    font-size: 20px;
+    letter-spacing: 1px;
+}
+
 table {
     border-collapse: collapse;
 }
@@ -61,7 +66,8 @@ input[type='password'] {
 input[type='submit'], button[type='submit'] {
     margin: 0px 0px 0px 0px;
     padding: 5px 14px 5px 14px;
-    background: linear-gradient(0deg, #5a88bc, #00b4d4);
+    /*background: linear-gradient(0deg, #5a88bc, #00b4d4);*/
+    background-color: #2a5575;
     color: white;
     border: 0px;
     cursor: pointer;
@@ -72,17 +78,20 @@ input[type='submit'], button[type='submit'] {
     -webkit-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
     box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
-    border-right: 1px solid #25a0b6;
-    border-bottom: 1px solid #25a0b6;
+/*    border-right: 1px solid #25a0b6;
+    border-bottom: 1px solid #25a0b6;*/
+    border-right: 1px solid #205378;
+    border-bottom: 1px solid #205378;
+
 }
 
-input[type='submit']:hover,button[type='submit']:hover {
+/*input[type='submit']:hover,button[type='submit']:hover {
     background: linear-gradient(0deg, #00b4d4, #5a88bc);
 }
 
 input[type='submit']:active,button[type='submit']:active {
     background: linear-gradient(0deg, #00b4d4, #00b4d4);
-}
+}*/
 
 textarea {
     border: 1px solid #a9a9a9;
@@ -151,7 +160,8 @@ a:hover {
 ******************************/
 
 #header {
-    background: linear-gradient(0deg, #2a97ab, #3c7aa8);
+    /*background: linear-gradient(0deg, #2a97ab, #3c7aa8);*/
+    background-color: #244964;
     -webkit-box-shadow: 0px 0px 7px 0px rgba(0,0,0,1);
     -moz-box-shadow: 0px 0px 7px 0px rgba(0,0,0,1);
     box-shadow: 0px 0px 7px 0px rgba(0,0,0,1);
@@ -316,7 +326,7 @@ a:hover {
 }
 
 .body-right-sidebar-bar-active {
-    background-color: #009ac6;
+    background-color: #2a5575;
     color: white !important;
 }
 
@@ -357,7 +367,8 @@ a:hover {
     width: 280px;
 }
 
-#layout-advertisement-right-banner-box1, #layout-advertisement-right-banner-box2 {
+#layout-advertisement-right-banner-box1, #layout-advertisement-right-banner-box2,
+#layout-advertisement-right-banner-box3, #layout-advertisement-right-banner-box4 {
     border: 1px dotted gray;
     width: 280px; 
     height: 180px; 
@@ -368,8 +379,22 @@ a:hover {
     letter-spacing: 1px;
 }
 
-#layout-advertisement-right-banner-box1 {
+#layout-advertisement-right-banner-box1, #layout-advertisement-right-banner-box2, 
+#layout-advertisement-right-banner-box3 {
     margin: 0px 0px 20px 0px;
+}
+
+/* LAYOUT LEFT CATEGORY
+******************************/
+
+#layout-left-category {
+    float: left;
+    width: 250px;
+}
+
+#layout-left-category-right {
+    margin-left: 280px;
+    width: calc(100% - 280px);
 }
 
 /* HOME
@@ -423,6 +448,9 @@ a:hover {
 
 #home-navigation-c2-c1-bar {
     margin: 0px 0px 10px 0px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 #home-navigation-c2-c1-bar a {
@@ -604,6 +632,97 @@ a:hover {
     margin: 18px 0px 18px 0px;
 }
 
+#dashboard-navigation {
+    margin: 10px 0px 0px 0px;
+}
+
+/* ADVERTISE LIST
+******************************/
+
+#advertise-list {
+    margin: 0px 0px 0px 0px;
+}
+
+#advertise-list-content {
+    padding: 15px 0px 0px 0px;
+}
+
+#advertise-list-category-breadcrumb {
+    font-size: 16px;
+    color: gray;
+    margin: -5px 0px 30px 0px;
+}
+
+#advertise-list-box {
+    float: left;
+    margin: 0px 50px 50px 0px;
+    width: 202px;
+}
+
+#advertise-list-photo-box {
+    width: 200px;
+    height: 200px;
+    border: 1px solid #e1e1e1;
+    background-color: whitesmoke;
+}
+
+#advertise-list-photo-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#advertise-list-title1 {
+    margin: 0px 0px 10px 0px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+#advertise-list-title1 a {
+    font-size: 20px;
+    color: black;
+    font-weight: bold;
+}
+
+#advertise-list-title1 a:hover {
+    text-decoration: none;
+}
+
+#advertise-list-title2 {
+    margin: 10px 0px 0px 0px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-weight: bold;
+}
+
+#advertise-list-title2 a {
+    font-size: 17px;
+    color: black;
+}
+
+#advertise-list-title2 a:hover {
+    text-decoration: none;
+}
+
+#advertise-list-info {
+    margin: 10px 0px 0px 0px;
+    font-size: 15px;
+}
+
+#advertise-list-dynamic-time {
+    border-top: 1px dotted #ababab;
+    border-bottom: 1px dotted #ababab;
+    padding: 10px 0px 10px 0px;
+    margin: 10px 0px 0px 0px;
+    font-size: 15px;
+    text-align: center;
+}
+
+#advertise-list-dynamic-time-label {
+    margin: 0px 0px 0px 6px;
+}
+
 /* OUTLET
 ******************************/
 
@@ -751,16 +870,17 @@ a:hover {
 }
 
 #profile-info-form-each-input-dob-year select {
-    margin: 00px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
 }
 
 #profile-info-form-each-input select {
     width: 290px;
     height: 28px;
+    margin: 0px 0px 10px 0px;
 }
 
 #profile-info-form-submit {
-    margin: 10px 0px 10px 0px;
+    margin: 15px 0px 0px 0px;
 }
 
 #profile-bottom-link-left {
@@ -816,25 +936,23 @@ a:hover {
     margin: 20px 0px 0px 0px;
 }
 
-#hot-deal-today {
-    float: right;
+#hot-deal-advertise-today {
+    margin: 0px 0px 10px 0px;
 }
 
-#hot-deal-upload-image-note {
-    padding: 10px 0px 0px 0px;
-    float: right;
+#hot-deal-advertise-upload-image-note {
     font-size: smaller;
     font-style: italic;
-    margin: 5px 0px 15px 0px;
+    margin: 10px 0px 10px 0px;
 }
 
-#hot-deal-form-each {
+#hot-deal-advertise-form {
     float: left; 
     width: 250px; 
     margin: 20px 0px 20px 0px;
 }
 
-#hot-deal-photo-box {
+#hot-deal-advertise-form-photo-box {
     width: 200px;
     height: 200px;
     border: 1px solid lightgray;
@@ -842,13 +960,49 @@ a:hover {
     margin: 0px 0px 20px 0px;
 }
 
-#hot-deal-photo-box img {
+#hot-deal-advertise-form-photo-box img {
     width: 100%;
     height: 100%;
     object-fit: contain;
 }
 
-#hot-deal-input-file {
+#hot-deal-advertise-form-each-label {
+    width: 285px;
+    text-align: left;
+    margin: 20px auto 0px auto;
+}
+
+#hot-deal-advertise-form-each-input input[type='text'] {
+    height: 25px;
+    width: 200px;
+    margin: 10px 0px 0px 0px;
+    box-sizing: border-box;
+}
+
+#hot-deal-advertise-form-each-input select {
+    height: 25px;
+    width: 200px;
+    margin: 10px 0px 0px 0px;
+    box-sizing: border-box;
+}
+
+#hot-deal-advertise-form-each-input textarea {
+    margin: 10px 0px 0px 0px;
+    height: 80px;
+    width: 200px;
+    box-sizing: border-box;
+    resize: none;
+}
+
+#hot-deal-advertise-remove-label {
+    font-size: 15px;
+}
+
+#hot-deal-advertise-form-each-input input[type='checkbox'] {
+    margin-top: -100px;
+}
+
+#hot-deal-advertise-form-input-file {
     margin: 0px 0px 20px 0px;
 }
     

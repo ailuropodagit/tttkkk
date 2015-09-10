@@ -38,7 +38,7 @@
                     $company = $category_merchant->company;
                     $slug = $category_merchant->slug;
                     ?>
-                    <div id="home-navigation-c2-c1-bar" >
+                    <div id="home-navigation-c2-c1-bar">
                         <a href='<?php echo base_url() ?>all/merchant-dashboard/<?php echo $slug ?>'><?php echo $company ?></a>
                     </div>
                     <?php

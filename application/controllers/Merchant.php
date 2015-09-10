@@ -4,7 +4,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Merchant extends CI_Controller
 {
-
     function __construct()
     {
         parent::__construct();
@@ -92,7 +91,6 @@ class Merchant extends CI_Controller
             // the user is not logging in so display the login page
             // set the flash data error message if there is one
             $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-
             $this->data['identity'] = array('name' => 'identity',
                 'id' => 'identity',
                 'type' => 'text',
@@ -102,7 +100,6 @@ class Merchant extends CI_Controller
                 'id' => 'password',
                 'type' => 'password',
             );
-
             $this->data['page_path_name'] = 'merchant/login';
             $this->load->view('template/layout', $this->data);
         }

@@ -67,6 +67,7 @@ class user extends CI_Controller
                 //redirect them back to the home page
                 //$this->session->set_flashdata('message', $this->ion_auth->messages());
                 redirect('user/profile', 'refresh');
+                //echo $this->session->userdata('user_id');
             }
             else
             {

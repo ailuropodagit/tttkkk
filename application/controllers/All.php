@@ -25,12 +25,13 @@ class All extends CI_Controller
 
         if (!IsNullOrEmptyString($sub_category_id))
         {
-            $this->data['sub_title'] = 'Category : ' . $this->m_custom->display_category($sub_category_id);
+            $this->data['main_category'] = $this->m_custom->display_main_category($sub_category_id);
+            $this->data['sub_category'] = $this->m_custom->display_category($sub_category_id);
         }
 
         $this->data['left_path_name'] = 'template/sidebar_left_full';    
         $this->data['page_path_name'] = 'all/advertise_list';
-        $this->load->view('template/layout_right', $this->data);
+        $this->load->view('template/layout_left_category', $this->data);
     }
     
     function promotion_list(){
@@ -40,12 +41,13 @@ class All extends CI_Controller
         
         if (!IsNullOrEmptyString($sub_category_id))
         {
-            $this->data['sub_title'] = 'Category : ' . $this->m_custom->display_category($sub_category_id);
+            $this->data['main_category'] = $this->m_custom->display_main_category($sub_category_id);
+            $this->data['sub_category'] = $this->m_custom->display_category($sub_category_id);
         }
         
         $this->data['left_path_name'] = 'template/sidebar_left_full';    
         $this->data['page_path_name'] = 'all/advertise_list';
-        $this->load->view('template/layout_right', $this->data);
+        $this->load->view('template/layout_left_category', $this->data);
     }
     
     function advertise($advertise_id, $advertise_type = NULL, $sub_category_id = NULL, $merchant_id = NULL)
@@ -167,7 +169,7 @@ class All extends CI_Controller
             $this->data['company_name'] = $the_row->company;
             $this->data['address'] = $the_row->address;
             $this->data['phone'] = $the_row->phone;
-            $this->data['show_outlet'] = base_url() . 'all/merchant-outlet/' . $slug;
+            $this->data['show_outlet'] = base_url() . 'all/merchant_outlet/' . $slug;
             $this->data['website_url'] = $the_row->me_website_url;
             $this->data['facebook_url'] = $the_row->me_facebook_url;
             //$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
@@ -176,9 +178,7 @@ class All extends CI_Controller
             $this->data['offer_deal'] = base_url() . 'all/merchant-dashboard/' . $slug;
             $this->data['user_picture'] = base_url() . 'all/merchant-dashboard/' . $slug . '/user-picture';
             $this->data['user_upload_for_merchant'] = base_url() . 'user/upload_for_merchant/' . $slug;
-            
-            $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('all', NULL, $the_row->id);
-
+            $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('all', NULL, $the_row->id);            
             if ($user_picture == NULL)
             {
                 $this->data['advertise_title'] = "Offer Deals";
@@ -190,7 +190,6 @@ class All extends CI_Controller
                 $this->data['title'] = "User Pictures";
                 $this->data['bottom_path_name'] = 'all/album_user_merchant';
             }
-
             if ($this->ion_auth->logged_in())
             {                
                 $this->load->view('template/layout_right_menu', $this->data);
@@ -216,7 +215,7 @@ class All extends CI_Controller
             $this->data['company_name'] = $the_row->company;
             $this->data['address'] = $the_row->address;
             $this->data['phone'] = $the_row->phone;
-            $this->data['show_outlet'] = base_url() . 'merchant-outlet/' . $slug;
+            $this->data['show_outlet'] = base_url() . 'merchant_outlet/' . $slug;
             $this->data['view_map_path'] = 'all/merchant-map/';
             $this->data['website_url'] = $the_row->me_website_url;
             $this->data['facebook_url'] = $the_row->me_facebook_url;
