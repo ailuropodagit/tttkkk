@@ -195,7 +195,8 @@ class All extends CI_Controller
     //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
     function user_click_like($refer_id, $refer_type){
         $this->m_custom->activity_like($refer_id, $refer_type);
-        return $this->m_custom->generate_like_link($refer_id, $refer_type);
+        $like_url = $this->m_custom->generate_like_link($refer_id, $refer_type);
+        echo $like_url;
     }
     
     //View the user dashboard upper part

@@ -5,8 +5,8 @@ function click_like(user_id) {
         type: 'POST',
         url: post_url,
         dataType: "html",
-        success: function() { 
-            $('.like-it').delay(2500).replaceWith(data);
+        success: function(data) { 
+            $('.like-it').replaceWith(data);
         },
         error: function (jqXHR, textStatus, errorThrown) {
             alert(textStatus);

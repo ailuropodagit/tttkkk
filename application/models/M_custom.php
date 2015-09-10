@@ -607,7 +607,7 @@ class M_custom extends CI_Model
     {
         if (check_correct_login_type($this->config->item('group_id_user')))
         {
-            return "<a href='' class='like-it' onclick='click_like(" . $refer_id . ");'> Like </a> : " . $this->activity_like_count($refer_id, $refer_type) . " ";
+            return "<span class='like-it' ><button onclick='click_like(" . $refer_id . ");'> Like </button> : " . $this->activity_like_count($refer_id, $refer_type) . " </span>";
         }else{
             return "Like : ". $this->activity_like_count($refer_id, $refer_type) . " ";
         }
