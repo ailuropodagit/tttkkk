@@ -1,15 +1,10 @@
-<?php
-
-if (!defined('BASEPATH'))
-    exit('No direct script access allowed');
+<?php if (!defined('BASEPATH'))exit('No direct script access allowed');
 
 class M_custom extends CI_Model
 {
-
     //Get all the static option of an option type
     public function get_static_option_array($option_type = NULL, $default_value = NULL, $default_text = NULL)
     {
-
         $query = $this->db->get_where('static_option', array('option_type' => $option_type));
         $return = array();
         if ($default_value != NULL)
