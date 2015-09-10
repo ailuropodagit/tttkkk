@@ -9,8 +9,10 @@
             <?php if (!empty($bottom_path_name))
             {
                 $this->load->view($bottom_path_name);
-            } ?>
+            } 
+            ?>
         </div>
+        <div id="float-fix"></div>
     </div>
 </div>
 

@@ -63,6 +63,23 @@ class M_custom extends CI_Model
         return $query->row()->category_label;
     }
     
+    //GET MAIN CATEGORY BY SUB CATEGORY ID
+    public function display_main_category($category_id = NULL)
+    {
+        $this->db->select('');
+        $this->db->from('category');
+        $this->db->where('category_id',$category_id);
+        $query = $this->db->get();
+        $main_category_id = $query->row()->main_category_id;
+        
+        $this->db->select('category_label');
+        $this->db->from('category');
+        $this->db->where('category_id',$main_category_id);
+        $query = $this->db->get();
+        $main_category_label = $query->row()->category_label;
+        return $main_category_label;
+    }
+    
     //Get one static option text by it option id
     public function display_users($user_id = NULL)
     {

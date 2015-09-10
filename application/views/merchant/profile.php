@@ -90,7 +90,7 @@
     { 
         ?>
         <div id='profile-bottom-link-left'>
-            <a href='<?php echo base_url(); ?>merchant/upload-ssm'>Submit SSM forms</a>
+            <a href='<?php echo base_url(); ?>merchant/upload_ssm'>Submit SSM forms</a>
         </div>
         <div id="profile-bottom-link-right">
             <div id="profile-bottom-link-right-each">
@@ -109,41 +109,41 @@
         </div>
         <div id='float-fix'></div>
         <?php
-    } 
+    }
     ?>
 </div>
 
 
 <?php if($is_supervisor==1){ ?>
 
-    <div id='register-form-each'>
-        <div id='register-form-each-label'><?php echo lang('branch_name_label', 'branch_name'); ?></div>
-        <div id='register-form-each-input'><?php echo form_input($branch_name); ?></div>
+    <div id='profile-info-form-each'>
+        <div id='profile-info-form-each-label'><?php echo lang('branch_name_label', 'branch_name'); ?></div>
+        <div id='profile-info-form-each-input'><?php echo form_input($branch_name); ?></div>
     </div>
 
-    <div id='register-form-each'>
-        <div id='register-form-each-label'><?php echo lang('branch_address_label', 'branch_address'); ?></div>
-        <div id='register-form-each-input'><?php echo form_textarea($branch_address); ?></div>
+    <div id='profile-info-form-each'>
+        <div id='profile-info-form-each-label'><?php echo lang('branch_address_label', 'branch_address'); ?></div>
+        <div id='profile-info-form-each-input'><?php echo form_textarea($branch_address); ?></div>
     </div>
 
-    <div id='register-form-each'>
-        <div id='register-form-each-label'><?php echo lang('branch_phone_label', 'branch_phone'); ?></div>
-        <div id='register-form-each-input'><?php echo form_input($branch_phone); ?></div>
+    <div id='profile-info-form-each'>
+        <div id='profile-info-form-each-label'><?php echo lang('branch_phone_label', 'branch_phone'); ?></div>
+        <div id='profile-info-form-each-input'><?php echo form_input($branch_phone); ?></div>
     </div>
 
-    <div id='register-form-each'>
-        <div id='register-form-each-label'><?php echo lang('branch_state_label', 'branch_state'); ?></div>
-        <div id='register-form-each-input'><?php echo form_input($branch_state); ?></div>
+    <div id='profile-info-form-each'>
+        <div id='profile-info-form-each-label'><?php echo lang('branch_state_label', 'branch_state'); ?></div>
+        <div id='profile-info-form-each-input'><?php echo form_input($branch_state); ?></div>
     </div>
 
-    <div id='register-form-each'>
-        <div id='register-form-each-label'><?php echo lang('supervisor_username_label', 'supervisor_username'); ?></div>
-        <div id='register-form-each-input'><?php echo form_input($supervisor_username); ?></div>
+    <div id='profile-info-form-each'>
+        <div id='profile-info-form-each-label'><?php echo lang('supervisor_username_label', 'supervisor_username'); ?></div>
+        <div id='profile-info-form-each-input'><?php echo form_input($supervisor_username); ?></div>
     </div>
 
-    <div id='register-form-each'>
-        <div id='register-form-each-label'><?php echo lang('supervisor_password_label', 'supervisor_password'); ?></div>
-        <div id='register-form-each-input'><?php echo form_input($supervisor_password); ?></div>
+    <div id='profile-info-form-each'>
+        <div id='profile-info-form-each-label'><?php echo lang('supervisor_password_label', 'supervisor_password'); ?></div>
+        <div id='profile-info-form-each-input'><?php echo form_input($supervisor_password); ?></div>
     </div>
 
 <?php }

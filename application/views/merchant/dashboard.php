@@ -3,6 +3,7 @@
 <div id="dashboard">
     <h1>Dashboard</h1>
     <div id="dashboard-content">
+        
         <div id="dashboard-photo">
             <?php            
             if(IsNullOrEmptyString($image))
@@ -19,6 +20,7 @@
             }
             ?>
         </div>
+        
         <div id="dashboard-info">
             <div id="dashboard-info-title">
                 <?php echo $company_name; ?>
@@ -49,13 +51,21 @@
                 </tr>
             </table>
         </div>
-        <div id="float-fix"></div><br/>
-        <a href="<?php echo $offer_deal; ?>" >Offer deal </a> | <a href="<?php echo $user_picture; ?>" > User's Picture</a> <br/><br/>
+        <div id="float-fix"></div>
+        
+        <div id="dashboard-navigation">
+            <a href="<?php echo $offer_deal; ?>" >Offer deal</a> &nbsp; | &nbsp;
+            <a href="<?php echo $user_picture; ?>" > User's Picture</a>
+        </div>
+        
+        <br/><br/>
         <?php
         if (check_correct_login_type($this->config->item('group_id_user')))
         {
             echo "<a href='" . $user_upload_for_merchant . "' > Upload Picture </a><br/><br/>";
         }
         ?>
-    </div>    
+        <div id="float-fix"></div>
+        
+    </div>
 </div>

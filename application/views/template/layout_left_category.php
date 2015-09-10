@@ -3,12 +3,15 @@
 <div id='wrapper'>
     <div id='body'>
         <div id='body-content'>
-           <div style="float:left;width:22%">
-            <?php $this->load->view($left_path_name) ?>    
+            
+            <div id="layout-left-category">
+                <div id="layout-left-category">
+                    <?php $this->load->view($left_path_name) ?>    
                 </div>
-            <!--BODY LEFT MAIN-->
-            <div id="body-left-main" style="width:75%">
-                <div id="body-left-main-content">
+            </div>
+            
+            <div id="layout-left-category-right">
+                <div id="layout-left-category-right-content">
                     <?php $this->load->view($page_path_name) ?>
                 </div>
             </div>
