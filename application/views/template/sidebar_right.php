@@ -6,13 +6,14 @@
         {            
             //MERCHANT SIDEBAR MENU
             $dashboard = base_url() . 'all/merchant_dashboard/' . generate_slug($this->session->userdata('company_name'));
+            $merchant_album = base_url() . 'all/album_merchant/' . generate_slug($this->session->userdata('company_name'));
             ?>
             <li><a href='<?php echo $dashboard ?>' class='body-right-sidebar-bar <?php if ($this->router->fetch_method() == 'merchant_dashboard' || $this->router->fetch_method() == 'merchant_outlet' || $this->router->fetch_method() == 'map'){ echo "body-right-sidebar-bar-active"; } ?>'>Dashboard</a></li>
             <li><a href='<?php echo base_url(); ?>merchant/profile' class='body-right-sidebar-bar <?php if ($this->router->fetch_method() == 'profile' || $this->router->fetch_method() == 'upload_ssm' || $this->router->fetch_method() == 'branch' || $this->router->fetch_method() == 'supervisor'){ echo "body-right-sidebar-bar-active"; } ?>'>Profile</a></li>
             <li><a href='<?php echo base_url(); ?>merchant/change_password' class='body-right-sidebar-bar <?php if ($this->router->fetch_method() == 'change_password'){ echo "body-right-sidebar-bar-active"; } ?>'>Change Password</a></li>
             <li><a href='<?php echo base_url(); ?>merchant/upload_hotdeal' class='body-right-sidebar-bar <?php if ($this->router->fetch_method() == 'upload_hotdeal'){ echo "body-right-sidebar-bar-active"; } ?>'>Hot Deal Advertise</a></li>
             <li><a href='<?php echo base_url(); ?>merchant/candie_promotion' class='body-right-sidebar-bar <?php if ($this->router->fetch_method() == 'candie_promotion'){ echo "body-right-sidebar-bar-active"; } ?>'>Candie Promotion</a></li>
-            <li><a href='#' class='body-right-sidebar-bar'>Picture</a></li>
+            <li><a href='<?php echo $merchant_album; ?>' class='body-right-sidebar-bar <?php if ($this->router->fetch_method() == 'album_merchant'){ echo "body-right-sidebar-bar-active"; } ?>'>Picture</a></li>
             <li><a href='#' class='body-right-sidebar-bar'>User Redemption</a></li>
             <li><a href='#' class='body-right-sidebar-bar'>Analysis Report</a></li>
             <li><a href='#' class='body-right-sidebar-bar'>Payment</a></li>
@@ -23,12 +24,13 @@
             //SUPERVISOR SIDEBAR MENU
             $the_row = $this->m_custom->get_parent_table_record('users', 'id', $this->session->userdata('user_id'), 'su_merchant_id', 'users', 'id');
             $dashboard = base_url() . 'all/merchant_dashboard/' . generate_slug($the_row->company);
+            $merchant_album = base_url() . 'all/album_merchant/' . generate_slug($the_row->company);
             ?>
-            <li><a href='<?php echo $dashboard ?>' class='body-right-sidebar-bar <?php if ($this->router->fetch_method() == 'merchant_dashboard' || $this->router->fetch_method() == 'merchant_outlet' || $this->router->fetch_method() == 'map'){ echo "body-right-sidebar-bar-active"; } ?>'>Dashboard</a></li>
+            <li><a href='<?php echo $dashboard; ?>' class='body-right-sidebar-bar <?php if ($this->router->fetch_method() == 'dashboard'){ echo "body-right-sidebar-bar-active"; } ?>'>Dashboard</a></li>
             <li><a href='<?php echo base_url(); ?>merchant/profile' class='body-right-sidebar-bar <?php if ($this->router->fetch_method() == 'profile'){ echo "body-right-sidebar-bar-active"; } ?>'>Profile</a></li>
             <li><a href='<?php echo base_url(); ?>merchant/upload_hotdeal' class='body-right-sidebar-bar <?php if ($this->router->fetch_method() == 'upload_hotdeal'){ echo "body-right-sidebar-bar-active"; } ?>'>Hot Deal Advertise</a></li>
             <li><a href='<?php echo base_url(); ?>merchant/candie_promotion' class='body-right-sidebar-bar <?php if ($this->router->fetch_method() == 'candie_promotion'){ echo "body-right-sidebar-bar-active"; } ?>'>Candie Promotion</a></li>
-            <li><a href='#' class='body-right-sidebar-bar'>Picture</a></li>
+            <li><a href='<?php echo $merchant_album; ?>' class='body-right-sidebar-bar <?php if ($this->router->fetch_method() == 'album_merchant'){ echo "body-right-sidebar-bar-active"; } ?>'>Picture</a></li>
             <li><a href='#' class='body-right-sidebar-bar'>User Redemption</a></li>
             <?php
         }

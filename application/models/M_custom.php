@@ -319,8 +319,8 @@ class M_custom extends CI_Model
     }
     
     //To get all main category
-    function getAdvertise($advertise_type, $sub_category_id = NULL, $merchant_id = NULL, $show_expired = 0)
-    {
+    function getAdvertise($advertise_type, $sub_category_id = NULL, $merchant_id = NULL, $show_expired = 0, $limit = NULL, $start = NULL)
+    {       
         if(!IsNullOrEmptyString($sub_category_id)){
             $this->db->where('sub_category_id', $sub_category_id);
         }
@@ -329,15 +329,21 @@ class M_custom extends CI_Model
         }
         if($show_expired == 0){
             $this->db->where('end_time >=',get_part_of_date('all'));
-        }
+        }                     
         $this->db->order_by("advertise_id", "desc"); 
         $this->db->where('start_time is not null AND end_time is not null');
+        
+        if(!IsNullOrEmptyString($limit) && !IsNullOrEmptyString($start)){
+            if($start == 1) {$start = 0;} //For fix skip first index problem on pagination
+            $this->db->limit($limit, $start);
+        }
         
         if($advertise_type == 'all'){
             $query = $this->db->get_where('advertise', array('hide_flag' => 0));
         }else{
             $query = $this->db->get_where('advertise', array('advertise_type' => $advertise_type, 'hide_flag' => 0));
         }
+        //var_dump($query->result_array());
         return $query->result_array();
     }
     

@@ -13,7 +13,7 @@ class Merchant extends CI_Controller
         $this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
         $this->lang->load('auth');
         $this->main_group_id = $this->config->item('group_id_merchant');
-        $this->supervisor_group_id = $this->config->item('group_id_supervisor');
+        $this->group_id_supervisor = $this->config->item('group_id_supervisor');
         $this->album_merchant_profile = $this->config->item('album_merchant_profile');
         $this->album_merchant = $this->config->item('album_merchant');
         $this->folder_merchant_ssm = $this->config->item('folder_merchant_ssm');
@@ -69,7 +69,7 @@ class Merchant extends CI_Controller
                 //$this->session->set_flashdata('message', $this->ion_auth->messages());
                 redirect('all/merchant_dashboard/' . generate_slug($this->session->userdata('company_name')), 'refresh');
             }
-            else if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember, $this->supervisor_group_id))
+            else if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember, $this->group_id_supervisor))
             {
                 //$this->session->set_flashdata('message', $this->ion_auth->messages());
                 redirect('/', 'refresh');
@@ -632,7 +632,7 @@ class Merchant extends CI_Controller
     //merchant profile view and edit page
     function profile()
     {
-        if (!check_correct_login_type($this->main_group_id) && !check_correct_login_type($this->supervisor_group_id))
+        if (!check_correct_login_type($this->main_group_id) && !check_correct_login_type($this->group_id_supervisor))
         {
             redirect('/', 'refresh');
         }
@@ -640,7 +640,7 @@ class Merchant extends CI_Controller
         $is_supervisor = 0;
         $branch = FALSE;
         //for supervisor view merchant profile because supervisor don't have own profile
-        if (check_correct_login_type($this->supervisor_group_id))
+        if (check_correct_login_type($this->group_id_supervisor))
         {
             $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;
             $is_supervisor = 1;
@@ -858,7 +858,7 @@ class Merchant extends CI_Controller
         $merchant_id = $this->ion_auth->user()->row()->id;
 
         //for supervisor view the branch of merchant
-        if (check_correct_login_type($this->supervisor_group_id))
+        if (check_correct_login_type($this->group_id_supervisor))
         {
             $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;
         }
@@ -952,7 +952,7 @@ class Merchant extends CI_Controller
     function branch_insert_callback($post_array, $primary_key)
     {
         $post_array['merchant_id'] = $this->ion_auth->user()->row()->id;
-        if (check_correct_login_type($this->supervisor_group_id))
+        if (check_correct_login_type($this->group_id_supervisor))
         {
             $post_array['merchant_id'] = $this->ion_auth->user()->row()->su_merchant_id;
         }
@@ -1015,7 +1015,7 @@ class Merchant extends CI_Controller
 
             //filter that this is supervisor type user and it is under this merchant
             $crud->where('su_merchant_id', $id);
-            $crud->where('main_group_id', $this->supervisor_group_id);
+            $crud->where('main_group_id', $this->group_id_supervisor);
 
             $output = $crud->render();
             return $output;
@@ -1043,11 +1043,11 @@ class Merchant extends CI_Controller
             'username' => $post_array['username'],
             'su_merchant_id' => $this->ion_auth->user()->row()->id,
             'su_branch_id' => $post_array['su_branch_id'],
-            'main_group_id' => $this->supervisor_group_id,
+            'main_group_id' => $this->group_id_supervisor,
             'password_visible' => $post_array['password_visible'],
         );
 
-        return $this->ion_auth->register($post_array['username'], $post_array['password_visible'], $post_array['username'] . $this->config->item('keppo_email_domain'), $additional_data, $this->supervisor_group_id);
+        return $this->ion_auth->register($post_array['username'], $post_array['password_visible'], $post_array['username'] . $this->config->item('keppo_email_domain'), $additional_data, $this->group_id_supervisor);
     }
 
     function supervisor_update_callback($post_array, $primary_key)
@@ -1152,7 +1152,7 @@ class Merchant extends CI_Controller
 
     function candie_promotion($promotion_id = NULL)
     {
-        if (!check_correct_login_type($this->main_group_id) && !check_correct_login_type($this->supervisor_group_id))
+        if (!check_correct_login_type($this->main_group_id) && !check_correct_login_type($this->group_id_supervisor))
         {
             redirect('/', 'refresh');
         }
@@ -1162,7 +1162,7 @@ class Merchant extends CI_Controller
         $is_supervisor = 0;
 
         //if is login by supervisor then need change some setting
-        if (check_correct_login_type($this->supervisor_group_id))
+        if (check_correct_login_type($this->group_id_supervisor))
         {
             $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;
             $is_supervisor = 1;
@@ -1432,7 +1432,7 @@ class Merchant extends CI_Controller
 
     function edit_hotdeal($hotdeal_id = NULL)
     {
-        if (!check_correct_login_type($this->main_group_id) && !check_correct_login_type($this->supervisor_group_id))
+        if (!check_correct_login_type($this->main_group_id) && !check_correct_login_type($this->group_id_supervisor))
         {
             redirect('/', 'refresh');
         }
@@ -1443,12 +1443,12 @@ class Merchant extends CI_Controller
         $is_supervisor = 0;
 
         //if is login by supervisor then need change some setting
-        if (check_correct_login_type($this->supervisor_group_id))
+        if (check_correct_login_type($this->group_id_supervisor))
         {
             $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;
             $is_supervisor = 1;
             $supervisor = $this->ion_auth->user()->row();
-            $do_by_type = $this->supervisor_group_id;
+            $do_by_type = $this->group_id_supervisor;
         }
 
         $allowed_list = $this->m_custom->get_list_of_allow_id('advertise', 'merchant_id', $merchant_id, 'advertise_id', 'advertise_type', 'hot');
@@ -1613,7 +1613,7 @@ class Merchant extends CI_Controller
 
     function upload_hotdeal()
     {
-        if (!check_correct_login_type($this->main_group_id) && !check_correct_login_type($this->supervisor_group_id))
+        if (!check_correct_login_type($this->main_group_id) && !check_correct_login_type($this->group_id_supervisor))
         {
             redirect('/', 'refresh');
         }
@@ -1622,10 +1622,10 @@ class Merchant extends CI_Controller
         $do_by_type = $this->main_group_id;
         $do_by_id = $merchant_id;   //merchant or supervisor also can use this assign because this is depend on login
         //if is login by supervisor then need change some setting
-        if (check_correct_login_type($this->supervisor_group_id))
+        if (check_correct_login_type($this->group_id_supervisor))
         {
             $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;
-            $do_by_type = $this->supervisor_group_id;
+            $do_by_type = $this->group_id_supervisor;
         }
 
         $merchant_data = $this->m_custom->get_one_table_record('users', 'id', $merchant_id);
