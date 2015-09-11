@@ -36,7 +36,7 @@ table {
 
 select {
     margin: 0px;
-    padding: 0px 0px 0px 0px;
+    padding: 0px 5px 0px 5px;
     outline: none;
     border-radius: 3px;
     border: 1px solid #a9a9a9;
@@ -1099,6 +1099,114 @@ a:hover {
 
 #hot-deal-advertise-form-input-file {
     margin: 0px 0px 20px 0px;
+}
+
+/* CANDIE PROMOTION
+******************************/
+
+#candie-promotion-content {
+    margin: 20px 0px 0px 0px;
+}
+
+#candie-promotion-form-go {
+    margin: 0px 0px 25px 0px;
+}
+
+#candie-promotion-form-go-year select, #candie-promotion-form-go-month select {
+    height: 28px;
+}
+
+#candie-promotion-form-photo {
+    float: left;
+}
+    
+#candie-promotion-form-photo-box {
+    width: 200px;
+    height: 200px;
+    border: 1px solid lightgray;
+    background-color: whitesmoke;
+    margin: 0px 0px 0px 0px;
+}
+
+#candie-promotion-form-photo-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#candie-promotion-form-photo-note {
+    font-size: smaller;
+    font-style: italic;
+    margin: 5px 0px 15px 0px;
+}
+
+#candie-promotion-form-photo-input-file {
+    width: 150px;
+}
+
+#candie-promotion-form-info {
+    margin: 0px 0px 0px 235px;
+}
+
+#candie-promotion-form-each-label {
+    margin: 10px 0px 10px 0px;
+}
+
+#candie-promotion-form-each-input input[type='text'] {
+    height: 25px;
+    width: 290px;
+    margin: 0px 0px 10px 0px;
+    box-sizing: border-box;
+}
+
+#candie-promotion-form-each-input select {
+    height: 25px;
+    width: 290px;
+    margin: 0px 0px 10px 0px;
+    box-sizing: border-box;
+}
+
+#candie-promotion-form-each-input textarea {
+    margin: 0px 0px 7px 0px;
+    width: 290px;
+    height: 100px;
+    resize: none;
+    box-sizing: border-box;
+}
+
+.candie-promotion-form-each-input-datepicker input[type='text'] {
+    background-size: 10px;
+    background: url(http://localhost/keppo/image/icon_calendar.png) no-repeat;
+    background-position: right 5px center;
+}
+
+#candie-promotion-form-voucher-checkbox {
+    margin: 15px 0px 10px 0px;
+}
+
+#candie-promotion-form-voucher-checkbox-title, #candie-promotion-form-branch-checkbox-title {
+    font-weight: bold;
+    font-size: 14px;
+    color: #7f7f7f;
+    margin: 0px 0px 8px 0px;
+    text-decoration: underline;
+}
+
+#candie-promotion-form-branch-checkbox-title {
+    margin: 20px 0px 8px 0px;
+}
+
+#candie-promotion-form-voucher-checkbox-each, #candie-promotion-form-branch-checkbox-each {
+    margin: 0px 0px 8px 0px;
+    color: gray;
+}
+
+#candie-promotion-form-voucher-checkbox-each-label, #candie-promotion-form-branch-checkbox-each-label {
+    padding: 0px 0px 0px 7px;
+}
+
+#candie-promotion-form-submit {
+    margin: 20px 0px 0px 0px;
 }
     
 /* ABOUT US
