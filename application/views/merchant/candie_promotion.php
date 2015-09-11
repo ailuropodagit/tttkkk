@@ -1,5 +1,5 @@
-<link href="http://localhost/keppo/js/jquery-ui-1.11.4.custom/jquery-ui.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="http://localhost/keppo/js/jquery-ui-1.11.4.custom/jquery-ui.js"></script>
+<link rel="stylesheet" href="http://localhost/keppo/js/jquery-ui-1.11.4.custom/jquery-ui.css">
+<script src="http://localhost/keppo/js/jquery-ui-1.11.4.custom/jquery-ui.js"></script>
 
 <h1>Candie Promotion</h1>
 <br/>
