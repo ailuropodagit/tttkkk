@@ -1,4 +1,8 @@
-<script type="text/javascript" src="http://localhost/keppo/js/js_custom.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>js/star-rating/jquery.rating.js"></script>
+<?php echo link_tag('js/star-rating/jquery.rating.css') ?>
+<script type="text/javascript" src="<?php echo base_url() ?>js/jgrowl/jquery.jgrowl.js"></script>
+<?php echo link_tag('js/jgrowl/jquery.jgrowl.css') ?>
+<script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script>
 
 <h1>Redemption</h1>
 <br/>
@@ -25,6 +29,23 @@ echo "<a href='" . $next_url . "' >Next</a> ";
 </div>
 <br/><br/>
 <div id="float-fix"></div>
+<div style="display:inline;">
+    <?php
+    echo form_input($item_id);
+    for ($i = 1; $i <= 5; $i++)
+    {
+        if ($i == round($average_rating))
+        {       
+            echo "<input class='auto-submit-star' type='radio' name='rating' ".$radio_level." value='".$i."' checked='checked'/>";
+        }
+        else
+        {
+            echo "<input class='auto-submit-star' type='radio' name='rating' ".$radio_level." value='".$i."'/>";
+        }
+    } //end of for
+    ?>
+</div>
+    <br/>
 <?php echo "Category : " . $sub_category . "<br/>"; ?>
 <?php echo "Redeem Period : " . $start_date . " to " . $end_date . "<br/>"; ?>
 
