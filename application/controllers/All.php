@@ -25,32 +25,26 @@ class All extends CI_Controller
         $sub_category_id = $this->uri->segment(3);
         $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('hot',$sub_category_id);
         $this->data['title'] = "Hot Deals";    
-
         if (!IsNullOrEmptyString($sub_category_id))
         {
             $this->data['main_category'] = $this->m_custom->display_main_category($sub_category_id);
             $this->data['sub_category'] = $this->m_custom->display_category($sub_category_id);
-        }
-
-        $this->data['left_path_name'] = 'template/sidebar_left_full';    
+        }   
         $this->data['page_path_name'] = 'all/advertise_list';
-        $this->load->view('template/layout_left_category', $this->data);
+        $this->load->view('template/layout_category', $this->data);
     }
     
     function promotion_list(){
         $sub_category_id = $this->uri->segment(3);
         $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('pro',$sub_category_id);
         $this->data['title'] = "Redemption";
-        
         if (!IsNullOrEmptyString($sub_category_id))
         {
             $this->data['main_category'] = $this->m_custom->display_main_category($sub_category_id);
             $this->data['sub_category'] = $this->m_custom->display_category($sub_category_id);
         }
-        
-        $this->data['left_path_name'] = 'template/sidebar_left_full';    
         $this->data['page_path_name'] = 'all/advertise_list';
-        $this->load->view('template/layout_left_category', $this->data);
+        $this->load->view('template/layout_category', $this->data);
     }
     
     function advertise($advertise_id, $advertise_type = NULL, $sub_category_id = NULL, $merchant_id = NULL, $show_expired = 0)
@@ -249,9 +243,7 @@ class All extends CI_Controller
             $this->data['user_picture'] = base_url() . 'all/merchant-dashboard/' . $slug . '/user-picture';
             $this->data['user_upload_for_merchant'] = base_url() . 'user/upload_for_merchant/' . $slug;
             $this->data['show_expired'] =  "<a href='" . base_url() . "all/album_merchant/'. $slug>Show Expired</a><br/>";
-            
             $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('all', NULL, $the_row->id);
-
             if ($user_picture == NULL)
             {
                 $this->data['title'] = "Offer Deals";

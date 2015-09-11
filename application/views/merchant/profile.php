@@ -80,6 +80,45 @@
             </div>
             <?php echo form_close(); ?>
         </div>
+        
+        <?php 
+        if($is_supervisor==1)
+        { 
+            ?>
+            <h1>Branch</h1>
+            <div id='profile-info' style="margin-top: 20px">
+                <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><?php echo lang('branch_name_label', 'branch_name'); ?></div>
+                    <div id='profile-info-form-each-input'><?php echo form_input($branch_name); ?></div>
+                </div>
+                <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><?php echo lang('branch_address_label', 'branch_address'); ?></div>
+                    <div id='profile-info-form-each-input'><?php echo form_textarea($branch_address); ?></div>
+                </div>
+                <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><?php echo lang('branch_phone_label', 'branch_phone'); ?></div>
+                    <div id='profile-info-form-each-input'><?php echo form_input($branch_phone); ?></div>
+                </div>
+                <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><?php echo lang('branch_state_label', 'branch_state'); ?></div>
+                    <div id='profile-info-form-each-input'><?php echo form_input($branch_state); ?></div>
+                </div>
+            </div>
+            
+            <h1>Supervisor</h1>
+            <div id='profile-info' style="margin-top: 20px">
+                <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><?php echo lang('supervisor_username_label', 'supervisor_username'); ?></div>
+                    <div id='profile-info-form-each-input'><?php echo form_input($supervisor_username); ?></div>
+                </div>
+                <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><?php echo lang('supervisor_password_label', 'supervisor_password'); ?></div>
+                    <div id='profile-info-form-each-input'><?php echo form_input($supervisor_password); ?></div>
+                </div>
+            </div>
+            <?php 
+        }
+        ?>
     </div>
     
 </div>
@@ -112,38 +151,3 @@
     }
     ?>
 </div>
-
-
-<?php if($is_supervisor==1){ ?>
-
-    <div id='profile-info-form-each'>
-        <div id='profile-info-form-each-label'><?php echo lang('branch_name_label', 'branch_name'); ?></div>
-        <div id='profile-info-form-each-input'><?php echo form_input($branch_name); ?></div>
-    </div>
-
-    <div id='profile-info-form-each'>
-        <div id='profile-info-form-each-label'><?php echo lang('branch_address_label', 'branch_address'); ?></div>
-        <div id='profile-info-form-each-input'><?php echo form_textarea($branch_address); ?></div>
-    </div>
-
-    <div id='profile-info-form-each'>
-        <div id='profile-info-form-each-label'><?php echo lang('branch_phone_label', 'branch_phone'); ?></div>
-        <div id='profile-info-form-each-input'><?php echo form_input($branch_phone); ?></div>
-    </div>
-
-    <div id='profile-info-form-each'>
-        <div id='profile-info-form-each-label'><?php echo lang('branch_state_label', 'branch_state'); ?></div>
-        <div id='profile-info-form-each-input'><?php echo form_input($branch_state); ?></div>
-    </div>
-
-    <div id='profile-info-form-each'>
-        <div id='profile-info-form-each-label'><?php echo lang('supervisor_username_label', 'supervisor_username'); ?></div>
-        <div id='profile-info-form-each-input'><?php echo form_input($supervisor_username); ?></div>
-    </div>
-
-    <div id='profile-info-form-each'>
-        <div id='profile-info-form-each-label'><?php echo lang('supervisor_password_label', 'supervisor_password'); ?></div>
-        <div id='profile-info-form-each-input'><?php echo form_input($supervisor_password); ?></div>
-    </div>
-
-<?php }

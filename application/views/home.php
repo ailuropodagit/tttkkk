@@ -1,13 +1,3 @@
-<?php 
-//$this->load->view('template/sidebar_left');
-//        
-////Example of show all company under the Category in Banner Home Page
-//$abc = $this->m_custom->getMerchantList_by_category(4, 1);
-//foreach ($abc as $one_row) {
-//    echo "<a href=".base_url()."merchant/dashboard/".$one_row->slug.">".$one_row->company."</a><br/>";
-//}
-?>
-
 <div id="home-navigation">
     
     <?php 
@@ -39,7 +29,7 @@
                     $slug = $category_merchant->slug;
                     ?>
                     <div id="home-navigation-c2-c1-bar">
-                        <a href='<?php echo base_url() ?>all/merchant-dashboard/<?php echo $slug ?>'><?php echo $company ?></a>
+                        <a href='<?php echo base_url() ?>all/merchant_dashboard/<?php echo $slug ?>'><?php echo $company ?></a>
                     </div>
                     <?php
                 }

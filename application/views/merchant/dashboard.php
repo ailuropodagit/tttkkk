@@ -56,15 +56,16 @@
         <div id="dashboard-navigation">
             <a href="<?php echo $offer_deal; ?>" >Offer deal</a> &nbsp; | &nbsp;
             <a href="<?php echo $user_picture; ?>" > User's Picture</a>
+            <?php
+            if (check_correct_login_type($this->config->item('group_id_user')))
+            {
+                ?>
+                &nbsp; | &nbsp;
+                <a href='<?php echo $user_upload_for_merchant ?>'> Upload Picture </a>
+                <?php
+            }
+            ?>
         </div>
-        
-        <br/><br/>
-        <?php
-        if (check_correct_login_type($this->config->item('group_id_user')))
-        {
-            echo "<a href='" . $user_upload_for_merchant . "' > Upload Picture </a><br/><br/>";
-        }
-        ?>
         <div id="float-fix"></div>
         
     </div>

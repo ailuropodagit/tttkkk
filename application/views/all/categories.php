@@ -1,46 +1,37 @@
-<style>
-    #c {
-        margin: 0px 0px 20px 0px;
-    }
-    
-    #c:last-child {
-        margin: 0px;
-    }
-    
-    #cc {
-        margin: 0px 0px 2px 0px;
-    }
-</style>
-
 <?php
-$cat_list = $this->m_custom->getCategory();
-?>
+//GET MAIN CATEGORY
+$main_category_object = $this->m_custom->getCategory();
 
-<?php foreach ($cat_list as $t_cat) { ?>
+//LOOP MAIN CATEGORY
+foreach ($main_category_object as $main_category) 
+{ 
+    //GET DATA
+    $main_category_id = $main_category->category_id;
+    $main_category_label = $main_category->category_label;
+    ?>
 
-<div style="float: left; margin: 0px 50px 0px 0px;">
-
-    <div style="font-size: 18px; font-weight: bold;">
-        <?php echo $t_cat->category_label ?>
-    </div>
-    
-    <div id="c">
+    <div id="category-each">
+        <div id="category-each-label"><?php echo $main_category_label ?></div>
         <?php 
-        $subcat_list = $this->m_custom->getSubCategory($t_cat->category_id); 
-        foreach ($subcat_list as $t_subcat) { 
+        //GET SUB CATEGORY
+        $sub_category_object = $this->m_custom->getSubCategory($main_category_id); 
+        
+        //LOOP SUB CATEGORY
+        foreach ($sub_category_object as $sub_category)
+        { 
+            //GET DATE
+            $sub_category_label = $sub_category->category_label;
             ?>
-            <div id="cc"><a href="#"></a>
-                <div>
-                    <div><a href="#"><?= $t_subcat->category_label ?></a></div>
-                </div>
+            <div id="category-each-nav">
+                <a href="#">
+                    <span id="category-each-nav-icon"><i class="fa fa-caret-right"></i></span>
+                    <?php echo $sub_category_label ?>
+                </a>
             </div>
             <?php
         }
         ?>
     </div>
-    
-</div>
 
-<?php } ?>
-
-<div id="float-fix"></div>
+    <?php
+}

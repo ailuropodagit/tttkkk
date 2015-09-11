@@ -33,7 +33,7 @@ $this->album_merchant = $this->config->item('album_merchant');
         <?php if (!empty($sub_category)) { ?>
             <div id='advertise-list-category-breadcrumb'>
                 <?php echo $main_category; ?>
-                 > &nbsp;
+                &nbsp; > &nbsp;
                 <?php echo $sub_category; ?>
             </div>
         <?php } ?>
@@ -84,7 +84,9 @@ $this->album_merchant = $this->config->item('album_merchant');
                         <tr>
                             <td>Category</td>
                             <td>:</td>
-                            <td><?php echo $this->m_custom->display_category($row['sub_category_id']) ?></td>
+                            <td>
+                                <div id="advertise-list-info-category"><?php echo $this->m_custom->display_category($row['sub_category_id']) ?></div>
+                            </td>
                         </tr>
                         <tr>
                             <td>Like</td>
