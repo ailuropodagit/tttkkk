@@ -73,21 +73,21 @@ class All extends CI_Controller
             $this->data['image_url'] = base_url($this->album_merchant .$the_row['image']);
             $this->data['sub_category'] = $this->m_custom->display_category($the_row['sub_category_id']);
             $this->data['start_date'] = displayDate($the_row['start_time']);
-            $this->data['end_date'] = displayDate($the_row['end_time']);          
-            
+            $this->data['end_date'] = displayDate($the_row['end_time']);
             $this->data['like_url'] = $this->m_custom->generate_like_link($advertise_id,'adv');
 
-            if($the_row['advertise_type'] == "pro"){                              
+            if ($the_row['advertise_type'] == "pro")
+            {                              
                 $this->data['voucher'] = $the_row['voucher'];
                 $this->data['voucher_barcode'] = base_url("barcode/generate/".$the_row['voucher']);
                 $this->data['voucher_candie'] = $the_row['voucher_candie'];
                 $this->data['expire_date'] = displayDate($the_row['voucher_expire_date']);
-                
                 $this->data['candie_term'] = $this->m_custom->many_get_childlist_detail('candie_term',$advertise_id,'dynamic_option','option_id');
                 $this->data['candie_branch'] = $this->m_custom->many_get_childlist_detail('candie_branch',$advertise_id,'merchant_branch','branch_id');
-                
                 $this->data['page_path_name'] = 'all/promotion';
-            }else{               
+            }
+            else
+            {               
                 $this->data['end_time'] = displayDate($the_row['end_time'], 1);
                 $this->data['page_path_name'] = 'all/hotdeal';
             }
@@ -98,14 +98,15 @@ class All extends CI_Controller
                 $advertise_id_array = get_key_array_from_list_array($advertise_current_list,'advertise_id');
                 $previous_id = get_previous_id($advertise_id,$advertise_id_array);
                 $next_id = get_next_id($advertise_id,$advertise_id_array);
-                if($previous_id){
+                if ($previous_id)
+                {
                     $this->data['previous_url'] = base_url() . "all/advertise/".$previous_id."/".$advertise_type."/".$sub_category_id."/".$merchant_id . "/" . $show_expired;
                 }
-                if($next_id){
+                if($next_id)
+                {
                     $this->data['next_url'] = base_url() . "all/advertise/".$next_id."/".$advertise_type."/".$sub_category_id."/".$merchant_id. "/" . $show_expired;
                 }
             }
-
             $this->load->view('template/layout', $this->data);
         }
         else
