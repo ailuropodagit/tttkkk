@@ -54,6 +54,7 @@ echo "<a href='" . $next_url . "' >Next</a> ";
 <div style="display:inline;">
     <?php
     echo form_input($item_id);
+    echo form_input($item_type);
     for ($i = 1; $i <= 5; $i++)
     {
         if ($i == round($average_rating))

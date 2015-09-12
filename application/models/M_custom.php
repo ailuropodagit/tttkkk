@@ -678,6 +678,16 @@ class M_custom extends CI_Model
     }
 
     //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
+    public function activity_like_is_exist($refer_id, $refer_type)
+    {
+        if (check_correct_login_type($this->config->item('group_id_user')))
+        {
+            $user_id = $this->ion_auth->user()->row()->id;           
+            return $this->activity_check_is_exist('like', $refer_id, $refer_type, $user_id, 'usr');;
+        }
+    }
+    
+    //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
     public function activity_like($refer_id, $refer_type)
     {
         if (check_correct_login_type($this->config->item('group_id_user')))

@@ -76,7 +76,13 @@ class All extends CI_Controller
                 'id' => 'item_id',
                 'value' => $advertise_id,
             );
-
+            $this->data['item_type'] = array(
+                'type' => 'hidden',
+                'name' => 'item_type',
+                'id' => 'item_type',
+                'value' => 'adv',
+            );
+            
             if (check_correct_login_type($this->group_id_user)) //Check if user logged in
             {
                 $this->data['radio_level'] = " ";
@@ -206,12 +212,21 @@ class All extends CI_Controller
     }
     
     //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
-    function user_click_like($refer_id, $refer_type){
-        $this->m_custom->activity_like($refer_id, $refer_type);
-        $like_url = $this->m_custom->generate_like_link($refer_id, $refer_type);
-        echo $like_url;
+    function user_click_like($refer_id, $refer_type)
+    {
+        if (!$this->m_custom->activity_like_is_exist($refer_id, $refer_type))
+        {
+            $this->m_custom->activity_like($refer_id, $refer_type);
+            $like_url = $this->m_custom->generate_like_link($refer_id, $refer_type);
+            echo json_encode(array("code" => "Success", "msg" => "Your Like has been count", "like_url" => $like_url));
+        }
+        else
+        {
+            $like_url = $this->m_custom->generate_like_link($refer_id, $refer_type);
+            echo json_encode(array("code" => "Error", "msg" => "You have already liked this item before", 'like_url' => $like_url));
+        }
     }
-    
+
     //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
     function user_rating($refer_id = NULL, $refer_type = NULL){
               
