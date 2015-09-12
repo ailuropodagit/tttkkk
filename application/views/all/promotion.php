@@ -51,11 +51,11 @@ echo "<a href='" . $next_url . "' >Next</a> ";
 <?php echo "Redeem Period : " . $start_date . " to " . $end_date . "<br/>"; ?>
 
 Description :
-    <?php   echo $description . "</br>";     ?>
+<?php  echo "<br/><textarea style='width:40%' rows='10'> ".$description . "</textarea> </br>";     ?>
 </br>
 <?php
     echo $like_url;
-    echo "Comment : 34 ";
+    echo $comment_url;
     echo "Share : <br/>";
     ?>
 Terms & Condition :
@@ -81,6 +81,10 @@ Available Branch :
         }
         ?>  
 </ul>
+<br/>
+<?php
+$this->load->view('all/comment_form');
+?>
 <br/>
 <?php 
 if (check_is_login()) {

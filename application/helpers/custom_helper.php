@@ -511,6 +511,32 @@ if (!function_exists('get_previous_id'))
     }
 
 }
+if (!function_exists('get_current_url'))
+{
+
+    function get_current_url()
+    {
+        $pageURL = 'http';
+        if (!empty($_SERVER["HTTPS"]))
+        {
+            if ($_SERVER["HTTPS"] == "on")
+            {
+                $pageURL .= "s";
+            }
+        }
+        $pageURL .= "://";
+        if ($_SERVER["SERVER_PORT"] != "80")
+        {
+            $pageURL .= $_SERVER["SERVER_NAME"] . ":" . $_SERVER["SERVER_PORT"] . $_SERVER["REQUEST_URI"];
+        }
+        else
+        {
+            $pageURL .= $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
+        }
+        return $pageURL;
+    }
+
+}
 
 if (!function_exists('get_next_id'))
 {
@@ -560,17 +586,23 @@ if (!function_exists('RemoveLastComma'))
 
 if (!function_exists('displayDate'))
 {
-   function displayDate( $date , $with_time = 0)
+   function displayDate( $date , $with_time = 0, $db_format = 0)
     {
        if(IsNullOrEmptyString($date)){
            return '';
        }
         $ci = & get_instance();
         $return_date = date_create($date);
-        if($with_time == 0){
+        if($with_time == 0 && $db_format == 0){
             return $return_date->format($ci->config->item('keppo_format_date_display'));
-        }else{
+        }else if($with_time != 0 && $db_format == 0){
+            return $return_date->format($ci->config->item('keppo_format_date_time_display'));
+        }else if($with_time == 0 && $db_format != 0){
+            return $return_date->format($ci->config->item('keppo_format_date_db'));
+        }else if($with_time != 0 && $db_format != 0){
             return $return_date->format($ci->config->item('keppo_format_date_time_db'));
+        }else{
+            return '';
         }
    }
 }

@@ -24,7 +24,7 @@ if ($this->ion_auth->logged_in())
 
     <div id='login-link'>
         <a href='<?php echo base_url(); ?>merchant/login'>
-            <i class="fa fa-user" id="login-link-icon"></i>Merchant Login
+            <i class="fa fa-user-secret" id="login-link-icon"></i>Merchant Login
         </a>
     </div>
     <div id='float-fix'></div>
