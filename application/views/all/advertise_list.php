@@ -28,6 +28,7 @@ $this->album_merchant = $this->config->item('album_merchant');
 <div id="advertise-list">
     
     <h1><?php echo $title; ?></h1>
+    
     <?php
     if (!empty($upload_hotdeal_button))
     {
@@ -140,61 +141,8 @@ $this->album_merchant = $this->config->item('album_merchant');
                 <?php
             }
             ?>
-
-            <div id='advertise-list-box'>
-                
-                <?php if($this->router->fetch_method() != 'merchant_dashboard') { ?>
-                <div id="advertise-list-title1">
-                    <a href='<?php echo $merchant_dashboard_url ?>'> <?php echo $merchant_name ?></a>
-                </div>
-                <?php } ?>
-
-                <div id="advertise-list-photo">
-                    <div id="advertise-list-photo-box">
-                        <a href='<?php echo $advertise_detail_url ?>'><img src='<?php echo base_url($this->album_merchant . $row['image']) ?>'></a>
-                    </div>
-                </div>
-                
-                <div id="advertise-list-title2">
-                    <a href='" . $advertise_detail_url . "'><?php echo $row['title'] ?></a>
-                </div>
-                
-                <div id="advertise-list-info">
-                    <table border="0" cellpadding="4px" cellspacing="0px">
-                        <tr>
-                            <td>Category</td>
-                            <td>:</td>
-                            <td>
-                                <div id="advertise-list-info-category"><?php echo $this->m_custom->display_category($row['sub_category_id']) ?></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Like</td>
-                            <td>:</td>
-                            <td><?php echo $this->m_custom->activity_like_count($row['advertise_id'], 'adv'); ?></td>
-                        </tr>
-                        <tr>
-                            <td>Comment</td>
-                            <td>:</td>
-                            <td><?php echo $this->m_custom->activity_comment_count($row['advertise_id'], 'adv'); ?></td>
-                        </tr>
-                    </table>
-                </div>
-                
-                <?php if ($row['advertise_type'] == 'hot') { ?>
-                    <div id="advertise-list-dynamic-time">
-                        <i class="fa fa-clock-o"></i><span id="advertise-list-dynamic-time-label" data-countdown='<?php echo $row['end_time'] ?>'></span>
-                    </div>
-                <?php } ?>
-
-                <?php if ($row['advertise_type'] == 'pro') { ?>
-                    <div id="advertise-list-dynamic-time">
-                        <i class="fa fa-bullseye"></i><span id="advertise-list-dynamic-time-label"><?php echo $row['voucher_candie'] ?> candies</span>
-                    </div>
-                <?php } ?>
-
-            </div>
-        
+            <div id='float-fix'></div>
+            <div id='advertise-list-bottom-empty-fix'>&nbsp;</div>
             <?php
         }
         ?>

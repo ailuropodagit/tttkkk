@@ -110,6 +110,11 @@
 
     <?php echo form_close(); ?>
 
-    <div id='login-tnc'>by clicking Log In, Facebook you agree to our new <a href='<?php echo base_url(); ?>terms-and-conditions' target='_blank'>T&C's</a></div>
-
+    <div id='login-agree'>
+        By creating an account, you agree to our 
+        <a href='<?php echo base_url() ?>terms-of-service' target='_blank'>Terms of Service</a>
+        and
+        <a href='<?php echo base_url() ?>privacy-policy' target='_blank'>Privacy Policy.</a>
+    </div>
+    
 </div>
