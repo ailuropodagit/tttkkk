@@ -240,3 +240,4 @@ $lang['reset_password_validation_new_password_confirm_label'] = 'Confirm New Pas
 
 // Other
 $lang['keppo_contact_us_send_email_success']      = 'Success send your inquiry to Keppo admin.';
+$lang['keppo_redeem_send_email_success']      = 'Success redeem a voucher.';

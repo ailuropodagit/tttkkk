@@ -48,7 +48,7 @@ class All extends CI_Controller
     }
     
     function advertise($advertise_id, $advertise_type = NULL, $sub_category_id = NULL, $merchant_id = NULL, $show_expired = 0)
-    {     
+    {   
         $the_row = $this->m_custom->getOneAdvertise($advertise_id);
         if ($the_row)
         {
@@ -74,6 +74,7 @@ class All extends CI_Controller
             $this->data['like_url'] = $this->m_custom->generate_like_link($advertise_id,'adv');
             $this->data['comment_url'] = $this->m_custom->generate_comment_link($advertise_id,'adv');
             $this->data['average_rating'] = $this->m_custom->activity_rating_average($advertise_id, 'adv');
+            $this->data['message'] = $this->session->flashdata('message');
             $this->data['item_id'] = array(
                 'type' => 'hidden',
                 'name' => 'item_id',
@@ -231,6 +232,59 @@ class All extends CI_Controller
         }
     }
 
+    //To do todo add submit way, and email send
+    function user_redeem_voucher()
+    {
+        $current_url = '/';
+        if (isset($_POST) && !empty($_POST))
+        {
+            if (check_correct_login_type($this->config->item('group_id_user')))
+            {
+                $current_url = $this->input->post('current_url');
+                $advertise_id = $this->input->post('item_id');
+                $user_email = $this->session->userdata('email');
+                $status = $this->m_custom->user_redemption_insert($advertise_id);
+                
+                if ($status['redeem_status'])
+                {
+                    $email_data = array(
+                        'advertise_id' => $advertise_id,
+                        'return_url' => $current_url,
+                        'email' => $user_email,
+                        'message' => $status['redeem_message'],
+                    );
+                    $this->session->set_flashdata('mail_info', $email_data);
+                    redirect('all/send_redeem_mail_process', 'refresh');
+                }else{
+                    $this->session->set_flashdata('message', $status['redeem_message']);
+                    redirect($current_url, 'refresh');
+                }
+            }
+        }
+        redirect($current_url, 'refresh');
+    }
+
+    function send_redeem_mail_process()
+    {
+        $identity = $this->session->flashdata('mail_info');
+        $get_status = send_mail_simple($identity['email'], 'Success Redeem A Keppo Voucher', $identity['message'], 'keppo_redeem_send_email_success');
+        if ($get_status)
+        {
+            set_simple_message('Thank you!', 'Please check your e-mail (Inbox/Junk) or keppo.my redemption "active". <br/><br/>Please present this voucher before you purchase.<br/><br/>Enjoy your gift from merchants & Keppo.my.', 
+                    $identity['message'], $identity['return_url'], 'Back', 'all/simple_message');
+        }
+        else
+        {
+            $this->session->set_flashdata('message', $identity['message']);
+            redirect($identity['return_url'], 'refresh');
+        }
+    }
+    
+    function simple_message()
+    {
+        display_simple_message();
+    }
+    
     //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
     function user_rating($refer_id = NULL, $refer_type = NULL){
               

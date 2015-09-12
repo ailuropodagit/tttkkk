@@ -179,7 +179,7 @@ class Merchant extends CI_Controller
                 //if the password was successfully changed
                 $this->session->set_flashdata('message', $this->ion_auth->messages());
                 //$this->logout();
-                set_simple_message('Thank you!', 'Your Password has been saved!', '', 'merchant/change_password', 'Back', 'merchant/simple_message');
+                set_simple_message('Thank you!', 'Your Password has been saved!', '', 'merchant/change_password', 'Back', 'all/simple_message');
             }
             else
             {
@@ -187,11 +187,6 @@ class Merchant extends CI_Controller
                 redirect($function_use_for, 'refresh');
             }
         }
-    }
-
-    function simple_message()
-    {
-        display_simple_message();
     }
 
     function retrieve_password()
@@ -236,7 +231,7 @@ class Merchant extends CI_Controller
         $get_status = send_mail_simple($identity->email, 'Your Keppo Account Login Info', 'Company Name:' . $identity->company . '<br/>Username:' . $identity->username . '<br/>Email:' . $identity->email . '<br/>Password:' . $identity->password_visible, 'forgot_password_send_email_success');
         if ($get_status)
         {
-            set_simple_message('Thank you!', 'An email will be sent to your registered email address.', "If you don't receive in the next 10 minutes, please check your spam folder and if you still haven't received it please try again...", 'merchant/login', 'Go to Log In Page', 'merchant/simple_message');
+            set_simple_message('Thank you!', 'An email will be sent to your registered email address.', "If you don't receive in the next 10 minutes, please check your spam folder and if you still haven't received it please try again...", 'merchant/login', 'Go to Log In Page', 'all/simple_message');
         }
         else
         {

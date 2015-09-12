@@ -365,6 +365,17 @@ if (!function_exists('format_date_server'))
 
 }
 
+if (!function_exists('format_year_month_server'))
+{
+
+    function format_year_month_server()
+    {
+        $ci = & get_instance();
+        return $ci->config->item('keppo_format_year_month_db');
+    }
+
+}
+
 if (!function_exists('date_server_format'))
 {
 
