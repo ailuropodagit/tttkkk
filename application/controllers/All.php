@@ -69,6 +69,28 @@ class All extends CI_Controller
             $this->data['start_date'] = displayDate($the_row['start_time']);
             $this->data['end_date'] = displayDate($the_row['end_time']);
             $this->data['like_url'] = $this->m_custom->generate_like_link($advertise_id,'adv');
+            $this->data['average_rating'] = $this->m_custom->activity_rating_average($advertise_id, 'adv');
+            $this->data['item_id'] = array(
+                'type' => 'hidden',
+                'name' => 'item_id',
+                'id' => 'item_id',
+                'value' => $advertise_id,
+            );
+            $this->data['item_type'] = array(
+                'type' => 'hidden',
+                'name' => 'item_type',
+                'id' => 'item_type',
+                'value' => 'adv',
+            );
+            
+            if (check_correct_login_type($this->group_id_user)) //Check if user logged in
+            {
+                $this->data['radio_level'] = " ";
+            }
+            else
+            {
+                $this->data['radio_level'] = "disabled";
+            }
 
             if ($the_row['advertise_type'] == "pro")
             {                              
@@ -190,10 +212,53 @@ class All extends CI_Controller
     }
     
     //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
-    function user_click_like($refer_id, $refer_type){
-        $this->m_custom->activity_like($refer_id, $refer_type);
-        $like_url = $this->m_custom->generate_like_link($refer_id, $refer_type);
-        echo $like_url;
+    function user_click_like($refer_id, $refer_type)
+    {
+        if (!$this->m_custom->activity_like_is_exist($refer_id, $refer_type))
+        {
+            $this->m_custom->activity_like($refer_id, $refer_type);
+            $like_url = $this->m_custom->generate_like_link($refer_id, $refer_type);
+            echo json_encode(array("code" => "Success", "msg" => "Your Like has been count", "like_url" => $like_url));
+        }
+        else
+        {
+            $like_url = $this->m_custom->generate_like_link($refer_id, $refer_type);
+            echo json_encode(array("code" => "Error", "msg" => "You have already liked this item before", 'like_url' => $like_url));
+        }
+    }
+
+    //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
+    function user_rating($refer_id = NULL, $refer_type = NULL){
+              
+        $rate = $this->input->post("rate_val", true);
+        $refer_id = $this->input->post("refer_id", true);
+        $refer_type = $this->input->post("refer_type", true);      
+
+        unset($this->layout); //Block template Layout
+        if (check_correct_login_type($this->group_id_user))   //get_user_id() return login user id
+        {
+            if (!$this->m_custom->activity_rating_is_exist($refer_id, $refer_type))
+            {                
+                if ($this->m_custom->activity_rating($refer_id, $refer_type, $rate))
+                {
+                    echo json_encode(array("code" => "Success", "msg" => "Your Rating has been saved"));
+                }
+                else
+                {
+                    echo json_encode(array("code" => "Error", "msg" => "There was a problem on rating"));
+                }
+            }
+            else
+            {
+                $this_user_rating = $this->m_custom->activity_rating_this_user($refer_id, $refer_type);
+                echo json_encode(array("code" => "Error", "msg" => "You have already rated this item as ". $this_user_rating . " star before"));
+            }
+        }
+        else
+        {
+            echo json_encode(array("code" => "Error", "msg" => "You have to login as user to rate the item"));
+        }
+        exit(0);
     }
     
     //View the user dashboard upper part

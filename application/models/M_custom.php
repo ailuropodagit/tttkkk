@@ -596,6 +596,97 @@ class M_custom extends CI_Model
         }
     }
     
+    public function activity_check_is_exist($the_type, $refer_id, $refer_type, $by_id, $by_type)
+    {
+        $search_data = array(
+            'act_type' => $the_type,
+            'act_refer_id' => $refer_id,
+            'act_refer_type' => $refer_type,
+            'act_by_id' => $by_id,
+            'act_by_type' => $by_type,
+        );
+        $query = $this->db->get_where('activity_history', $search_data);
+        if ($query->num_rows() == 0)
+        {
+            return FALSE;
+        }else{
+            return TRUE;
+        }
+    }
+    
+    //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
+    public function activity_rating_is_exist($refer_id, $refer_type)
+    {
+        if (check_correct_login_type($this->config->item('group_id_user')))
+        {
+            $user_id = $this->ion_auth->user()->row()->id;           
+            return $this->activity_check_is_exist('rating', $refer_id, $refer_type, $user_id, 'usr');;
+        }
+    }
+    
+    //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
+    public function activity_rating($refer_id, $refer_type, $rating)
+    {
+        if (check_correct_login_type($this->config->item('group_id_user')))
+        {
+            $user_id = $this->ion_auth->user()->row()->id;
+            $this->activity_check_and_insert('rating', $refer_id, $refer_type, $user_id, 'usr', 0, $rating);
+            return TRUE;
+        }
+    }
+    
+    //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
+    public function activity_rating_this_user($refer_id, $refer_type)
+    {
+        if (check_correct_login_type($this->config->item('group_id_user')))
+        {
+            $user_id = $this->ion_auth->user()->row()->id;
+            $the_data = array(
+                'act_type' => 'rating',
+                'act_refer_id' => $refer_id,
+                'act_refer_type' => $refer_type,
+                'act_by_id' => $user_id,
+                'act_by_type' => 'usr',
+            );
+            $query = $this->db->get_where('activity_history', $the_data);
+            if($query->num_rows()==1){
+                $result = $query->row_array();
+                return $result['rating'];
+            }
+        }
+        return 'NA';
+    }
+    
+    //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
+    public function activity_rating_average($refer_id, $refer_type)
+    {
+        $query = $this->db->get_where('activity_history', array('act_type' => 'rating', 'act_refer_id' => $refer_id, 'act_refer_type' => $refer_type));
+        $rate_count = $query->num_rows();
+        $total_rate = 0;
+        foreach ($query->result_array() as $row)
+        {
+            $total_rate += $row['rating'];
+        }
+        if ($rate_count == 0)
+        {
+            return 0;
+        }
+        else
+        {
+            return ($total_rate / $rate_count);
+        }
+    }
+
+    //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
+    public function activity_like_is_exist($refer_id, $refer_type)
+    {
+        if (check_correct_login_type($this->config->item('group_id_user')))
+        {
+            $user_id = $this->ion_auth->user()->row()->id;           
+            return $this->activity_check_is_exist('like', $refer_id, $refer_type, $user_id, 'usr');;
+        }
+    }
+    
     //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
     public function activity_like($refer_id, $refer_type)
     {
