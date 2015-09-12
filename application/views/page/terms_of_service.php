@@ -1,5 +1,5 @@
 <div id='terms-and-conditions'>
-    <h1>Terms and Conditions</h1>
+    <h1>Terms of Service</h1>
     <p>
         <b>Last Updated on November 27, 2012.</b> These terms and conditions are effective immediately for those
         registering accounts after that date and will become effective December 27, 2012 for those with
