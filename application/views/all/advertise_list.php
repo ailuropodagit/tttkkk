@@ -26,16 +26,18 @@ $this->album_merchant = $this->config->item('album_merchant');
 ?>
 
 <div id="advertise-list">
-    
     <h1><?php echo $title; ?></h1>
     
     <?php
+    //UPLOAD BUTTON
     if (!empty($upload_hotdeal_button))
     {
         echo $upload_hotdeal_button;
     }
     ?>
+    
     <?php
+    //PAGINATION
     if (!empty($paging_links))
     {
         echo "<p>" . $paging_links . "<p>";
@@ -56,8 +58,21 @@ $this->album_merchant = $this->config->item('album_merchant');
         <?php 
         if (empty($hotdeal_list)) 
         {
+            //SHARE PAGE
+            if ($this->router->fetch_method() == 'hotdeal_list')
+            {
+                $empty_data_message = 'No hot deal in the moment';
+            }
+            else if ($this->router->fetch_method() == 'merchant_dashboard')
+            {
+                $empty_data_message = 'No offer deal in the moment';
+            }
+            else if ($this->router->fetch_method() == 'promotion_list')
+            {
+                $empty_data_message = 'No redemption in the moment';
+            }
             //EMPTY
-            ?><div id=''>No Offer Deal</div><?php
+            ?><div id='advertise-list-empty-message'><?php echo $empty_data_message ?></div><?php
         }
         else
         {

@@ -119,4 +119,3 @@ if (check_is_login())
         <?php
     }
 }
-?>
