@@ -52,21 +52,6 @@
     width: 100%;
 }
 
-#layout-advertisement-right {
-    float: none;
-    margin: 20px 0px 0px 0px;
-    width: auto;
-}
-
-#layout-advertisement-right-banner-box1, #layout-advertisement-right-banner-box2 {
-    float: none;
-    margin: 0px auto 0px auto;
-}
-
-#layout-advertisement-right-banner-box1 {
-    margin: 0px auto 20px auto;    
-}
-
 /* HOME
 ******************************/
 
