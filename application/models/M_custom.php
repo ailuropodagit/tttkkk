@@ -474,6 +474,20 @@ class M_custom extends CI_Model
         return $query->result();
     }
 
+    //To get all main category
+    function getMerchant($merchant_id = 0, $slug = NULL, $company = NULL)
+    {
+        $group_id = $this->config->item('group_id_merchant');
+        if($merchant_id != 0){
+            $query = $this->db->get_where('users', array('id' => $merchant_id, 'main_group_id' => $group_id));
+        }else if($slug != NULL){
+            $query = $this->db->get_where('users', array('slug' => $slug, 'main_group_id' => $group_id));
+        }else if($company != NULL){
+            $query = $this->db->get_where('users', array('company' => $company, 'main_group_id' => $group_id));
+        }
+        return $query->row_array();
+    }
+    
     //To get related sub category by pass in the main category id
     function getSubCategory($id)
     {
@@ -647,6 +661,12 @@ class M_custom extends CI_Model
                 'many_child_id' => $child_id,
             );
             $this->db->insert('many_to_many', $the_data);
+            $insert_id = $this->db->insert_id();
+            switch($the_type){
+                case 'view_advertise': 
+                    $this->candie_history_insert(1, $insert_id, 'many_to_many');
+                    break;
+            }
         }
     }
 
@@ -701,7 +721,17 @@ class M_custom extends CI_Model
                 'comment' => $comment == NULL? NULL : $comment,
             );
             $this->db->insert('activity_history', $the_data);
+            $insert_id = $this->db->insert_id();
+            switch($the_type){
+                case 'like': 
+                    $this->candie_history_insert(2, $insert_id);
+                    break;
+                case 'rating': 
+                    $this->candie_history_insert(3, $insert_id);
+                    break;
+            }
         }
+
     }
     
     public function activity_check_is_exist($the_type, $refer_id, $refer_type, $by_id, $by_type)
@@ -865,6 +895,45 @@ class M_custom extends CI_Model
         return "Comment : ". $this->activity_comment_count($refer_id, $refer_type) . " ";
     }
     
+    public function candie_history_insert($trans_conf_id, $get_from_table_id, $get_from_table = 'activity_history', $allow_duplicate = 0)
+    {
+        if (check_correct_login_type($this->config->item('group_id_user')))
+        {
+            $user_id = $this->ion_auth->user()->row()->id;
+            $search_data = array(
+                'user_id' => $user_id,
+                'trans_conf_id' => $trans_conf_id,
+                'get_from_table' => $get_from_table,
+                'get_from_table_id' => $get_from_table_id,
+            );                               
+            $query = $this->db->get_where('candie_history', $search_data);
+            if (($query->num_rows() == 0 && $allow_duplicate == 0) || $allow_duplicate != 0)
+            {
+                $config_query = $this->db->get_where('transaction_config', array('trans_conf_id' => $trans_conf_id, 'conf_type' => 'can'));
+                if ($config_query->num_rows() == 1)
+                {
+                    $config_result = $config_query->row_array();                  
+                    $candie_plus = 0;
+                    $candie_minus = 0;
+                    if($config_result['change_type'] == 'inc'){
+                        $candie_plus = $config_result['amount_change'];
+                    }else{
+                        $candie_minus = $config_result['amount_change'];
+                    }
+                    $the_data = array(
+                        'user_id' => $user_id,
+                        'trans_conf_id' => $trans_conf_id,
+                        'candie_plus' => $candie_plus,
+                        'candie_minus' => $candie_minus,
+                        'get_from_table' => $get_from_table,
+                        'get_from_table_id' => $get_from_table_id,
+                    );
+                    $this->db->insert('candie_history', $the_data);
+                }
+            }
+        }
+    }
+
     public function compare_before_update($the_table, $the_data, $id_column, $id_value)
     {
         $record = $this->get_one_table_record($the_table, $id_column, $id_value, 1);

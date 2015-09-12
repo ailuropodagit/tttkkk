@@ -59,9 +59,12 @@ class All extends CI_Controller
                  $login_data = $this->m_custom->get_one_table_record('users', 'id', $login_id);
                  $this->m_custom->activity_view($advertise_id);
             }
-
+            
+            $merchant_row = $this->m_custom->getMerchant($the_row['merchant_id']);
+            $this->data['merchant_dashboard_url'] = base_url() . "all/merchant-dashboard/" .$merchant_row['slug'];
+            
             $this->data['advertise_id'] = $advertise_id;
-            $this->data['name'] = $this->m_custom->display_users($the_row['merchant_id']);
+            $this->data['merchant_name'] = $merchant_row['company'];
             $this->data['title'] = $the_row['title'];
             $this->data['description'] = $the_row['description'];
             $this->data['image_url'] = base_url($this->album_merchant .$the_row['image']);
@@ -193,7 +196,7 @@ class All extends CI_Controller
         $config["base_url"] = $base_url;
         $config["total_rows"] = count($this->m_custom->getAdvertise('all', NULL, $merchant_id, 1));  //To get the total row              
         $this->pagination->initialize($config);      
-        $this->data["links"] = $this->pagination->create_links();
+        $this->data["paging_links"] = $this->pagination->create_links();
         $start_index = $page == 1? $page : (($page-1)*$config["per_page"]);  //For calculate page number to start index
         
         $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('all', NULL, $merchant_id, 1, $config["per_page"], $start_index);   //To get the limited result only for that current page

@@ -34,10 +34,11 @@ $this->album_merchant = $this->config->item('album_merchant');
     {
         echo $upload_hotdeal_button;
     }
-
-    if (!empty($links))
+    ?>
+    <?php
+    if (!empty($paging_links))
     {
-        echo "<p>" . $links . "<p>";
+        echo "<p>" . $paging_links . "<p>";
     }
     ?>
     
@@ -87,6 +88,10 @@ $this->album_merchant = $this->config->item('album_merchant');
                 {
                     $advertise_detail_url = base_url() . "all/advertise/" . $advertise_id . "/hot/" . $sub_category_id;
                 }
+                else if ($this->router->fetch_method() == 'album_merchant')
+                {
+                    $advertise_detail_url = base_url() . "all/advertise/" . $row['advertise_id'] . "/all/0/" . $row['merchant_id'] . '/1';
+                }
                 else if ($this->router->fetch_method() == 'merchant_dashboard')
                 {
                     $advertise_detail_url = base_url() . "all/advertise/" . $advertise_id . "/all/0/" . $merchant_id;
@@ -112,7 +117,7 @@ $this->album_merchant = $this->config->item('album_merchant');
                         </div>
                     </div>
                     <div id="advertise-list-title2">
-                        <a href='" . $advertise_detail_url . "'><?php echo $row['title'] ?></a>
+                        <a href='<?php echo $advertise_detail_url ?>'><?php echo $row['title'] ?></a>
                     </div>
                     <div id="advertise-list-info">
                         <table border="0" cellpadding="4px" cellspacing="0px">

@@ -927,6 +927,7 @@ class user extends CI_Controller
                                 $new_id = $this->m_custom->get_id_after_insert('merchant_user_album', $data);
                                 if ($new_id)
                                 {
+                                    $this->m_custom->candie_history_insert(4, $new_id,'merchant_user_album');
                                     $message_info = add_message_info($message_info, 'Image for merchant ' . $this->m_custom->display_users($post_merchant_id) . ' success create.', $post_title);
                                 }
                                 else
