@@ -137,7 +137,8 @@ $this->album_merchant = $this->config->item('album_merchant');
                 <?php
             }
             ?>
-            
+            <div id='float-fix'></div>
+            <div id='advertise-list-bottom-empty-fix'>&nbsp;</div>
             <?php
         }
         ?>
