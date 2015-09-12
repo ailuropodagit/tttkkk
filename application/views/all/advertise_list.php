@@ -26,16 +26,21 @@ $this->album_merchant = $this->config->item('album_merchant');
 ?>
 
 <div id="advertise-list">
+    
     <h1><?php echo $title; ?></h1>
     <?php
-if(!empty($upload_hotdeal_button)){
-echo $upload_hotdeal_button; 
-}
-?>
+    if (!empty($upload_hotdeal_button))
+    {
+        echo $upload_hotdeal_button;
+    }
+    ?>
     <?php
-if(!empty($links)){
-echo "<p>".$links."<p>"; 
-} ?>
+    if (!empty($links))
+    {
+        echo "<p>" . $links . "<p>";
+    }
+    ?>
+    
     <div id="advertise-list-content">
         
         <!--CATEGORY BREADCRUMB-->
@@ -130,23 +135,6 @@ echo "<p>".$links."<p>";
                 </div>
                 <?php
             }
-            else if($this->router->fetch_method() == 'album_merchant' ){
-                $advertise_detail_url = base_url() . "all/advertise/" . $row['advertise_id'] . "/all/0/" . $row['merchant_id'] . '/1';
-             }
-            else if ($this->router->fetch_method() == 'merchant_dashboard')
-            {
-                $advertise_detail_url = base_url() . "all/advertise/" . $row['advertise_id'] . "/all/0/" . $row['merchant_id'];
-            }
-            else if ($this->router->fetch_method() == 'promotion_list')
-            {
-                $advertise_detail_url = base_url() . "all/advertise/" . $row['advertise_id'] . "/pro/" . $row['sub_category_id'];
-            }
-            else
-            {
-                $advertise_detail_url = base_url() . "all/advertise/" . $row['advertise_id'];
-            }
-            $merchant_name = $this->m_custom->display_users($row['merchant_id']);
-            $merchant_dashboard_url = base_url() . "all/merchant-dashboard/" . generate_slug($merchant_name);
             ?>
 
             <div id='advertise-list-box'>
