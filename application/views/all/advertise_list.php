@@ -26,16 +26,18 @@ $this->album_merchant = $this->config->item('album_merchant');
 ?>
 
 <div id="advertise-list">
-    
     <h1><?php echo $title; ?></h1>
     
     <?php
+    //UPLOAD BUTTON
     if (!empty($upload_hotdeal_button))
     {
         echo $upload_hotdeal_button;
     }
     ?>
+    
     <?php
+    //PAGINATION
     if (!empty($paging_links))
     {
         echo "<p>" . $paging_links . "<p>";
