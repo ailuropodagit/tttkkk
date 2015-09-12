@@ -7,7 +7,9 @@
 <h1>Redemption</h1>
 <br/>
 
-<h2><?php  echo $name . "</br>"; ?></h2>
+<div id="advertise-list-title1">
+    <a href='<?php echo $merchant_dashboard_url ?>'> <?php echo $merchant_name ?></a>
+</div>
 
 <?php
 if(!empty($previous_url)){

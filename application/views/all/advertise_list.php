@@ -104,7 +104,7 @@ $this->album_merchant = $this->config->item('album_merchant');
                         </div>
                     </div>
                     <div id="advertise-list-title2">
-                        <a href='" . $advertise_detail_url . "'><?php echo $row['title'] ?></a>
+                        <a href='<?php echo $advertise_detail_url ?>'><?php echo $row['title'] ?></a>
                     </div>
                     <div id="advertise-list-info">
                         <table border="0" cellpadding="4px" cellspacing="0px">
