@@ -96,7 +96,7 @@ $this->album_merchant = $this->config->item('album_merchant');
                         <tr>
                             <td>Comment</td>
                             <td>:</td>
-                            <td>10</td>
+                            <td><?php echo $this->m_custom->activity_comment_count($row['advertise_id'], 'adv'); ?></td>
                         </tr>
                     </table>
                 </div>

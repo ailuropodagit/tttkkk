@@ -48,3 +48,6 @@ $config['keppo_email_domain'] = '@keppo.my';
 $config['keppo_admin_email'] = 'wilkinwilly999@gmail.com,weechiat.teo@hotmail.com';
 
 $config['custom_per_page'] = '4';
+
+$config['gender_id_male'] = '13';
+$config['gender_id_female'] = '14';

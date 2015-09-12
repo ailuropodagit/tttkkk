@@ -69,6 +69,7 @@ class All extends CI_Controller
             $this->data['start_date'] = displayDate($the_row['start_time']);
             $this->data['end_date'] = displayDate($the_row['end_time']);
             $this->data['like_url'] = $this->m_custom->generate_like_link($advertise_id,'adv');
+            $this->data['comment_url'] = $this->m_custom->generate_comment_link($advertise_id,'adv');
             $this->data['average_rating'] = $this->m_custom->activity_rating_average($advertise_id, 'adv');
             $this->data['item_id'] = array(
                 'type' => 'hidden',
@@ -104,7 +105,7 @@ class All extends CI_Controller
             }
             else
             {               
-                $this->data['end_time'] = displayDate($the_row['end_time'], 1);
+                $this->data['end_time'] = displayDate($the_row['end_time'], 1, 1);
                 $this->data['page_path_name'] = 'all/hotdeal';
             }
 
@@ -286,6 +287,43 @@ class All extends CI_Controller
         {
             redirect('/', 'refresh');
         }
+    }
+    
+    public function comment_add(){
+        $message_info = '';
+        $current_url = '/';
+        if (isset($_POST) && !empty($_POST))
+        {
+            $current_url = $this->input->post('current_url');
+            $refer_id = $this->input->post('item_id');
+            $refer_type = $this->input->post('item_type');
+            $comment = $this->input->post('comment');
+
+            if (IsNullOrEmptyString($comment))
+            {
+                $message_info = add_message_info($message_info, 'Comment cannot be empty.');
+                $current_url = '/';
+            }
+            else
+            {
+                $this->m_custom->activity_comment($refer_id, $refer_type, $comment);
+                $message_info = add_message_info($message_info, 'Comment success add.');
+            }
+            $this->session->set_flashdata('message', $message_info);
+        }
+        redirect($current_url, 'refresh');
+    }
+    
+    public function comment_hide(){
+        $current_url = '/';
+        if (isset($_POST) && !empty($_POST))
+        {
+            $current_url = $this->input->post('current_url');
+            $act_history_id = $this->input->post('act_history_id');
+            $this->m_custom->activity_hide($act_history_id);
+        }
+        redirect($current_url, 'refresh');
+       
     }
     
     public function merchant_dashboard($slug, $user_picture = NULL)
