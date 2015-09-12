@@ -314,50 +314,45 @@ a:hover {
     padding: 25px;
 }
 
-#body-right-sidebar {
-    float: right;
-    width: 200px;
-}
-
-#body-right-sidebar ul {
-    list-style: none;
-    padding: 0px;
-    margin: 0px;
-}
-
-#body-right-sidebar li {
-    padding: 1px 0px 1px 0px;
-    border-top: 1px solid lightgray;
-}
-
-.body-right-sidebar-bar {
-    
-    padding: 8px 15px 8px 15px;
-    display: block;
-}
-
-.body-right-sidebar-bar-active {
-    background-color: #2a5575;
-    color: white !important;
-}
-
-#body-right-sidebar li a {
-    text-decoration: none;
-    color: black;
-    font-size: 13px;
-}
-
 #body-left-main {
     float: left;
     width: calc(100% - 230px);
 }
 
-.arrow-right {
-    width: 0; 
-    height: 0; 
-    border-top: 60px solid transparent;
-    border-bottom: 60px solid transparent;
-    border-left: 60px solid green;
+/* LAYOUT INNER RIGHT MENU
+******************************/
+
+#layout-inner-right-menu {
+    float: right;
+    width: 200px;
+}
+
+#layout-inner-right-menu ul {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+#layout-inner-right-menu li {
+    padding: 1px 0px 1px 0px;
+    border-top: 1px solid lightgray;
+}
+
+.layout-inner-right-menu-bar {
+    
+    padding: 8px 15px 8px 15px;
+    display: block;
+}
+
+.layout-inner-right-menu-bar-active {
+    background-color: #2a5575;
+    color: white !important;
+}
+
+#layout-inner-right-menu li a {
+    text-decoration: none;
+    color: black;
+    font-size: 13px;
 }
 
 /* LAYOUT ADVERTISEMENT
@@ -478,7 +473,7 @@ a:hover {
 #home-navigation-c1-bar a { 
     font-size: 13px;
     text-decoration: none;
-    color: #3b65a7;
+    color: #295292;
     font-weight: bold;
 }
 
@@ -499,15 +494,20 @@ a:hover {
 }
 
 #home-navigation-c2-c1-bar {
-    margin: 0px 0px 10px 0px;
+    margin: 0px 0px 13px 0px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
 #home-navigation-c2-c1-bar a {
-    font-size: 16px;
+    color: gray;
+    font-size: 15px;
     text-decoration: none;
+}
+
+#home-navigation-c2-c1-bar a:hover {
+    color: black;
 }
 
 #home-navigation-c2-c2 {
@@ -726,10 +726,6 @@ a:hover {
 /* ADVERTISE LIST
 ******************************/
 
-#advertise-list {
-    margin: 0px 0px 0px 0px;
-}
-
 #advertise-list-content {
     padding: 15px 0px 0px 0px;
 }
@@ -816,6 +812,10 @@ a:hover {
 
 #advertise-list-dynamic-time-label {
     margin: 0px 0px 0px 6px;
+}
+
+#advertise-list-bottom-empty-fix {
+    margin: 0px 0px -50px 0px;
 }
 
 /* OUTLET

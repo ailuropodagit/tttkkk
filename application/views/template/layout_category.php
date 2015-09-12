@@ -9,6 +9,7 @@ $this->load->view('template/header');
             
             <!--LAYOUT CATEGORY-->
             <div id="layout-category">
+                
                 <!--LAYOUT CATEGORY LEFT-->
                 <div id="layout-category-left">
                     <?php
@@ -67,9 +68,13 @@ $this->load->view('template/header');
 
                 <!--LAYOUT CATEGORY RIGHT-->
                 <div id="layout-category-right">
-                    <?php $this->load->view($page_path_name) ?>
+                    <?php 
+                    //VIEW PAGE
+                    $this->load->view($page_path_name);
+                    ?>
                 </div>
                 <div id="float-fix"></div>
+                
             </div>
                                     
         </div>
