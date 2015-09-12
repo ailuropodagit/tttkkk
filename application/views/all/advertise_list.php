@@ -27,6 +27,15 @@ $this->album_merchant = $this->config->item('album_merchant');
 
 <div id="advertise-list">
     <h1><?php echo $title; ?></h1>
+    <?php
+if(!empty($upload_hotdeal_button)){
+echo $upload_hotdeal_button; 
+}
+?>
+    <?php
+if(!empty($links)){
+echo "<p>".$links."<p>"; 
+} ?>
     <div id="advertise-list-content">
         
         <!--CATEGORY BREADCRUMB-->
@@ -45,6 +54,9 @@ $this->album_merchant = $this->config->item('album_merchant');
             {
                 $advertise_detail_url = base_url() . "all/advertise/" . $row['advertise_id'] . "/hot/" . $row['sub_category_id'];
             }
+            else if($this->router->fetch_method() == 'album_merchant' ){
+                $advertise_detail_url = base_url() . "all/advertise/" . $row['advertise_id'] . "/all/0/" . $row['merchant_id'] . '/1';
+             }
             else if ($this->router->fetch_method() == 'merchant_dashboard')
             {
                 $advertise_detail_url = base_url() . "all/advertise/" . $row['advertise_id'] . "/all/0/" . $row['merchant_id'];
