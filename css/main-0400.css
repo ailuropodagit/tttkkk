@@ -18,7 +18,8 @@
 /* LAYOUT ADVERTISEMENT
 ******************************/
 
-#layout-advertisement-right-banner-box1, #layout-advertisement-right-banner-box2 {
+#layout-advertisement-right-banner-box1, #layout-advertisement-right-banner-box2,
+#layout-advertisement-right-banner-box3, #layout-advertisement-right-banner-box4 {
     width: 100%;
     height: auto;
 }
