@@ -193,7 +193,7 @@ class All extends CI_Controller
         $config["base_url"] = $base_url;
         $config["total_rows"] = count($this->m_custom->getAdvertise('all', NULL, $merchant_id, 1));  //To get the total row              
         $this->pagination->initialize($config);      
-        $this->data["links"] = $this->pagination->create_links();
+        $this->data["paging_links"] = $this->pagination->create_links();
         $start_index = $page == 1? $page : (($page-1)*$config["per_page"]);  //For calculate page number to start index
         
         $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('all', NULL, $merchant_id, 1, $config["per_page"], $start_index);   //To get the limited result only for that current page

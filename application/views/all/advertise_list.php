@@ -35,9 +35,9 @@ $this->album_merchant = $this->config->item('album_merchant');
     }
     ?>
     <?php
-    if (!empty($links))
+    if (!empty($paging_links))
     {
-        echo "<p>" . $links . "<p>";
+        echo "<p>" . $paging_links . "<p>";
     }
     ?>
     
@@ -73,6 +73,10 @@ $this->album_merchant = $this->config->item('album_merchant');
                 if ($this->router->fetch_method() == 'hotdeal_list')
                 {
                     $advertise_detail_url = base_url() . "all/advertise/" . $advertise_id . "/hot/" . $sub_category_id;
+                }
+                else if ($this->router->fetch_method() == 'album_merchant')
+                {
+                    $advertise_detail_url = base_url() . "all/advertise/" . $row['advertise_id'] . "/all/0/" . $row['merchant_id'] . '/1';
                 }
                 else if ($this->router->fetch_method() == 'merchant_dashboard')
                 {
