@@ -13,7 +13,7 @@
             <li><a href='<?php echo base_url(); ?>merchant/upload_hotdeal' class='layout-inner-right-menu-bar <?php if ($this->router->fetch_method() == 'upload_hotdeal' || $this->router->fetch_method() == 'edit_hotdeal'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Hot Deal Advertise</a></li>
             <li><a href='<?php echo base_url(); ?>merchant/candie_promotion' class='layout-inner-right-menu-bar <?php if ($this->router->fetch_method() == 'candie_promotion'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Candie Promotion</a></li>
             <li><a href='<?php echo $merchant_album; ?>' class='layout-inner-right-menu-bar <?php if ($this->router->fetch_method() == 'album_merchant'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Picture</a></li>
-            <li><a href='#' class='layout-inner-right-menu-bar'>User Redemption</a></li>
+            <li><a href='<?php echo base_url(); ?>merchant/merchant_redemption_page' class='layout-inner-right-menu-bar <?php if ($this->router->fetch_method() == 'merchant_redemption_page'){ echo "layout-inner-right-menu-bar-active"; } ?>'>User Redemption</a></li>
             <li><a href='#' class='layout-inner-right-menu-bar'>Analysis Report</a></li>
             <li><a href='#' class='layout-inner-right-menu-bar'>Payment</a></li>
             <?php
@@ -30,7 +30,7 @@
             <li><a href='<?php echo base_url(); ?>merchant/upload_hotdeal' class='layout-inner-right-menu-bar <?php if ($this->router->fetch_method() == 'upload_hotdeal' || $this->router->fetch_method() == 'edit_hotdeal'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Hot Deal Advertise</a></li>
             <li><a href='<?php echo base_url(); ?>merchant/candie_promotion' class='layout-inner-right-menu-bar <?php if ($this->router->fetch_method() == 'candie_promotion'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Candie Promotion</a></li>
             <li><a href='<?php echo $merchant_album; ?>' class='layout-inner-right-menu-bar <?php if ($this->router->fetch_method() == 'album_merchant'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Picture</a></li>
-            <li><a href='#' class='layout-inner-right-menu-bar'>User Redemption</a></li>
+            <li><a href='<?php echo base_url(); ?>merchant/merchant_redemption_page' class='layout-inner-right-menu-bar <?php if ($this->router->fetch_method() == 'merchant_redemption_page'){ echo "layout-inner-right-menu-bar-active"; } ?>'>User Redemption</a></li>
             <?php
         }
         else

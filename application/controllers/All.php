@@ -243,20 +243,21 @@ class All extends CI_Controller
                 $current_url = $this->input->post('current_url');
                 $advertise_id = $this->input->post('item_id');
                 $user_email = $this->session->userdata('email');
-                $status = $this->m_custom->user_redemption_insert($advertise_id);
+                $redeem_info = $this->m_custom->user_redemption_insert($advertise_id);
                 
-                if ($status['redeem_status'])
+                if ($redeem_info['redeem_status'])
                 {
-                    $email_data = array(
+                    $mail_info = array(
                         'advertise_id' => $advertise_id,
                         'return_url' => $current_url,
                         'email' => $user_email,
-                        'message' => $status['redeem_message'],
-                    );
-                    $this->session->set_flashdata('mail_info', $email_data);
+                        'message' => $redeem_info['redeem_message'],
+                        'redeem_info' => $redeem_info,
+                    ); 
+                    $this->session->set_flashdata('mail_info', $mail_info);
                     redirect('all/send_redeem_mail_process', 'refresh');
                 }else{
-                    $this->session->set_flashdata('message', $status['redeem_message']);
+                    $this->session->set_flashdata('message', $redeem_info['redeem_message']);
                     redirect($current_url, 'refresh');
                 }
             }
@@ -266,17 +267,22 @@ class All extends CI_Controller
 
     function send_redeem_mail_process()
     {
-        $identity = $this->session->flashdata('mail_info');
-        $get_status = send_mail_simple($identity['email'], 'Success Redeem A Keppo Voucher', $identity['message'], 'keppo_redeem_send_email_success');
+        $mail_info = $this->session->flashdata('mail_info');
+        $mail_message =  'Merchant : '. $mail_info['redeem_info']['redeem_merchant'] . '<br/>'
+                    . 'Promotion Title : '. $mail_info['redeem_info']['redeem_title'] . '<br/>'
+                    . 'Voucher Code : ' . $mail_info['redeem_info']['redeem_voucher']. '<br/>'
+                    . 'End Date : '. $mail_info['redeem_info']['redeem_expire'] . '<br/><br/>'
+                    . $mail_info['message'];
+        $get_status = send_mail_simple($mail_info['email'], $mail_info['redeem_info']['redeem_email_subject'], $mail_message, 'keppo_redeem_send_email_success');
         if ($get_status)
         {
             set_simple_message('Thank you!', 'Please check your e-mail (Inbox/Junk) or keppo.my redemption "active". <br/><br/>Please present this voucher before you purchase.<br/><br/>Enjoy your gift from merchants & Keppo.my.', 
-                    $identity['message'], $identity['return_url'], 'Back', 'all/simple_message');
+                    $mail_message, $mail_info['return_url'], 'Back', 'all/simple_message');
         }
         else
         {
-            $this->session->set_flashdata('message', $identity['message']);
-            redirect($identity['return_url'], 'refresh');
+            $this->session->set_flashdata('message', $mail_info['message']);
+            redirect($mail_info['return_url'], 'refresh');
         }
     }
     
@@ -381,8 +387,8 @@ class All extends CI_Controller
         }
         redirect($current_url, 'refresh');
        
-    }
-    
+    }   
+
     public function merchant_dashboard($slug, $user_picture = NULL)
     {
         $the_row = $this->m_custom->get_one_table_record('users', 'slug', $slug);        
@@ -429,7 +435,7 @@ class All extends CI_Controller
             redirect('/', 'refresh');
         }
     }
-    
+          
     public function merchant_outlet($slug) 
     {
         $the_row = $this->m_custom->get_one_table_record('users', 'slug', $slug);

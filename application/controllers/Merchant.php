@@ -13,6 +13,7 @@ class Merchant extends CI_Controller
         $this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
         $this->lang->load('auth');
         $this->main_group_id = $this->config->item('group_id_merchant');
+        $this->group_id_merchant = $this->config->item('group_id_merchant');
         $this->group_id_supervisor = $this->config->item('group_id_supervisor');
         $this->album_merchant_profile = $this->config->item('album_merchant_profile');
         $this->album_merchant = $this->config->item('album_merchant');
@@ -836,6 +837,32 @@ class Merchant extends CI_Controller
         $this->load->view('template/layout_right_menu', $this->data);
     }
 
+    public function merchant_redemption_page()
+    {
+        if (check_correct_login_type($this->group_id_merchant) || check_correct_login_type($this->group_id_supervisor))
+        {
+            $merchant_id = $this->ion_auth->user()->row()->id;
+            $is_supervisor = 0;      
+            $supervisor_id = 0;
+            if (check_correct_login_type($this->group_id_supervisor))
+            {
+                $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;     
+                $merchant = $this->m_custom->getUser($merchant_id);
+                $is_supervisor = 1;
+                $supervisor_id = $this->ion_auth->user()->row()->id;
+                $supervisor = $this->m_custom->getUser($supervisor_id);
+            }
+            
+            $this->data['promotion_list'] = $this->m_custom->getPromotion($merchant_id, $supervisor_id);
+            
+            $this->data['message'] =  $this->session->flashdata('message');
+            $this->data['page_path_name'] = 'merchant/redemption';
+            $this->load->view('template/layout_right_menu', $this->data);
+        }
+      
+        //redirect('/', 'refresh');
+    }
+    
     function branch()
     {
         $merchant_id = $this->ion_auth->user()->row()->id;

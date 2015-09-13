@@ -433,6 +433,66 @@ class M_custom extends CI_Model
         return $query->result_array();
     }
     
+    //To get merchant promotion list with branch filter or history only
+    function getPromotion($merchant_id, $supervisor_id = 0, $show_history = 0)
+    {
+        $branch_id = 0;
+        if ($supervisor_id != 0)
+        {
+            $supervisor = $this->getUser($supervisor_id);
+            $branch_id = $supervisor['su_branch_id'];
+        }
+
+        if ($show_history == 0)
+        {
+            $this->db->where('voucher_expire_date >=', get_part_of_date('all'));
+        }
+        else
+        {
+            $this->db->where('voucher_expire_date <', get_part_of_date('all'));
+        }
+
+        $this->db->order_by("advertise_id", "desc");
+        $this->db->where('start_time is not null AND end_time is not null');
+
+        $original_query = $this->db->get_where('advertise', array('advertise_type' => 'pro', 'hide_flag' => 0, 'merchant_id' => $merchant_id));
+        $original_result = $original_query->result_array();
+        $advertise_list[] = NULL;
+        foreach ($original_result as $original_row)
+        {
+            $advertise_id = $original_row['advertise_id'];
+            if ($branch_id == 0)
+            {
+                $advertise_list[] = $advertise_id;
+            }
+            else
+            {
+                $many_list = $this->many_get_childlist('candie_branch', $advertise_id);  
+                if (in_array($branch_id, $many_list))
+                {
+                    //var_dump($many_list);
+                    $advertise_list[] = $advertise_id;
+                }
+            }
+        }
+
+        $this->db->where_in('advertise_id', $advertise_list);
+        $advertise_query = $this->db->get_where('advertise', array('advertise_type' => 'pro', 'hide_flag' => 0, 'merchant_id' => $merchant_id));
+
+        return $advertise_query->result_array();
+    }
+
+    //To get merchant promotion list with branch filter or history only
+    function getUserRedemption($promotion_id, $status_id, $hide_expired = 0)
+    {
+        if ($hide_expired == 1)
+        {
+            $this->db->where('expired_date >=', get_part_of_date('all'));
+        }
+        $redeem_query = $this->db->get_where('user_redemption', array('advertise_id' => $promotion_id, 'status_id' => $status_id));
+        return $redeem_query->result_array();
+    }
+    
     //To get all main category
     function getAlbumUserMerchant($user_id = NULL, $merchant_id = NULL)
     {
@@ -485,6 +545,11 @@ class M_custom extends CI_Model
         }else if($company != NULL){
             $query = $this->db->get_where('users', array('company' => $company, 'main_group_id' => $group_id));
         }
+        return $query->row_array();
+    }
+    
+    function getUser($user_id){
+        $query = $this->db->get_where('users', array('id' => $user_id));
         return $query->row_array();
     }
     
@@ -1039,6 +1104,8 @@ class M_custom extends CI_Model
                 $voucher_candie = $promotion_row['voucher_candie'];
                 $current_balance = $this->candie_check_balance($user_id);
                 $new_balance = $this->candie_enough($user_id, $voucher_candie, 1);
+                $voucher = $promotion_row['voucher'];
+                $merchant_name = $this->display_users($promotion_row['merchant_id']);
                 if ($new_balance >= 0)
                 {
                     $the_data = array(
@@ -1050,20 +1117,31 @@ class M_custom extends CI_Model
                     $this->db->insert('user_redemption', $the_data);
                     $insert_id = $this->db->insert_id();
                     $this->candie_history_insert(8, $insert_id, 'user_redemption', 0, $voucher_candie);
-                    $redeem_message =  "Current Candie : " . $current_balance . " <br/>Voucher Required Candie : " . $voucher_candie . 
-                            " <br/>Success redeem this voucher, remain candie is ". $new_balance .
-                            " <br/>Voucher Code : " . $promotion_row['voucher']. "<br/>";
+                    $redeem_message = "Success Redeem This Voucher <br/>" .
+                            "Previous Candie : " . $current_balance . " <br/>" .
+                            "Voucher Required Candie : " . $voucher_candie . " <br/>" .
+                            "Remain Candie : " . $new_balance . " <br/>";
                     $redeem_status = TRUE;
-                }else{                    
-                    $redeem_message =  "Current Candie : " . $current_balance . " <br/>Voucher Required Candie : " . $voucher_candie . " <br/>Not enough candie to redeem this voucher<br/>";
+                    $this->candie_balance_update($user_id);
+                }
+                else
+                {
+                    $redeem_message = "Not enough candie to redeem this voucher!<br/>" .
+                            "Current Candie : " . $current_balance . " <br/>" .
+                            "Voucher Required Candie : " . $voucher_candie . " <br/>";
                 }
             }
         }
-        $status = array(
+        $redeem_info = array(
             'redeem_status' => $redeem_status,
             'redeem_message' => $redeem_message,
+            'redeem_voucher' => $voucher,
+            'redeem_title' => $promotion_row['title'],
+            'redeem_merchant' => $merchant_name,
+            'redeem_expire' => displayDate($promotion_row['voucher_expire_date']),
+            'redeem_email_subject' => $merchant_name . ' Keppo Voucher Success Redeem : '.$voucher,
         );
-        return $status;
+        return $redeem_info;
     }
 
     public function compare_before_update($the_table, $the_data, $id_column, $id_value)
