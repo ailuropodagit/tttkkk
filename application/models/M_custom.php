@@ -321,6 +321,17 @@ class M_custom extends CI_Model
         }
     }
 
+    public function get_one_field_by_key($the_table, $key_column, $key_value, $wanted_column){
+        $query = $this->db->get_where($the_table, array($key_column => $key_value), 1);
+        if ($query->num_rows() == 0)
+        {
+            return FALSE;
+        }else{
+            $result = $query->row_array();
+            return $result[$wanted_column];
+        }
+    }
+    
     //To find many records in DB with one keyword
     public function get_many_table_record($the_table, $the_column, $the_value, $want_array = 0)
     {
@@ -475,7 +486,8 @@ class M_custom extends CI_Model
                 }
             }
         }
-
+        
+        $this->db->order_by("advertise_id", "desc");
         $this->db->where_in('advertise_id', $advertise_list);
         $advertise_query = $this->db->get_where('advertise', array('advertise_type' => 'pro', 'hide_flag' => 0, 'merchant_id' => $merchant_id));
 
@@ -1091,6 +1103,40 @@ class M_custom extends CI_Model
         }
     }
 
+    public function user_redemption_done($redeem_id, $mark_expired = 0)
+    {
+        if (check_correct_login_type($this->group_id_merchant) || check_correct_login_type($this->group_id_supervisor))
+        {
+            $login_id = $this->ion_auth->user()->row()->id;
+            $login_type = $this->session->userdata('user_group_id');
+            
+            $branch_id = 0;
+            if(check_correct_login_type($this->group_id_supervisor)){
+                $supervisor = $this->m_custom->getUser($login_id);
+                $branch_id = $supervisor['su_branch_id'];
+            }
+            
+            $status_id = $this->config->item('voucher_used');
+            if ($mark_expired == 1)
+            {
+                $status_id = $this->config->item('voucher_expired');
+            }
+
+            $the_data = array(
+                'status_id' => $status_id,
+                'redeem_at_date' => get_part_of_date('all'),
+                'redeem_at_branch' => $branch_id,               
+                'done_by' => $login_id,
+                'done_by_type' => $login_type,
+            );
+            $this->db->where('redeem_id', $redeem_id);
+            if($this->db->update('user_redemption', $the_data)){
+                return TRUE;
+            }           
+        }
+        return FALSE;
+    }
+    
     public function user_redemption_insert($advertise_id)
     {
         $redeem_status = FALSE;

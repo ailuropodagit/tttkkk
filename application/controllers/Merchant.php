@@ -837,7 +837,7 @@ class Merchant extends CI_Controller
         $this->load->view('template/layout_right_menu', $this->data);
     }
 
-    public function merchant_redemption_page()
+    public function merchant_redemption_page($show_used = 0)
     {
         if (check_correct_login_type($this->group_id_merchant) || check_correct_login_type($this->group_id_supervisor))
         {
@@ -853,16 +853,60 @@ class Merchant extends CI_Controller
                 $supervisor = $this->m_custom->getUser($supervisor_id);
             }
             
+            $this->data['title'] = "Redemption";
+            if ($show_used == 1)
+            {
+                $this->data['title'] = "Redemption Used History";
+            }
+            else if ($show_used == 2)
+            {
+                $this->data['title'] = "Redemption Mark As Expired";
+            }
+
+            $this->data['show_used'] = $show_used;
             $this->data['promotion_list'] = $this->m_custom->getPromotion($merchant_id, $supervisor_id);
             
             $this->data['message'] =  $this->session->flashdata('message');
             $this->data['page_path_name'] = 'merchant/redemption';
             $this->load->view('template/layout_right_menu', $this->data);
+        }else{           
+            redirect('/', 'refresh');
         }
-      
-        //redirect('/', 'refresh');
     }
     
+    public function redeem_done()
+    {
+        $current_url = '/';
+        if (isset($_POST) && !empty($_POST))
+        {
+            $current_url = $this->input->post('current_url');
+            $redeem_id = $this->input->post('redeem_id');
+            $user_id = $this->input->post('user_id');
+            $advertise_id = $this->input->post('advertise_id');
+            $voucher = $this->m_custom->get_one_field_by_key('advertise', 'advertise_id', $advertise_id, 'voucher');
+            $user_name = $this->m_custom->display_users($user_id);
+            if ($this->input->post('button_action') == "submit_used")
+            {
+                if ($this->m_custom->user_redemption_done($redeem_id))
+                {
+                    $this->session->set_flashdata('message', 'Thanks You!!! ' . $voucher . ' voucher approved for ' . $user_name);
+                }
+                else
+                {
+                    $this->session->set_flashdata('message', 'Sorry, redeem fail. Please check with admin...');
+                }
+            }
+            else if ($this->input->post('button_action') == "submit_expired")
+            {
+                if ($this->m_custom->user_redemption_done($redeem_id,1))
+                {
+                    $this->session->set_flashdata('message', 'You mark ' . $voucher . ' voucher for ' . $user_name . ' as expired');
+                }
+            }
+        }
+        redirect($current_url, 'refresh');
+    }
+
     function branch()
     {
         $merchant_id = $this->ion_auth->user()->row()->id;

@@ -36,7 +36,8 @@
         else
         {
             //USER SIDEBAR MENU
-            $dashboard = base_url() . 'all/user_dashboard/' . $this->session->userdata('user_id');
+            $login_user_id = $this->session->userdata('user_id');
+            $dashboard = base_url() . 'all/user_dashboard/' . $login_user_id;            
             ?>
             <li><a href='<?php echo $dashboard ?>' class='layout-inner-right-menu-bar <?php if ($this->router->fetch_method() == 'user_dashboard'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Dashboard</a></li>
             <li><a href='<?php echo base_url(); ?>user/profile' class='layout-inner-right-menu-bar <?php if ($this->router->fetch_method() == 'profile'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Profile</a></li>
@@ -44,7 +45,7 @@
             <li><a href='#' class='layout-inner-right-menu-bar'>Follower</a></li>
             <li><a href='#' class='layout-inner-right-menu-bar'>Review</a></li>
             <li><a href='<?php echo base_url(); ?>all/album_user' class='layout-inner-right-menu-bar <?php if ($this->router->fetch_method() == 'album_user'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Picture</a></li>
-            <li><a href='#' class='layout-inner-right-menu-bar'>Candies</a></li>
+            <li><a href='#' class='layout-inner-right-menu-bar'>Candies (<?php echo $this->m_custom->candie_check_balance($login_user_id); ?>)</a></li>
             <li><a href='#' class='layout-inner-right-menu-bar'>Redemption</a></li>
             <li><a href='#' class='layout-inner-right-menu-bar'>Invite Friend</a></li>
             <?php

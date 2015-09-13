@@ -481,6 +481,7 @@ class user extends CI_Controller
         // validate form input
         $this->form_validation->set_rules('first_name', $this->lang->line('create_user_fname_label'), 'required');
         $this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'));
+        $this->form_validation->set_rules('ic_number', $this->lang->line('create_user_ic_number_label'), 'required');
         $this->form_validation->set_rules('phone', $this->lang->line('create_user_phone_label'), 'required');
         $this->form_validation->set_rules('dob', $this->lang->line('create_user_dob_label'), 'callback_date_check');
         $this->form_validation->set_rules('race_other', $this->lang->line('create_user_race_other_label'));
@@ -492,6 +493,7 @@ class user extends CI_Controller
         {
             $first_name = $this->input->post('first_name');
             $last_name = $this->input->post('last_name');
+            $ic_number = $this->input->post('ic_number');
             $phone = $this->input->post('phone');
             $username = strtolower($this->input->post('username'));
             $email = strtolower($this->input->post('email'));
@@ -500,6 +502,7 @@ class user extends CI_Controller
             $additional_data = array(
                 'first_name' => $first_name,
                 'last_name' => $last_name,
+                'us_ic' => $ic_number,
                 'phone' => $phone,
                 'us_birthday' => $this->input->post('dob'),
                 'us_age' => age_count($this->input->post('dob')),
@@ -597,6 +600,12 @@ class user extends CI_Controller
                 'style' => 'display:none',
                 'value' => $this->form_validation->set_value('race_other'),
             );
+            $this->data['ic_number'] = array(
+                'name' => 'ic_number',
+                'id' => 'ic_number',
+                'type' => 'text',
+                'value' => $this->form_validation->set_value('ic_number'),
+            );
             $this->data['phone'] = array(
                 'name' => 'phone',
                 'id' => 'phone',
@@ -658,6 +667,7 @@ class user extends CI_Controller
         // validate form input
         $this->form_validation->set_rules('first_name', $this->lang->line('create_user_fname_label'), 'required');
         $this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'));
+        $this->form_validation->set_rules('ic_number', $this->lang->line('create_user_ic_number_label'), 'required');
         $this->form_validation->set_rules('phone', $this->lang->line('create_user_phone_label'), 'required');
         $this->form_validation->set_rules('dob', $this->lang->line('create_user_dob_label'), 'callback_date_check');
         $this->form_validation->set_rules('username', $this->lang->line('create_user_username_label'), 'trim|required|is_unique_edit[' . $tables['users'] . '.username.' . $user_id . ']');
@@ -683,6 +693,7 @@ class user extends CI_Controller
                     $data = array(
                         'first_name' => $first_name,
                         'last_name' => $last_name,
+                        'us_ic' => $this->input->post('ic_number'),
                         'phone' => $this->input->post('phone'),
                         'us_birthday' => $this->input->post('dob'),
                         'us_age' => $this->input->post('age'),
@@ -836,6 +847,12 @@ class user extends CI_Controller
         $this->data['race_other_attributes'] = array(
             'id' => 'race_other_label',
             'style' => $this->m_custom->display_static_option($user->us_race_id) == 'Other' ? 'display:inline' : 'display:none',
+        );
+        $this->data['ic_number'] = array(
+            'name' => 'ic_number',
+            'id' => 'ic_number',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('ic_number', $user->us_ic),
         );
         $this->data['phone'] = array(
             'name' => 'phone',
