@@ -180,11 +180,7 @@ class All extends CI_Controller
             $the_row = $this->m_custom->get_one_table_record('users', 'id', $merchant_id);
             $base_url = base_url() . "all/album_merchant/".$the_row->slug;          
         }      
-        
-        if ($this->ion_auth->logged_in()){
-            $this->data['upload_hotdeal_button'] =  "<a href='" . base_url() . "merchant/upload_hotdeal'>Upload</a><br/>";
-        }
-        
+                
         //For setting the pagination function
         $config["per_page"] = $this->config->item('custom_per_page');             
         $config['num_links'] = 5;

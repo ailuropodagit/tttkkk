@@ -27,33 +27,37 @@ $this->album_merchant = $this->config->item('album_merchant');
 
 <div id="advertise-list">
     <h1><?php echo $title; ?></h1>
-    
-    <?php
-    //UPLOAD BUTTON
-    if (!empty($upload_hotdeal_button))
-    {
-        echo $upload_hotdeal_button;
-    }
-    ?>
-    
-    <?php
-    //PAGINATION
-    if (!empty($paging_links))
-    {
-        echo "<p>" . $paging_links . "<p>";
-    }
-    ?>
-    
+        
     <div id="advertise-list-content">
         
-        <!--CATEGORY BREADCRUMB-->
-        <?php if (!empty($sub_category)) { ?>
+        <?php
+        //CATEGORY BREADCRUMB
+        if (!empty($sub_category))
+        { 
+            ?>
             <div id='advertise-list-category-breadcrumb'>
                 <?php echo $main_category; ?>
                 &nbsp; > &nbsp;
                 <?php echo $sub_category; ?>
             </div>
-        <?php } ?>
+            <?php
+        }
+        ?>
+        
+        <?php
+        //UPLOAD BUTTON
+        if ($this->ion_auth->logged_in())
+        {
+            if ($this->router->fetch_method() == 'album_merchant')
+            {
+                ?>            
+                <div id='advertise-list-upload-button'>
+                    <a href='<?php echo base_url() ?>merchant/upload_hotdeal' class='ahref-button'>Upload</a>
+                </div>
+                <?php
+            }
+        }
+        ?>
 
         <?php 
         if (empty($hotdeal_list)) 
@@ -156,9 +160,21 @@ $this->album_merchant = $this->config->item('album_merchant');
                 <?php
             }
             ?>
+            
             <div id='float-fix'></div>
             <div id='advertise-list-bottom-empty-fix'>&nbsp;</div>
+            
             <?php
+            //PAGINATION
+            if (!empty($paging_links))
+            {
+                ?>
+                <div id='advertise-list-pagination'>
+                    <?php echo $paging_links; ?>
+                </div>
+                <?php
+            }
+            
         }
         ?>
         
