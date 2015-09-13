@@ -739,9 +739,11 @@ class M_custom extends CI_Model
             );
             $this->db->insert('many_to_many', $the_data);
             $insert_id = $this->db->insert_id();
+            $merchant_id = $this->get_merchant_id_from_advertise($parent_id);
             switch($the_type){
                 case 'view_advertise': 
-                    $this->candie_history_insert(1, $insert_id, 'many_to_many');
+                    $this->candie_history_insert(1, $insert_id, 'many_to_many');                  
+                    $this->transaction_history_insert($merchant_id, 11, $insert_id, 'many_to_many');
                     break;
             }
         }
@@ -799,12 +801,15 @@ class M_custom extends CI_Model
             );
             $this->db->insert('activity_history', $the_data);
             $insert_id = $this->db->insert_id();
+            $merchant_id = $this->get_merchant_id_from_advertise($refer_id);
             switch($the_type){
                 case 'like': 
-                    $this->candie_history_insert(2, $insert_id);
+                    $this->candie_history_insert(2, $insert_id);                   
+                    $this->transaction_history_insert($merchant_id, 12, $insert_id);
                     break;
                 case 'rating': 
                     $this->candie_history_insert(3, $insert_id);
+                    $this->transaction_history_insert($this->get_merchant_id_from_advertise($refer_id), 13, $insert_id);
                     break;
             }
         }
@@ -1047,18 +1052,10 @@ class M_custom extends CI_Model
         }
         return $current_balance;
     }
-    
+      
     public function candie_balance_update($user_id, $month_id = NULL, $year = NULL)
     {
-        if (empty($month_id))
-        {
-            $month_id = get_part_of_date('month');
-        }
-        if (empty($year))
-        {
-            $year = get_part_of_date('year');
-        }
-        $search_date = $year . '-' . str_pad($month_id, 2, "0", STR_PAD_LEFT);
+        $search_date = date_for_db_search($month_id,$year);
 
         $history_condition = "trans_time like '%" . $search_date . "%'";
         $history_search_data = array(
@@ -1102,7 +1099,153 @@ class M_custom extends CI_Model
             }
         }
     }
+    
+    public function get_merchant_id_from_advertise($advertise_id)
+    {
+        $query = $this->db->get_where('advertise', array('advertise_id' => $advertise_id));
+        if ($query->num_rows() == 1)
+        {
+            $result = $query->row_array();
+            return $result['merchant_id'];
+        }
+        return 0;
+    }
 
+    public function transaction_history_insert($merchant_id, $trans_conf_id, $get_from_table_id, $get_from_table = 'activity_history', $allow_duplicate = 0, $amount_overwrite = 0)
+    {
+        $search_data = array(
+            'merchant_id' => $merchant_id,
+            'trans_conf_id' => $trans_conf_id,
+            'get_from_table' => $get_from_table,
+            'get_from_table_id' => $get_from_table_id,
+        );
+        $query = $this->db->get_where('transaction_history', $search_data);
+        if (($query->num_rows() == 0 && $allow_duplicate == 0) || $allow_duplicate != 0)
+        {
+            $config_query = $this->db->get_where('transaction_config', array('trans_conf_id' => $trans_conf_id, 'conf_type' => 'bal'));
+            if ($config_query->num_rows() == 1)
+            {
+                $config_result = $config_query->row_array();
+                $amount_plus = 0;
+                $amount_minus = 0;
+                if ($config_result['change_type'] == 'dec')
+                {
+                    $amount_minus = $config_result['amount_change'];
+                    //If is Banner, then the amount is key in by admin
+                    if ($trans_conf_id == 17)
+                    {
+                        $amount_minus = $amount_overwrite;
+                    }
+                }
+                else
+                {
+                    $amount_plus = $config_result['amount_change'];
+                    //If is Top up, then the amount is key in by admin
+                    if ($trans_conf_id == 19)
+                    {
+                        $amount_plus = $amount_overwrite;
+                    }
+                }
+                $the_data = array(
+                    'merchant_id' => $merchant_id,
+                    'trans_conf_id' => $trans_conf_id,
+                    'amount_plus' => $amount_plus,
+                    'amount_minus' => $amount_minus,
+                    'get_from_table' => $get_from_table,
+                    'get_from_table_id' => $get_from_table_id,
+                );
+                $this->db->insert('transaction_history', $the_data);
+            }
+        }
+    }
+
+    public function merchant_balance_update($merchant_id, $month_id = NULL, $year = NULL)
+    {
+        if (empty($month_id))
+        {
+            $month_id = get_part_of_date('month');
+        }
+        if (empty($year))
+        {
+            $year = get_part_of_date('year');
+        }
+        $search_date = $year . '-' . str_pad($month_id, 2, "0", STR_PAD_LEFT);
+
+        $history_condition = "trans_time like '%" . $search_date . "%'";
+        $history_search_data = array(
+            'merchant_id' => $merchant_id,
+        );
+        $this->db->where($history_condition);
+        $history_query = $this->db->get_where('transaction_history', $history_search_data);
+        $history_result = $history_query->result_array();
+        if ($history_query->num_rows() != 0)
+        {
+            $monthly_balance = 0;
+            foreach ($history_result as $history_row)
+            {
+                $monthly_balance = $monthly_balance + $history_row['amount_plus'] - $history_row['amount_minus'];
+            }
+
+            $balance_search_data = array(
+                'merchant_id' => $merchant_id,
+                'month_id' => $month_id,
+                'year' => $year,
+            );
+            $balance_query = $this->db->get_where('merchant_balance', $balance_search_data);
+            if ($balance_query->num_rows() == 0)
+            {
+                $insert_data = array(
+                    'merchant_id' => $merchant_id,
+                    'balance' => $monthly_balance,
+                    'month_id' => $month_id,
+                    'year' => $year,
+                );
+                $this->db->insert('merchant_balance', $insert_data);
+            }
+            else
+            {
+                $balance_result = $balance_query->row_array();
+                $update_data = array(
+                    'balance' => $monthly_balance,
+                );
+                $this->db->where('balance_id', $balance_result['balance_id']);
+                $this->db->update('merchant_balance', $update_data);
+            }
+        }
+    }
+    
+    public function merchant_this_month_transaction($merchant_id){
+        $search_date = date_for_db_search();
+        $condition = "trans_time like '%" . $search_date . "%'";
+        $this->db->where($condition);
+        $this->db->select("trans_conf_id, SUM(amount_plus) AS plus, SUM(amount_minus) AS minus, COUNT(trans_history_id) As quantity");
+        $this->db->group_by('trans_conf_id');
+        $this->db->order_by('trans_conf_id', 'asc');
+        $query = $this->db->get_where('transaction_history', array('merchant_id' => $merchant_id));
+        $result = $query->result_array();
+        return $result;
+    }
+    
+    public function merchant_check_balance($merchant_id, $exclude_this_month = 0){
+        $this->candie_balance_update($merchant_id);
+        if($exclude_this_month==0){
+            $history_query = $this->db->get_where('merchant_balance', array('merchant_id' => $merchant_id));
+        }else{
+            $current_month = ltrim(get_part_of_date('month'), '0');
+            $current_year = get_part_of_date('year');
+            $condition = "(month_id !=" . $current_month . " or year !=" . $current_year . ")";
+            $this->db->where($condition);          
+            $history_query = $this->db->get_where('merchant_balance', array('merchant_id' => $merchant_id));
+        }
+        $current_balance = 0;
+        $history_result = $history_query->result_array();
+        foreach ($history_result as $history_row)
+        {
+            $current_balance += $history_row['balance'];
+        }
+        return number_format($current_balance,2);
+    }
+    
     public function user_redemption_done($redeem_id, $mark_expired = 0)
     {
         if (check_correct_login_type($this->group_id_merchant) || check_correct_login_type($this->group_id_supervisor))
@@ -1163,6 +1306,7 @@ class M_custom extends CI_Model
                     $this->db->insert('user_redemption', $the_data);
                     $insert_id = $this->db->insert_id();
                     $this->candie_history_insert(8, $insert_id, 'user_redemption', 0, $voucher_candie);
+                    $this->transaction_history_insert($promotion_row['merchant_id'], 18, $insert_id, 'user_redemption');
                     $redeem_message = "Success Redeem This Voucher <br/>" .
                             "Previous Candie : " . $current_balance . " <br/>" .
                             "Voucher Required Candie : " . $voucher_candie . " <br/>" .

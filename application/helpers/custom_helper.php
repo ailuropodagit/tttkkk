@@ -170,6 +170,22 @@ if (!function_exists('send_mail_simple'))
 
 }
 
+if (!function_exists('date_for_db_search'))
+{
+    function date_for_db_search($month_id = NULL, $year = NULL){
+        if (empty($month_id))
+        {
+            $month_id = get_part_of_date('month');
+        }
+        if (empty($year))
+        {
+            $year = get_part_of_date('year');
+        }
+        $search_date = $year . '-' . str_pad($month_id, 2, "0", STR_PAD_LEFT);
+        return $search_date;
+    }
+}
+
 if (!function_exists('generate_options'))
 {
 

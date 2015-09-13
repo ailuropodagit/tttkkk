@@ -68,6 +68,7 @@ class Merchant extends CI_Controller
                 //if the login is successful
                 //redirect them back to the home page
                 //$this->session->set_flashdata('message', $this->ion_auth->messages());
+                $this->update_whole_year_balance();
                 redirect('all/merchant_dashboard/' . generate_slug($this->session->userdata('company_name')), 'refresh');
             }
             else if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember, $this->group_id_supervisor))
@@ -189,7 +190,34 @@ class Merchant extends CI_Controller
             }
         }
     }
+    
+    function update_whole_year_balance()
+    {
+        if (check_correct_login_type($this->main_group_id))
+        {
+            $merchant_id = $this->ion_auth->user()->row()->id;
+            for ($i = 1; $i < 13; $i++)
+            {
+                $this->m_custom->merchant_balance_update($merchant_id, $i);
+            }
+        }
+    }
 
+    function payment_page(){
+        if (check_correct_login_type($this->main_group_id))
+        {
+            $merchant_id = $this->ion_auth->user()->row()->id;
+            $this->m_custom->merchant_balance_update($merchant_id);
+            $this->data['last_month_balance'] = $this->m_custom->merchant_check_balance($merchant_id,1);
+            $this->data['this_month_balance'] = $this->m_custom->merchant_check_balance($merchant_id);
+            $this->data['this_month_transaction'] = $this->m_custom->merchant_this_month_transaction($merchant_id);
+            
+            $this->data['message'] =  $this->session->flashdata('message');
+            $this->data['page_path_name'] = 'merchant/payment';
+            $this->load->view('template/layout_right_menu', $this->data);
+        }
+    }
+    
     function retrieve_password()
     {
         $this->form_validation->set_rules('username_email', $this->lang->line('forgot_password_username_email_label'), 'required');
