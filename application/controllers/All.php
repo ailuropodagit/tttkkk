@@ -48,7 +48,7 @@ class All extends CI_Controller
     }
     
     function advertise($advertise_id, $advertise_type = NULL, $sub_category_id = NULL, $merchant_id = NULL, $show_expired = 0)
-    {     
+    {   
         $the_row = $this->m_custom->getOneAdvertise($advertise_id);
         if ($the_row)
         {
@@ -74,6 +74,7 @@ class All extends CI_Controller
             $this->data['like_url'] = $this->m_custom->generate_like_link($advertise_id,'adv');
             $this->data['comment_url'] = $this->m_custom->generate_comment_link($advertise_id,'adv');
             $this->data['average_rating'] = $this->m_custom->activity_rating_average($advertise_id, 'adv');
+            $this->data['message'] = $this->session->flashdata('message');
             $this->data['item_id'] = array(
                 'type' => 'hidden',
                 'name' => 'item_id',
@@ -227,6 +228,65 @@ class All extends CI_Controller
         }
     }
 
+    //To do todo add submit way, and email send
+    function user_redeem_voucher()
+    {
+        $current_url = '/';
+        if (isset($_POST) && !empty($_POST))
+        {
+            if (check_correct_login_type($this->config->item('group_id_user')))
+            {
+                $current_url = $this->input->post('current_url');
+                $advertise_id = $this->input->post('item_id');
+                $user_email = $this->session->userdata('email');
+                $redeem_info = $this->m_custom->user_redemption_insert($advertise_id);
+                
+                if ($redeem_info['redeem_status'])
+                {
+                    $mail_info = array(
+                        'advertise_id' => $advertise_id,
+                        'return_url' => $current_url,
+                        'email' => $user_email,
+                        'message' => $redeem_info['redeem_message'],
+                        'redeem_info' => $redeem_info,
+                    ); 
+                    $this->session->set_flashdata('mail_info', $mail_info);
+                    redirect('all/send_redeem_mail_process', 'refresh');
+                }else{
+                    $this->session->set_flashdata('message', $redeem_info['redeem_message']);
+                    redirect($current_url, 'refresh');
+                }
+            }
+        }
+        redirect($current_url, 'refresh');
+    }
+
+    function send_redeem_mail_process()
+    {
+        $mail_info = $this->session->flashdata('mail_info');
+        $mail_message =  'Merchant : '. $mail_info['redeem_info']['redeem_merchant'] . '<br/>'
+                    . 'Promotion Title : '. $mail_info['redeem_info']['redeem_title'] . '<br/>'
+                    . 'Voucher Code : ' . $mail_info['redeem_info']['redeem_voucher']. '<br/>'
+                    . 'End Date : '. $mail_info['redeem_info']['redeem_expire'] . '<br/><br/>'
+                    . $mail_info['message'];
+        $get_status = send_mail_simple($mail_info['email'], $mail_info['redeem_info']['redeem_email_subject'], $mail_message, 'keppo_redeem_send_email_success');
+        if ($get_status)
+        {
+            set_simple_message('Thank you!', 'Please check your e-mail (Inbox/Junk) or keppo.my redemption "active". <br/><br/>Please present this voucher before you purchase.<br/><br/>Enjoy your gift from merchants & Keppo.my.', 
+                    $mail_message, $mail_info['return_url'], 'Back', 'all/simple_message');
+        }
+        else
+        {
+            $this->session->set_flashdata('message', $mail_info['message']);
+            redirect($mail_info['return_url'], 'refresh');
+        }
+    }
+    
+    function simple_message()
+    {
+        display_simple_message();
+    }
+    
     //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
     function user_rating($refer_id = NULL, $refer_type = NULL){
               
@@ -323,8 +383,8 @@ class All extends CI_Controller
         }
         redirect($current_url, 'refresh');
        
-    }
-    
+    }   
+
     public function merchant_dashboard($slug, $user_picture = NULL)
     {
         $the_row = $this->m_custom->get_one_table_record('users', 'slug', $slug);        
@@ -371,7 +431,7 @@ class All extends CI_Controller
             redirect('/', 'refresh');
         }
     }
-    
+          
     public function merchant_outlet($slug) 
     {
         $the_row = $this->m_custom->get_one_table_record('users', 'slug', $slug);

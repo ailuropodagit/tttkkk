@@ -63,6 +63,7 @@ $lang['create_user_fname_label']                       = 'First Name:';
 $lang['create_user_first_name_label']                  = 'First Name:';
 $lang['create_user_lname_label']                       = 'Last Name:';
 $lang['create_user_last_name_label']                   = 'Last Name:';
+$lang['create_user_ic_number_label']                   = 'IC No:';
 $lang['create_user_company_label']                     = 'Company Name:';
 $lang['create_user_companyssm_label']                  = 'Company SSM:';
 $lang['create_user_address_label']                     = 'Address:';
@@ -240,3 +241,4 @@ $lang['reset_password_validation_new_password_confirm_label'] = 'Confirm New Pas
 
 // Other
 $lang['keppo_contact_us_send_email_success']      = 'Success send your inquiry to Keppo admin.';
+$lang['keppo_redeem_send_email_success']      = 'Success redeem a voucher.';

@@ -62,6 +62,10 @@
                     <div id='profile-info-form-each-input'><?php echo form_input($last_name); ?></div>
                 </div>
                 <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><?php echo lang('create_user_ic_number_label', 'ic number'); ?></div>
+                    <div id='profile-info-form-each-input'><?php echo form_input($ic_number); ?></div>
+                </div>
+                <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_user_contact_number_label', 'contact number'); ?></div>
                     <div id='profile-info-form-each-input'><?php echo form_input($phone); ?></div>
                 </div>

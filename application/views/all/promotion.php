@@ -20,6 +20,13 @@ echo "<a href='" . $next_url . "' >Next</a> ";
 }
 ?>
 <br/>
+<?php
+    if (!empty($message))
+    {
+        echo $message;
+    }
+    ?>
+<br/>
 
 <img src="<?php echo $voucher_barcode; ?>"  alt="not show" style="margin-top:20px; margin-left:70%;"/>
 <div id='hot-deal-photo-box'>
@@ -83,6 +90,21 @@ Available Branch :
         }
         ?>  
 </ul>
+<br/>
+
+<?php
+if (check_correct_login_type($this->config->item('group_id_user')))
+{
+    echo form_open("all/user_redeem_voucher");
+    echo form_input($item_id);
+    echo "<input type='hidden' name='current_url' id='current_url' value='".get_current_url()."'/>";
+    ?>
+    <button name="button_action" type="submit" value="redeem" >Redeem</button>
+
+<?php }
+echo form_close();
+?>
+
 <br/>
 <?php
 $this->load->view('all/comment_form');

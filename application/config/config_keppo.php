@@ -39,6 +39,7 @@ $config['keppo_format_date_display'] = 'd-m-Y';
 $config['keppo_format_date_time_display'] = 'd-m-Y H:i';
 $config['keppo_format_date_db'] = 'Y-m-d';
 $config['keppo_format_date_time_db'] = 'Y-m-d H:i:s';
+$config['keppo_format_year_month_db'] = 'Y-m';
 
 $config['hotdeal_per_day'] = 5;
 
@@ -49,3 +50,7 @@ $config['custom_per_page'] = '4';
 
 $config['gender_id_male'] = '13';
 $config['gender_id_female'] = '14';
+
+$config['voucher_active'] = '21';
+$config['voucher_used'] = '22';
+$config['voucher_expired'] = '23';
