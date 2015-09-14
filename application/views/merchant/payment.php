@@ -1,9 +1,11 @@
+<script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script>
+
 <div id="infoMessage"><?php echo $message; ?></div>
 
 <div id="profile">
     <h1><?php echo "Payment"; ?></h1>
-
-    <a href="#">Print Statement</a>
+    <input type="button" onclick="printDiv('printableArea')" value="Print Statement" /><br/><br/>
+    <div id="printableArea">
 <?php
 
 echo '<table style="text-align:right">';
@@ -28,3 +30,5 @@ Your balance cannot less then RM50. System will auto freezon your account until 
 
 Please reload to this account: xxxxxxxxxxx<br/><br/>
 If need furthur assistance please contact us: xxx-xxxxxxxx
+
+</div>
