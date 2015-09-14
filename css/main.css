@@ -107,10 +107,13 @@ input[type='submit'], button[type='submit'], .ahref-button {
     box-shadow: none;
     border: 0px;
     color: gray;
+    text-decoration: none;
+    color: #4d4dff;
+    font-weight: normal;
 }
 
 #button-a-href:hover {
-    color: black;
+    text-decoration: underline;
 }
 
 /*input[type='submit']:hover,button[type='submit']:hover {
@@ -1312,6 +1315,7 @@ a:hover {
 }
 
 #redemption-voucher-barcode {
+    margin: 15px 0px 0px 0px;
     float: right;
 }
 
@@ -1485,7 +1489,7 @@ a:hover {
 }
 
 #redemption-available-branch li {
-    margin: 0px 0px 8px 0px;
+    margin: 0px 0px 10px 0px;
     color: gray;
     font-size: 14px;
 }
@@ -1515,9 +1519,37 @@ a:hover {
     margin: 20px 0px 0px 0px;
 }
 
+#redemption-redempt-submit {
+    margin: 20px 0px 0px 0px;
+    text-align: left;
+}
+
 #redemption-comment-list {
     margin: 20px 0px 0px 0px;
     text-align: left;
+}
+
+/* USER REDEMPTION
+******************************/
+
+#user-redemption-content {
+    margin: 20px 0px 0px 0px;
+}
+
+#user-redemption table {
+    width: 100%;
+    border: 1px solid lightgray;
+}
+
+#user-redemption table th {
+    background-color: whitesmoke;
+    padding: 4px 0px 4px 0px;
+    font-size: 14px;
+}
+
+#user-redemption table td {
+    font-size: 14px;
+    padding: 5px 8px 5px 8px;
 }
 
 /* CANDIE PROMOTION

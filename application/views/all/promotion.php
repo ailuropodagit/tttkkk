@@ -20,7 +20,19 @@ if (!empty($message))
         </div>
         
         <div id="hot-deal-edit-link">
-            
+            <?php
+            if (check_is_login())
+            {
+                $merchant_id = $this->ion_auth->user()->row()->id;
+                $allowed_list = $this->m_custom->get_list_of_allow_id('advertise', 'merchant_id', $merchant_id, 'advertise_id');
+                if (check_correct_login_type($this->config->item('group_id_merchant'), $allowed_list, $advertise_id))
+                {
+                    ?>
+                    <a href='<?php echo base_url() . "merchant/candie_promotion/" . $advertise_id ?>' >Edit Redemption</a>
+                    <?php
+                }
+            }
+            ?>
         </div>
         <div id="float-fix"></div>
         
@@ -131,8 +143,8 @@ if (!empty($message))
                                         <div id="redemption-available-branch-address"><?php echo $value['address'] ?></div>
                                         <div id="redemption-available-branch-tel"><a href='tel: <?php echo $value['phone'] ?>'><?php echo $value['phone'] ?></a></div>
                                         <div id="redemption-available-branch-view-map"><a href='<?php echo base_url() ?>all/merchant-map/<?php echo $value['branch_id'] ?>' target='_blank'>View Map</a></div>
+                                        <div id='float-fix'></div>
                                     </li>
-                                    <div id='float-fix'></div>
                                     <?php
                                 }
                                 ?>  
@@ -140,6 +152,22 @@ if (!empty($message))
                         </div>
                         <div id='redemption-expired-date'>
                             Expiry Date: <?php echo $expire_date; ?>
+                        </div>
+                        <div id='redemption-redempt-submit'>
+                            <?php
+                            if (check_correct_login_type($this->config->item('group_id_user')))
+                            {
+                                //FORM OPEN
+                                echo form_open("all/user_redeem_voucher");
+                                echo form_input($item_id);
+                                ?>
+                                <input type='hidden' name='current_url' id='current_url' value='<?php echo get_current_url() ?>'/>
+                                <button name="button_action" type="submit" value="redeem" >Redeem</button>
+                                <?php
+                                //FORM CLOSE
+                                echo form_close();
+                            }
+                            ?>
                         </div>
                         <div id='redemption-comment-list'>
                             <?php $this->load->view('all/comment_form'); ?>
@@ -162,45 +190,6 @@ if (!empty($message))
                 </div>
             </div>
         </div>
-        
-
-
-        
-
-        <?php
-        if (check_correct_login_type($this->config->item('group_id_user')))
-        {
-            echo form_open("all/user_redeem_voucher");
-            echo form_input($item_id);
-            echo "<input type='hidden' name='current_url' id='current_url' value='" . get_current_url() . "'/>";
-            ?>
-            <button name="button_action" type="submit" value="redeem" >Redeem</button>
-
-        <?php
-        }
-        echo form_close();
-        ?>
-
-
-
-        <?php
-        if (check_is_login())
-        {
-            $merchant_id = $this->ion_auth->user()->row()->id;
-            $allowed_list = $this->m_custom->get_list_of_allow_id('advertise', 'merchant_id', $merchant_id, 'advertise_id');
-            if (check_correct_login_type($this->config->item('group_id_merchant'), $allowed_list, $advertise_id))
-            {
-                ?>
-                <div id="profile-bottom-link-right">
-                    <div id="profile-bottom-link-right-each">
-                        <a href='<?php echo base_url() . "merchant/candie_promotion/" . $advertise_id ?>' >Edit Redemption</a>
-                    </div>
-                    <div id='float-fix'></div>
-                </div>
-                <?php
-            }
-        }
-        ?>
 
     </div>
 </div>

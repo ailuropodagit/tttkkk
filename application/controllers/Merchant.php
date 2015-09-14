@@ -879,7 +879,7 @@ class Merchant extends CI_Controller
                 $supervisor = $this->m_custom->getUser($supervisor_id);
             }
             
-            $this->data['title'] = "Redemption";
+            $this->data['title'] = "User Redemption";
             if ($show_used == 1)
             {
                 $this->data['title'] = "Redemption Used History";
@@ -895,7 +895,9 @@ class Merchant extends CI_Controller
             $this->data['message'] =  $this->session->flashdata('message');
             $this->data['page_path_name'] = 'merchant/redemption';
             $this->load->view('template/layout_right_menu', $this->data);
-        }else{           
+        }
+        else
+        {           
             redirect('/', 'refresh');
         }
     }

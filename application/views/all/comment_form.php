@@ -4,6 +4,7 @@ $all_comment = $this->m_custom->activity_comment_count($item_id['value'],$item_t
 ?>
 
 <div id="user-comment">
+    
     <?php
     //LOOP ALL COMMENT
     foreach($all_comment as $row)
@@ -79,4 +80,5 @@ $all_comment = $this->m_custom->activity_comment_count($item_id['value'],$item_t
         echo form_close();
     }
     ?>
+        
 </div>
