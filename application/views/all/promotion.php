@@ -164,6 +164,7 @@ if (!empty($message))
                         <div id='redemption-expired-date'>
                             Expiry Date: <?php echo $expire_date; ?>
                         </div>
+                    </div>
                         <div id='redemption-redempt-submit'>
                             <?php
                             if (check_correct_login_type($this->config->item('group_id_user')))
@@ -180,7 +181,6 @@ if (!empty($message))
                             }
                             ?>
                         </div>
-                    </div>
                         <div id='redemption-comment-list'>
                             <?php $this->load->view('all/comment_form'); ?>
                         </div>
