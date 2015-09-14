@@ -6,30 +6,30 @@
 <script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script>
 
 <script type="text/javascript">
-    $( document ).ready(function() 
-    {
-        $('[data-countdown]').each(function()
-        {
-            var $this = $(this), finalDate = $(this).data('countdown');
-            $this.countdown(finalDate).on('update.countdown', function(event)
-            {
-                var format = '%H:%M:%S';
-                if (event.offset.days > 0) 
-                {
-                    format = '%-d day%!d ' + format;
-                }
-                if (event.offset.weeks > 0) 
-                {
-                    format = '%-w week%!w ' + format;
-                }
-                $this.html(event.strftime(format));
-                
-            }).on('finish.countdown', function (event) 
-            {
-                $this.html('Expired!');
-            });
+    $( document ).ready(function() {
+        $('[data-countdown]').each(function() {
+        var $this = $(this), finalDate = $(this).data('countdown');
+        
+        $this.countdown(finalDate)
+        .on('update.countdown', function(event) {
+        var format = '%H:%M:%S';
+                        if (event.offset.days > 0) {
+                            format = '%-d day%!d ' + format;
+                        }
+                        if (event.offset.weeks > 0) {
+                            format = '%-w week%!w ' + format;
+                        }
+                        $this.html(event.strftime(format));
+                    })
+                    .on('finish.countdown', function (event) {
+                        $this.html('Expired!');
+
+                    });
         });
+
+
     });
+
 </script>
 
 <div id='hot-deal'>
