@@ -17,12 +17,12 @@ foreach($promotion_list as $promotion_row){
     $advertise_url = "<a target='_blank' href='" . base_url() . "all/advertise/" . $promotion_row['advertise_id'] . "'>" . $promotion_row['title'] . "</a>";
     echo $advertise_url ." (" . $promotion_row['voucher'].")<br/><br/>";
     $redeem_list = $this->m_custom->getUserRedemption($promotion_row['advertise_id'],$voucher_active);
-    echo '<table>';
+    echo '<table><tr>';
     if ($show_used == 0)
     {
         echo '<td>Mark As</td>';
     }
-    echo '<td>Name</td><td>IC</td><td>Phone</td><td>Email</td><td>Expire Date</td>';
+    echo '<th>Name</th><th>IC</th><th>Phone</th><th>Email</th><th>Expire Date</th></tr>';
     foreach($redeem_list as $redeem_row){
         $user_info = $this->m_custom->getUser($redeem_row['user_id']);
         $user_name = $this->m_custom->display_users($redeem_row['user_id']);
@@ -40,8 +40,8 @@ foreach($promotion_list as $promotion_row){
         echo "<input type='hidden' name='advertise_id' id='advertise_id' value='" . $redeem_row['advertise_id'] . "'/>";       
         echo "<input type='hidden' name='current_url' id='current_url' value='" . get_current_url() . "'/>";
 
-            echo "<button name='button_action' type='submit' value='submit_used' >Used</button><br/>";
-            echo "<button name='button_action' type='submit' value='submit_expired' >Expired</button><br/>";
+        echo "<button name='button_action' type='submit' value='submit_used' >Used</button><br/>";
+        echo "<button name='button_action' type='submit' value='submit_expired' >Expired</button><br/>";
 
         echo "<br/>";
         echo form_close();       

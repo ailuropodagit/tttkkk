@@ -15,7 +15,7 @@
             <li><a href='<?php echo $merchant_album; ?>' class='layout-inner-right-menu-bar <?php if ($this->router->fetch_method() == 'album_merchant'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Picture</a></li>
             <li><a href='<?php echo base_url(); ?>merchant/merchant_redemption_page' class='layout-inner-right-menu-bar <?php if ($this->router->fetch_method() == 'merchant_redemption_page'){ echo "layout-inner-right-menu-bar-active"; } ?>'>User Redemption</a></li>
             <li><a href='#' class='layout-inner-right-menu-bar'>Analysis Report</a></li>
-            <li><a href='#' class='layout-inner-right-menu-bar'>Payment</a></li>
+            <li><a href='<?php echo base_url(); ?>merchant/payment_page' class='layout-inner-right-menu-bar <?php if ($this->router->fetch_method() == 'payment_page'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Payment</a></li>
             <?php
         }
         else if ($this->session->userdata('user_group_id') == $this->config->item('group_id_supervisor'))
