@@ -8,35 +8,51 @@
 <script type="text/javascript">
     $( document ).ready(function() {
         $('[data-countdown]').each(function() {
-        var $this = $(this), finalDate = $(this).data('countdown');
-        
-        $this.countdown(finalDate)
-        .on('update.countdown', function(event) {
-        var format = '%H:%M:%S';
-                        if (event.offset.days > 0) {
-                            format = '%-d day%!d ' + format;
-                        }
-                        if (event.offset.weeks > 0) {
-                            format = '%-w week%!w ' + format;
-                        }
-                        $this.html(event.strftime(format));
-                    })
-                    .on('finish.countdown', function (event) {
-                        $this.html('Expired!');
-
-                    });
+            var $this = $(this), finalDate = $(this).data('countdown');
+            $this.countdown(finalDate).on('update.countdown', function(event) {
+                var format = '%H:%M:%S';
+                if (event.offset.days > 0) {
+                    format = '%-d day%!d ' + format;
+                }
+                if (event.offset.weeks > 0) {
+                    format = '%-w week%!w ' + format;
+                }
+                $this.html(event.strftime(format));
+            }).on('finish.countdown', function (event) {
+                $this.html('Expired!');
+            });
         });
-
-
     });
-
 </script>
 
 <div id='hot-deal'>
     <h1>Hot Deal</h1>
     <div id='hot-deal-content'>
         
-        <?php echo "Category : " . $sub_category . "<br/>"; ?>
+        <div id="hot-deal-category">
+            Category: <?php echo $sub_category; ?>
+        </div>
+        
+        <div id="hot-deal-edit-link">
+            <?php
+            if (check_is_login())
+            {
+                $merchant_id = $this->ion_auth->user()->row()->id;
+                if (check_correct_login_type($this->config->item('group_id_supervisor')))
+                {
+                    $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;
+                }
+                $allowed_list = $this->m_custom->get_list_of_allow_id('advertise', 'merchant_id', $merchant_id, 'advertise_id');
+                if (check_correct_login_type($this->config->item('group_id_merchant'), $allowed_list, $advertise_id) || check_correct_login_type($this->config->item('group_id_supervisor'), $allowed_list, $advertise_id))
+                {
+                    ?>
+                    <a href='<?php echo base_url() . "merchant/edit_hotdeal/" . $advertise_id ?>' >Edit Hot Deal</a>
+                    <?php
+                }
+            }
+            ?>
+        </div>
+        <div id="float-fix"></div>
         
         <div id='hot-deal-table'>
             <div id='hot-deal-table-row'>
@@ -86,7 +102,8 @@
                                 </div>
                             </div>
                             <div id="hot-deal-time">
-                                <div data-countdown='<?php echo $end_time ?>'></div>
+                                <i class="fa fa-clock-o"></i>
+                                <span id="hot-deal-time-label" data-countdown='<?php echo $end_time ?>'></span>
                             </div>
                             <div id="float-fix"></div>
                         </div>
@@ -94,16 +111,27 @@
                             <?php echo $description ?>
                         </div>
                         <div id="hot-deal-like-comment-share">
-                            <?php
-                            echo $like_url;
-                            echo $comment_url;
-                            echo "Share : <br/>";
-                            ?>
+                            <div id="hot-deal-like">
+                                <?php echo $like_url; ?>
+                            </div>
+                            <div id="hot-deal-comment">
+                                <?php echo $comment_url; ?>
+                            </div>
+                            <div id="hot-deal-share">
+                                <?php echo "Share :"; ?>
+                                <span id="hot-deal-share-facebook">
+                                    <a href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook-square"></i></a>
+                                </span>
+                                <span id="hot-deal-share-instagram">
+                                    <a href="https://instagram.com" target="_blank"><i class="fa fa-instagram"></i></a>
+                                </span>
+                            </div>
+                            <div id="float-fix"></div>
                         </div>
                         <div id="hot-deal-people-reach">
                             <?php echo "People Reached " . $this->m_custom->activity_view_count($advertise_id) . " users"; ?>
                         </div>
-                        <div id="hot-deal-comment">
+                        <div id="hot-deal-comment-list">
                             <?php
                             $this->load->view('all/comment_form');
                             ?>
@@ -129,24 +157,3 @@
         
     </div>
 </div>
-
-
-
-
-
-<?php
-if (check_is_login())
-{
-    $merchant_id = $this->ion_auth->user()->row()->id;
-    if (check_correct_login_type($this->config->item('group_id_supervisor')))
-    {
-        $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;
-    }
-    $allowed_list = $this->m_custom->get_list_of_allow_id('advertise', 'merchant_id', $merchant_id, 'advertise_id');
-    if (check_correct_login_type($this->config->item('group_id_merchant'), $allowed_list, $advertise_id) || check_correct_login_type($this->config->item('group_id_supervisor'), $allowed_list, $advertise_id))
-    {
-        ?>
-        <a href='<?php echo base_url() . "merchant/edit_hotdeal/" . $advertise_id ?>' >Edit Hot Deal</a>
-        <?php
-    }
-}

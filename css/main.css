@@ -99,6 +99,20 @@ input[type='submit'], button[type='submit'], .ahref-button {
     display: inline-block;
 }
 
+#button-a-href {
+    background: none;
+    padding: 0px;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    border: 0px;
+    color: gray;
+}
+
+#button-a-href:hover {
+    color: black;
+}
+
 /*input[type='submit']:hover,button[type='submit']:hover {
     background: linear-gradient(0deg, #00b4d4, #5a88bc);
 }
@@ -1061,9 +1075,18 @@ a:hover {
     margin: 20px 0px 0px 0px;
 }
 
+#hot-deal-category {
+    float: left;
+}
+
+#hot-deal-edit-link {
+    float: right;
+}
+
 #hot-deal-table {
     display: table;
     width: 100%;
+    margin: 20px 0px 0px 0px;
 }
 
 #hot-deal-table-row {
@@ -1146,6 +1169,10 @@ a:hover {
     font-size: 15px;
 }
 
+#hot-deal-time-label {
+    margin: 0px 0px 0px 2px;
+}
+
 #hot-deal-description {
     margin: 20px 0px 0px 0px;
     padding: 7px;
@@ -1159,13 +1186,38 @@ a:hover {
     margin: 20px 0px 0px 0px;
 }
 
-#hot-deal-people-reach {
-    margin: 20px 0px 0px 0px;
-    text-align: right;
+#hot-deal-like {
+    float: left;
+    margin: 0px 30px 0px 0px;
 }
 
 #hot-deal-comment {
-    margin: 20px 0px 0px 0px;
+    float: left;
+}
+
+#hot-deal-share {
+    float: right;
+}
+
+#hot-deal-share-facebook a {
+    color: #4a5e91;
+    font-size: 18px;
+    margin: 0px 3px 0px 3px;
+}
+
+#hot-deal-share-instagram a {
+    color: #7d5846;
+    font-size: 18px;
+    margin: 0px 3px 0px 3px;
+}
+
+#hot-deal-people-reach {
+    margin: 30px 0px 0px 0px;
+    text-align: left;
+}
+
+#hot-deal-comment-list {
+    margin: 10px 0px 0px 0px;
     text-align: left;
 }
 
@@ -1242,6 +1294,230 @@ a:hover {
 #hot-deal-advertise-remove {
     margin: 20px 0px 0px;
     height: 20px;
+}
+
+/* REDEMPTION
+******************************/
+
+#redemption-content {
+    margin: 20px 0px 0px 0px;
+}
+
+#redemption-category {
+    float: left;
+}
+
+#redemption-edit-link {
+    float: right;
+}
+
+#redemption-voucher-barcode {
+    float: right;
+}
+
+#redemption-table {
+    display: table;
+    width: 100%;
+    margin: 20px 0px 0px 0px;
+}
+
+#redemption-table-row {
+    display: table-row;
+}
+
+#redemption-table-row-cell {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.redemption-center-cell {
+    width: 100%;
+}
+
+#redemption-center {
+    width: 500px;
+    margin: 0px auto 0px auto;
+}
+
+#redemption-right, #redemption-left {
+    font-size: 45px;
+    width: 40px;
+}
+
+#redemption-left-gray, #redemption-right-gray {
+    color: #ebebeb;
+}
+
+#redemption-right a, #redemption-left a {
+    color: #b6b6b6;
+}
+
+#redemption-right a:hover, #redemption-left a:hover {
+    color: #919191;
+}
+
+#redemption-title {
+    font-size: 20px;
+    color: black;
+    font-weight: bold;
+}
+
+#redemption-title a {
+    color: black;
+    text-decoration: none;
+}
+
+#redemption-photo-box {
+    width: 200px;
+    height: 200px;
+    border: 1px solid lightgray;
+    background-color: whitesmoke;
+    margin: 10px auto 10px auto;
+}
+
+#redemption-photo-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#redemption-sub-title {
+    font-weight: bold;
+    font-size: 17px;
+    color: black;
+}
+
+#redemption-candies {
+    margin: 10px 0px 0px 0px;
+}
+
+#redemption-rate-time {
+    margin: 20px 0px 0px 0px;
+}
+
+#redemption-rate {
+    float: left;
+}
+
+#redemption-time {
+    float: right;
+}
+
+#redemption-description {
+    margin: 20px 0px 0px 0px;
+    padding: 7px;
+    text-align: left;
+    border-radius: 4px;
+    border: 1px solid #a9a9a9;
+    min-height: 100px;
+}
+
+#redemption-like-comment-share {
+    margin: 20px 0px 0px 0px;
+}
+
+#redemption-like {
+    float: left;
+    margin: 0px 30px 0px 0px;
+}
+
+#redemption-comment {
+    float: left;
+}
+
+#redemption-share {
+    float: right;
+}
+
+#redemption-share-facebook a {
+    color: #4a5e91;
+    font-size: 18px;
+    margin: 0px 3px 0px 3px;
+}
+
+#redemption-share-instagram a {
+    color: #7d5846;
+    font-size: 18px;
+    margin: 0px 3px 0px 3px;
+}
+
+#redemption-terms-conditions {
+    margin: 20px 0px 0px 0px;
+    text-align: left;
+}
+
+#redemption-terms-conditions-title {
+    font-weight: bold;
+    font-size: 14px;
+    color: #7f7f7f;
+    text-decoration: underline;
+    margin: 0px 0px 8px 0px;
+}
+
+#redemption-terms-conditions ul {
+    margin: 0px 0px 0px 20px;
+    padding: 0px;
+}
+
+#redemption-terms-conditions li {
+    margin: 0px 0px 8px 0px;
+    color: gray;
+    font-size: 14px;
+}
+
+#redemption-available-branch {
+    margin: 20px 0px 0px 0px;
+    text-align: left;
+}
+
+#redemption-available-branch-title {
+    font-weight: bold;
+    font-size: 14px;
+    color: #7f7f7f;
+    text-decoration: underline;
+    margin: 0px 0px 8px 0px;
+}
+
+#redemption-available-branch ul {
+    margin: 0px 0px 0px 20px;
+    padding: 0px;
+}
+
+#redemption-available-branch li {
+    margin: 0px 0px 8px 0px;
+    color: gray;
+    font-size: 14px;
+}
+
+#redemption-available-branch-name {
+    font-weight: bold;
+    font-size: 13px;
+}
+
+#redemption-available-branch-address {
+    margin: 5px 0px 0px 0px;
+}
+
+#redemption-available-branch-tel {
+    float: left;
+    margin: 5px 0px 0px 0px;
+}
+
+#redemption-available-branch-view-map {
+    float: right;
+    margin: 5px 0px 0px 0px;
+}
+
+#redemption-expired-date {
+    text-align: left;
+    font-weight: bold;
+    margin: 20px 0px 0px 0px;
+}
+
+#redemption-comment-list {
+    margin: 20px 0px 0px 0px;
+    text-align: left;
 }
 
 /* CANDIE PROMOTION
@@ -1351,6 +1627,46 @@ a:hover {
 #candie-promotion-form-submit {
     margin: 20px 0px 0px 0px;
 }
+
+/* USER COMMENT
+******************************/
+
+#user-comment {
+    margin: 0px 0px 0px 0px;
+}
+
+#user-comment-list-each {
+    margin: 0px 0px 15px 0px;
+}
+
+#user-comment-list-each-username {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 120px;
+}
+
+#user-comment-list-each-comment-time {
+    font-size: 13px;
+    color: gray;
+    margin: 5px 0px 0px 0px;
+}
+
+#user-comment-input {
+    margin: 20px 0px 0px 0px;
+}
+
+#user-comment-input textarea {
+    height: 100px;
+    width: 100%;
+    resize: none;
+    box-sizing: border-box;
+}
+
+#user-comment-submit {
+    margin: 20px 0px 0px 0px;
+}
+
     
 /* ABOUT US
 ******************************/

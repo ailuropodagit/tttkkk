@@ -117,7 +117,7 @@
                     </div>
                 </div>
                 <div id="candie-promotion-form-voucher-checkbox">
-                    <div id="candie-promotion-form-voucher-checkbox-title">Select Term</div>
+                    <div id="candie-promotion-form-voucher-checkbox-title">Select Terms & Conditions</div>
                     <?php
                     foreach ($candie_term as $key => $value)
                     {
