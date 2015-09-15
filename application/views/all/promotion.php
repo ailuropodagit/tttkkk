@@ -4,6 +4,18 @@
 <?php echo link_tag('js/jgrowl/jquery.jgrowl.css') ?>
 <script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script>
 
+<!--Media Print Hide ID Not Working?-->
+<style type="text/css">
+    @media print {
+    #redemption-like-comment-share {
+        display: none !important;
+    }
+    #redemption-rate{
+        display: none !important;
+    }
+}
+</style>
+
 <?php
 if (!empty($message))
 {
@@ -34,12 +46,7 @@ if (!empty($message))
             }
             ?>
         </div>
-        <div id="float-fix"></div>
-        
-        <div id="redemption-voucher-barcode">
-            <img src="<?php echo $voucher_barcode; ?>"  alt="not show"/>
-        </div>
-        <div id="float-fix"></div>
+        <div id="float-fix"></div>       
         
         <div id='redemption-table'>
             <div id='redemption-table-row'>
@@ -59,6 +66,10 @@ if (!empty($message))
                 </div>
                 <div id='redemption-table-row-cell' class='redemption-center-cell'>
                     <div id='redemption-center'>
+                        <div id="redemption-voucher-barcode">
+                            <img src="<?php echo $voucher_barcode; ?>"  alt="not show"/>
+                        </div>
+                        <div id="float-fix"></div>
                         <div id="redemption-title">
                             <a href='<?php echo $merchant_dashboard_url ?>'> <?php echo $merchant_name ?></a>
                         </div>
@@ -153,6 +164,7 @@ if (!empty($message))
                         <div id='redemption-expired-date'>
                             Expiry Date: <?php echo $expire_date; ?>
                         </div>
+                    </div>
                         <div id='redemption-redempt-submit'>
                             <?php
                             if (check_correct_login_type($this->config->item('group_id_user')))
@@ -172,8 +184,8 @@ if (!empty($message))
                         <div id='redemption-comment-list'>
                             <?php $this->load->view('all/comment_form'); ?>
                         </div>
-                    </div>
                 </div>
+                <input type="button" onclick="printDiv('redemption-center')" value="Print" /><br/><br/>
                 <div id='redemption-table-row-cell' class='redemption-right-cell'>
                     <div id='redemption-right'>
                         <?php

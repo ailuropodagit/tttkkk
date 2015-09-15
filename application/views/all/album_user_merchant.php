@@ -27,13 +27,22 @@ if (check_correct_login_type($this->config->item('group_id_user')) && $this->rou
 <?php
 foreach ($album_list as $row)
 {
-    $advertise_detail_url = base_url()."all/user_merchant_picture/".$row['merchant_user_album_id'];
+    if ($this->router->fetch_method() == 'album_user_merchant')
+    {
+        $picture_detail_url = base_url() . "all/merchant_user_picture/" . $row['merchant_user_album_id'] . "/" . $row['user_id'];
+    }
+    else if ($this->router->fetch_method() == 'merchant_dashboard')
+    {
+        $picture_detail_url = base_url() . "all/merchant_user_picture/" . $row['merchant_user_album_id'] . "/0/" . $row['merchant_id'];
+    }else{
+        $picture_detail_url = base_url() . "all/merchant_user_picture/" . $row['merchant_user_album_id'];
+    }
     $merchant_name = $this->m_custom->display_users($row['merchant_id']);
     $merchant_dashboard_url = base_url()."all/merchant-dashboard/".generate_slug($merchant_name);
     echo "<div class='hot-deal-box'>";
     echo "<h2><a href='".$merchant_dashboard_url."'>".$merchant_name."</a></h2><br/>";
-    echo "<a href='".$advertise_detail_url."'><img src='" . base_url($this->album_user_merchant.$row['image']) . "' class='image-hot-deal' ></a><br/>";
-    echo "<a href='".$advertise_detail_url."'>".$row['title']."</a><br/>";
+    echo "<a href='".$picture_detail_url."'><img src='" . base_url($this->album_user_merchant.$row['image']) . "' class='image-hot-deal' ></a><br/>";
+    echo "<a href='".$picture_detail_url."'>".$row['title']."</a><br/>";
     echo "Upload by : " . $this->m_custom->display_users($row['user_id'])."<br/>";
     echo "Like : 30 ";
     echo "Comment : 10";

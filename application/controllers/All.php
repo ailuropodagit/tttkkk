@@ -128,12 +128,104 @@ class All extends CI_Controller
                     $this->data['next_url'] = base_url() . "all/advertise/".$next_id."/".$advertise_type."/".$sub_category_id."/".$merchant_id. "/" . $show_expired;
                 }
             }
-            $this->load->view('template/layout', $this->data);
+            if ($this->ion_auth->logged_in())
+            {
+                $this->load->view('template/layout_right_menu', $this->data);
+            }
+            else
+            {
+                $this->load->view('template/layout', $this->data);
+            }
         }
         else
         {
             redirect('/', 'refresh');
         }
+    }
+    
+    function merchant_user_picture($picture_id, $user_id = NULL, $merchant_id = NULL){
+        
+        $this->data['page_title'] = "Merchant Album";      
+        $the_row = $this->m_custom->get_one_table_record('merchant_user_album','merchant_user_album_id',$picture_id,1);
+        if ($the_row)
+        {
+            $message_info = '';
+            if ($this->ion_auth->logged_in())
+            {
+                 $login_id = $this->ion_auth->user()->row()->id;
+                 $login_data = $this->m_custom->getUser($login_id);
+            }
+            
+            //$user_row = $this->m_custom->getUser($the_row['user_id']);    //Temporary hide because no use, but maybe future will use
+            $merchant_row = $this->m_custom->getMerchant($the_row['merchant_id']);
+            $this->data['merchant_dashboard_url'] = base_url() . "all/merchant-dashboard/" .$merchant_row['slug'];
+            
+            $this->data['picture_id'] = $picture_id;
+            $this->data['merchant_name'] = $merchant_row['company'];
+            $this->data['user_name_url'] = "<a href='".base_url()."all/user_dashboard/".$the_row['user_id']."'>".$this->m_custom->display_users($the_row['user_id'])."</a>";
+            $this->data['title'] = $the_row['title'];
+            $this->data['description'] = $the_row['description'];
+            $this->data['image_url'] = base_url($this->album_user_merchant .$the_row['image']);
+            
+            $this->data['like_url'] = $this->m_custom->generate_like_link($picture_id,'mua');
+            $this->data['comment_url'] = $this->m_custom->generate_comment_link($picture_id,'mua');
+            $this->data['average_rating'] = $this->m_custom->activity_rating_average($picture_id, 'mua');
+            $this->data['message'] = $this->session->flashdata('message');
+            $this->data['item_id'] = array(
+                'type' => 'hidden',
+                'name' => 'item_id',
+                'id' => 'item_id',
+                'value' => $picture_id,
+            );
+            $this->data['item_type'] = array(
+                'type' => 'hidden',
+                'name' => 'item_type',
+                'id' => 'item_type',
+                'value' => 'mua',
+            );
+            
+            if (check_correct_login_type($this->group_id_user)) //Check if user logged in
+            {
+                $this->data['radio_level'] = " ";
+            }
+            else
+            {
+                $this->data['radio_level'] = "disabled";
+            }
+
+            $this->data['page_path_name'] = 'all/picture';
+
+            if ($user_id != NULL || $merchant_id != NULL)
+            {
+                $current_list = $this->m_custom->getAlbumUserMerchant($user_id, $merchant_id);
+                $id_array = get_key_array_from_list_array($current_list,'merchant_user_album_id');
+                $previous_id = get_previous_id($picture_id,$id_array);
+                $next_id = get_next_id($picture_id,$id_array);
+                if ($previous_id)
+                {
+                    $this->data['previous_url'] = base_url() . "all/merchant_user_picture/".$previous_id."/".$user_id."/".$merchant_id;
+                }
+                if($next_id)
+                {
+                    $this->data['next_url'] = base_url() . "all/merchant_user_picture/".$next_id."/".$user_id."/".$merchant_id;
+                }
+            }
+            
+            if ($this->ion_auth->logged_in())
+            {
+                $this->load->view('template/layout_right_menu', $this->data);
+            }
+            else
+            {
+                $this->load->view('template/layout', $this->data);
+            }
+        }
+        else
+        {
+            redirect('/', 'refresh');
+        }
+        
+        $this->data['page_path_name'] = 'all/picture';       
     }
     
     function album_user_merchant($user_id = NULL, $merchant_id = NULL)

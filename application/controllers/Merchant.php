@@ -201,21 +201,26 @@ class Merchant extends CI_Controller
         }
     }
 
-    function payment_page(){
+    function payment_page()
+    {
         if (check_correct_login_type($this->main_group_id))
         {
             $merchant_id = $this->ion_auth->user()->row()->id;
             $this->m_custom->merchant_balance_update($merchant_id);
-            $this->data['last_month_balance'] = $this->m_custom->merchant_check_balance($merchant_id,1);
+            $this->data['last_month_balance'] = $this->m_custom->merchant_check_balance($merchant_id, 1);
             $this->data['this_month_balance'] = $this->m_custom->merchant_check_balance($merchant_id);
             $this->data['this_month_transaction'] = $this->m_custom->merchant_this_month_transaction($merchant_id);
-            
-            $this->data['message'] =  $this->session->flashdata('message');
+
+            $this->data['message'] = $this->session->flashdata('message');
             $this->data['page_path_name'] = 'merchant/payment';
             $this->load->view('template/layout_right_menu', $this->data);
         }
+        else
+        {
+            redirect('/', 'refresh');
+        }
     }
-    
+
     function retrieve_password()
     {
         $this->form_validation->set_rules('username_email', $this->lang->line('forgot_password_username_email_label'), 'required');
