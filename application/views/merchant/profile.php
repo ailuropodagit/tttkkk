@@ -2,8 +2,8 @@
 
 <div id="profile">
     <h1>Profile</h1>
-    
     <div id='profile-content'>
+        
         <div id="profile-photo">
             <div id="profile-photo-box">
                 <?php            
@@ -119,35 +119,34 @@
             <?php 
         }
         ?>
+            
     </div>
-    
 </div>
 
-<div id='profile-bottom-link'>
-   <?php 
-    if (check_correct_login_type($this->main_group_id)) 
-    { 
-        ?>
-        <div id='profile-bottom-link-left'>
-            <a href='<?php echo base_url(); ?>merchant/upload_ssm'>Submit SSM forms</a>
-        </div>
-        <div id="profile-bottom-link-right">
-            <div id="profile-bottom-link-right-each">
-                <a href="<?php echo base_url() ?>merchant/branch/add">Add Branch</a>
-            </div>
-            <div id="profile-bottom-link-right-each">
-                <a href="<?php echo base_url() ?>merchant/branch">View Branch</a>
-            </div>
-            <div id="profile-bottom-link-right-each">
-                <a href="<?php echo base_url() ?>merchant/supervisor/add">Add Supervisor</a>
-            </div>
-            <div id="profile-bottom-link-right-each">
-                <a href="<?php echo base_url() ?>merchant/supervisor">View Supervisor</a>
-            </div>
-            <div id='float-fix'></div>
-        </div>
-        <div id='float-fix'></div>
-        <?php
-    }
-    ?>
-</div>
+<?php 
+ if (check_correct_login_type($this->main_group_id)) 
+ { 
+     ?>
+     <div id='profile-bottom-link'>
+         <div id='profile-bottom-link-left'>
+             <a href='<?php echo base_url(); ?>merchant/upload_ssm'>Submit SSM forms</a>
+         </div>
+         <div id="profile-bottom-link-right">
+             <div id="profile-bottom-link-right-each">
+                 <a href="<?php echo base_url() ?>merchant/branch/add">Add Branch</a>
+             </div>
+             <div id="profile-bottom-link-right-each">
+                 <a href="<?php echo base_url() ?>merchant/branch">View Branch</a>
+             </div>
+             <div id="profile-bottom-link-right-each">
+                 <a href="<?php echo base_url() ?>merchant/supervisor/add">Add Supervisor</a>
+             </div>
+             <div id="profile-bottom-link-right-each">
+                 <a href="<?php echo base_url() ?>merchant/supervisor">View Supervisor</a>
+             </div>
+             <div id='float-fix'></div>
+         </div>
+         <div id='float-fix'></div>
+     </div>
+     <?php
+ }

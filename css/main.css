@@ -978,7 +978,7 @@ a:hover {
 }
 
 #profile-info {
-    margin: 0px 0px 30px 235px;
+    margin: 0px 0px 0px 235px;
 }
 
 #profile-info-form-each-label {
@@ -1023,6 +1023,10 @@ a:hover {
 
 #profile-info-form-submit {
     margin: 15px 0px 0px 0px;
+}
+
+#profile-bottom-link {
+    margin: 30px 0px 0px 0px;
 }
 
 #profile-bottom-link-left {
@@ -1299,6 +1303,81 @@ a:hover {
     height: 20px;
 }
 
+/* UPLOAD FOR MERCHANT
+******************************/
+
+#upload-for-merchant-content {
+    margin: 20px 0px 0px 0px;
+}
+
+#upload-for-merchant-upload-image-note {
+    font-size: smaller;
+    font-style: italic;
+    margin: 15px 0px 20px 0px;
+}
+
+#upload-for-merchant-form {
+    vertical-align: top;
+    display: inline-block;
+    width: 250px; 
+    margin: 0px 0px 50px 0px;
+}
+
+#upload-for-merchant-form-photo-box {
+    width: 200px;
+    height: 200px;
+    border: 1px solid lightgray;
+    background-color: whitesmoke;
+    margin: 0px 0px 20px 0px;
+}
+
+#upload-for-merchant-form-photo-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#upload-for-merchant-form-input-file {
+    margin: 0px 0px 20px 0px;
+}
+
+#upload-for-merchant-form-each-label {
+    width: 285px;
+    text-align: left;
+    margin: 20px auto 0px auto;
+}
+
+#upload-for-merchant-form-each-input input[type='text'] {
+    height: 25px;
+    width: 200px;
+    margin: 10px 0px 0px 0px;
+    box-sizing: border-box;
+}
+
+#upload-for-merchant-form-each-input select {
+    height: 25px;
+    width: 200px;
+    margin: 10px 0px 0px 0px;
+    box-sizing: border-box;
+}
+
+#upload-for-merchant-form-each-input textarea {
+    margin: 10px 0px 0px 0px;
+    height: 80px;
+    width: 200px;
+    box-sizing: border-box;
+    resize: none;
+}
+
+#upload-for-merchant-remove-label {
+    font-size: 15px;
+}
+
+#upload-for-merchant-remove {
+    margin: 20px 0px 0px;
+    height: 20px;
+}
+
 /* REDEMPTION
 ******************************/
 
@@ -1310,13 +1389,17 @@ a:hover {
     float: left;
 }
 
+#redemption-print {
+    float: left;
+    margin: 20px 0px 0px 0px;
+}
+
 #redemption-edit-link {
     float: right;
 }
 
 #redemption-voucher-barcode {
-    margin: 15px 0px 0px 0px;
-    float: right;
+    margin: 5px 0px 15px 0px;
 }
 
 #redemption-table {
