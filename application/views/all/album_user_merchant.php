@@ -78,12 +78,12 @@
                             <tr>
                                 <td>Like</td>
                                 <td>:</td>
-                                <td>2</td>
+                                <td><?php echo $this->m_custom->activity_like_count($row['merchant_user_album_id'], 'mua'); ?></td>
                             </tr>
                             <tr>
                                 <td>Comment</td>
                                 <td>:</td>
-                                <td>10</td>
+                                <td><?php echo $this->m_custom->activity_comment_count($row['merchant_user_album_id'], 'mua'); ?></td>
                             </tr>
                         </table>
                     </div>

@@ -88,7 +88,7 @@
                     <?php
                 }
                 ?>        
-            </table>
+            </table><br/><br/>
             <?php
         }
         ?>

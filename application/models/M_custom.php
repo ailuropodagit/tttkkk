@@ -1520,6 +1520,31 @@ class M_custom extends CI_Model
         }
     }
 
+    public function get_user_today_upload_count($user_id, $date = NULL)
+    {
+        if (!IsNullOrEmptyString($date))
+        {
+            $search_date = $date;
+        }
+        else
+        {
+            $search_date = date(format_date_server());
+        }
+
+        $condition = "create_date like '%" . $search_date . "%'";
+        $this->db->where($condition);
+        $this->db->where('hide_flag', 0);
+        $mua_query = $this->db->get_where('merchant_user_album', array('user_id' => $user_id));
+        $total_count = $mua_query->num_rows();
+
+        $this->db->where($condition);
+        $this->db->where('hide_flag', 0);
+        $usa_query = $this->db->get_where('user_album', array('user_id' => $user_id));
+        $total_count += $usa_query->num_rows();
+        
+        return $total_count;
+    }
+    
     //wanted display: name, description, short
     public function display_users_groups($groups_id, $wanted_display)
     {

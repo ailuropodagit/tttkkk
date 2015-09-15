@@ -870,11 +870,11 @@ class user extends CI_Controller
         {
             redirect('/', 'refresh');
         }
-                     
+
         $message_info = '';
         $user_id = $this->ion_auth->user()->row()->id;
-        $user_data = $this->m_custom->get_one_table_record('users', 'id', $user_id);
-       
+        $user_data = $this->m_custom->get_one_table_record('users', 'id', $user_id);       
+        
         if(!IsNullOrEmptyString($slug)){
             $merchant_data = $this->m_custom->get_one_table_record('users', 'slug', $slug,1);        
             $merchant_id = $merchant_data['id'];    
@@ -900,8 +900,16 @@ class user extends CI_Controller
                 $validate_fail = 0;
                 for ($i = 0; $i < $this->box_number; $i++)
                 {
-                    $user_today_upload_count = 1; //todo
-                            
+                    $user_today_upload_count = $this->m_custom->get_user_today_upload_count($user_id);
+                    $user_max_picture_per_day = $this->config->item('user_max_picture_per_day');
+
+                    if ($user_today_upload_count >= $user_max_picture_per_day)
+                    {
+                        $message_info = add_message_info($message_info, 'You already reach max ' . $user_max_picture_per_day . ' picture upload per day. Please upload again after today.');
+                        $this->session->set_flashdata('message', $message_info);
+                        redirect('user/upload_for_merchant', 'refresh');
+                    }
+
                     $post_file = "image-file-" . $i;
                     $post_title = $this->input->post('image-title-' . $i);
                     $post_merchant_id = $this->input->post('image-merchant-' . $i);
@@ -921,6 +929,7 @@ class user extends CI_Controller
                         }
                             if (!$this->upload->do_upload($post_file))
                             {
+                                $validate_fail = 1;
                                 $message_info = add_message_info($message_info, $this->upload->display_errors(), $post_title);
                             }
                             else
