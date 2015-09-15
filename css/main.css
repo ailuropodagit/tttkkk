@@ -1552,6 +1552,52 @@ a:hover {
     padding: 5px 8px 5px 8px;
 }
 
+/* PAYMENT
+******************************/
+
+#payment-content {
+    margin: 20px 0px 0px 0px;
+}
+
+#payment-print {
+    margin: 20px 0px 0px 0px;
+}
+
+#payment-table {
+    margin: 20px 0px 0px 0px;
+}
+
+#payment-content table {
+    border: 1px solid lightgray;
+}
+
+#payment-content table th {
+    background-color: whitesmoke;
+    padding: 4px 0px 4px 0px;
+    font-size: 14px;
+}
+
+#payment-content table td {
+    font-size: 14px;
+    padding: 5px 8px 5px 8px;
+}
+
+#payment-current-balance {
+    margin: 20px 0px 0px 0px;
+}
+
+#payment-your-balance {
+    margin: 10px 0px 0px 0px;
+}
+
+#payment-reload {
+    margin: 10px 0px 0px 0px;
+}
+
+#payment-assistance {
+    margin: 10px 0px 0px 0px;
+}
+
 /* CANDIE PROMOTION
 ******************************/
 
