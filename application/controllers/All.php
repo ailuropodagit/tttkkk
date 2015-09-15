@@ -508,7 +508,7 @@ class All extends CI_Controller
             else
             {
                 $this->data['album_list'] = $this->m_custom->getAlbumUserMerchant(NULL, $the_row->id);
-                $this->data['title'] = "User Pictures";
+                $this->data['title'] = "User's Pictures";
                 $this->data['bottom_path_name'] = 'all/album_user_merchant';
             }
             if ($this->ion_auth->logged_in())

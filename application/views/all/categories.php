@@ -1,4 +1,7 @@
 <?php
+//PRESET VAR
+$tab_counter = 0;
+
 //GET MAIN CATEGORY
 $main_category_object = $this->m_custom->getCategory();
 
@@ -18,18 +21,21 @@ foreach ($main_category_object as $main_category)
         
         //LOOP SUB CATEGORY
         foreach ($sub_category_object as $sub_category)
-        { 
-            //GET DATE
+        {
+            //DATA
+            $sub_category_id = $sub_category->category_id;
             $sub_category_label = $sub_category->category_label;
             ?>
             <div id="category-each-nav">
-                <a href="#">
+                <a href="<?php echo base_url() ?>all/hotdeal-list/<?php echo $sub_category_id ?>/<?php echo $tab_counter ?>">
                     <span id="category-each-nav-icon"><i class="fa fa-caret-right"></i></span>
                     <?php echo $sub_category_label ?>
                 </a>
             </div>
             <?php
         }
+        //COUNTER ++
+        $tab_counter = $tab_counter + 1;
         ?>
     </div>
 

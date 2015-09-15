@@ -27,9 +27,8 @@ $this->album_merchant = $this->config->item('album_merchant');
 
 <div id="advertise-list">
     <h1><?php echo $title; ?></h1>
-        
     <div id="advertise-list-content">
-        
+                
         <?php
         //CATEGORY BREADCRUMB
         if (!empty($sub_category))
