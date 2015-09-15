@@ -259,11 +259,13 @@ class All extends CI_Controller
         
         $merchant_id = 0;
         $base_url = base_url() . "all/album_merchant";
-        if($slug != NULL){
+        if($slug != NULL)
+        {
             $the_row = $this->m_custom->get_one_table_record('users', 'slug', $slug);
             $merchant_id = $the_row->id ;    
             $base_url = base_url() . "all/album_merchant/".$slug;
-        }else if (check_correct_login_type($this->group_id_merchant))
+        }
+        else if (check_correct_login_type($this->group_id_merchant))
         {
             $merchant_id = $this->ion_auth->user()->row()->id;
             $the_row = $this->m_custom->get_one_table_record('users', 'id', $merchant_id);

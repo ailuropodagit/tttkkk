@@ -75,6 +75,10 @@ $this->album_merchant = $this->config->item('album_merchant');
             {
                 $empty_data_message = 'No redemption in the moment';
             }
+            else if ($this->router->fetch_method() == 'album_merchant')
+            {
+                $empty_data_message = 'No picture in the moment';
+            }
             //EMPTY
             ?><div id='advertise-list-empty-message'><?php echo $empty_data_message ?></div><?php
         }
