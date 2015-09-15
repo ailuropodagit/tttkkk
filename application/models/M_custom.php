@@ -322,12 +322,17 @@ class M_custom extends CI_Model
     }
 
     //To find one record in DB with one keyword
-    public function get_one_table_record($the_table, $the_column, $the_value, $want_array = 0)
+    public function get_one_table_record($the_table, $the_column, $the_value, $want_array = 0, $ignore_hide = 0)
     {
         if (empty($the_value))
         {
             return FALSE;
         }
+        
+        if($ignore_hide != 0){
+            $this->db->where('hide_flag', 0);
+        }
+        
         $query = $this->db->get_where($the_table, array($the_column => $the_value), 1);
         if ($query->num_rows() !== 1)
         {
