@@ -5,11 +5,10 @@
         $(document).ready(function() {
        var options ={
         chart: {
-                renderTo: 'container_gender',
                 type: 'bar'
             },
             title: {
-                text: 'Gender Analysis Report'
+                text: 'Analysis Report'
             },
             xAxis: {
                 categories: ['View', 'Like', 'Rating', 'Redeem']
@@ -35,7 +34,7 @@
                 },
                 bar: {
                     dataLabels: {
-                        enabled: true
+                        enabled: true,
                     }
                 }
             },
@@ -52,11 +51,14 @@
             url: post_url,
             dataType: 'json',
             data: "&the_year=" + the_year + "&the_month=" + the_month + "&the_adv_type=" + the_adv_type,
-            success: function (json) {
-                //options.xAxis.categories = json[0]['name'];
-                options.series[0] = json[0];
-                options.series[1] = json[1];
-
+            success: function (data) {
+                options.series.length = 0;
+                options.title.text = 'Gender Analysis Report';
+                options.yAxis.title.text = 'Gender';
+                options.chart.renderTo = 'container_gender';               
+                options.series[0] = data[0];
+                options.series[1] = data[1];
+                
                 chart = new Highcharts.Chart(options);
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -65,7 +67,55 @@
             }
         });
 
+        var post_url2 = 'http://' + $(location).attr('hostname') + '/keppo/merchant/getChart_race';
+        $.ajax({
+            type: "POST",
+            url: post_url2,
+            dataType: 'json',
+            data: "&the_year=" + the_year + "&the_month=" + the_month + "&the_adv_type=" + the_adv_type,
+            success: function (data) {
+                options.series.length = 0;
+                options.title.text = 'Race Analysis Report';
+                options.yAxis.title.text = 'Race';
+                options.chart.renderTo = 'container_race';    
+                options.series[0] = data[0];
+                options.series[1] = data[1];
+                options.series[2] = data[2];
+                options.series[3] = data[3];
+                
+                chart = new Highcharts.Chart(options);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert(textStatus);
+                alert(errorThrown);
+            }
+        });
 
+        var post_url3 = 'http://' + $(location).attr('hostname') + '/keppo/merchant/getChart_age';
+        $.ajax({
+            type: "POST",
+            url: post_url3,
+            dataType: 'json',
+            data: "&the_year=" + the_year + "&the_month=" + the_month + "&the_adv_type=" + the_adv_type,
+            success: function (data) {
+                options.series.length = 0;
+                options.title.text = 'Age Analysis Report';
+                options.yAxis.title.text = 'Age';
+                options.chart.renderTo = 'container_age';             
+                options.series[0] = data[0];
+                options.series[1] = data[1];
+                options.series[2] = data[2];
+                options.series[3] = data[3];
+                options.series[4] = data[4];
+                
+                chart = new Highcharts.Chart(options);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert(textStatus);
+                alert(errorThrown);
+            }
+        });
+        
     });
 </script>
         
@@ -79,6 +129,8 @@
                 <span id="candie-promotion-form-go-button"><button name="button_action" type="submit" value="search_history">Go</button></span>
             </div>
         <?php echo form_close(); ?>
-        <div id="container_gender" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+    <div id="container_gender" style="min-width: 400px; height: 400px; margin: 0 auto"></div><br/><br/><br/>
         
-   
+        <div id="container_race" style="min-width: 400px; height: 400px; margin: 0 auto"></div><br/><br/><br/>
+        
+             <div id="container_age" style="min-width: 400px; height: 400px; margin: 0 auto"></div><br/><br/><br/>

@@ -1429,6 +1429,7 @@ class M_custom extends CI_Model
                 return $the_user['us_gender_id'];
                 break;
             case 'age':
+                return $the_user['us_age'];
                 break;
         }
     }
