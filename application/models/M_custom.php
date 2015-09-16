@@ -1370,13 +1370,19 @@ class M_custom extends CI_Model
     }
 
     //Type: view, like, rating, redeem, choose by show race, gender, age, to do, todo
-    public function getMerchantAnalysisReport($merchant_id, $the_type, $month_id = NULL, $year = NULL)
+    public function getMerchantAnalysisReport($merchant_id, $the_type, $month_id = NULL, $year = NULL, $advertise_type = NULL)
     {
         $group_id_user = $this->config->item('group_id_user');
         $search_date = date_for_db_search($month_id, $year);
-        $advertise_of_merchant = $this->get_list_of_allow_id('advertise','merchant_id',$merchant_id,'advertise_id');
+        if ($advertise_type == NULL)
+        {
+            $advertise_of_merchant = $this->get_list_of_allow_id('advertise', 'merchant_id', $merchant_id, 'advertise_id');
+        }
+        else
+        {
+            $advertise_of_merchant = $this->get_list_of_allow_id('advertise', 'merchant_id', $merchant_id, 'advertise_id', 'advertise_type', $advertise_type);
+        }
 
-        
         switch ($the_type)
         {
             case 'view':

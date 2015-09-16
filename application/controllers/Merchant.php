@@ -2125,12 +2125,51 @@ class Merchant extends CI_Controller
         $this->_render_page('merchant/edit_user', $this->data);
     }
 
-    function analysis_report()
+    function analysis_report($search_month = NULL, $search_year = NULL, $search_adv_type = NULL)
     {
         $message_info = '';
         if (check_correct_login_type($this->main_group_id))
-        {           
+        {
             //$this->data['charts'] = $this->getChart($merchant_id);
+            $merchant_id = $this->ion_auth->user()->row()->id;
+            $merchant_data = $this->m_custom->getUser($merchant_id);
+
+            if (isset($_POST) && !empty($_POST))
+            {
+                if ($this->input->post('button_action') == "search_history")
+                {
+                    $search_month = $this->input->post('the_month');
+                    $search_year = $this->input->post('the_year');
+                    $search_adv_type = $this->input->post('the_adv_type');
+                }
+            }
+            $year_list = generate_number_option(get_part_of_date('year', $merchant_data['created_on'], 1), get_part_of_date('year'));
+            $this->data['year_list'] = $year_list;
+            $this->data['the_year'] = array(
+                'name' => 'the_year',
+                'id' => 'the_year',
+            );
+            $this->data['the_year_selected'] = empty($search_year) ? get_part_of_date('year') : $search_year;
+
+            $month_list = $this->ion_auth->get_static_option_list('month');
+            $this->data['month_list'] = $month_list;
+            $this->data['the_month'] = array(
+                'name' => 'the_month',
+                'id' => 'the_month',
+            );
+            $this->data['the_month_selected'] = empty($search_month) ? get_part_of_date('month') : $search_month;
+
+            $adv_type_list = array(
+                '' => 'All',
+                'hot' => 'Hot Deal',
+                'pro' => 'Promotion'
+            );
+            $this->data['adv_type_list'] = $adv_type_list;
+            $this->data['the_adv_type'] = array(
+                'name' => 'the_adv_type',
+                'id' => 'the_adv_type',
+            );
+            $this->data['the_adv_type_selected'] = empty($search_adv_type) ? "" : $search_adv_type;
 
             $this->data['message'] = $this->session->flashdata('message');
             $this->data['page_path_name'] = 'merchant/analysis_report';
@@ -2141,98 +2180,102 @@ class Merchant extends CI_Controller
             redirect('/', 'refresh');
         }
     }
-    
+
     function getChart_gender()
     {
         if (check_correct_login_type($this->main_group_id))
         {
-        $merchant_id = $this->ion_auth->user()->row()->id;
-        
-        $view_result = $this->m_custom->getMerchantAnalysisReport($merchant_id,'view');       
-        $view_male_count = 0;
-        $view_female_count = 0;
-        foreach ($view_result as $row)
-        {
-            $return = $this->m_custom->getUserAnalysisGroup($row['many_child_id'], 'gender');
-            if ($return == $this->config->item('gender_id_male'))
+            $merchant_id = $this->ion_auth->user()->row()->id;
+
+            $the_year = $this->input->post("the_year", true);
+            $the_month = $this->input->post("the_month", true);
+            $the_adv_type = $this->input->post("the_adv_type", true) == '' ? NULL : $this->input->post("the_adv_type", true);
+
+            $view_result = $this->m_custom->getMerchantAnalysisReport($merchant_id, 'view', $the_month, $the_year, $the_adv_type);
+            $view_male_count = 0;
+            $view_female_count = 0;
+            foreach ($view_result as $row)
             {
-                $view_male_count++;
+                $return = $this->m_custom->getUserAnalysisGroup($row['many_child_id'], 'gender');
+                if ($return == $this->config->item('gender_id_male'))
+                {
+                    $view_male_count++;
+                }
+                else
+                {
+                    $view_female_count++;
+                }
             }
-            else
+
+            $like_result = $this->m_custom->getMerchantAnalysisReport($merchant_id, 'like', $the_month, $the_year, $the_adv_type);
+            $like_male_count = 0;
+            $like_female_count = 0;
+            foreach ($like_result as $row)
             {
-                $view_female_count++;
+                $return = $this->m_custom->getUserAnalysisGroup($row['act_by_id'], 'gender');
+                if ($return == $this->config->item('gender_id_male'))
+                {
+                    $like_male_count++;
+                }
+                else
+                {
+                    $like_female_count++;
+                }
             }
+
+            $rating_result = $this->m_custom->getMerchantAnalysisReport($merchant_id, 'rating', $the_month, $the_year, $the_adv_type);
+            $rating_male_count = 0;
+            $rating_female_count = 0;
+            foreach ($rating_result as $row)
+            {
+                $return = $this->m_custom->getUserAnalysisGroup($row['act_by_id'], 'gender');
+                if ($return == $this->config->item('gender_id_male'))
+                {
+                    $rating_male_count++;
+                }
+                else
+                {
+                    $rating_female_count++;
+                }
+            }
+
+            $redeem_result = $this->m_custom->getMerchantAnalysisReport($merchant_id, 'redeem', $the_month, $the_year, $the_adv_type);
+            $redeem_male_count = 0;
+            $redeem_female_count = 0;
+            foreach ($redeem_result as $row)
+            {
+                $return = $this->m_custom->getUserAnalysisGroup($row['user_id'], 'gender');
+                if ($return == $this->config->item('gender_id_male'))
+                {
+                    $redeem_male_count++;
+                }
+                else
+                {
+                    $redeem_female_count++;
+                }
+            }
+
+            $male_array = array();
+            $male_array['name'] = 'Male';
+            $male_array['data'][] = $view_male_count;
+            $male_array['data'][] = $like_male_count;
+            $male_array['data'][] = $rating_male_count;
+            $male_array['data'][] = $redeem_male_count;
+
+            $female_array = array();
+            $female_array['name'] = 'Female';
+            $female_array['data'][] = $view_female_count;
+            $female_array['data'][] = $like_female_count;
+            $female_array['data'][] = $rating_female_count;
+            $female_array['data'][] = $redeem_female_count;
+
+            $result = array();
+            array_push($result, $female_array);
+            array_push($result, $male_array);
+
+            echo json_encode($result);
         }
-        
-        $like_result = $this->m_custom->getMerchantAnalysisReport($merchant_id,'like');       
-        $like_male_count = 0;
-        $like_female_count = 0;
-        foreach ($like_result as $row)
-        {
-            $return = $this->m_custom->getUserAnalysisGroup($row['act_by_id'], 'gender');
-            if ($return == $this->config->item('gender_id_male'))
-            {
-                $like_male_count++;
-            }
-            else
-            {
-                $like_female_count++;
-            }
-        }
-        
-        $rating_result = $this->m_custom->getMerchantAnalysisReport($merchant_id,'rating');       
-        $rating_male_count = 0;
-        $rating_female_count = 0;
-        foreach ($rating_result as $row)
-        {
-            $return = $this->m_custom->getUserAnalysisGroup($row['act_by_id'], 'gender');
-            if ($return == $this->config->item('gender_id_male'))
-            {
-                $rating_male_count++;
-            }
-            else
-            {
-                $rating_female_count++;
-            }
-        }
-        
-        $redeem_result = $this->m_custom->getMerchantAnalysisReport($merchant_id,'redeem');       
-        $redeem_male_count = 0;
-        $redeem_female_count = 0;
-        foreach ($redeem_result as $row)
-        {
-            $return = $this->m_custom->getUserAnalysisGroup($row['user_id'], 'gender');
-            if ($return == $this->config->item('gender_id_male'))
-            {
-                $redeem_male_count++;
-            }
-            else
-            {
-                $redeem_female_count++;
-            }
-        }
-        
-        $male_array = array();
-        $male_array['name'] = 'Male';
-        $male_array['data'][] = $view_male_count;
-        $male_array['data'][] = $like_male_count;
-        $male_array['data'][] = $rating_male_count;
-        $male_array['data'][] = $redeem_male_count;
-        
-        $female_array = array();
-        $female_array['name'] = 'Female';
-        $female_array['data'][] = $view_female_count;
-        $female_array['data'][] = $like_female_count;
-        $female_array['data'][] = $rating_female_count;
-        $female_array['data'][] = $redeem_female_count;
-        
-        $result = array();
-        array_push($result,$female_array);
-        array_push($result,$male_array);
-        
-        echo json_encode($result);       
-        }
-                //$this->load->library('Highcharts');
+        //$this->load->library('Highcharts');
 //        $this->highcharts->set_title('Gender :');
 //        $this->highcharts->set_dimensions(740, 300);
 //        $this->highcharts->set_axis_titles('Activity', 'Count');
@@ -2243,15 +2286,13 @@ class Merchant extends CI_Controller
         //$this->highcharts->render_to("content_top");
         //
         //$category = array('View', 'Like', 'Rating', 'Redeem');
-        
         //$this->highcharts->push_xcategorie($category);
-
 //        $serie['data'] = $result;
 //        $this->highcharts->export_file("Code 2 Learn Chart" . date('d M Y'));
 //        $this->highcharts->set_serie($result, "Male");
         //$this->highcharts->set_serie($series, "Female");
         //$this->output->set_content_type('application/json')
-         //            ->set_output(json_encode($result));           
+        //            ->set_output(json_encode($result));           
         //return $this->highcharts->render();
     }
 
