@@ -44,13 +44,14 @@
         var the_year = $('#the_year').val();
         var the_month = $('#the_month').val();
         var the_adv_type = $('#the_adv_type').val();
+        var the_new_user = $('#the_new_user').val();
         
         var post_url = 'http://' + $(location).attr('hostname') + '/keppo/merchant/getChart_gender';
         $.ajax({
             type: "POST",
             url: post_url,
             dataType: 'json',
-            data: "&the_year=" + the_year + "&the_month=" + the_month + "&the_adv_type=" + the_adv_type,
+            data: "&the_year=" + the_year + "&the_month=" + the_month + "&the_adv_type=" + the_adv_type + "&the_new_user=" + the_new_user,
             success: function (data) {
                 options.series.length = 0;
                 options.title.text = 'Gender Analysis Report';
@@ -72,7 +73,7 @@
             type: "POST",
             url: post_url2,
             dataType: 'json',
-            data: "&the_year=" + the_year + "&the_month=" + the_month + "&the_adv_type=" + the_adv_type,
+            data: "&the_year=" + the_year + "&the_month=" + the_month + "&the_adv_type=" + the_adv_type + "&the_new_user=" + the_new_user,
             success: function (data) {
                 options.series.length = 0;
                 options.title.text = 'Race Analysis Report';
@@ -96,7 +97,7 @@
             type: "POST",
             url: post_url3,
             dataType: 'json',
-            data: "&the_year=" + the_year + "&the_month=" + the_month + "&the_adv_type=" + the_adv_type,
+            data: "&the_year=" + the_year + "&the_month=" + the_month + "&the_adv_type=" + the_adv_type + "&the_new_user=" + the_new_user,
             success: function (data) {
                 options.series.length = 0;
                 options.title.text = 'Age Analysis Report';
@@ -126,6 +127,7 @@
                 <span id="candie-promotion-form-go-year"><?php echo form_dropdown($the_year, $year_list, $the_year_selected); ?></span>
                 <span id="candie-promotion-form-go-month"><?php echo form_dropdown($the_month, $month_list, $the_month_selected); ?></span>
                 <span id="candie-promotion-form-go-month"><?php echo form_dropdown($the_adv_type, $adv_type_list, $the_adv_type_selected); ?></span>
+                <span id="candie-promotion-form-go-month"><?php echo form_dropdown($the_new_user, $new_user_list, $the_new_user_selected); ?></span>
                 <span id="candie-promotion-form-go-button"><button name="button_action" type="submit" value="search_history">Go</button></span>
             </div>
         <?php echo form_close(); ?>

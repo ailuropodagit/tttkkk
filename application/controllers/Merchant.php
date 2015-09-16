@@ -1,7 +1,10 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php
+
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Merchant extends CI_Controller
 {
+
     function __construct()
     {
         parent::__construct();
@@ -188,7 +191,7 @@ class Merchant extends CI_Controller
             }
         }
     }
-    
+
     function update_whole_year_balance()
     {
         if (check_correct_login_type($this->main_group_id))
@@ -873,17 +876,17 @@ class Merchant extends CI_Controller
         if (check_correct_login_type($this->group_id_merchant) || check_correct_login_type($this->group_id_supervisor))
         {
             $merchant_id = $this->ion_auth->user()->row()->id;
-            $is_supervisor = 0;      
+            $is_supervisor = 0;
             $supervisor_id = 0;
             if (check_correct_login_type($this->group_id_supervisor))
             {
-                $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;     
+                $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;
                 $merchant = $this->m_custom->getUser($merchant_id);
                 $is_supervisor = 1;
                 $supervisor_id = $this->ion_auth->user()->row()->id;
                 $supervisor = $this->m_custom->getUser($supervisor_id);
             }
-            
+
             $this->data['title'] = "User Redemption";
             if ($show_used == 1)
             {
@@ -896,17 +899,17 @@ class Merchant extends CI_Controller
 
             $this->data['show_used'] = $show_used;
             $this->data['promotion_list'] = $this->m_custom->getPromotion($merchant_id, $supervisor_id);
-            
-            $this->data['message'] =  $this->session->flashdata('message');
+
+            $this->data['message'] = $this->session->flashdata('message');
             $this->data['page_path_name'] = 'merchant/redemption';
             $this->load->view('template/layout_right_menu', $this->data);
         }
         else
-        {           
+        {
             redirect('/', 'refresh');
         }
     }
-    
+
     public function redeem_done()
     {
         $current_url = '/';
@@ -931,7 +934,7 @@ class Merchant extends CI_Controller
             }
             else if ($this->input->post('button_action') == "submit_expired")
             {
-                if ($this->m_custom->user_redemption_done($redeem_id,1))
+                if ($this->m_custom->user_redemption_done($redeem_id, 1))
                 {
                     $this->session->set_flashdata('message', 'You mark ' . $voucher . ' voucher for ' . $user_name . ' as expired');
                 }
@@ -1361,7 +1364,7 @@ class Merchant extends CI_Controller
                         'voucher' => $this->m_custom->generate_voucher($merchant_id),
                         'voucher_candie' => $candie_point,
                         'voucher_expire_date' => $expire_date,
-                        //'extra_field' => $candie_vender
+                            //'extra_field' => $candie_vender
                     );
 
                     $new_id = $this->m_custom->get_id_after_insert('advertise', $data);
@@ -1410,7 +1413,7 @@ class Merchant extends CI_Controller
                         'end_time' => $end_date,
                         'voucher_candie' => $candie_point,
                         'voucher_expire_date' => $expire_date,
-                        //'extra_field' => $candie_vender
+                            //'extra_field' => $candie_vender
                     );
 
                     if ($this->m_custom->simple_update('advertise', $data, 'advertise_id', $candie_id))
@@ -2125,7 +2128,7 @@ class Merchant extends CI_Controller
         $this->_render_page('merchant/edit_user', $this->data);
     }
 
-    function analysis_report($search_month = NULL, $search_year = NULL, $search_adv_type = NULL)
+    function analysis_report($search_month = NULL, $search_year = NULL, $search_adv_type = NULL, $search_new_user = NULL)
     {
         $message_info = '';
         if (check_correct_login_type($this->main_group_id))
@@ -2141,6 +2144,7 @@ class Merchant extends CI_Controller
                     $search_month = $this->input->post('the_month');
                     $search_year = $this->input->post('the_year');
                     $search_adv_type = $this->input->post('the_adv_type');
+                    $search_new_user = $this->input->post('the_new_user');
                 }
             }
             $year_list = generate_number_option(get_part_of_date('year', $merchant_data['created_on'], 1), get_part_of_date('year'));
@@ -2160,7 +2164,7 @@ class Merchant extends CI_Controller
             $this->data['the_month_selected'] = empty($search_month) ? get_part_of_date('month') : $search_month;
 
             $adv_type_list = array(
-                '' => 'All',
+                '' => 'All Advertise',
                 'hot' => 'Hot Deal',
                 'pro' => 'Promotion'
             );
@@ -2170,6 +2174,17 @@ class Merchant extends CI_Controller
                 'id' => 'the_adv_type',
             );
             $this->data['the_adv_type_selected'] = empty($search_adv_type) ? "" : $search_adv_type;
+
+            $new_user_list = array(
+                '' => 'All User',
+                '1' => 'New User Only',
+            );
+            $this->data['new_user_list'] = $new_user_list;
+            $this->data['the_new_user'] = array(
+                'name' => 'the_new_user',
+                'id' => 'the_new_user',
+            );
+            $this->data['the_new_user_selected'] = empty($search_new_user) ? "" : $search_new_user;
 
             $this->data['message'] = $this->session->flashdata('message');
             $this->data['page_path_name'] = 'merchant/analysis_report';
@@ -2187,24 +2202,30 @@ class Merchant extends CI_Controller
         {
             $merchant_id = $this->ion_auth->user()->row()->id;
             $group_by = 'gender';
-            
+
             $the_year = $this->input->post("the_year", true);
             $the_month = $this->input->post("the_month", true);
             $the_adv_type = $this->input->post("the_adv_type", true) == '' ? NULL : $this->input->post("the_adv_type", true);
+            $the_new_user = $this->input->post("the_new_user", true) == '' ? 0 : $this->input->post("the_new_user", true);
 
             $view_result = $this->m_custom->getMerchantAnalysisReport($merchant_id, 'view', $the_month, $the_year, $the_adv_type);
             $view_male_count = 0;
             $view_female_count = 0;
             foreach ($view_result as $row)
             {
-                $return = $this->m_custom->getUserAnalysisGroup($row['many_child_id'], $group_by);
-                if ($return == $this->config->item('gender_id_male'))
+                $user_id = $row['many_child_id'];
+                $return = $this->m_custom->getUserAnalysisGroup($user_id, $group_by);
+
+                if ($the_new_user == 0 || ($this->m_custom->check_is_new_user($user_id) && $the_new_user == 1))
                 {
-                    $view_male_count++;
-                }
-                else
-                {
-                    $view_female_count++;
+                    if ($return == $this->config->item('gender_id_male'))
+                    {
+                        $view_male_count++;
+                    }
+                    else
+                    {
+                        $view_female_count++;
+                    }
                 }
             }
 
@@ -2213,14 +2234,18 @@ class Merchant extends CI_Controller
             $like_female_count = 0;
             foreach ($like_result as $row)
             {
-                $return = $this->m_custom->getUserAnalysisGroup($row['act_by_id'], $group_by);
-                if ($return == $this->config->item('gender_id_male'))
+                $user_id = $row['act_by_id'];
+                $return = $this->m_custom->getUserAnalysisGroup($user_id, $group_by);
+                if ($the_new_user == 0 || ($this->m_custom->check_is_new_user($user_id) && $the_new_user == 1))
                 {
-                    $like_male_count++;
-                }
-                else
-                {
-                    $like_female_count++;
+                    if ($return == $this->config->item('gender_id_male'))
+                    {
+                        $like_male_count++;
+                    }
+                    else
+                    {
+                        $like_female_count++;
+                    }
                 }
             }
 
@@ -2229,14 +2254,18 @@ class Merchant extends CI_Controller
             $rating_female_count = 0;
             foreach ($rating_result as $row)
             {
-                $return = $this->m_custom->getUserAnalysisGroup($row['act_by_id'], $group_by);
-                if ($return == $this->config->item('gender_id_male'))
+                $user_id = $row['act_by_id'];
+                $return = $this->m_custom->getUserAnalysisGroup($user_id, $group_by);
+                if ($the_new_user == 0 || ($this->m_custom->check_is_new_user($user_id) && $the_new_user == 1))
                 {
-                    $rating_male_count++;
-                }
-                else
-                {
-                    $rating_female_count++;
+                    if ($return == $this->config->item('gender_id_male'))
+                    {
+                        $rating_male_count++;
+                    }
+                    else
+                    {
+                        $rating_female_count++;
+                    }
                 }
             }
 
@@ -2245,14 +2274,18 @@ class Merchant extends CI_Controller
             $redeem_female_count = 0;
             foreach ($redeem_result as $row)
             {
-                $return = $this->m_custom->getUserAnalysisGroup($row['user_id'], $group_by);
-                if ($return == $this->config->item('gender_id_male'))
+                $user_id = $row['user_id'];
+                $return = $this->m_custom->getUserAnalysisGroup($user_id, $group_by);
+                if ($the_new_user == 0 || ($this->m_custom->check_is_new_user($user_id) && $the_new_user == 1))
                 {
-                    $redeem_male_count++;
-                }
-                else
-                {
-                    $redeem_female_count++;
+                    if ($return == $this->config->item('gender_id_male'))
+                    {
+                        $redeem_male_count++;
+                    }
+                    else
+                    {
+                        $redeem_female_count++;
+                    }
                 }
             }
 
@@ -2297,7 +2330,7 @@ class Merchant extends CI_Controller
         //return $this->highcharts->render();
     }
 
-     function getChart_race()
+    function getChart_race()
     {
         if (check_correct_login_type($this->main_group_id))
         {
@@ -2307,10 +2340,11 @@ class Merchant extends CI_Controller
             $race_id_chinese = $this->config->item('race_id_chinese');
             $race_id_india = $this->config->item('race_id_india');
             $race_id_other = $this->config->item('race_id_other');
-            
+
             $the_year = $this->input->post("the_year", true);
             $the_month = $this->input->post("the_month", true);
             $the_adv_type = $this->input->post("the_adv_type", true) == '' ? NULL : $this->input->post("the_adv_type", true);
+            $the_new_user = $this->input->post("the_new_user", true) == '' ? 0 : $this->input->post("the_new_user", true);
 
             $view_result = $this->m_custom->getMerchantAnalysisReport($merchant_id, 'view', $the_month, $the_year, $the_adv_type);
             $view_count[0] = 0;
@@ -2319,22 +2353,27 @@ class Merchant extends CI_Controller
             $view_count[3] = 0;
             foreach ($view_result as $row)
             {
-                $return = $this->m_custom->getUserAnalysisGroup($row['many_child_id'], $group_by);
-                if ($return == $race_id_malay)
+                $user_id = $row['many_child_id'];
+                $return = $this->m_custom->getUserAnalysisGroup($user_id, $group_by);
+
+                if ($the_new_user == 0 || ($this->m_custom->check_is_new_user($user_id) && $the_new_user == 1))
                 {
-                    $view_count[0]++;
-                }
-                else if ($return == $race_id_chinese)
-                {
-                    $view_count[1]++;
-                }
-                else if ($return == $race_id_india)
-                {
-                    $view_count[2]++;
-                }
-                else if ($return == $race_id_other)
-                {
-                    $view_count[3]++;
+                    if ($return == $race_id_malay)
+                    {
+                        $view_count[0] ++;
+                    }
+                    else if ($return == $race_id_chinese)
+                    {
+                        $view_count[1] ++;
+                    }
+                    else if ($return == $race_id_india)
+                    {
+                        $view_count[2] ++;
+                    }
+                    else if ($return == $race_id_other)
+                    {
+                        $view_count[3] ++;
+                    }
                 }
             }
 
@@ -2345,22 +2384,26 @@ class Merchant extends CI_Controller
             $like_count[3] = 0;
             foreach ($like_result as $row)
             {
-                $return = $this->m_custom->getUserAnalysisGroup($row['act_by_id'], $group_by);
-                if ($return == $race_id_malay)
+                $user_id = $row['act_by_id'];
+                $return = $this->m_custom->getUserAnalysisGroup($user_id, $group_by);
+                if ($the_new_user == 0 || ($this->m_custom->check_is_new_user($user_id) && $the_new_user == 1))
                 {
-                    $like_count[0]++;
-                }
-                else if ($return == $race_id_chinese)
-                {
-                    $like_count[1]++;
-                }
-                else if ($return == $race_id_india)
-                {
-                    $like_count[2]++;
-                }
-                else if ($return == $race_id_other)
-                {
-                    $like_count[3]++;
+                    if ($return == $race_id_malay)
+                    {
+                        $like_count[0] ++;
+                    }
+                    else if ($return == $race_id_chinese)
+                    {
+                        $like_count[1] ++;
+                    }
+                    else if ($return == $race_id_india)
+                    {
+                        $like_count[2] ++;
+                    }
+                    else if ($return == $race_id_other)
+                    {
+                        $like_count[3] ++;
+                    }
                 }
             }
 
@@ -2371,22 +2414,26 @@ class Merchant extends CI_Controller
             $rating_count[3] = 0;
             foreach ($rating_result as $row)
             {
-                $return = $this->m_custom->getUserAnalysisGroup($row['act_by_id'], $group_by);
-                if ($return == $race_id_malay)
+                $user_id = $row['act_by_id'];
+                $return = $this->m_custom->getUserAnalysisGroup($user_id, $group_by);
+                if ($the_new_user == 0 || ($this->m_custom->check_is_new_user($user_id) && $the_new_user == 1))
                 {
-                    $rating_count[0]++;
-                }
-                else if ($return == $race_id_chinese)
-                {
-                    $rating_count[1]++;
-                }
-                else if ($return == $race_id_india)
-                {
-                    $rating_count[2]++;
-                }
-                else if ($return == $race_id_other)
-                {
-                    $rating_count[3]++;
+                    if ($return == $race_id_malay)
+                    {
+                        $rating_count[0] ++;
+                    }
+                    else if ($return == $race_id_chinese)
+                    {
+                        $rating_count[1] ++;
+                    }
+                    else if ($return == $race_id_india)
+                    {
+                        $rating_count[2] ++;
+                    }
+                    else if ($return == $race_id_other)
+                    {
+                        $rating_count[3] ++;
+                    }
                 }
             }
 
@@ -2397,25 +2444,29 @@ class Merchant extends CI_Controller
             $redeem_count[3] = 0;
             foreach ($redeem_result as $row)
             {
-                $return = $this->m_custom->getUserAnalysisGroup($row['user_id'], $group_by);
-                if ($return == $race_id_malay)
+                $user_id = $row['user_id'];
+                $return = $this->m_custom->getUserAnalysisGroup($user_id, $group_by);
+                if ($the_new_user == 0 || ($this->m_custom->check_is_new_user($user_id) && $the_new_user == 1))
                 {
-                    $redeem_count[0]++;
+                    if ($return == $race_id_malay)
+                    {
+                        $redeem_count[0] ++;
+                    }
+                    else if ($return == $race_id_chinese)
+                    {
+                        $redeem_count[1] ++;
+                    }
+                    else if ($return == $race_id_india)
+                    {
+                        $redeem_count[2] ++;
+                    }
+                    else if ($return == $race_id_other)
+                    {
+                        $redeem_count[3] ++;
+                    }
                 }
-                else if ($return == $race_id_chinese)
-                {
-                    $redeem_count[1]++;
-                }
-                else if ($return == $race_id_india)
-                {
-                    $redeem_count[2]++;
-                }
-                else if ($return == $race_id_other)
-                {
-                    $redeem_count[3]++;
-                }
-            }           
-            
+            }
+
             $malay_array = array();
             $malay_array['name'] = 'Malay';
             $malay_array['data'][] = $view_count[0];
@@ -2436,26 +2487,25 @@ class Merchant extends CI_Controller
             $india_array['data'][] = $like_count[2];
             $india_array['data'][] = $rating_count[2];
             $india_array['data'][] = $redeem_count[2];
-            
+
             $other_array = array();
             $other_array['name'] = 'Other';
             $other_array['data'][] = $view_count[3];
             $other_array['data'][] = $like_count[3];
             $other_array['data'][] = $rating_count[3];
             $other_array['data'][] = $redeem_count[3];
-            
+
             $result = array();
             array_push($result, $other_array);
             array_push($result, $india_array);
             array_push($result, $chinese_array);
             array_push($result, $malay_array);
-            
+
             echo json_encode($result);
         }
-
     }
-    
-      function getChart_age()
+
+    function getChart_age()
     {
         if (check_correct_login_type($this->main_group_id))
         {
@@ -2465,10 +2515,11 @@ class Merchant extends CI_Controller
             $age_group1 = 21;
             $age_group2 = 31;
             $age_group3 = 41;
-            
+
             $the_year = $this->input->post("the_year", true);
             $the_month = $this->input->post("the_month", true);
             $the_adv_type = $this->input->post("the_adv_type", true) == '' ? NULL : $this->input->post("the_adv_type", true);
+            $the_new_user = $this->input->post("the_new_user", true) == '' ? 0 : $this->input->post("the_new_user", true);
 
             $view_result = $this->m_custom->getMerchantAnalysisReport($merchant_id, 'view', $the_month, $the_year, $the_adv_type);
             $view_count[0] = 0;
@@ -2478,24 +2529,31 @@ class Merchant extends CI_Controller
             $view_count[4] = 0;
             foreach ($view_result as $row)
             {
-                $return = $this->m_custom->getUserAnalysisGroup($row['many_child_id'], $group_by);
-                if ($return < $age_group0)
+                $user_id = $row['many_child_id'];
+                $return = $this->m_custom->getUserAnalysisGroup($user_id, $group_by);
+
+                if ($the_new_user == 0 || ($this->m_custom->check_is_new_user($user_id) && $the_new_user == 1))
                 {
-                    $view_count[0]++;
-                }
-                else if ($return < $age_group1)
-                {
-                    $view_count[1]++;
-                }
-                else if ($return < $age_group2)
-                {
-                    $view_count[2]++;
-                }
-                else if ($return < $age_group3)
-                {
-                    $view_count[3]++;
-                }else{
-                    $view_count[4]++;
+                    if ($return < $age_group0)
+                    {
+                        $view_count[0] ++;
+                    }
+                    else if ($return < $age_group1)
+                    {
+                        $view_count[1] ++;
+                    }
+                    else if ($return < $age_group2)
+                    {
+                        $view_count[2] ++;
+                    }
+                    else if ($return < $age_group3)
+                    {
+                        $view_count[3] ++;
+                    }
+                    else
+                    {
+                        $view_count[4] ++;
+                    }
                 }
             }
 
@@ -2507,24 +2565,30 @@ class Merchant extends CI_Controller
             $like_count[4] = 0;
             foreach ($like_result as $row)
             {
-                $return = $this->m_custom->getUserAnalysisGroup($row['act_by_id'], $group_by);
-                if ($return < $age_group0)
+                $user_id = $row['act_by_id'];
+                $return = $this->m_custom->getUserAnalysisGroup($user_id, $group_by);
+                if ($the_new_user == 0 || ($this->m_custom->check_is_new_user($user_id) && $the_new_user == 1))
                 {
-                    $like_count[0]++;
-                }
-                else if ($return < $age_group1)
-                {
-                    $like_count[1]++;
-                }
-                else if ($return < $age_group2)
-                {
-                    $like_count[2]++;
-                }
-                else if ($return < $age_group3)
-                {
-                    $like_count[3]++;
-                }else{
-                    $like_count[4]++;
+                    if ($return < $age_group0)
+                    {
+                        $like_count[0] ++;
+                    }
+                    else if ($return < $age_group1)
+                    {
+                        $like_count[1] ++;
+                    }
+                    else if ($return < $age_group2)
+                    {
+                        $like_count[2] ++;
+                    }
+                    else if ($return < $age_group3)
+                    {
+                        $like_count[3] ++;
+                    }
+                    else
+                    {
+                        $like_count[4] ++;
+                    }
                 }
             }
 
@@ -2536,24 +2600,30 @@ class Merchant extends CI_Controller
             $rating_count[4] = 0;
             foreach ($rating_result as $row)
             {
-                $return = $this->m_custom->getUserAnalysisGroup($row['act_by_id'], $group_by);
-                if ($return < $age_group0)
+                $user_id = $row['act_by_id'];
+                $return = $this->m_custom->getUserAnalysisGroup($user_id, $group_by);
+                if ($the_new_user == 0 || ($this->m_custom->check_is_new_user($user_id) && $the_new_user == 1))
                 {
-                    $rating_count[0]++;
-                }
-                else if ($return < $age_group1)
-                {
-                    $rating_count[1]++;
-                }
-                else if ($return < $age_group2)
-                {
-                    $rating_count[2]++;
-                }
-                else if ($return < $age_group3)
-                {
-                    $rating_count[3]++;
-                }else{
-                    $rating_count[4]++;
+                    if ($return < $age_group0)
+                    {
+                        $rating_count[0] ++;
+                    }
+                    else if ($return < $age_group1)
+                    {
+                        $rating_count[1] ++;
+                    }
+                    else if ($return < $age_group2)
+                    {
+                        $rating_count[2] ++;
+                    }
+                    else if ($return < $age_group3)
+                    {
+                        $rating_count[3] ++;
+                    }
+                    else
+                    {
+                        $rating_count[4] ++;
+                    }
                 }
             }
 
@@ -2565,27 +2635,33 @@ class Merchant extends CI_Controller
             $redeem_count[4] = 0;
             foreach ($redeem_result as $row)
             {
-                $return = $this->m_custom->getUserAnalysisGroup($row['user_id'], $group_by);
-                if ($return < $age_group0)
+                $user_id = $row['user_id'];
+                $return = $this->m_custom->getUserAnalysisGroup($user_id, $group_by);
+                if ($the_new_user == 0 || ($this->m_custom->check_is_new_user($user_id) && $the_new_user == 1))
                 {
-                    $redeem_count[0]++;
+                    if ($return < $age_group0)
+                    {
+                        $redeem_count[0] ++;
+                    }
+                    else if ($return < $age_group1)
+                    {
+                        $redeem_count[1] ++;
+                    }
+                    else if ($return < $age_group2)
+                    {
+                        $redeem_count[2] ++;
+                    }
+                    else if ($return < $age_group3)
+                    {
+                        $redeem_count[3] ++;
+                    }
+                    else
+                    {
+                        $redeem_count[4] ++;
+                    }
                 }
-                else if ($return < $age_group1)
-                {
-                    $redeem_count[1]++;
-                }
-                else if ($return < $age_group2)
-                {
-                    $redeem_count[2]++;
-                }
-                else if ($return < $age_group3)
-                {
-                    $redeem_count[3]++;
-                }else{
-                    $redeem_count[4]++;
-                }
-            }           
-            
+            }
+
             $age_array0 = array();
             $age_array0['name'] = '< 15';
             $age_array0['data'][] = $view_count[0];
@@ -2606,33 +2682,32 @@ class Merchant extends CI_Controller
             $age_array2['data'][] = $like_count[2];
             $age_array2['data'][] = $rating_count[2];
             $age_array2['data'][] = $redeem_count[2];
-            
+
             $age_array3 = array();
             $age_array3['name'] = '31 - 40';
             $age_array3['data'][] = $view_count[3];
             $age_array3['data'][] = $like_count[3];
             $age_array3['data'][] = $rating_count[3];
             $age_array3['data'][] = $redeem_count[3];
-            
+
             $age_array4 = array();
             $age_array4['name'] = '> 40';
             $age_array4['data'][] = $view_count[4];
             $age_array4['data'][] = $like_count[4];
             $age_array4['data'][] = $rating_count[4];
             $age_array4['data'][] = $redeem_count[4];
-            
+
             $result = array();
             array_push($result, $age_array4);
             array_push($result, $age_array3);
             array_push($result, $age_array2);
             array_push($result, $age_array1);
             array_push($result, $age_array0);
-            
+
             echo json_encode($result);
         }
-
     }
-    
+
     function _get_csrf_nonce()
     {
         $this->load->helper('string');

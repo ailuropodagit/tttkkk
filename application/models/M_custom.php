@@ -1434,6 +1434,23 @@ class M_custom extends CI_Model
         }
     }
 
+    public function check_is_new_user($user_id, $month_id = NULL, $year = NULL)
+    {
+        $the_user = $this->getUser($user_id);
+        $created_on = date($this->config->item('keppo_format_date_time_db'), $the_user['created_on']);
+        $search_date = date_for_db_search($month_id, $year);
+        if (strpos($created_on, $search_date) !== false)
+        {
+            //return $created_on . " is new";
+            return TRUE;
+        }
+        else
+        {
+            //return $created_on . " is old";
+            return FALSE;
+        }
+    }
+
     public function compare_before_update($the_table, $the_data, $id_column, $id_value)
     {
         $record = $this->get_one_table_record($the_table, $id_column, $id_value, 1);
