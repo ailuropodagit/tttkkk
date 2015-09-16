@@ -1204,15 +1204,7 @@ class M_custom extends CI_Model
 
     public function merchant_balance_update($merchant_id, $month_id = NULL, $year = NULL)
     {
-        if (empty($month_id))
-        {
-            $month_id = get_part_of_date('month');
-        }
-        if (empty($year))
-        {
-            $year = get_part_of_date('year');
-        }
-        $search_date = $year . '-' . str_pad($month_id, 2, "0", STR_PAD_LEFT);
+        $search_date = date_for_db_search($month_id,$year);
 
         $history_condition = "trans_time like '%" . $search_date . "%'";
         $history_search_data = array(
@@ -1375,6 +1367,64 @@ class M_custom extends CI_Model
             'redeem_email_subject' => $merchant_name . ' Keppo Voucher Success Redeem : '.$voucher,
         );
         return $redeem_info;
+    }
+
+    //Type: view, like, rating, redeem, choose by show race, gender, age, to do, todo
+    public function getMerchantAnalysisReport($merchant_id, $the_type, $month_id = NULL, $year = NULL)
+    {
+        $group_id_user = $this->config->item('group_id_user');
+        $search_date = date_for_db_search($month_id, $year);
+        $advertise_of_merchant = $this->get_list_of_allow_id('advertise','merchant_id',$merchant_id,'advertise_id');
+
+        
+        switch ($the_type)
+        {
+            case 'view':
+                $condition = "many_time like '%" . $search_date . "%'";
+                $this->db->where($condition);
+                $this->db->where_in('many_parent_id', $advertise_of_merchant);
+                $query = $this->db->get_where('many_to_many',array('many_type' => 'view_advertise'));
+                break;
+            case 'like':
+                $condition = "act_time like '%" . $search_date . "%'";
+                $this->db->where($condition);
+                $this->db->where_in('act_refer_type', array('adv', 'mua'));
+                $this->db->where_in('act_refer_id', $advertise_of_merchant);
+                $query = $this->db->get_where('activity_history', array('act_type' => 'like', 'act_by_type' => $group_id_user, 'hide_flag' => 0));
+                break;
+            case 'rating':
+                $condition = "act_time like '%" . $search_date . "%'";
+                $this->db->where($condition);
+                $this->db->where_in('act_refer_type', array('adv', 'mua'));
+                $this->db->where_in('act_refer_id', $advertise_of_merchant);
+                $query = $this->db->get_where('activity_history', array('act_type' => 'rating', 'act_by_type' => $group_id_user, 'hide_flag' => 0));
+                break;
+            case 'redeem':
+                $condition = "redeem_time like '%" . $search_date . "%'";
+                $this->db->where($condition);
+                $this->db->where_in('advertise_id', $advertise_of_merchant);
+                $query = $this->db->get_where('user_redemption');
+                break;
+        }
+
+        return $query->result_array();
+    }
+
+    //Type: race, gender, age, to do , todo
+    public function getUserAnalysisGroup($user_id, $the_type)
+    {
+        $the_user = $this->getUser($user_id);
+        switch ($the_type)
+        {
+            case 'race':
+                return $the_user['us_race_id'];
+                break;
+            case 'gender':
+                return $the_user['us_gender_id'];
+                break;
+            case 'age':
+                break;
+        }
     }
 
     public function compare_before_update($the_table, $the_data, $id_column, $id_value)

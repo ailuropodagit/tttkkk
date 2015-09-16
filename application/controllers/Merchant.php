@@ -1955,54 +1955,6 @@ class Merchant extends CI_Controller
         $this->load->view('template/layout_right_menu', $this->data);
     }
 
-//    function upload_image() {
-//
-//        redirect('/','refresh'); //no use currently, disable this function first
-//        if (!$this->ion_auth->logged_in()) {
-//            redirect('merchant/login', 'refresh');
-//        }
-//
-//        $id = $this->ion_auth->user()->row()->id;
-//
-//        if (isset($_POST) && !empty($_POST)) {
-//            $upload_rule = array(
-//                'upload_path' => $this->album_merchant_profile,
-//                'allowed_types' => $this->config->item('allowed_types_image'),
-//                'max_size' => $this->config->item('max_size'),
-//            );
-//
-//            $this->load->library('upload', $upload_rule);
-//
-//            if (!$this->upload->do_upload()) {
-//                $error = array('error' => $this->upload->display_errors());
-//                $this->session->set_flashdata('message', $this->upload->display_errors());
-//            } else {
-//                $image_data = array('upload_data' => $this->upload->data());
-//                //$this->ion_auth->set_message('image_upload_successful');
-//
-//                $data = array(
-//                    'profile_image' => $this->upload->data('file_name'),
-//                );
-//
-//                if ($this->ion_auth->update($id, $data)) {
-//                    $this->session->set_flashdata('message', 'Merchant logo success update.');
-//                    redirect('merchant/profile', 'refresh');
-//                } else {
-//
-//                    $this->session->set_flashdata('message', $this->ion_auth->errors());
-//                }
-//            }
-//        }
-//
-//        $user = $this->ion_auth->user($id)->row();
-//        $this->data['logo_url'] = $this->album_merchant_profile . $user->profile_image;
-//
-//        // set the flash data error message if there is one
-//        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-//
-//        $this->data['page_path_name'] = 'merchant/upload_image';
-//        $this->load->view('template/layout', $this->data);
-//    }
     // edit a user
     function edit_user($id)
     {
@@ -2171,6 +2123,136 @@ class Merchant extends CI_Controller
         );
 
         $this->_render_page('merchant/edit_user', $this->data);
+    }
+
+    function analysis_report()
+    {
+        $message_info = '';
+        if (check_correct_login_type($this->main_group_id))
+        {           
+            //$this->data['charts'] = $this->getChart($merchant_id);
+
+            $this->data['message'] = $this->session->flashdata('message');
+            $this->data['page_path_name'] = 'merchant/analysis_report';
+            $this->load->view('template/layout_right_menu', $this->data);
+        }
+        else
+        {
+            redirect('/', 'refresh');
+        }
+    }
+    
+    function getChart_gender()
+    {
+        if (check_correct_login_type($this->main_group_id))
+        {
+        $merchant_id = $this->ion_auth->user()->row()->id;
+        
+        $view_result = $this->m_custom->getMerchantAnalysisReport($merchant_id,'view');       
+        $view_male_count = 0;
+        $view_female_count = 0;
+        foreach ($view_result as $row)
+        {
+            $return = $this->m_custom->getUserAnalysisGroup($row['many_child_id'], 'gender');
+            if ($return == $this->config->item('gender_id_male'))
+            {
+                $view_male_count++;
+            }
+            else
+            {
+                $view_female_count++;
+            }
+        }
+        
+        $like_result = $this->m_custom->getMerchantAnalysisReport($merchant_id,'like');       
+        $like_male_count = 0;
+        $like_female_count = 0;
+        foreach ($like_result as $row)
+        {
+            $return = $this->m_custom->getUserAnalysisGroup($row['act_by_id'], 'gender');
+            if ($return == $this->config->item('gender_id_male'))
+            {
+                $like_male_count++;
+            }
+            else
+            {
+                $like_female_count++;
+            }
+        }
+        
+        $rating_result = $this->m_custom->getMerchantAnalysisReport($merchant_id,'rating');       
+        $rating_male_count = 0;
+        $rating_female_count = 0;
+        foreach ($rating_result as $row)
+        {
+            $return = $this->m_custom->getUserAnalysisGroup($row['act_by_id'], 'gender');
+            if ($return == $this->config->item('gender_id_male'))
+            {
+                $rating_male_count++;
+            }
+            else
+            {
+                $rating_female_count++;
+            }
+        }
+        
+        $redeem_result = $this->m_custom->getMerchantAnalysisReport($merchant_id,'redeem');       
+        $redeem_male_count = 0;
+        $redeem_female_count = 0;
+        foreach ($redeem_result as $row)
+        {
+            $return = $this->m_custom->getUserAnalysisGroup($row['user_id'], 'gender');
+            if ($return == $this->config->item('gender_id_male'))
+            {
+                $redeem_male_count++;
+            }
+            else
+            {
+                $redeem_female_count++;
+            }
+        }
+        
+        $male_array = array();
+        $male_array['name'] = 'Male';
+        $male_array['data'][] = $view_male_count;
+        $male_array['data'][] = $like_male_count;
+        $male_array['data'][] = $rating_male_count;
+        $male_array['data'][] = $redeem_male_count;
+        
+        $female_array = array();
+        $female_array['name'] = 'Female';
+        $female_array['data'][] = $view_female_count;
+        $female_array['data'][] = $like_female_count;
+        $female_array['data'][] = $rating_female_count;
+        $female_array['data'][] = $redeem_female_count;
+        
+        $result = array();
+        array_push($result,$female_array);
+        array_push($result,$male_array);
+        
+        echo json_encode($result);       
+        }
+                //$this->load->library('Highcharts');
+//        $this->highcharts->set_title('Gender :');
+//        $this->highcharts->set_dimensions(740, 300);
+//        $this->highcharts->set_axis_titles('Activity', 'Count');
+//        $this->highcharts->set_type('bar');
+        //$credits->href = 'http://www.internetworldstats.com/stats7.htm';
+        //$credits->text = "Article on Internet Wold Stats";
+        //$this->highcharts->set_credits($credits);
+        //$this->highcharts->render_to("content_top");
+        //
+        //$category = array('View', 'Like', 'Rating', 'Redeem');
+        
+        //$this->highcharts->push_xcategorie($category);
+
+//        $serie['data'] = $result;
+//        $this->highcharts->export_file("Code 2 Learn Chart" . date('d M Y'));
+//        $this->highcharts->set_serie($result, "Male");
+        //$this->highcharts->set_serie($series, "Female");
+        //$this->output->set_content_type('application/json')
+         //            ->set_output(json_encode($result));           
+        //return $this->highcharts->render();
     }
 
     function _get_csrf_nonce()

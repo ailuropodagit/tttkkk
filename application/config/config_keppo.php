@@ -52,6 +52,11 @@ $config['custom_per_page'] = '4';
 $config['gender_id_male'] = '13';
 $config['gender_id_female'] = '14';
 
+$config['race_id_malay'] = '16';
+$config['race_id_chinese'] = '17';
+$config['race_id_india'] = '18';
+$config['race_id_other'] = '19';
+
 $config['voucher_active'] = '21';
 $config['voucher_used'] = '22';
 $config['voucher_expired'] = '23';
