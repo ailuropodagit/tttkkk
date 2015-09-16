@@ -748,7 +748,24 @@ a:hover {
 }
 
 #dashboard-info-outlet-address {
-    margin: 18px 0px 18px 0px;
+    margin: 18px 0px 0px 0px;
+}
+
+#dashboard-info-table {
+    margin: 18px 0px 0px 0px;
+}
+
+#dashboard-info-followers-following {
+    margin: 20px 0px 0px 0px;
+}
+
+#dashboard-info-followers {
+    float: left;
+    margin: 0px 30px 0px 0px;
+}
+
+#dashboard-info-following {
+    float: left;
 }
 
 #dashboard-navigation {

@@ -418,28 +418,44 @@ class All extends CI_Controller
     //View the user dashboard upper part
     function user_dashboard($user_id)
     {
-        $the_row = $this->m_custom->get_one_table_record('users', 'id', $user_id);
-        if ($the_row)
+        //DATA
+        $data['query_user'] = $this->albert_model->get_user($user_id);
+        $data['first_name'] = '1';
+        $data['last_name'] = '2';
+        $data['page_path_name'] = 'user/dashboard';
+        if ($this->ion_auth->logged_in())
         {
-            $this->data['image_path'] = $this->album_user_profile;
-            $this->data['image'] = $the_row->profile_image;
-            $this->data['first_name'] = $the_row->first_name;
-            $this->data['last_name'] = $the_row->last_name;
-            $this->data['message'] = $this->session->flashdata('message');
-            $this->data['page_path_name'] = 'user/dashboard';
-            if ($this->ion_auth->logged_in())
-            {
-                $this->load->view('template/layout_right_menu', $this->data);
-            }
-            else
-            {
-                $this->load->view('template/layout', $this->data);
-            }
+            //LOGGED IN
+            $this->load->view('template/layout_right_menu', $data);
         }
         else
         {
-            redirect('/', 'refresh');
+            //NOT LOGGED IN
+            $this->load->view('template/layout', $data);
         }
+        
+//        $the_row = $this->m_custom->get_one_table_record('users', 'id', $user_id);
+//        if ($the_row)
+//        {
+//            $this->data['image_path'] = $this->album_user_profile;
+//            $this->data['image'] = $the_row->profile_image;
+//            $this->data['first_name'] = $the_row->first_name;
+//            $this->data['last_name'] = $the_row->last_name;
+//            $this->data['message'] = $this->session->flashdata('message');
+//            $this->data['page_path_name'] = 'user/dashboard';
+//            if ($this->ion_auth->logged_in())
+//            {
+//                $this->load->view('template/layout_right_menu', $this->data);
+//            }
+//            else
+//            {
+//                $this->load->view('template/layout', $this->data);
+//            }
+//        }
+//        else
+//        {
+//            redirect('/', 'refresh');
+//        }
     }
     
     public function comment_add(){
