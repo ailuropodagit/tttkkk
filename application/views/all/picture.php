@@ -8,6 +8,21 @@
     <h1><?php echo $page_title; ?></h1>
     <div id='hot-deal-content'>       
         
+        <div id="hot-deal-edit-link">
+            <?php
+            if (check_is_login())
+            {
+                $user_id = $this->ion_auth->user()->row()->id;
+                $allowed_list = $this->m_custom->get_list_of_allow_id('merchant_user_album', 'user_id', $user_id, 'merchant_user_album_id', 'post_type', 'mer');
+                if (check_correct_login_type($this->config->item('group_id_user'), $allowed_list, $picture_id))
+                {
+                    ?>
+                    <a href='<?php echo base_url() . "user/edit_merchant_picture/" . $picture_id ?>' >Edit Picture</a>
+                    <?php
+                }
+            }
+            ?>
+        </div>
         <div id="float-fix"></div>
         
         <div id='hot-deal-table'>

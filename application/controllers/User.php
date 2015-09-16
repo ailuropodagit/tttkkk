@@ -863,8 +863,150 @@ class user extends CI_Controller
         $this->data['page_path_name'] = 'user/profile';
         $this->load->view('template/layout_right_menu', $this->data);
     }
+    
+    function edit_merchant_picture($picture_id = NULL)
+    {
+        if (!check_correct_login_type($this->main_group_id))
+        {
+            redirect('/', 'refresh');
+        }
+        $message_info = '';
+        $user_id = $this->ion_auth->user()->row()->id;
+        $do_by_type = $this->main_group_id;
+        $do_by_id = $user_id; 
 
-    //To Do
+        $allowed_list = $this->m_custom->get_list_of_allow_id('merchant_user_album', 'user_id', $user_id, 'merchant_user_album_id', 'post_type', 'mer');
+        if (!check_allowed_list($allowed_list, $picture_id))
+        {
+            redirect('/', 'refresh');
+        }
+
+        $user_data = $this->m_custom->getUser($user_id);
+
+        if (isset($_POST) && !empty($_POST))
+        {
+            if (IsNullOrEmptyString($picture_id))
+            {
+                redirect('user/upload_image', 'refresh');
+            }
+            $upload_rule = array(
+                'upload_path' => $this->album_user_merchant,
+                'allowed_types' => $this->config->item('allowed_types_image'),
+                'max_size' => $this->config->item('max_size'),
+                'max_width' => $this->config->item('max_width'),
+                'max_height' => $this->config->item('max_height'),
+            );
+
+            $this->load->library('upload', $upload_rule);
+
+            $picture_id = $this->input->post('picture_id');
+            $post_file = "post-file";
+            $post_title = $this->input->post('picture-title');
+            $post_merchant_id = $this->input->post('picture-merchant');
+            $post_desc = $this->input->post('picture-desc');
+            if ($this->input->post('button_action') == "edit_picture")
+            {
+                $image_data = NULL;
+                $previous_image_name = $this->m_custom->get_one_table_record('merchant_user_album', 'merchant_user_album_id', $picture_id)->image;
+
+                //To check old deal got change image or not, if got then upload the new one and delete previous image
+                if (!empty($_FILES[$post_file]['name']))
+                {
+                    if (!$this->upload->do_upload($post_file))
+                    {
+                        //$error = array('error' => $this->upload->display_errors());
+                        $message_info = add_message_info($message_info, $this->upload->display_errors(), $post_title);
+                    }
+                    else
+                    {
+                        $image_data = array('upload_data' => $this->upload->data());
+                        if (!IsNullOrEmptyString($previous_image_name))
+                        {
+                            delete_file($this->album_user_merchant . $previous_image_name);
+                        }
+                    }
+                }
+
+                $data = array(
+                    'merchant_id' => $post_merchant_id,
+                    'post_id' => $post_merchant_id,
+                    'title' => $post_title,
+                    'description' => $post_desc,
+                    'image' => empty($image_data) ? $previous_image_name : $image_data['upload_data']['file_name'],
+                );
+
+                if ($this->m_custom->simple_update('merchant_user_album', $data, 'merchant_user_album_id', $picture_id))
+                {
+                    $this->m_custom->update_row_log('merchant_user_album', $picture_id, $do_by_id, $do_by_type);
+                    $message_info = add_message_info($message_info, 'Picture for merchant success update.', $post_title);
+                }
+                else
+                {
+                    $message_info = add_message_info($message_info, $this->ion_auth->errors(), $post_title);
+                }
+                
+                $this->session->set_flashdata('message', $message_info);
+                redirect('user/edit_merchant_picture/' . $picture_id, 'refresh');
+            }
+            if ($this->input->post('button_action') == "remove_picture")
+            {
+                $data = array(
+                    'hide_flag' => 1,
+                );
+                if ($this->m_custom->simple_update('merchant_user_album', $data, 'merchant_user_album_id', $picture_id))
+                {
+                    $this->m_custom->remove_row_log('merchant_user_album', $picture_id, $do_by_id, $do_by_type);
+                    $message_info = add_message_info($message_info, 'Picture for merchant success remove.', $post_title);
+                    redirect('all/album_user_merchant/'.$user_id, 'refresh');
+                }
+                else
+                {
+                    $message_info = add_message_info($message_info, $this->ion_auth->errors(), $post_title);
+                }
+            }
+            if ($this->input->post('button_action') == "back_picture")
+            {
+                redirect('all/merchant_user_picture/' . $picture_id, 'refresh');
+            }
+        }
+
+        $picture_result = $this->m_custom->get_one_table_record('merchant_user_album','merchant_user_album_id',$picture_id,1, 1);
+        
+        $this->data['picture_date'] = empty($picture_result) ? '' : displayDate($picture_result['create_date']);
+
+        $this->data['picture_title'] = array(
+            'name' => 'picture-title',
+            'id' => 'picture-title',
+            'value' => empty($picture_result) ? '' : $picture_result['title'],
+        );
+
+        $this->data['picture_image'] = empty($picture_result) ? $this->config->item('empty_image') : $this->album_user_merchant . $picture_result['image'];
+
+        $this->data['picture_merchant'] = array(
+            'name' => 'picture-merchant',
+            'id' => 'picture-merchant',
+        );      
+        $this->data['merchant_list'] = $this->m_custom->getMerchantList();
+        $this->data['picture_merchant_selected'] = empty($picture_result) ? '' : $picture_result['merchant_id'];
+
+        $this->data['picture_desc'] = array(
+            'name' => 'picture-desc',
+            'id' => 'picture-desc',
+            'value' => empty($picture_result) ? '' : $picture_result['description'],
+        );
+
+        $mua_id = empty($picture_result) ? '0' : $picture_result['merchant_user_album_id'];
+        $this->data['mua_id_value'] = $mua_id;
+
+        $this->data['picture_id'] = array(
+            'picture_id' => $mua_id,
+        );
+
+        $this->data['message'] = $this->session->flashdata('message');
+        $this->data['page_path_name'] = 'user/edit_merchant_picture';
+        $this->load->view('template/layout_right_menu', $this->data);
+    }
+    
     function upload_for_merchant($slug = NULL){
         if (!check_correct_login_type($this->main_group_id))
         {
@@ -917,6 +1059,7 @@ class user extends CI_Controller
 
                     if (!empty($_FILES[$post_file]['name']))
                     {
+                        //to do todo if want to add auto populate back
 //                        $this->form_validation->set_rules('image-title-' . $i, $this->lang->line('album_title_label'), 'required');
 //                        $this->form_validation->set_rules('image-merchant-' . $i, $this->lang->line('album_merchant_label'), 'required');
 //                        $this->form_validation->set_rules('image-desc-' . $i, $this->lang->line('album_description_label'));
