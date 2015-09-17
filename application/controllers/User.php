@@ -986,7 +986,7 @@ class user extends CI_Controller
             'name' => 'picture-merchant',
             'id' => 'picture-merchant',
         );      
-        $this->data['merchant_list'] = $this->m_custom->getMerchantList();
+        $this->data['merchant_list'] = $this->m_merchant->getMerchantList();
         $this->data['picture_merchant_selected'] = empty($picture_result) ? '' : $picture_result['merchant_id'];
 
         $this->data['picture_desc'] = array(
@@ -1042,7 +1042,7 @@ class user extends CI_Controller
                 $validate_fail = 0;
                 for ($i = 0; $i < $this->box_number; $i++)
                 {
-                    $user_today_upload_count = $this->m_custom->get_user_today_upload_count($user_id);
+                    $user_today_upload_count = $this->m_user->get_user_today_upload_count($user_id);
                     $user_max_picture_per_day = $this->config->item('user_max_picture_per_day');
 
                     if ($user_today_upload_count >= $user_max_picture_per_day)
@@ -1091,8 +1091,8 @@ class user extends CI_Controller
                                 $new_id = $this->m_custom->get_id_after_insert('merchant_user_album', $data);
                                 if ($new_id)
                                 {
-                                    $this->m_custom->candie_history_insert(4, $new_id,'merchant_user_album');
-                                    $this->m_custom->transaction_history_insert($post_merchant_id, 14, $new_id, 'merchant_user_album');
+                                    $this->m_user->candie_history_insert(4, $new_id,'merchant_user_album');
+                                    $this->m_merchant->transaction_history_insert($post_merchant_id, 14, $new_id, 'merchant_user_album');
                                     $message_info = add_message_info($message_info, 'Image for merchant ' . $this->m_custom->display_users($post_merchant_id) . ' success create.', $post_title);
                                 }
                                 else
@@ -1111,7 +1111,7 @@ class user extends CI_Controller
         }
         
         $this->data['category_list'] = $this->m_custom->getCategoryList('0','');
-        $this->data['merchant_list'] = $this->m_custom->getMerchantList();
+        $this->data['merchant_list'] = $this->m_merchant->getMerchantList();
                 
         for ($i = 0; $i < $this->box_number; $i++)
         {
@@ -1160,7 +1160,7 @@ class user extends CI_Controller
         $merchant_list = array();
         if ($selected_category != '0')
         {
-            $query = $this->m_custom->getMerchantList_by_category($selected_category, 0 ,1);
+            $query = $this->m_merchant->getMerchantList_by_category($selected_category, 0 ,1);
 
             foreach ($query as $item){
                 $merchant_list[$item->id] = $item->company;

@@ -16,12 +16,12 @@ class Home extends CI_Controller
         if ($slug == NULL)
         {
             //DATA
-            $data['category_merchant_array'] = $this->m_custom->getMerchantList_by_category('1',0,1);
+            $data['category_merchant_array'] = $this->m_merchant->getMerchantList_by_category('1',0,1);
         }
         else
         {
             //DATA
-            $data['category_merchant_array'] = $this->m_custom->getMerchantList_by_category($slug,0,1);
+            $data['category_merchant_array'] = $this->m_merchant->getMerchantList_by_category($slug,0,1);
         }
         //LOAD TEMPLATE
         $this->load->view('template/layout_advertisement', $data);

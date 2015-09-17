@@ -60,7 +60,7 @@ class All extends CI_Controller
                  $this->m_custom->activity_view($advertise_id);
             }
             
-            $merchant_row = $this->m_custom->getMerchant($the_row['merchant_id']);
+            $merchant_row = $this->m_merchant->getMerchant($the_row['merchant_id']);
             $this->data['merchant_dashboard_url'] = base_url() . "all/merchant-dashboard/" .$merchant_row['slug'];
             
             $this->data['advertise_id'] = $advertise_id;
@@ -157,7 +157,7 @@ class All extends CI_Controller
             }
             
             //$user_row = $this->m_custom->getUser($the_row['user_id']);    //Temporary hide because no use, but maybe future will use
-            $merchant_row = $this->m_custom->getMerchant($the_row['merchant_id']);
+            $merchant_row = $this->m_merchant->getMerchant($the_row['merchant_id']);
             $this->data['merchant_dashboard_url'] = base_url() . "all/merchant-dashboard/" .$merchant_row['slug'];
             
             $this->data['picture_id'] = $picture_id;
@@ -333,7 +333,7 @@ class All extends CI_Controller
                 $current_url = $this->input->post('current_url');
                 $advertise_id = $this->input->post('item_id');
                 $user_email = $this->session->userdata('email');
-                $redeem_info = $this->m_custom->user_redemption_insert($advertise_id);
+                $redeem_info = $this->m_user->user_redemption_insert($advertise_id);
                 
                 if ($redeem_info['redeem_status'])
                 {

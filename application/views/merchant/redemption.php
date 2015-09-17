@@ -21,7 +21,7 @@
         {
             $advertise_url = "<a target='_blank' href='" . base_url() . "all/advertise/" . $promotion_row['advertise_id'] . "'>" . $promotion_row['title'] . "</a>";
             echo $advertise_url . " (" . $promotion_row['voucher'] . ")<br/><br/>";
-            $redeem_list = $this->m_custom->getUserRedemption($promotion_row['advertise_id'], $voucher_active);
+            $redeem_list = $this->m_merchant->getUserRedemption($promotion_row['advertise_id'], $voucher_active);
             ?>
             <table border='1px' cellpadding='0px' cellspacing='0px'>
                 <colgroup>

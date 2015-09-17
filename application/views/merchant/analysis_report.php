@@ -112,8 +112,8 @@
                 chart = new Highcharts.Chart(options);
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                alert(textStatus);
-                alert(errorThrown);
+                //alert(textStatus);
+                //alert(errorThrown);
             }
         });
         
