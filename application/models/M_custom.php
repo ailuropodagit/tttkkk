@@ -456,6 +456,22 @@ class M_custom extends CI_Model
         return $query->row_array();
     }
 
+    //To find one record in DB with one keyword
+    public function getOneMUA($mua_id)
+    {
+        $the_row = $this->m_custom->get_one_table_record('merchant_user_album', 'merchant_user_album_id', $mua_id, 1);
+
+        return $the_row;
+    }
+
+    //To find one record in DB with one keyword
+    public function getOneUserPicture($picture_id)
+    {
+        $the_row = $this->m_custom->get_one_table_record('user_album', 'user_album_id', $picture_id, 1);
+
+        return $the_row;
+    }
+    
     //To get all main category
     function getAdvertise($advertise_type, $sub_category_id = NULL, $merchant_id = NULL, $show_expired = 0, $limit = NULL, $start = NULL)
     {
@@ -941,6 +957,19 @@ class M_custom extends CI_Model
         }
     }
 
+    public function activity_like_user_list($refer_id, $refer_type)
+    {
+        $query = $this->m_custom->activity_like_count($refer_id, $refer_type, 1);
+
+        $return = array();
+        foreach ($query as $row)
+        {
+            $return[] = $this->m_custom->generate_user_link($row['act_by_id'], 1);
+        }
+
+        return $return;
+    }
+
     //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
     public function activity_like($refer_id, $refer_type)
     {
@@ -966,17 +995,28 @@ class M_custom extends CI_Model
         }
     }
 
+    public function generate_user_link($user_id = NULL, $with_icon = 0)
+    {
+        $user_name = $this->m_custom->display_users($user_id, $with_icon);
+        return "<a target='_blank' href='" . base_url() . "all/user_dashboard/" . $user_id . "'>" . $user_name . "</a>";
+    }
+
     //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
     public function generate_like_link($refer_id, $refer_type)
     {
         if (check_correct_login_type($this->config->item('group_id_user')))
         {
-            return "<span class='like-it' ><button onclick='click_like(" . $refer_id . ");'> Like </button> : " . $this->activity_like_count($refer_id, $refer_type) . " </span>";
+            return "<span class='like-it' ><button onclick='click_like(" . $refer_id . ");'> Like </button> : " . $this->generate_like_list_link($refer_id, $refer_type) . " </span>";
         }
         else
         {
-            return "Like : " . $this->activity_like_count($refer_id, $refer_type) . " ";
+            return "Like : " . $this->generate_like_list_link($refer_id, $refer_type) . " ";
         }
+    }
+
+    public function generate_like_list_link($refer_id, $refer_type)
+    {
+        return "<a target='_blank' href='" . base_url() . "all/like_list/" . $refer_id . "/" . $refer_type . "'>" . $this->activity_like_count($refer_id, $refer_type) . "</a>";
     }
 
     //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
@@ -1000,6 +1040,29 @@ class M_custom extends CI_Model
             //return $created_on . " is old";
             return FALSE;
         }
+    }
+
+    public function post_title($refer_id, $refer_type)
+    {
+        $return_title = '';
+        switch ($refer_type)
+        {
+            case 'adv':
+                $result = $this->m_custom->getOneAdvertise($refer_id);
+                $return_title = "<a target='_blank' href='" . base_url() . "all/advertise/" . $result['advertise_id'] . "'>" . $result['title'] . "</a>";
+                break;
+
+            case 'mua':
+                $result = $this->m_custom->getOneMUA($refer_id);
+                $return_title = "<a target='_blank' href='" . base_url() . "all/merchant_user_picture/" . $result['merchant_user_album_id'] . "'>" . $result['title'] . "</a>";
+                break;
+            
+            case 'usa':
+                $result = $this->m_custom->getOneUserPicture($refer_id);
+                $return_title = "<a target='_blank' href='" . base_url() . "all/user_picture/" . $result['user_album_id'] . "'>" . $result['title'] . "</a>";
+                break;
+        }
+        return $return_title;
     }
 
     public function compare_before_update($the_table, $the_data, $id_column, $id_value)

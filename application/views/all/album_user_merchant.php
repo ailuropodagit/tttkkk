@@ -78,7 +78,7 @@
                             <tr>
                                 <td>Like</td>
                                 <td>:</td>
-                                <td><?php echo $this->m_custom->activity_like_count($row['merchant_user_album_id'], 'mua'); ?></td>
+                                <td><?php echo $this->m_custom->generate_like_list_link($row['merchant_user_album_id'], 'mua'); ?></td>
                             </tr>
                             <tr>
                                 <td>Comment</td>
@@ -88,7 +88,7 @@
                         </table>
                     </div>
                     <div id='album-user-merchant-upload-by'>
-                        Upload by : <?php echo $this->m_custom->display_users($row['user_id']) ?>
+                        Upload by : <?php echo $this->m_custom->generate_user_link($row['user_id']); ?>
                     </div>
                 </div>
                 <?php

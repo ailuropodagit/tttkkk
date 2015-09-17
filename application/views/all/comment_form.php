@@ -23,7 +23,7 @@ $all_comment = $this->m_custom->activity_comment_count($item_id['value'],$item_t
                 <tr>
                     <td valign='top'>
                         <div id="user-comment-list-each-username">
-                            <a href='#'><?php echo $user_name; ?></a>
+                                <?php echo $this->m_custom->generate_user_link($row['act_by_id'], 1); ?>
                             <div id="user-comment-list-each-comment-time"><?php echo $user_comment_time; ?></div>
                         </div>
                     </td>
