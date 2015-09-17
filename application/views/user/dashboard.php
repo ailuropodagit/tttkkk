@@ -1,12 +1,13 @@
 <?php
+//USERS ROW
+$row_users = $query_users->row_array();
 //USERS DATA
-$row_user = $query_user->row();
-$profile_image = $row_user->profile_image;
-$first_name = $row_user->first_name;
-$last_name = $row_user->last_name;
-$blog_url = $row_user->us_blog_url;
-$instagram_url = $row_user->us_instagram_url;
-$facebook_url = $row_user->us_facebook_url;
+$profile_image = $row_users['profile_image'];
+$first_name = $row_users['first_name'];
+$last_name = $row_users['last_name'];
+$blog_url = $row_users['us_blog_url'];
+$instagram_url = $row_users['us_instagram_url'];
+$facebook_url = $row_users['us_facebook_url'];
 ?>
 
 <?php 
@@ -80,5 +81,6 @@ $album_user_profile = $this->config->item('album_user_profile');
                 </div>
             </div>
         </div>
+        <div id="float-fix"></div>
     </div>    
 </div>

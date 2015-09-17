@@ -416,13 +416,18 @@ class All extends CI_Controller
     }
     
     //View the user dashboard upper part
-    function user_dashboard($user_id)
+    function user_dashboard($users_id)
     {
         //DATA
-        $data['query_user'] = $this->albert_model->get_user($user_id);
-        $data['first_name'] = '1';
-        $data['last_name'] = '2';
+        $data['query_users'] = $this->albert_model->get_users($users_id);        
+        //$data['query_get_activity_history_inner_join_advertise'] = $this->albert_model->get_activity_history_inner_join_advertise($users_id)->result_array();
+        $data['title'] = 'activity';
+        //PAGE PATH NAME
         $data['page_path_name'] = 'user/dashboard';
+        //BOTTON PATH NAME
+        $data['title'] = "Activity";
+        $data['bottom_path_name'] = 'all/advertise_list';
+        $data['hotdeal_list'] = $this->albert_model->get_activity_history_inner_join_advertise($users_id)->result_array();
         if ($this->ion_auth->logged_in())
         {
             //LOGGED IN

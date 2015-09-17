@@ -66,6 +66,10 @@ $this->album_merchant = $this->config->item('album_merchant');
             {
                 $empty_data_message = 'No hot deal in the moment';
             }
+            else if ($this->router->fetch_method() == 'user_dashboard')
+            {
+                $empty_data_message = 'No activity in the moment';
+            }
             else if ($this->router->fetch_method() == 'merchant_dashboard')
             {
                 $empty_data_message = 'No offer deal in the moment';
