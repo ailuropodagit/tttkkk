@@ -471,7 +471,7 @@ class M_custom extends CI_Model
 
         return $the_row;
     }
-    
+
     //To get all main category
     function getAdvertise($advertise_type, $sub_category_id = NULL, $merchant_id = NULL, $show_expired = 0, $limit = NULL, $start = NULL)
     {
@@ -1056,7 +1056,7 @@ class M_custom extends CI_Model
                 $result = $this->m_custom->getOneMUA($refer_id);
                 $return_title = "<a target='_blank' href='" . base_url() . "all/merchant_user_picture/" . $result['merchant_user_album_id'] . "'>" . $result['title'] . "</a>";
                 break;
-            
+
             case 'usa':
                 $result = $this->m_custom->getOneUserPicture($refer_id);
                 $return_title = "<a target='_blank' href='" . base_url() . "all/user_picture/" . $result['user_album_id'] . "'>" . $result['title'] . "</a>";
