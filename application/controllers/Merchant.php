@@ -1,7 +1,10 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php
+
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Merchant extends CI_Controller
 {
+
     function __construct()
     {
         parent::__construct();
@@ -188,7 +191,7 @@ class Merchant extends CI_Controller
             }
         }
     }
-    
+
     function update_whole_year_balance()
     {
         if (check_correct_login_type($this->main_group_id))
@@ -873,17 +876,17 @@ class Merchant extends CI_Controller
         if (check_correct_login_type($this->group_id_merchant) || check_correct_login_type($this->group_id_supervisor))
         {
             $merchant_id = $this->ion_auth->user()->row()->id;
-            $is_supervisor = 0;      
+            $is_supervisor = 0;
             $supervisor_id = 0;
             if (check_correct_login_type($this->group_id_supervisor))
             {
-                $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;     
+                $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;
                 $merchant = $this->m_custom->getUser($merchant_id);
                 $is_supervisor = 1;
                 $supervisor_id = $this->ion_auth->user()->row()->id;
                 $supervisor = $this->m_custom->getUser($supervisor_id);
             }
-            
+
             $this->data['title'] = "User Redemption";
             if ($show_used == 1)
             {
@@ -896,17 +899,17 @@ class Merchant extends CI_Controller
 
             $this->data['show_used'] = $show_used;
             $this->data['promotion_list'] = $this->m_custom->getPromotion($merchant_id, $supervisor_id);
-            
-            $this->data['message'] =  $this->session->flashdata('message');
+
+            $this->data['message'] = $this->session->flashdata('message');
             $this->data['page_path_name'] = 'merchant/redemption';
             $this->load->view('template/layout_right_menu', $this->data);
         }
         else
-        {           
+        {
             redirect('/', 'refresh');
         }
     }
-    
+
     public function redeem_done()
     {
         $current_url = '/';
@@ -931,7 +934,7 @@ class Merchant extends CI_Controller
             }
             else if ($this->input->post('button_action') == "submit_expired")
             {
-                if ($this->m_custom->user_redemption_done($redeem_id,1))
+                if ($this->m_custom->user_redemption_done($redeem_id, 1))
                 {
                     $this->session->set_flashdata('message', 'You mark ' . $voucher . ' voucher for ' . $user_name . ' as expired');
                 }
@@ -1361,7 +1364,7 @@ class Merchant extends CI_Controller
                         'voucher' => $this->m_custom->generate_voucher($merchant_id),
                         'voucher_candie' => $candie_point,
                         'voucher_expire_date' => $expire_date,
-                        //'extra_field' => $candie_vender
+                            //'extra_field' => $candie_vender
                     );
 
                     $new_id = $this->m_custom->get_id_after_insert('advertise', $data);
@@ -1410,7 +1413,7 @@ class Merchant extends CI_Controller
                         'end_time' => $end_date,
                         'voucher_candie' => $candie_point,
                         'voucher_expire_date' => $expire_date,
-                        //'extra_field' => $candie_vender
+                            //'extra_field' => $candie_vender
                     );
 
                     if ($this->m_custom->simple_update('advertise', $data, 'advertise_id', $candie_id))
@@ -1955,54 +1958,6 @@ class Merchant extends CI_Controller
         $this->load->view('template/layout_right_menu', $this->data);
     }
 
-//    function upload_image() {
-//
-//        redirect('/','refresh'); //no use currently, disable this function first
-//        if (!$this->ion_auth->logged_in()) {
-//            redirect('merchant/login', 'refresh');
-//        }
-//
-//        $id = $this->ion_auth->user()->row()->id;
-//
-//        if (isset($_POST) && !empty($_POST)) {
-//            $upload_rule = array(
-//                'upload_path' => $this->album_merchant_profile,
-//                'allowed_types' => $this->config->item('allowed_types_image'),
-//                'max_size' => $this->config->item('max_size'),
-//            );
-//
-//            $this->load->library('upload', $upload_rule);
-//
-//            if (!$this->upload->do_upload()) {
-//                $error = array('error' => $this->upload->display_errors());
-//                $this->session->set_flashdata('message', $this->upload->display_errors());
-//            } else {
-//                $image_data = array('upload_data' => $this->upload->data());
-//                //$this->ion_auth->set_message('image_upload_successful');
-//
-//                $data = array(
-//                    'profile_image' => $this->upload->data('file_name'),
-//                );
-//
-//                if ($this->ion_auth->update($id, $data)) {
-//                    $this->session->set_flashdata('message', 'Merchant logo success update.');
-//                    redirect('merchant/profile', 'refresh');
-//                } else {
-//
-//                    $this->session->set_flashdata('message', $this->ion_auth->errors());
-//                }
-//            }
-//        }
-//
-//        $user = $this->ion_auth->user($id)->row();
-//        $this->data['logo_url'] = $this->album_merchant_profile . $user->profile_image;
-//
-//        // set the flash data error message if there is one
-//        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-//
-//        $this->data['page_path_name'] = 'merchant/upload_image';
-//        $this->load->view('template/layout', $this->data);
-//    }
     // edit a user
     function edit_user($id)
     {
@@ -2171,6 +2126,586 @@ class Merchant extends CI_Controller
         );
 
         $this->_render_page('merchant/edit_user', $this->data);
+    }
+
+    function analysis_report($search_month = NULL, $search_year = NULL, $search_adv_type = NULL, $search_new_user = NULL)
+    {
+        $message_info = '';
+        if (check_correct_login_type($this->main_group_id))
+        {
+            //$this->data['charts'] = $this->getChart($merchant_id);
+            $merchant_id = $this->ion_auth->user()->row()->id;
+            $merchant_data = $this->m_custom->getUser($merchant_id);
+
+            if (isset($_POST) && !empty($_POST))
+            {
+                if ($this->input->post('button_action') == "search_history")
+                {
+                    $search_month = $this->input->post('the_month');
+                    $search_year = $this->input->post('the_year');
+                    $search_adv_type = $this->input->post('the_adv_type');
+                    $search_new_user = $this->input->post('the_new_user');
+                }
+            }
+            $year_list = generate_number_option(get_part_of_date('year', $merchant_data['created_on'], 1), get_part_of_date('year'));
+            $this->data['year_list'] = $year_list;
+            $this->data['the_year'] = array(
+                'name' => 'the_year',
+                'id' => 'the_year',
+            );
+            $this->data['the_year_selected'] = empty($search_year) ? get_part_of_date('year') : $search_year;
+
+            $month_list = $this->ion_auth->get_static_option_list('month');
+            $this->data['month_list'] = $month_list;
+            $this->data['the_month'] = array(
+                'name' => 'the_month',
+                'id' => 'the_month',
+            );
+            $this->data['the_month_selected'] = empty($search_month) ? get_part_of_date('month') : $search_month;
+
+            $adv_type_list = array(
+                '' => 'All Advertise',
+                'hot' => 'Hot Deal',
+                'pro' => 'Promotion'
+            );
+            $this->data['adv_type_list'] = $adv_type_list;
+            $this->data['the_adv_type'] = array(
+                'name' => 'the_adv_type',
+                'id' => 'the_adv_type',
+            );
+            $this->data['the_adv_type_selected'] = empty($search_adv_type) ? "" : $search_adv_type;
+
+            $new_user_list = array(
+                '' => 'All User',
+                '1' => 'New User Only',
+            );
+            $this->data['new_user_list'] = $new_user_list;
+            $this->data['the_new_user'] = array(
+                'name' => 'the_new_user',
+                'id' => 'the_new_user',
+            );
+            $this->data['the_new_user_selected'] = empty($search_new_user) ? "" : $search_new_user;
+
+            $this->data['message'] = $this->session->flashdata('message');
+            $this->data['page_path_name'] = 'merchant/analysis_report';
+            $this->load->view('template/layout_right_menu', $this->data);
+        }
+        else
+        {
+            redirect('/', 'refresh');
+        }
+    }
+
+    function getChart_gender()
+    {
+        if (check_correct_login_type($this->main_group_id))
+        {
+            $merchant_id = $this->ion_auth->user()->row()->id;
+            $group_by = 'gender';
+
+            $the_year = $this->input->post("the_year", true);
+            $the_month = $this->input->post("the_month", true);
+            $the_adv_type = $this->input->post("the_adv_type", true) == '' ? NULL : $this->input->post("the_adv_type", true);
+            $the_new_user = $this->input->post("the_new_user", true) == '' ? 0 : $this->input->post("the_new_user", true);
+
+            $view_result = $this->m_custom->getMerchantAnalysisReport($merchant_id, 'view', $the_month, $the_year, $the_adv_type);
+            $view_male_count = 0;
+            $view_female_count = 0;
+            foreach ($view_result as $row)
+            {
+                $user_id = $row['many_child_id'];
+                $return = $this->m_custom->getUserAnalysisGroup($user_id, $group_by);
+
+                if ($the_new_user == 0 || ($this->m_custom->check_is_new_user($user_id) && $the_new_user == 1))
+                {
+                    if ($return == $this->config->item('gender_id_male'))
+                    {
+                        $view_male_count++;
+                    }
+                    else
+                    {
+                        $view_female_count++;
+                    }
+                }
+            }
+
+            $like_result = $this->m_custom->getMerchantAnalysisReport($merchant_id, 'like', $the_month, $the_year, $the_adv_type);
+            $like_male_count = 0;
+            $like_female_count = 0;
+            foreach ($like_result as $row)
+            {
+                $user_id = $row['act_by_id'];
+                $return = $this->m_custom->getUserAnalysisGroup($user_id, $group_by);
+                if ($the_new_user == 0 || ($this->m_custom->check_is_new_user($user_id) && $the_new_user == 1))
+                {
+                    if ($return == $this->config->item('gender_id_male'))
+                    {
+                        $like_male_count++;
+                    }
+                    else
+                    {
+                        $like_female_count++;
+                    }
+                }
+            }
+
+            $rating_result = $this->m_custom->getMerchantAnalysisReport($merchant_id, 'rating', $the_month, $the_year, $the_adv_type);
+            $rating_male_count = 0;
+            $rating_female_count = 0;
+            foreach ($rating_result as $row)
+            {
+                $user_id = $row['act_by_id'];
+                $return = $this->m_custom->getUserAnalysisGroup($user_id, $group_by);
+                if ($the_new_user == 0 || ($this->m_custom->check_is_new_user($user_id) && $the_new_user == 1))
+                {
+                    if ($return == $this->config->item('gender_id_male'))
+                    {
+                        $rating_male_count++;
+                    }
+                    else
+                    {
+                        $rating_female_count++;
+                    }
+                }
+            }
+
+            $redeem_result = $this->m_custom->getMerchantAnalysisReport($merchant_id, 'redeem', $the_month, $the_year, $the_adv_type);
+            $redeem_male_count = 0;
+            $redeem_female_count = 0;
+            foreach ($redeem_result as $row)
+            {
+                $user_id = $row['user_id'];
+                $return = $this->m_custom->getUserAnalysisGroup($user_id, $group_by);
+                if ($the_new_user == 0 || ($this->m_custom->check_is_new_user($user_id) && $the_new_user == 1))
+                {
+                    if ($return == $this->config->item('gender_id_male'))
+                    {
+                        $redeem_male_count++;
+                    }
+                    else
+                    {
+                        $redeem_female_count++;
+                    }
+                }
+            }
+
+            $male_array = array();
+            $male_array['name'] = 'Male';
+            $male_array['data'][] = $view_male_count;
+            $male_array['data'][] = $like_male_count;
+            $male_array['data'][] = $rating_male_count;
+            $male_array['data'][] = $redeem_male_count;
+
+            $female_array = array();
+            $female_array['name'] = 'Female';
+            $female_array['data'][] = $view_female_count;
+            $female_array['data'][] = $like_female_count;
+            $female_array['data'][] = $rating_female_count;
+            $female_array['data'][] = $redeem_female_count;
+
+            $result = array();
+            array_push($result, $female_array);
+            array_push($result, $male_array);
+
+            echo json_encode($result);
+        }
+        //$this->load->library('Highcharts');
+//        $this->highcharts->set_title('Gender :');
+//        $this->highcharts->set_dimensions(740, 300);
+//        $this->highcharts->set_axis_titles('Activity', 'Count');
+//        $this->highcharts->set_type('bar');
+        //$credits->href = 'http://www.internetworldstats.com/stats7.htm';
+        //$credits->text = "Article on Internet Wold Stats";
+        //$this->highcharts->set_credits($credits);
+        //$this->highcharts->render_to("content_top");
+        //
+        //$category = array('View', 'Like', 'Rating', 'Redeem');
+        //$this->highcharts->push_xcategorie($category);
+//        $serie['data'] = $result;
+//        $this->highcharts->export_file("Code 2 Learn Chart" . date('d M Y'));
+//        $this->highcharts->set_serie($result, "Male");
+        //$this->highcharts->set_serie($series, "Female");
+        //$this->output->set_content_type('application/json')
+        //            ->set_output(json_encode($result));           
+        //return $this->highcharts->render();
+    }
+
+    function getChart_race()
+    {
+        if (check_correct_login_type($this->main_group_id))
+        {
+            $merchant_id = $this->ion_auth->user()->row()->id;
+            $group_by = 'race';
+            $race_id_malay = $this->config->item('race_id_malay');
+            $race_id_chinese = $this->config->item('race_id_chinese');
+            $race_id_india = $this->config->item('race_id_india');
+            $race_id_other = $this->config->item('race_id_other');
+
+            $the_year = $this->input->post("the_year", true);
+            $the_month = $this->input->post("the_month", true);
+            $the_adv_type = $this->input->post("the_adv_type", true) == '' ? NULL : $this->input->post("the_adv_type", true);
+            $the_new_user = $this->input->post("the_new_user", true) == '' ? 0 : $this->input->post("the_new_user", true);
+
+            $view_result = $this->m_custom->getMerchantAnalysisReport($merchant_id, 'view', $the_month, $the_year, $the_adv_type);
+            $view_count[0] = 0;
+            $view_count[1] = 0;
+            $view_count[2] = 0;
+            $view_count[3] = 0;
+            foreach ($view_result as $row)
+            {
+                $user_id = $row['many_child_id'];
+                $return = $this->m_custom->getUserAnalysisGroup($user_id, $group_by);
+
+                if ($the_new_user == 0 || ($this->m_custom->check_is_new_user($user_id) && $the_new_user == 1))
+                {
+                    if ($return == $race_id_malay)
+                    {
+                        $view_count[0] ++;
+                    }
+                    else if ($return == $race_id_chinese)
+                    {
+                        $view_count[1] ++;
+                    }
+                    else if ($return == $race_id_india)
+                    {
+                        $view_count[2] ++;
+                    }
+                    else if ($return == $race_id_other)
+                    {
+                        $view_count[3] ++;
+                    }
+                }
+            }
+
+            $like_result = $this->m_custom->getMerchantAnalysisReport($merchant_id, 'like', $the_month, $the_year, $the_adv_type);
+            $like_count[0] = 0;
+            $like_count[1] = 0;
+            $like_count[2] = 0;
+            $like_count[3] = 0;
+            foreach ($like_result as $row)
+            {
+                $user_id = $row['act_by_id'];
+                $return = $this->m_custom->getUserAnalysisGroup($user_id, $group_by);
+                if ($the_new_user == 0 || ($this->m_custom->check_is_new_user($user_id) && $the_new_user == 1))
+                {
+                    if ($return == $race_id_malay)
+                    {
+                        $like_count[0] ++;
+                    }
+                    else if ($return == $race_id_chinese)
+                    {
+                        $like_count[1] ++;
+                    }
+                    else if ($return == $race_id_india)
+                    {
+                        $like_count[2] ++;
+                    }
+                    else if ($return == $race_id_other)
+                    {
+                        $like_count[3] ++;
+                    }
+                }
+            }
+
+            $rating_result = $this->m_custom->getMerchantAnalysisReport($merchant_id, 'rating', $the_month, $the_year, $the_adv_type);
+            $rating_count[0] = 0;
+            $rating_count[1] = 0;
+            $rating_count[2] = 0;
+            $rating_count[3] = 0;
+            foreach ($rating_result as $row)
+            {
+                $user_id = $row['act_by_id'];
+                $return = $this->m_custom->getUserAnalysisGroup($user_id, $group_by);
+                if ($the_new_user == 0 || ($this->m_custom->check_is_new_user($user_id) && $the_new_user == 1))
+                {
+                    if ($return == $race_id_malay)
+                    {
+                        $rating_count[0] ++;
+                    }
+                    else if ($return == $race_id_chinese)
+                    {
+                        $rating_count[1] ++;
+                    }
+                    else if ($return == $race_id_india)
+                    {
+                        $rating_count[2] ++;
+                    }
+                    else if ($return == $race_id_other)
+                    {
+                        $rating_count[3] ++;
+                    }
+                }
+            }
+
+            $redeem_result = $this->m_custom->getMerchantAnalysisReport($merchant_id, 'redeem', $the_month, $the_year, $the_adv_type);
+            $redeem_count[0] = 0;
+            $redeem_count[1] = 0;
+            $redeem_count[2] = 0;
+            $redeem_count[3] = 0;
+            foreach ($redeem_result as $row)
+            {
+                $user_id = $row['user_id'];
+                $return = $this->m_custom->getUserAnalysisGroup($user_id, $group_by);
+                if ($the_new_user == 0 || ($this->m_custom->check_is_new_user($user_id) && $the_new_user == 1))
+                {
+                    if ($return == $race_id_malay)
+                    {
+                        $redeem_count[0] ++;
+                    }
+                    else if ($return == $race_id_chinese)
+                    {
+                        $redeem_count[1] ++;
+                    }
+                    else if ($return == $race_id_india)
+                    {
+                        $redeem_count[2] ++;
+                    }
+                    else if ($return == $race_id_other)
+                    {
+                        $redeem_count[3] ++;
+                    }
+                }
+            }
+
+            $malay_array = array();
+            $malay_array['name'] = 'Malay';
+            $malay_array['data'][] = $view_count[0];
+            $malay_array['data'][] = $like_count[0];
+            $malay_array['data'][] = $rating_count[0];
+            $malay_array['data'][] = $redeem_count[0];
+
+            $chinese_array = array();
+            $chinese_array['name'] = 'Chinese';
+            $chinese_array['data'][] = $view_count[1];
+            $chinese_array['data'][] = $like_count[1];
+            $chinese_array['data'][] = $rating_count[1];
+            $chinese_array['data'][] = $redeem_count[1];
+
+            $india_array = array();
+            $india_array['name'] = 'India';
+            $india_array['data'][] = $view_count[2];
+            $india_array['data'][] = $like_count[2];
+            $india_array['data'][] = $rating_count[2];
+            $india_array['data'][] = $redeem_count[2];
+
+            $other_array = array();
+            $other_array['name'] = 'Other';
+            $other_array['data'][] = $view_count[3];
+            $other_array['data'][] = $like_count[3];
+            $other_array['data'][] = $rating_count[3];
+            $other_array['data'][] = $redeem_count[3];
+
+            $result = array();
+            array_push($result, $other_array);
+            array_push($result, $india_array);
+            array_push($result, $chinese_array);
+            array_push($result, $malay_array);
+
+            echo json_encode($result);
+        }
+    }
+
+    function getChart_age()
+    {
+        if (check_correct_login_type($this->main_group_id))
+        {
+            $merchant_id = $this->ion_auth->user()->row()->id;
+            $group_by = 'age';
+            $age_group0 = 15;
+            $age_group1 = 21;
+            $age_group2 = 31;
+            $age_group3 = 41;
+
+            $the_year = $this->input->post("the_year", true);
+            $the_month = $this->input->post("the_month", true);
+            $the_adv_type = $this->input->post("the_adv_type", true) == '' ? NULL : $this->input->post("the_adv_type", true);
+            $the_new_user = $this->input->post("the_new_user", true) == '' ? 0 : $this->input->post("the_new_user", true);
+
+            $view_result = $this->m_custom->getMerchantAnalysisReport($merchant_id, 'view', $the_month, $the_year, $the_adv_type);
+            $view_count[0] = 0;
+            $view_count[1] = 0;
+            $view_count[2] = 0;
+            $view_count[3] = 0;
+            $view_count[4] = 0;
+            foreach ($view_result as $row)
+            {
+                $user_id = $row['many_child_id'];
+                $return = $this->m_custom->getUserAnalysisGroup($user_id, $group_by);
+
+                if ($the_new_user == 0 || ($this->m_custom->check_is_new_user($user_id) && $the_new_user == 1))
+                {
+                    if ($return < $age_group0)
+                    {
+                        $view_count[0] ++;
+                    }
+                    else if ($return < $age_group1)
+                    {
+                        $view_count[1] ++;
+                    }
+                    else if ($return < $age_group2)
+                    {
+                        $view_count[2] ++;
+                    }
+                    else if ($return < $age_group3)
+                    {
+                        $view_count[3] ++;
+                    }
+                    else
+                    {
+                        $view_count[4] ++;
+                    }
+                }
+            }
+
+            $like_result = $this->m_custom->getMerchantAnalysisReport($merchant_id, 'like', $the_month, $the_year, $the_adv_type);
+            $like_count[0] = 0;
+            $like_count[1] = 0;
+            $like_count[2] = 0;
+            $like_count[3] = 0;
+            $like_count[4] = 0;
+            foreach ($like_result as $row)
+            {
+                $user_id = $row['act_by_id'];
+                $return = $this->m_custom->getUserAnalysisGroup($user_id, $group_by);
+                if ($the_new_user == 0 || ($this->m_custom->check_is_new_user($user_id) && $the_new_user == 1))
+                {
+                    if ($return < $age_group0)
+                    {
+                        $like_count[0] ++;
+                    }
+                    else if ($return < $age_group1)
+                    {
+                        $like_count[1] ++;
+                    }
+                    else if ($return < $age_group2)
+                    {
+                        $like_count[2] ++;
+                    }
+                    else if ($return < $age_group3)
+                    {
+                        $like_count[3] ++;
+                    }
+                    else
+                    {
+                        $like_count[4] ++;
+                    }
+                }
+            }
+
+            $rating_result = $this->m_custom->getMerchantAnalysisReport($merchant_id, 'rating', $the_month, $the_year, $the_adv_type);
+            $rating_count[0] = 0;
+            $rating_count[1] = 0;
+            $rating_count[2] = 0;
+            $rating_count[3] = 0;
+            $rating_count[4] = 0;
+            foreach ($rating_result as $row)
+            {
+                $user_id = $row['act_by_id'];
+                $return = $this->m_custom->getUserAnalysisGroup($user_id, $group_by);
+                if ($the_new_user == 0 || ($this->m_custom->check_is_new_user($user_id) && $the_new_user == 1))
+                {
+                    if ($return < $age_group0)
+                    {
+                        $rating_count[0] ++;
+                    }
+                    else if ($return < $age_group1)
+                    {
+                        $rating_count[1] ++;
+                    }
+                    else if ($return < $age_group2)
+                    {
+                        $rating_count[2] ++;
+                    }
+                    else if ($return < $age_group3)
+                    {
+                        $rating_count[3] ++;
+                    }
+                    else
+                    {
+                        $rating_count[4] ++;
+                    }
+                }
+            }
+
+            $redeem_result = $this->m_custom->getMerchantAnalysisReport($merchant_id, 'redeem', $the_month, $the_year, $the_adv_type);
+            $redeem_count[0] = 0;
+            $redeem_count[1] = 0;
+            $redeem_count[2] = 0;
+            $redeem_count[3] = 0;
+            $redeem_count[4] = 0;
+            foreach ($redeem_result as $row)
+            {
+                $user_id = $row['user_id'];
+                $return = $this->m_custom->getUserAnalysisGroup($user_id, $group_by);
+                if ($the_new_user == 0 || ($this->m_custom->check_is_new_user($user_id) && $the_new_user == 1))
+                {
+                    if ($return < $age_group0)
+                    {
+                        $redeem_count[0] ++;
+                    }
+                    else if ($return < $age_group1)
+                    {
+                        $redeem_count[1] ++;
+                    }
+                    else if ($return < $age_group2)
+                    {
+                        $redeem_count[2] ++;
+                    }
+                    else if ($return < $age_group3)
+                    {
+                        $redeem_count[3] ++;
+                    }
+                    else
+                    {
+                        $redeem_count[4] ++;
+                    }
+                }
+            }
+
+            $age_array0 = array();
+            $age_array0['name'] = '< 15';
+            $age_array0['data'][] = $view_count[0];
+            $age_array0['data'][] = $like_count[0];
+            $age_array0['data'][] = $rating_count[0];
+            $age_array0['data'][] = $redeem_count[0];
+
+            $age_array1 = array();
+            $age_array1['name'] = '15 - 20';
+            $age_array1['data'][] = $view_count[1];
+            $age_array1['data'][] = $like_count[1];
+            $age_array1['data'][] = $rating_count[1];
+            $age_array1['data'][] = $redeem_count[1];
+
+            $age_array2 = array();
+            $age_array2['name'] = '21 - 30';
+            $age_array2['data'][] = $view_count[2];
+            $age_array2['data'][] = $like_count[2];
+            $age_array2['data'][] = $rating_count[2];
+            $age_array2['data'][] = $redeem_count[2];
+
+            $age_array3 = array();
+            $age_array3['name'] = '31 - 40';
+            $age_array3['data'][] = $view_count[3];
+            $age_array3['data'][] = $like_count[3];
+            $age_array3['data'][] = $rating_count[3];
+            $age_array3['data'][] = $redeem_count[3];
+
+            $age_array4 = array();
+            $age_array4['name'] = '> 40';
+            $age_array4['data'][] = $view_count[4];
+            $age_array4['data'][] = $like_count[4];
+            $age_array4['data'][] = $rating_count[4];
+            $age_array4['data'][] = $redeem_count[4];
+
+            $result = array();
+            array_push($result, $age_array4);
+            array_push($result, $age_array3);
+            array_push($result, $age_array2);
+            array_push($result, $age_array1);
+            array_push($result, $age_array0);
+
+            echo json_encode($result);
+        }
     }
 
     function _get_csrf_nonce()
