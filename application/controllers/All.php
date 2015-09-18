@@ -547,12 +547,14 @@ class All extends CI_Controller
     }
 
     //View the user dashboard upper part
-    function user_dashboard($users_id)
+    function user_dashboard($users_id = NULL)
     {
+        if($users_id == NULL){
+            redirect('/', 'refresh');
+        }
         //QUERY USERS
         $query_users_where = array('id' => $users_id);
         $data['query_users'] = $this->albert_model->get_users($query_users_where);
-        $data['title'] = 'activity';
         //PAGE PATH NAME
         $data['page_path_name'] = 'user/dashboard';
         //BOTTON PATH NAME
@@ -596,6 +598,33 @@ class All extends CI_Controller
 //        }
     }
 
+    function user_review($users_id = NULL)
+    {
+        if($users_id == NULL){
+            redirect('/', 'refresh');
+        }
+        //QUERY USERS
+        $query_users_where = array('id' => $users_id);
+        $data['query_users'] = $this->albert_model->get_users($query_users_where);
+        //PAGE PATH NAME
+        $data['page_path_name'] = 'all/advertise_list';
+        //BOTTON PATH NAME
+        $data['title'] = "Review";
+        //QUERY HOTDEAL LIST
+        $hotdeal_list_where = array('act_by_id' => $users_id);
+        $data['hotdeal_list'] = $this->albert_model->get_activity_history_inner_join_advertise($hotdeal_list_where)->result_array();
+        if ($this->ion_auth->logged_in())
+        {
+            //LOGGED IN
+            $this->load->view('template/layout_right_menu', $data);
+        }
+        else
+        {
+            //NOT LOGGED IN
+            $this->load->view('template/layout', $data);
+        }
+    }
+    
     public function comment_add()
     {
         $message_info = '';
@@ -634,7 +663,7 @@ class All extends CI_Controller
         redirect($current_url, 'refresh');
     }
 
-    public function merchant_dashboard($slug, $user_picture = NULL)
+    public function merchant_dashboard($slug = NULL, $user_picture = NULL)
     {
         $the_row = $this->m_custom->get_one_table_record('users', 'slug', $slug);
         if ($the_row)
