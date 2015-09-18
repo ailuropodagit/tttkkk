@@ -48,7 +48,7 @@
             <li><a href='#' class='layout-inner-right-menu-bar'>Follower</a></li>
             <li><a href='<?php echo $user_review; ?>' class='layout-inner-right-menu-bar <?php if ($this->router->fetch_method() == 'user_review'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Review</a></li>
             <li><a href='<?php echo $user_picture; ?>' class='layout-inner-right-menu-bar <?php if ($this->router->fetch_method() == 'album_user'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Picture</a></li>
-            <li><a href='<?php echo $user_candie; ?>' class='layout-inner-right-menu-bar <?php if ($this->router->fetch_method() == 'album_user'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Candies (<?php echo $this->m_user->candie_check_balance($login_user_id); ?>)</a></li>
+            <li><a href='<?php echo $user_candie; ?>' class='layout-inner-right-menu-bar <?php if ($this->router->fetch_method() == 'candie_page'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Candies (<?php echo $this->m_user->candie_check_balance($login_user_id); ?>)</a></li>
             <li><a href='#' class='layout-inner-right-menu-bar'>Redemption</a></li>
             <li><a href='#' class='layout-inner-right-menu-bar'>Invite Friend</a></li>
             <?php
