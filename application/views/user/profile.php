@@ -104,6 +104,18 @@
                     <div id='profile-info-form-each-label'><?php echo lang('create_user_email_label', 'email address'); ?></div>
                     <div id='profile-info-form-each-input'><?php echo form_input($email); ?></div>
                 </div>
+                <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><label for='blog_url'>Blog URL</label></div>
+                    <div id='profile-info-form-each-input'><?php echo form_input($blog_url); ?></div>
+                </div>
+                <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><label for='instagram_url'>Instagram URL</label></div>
+                    <div id='profile-info-form-each-input'><?php echo form_input($instagram_url); ?></div>
+                </div>
+                <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><label for='facebook_url'>Facebook URL</label></div>
+                    <div id='profile-info-form-each-input'><?php echo form_input($facebook_url); ?></div>
+                </div>
             </div>
             <?php echo form_hidden('id', $user->id); ?>
             <?php echo form_hidden($csrf); ?>

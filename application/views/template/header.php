@@ -57,7 +57,7 @@
                         </li>
                         <?php
                         if (check_is_login())
-                        {
+                        {                            
                             if (check_correct_login_type($this->config->item('group_id_user'))) 
                             {
                                 ?>
@@ -72,7 +72,7 @@
                             else 
                             {
                                 ?>
-                                <li>
+                                <li <?php if($this->router->fetch_method() == 'profile'){ echo "class='header-menu-active'"; } ?>>
                                     <a href='<?php echo base_url() ?>merchant/profile'><i class='fa fa-user header-menu-icon'></i>Profile</a>
                                 </li>
                                 <li>

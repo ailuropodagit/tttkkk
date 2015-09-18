@@ -393,7 +393,7 @@ a:hover {
 #layout-advertisement-left {
     float: left;
     width: 100%;
-    width: calc(100% - 300px);
+    width: calc(100% - 260px);
 }
 
 #layout-advertisement-left-content {
@@ -402,18 +402,18 @@ a:hover {
 
 #layout-advertisement-right {
     float: right;
-    width: 280px;
+    width: 240px;
 }
 
 #layout-advertisement-right-banner-box1, #layout-advertisement-right-banner-box2,
 #layout-advertisement-right-banner-box3, #layout-advertisement-right-banner-box4 {
     border: 1px dotted gray;
-    width: 280px; 
-    height: 180px; 
+    width: 240px; 
+    height: 150px; 
     line-height: 23px;
     text-align: center; 
     color: gray; 
-    font-size: 15px; 
+    font-size: 13px; 
     letter-spacing: 1px;
 }
 
@@ -549,6 +549,13 @@ a:hover {
 
 #home-navigation-c2-c2-content {
     padding: 4px;
+}
+
+#home-navigation-c2-c2-content img {
+    border: 1px dotted gray;
+    box-sizing: border-box;
+    width: 100%; 
+    display: block;
 }
 
 /* CATEGORY

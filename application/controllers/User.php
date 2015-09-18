@@ -690,6 +690,9 @@ class user extends CI_Controller
                     $username = strtolower($this->input->post('username'));
                     $email = strtolower($this->input->post('email'));
                     $race_other = $this->input->post('race_other');
+                    $blog_url = $this->input->post('blog_url');
+                    $instagram_url = $this->input->post('instagram_url');
+                    $facebook_url = $this->input->post('facebook_url');
                     $data = array(
                         'first_name' => $first_name,
                         'last_name' => $last_name,
@@ -702,6 +705,9 @@ class user extends CI_Controller
                         'us_race_other' => $race_other,
                         'username' => $username,
                         'email' => $email,
+                        'us_blog_url' => $blog_url,
+                        'us_instagram_url' => $instagram_url,
+                        'us_facebook_url' => $facebook_url,
                     );
 
                     // check to see if we are updating the user
@@ -859,6 +865,24 @@ class user extends CI_Controller
             'id' => 'phone',
             'type' => 'text',
             'value' => $this->form_validation->set_value('phone', $user->phone),
+        );
+        $this->data['blog_url'] = array(
+            'name' => 'blog_url',
+            'id' => 'blog_url',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('blog_url', $user->us_blog_url),
+        );
+        $this->data['instagram_url'] = array(
+            'name' => 'instagram_url',
+            'id' => 'instagram_url',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('instagram_url', $user->us_instagram_url),
+        );
+        $this->data['facebook_url'] = array(
+            'name' => 'facebook_url',
+            'id' => 'facebook_url',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('facebook_url', $user->us_facebook_url),
         );
         $this->data['page_path_name'] = 'user/profile';
         $this->load->view('template/layout_right_menu', $this->data);
