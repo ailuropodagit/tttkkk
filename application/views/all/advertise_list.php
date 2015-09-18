@@ -144,7 +144,7 @@ $this->album_merchant = $this->config->item('album_merchant');
                             <tr>
                                 <td>Like</td>
                                 <td>:</td>
-                                <td><?php echo $this->m_custom->activity_like_count($row['advertise_id'], 'adv'); ?></td>
+                                <td><?php echo $this->m_custom->generate_like_list_link($row['advertise_id'], 'adv'); ?></td>
                             </tr>
                             <tr>
                                 <td>Comment</td>

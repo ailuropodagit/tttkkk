@@ -21,7 +21,7 @@
         {
             $advertise_url = "<a target='_blank' href='" . base_url() . "all/advertise/" . $promotion_row['advertise_id'] . "'>" . $promotion_row['title'] . "</a>";
             echo $advertise_url . " (" . $promotion_row['voucher'] . ")<br/><br/>";
-            $redeem_list = $this->m_custom->getUserRedemption($promotion_row['advertise_id'], $voucher_active);
+            $redeem_list = $this->m_merchant->getUserRedemption($promotion_row['advertise_id'], $voucher_active);
             ?>
             <table border='1px' cellpadding='0px' cellspacing='0px'>
                 <colgroup>
@@ -77,7 +77,7 @@
                             echo form_close();
                             echo "</td>";
                         }
-                        $user_url = "<a target='_blank' href='" . base_url() . "all/user_dashboard/" . $user_info['id'] . "'>" . $user_name . "</a>";
+                        $user_url = $this->m_custom->generate_user_link($user_info['id']);
                         echo "<td>" . $user_url . "</td>";
                         echo "<td>" . $user_info['us_ic'] . "</td>";
                         echo "<td>" . $user_info['phone'] . "</td>";

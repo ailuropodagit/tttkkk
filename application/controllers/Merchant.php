@@ -199,7 +199,7 @@ class Merchant extends CI_Controller
             $merchant_id = $this->ion_auth->user()->row()->id;
             for ($i = 1; $i < 13; $i++)
             {
-                $this->m_custom->merchant_balance_update($merchant_id, $i);
+                $this->m_merchant->merchant_balance_update($merchant_id, $i);
             }
         }
     }
@@ -209,10 +209,10 @@ class Merchant extends CI_Controller
         if (check_correct_login_type($this->main_group_id))
         {
             $merchant_id = $this->ion_auth->user()->row()->id;
-            $this->m_custom->merchant_balance_update($merchant_id);
-            $this->data['last_month_balance'] = $this->m_custom->merchant_check_balance($merchant_id, 1);
-            $this->data['this_month_balance'] = $this->m_custom->merchant_check_balance($merchant_id);
-            $this->data['this_month_transaction'] = $this->m_custom->merchant_this_month_transaction($merchant_id);
+            $this->m_merchant->merchant_balance_update($merchant_id);
+            $this->data['last_month_balance'] = $this->m_merchant->merchant_check_balance($merchant_id, 1);
+            $this->data['this_month_balance'] = $this->m_merchant->merchant_check_balance($merchant_id);
+            $this->data['this_month_transaction'] = $this->m_merchant->merchant_this_month_transaction($merchant_id);
 
             $this->data['message'] = $this->session->flashdata('message');
             $this->data['page_path_name'] = 'merchant/payment';
@@ -923,7 +923,7 @@ class Merchant extends CI_Controller
             $user_name = $this->m_custom->display_users($user_id);
             if ($this->input->post('button_action') == "submit_used")
             {
-                if ($this->m_custom->user_redemption_done($redeem_id))
+                if ($this->m_merchant->user_redemption_done($redeem_id))
                 {
                     $this->session->set_flashdata('message', 'Thanks You!!! ' . $voucher . ' voucher approved for ' . $user_name);
                 }
@@ -934,7 +934,7 @@ class Merchant extends CI_Controller
             }
             else if ($this->input->post('button_action') == "submit_expired")
             {
-                if ($this->m_custom->user_redemption_done($redeem_id, 1))
+                if ($this->m_merchant->user_redemption_done($redeem_id, 1))
                 {
                     $this->session->set_flashdata('message', 'You mark ' . $voucher . ' voucher for ' . $user_name . ' as expired');
                 }
@@ -1361,7 +1361,7 @@ class Merchant extends CI_Controller
                         'end_time' => $end_date,
                         'month_id' => $search_month,
                         'year' => $search_year,
-                        'voucher' => $this->m_custom->generate_voucher($merchant_id),
+                        'voucher' => $this->m_merchant->generate_voucher($merchant_id),
                         'voucher_candie' => $candie_point,
                         'voucher_expire_date' => $expire_date,
                             //'extra_field' => $candie_vender
@@ -1446,7 +1446,7 @@ class Merchant extends CI_Controller
         }
 
         //To get this month candie promotion if already create before
-        $this_month_candie = $this->m_custom->get_merchant_monthly_promotion($merchant_id, $search_month, $search_year, $promotion_id);
+        $this_month_candie = $this->m_merchant->get_merchant_monthly_promotion($merchant_id, $search_month, $search_year, $promotion_id);
         $this->data['is_history'] = $is_history;
         $this->data['candie_term_current'] = empty($this_month_candie) ? array() : $this->m_custom->many_get_childlist('candie_term', $this_month_candie['advertise_id']);
         $this->data['candie_branch_current'] = empty($this_month_candie) ? array() : $this->m_custom->many_get_childlist('candie_branch', $this_month_candie['advertise_id']);
@@ -1754,7 +1754,7 @@ class Merchant extends CI_Controller
                 for ($i = 0; $i < $hotdeal_per_day; $i++)
                 {
 
-                    $hotdeal_today_count = $this->m_custom->get_merchant_today_hotdeal($merchant_id, 1, $search_date);
+                    $hotdeal_today_count = $this->m_merchant->get_merchant_today_hotdeal($merchant_id, 1, $search_date);
 
                     $hotdeal_id = $this->input->post('hotdeal_id-' . $i);
                     $hotdeal_file = "hotdeal-file-" . $i;
@@ -1892,8 +1892,8 @@ class Merchant extends CI_Controller
         }
 
         //To get today hot deal result row
-        $hotdeal_today_result = $this->m_custom->get_merchant_today_hotdeal($merchant_id, 0, $search_date);
-        $this->data['hotdeal_today_count'] = $this->m_custom->get_merchant_today_hotdeal($merchant_id, 1, $search_date);
+        $hotdeal_today_result = $this->m_merchant->get_merchant_today_hotdeal($merchant_id, 0, $search_date);
+        $this->data['hotdeal_today_count'] = $this->m_merchant->get_merchant_today_hotdeal($merchant_id, 1, $search_date);
         //$this->data['hour_list'] = generate_number_option(1, 24);
         $this->data['sub_category_list'] = $this->ion_auth->get_sub_category_list($merchant_data->me_category_id);
 
@@ -2208,13 +2208,13 @@ class Merchant extends CI_Controller
             $the_adv_type = $this->input->post("the_adv_type", true) == '' ? NULL : $this->input->post("the_adv_type", true);
             $the_new_user = $this->input->post("the_new_user", true) == '' ? 0 : $this->input->post("the_new_user", true);
 
-            $view_result = $this->m_custom->getMerchantAnalysisReport($merchant_id, 'view', $the_month, $the_year, $the_adv_type);
+            $view_result = $this->m_merchant->getMerchantAnalysisReport($merchant_id, 'view', $the_month, $the_year, $the_adv_type);
             $view_male_count = 0;
             $view_female_count = 0;
             foreach ($view_result as $row)
             {
                 $user_id = $row['many_child_id'];
-                $return = $this->m_custom->getUserAnalysisGroup($user_id, $group_by);
+                $return = $this->m_user->getUserAnalysisGroup($user_id, $group_by);
 
                 if ($the_new_user == 0 || ($this->m_custom->check_is_new_user($user_id) && $the_new_user == 1))
                 {
@@ -2229,13 +2229,13 @@ class Merchant extends CI_Controller
                 }
             }
 
-            $like_result = $this->m_custom->getMerchantAnalysisReport($merchant_id, 'like', $the_month, $the_year, $the_adv_type);
+            $like_result = $this->m_merchant->getMerchantAnalysisReport($merchant_id, 'like', $the_month, $the_year, $the_adv_type);
             $like_male_count = 0;
             $like_female_count = 0;
             foreach ($like_result as $row)
             {
                 $user_id = $row['act_by_id'];
-                $return = $this->m_custom->getUserAnalysisGroup($user_id, $group_by);
+                $return = $this->m_user->getUserAnalysisGroup($user_id, $group_by);
                 if ($the_new_user == 0 || ($this->m_custom->check_is_new_user($user_id) && $the_new_user == 1))
                 {
                     if ($return == $this->config->item('gender_id_male'))
@@ -2249,13 +2249,13 @@ class Merchant extends CI_Controller
                 }
             }
 
-            $rating_result = $this->m_custom->getMerchantAnalysisReport($merchant_id, 'rating', $the_month, $the_year, $the_adv_type);
+            $rating_result = $this->m_merchant->getMerchantAnalysisReport($merchant_id, 'rating', $the_month, $the_year, $the_adv_type);
             $rating_male_count = 0;
             $rating_female_count = 0;
             foreach ($rating_result as $row)
             {
                 $user_id = $row['act_by_id'];
-                $return = $this->m_custom->getUserAnalysisGroup($user_id, $group_by);
+                $return = $this->m_user->getUserAnalysisGroup($user_id, $group_by);
                 if ($the_new_user == 0 || ($this->m_custom->check_is_new_user($user_id) && $the_new_user == 1))
                 {
                     if ($return == $this->config->item('gender_id_male'))
@@ -2269,13 +2269,13 @@ class Merchant extends CI_Controller
                 }
             }
 
-            $redeem_result = $this->m_custom->getMerchantAnalysisReport($merchant_id, 'redeem', $the_month, $the_year, $the_adv_type);
+            $redeem_result = $this->m_merchant->getMerchantAnalysisReport($merchant_id, 'redeem', $the_month, $the_year, $the_adv_type);
             $redeem_male_count = 0;
             $redeem_female_count = 0;
             foreach ($redeem_result as $row)
             {
                 $user_id = $row['user_id'];
-                $return = $this->m_custom->getUserAnalysisGroup($user_id, $group_by);
+                $return = $this->m_user->getUserAnalysisGroup($user_id, $group_by);
                 if ($the_new_user == 0 || ($this->m_custom->check_is_new_user($user_id) && $the_new_user == 1))
                 {
                     if ($return == $this->config->item('gender_id_male'))
@@ -2346,7 +2346,7 @@ class Merchant extends CI_Controller
             $the_adv_type = $this->input->post("the_adv_type", true) == '' ? NULL : $this->input->post("the_adv_type", true);
             $the_new_user = $this->input->post("the_new_user", true) == '' ? 0 : $this->input->post("the_new_user", true);
 
-            $view_result = $this->m_custom->getMerchantAnalysisReport($merchant_id, 'view', $the_month, $the_year, $the_adv_type);
+            $view_result = $this->m_merchant->getMerchantAnalysisReport($merchant_id, 'view', $the_month, $the_year, $the_adv_type);
             $view_count[0] = 0;
             $view_count[1] = 0;
             $view_count[2] = 0;
@@ -2354,7 +2354,7 @@ class Merchant extends CI_Controller
             foreach ($view_result as $row)
             {
                 $user_id = $row['many_child_id'];
-                $return = $this->m_custom->getUserAnalysisGroup($user_id, $group_by);
+                $return = $this->m_user->getUserAnalysisGroup($user_id, $group_by);
 
                 if ($the_new_user == 0 || ($this->m_custom->check_is_new_user($user_id) && $the_new_user == 1))
                 {
@@ -2377,7 +2377,7 @@ class Merchant extends CI_Controller
                 }
             }
 
-            $like_result = $this->m_custom->getMerchantAnalysisReport($merchant_id, 'like', $the_month, $the_year, $the_adv_type);
+            $like_result = $this->m_merchant->getMerchantAnalysisReport($merchant_id, 'like', $the_month, $the_year, $the_adv_type);
             $like_count[0] = 0;
             $like_count[1] = 0;
             $like_count[2] = 0;
@@ -2385,7 +2385,7 @@ class Merchant extends CI_Controller
             foreach ($like_result as $row)
             {
                 $user_id = $row['act_by_id'];
-                $return = $this->m_custom->getUserAnalysisGroup($user_id, $group_by);
+                $return = $this->m_user->getUserAnalysisGroup($user_id, $group_by);
                 if ($the_new_user == 0 || ($this->m_custom->check_is_new_user($user_id) && $the_new_user == 1))
                 {
                     if ($return == $race_id_malay)
@@ -2407,7 +2407,7 @@ class Merchant extends CI_Controller
                 }
             }
 
-            $rating_result = $this->m_custom->getMerchantAnalysisReport($merchant_id, 'rating', $the_month, $the_year, $the_adv_type);
+            $rating_result = $this->m_merchant->getMerchantAnalysisReport($merchant_id, 'rating', $the_month, $the_year, $the_adv_type);
             $rating_count[0] = 0;
             $rating_count[1] = 0;
             $rating_count[2] = 0;
@@ -2415,7 +2415,7 @@ class Merchant extends CI_Controller
             foreach ($rating_result as $row)
             {
                 $user_id = $row['act_by_id'];
-                $return = $this->m_custom->getUserAnalysisGroup($user_id, $group_by);
+                $return = $this->m_user->getUserAnalysisGroup($user_id, $group_by);
                 if ($the_new_user == 0 || ($this->m_custom->check_is_new_user($user_id) && $the_new_user == 1))
                 {
                     if ($return == $race_id_malay)
@@ -2437,7 +2437,7 @@ class Merchant extends CI_Controller
                 }
             }
 
-            $redeem_result = $this->m_custom->getMerchantAnalysisReport($merchant_id, 'redeem', $the_month, $the_year, $the_adv_type);
+            $redeem_result = $this->m_merchant->getMerchantAnalysisReport($merchant_id, 'redeem', $the_month, $the_year, $the_adv_type);
             $redeem_count[0] = 0;
             $redeem_count[1] = 0;
             $redeem_count[2] = 0;
@@ -2445,7 +2445,7 @@ class Merchant extends CI_Controller
             foreach ($redeem_result as $row)
             {
                 $user_id = $row['user_id'];
-                $return = $this->m_custom->getUserAnalysisGroup($user_id, $group_by);
+                $return = $this->m_user->getUserAnalysisGroup($user_id, $group_by);
                 if ($the_new_user == 0 || ($this->m_custom->check_is_new_user($user_id) && $the_new_user == 1))
                 {
                     if ($return == $race_id_malay)
@@ -2521,7 +2521,7 @@ class Merchant extends CI_Controller
             $the_adv_type = $this->input->post("the_adv_type", true) == '' ? NULL : $this->input->post("the_adv_type", true);
             $the_new_user = $this->input->post("the_new_user", true) == '' ? 0 : $this->input->post("the_new_user", true);
 
-            $view_result = $this->m_custom->getMerchantAnalysisReport($merchant_id, 'view', $the_month, $the_year, $the_adv_type);
+            $view_result = $this->m_merchant->getMerchantAnalysisReport($merchant_id, 'view', $the_month, $the_year, $the_adv_type);
             $view_count[0] = 0;
             $view_count[1] = 0;
             $view_count[2] = 0;
@@ -2530,7 +2530,7 @@ class Merchant extends CI_Controller
             foreach ($view_result as $row)
             {
                 $user_id = $row['many_child_id'];
-                $return = $this->m_custom->getUserAnalysisGroup($user_id, $group_by);
+                $return = $this->m_user->getUserAnalysisGroup($user_id, $group_by);
 
                 if ($the_new_user == 0 || ($this->m_custom->check_is_new_user($user_id) && $the_new_user == 1))
                 {
@@ -2557,7 +2557,7 @@ class Merchant extends CI_Controller
                 }
             }
 
-            $like_result = $this->m_custom->getMerchantAnalysisReport($merchant_id, 'like', $the_month, $the_year, $the_adv_type);
+            $like_result = $this->m_merchant->getMerchantAnalysisReport($merchant_id, 'like', $the_month, $the_year, $the_adv_type);
             $like_count[0] = 0;
             $like_count[1] = 0;
             $like_count[2] = 0;
@@ -2566,7 +2566,7 @@ class Merchant extends CI_Controller
             foreach ($like_result as $row)
             {
                 $user_id = $row['act_by_id'];
-                $return = $this->m_custom->getUserAnalysisGroup($user_id, $group_by);
+                $return = $this->m_user->getUserAnalysisGroup($user_id, $group_by);
                 if ($the_new_user == 0 || ($this->m_custom->check_is_new_user($user_id) && $the_new_user == 1))
                 {
                     if ($return < $age_group0)
@@ -2592,7 +2592,7 @@ class Merchant extends CI_Controller
                 }
             }
 
-            $rating_result = $this->m_custom->getMerchantAnalysisReport($merchant_id, 'rating', $the_month, $the_year, $the_adv_type);
+            $rating_result = $this->m_merchant->getMerchantAnalysisReport($merchant_id, 'rating', $the_month, $the_year, $the_adv_type);
             $rating_count[0] = 0;
             $rating_count[1] = 0;
             $rating_count[2] = 0;
@@ -2601,7 +2601,7 @@ class Merchant extends CI_Controller
             foreach ($rating_result as $row)
             {
                 $user_id = $row['act_by_id'];
-                $return = $this->m_custom->getUserAnalysisGroup($user_id, $group_by);
+                $return = $this->m_user->getUserAnalysisGroup($user_id, $group_by);
                 if ($the_new_user == 0 || ($this->m_custom->check_is_new_user($user_id) && $the_new_user == 1))
                 {
                     if ($return < $age_group0)
@@ -2627,7 +2627,7 @@ class Merchant extends CI_Controller
                 }
             }
 
-            $redeem_result = $this->m_custom->getMerchantAnalysisReport($merchant_id, 'redeem', $the_month, $the_year, $the_adv_type);
+            $redeem_result = $this->m_merchant->getMerchantAnalysisReport($merchant_id, 'redeem', $the_month, $the_year, $the_adv_type);
             $redeem_count[0] = 0;
             $redeem_count[1] = 0;
             $redeem_count[2] = 0;
@@ -2636,7 +2636,7 @@ class Merchant extends CI_Controller
             foreach ($redeem_result as $row)
             {
                 $user_id = $row['user_id'];
-                $return = $this->m_custom->getUserAnalysisGroup($user_id, $group_by);
+                $return = $this->m_user->getUserAnalysisGroup($user_id, $group_by);
                 if ($the_new_user == 0 || ($this->m_custom->check_is_new_user($user_id) && $the_new_user == 1))
                 {
                     if ($return < $age_group0)

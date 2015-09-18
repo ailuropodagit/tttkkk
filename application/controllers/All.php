@@ -60,7 +60,7 @@ class All extends CI_Controller
                  $this->m_custom->activity_view($advertise_id);
             }
             
-            $merchant_row = $this->m_custom->getMerchant($the_row['merchant_id']);
+            $merchant_row = $this->m_merchant->getMerchant($the_row['merchant_id']);
             $this->data['merchant_dashboard_url'] = base_url() . "all/merchant-dashboard/" .$merchant_row['slug'];
             
             $this->data['advertise_id'] = $advertise_id;
@@ -146,7 +146,7 @@ class All extends CI_Controller
     function merchant_user_picture($picture_id, $user_id = NULL, $merchant_id = NULL){
         
         $this->data['page_title'] = "Merchant Album";      
-        $the_row = $this->m_custom->get_one_table_record('merchant_user_album','merchant_user_album_id',$picture_id,1);
+        $the_row = $this->m_custom->getOneMUA($picture_id);
         if ($the_row)
         {
             $message_info = '';
@@ -157,12 +157,12 @@ class All extends CI_Controller
             }
             
             //$user_row = $this->m_custom->getUser($the_row['user_id']);    //Temporary hide because no use, but maybe future will use
-            $merchant_row = $this->m_custom->getMerchant($the_row['merchant_id']);
+            $merchant_row = $this->m_merchant->getMerchant($the_row['merchant_id']);
             $this->data['merchant_dashboard_url'] = base_url() . "all/merchant-dashboard/" .$merchant_row['slug'];
             
             $this->data['picture_id'] = $picture_id;
             $this->data['merchant_name'] = $merchant_row['company'];
-            $this->data['user_name_url'] = "<a href='".base_url()."all/user_dashboard/".$the_row['user_id']."'>".$this->m_custom->display_users($the_row['user_id'])."</a>";
+            $this->data['user_name_url'] = $this->m_custom->generate_user_link($the_row['user_id']);
             $this->data['title'] = $the_row['title'];
             $this->data['description'] = $the_row['description'];
             $this->data['image_url'] = base_url($this->album_user_merchant .$the_row['image']);
@@ -333,7 +333,7 @@ class All extends CI_Controller
                 $current_url = $this->input->post('current_url');
                 $advertise_id = $this->input->post('item_id');
                 $user_email = $this->session->userdata('email');
-                $redeem_info = $this->m_custom->user_redemption_insert($advertise_id);
+                $redeem_info = $this->m_user->user_redemption_insert($advertise_id);
                 
                 if ($redeem_info['redeem_status'])
                 {
@@ -381,6 +381,29 @@ class All extends CI_Controller
         display_simple_message();
     }
     
+    function like_list($refer_id = NULL, $refer_type = NULL)
+    {
+        if ($refer_id != NULL && $refer_type != NULL)
+        {
+            $like_list = $this->m_custom->activity_like_user_list($refer_id, $refer_type);
+            $data['like_list'] = $like_list;
+            $data['post_title'] = $this->m_custom->post_title($refer_id, $refer_type);
+            $data['page_path_name'] = 'all/like_list';          
+            if ($this->ion_auth->logged_in())
+            {
+                $this->load->view('template/layout_right_menu', $data);
+            }
+            else
+            {
+                $this->load->view('template/layout', $data);
+            }
+        }
+        else
+        {
+            redirect('/', 'refresh');
+        }
+    }
+
     //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
     function user_rating($refer_id = NULL, $refer_type = NULL){
               
