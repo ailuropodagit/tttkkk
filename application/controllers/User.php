@@ -1340,6 +1340,28 @@ class user extends CI_Controller
         echo $output;
     }
 
+    function candie_page()
+    {
+        if (check_correct_login_type($this->main_group_id))
+        {
+            $user_id = $this->ion_auth->user()->row()->id;
+            $this->m_user->candie_balance_update($user_id);
+            $this->data['last_month_balance'] = $this->m_user->candie_check_balance($user_id, 1);
+            $this->data['this_month_balance'] = $this->m_user->candie_check_balance($user_id);           
+            $this->data['this_month_redemption'] = $this->m_user->user_this_month_redemption($user_id);
+            $this->data['this_month_candie_gain'] = $this->m_user->user_this_month_candie_gain($user_id);
+            
+            
+            $this->data['message'] = $this->session->flashdata('message');
+            $this->data['page_path_name'] = 'user/candie';
+            $this->load->view('template/layout_right_menu', $this->data);
+        }
+        else
+        {
+            redirect('/', 'refresh');
+        }
+    }
+    
     function upload_image()
     {
         if (!check_correct_login_type($this->main_group_id))

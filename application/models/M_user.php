@@ -9,7 +9,16 @@ class M_user extends CI_Model
     public function candie_balance_update($user_id, $month_id = NULL, $year = NULL)
     {
         $search_date = date_for_db_search($month_id, $year);
-
+        
+        if (empty($month_id))
+        {
+            $month_id = get_part_of_date('month');
+        }
+        if (empty($year))
+        {
+            $year = get_part_of_date('year');
+        }
+        
         $history_condition = "trans_time like '%" . $search_date . "%'";
         $history_search_data = array(
             'user_id' => $user_id,
@@ -107,10 +116,21 @@ class M_user extends CI_Model
         return $redeem_info;
     }
 
-    public function candie_check_balance($user_id)
+    public function candie_check_balance($user_id, $exclude_this_month = 0)
     {
         $this->m_user->candie_balance_update($user_id);
-        $history_query = $this->db->get_where('candie_balance', array('user_id' => $user_id));
+        if ($exclude_this_month == 0)
+        {
+            $history_query = $this->db->get_where('candie_balance', array('user_id' => $user_id));
+        }
+        else
+        {
+            $current_month = ltrim(get_part_of_date('month'), '0');
+            $current_year = get_part_of_date('year');
+            $condition = "(month_id !=" . $current_month . " or year !=" . $current_year . ")";
+            $this->db->where($condition);
+            $history_query = $this->db->get_where('candie_balance', array('user_id' => $user_id));
+        }
         $current_balance = 0;
         $history_result = $history_query->result_array();
         foreach ($history_result as $history_row)
@@ -120,6 +140,51 @@ class M_user extends CI_Model
         return $current_balance;
     }
 
+    public function user_this_month_candie_gain($user_id)
+    {
+        $search_date = date_for_db_search();
+        $condition = "trans_time like '%" . $search_date . "%'";
+        $this->db->where($condition);
+        $this->db->select("SUM(candie_plus) AS plus");
+        $this->db->group_by('user_id');
+        $query = $this->db->get_where('candie_history', array('user_id' => $user_id));
+        $result = $query->row_array();
+        return $result['plus'];
+    }
+
+    public function user_this_month_candie($user_id)
+    {
+        $search_date = date_for_db_search();
+        $condition = "trans_time like '%" . $search_date . "%'";
+        $this->db->where($condition);
+        $this->db->select("trans_conf_id, SUM(candie_plus) AS plus, SUM(candie_minus) AS minus, COUNT(trans_history_id) As quantity");
+        $this->db->group_by('trans_conf_id');
+        $this->db->order_by('trans_conf_id', 'asc');
+        $query = $this->db->get_where('candie_history', array('user_id' => $user_id));
+        $result = $query->result_array();
+        return $result;
+    }
+    
+    public function user_this_month_redemption($user_id)
+    {
+        $search_date = date_for_db_search();
+        $condition = "redeem_time like '%" . $search_date . "%'";
+        $this->db->where($condition);
+        $this->db->select("*");
+        $this->db->from('user_redemption');
+        //$this->db->join('candie_history', 'user_redemption.redeem_id = candie_history.get_from_table_id', 'inner');
+        $this->db->order_by('redeem_id', 'asc');
+        $this->db->where('user_redemption.user_id', $user_id);
+        $query = $this->db->get();
+        $result = $query->result_array();
+        return $result;
+    }
+    
+    public function get_candie_history_from_redemption($redeem_id){
+        $query = $this->db->get_where('candie_history', array('get_from_table_id' => $redeem_id, 'get_from_table' => 'user_redemption'));
+        return $query->row_array();
+    }
+    
     public function candie_enough($user_id, $spend_candie = 0, $return_new_balance = 0)
     {
         $current_balance = $this->m_user->candie_check_balance($user_id);
