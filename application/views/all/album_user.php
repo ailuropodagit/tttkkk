@@ -55,7 +55,7 @@ if($this->router->fetch_method() == 'user_dashboard')
         {
             foreach ($album_list as $row)
             {
-                if ($this->router->fetch_method() == 'album_user')
+                if ($this->router->fetch_method() == 'album_user' || $this->router->fetch_method() == 'user_dashboard')
                 {
                     $picture_detail_url = base_url() . "all/user_picture/" . $row['user_album_id'] . "/" . $row['user_id'];
                 }

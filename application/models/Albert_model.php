@@ -86,6 +86,7 @@ class Albert_model extends CI_Model
     {
         //QUERY
         $this->db->select('*');
+        $this->db->order_by("user_album_id", "desc");
         $this->db->from('user_album');
         //WHERE
         if($where)
@@ -103,6 +104,7 @@ class Albert_model extends CI_Model
     {
         //QUERY
         $this->db->select('*');
+        $this->db->order_by("merchant_user_album_id", "desc");
         $this->db->from('merchant_user_album');
         //WHERE
         if($where)
