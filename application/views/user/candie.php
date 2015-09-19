@@ -9,7 +9,7 @@
             <a href="<?php echo $voucher_active_url; ?>" >Active Voucher</a> | 
             <a href="<?php echo $voucher_used_url; ?>" >Used Voucher</a> | 
             <a href="<?php echo $voucher_expired_url; ?>" >Expired Voucher</a>
-        </div>
+        </div><br/>
         
         <div id="print-area">
             <div id='payment-table'>

@@ -121,7 +121,7 @@
 </script>
         
     <h1>Analysis Report</h1>
-<?php echo form_open_multipart(uri_string()); ?>
+<?php echo form_open(uri_string());?>
 <div id="candie-promotion-form-go">
                 <span id="candie-promotion-form-go-label"><?php echo "Filter "; ?></span>
                 <span id="candie-promotion-form-go-year"><?php echo form_dropdown($the_year, $year_list, $the_year_selected); ?></span>
