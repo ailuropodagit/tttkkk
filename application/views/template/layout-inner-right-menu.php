@@ -42,7 +42,8 @@
             <li><a href='<?php echo $dashboard ?>' class='layout-inner-right-menu-bar <?php if ($this->router->fetch_method() == 'user_dashboard'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Dashboard</a></li>
             <li><a href='<?php echo base_url(); ?>user/profile' class='layout-inner-right-menu-bar <?php if ($this->router->fetch_method() == 'profile'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Profile</a></li>
             <li><a href='<?php echo base_url(); ?>user/change_password' class='layout-inner-right-menu-bar <?php if ($this->router->fetch_method() == 'change_password'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Change Password</a></li>
-            <li><a href='#' class='layout-inner-right-menu-bar'>Follower</a></li>
+            <li><a href='<?php echo base_url(); ?>user/follower' class='layout-inner-right-menu-bar <?php if ($this->router->fetch_method() == 'follower'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Follower</a></li>
+            <li><a href='<?php echo base_url(); ?>user/following' class='layout-inner-right-menu-bar <?php if ($this->router->fetch_method() == 'following'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Following</a></li>
             <li><a href='#' class='layout-inner-right-menu-bar'>Review</a></li>
             <li><a href='<?php echo base_url(); ?>all/album_user' class='layout-inner-right-menu-bar <?php if ($this->router->fetch_method() == 'album_user'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Picture</a></li>
             <li><a href='#' class='layout-inner-right-menu-bar'>Candies (<?php echo $this->m_user->candie_check_balance($login_user_id); ?>)</a></li>

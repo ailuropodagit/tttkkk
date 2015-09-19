@@ -2,7 +2,8 @@
 
 class Albert_model extends CI_Model
 {
-    //GET MAIN CATEGORY
+    /* GET MAIN CATEGORY
+    ***************************************************/
     public function get_main_category()
     {
         //QUERY
@@ -14,7 +15,8 @@ class Albert_model extends CI_Model
         return $query;
     }
     
-    //GET SUB CATEGORY
+    /* GET SUB CATEGORY
+    ***************************************************/
     public function get_sub_category()
     {
         //QUERY
@@ -26,7 +28,8 @@ class Albert_model extends CI_Model
         return $query;
     }
     
-    //GET BANNER
+    /* GET BANNER
+    ***************************************************/
     public function get_banner($where)
     {
         //QUERY
@@ -42,7 +45,8 @@ class Albert_model extends CI_Model
         return $query;
     }
     
-    //GET MERCHANT BY MAIN CATEGORY ID
+    /* GET MERCHANT BY MAIN CATEGORY ID
+    ***************************************************/
     public function get_merchant($where)
     {
         //QUERY
@@ -59,7 +63,8 @@ class Albert_model extends CI_Model
         return $query;
     }
     
-    //GET USER
+    /* GET USER
+    ***************************************************/
     public function get_users($where)
     {
         //QUERY
@@ -75,7 +80,43 @@ class Albert_model extends CI_Model
         return $query;
     }
     
-    //GET ACTIVITY HISTORY INNER JOIN ADVERTISE
+    /* GET USER_FOLLOW
+    *************************************************************/
+    public function get_user_follow($where)
+    {
+        //QUERY 
+        $this->db->select('*');
+        $this->db->from('user_follow');
+        //WHERE
+        if($where)
+        {
+            $this->db->where($where);
+        }
+        $query = $this->db->get();
+        //RETURN
+        return $query;
+    }
+    
+    /* GET USER_FOLLOW INNER JOIN USERS
+    *************************************************************/
+    public function get_user_follow_inner_join_users($where)
+    {
+        //QUERY
+        $this->db->select('*');
+        $this->db->from('user_follow');
+        $this->db->join('users', 'user_follow.follow_to_id = users.id', 'inner');
+        //WHERE
+        if($where)
+        {
+            $this->db->where($where);
+        }
+        $query = $this->db->get();
+        //RETURN
+        return $query;
+    }
+    
+    /* GET ACTIVITY_HISTORY INNER JOIN ADVERTISE
+    *************************************************************/
     public function get_activity_history_inner_join_advertise($where) 
     {
         //QUERY
