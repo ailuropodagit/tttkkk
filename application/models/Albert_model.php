@@ -80,6 +80,40 @@ class Albert_model extends CI_Model
         return $query;
     }
     
+    /* GET USER_ALBUM
+    *************************************************************/
+    public function get_user_album($where)
+    {
+        //QUERY
+        $this->db->select('*');
+        $this->db->from('user_album');
+        //WHERE
+        if($where)
+        {
+            $this->db->where($where);
+        }
+        $query = $this->db->get();
+        //RETURN
+        return $query;
+    }
+    
+    /* GET MERCHANT_USER_ALBUM
+    *************************************************************/
+    public function get_merchant_user_album($where)
+    {
+        //QUERY
+        $this->db->select('*');
+        $this->db->from('merchant_user_album');
+        //WHERE
+        if($where)
+        {
+            $this->db->where($where);
+        }
+        $query = $this->db->get();
+        //RETURN
+        return $query;
+    }
+    
     /* GET USER_FOLLOW
     *************************************************************/
     public function get_user_follow($where)

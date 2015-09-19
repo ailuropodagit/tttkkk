@@ -46,17 +46,12 @@
             <li><a href='<?php echo $dashboard; ?>' class='layout-inner-right-menu-bar <?php if ($this->router->fetch_method() == 'user_dashboard'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Dashboard</a></li>
             <li><a href='<?php echo base_url(); ?>user/profile' class='layout-inner-right-menu-bar <?php if ($this->router->fetch_method() == 'profile'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Profile</a></li>
             <li><a href='<?php echo base_url(); ?>user/change_password' class='layout-inner-right-menu-bar <?php if ($this->router->fetch_method() == 'change_password'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Change Password</a></li>
-            <li><a href='#' class='layout-inner-right-menu-bar'>Follower</a></li>
+            <li><a href='<?php echo base_url(); ?>user/follower' class='layout-inner-right-menu-bar <?php if ($this->router->fetch_method() == 'follower'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Follower</a></li>
+            <li><a href='<?php echo base_url(); ?>user/following' class='layout-inner-right-menu-bar <?php if ($this->router->fetch_method() == 'following'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Following</a></li>
             <li><a href='<?php echo $user_review; ?>' class='layout-inner-right-menu-bar <?php if ($this->router->fetch_method() == 'user_review'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Review</a></li>
             <li><a href='<?php echo $user_picture; ?>' class='layout-inner-right-menu-bar <?php if ($this->router->fetch_method() == 'album_user'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Picture</a></li>
             <li><a href='<?php echo $user_candie; ?>' class='layout-inner-right-menu-bar <?php if ($this->router->fetch_method() == 'candie_page'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Candies (<?php echo $this->m_user->candie_check_balance($login_user_id); ?>)</a></li>
             <li><a href='<?php echo $user_redemption; ?>' class='layout-inner-right-menu-bar <?php if ($this->router->fetch_method() == 'redemption'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Redemption</a></li>
-            <li><a href='<?php echo base_url(); ?>user/follower' class='layout-inner-right-menu-bar <?php if ($this->router->fetch_method() == 'follower'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Follower</a></li>
-            <li><a href='<?php echo base_url(); ?>user/following' class='layout-inner-right-menu-bar <?php if ($this->router->fetch_method() == 'following'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Following</a></li>
-            <li><a href='#' class='layout-inner-right-menu-bar'>Review</a></li>
-            <li><a href='<?php echo base_url(); ?>all/album_user' class='layout-inner-right-menu-bar <?php if ($this->router->fetch_method() == 'album_user'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Picture</a></li>
-            <li><a href='#' class='layout-inner-right-menu-bar'>Candies (<?php echo $this->m_user->candie_check_balance($login_user_id); ?>)</a></li>
-            <li><a href='#' class='layout-inner-right-menu-bar'>Redemption</a></li>
             <li><a href='#' class='layout-inner-right-menu-bar'>Invite Friend</a></li>
             <?php
         }

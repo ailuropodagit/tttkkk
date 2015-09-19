@@ -74,7 +74,7 @@ $album_user_profile = $this->config->item('album_user_profile');
             <div id="dashboard-info-followers-following">
                 <?php
                 //FOLLOWER
-                $num_rows_user_follow_follower =  $query_user_follow_following->num_rows();
+                $num_rows_user_follow_follower =  $query_user_follow_follower->num_rows();
                 //FOLLOWING
                 $num_rows_user_follow_following =  $query_user_follow_following->num_rows();
                 ?>
