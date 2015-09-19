@@ -1351,7 +1351,11 @@ class user extends CI_Controller
             $this->data['this_month_redemption'] = $this->m_user->user_this_month_redemption($user_id);
             $this->data['this_month_candie_gain'] = $this->m_user->user_this_month_candie_gain($user_id);
             
-            
+            $this->data['candie_url'] = base_url() . "user/candie_page";
+            $this->data['voucher_active_url'] = base_url() . "user/redemption/" . $this->config->item('voucher_active');
+            $this->data['voucher_used_url'] = base_url() . "user/redemption/" . $this->config->item('voucher_used');
+            $this->data['voucher_expired_url'] = base_url() . "user/redemption/" . $this->config->item('voucher_expired');
+
             $this->data['message'] = $this->session->flashdata('message');
             $this->data['page_path_name'] = 'user/candie';
             $this->load->view('template/layout_right_menu', $this->data);
@@ -1370,7 +1374,20 @@ class user extends CI_Controller
         $user_id = $this->ion_auth->user()->row()->id;
         
         $this->data['redemption'] = $this->m_user->user_redemption($user_id, $status_id, $sub_category);
-
+        if ($status_id != NULL)
+        {
+            $this->data['title'] = "Redemption : " . $this->m_custom->display_static_option($status_id);
+        }
+        else
+        {
+            $this->data['title'] = "Redemption";
+        }
+        
+        $this->data['candie_url'] = base_url() . "user/candie_page"; 
+        $this->data['voucher_active_url'] = base_url() . "user/redemption/" . $this->config->item('voucher_active');  
+        $this->data['voucher_used_url'] = base_url() . "user/redemption/" . $this->config->item('voucher_used');  
+        $this->data['voucher_expired_url'] = base_url() . "user/redemption/" . $this->config->item('voucher_expired');  
+        
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'user/redemption';
         $this->load->view('template/layout_right_menu', $this->data);

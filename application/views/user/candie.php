@@ -1,5 +1,3 @@
-<script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script>
-
 <div id="infoMessage"><?php echo $message; ?></div>
 
 <div id="payment">
@@ -7,13 +5,10 @@
     <div id='payment-content'>
         
         <div id='payment-print'>
-            <?php 
-                $user_candie = base_url() . 'user/candie_page'; 
-                echo "<a href='".$user_candie."' >Candies Balance</a> | ";
-            ?>
-            <a href="#" >Active Voucher</a> | 
-            <a href="#" >Used Voucher</a> | 
-            <a href="#" >Expired Voucher</a>
+            <a href="<?php echo $candie_url; ?>" >Candies Balance</a> | 
+            <a href="<?php echo $voucher_active_url; ?>" >Active Voucher</a> | 
+            <a href="<?php echo $voucher_used_url; ?>" >Used Voucher</a> | 
+            <a href="<?php echo $voucher_expired_url; ?>" >Expired Voucher</a>
         </div>
         
         <div id="print-area">
