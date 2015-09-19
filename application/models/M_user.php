@@ -221,6 +221,32 @@ class M_user extends CI_Model
         return $result;
     }
     
+    public function user_redemption_sub_category_list($user_id, $status_id = NULL)
+    {
+        if (!IsNullOrEmptyString($status_id))
+        {
+            $this->db->where('status_id', $status_id);
+        }
+        $this->db->order_by('redeem_id', 'desc');
+        $red_query = $this->db->get_where('user_redemption', array('user_id' => $user_id));
+        $red_result = $red_query->result_array();
+
+        $result = array();
+        foreach ($red_result as $row)
+        {
+            $advertise = $this->m_custom->getOneAdvertise($row['advertise_id']);
+            if ($advertise != FALSE)
+            {
+                if (!in_array($advertise['sub_category_id'], $result))
+                {
+                    $result[$advertise['sub_category_id']] = $this->m_custom->display_category($advertise['sub_category_id']);
+                }
+            }
+        }
+
+        return $result;
+    }
+    
     public function candie_enough($user_id, $spend_candie = 0, $return_new_balance = 0)
     {
         $current_balance = $this->m_user->candie_check_balance($user_id);

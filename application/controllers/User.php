@@ -1403,6 +1403,14 @@ class User extends CI_Controller
         }
         $user_id = $this->ion_auth->user()->row()->id;
         
+        if (isset($_POST) && !empty($_POST))
+            {
+                if ($this->input->post('button_action') == "search_by_subcategory")
+                {
+                    $sub_category = $this->input->post('sub_category');
+                }
+            }
+            
         $this->data['redemption'] = $this->m_user->user_redemption($user_id, $status_id, $sub_category);
         if ($status_id != NULL)
         {
@@ -1413,6 +1421,14 @@ class User extends CI_Controller
             $this->data['title'] = "Redemption";
         }
         
+        $sub_category_list = $this->m_user->user_redemption_sub_category_list($user_id, $status_id);
+        $this->data['sub_category_list'] = $sub_category_list;
+        $this->data['sub_category'] = array(
+            'name' => 'sub_category',
+            'id' => 'sub_category',
+        );
+        $this->data['sub_category_selected'] = empty($sub_category) ? "" : $sub_category;
+
         $this->data['candie_url'] = base_url() . "user/candie_page"; 
         $this->data['voucher_active_url'] = base_url() . "user/redemption/" . $this->config->item('voucher_active');  
         $this->data['voucher_used_url'] = base_url() . "user/redemption/" . $this->config->item('voucher_used');  
