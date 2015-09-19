@@ -561,7 +561,6 @@ class M_custom extends CI_Model
         return $advertise_query->result_array();
     }
 
-    //To get all main category
     function getAlbumUserMerchant($user_id = NULL, $merchant_id = NULL)
     {
         if (!IsNullOrEmptyString($user_id))
@@ -578,6 +577,18 @@ class M_custom extends CI_Model
         return $query->result_array();
     }
 
+    function getAlbumUser($user_id = NULL)
+    {
+        if (!IsNullOrEmptyString($user_id))
+        {
+            $this->db->where('user_id', $user_id);
+        }
+
+        $this->db->order_by("user_album_id", "desc");
+        $query = $this->db->get_where('user_album', array('hide_flag' => 0));
+        return $query->result_array();
+    }
+    
     //Get all the static option of an option type
     public function getCategoryList($default_value = NULL, $default_text = NULL)
     {
@@ -995,12 +1006,25 @@ class M_custom extends CI_Model
         }
     }
 
+    public function generate_merchant_link($merchant_id = NULL, $with_icon = 0)
+    {
+        $user_name = $this->m_custom->display_users($merchant_id, $with_icon);
+        $merchant = $this->m_merchant->getMerchant($merchant_id);
+        return "<a target='_blank' href='" . base_url() . "all/merchant_dashboard/" . $merchant['slug'] . "'>" . $user_name . "</a>";
+    }
+    
     public function generate_user_link($user_id = NULL, $with_icon = 0)
     {
         $user_name = $this->m_custom->display_users($user_id, $with_icon);
         return "<a target='_blank' href='" . base_url() . "all/user_dashboard/" . $user_id . "'>" . $user_name . "</a>";
     }
 
+    public function generate_advertise_link($advertise_id = NULL)
+    {
+        $adv_row = $this->m_custom->get_one_table_record('advertise','advertise_id',$advertise_id,1);
+        return "<a target='_blank' href='" . base_url() . "all/advertise/" . $adv_row['advertise_id'] . "'>" . $adv_row['title'] . "</a>";
+    }
+    
     //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
     public function generate_like_link($refer_id, $refer_type)
     {

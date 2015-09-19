@@ -49,7 +49,7 @@
 <div id="infoMessage"><?php echo $message; ?></div>
 
 <div id="upload-for-merchant">
-    <h1>User upload image for merchant</h1>
+    <h1>User Upload Image For Merchant</h1>
     <div id="upload-for-merchant-content">
         
         <div id="upload-for-merchant-merchant-album">

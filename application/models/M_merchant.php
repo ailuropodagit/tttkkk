@@ -120,6 +120,11 @@ class M_merchant extends CI_Model
         return 0;
     }
 
+    public function get_merchant_link_from_advertise($advertise_id)
+    {
+        return $this->m_custom->generate_merchant_link($this->m_merchant->get_merchant_id_from_advertise($advertise_id));
+    }
+    
     public function get_merchant_id_from_mua($picture_id)
     {
         $query = $this->db->get_where('merchant_user_album', array('merchant_user_album_id' => $picture_id));
@@ -205,7 +210,16 @@ class M_merchant extends CI_Model
     public function merchant_balance_update($merchant_id, $month_id = NULL, $year = NULL)
     {
         $search_date = date_for_db_search($month_id, $year);
-
+        
+        if (empty($month_id))
+        {
+            $month_id = get_part_of_date('month');
+        }
+        if (empty($year))
+        {
+            $year = get_part_of_date('year');
+        }
+        
         $history_condition = "trans_time like '%" . $search_date . "%'";
         $history_search_data = array(
             'merchant_id' => $merchant_id,
