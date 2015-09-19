@@ -1362,6 +1362,20 @@ class user extends CI_Controller
         }
     }
     
+    function redemption($status_id = NULL, $sub_category = NULL){
+        if (!check_correct_login_type($this->main_group_id))
+        {
+            redirect('/', 'refresh');
+        }
+        $user_id = $this->ion_auth->user()->row()->id;
+        
+        $this->data['redemption'] = $this->m_user->user_redemption($user_id, $status_id, $sub_category);
+
+        $this->data['message'] = $this->session->flashdata('message');
+        $this->data['page_path_name'] = 'user/redemption';
+        $this->load->view('template/layout_right_menu', $this->data);
+    }
+    
     function upload_image()
     {
         if (!check_correct_login_type($this->main_group_id))
