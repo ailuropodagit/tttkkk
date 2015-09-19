@@ -1,6 +1,4 @@
-<?php
-
-defined('BASEPATH') OR exit('No direct script access allowed');
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 class All extends CI_Controller
 {
@@ -547,55 +545,67 @@ class All extends CI_Controller
     }
 
     //View the user dashboard upper part
-    function user_dashboard($users_id = NULL)
+    function user_dashboard($users_id = NULL, $album = NULL)
     {
-        if($users_id == NULL){
-            redirect('/', 'refresh');
-        }
-        //QUERY USERS
-        $query_users_where = array('id' => $users_id);
-        $data['query_users'] = $this->albert_model->get_users($query_users_where);
-        //PAGE PATH NAME
-        $data['page_path_name'] = 'user/dashboard';
-        //BOTTON PATH NAME
-        $data['title'] = "Activity";
-        $data['bottom_path_name'] = 'all/advertise_list';
-        //QUERY HOTDEAL LIST
-        $hotdeal_list_where = array('act_by_id' => $users_id);
-        $data['hotdeal_list'] = $this->albert_model->get_activity_history_inner_join_advertise($hotdeal_list_where)->result_array();
-        if ($this->ion_auth->logged_in())
+        if($users_id)
         {
-            //LOGGED IN
-            $this->load->view('template/layout_right_menu', $data);
+            //QUERY USERS
+            $query_users_where = array('id' => $users_id);
+            $data['query_users'] = $this->albert_model->get_users($query_users_where);
+            $num_rows_users = $data['query_users']->num_rows();
+            //USER EXISTS
+            if($num_rows_users)
+            {
+                //PAGE PATH NAME
+                $data['page_path_name'] = 'user/dashboard';
+                //QUERY USER FOLLOW FOLLOWER
+                $where_user_follow_follower = array('follow_to_id'=>$users_id);
+                $data['query_user_follow_follower'] = $this->albert_model->get_user_follow($where_user_follow_follower);
+                //QUERY USER FOLLOW FOLLOWING
+                $where_user_follow_following = array('follow_from_id'=>$users_id);
+                $data['query_user_follow_following'] = $this->albert_model->get_user_follow($where_user_follow_following);
+                
+                if(!$album)
+                {
+                    //USER ALBUM
+                    $data['title'] = "User Album";
+                    $data['bottom_path_name'] = 'all/album_user';
+                    $where_user_album = array('user_id'=>$users_id);
+                    $query_user_album = $this->albert_model->get_user_album($where_user_album);
+                    $data['album_list'] = $query_user_album->result_array();
+                }
+                else
+                {
+                    //USER MERCHANT ALBUM
+                    $data['title'] = "Merchant Album";
+                    $data['bottom_path_name'] = 'all/album_user_merchant';
+                    $where_merchant_user_album = array('user_id'=>$users_id);
+                    $query_merchant_user_album = $this->albert_model->get_merchant_user_album($where_merchant_user_album);
+                    $data['album_list'] = $query_merchant_user_album->result_array();
+                }
+                
+                if ($this->ion_auth->logged_in())
+                {
+                    //LOGGED IN
+                    $this->load->view('template/layout_right_menu', $data);
+                }
+                else
+                {
+                    //NOT LOGGED IN
+                    $this->load->view('template/layout', $data);
+                }
+            }
+            else
+            {
+                //REDIRECT TO ROOT
+                redirect('/', 'refresh');
+            } 
         }
         else
         {
-            //NOT LOGGED IN
-            $this->load->view('template/layout', $data);
+            //REDIRECT TO ROOT
+            redirect('/', 'refresh');
         }
-
-//        $the_row = $this->m_custom->get_one_table_record('users', 'id', $user_id);
-//        if ($the_row)
-//        {
-//            $this->data['image_path'] = $this->album_user_profile;
-//            $this->data['image'] = $the_row->profile_image;
-//            $this->data['first_name'] = $the_row->first_name;
-//            $this->data['last_name'] = $the_row->last_name;
-//            $this->data['message'] = $this->session->flashdata('message');
-//            $this->data['page_path_name'] = 'user/dashboard';
-//            if ($this->ion_auth->logged_in())
-//            {
-//                $this->load->view('template/layout_right_menu', $this->data);
-//            }
-//            else
-//            {
-//                $this->load->view('template/layout', $this->data);
-//            }
-//        }
-//        else
-//        {
-//            redirect('/', 'refresh');
-//        }
     }
 
     function user_review($users_id = NULL)

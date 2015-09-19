@@ -1,16 +1,25 @@
-<!--<style>
-    .hot-deal-box{
-        float: left;
-        width:250px;
-        margin:20px;
-        height:400px;
-        border:1px solid black;
-    }
-    .image-hot-deal{
-        max-height: 200px;
-        max-width: 200px;
-    }
-</style>-->
+<?php
+if($this->router->fetch_method() == 'user_dashboard')
+{
+    $user_id = $this->ion_auth->user()->row()->id;
+    ?>
+    <div id="dashboard-navigation" style="margin:0px 0px 30px 0px;">
+        <a href="<?php echo base_url() ?>all/user_dashboard/<?php echo $user_id ?>">User Album</a> &nbsp; | &nbsp;
+        <a href="<?php echo base_url() ?>all/user_dashboard/<?php echo $user_id ?>/merchant_album">Merchant Album</a>
+        <?php
+        if (check_correct_login_type($this->config->item('group_id_user')))
+        {
+            ?>
+            &nbsp; | &nbsp;
+            <a href='<?php echo base_url() ?>user/upload_image'>Upload Picture</a>
+            <?php
+        }
+        ?>
+    </div>
+    <div id="float-fix"></div>
+    <?php
+}
+?>
 
 <div id="album-user-merchant">
     <h1><?php echo $title ?></h1>

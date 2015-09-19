@@ -1,14 +1,40 @@
+<?php
+if($this->router->fetch_method() == 'user_dashboard')
+{
+    $user_id = $this->ion_auth->user()->row()->id;
+    ?>
+    <div id="dashboard-navigation" style="margin:0px 0px 30px 0px;">
+        <a href="<?php echo base_url() ?>all/user_dashboard/<?php echo $user_id ?>">User Album</a> &nbsp; | &nbsp;
+        <a href="<?php echo base_url() ?>all/user_dashboard/<?php echo $user_id ?>/merchant_album">Merchant Album</a>
+        <?php
+        if (check_correct_login_type($this->config->item('group_id_user')))
+        {
+            ?>
+            &nbsp; | &nbsp;
+            <a href='<?php echo base_url() ?>user/upload_image'>Upload Picture</a>
+            <?php
+        }
+        ?>
+    </div>
+    <div id="float-fix"></div>
+    <?php
+}
+?>
+
 <div id="album-user-merchant">
     <h1><?php echo $title ?></h1>
     <div id="album-user-merchant-content">
         
         <?php
-        if (check_correct_login_type($this->config->item('group_id_user')))
+        if($this->router->fetch_method() != 'user_dashboard')
         {
-            $user_id = $this->ion_auth->user()->row()->id;
+            if (check_correct_login_type($this->config->item('group_id_user')))
+            {
+                $user_id = $this->ion_auth->user()->row()->id;
 
-            echo "<a href='" . base_url() . "all/album_user_merchant/" . $user_id . "'>Merchant Album</a><br/>";
-            echo "<a href='" . base_url() . "user/upload_image'>Upload</a><br/>";
+                echo "<a href='" . base_url() . "all/album_user_merchant/" . $user_id . "'>Merchant Album</a><br/>";
+                echo "<a href='" . base_url() . "user/upload_image'>Upload</a><br/>";
+            }
         }
         ?>
         
@@ -19,7 +45,10 @@
             {
                 $empty_data_message = "No user's pictures in the moment";
             }
-            
+            if ($this->router->fetch_method() == 'user_dashboard')
+            {
+                $empty_data_message = "No user's pictures in the moment";
+            }            
             ?><div id='album-user-merchant-empty-message'><?php echo $empty_data_message ?></div><?php
         }
         else
