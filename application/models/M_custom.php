@@ -472,7 +472,6 @@ class M_custom extends CI_Model
         return $the_row;
     }
 
-    //To get all main category
     function getAdvertise($advertise_type, $sub_category_id = NULL, $merchant_id = NULL, $show_expired = 0, $limit = NULL, $start = NULL)
     {
         if (!IsNullOrEmptyString($sub_category_id))
@@ -588,7 +587,7 @@ class M_custom extends CI_Model
         $query = $this->db->get_where('user_album', array('hide_flag' => 0));
         return $query->result_array();
     }
-    
+
     //Get all the static option of an option type
     public function getCategoryList($default_value = NULL, $default_text = NULL)
     {
@@ -619,6 +618,33 @@ class M_custom extends CI_Model
     {
         $query = $this->db->get_where('users', array('id' => $user_id));
         return $query->row_array();
+    }
+
+    function getMerchantInfo($merchant_id)
+    {
+        $query = $this->db->get_where('users', array('id' => $merchant_id));
+        $user = $query->row_array();
+        $merchant = array(
+            'id' => $user['id'],
+            'email' => $user['email'],
+            'company' => $user['company'],
+            'slug' => $user['slug'],
+            'phone' => $user['phone'],
+            'address' => $user['address'],
+            'profile_image' => $user['profile_image'],
+            'me_ssm' => $user['me_ssm'],
+            'me_ssm_file' => $user['me_ssm_file'],
+            'me_category_id' => $user['me_category_id'],
+            'me_state_id' => $user['me_state_id'],
+            'me_google_map_url' => $user['me_google_map_url'],
+            'me_website_url' => $user['me_website_url'],
+            'me_facebook_url' => $user['me_facebook_url'],
+            'me_category_name' => $this->m_custom->display_category($user['me_category_id']),
+            'me_state_name' => $this->m_custom->display_static_option($user['me_state_id']),
+            'merchant_dashboard_url' => base_url() . "all/merchant-dashboard/" . $user['slug'],
+            'merchant_dashboard_link' => $this->m_custom->generate_merchant_link($merchant_id),
+        );
+        return $merchant;
     }
 
     //To get related sub category by pass in the main category id
@@ -930,6 +956,14 @@ class M_custom extends CI_Model
     }
 
     //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
+    public function activity_rating_count($refer_id, $refer_type)
+    {
+        $query = $this->db->get_where('activity_history', array('act_type' => 'rating', 'act_refer_id' => $refer_id, 'act_refer_type' => $refer_type));
+        $rate_count = $query->num_rows();
+        return $rate_count;
+    }
+
+    //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
     public function activity_comment($refer_id, $refer_type, $comment)
     {
         if ($this->ion_auth->logged_in())
@@ -1006,13 +1040,80 @@ class M_custom extends CI_Model
         }
     }
 
+    //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
+    public function merchant_like_count($merchant_id, $refer_type)
+    {
+        $advertise_list = $this->m_custom->getAdvertise('all', NULL, $merchant_id, 1);
+        $advertise_list_id = array();
+        foreach ($advertise_list as $row)
+        {
+            $advertise_list_id[] = $row['advertise_id'];
+        }
+
+        $this->db->where_in('act_refer_id', $advertise_list_id);
+        $query = $this->db->get_where('activity_history', array('act_type' => 'like', 'act_refer_type' => $refer_type));
+
+        return $query->num_rows();
+    }
+
+    //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
+    public function merchant_comment_count($merchant_id, $refer_type)
+    {
+        $advertise_list = $this->m_custom->getAdvertise('all', NULL, $merchant_id, 1);
+        $advertise_list_id = array();
+
+        foreach ($advertise_list as $row)
+        {
+            $advertise_list_id[] = $row['advertise_id'];
+        }
+        $this->db->where_in('act_refer_id', $advertise_list_id);
+        $query = $this->db->get_where('activity_history', array('act_type' => 'comment', 'act_refer_type' => $refer_type));
+
+        return $query->num_rows();
+    }
+
+    //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
+    public function merchant_rating_average($merchant_id, $refer_type, $want_count = 0)
+    {
+        $advertise_list = $this->m_custom->getAdvertise('all', NULL, $merchant_id, 1);
+        $total_rate = 0;
+        $counter = 0;
+        $user_count = 0;
+        foreach ($advertise_list as $row)
+        {
+            $temp_rate = $this->m_custom->activity_rating_average($row['advertise_id'], $refer_type);
+            $user_count += $this->m_custom->activity_rating_count($row['advertise_id'], $refer_type);
+            $total_rate += $temp_rate;
+            if ($temp_rate != 0)
+            {
+                $counter++;
+            }
+        }
+        if ($counter != 0)
+        {
+            $average_rate = $total_rate / $counter;
+            if ($want_count == 1)
+            {
+                return $user_count;
+            }
+            else
+            {
+                return $average_rate;
+            }
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
     public function generate_merchant_link($merchant_id = NULL, $with_icon = 0)
     {
         $user_name = $this->m_custom->display_users($merchant_id, $with_icon);
         $merchant = $this->m_merchant->getMerchant($merchant_id);
         return "<a target='_blank' href='" . base_url() . "all/merchant_dashboard/" . $merchant['slug'] . "'>" . $user_name . "</a>";
     }
-    
+
     public function generate_user_link($user_id = NULL, $with_icon = 0)
     {
         $user_name = $this->m_custom->display_users($user_id, $with_icon);
@@ -1021,10 +1122,10 @@ class M_custom extends CI_Model
 
     public function generate_advertise_link($advertise_id = NULL)
     {
-        $adv_row = $this->m_custom->get_one_table_record('advertise','advertise_id',$advertise_id,1);
+        $adv_row = $this->m_custom->get_one_table_record('advertise', 'advertise_id', $advertise_id, 1);
         return "<a target='_blank' href='" . base_url() . "all/advertise/" . $adv_row['advertise_id'] . "'>" . $adv_row['title'] . "</a>";
     }
-    
+
     //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
     public function generate_like_link($refer_id, $refer_type)
     {

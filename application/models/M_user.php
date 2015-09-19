@@ -9,7 +9,7 @@ class M_user extends CI_Model
     public function candie_balance_update($user_id, $month_id = NULL, $year = NULL)
     {
         $search_date = date_for_db_search($month_id, $year);
-        
+
         if (empty($month_id))
         {
             $month_id = get_part_of_date('month');
@@ -18,7 +18,7 @@ class M_user extends CI_Model
         {
             $year = get_part_of_date('year');
         }
-        
+
         $history_condition = "trans_time like '%" . $search_date . "%'";
         $history_search_data = array(
             'user_id' => $user_id,
@@ -164,7 +164,7 @@ class M_user extends CI_Model
         $result = $query->result_array();
         return $result;
     }
-    
+
     public function user_this_month_redemption($user_id)
     {
         $search_date = date_for_db_search();
@@ -179,12 +179,13 @@ class M_user extends CI_Model
         $result = $query->result_array();
         return $result;
     }
-    
-    public function get_candie_history_from_redemption($redeem_id){
+
+    public function get_candie_history_from_redemption($redeem_id)
+    {
         $query = $this->db->get_where('candie_history', array('get_from_table_id' => $redeem_id, 'get_from_table' => 'user_redemption'));
         return $query->row_array();
     }
-    
+
     public function user_redemption($user_id, $status_id = NULL, $sub_category = NULL)
     {
         if (!IsNullOrEmptyString($status_id))
@@ -214,13 +215,12 @@ class M_user extends CI_Model
                 {
                     $result[] = $advertise + $candie + $row;
                 }
-                
             }
         }
 
         return $result;
     }
-    
+
     public function user_redemption_sub_category_list($user_id, $status_id = NULL)
     {
         if (!IsNullOrEmptyString($status_id))
@@ -246,7 +246,79 @@ class M_user extends CI_Model
 
         return $result;
     }
-    
+
+    public function user_review_list($act_type, $user_id, $category = NULL)
+    {
+        $act_type_name = $this->m_custom->display_static_option($act_type);
+        $group_id_user = $this->config->item('group_id_user');
+
+        $this->db->where('act_refer_type', 'adv');
+        $act_query = $this->db->get_where('activity_history', array('act_by_id' => $user_id, 'act_type' => $act_type_name, 'act_by_type' => $group_id_user));
+        $act_result = $act_query->result_array();
+
+        $result = array();
+        foreach ($act_result as $row)
+        {
+            switch ($row['act_refer_type'])
+            {
+                case 'adv':
+                    $refer_row = $this->m_custom->getOneAdvertise($row['act_refer_id']);
+                    break;
+                case 'mua':
+                    $refer_row = $this->m_custom->getOneMUA($row['act_refer_id']);
+                    break;
+                case 'usa':
+                    $refer_row = $this->m_custom->getOneUserPicture($row['act_refer_id']);
+                    break;
+            }
+
+            if ($refer_row != FALSE)
+            {
+                $result[] = $row + $refer_row;
+            }
+        }
+
+        return $result;
+    }
+
+    public function user_review_merchant_list($act_type, $user_id, $category = NULL)
+    {
+        $act_type_name = $this->m_custom->display_static_option($act_type);
+        $group_id_user = $this->config->item('group_id_user');
+
+        $this->db->where('act_refer_type', 'adv');  //current hardcode only get analysis from advertisement(hot deal and promotion), dint include analysis for picture upload by user for merchant
+        $act_query = $this->db->get_where('activity_history', array('act_by_id' => $user_id, 'act_type' => $act_type_name, 'act_by_type' => $group_id_user));
+        $act_result = $act_query->result_array();
+
+        $merchant_list = array();
+        $result_merchant = array();
+        foreach ($act_result as $row)
+        {
+            $refer_row = $this->m_custom->getOneAdvertise($row['act_refer_id']);
+
+            if ($refer_row != FALSE && !in_array($refer_row['merchant_id'], $merchant_list))
+            {
+                $merchant_id = $refer_row['merchant_id'];
+                $merchant_info = $this->m_custom->getMerchantInfo($merchant_id);
+                if ($category == NULL)
+                {
+                    $result_merchant[] = $merchant_info;
+                    $merchant_list[] = $merchant_id;
+                }
+                else
+                {
+                    if ($merchant_info['me_category_id'] == $category)
+                    {
+                        $result_merchant[] = $merchant_info;
+                        $merchant_list[] = $merchant_id;
+                    }
+                }
+            }
+        }
+
+        return $result_merchant;
+    }
+
     public function candie_enough($user_id, $spend_candie = 0, $return_new_balance = 0)
     {
         $current_balance = $this->m_user->candie_check_balance($user_id);
