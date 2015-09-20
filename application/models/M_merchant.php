@@ -50,14 +50,16 @@ class M_merchant extends CI_Model
             case 'like':
                 $condition = "act_time like '%" . $search_date . "%'";
                 $this->db->where($condition);
-                $this->db->where_in('act_refer_type', array('adv', 'mua'));
+                //$this->db->where_in('act_refer_type', array('adv', 'mua'));
+                $this->db->where_in('act_refer_type', array('adv'));  //current hardcode only get analysis from advertisement(hot deal and promotion), dint include analysis for picture upload by user for merchant
                 $this->db->where_in('act_refer_id', $advertise_of_merchant);
                 $query = $this->db->get_where('activity_history', array('act_type' => 'like', 'act_by_type' => $group_id_user, 'hide_flag' => 0));
                 break;
             case 'rating':
                 $condition = "act_time like '%" . $search_date . "%'";
                 $this->db->where($condition);
-                $this->db->where_in('act_refer_type', array('adv', 'mua'));
+                //$this->db->where_in('act_refer_type', array('adv', 'mua'));
+                $this->db->where_in('act_refer_type', array('adv'));  //current hardcode only get analysis from advertisement(hot deal and promotion), dint include analysis for picture upload by user for merchant
                 $this->db->where_in('act_refer_id', $advertise_of_merchant);
                 $query = $this->db->get_where('activity_history', array('act_type' => 'rating', 'act_by_type' => $group_id_user, 'hide_flag' => 0));
                 break;
@@ -124,7 +126,7 @@ class M_merchant extends CI_Model
     {
         return $this->m_custom->generate_merchant_link($this->m_merchant->get_merchant_id_from_advertise($advertise_id));
     }
-    
+
     public function get_merchant_id_from_mua($picture_id)
     {
         $query = $this->db->get_where('merchant_user_album', array('merchant_user_album_id' => $picture_id));
@@ -210,7 +212,7 @@ class M_merchant extends CI_Model
     public function merchant_balance_update($merchant_id, $month_id = NULL, $year = NULL)
     {
         $search_date = date_for_db_search($month_id, $year);
-        
+
         if (empty($month_id))
         {
             $month_id = get_part_of_date('month');
@@ -219,7 +221,7 @@ class M_merchant extends CI_Model
         {
             $year = get_part_of_date('year');
         }
-        
+
         $history_condition = "trans_time like '%" . $search_date . "%'";
         $history_search_data = array(
             'merchant_id' => $merchant_id,

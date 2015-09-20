@@ -45,6 +45,8 @@ if($this->router->fetch_method() == 'user_dashboard')
             else if ($this->router->fetch_method() == 'merchant_dashboard')
             {
                 $empty_data_message = "No user's pictures in the moment";
+            }else{
+                $empty_data_message = "";
             }
             
             ?><div id='album-user-merchant-empty-message'><?php echo $empty_data_message ?></div><?php
@@ -60,6 +62,10 @@ if($this->router->fetch_method() == 'user_dashboard')
                 else if ($this->router->fetch_method() == 'merchant_dashboard')
                 {
                     $picture_detail_url = base_url() . "all/merchant_user_picture/" . $row['merchant_user_album_id'] . "/0/" . $row['merchant_id'];
+                }
+                else if ($this->router->fetch_method() == 'user_dashboard')
+                {
+                    $picture_detail_url = base_url() . "all/merchant_user_picture/" . $row['merchant_user_album_id'] . "/" . $row['user_id'];
                 }
                 else
                 {

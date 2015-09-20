@@ -60,3 +60,7 @@ $config['race_id_other'] = '19';
 $config['voucher_active'] = '21';
 $config['voucher_used'] = '22';
 $config['voucher_expired'] = '23';
+
+$config['user_activity_like'] = '45';
+$config['user_activity_rating'] = '46';
+$config['user_activity_comment'] = '47';

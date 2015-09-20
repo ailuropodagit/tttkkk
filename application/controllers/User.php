@@ -1377,10 +1377,10 @@ class User extends CI_Controller
             $user_id = $this->ion_auth->user()->row()->id;
             $this->m_user->candie_balance_update($user_id);
             $this->data['last_month_balance'] = $this->m_user->candie_check_balance($user_id, 1);
-            $this->data['this_month_balance'] = $this->m_user->candie_check_balance($user_id);           
+            $this->data['this_month_balance'] = $this->m_user->candie_check_balance($user_id);
             $this->data['this_month_redemption'] = $this->m_user->user_this_month_redemption($user_id);
             $this->data['this_month_candie_gain'] = $this->m_user->user_this_month_candie_gain($user_id);
-            
+
             $this->data['candie_url'] = base_url() . "user/candie_page";
             $this->data['voucher_active_url'] = base_url() . "user/redemption/" . $this->config->item('voucher_active');
             $this->data['voucher_used_url'] = base_url() . "user/redemption/" . $this->config->item('voucher_used');
@@ -1395,22 +1395,23 @@ class User extends CI_Controller
             redirect('/', 'refresh');
         }
     }
-    
-    function redemption($status_id = NULL, $sub_category = NULL){
+
+    function redemption($status_id = NULL, $sub_category = NULL)
+    {
         if (!check_correct_login_type($this->main_group_id))
         {
             redirect('/', 'refresh');
         }
         $user_id = $this->ion_auth->user()->row()->id;
-        
+
         if (isset($_POST) && !empty($_POST))
+        {
+            if ($this->input->post('button_action') == "search_by_subcategory")
             {
-                if ($this->input->post('button_action') == "search_by_subcategory")
-                {
-                    $sub_category = $this->input->post('sub_category');
-                }
+                $sub_category = $this->input->post('sub_category');
             }
-            
+        }
+
         $this->data['redemption'] = $this->m_user->user_redemption($user_id, $status_id, $sub_category);
         if ($status_id != NULL)
         {
@@ -1420,7 +1421,7 @@ class User extends CI_Controller
         {
             $this->data['title'] = "Redemption";
         }
-        
+
         $sub_category_list = $this->m_user->user_redemption_sub_category_list($user_id, $status_id);
         $this->data['sub_category_list'] = $sub_category_list;
         $this->data['sub_category'] = array(
@@ -1429,16 +1430,83 @@ class User extends CI_Controller
         );
         $this->data['sub_category_selected'] = empty($sub_category) ? "" : $sub_category;
 
-        $this->data['candie_url'] = base_url() . "user/candie_page"; 
-        $this->data['voucher_active_url'] = base_url() . "user/redemption/" . $this->config->item('voucher_active');  
-        $this->data['voucher_used_url'] = base_url() . "user/redemption/" . $this->config->item('voucher_used');  
-        $this->data['voucher_expired_url'] = base_url() . "user/redemption/" . $this->config->item('voucher_expired');  
-        
+        $this->data['candie_url'] = base_url() . "user/candie_page";
+        $this->data['voucher_active_url'] = base_url() . "user/redemption/" . $this->config->item('voucher_active');
+        $this->data['voucher_used_url'] = base_url() . "user/redemption/" . $this->config->item('voucher_used');
+        $this->data['voucher_expired_url'] = base_url() . "user/redemption/" . $this->config->item('voucher_expired');
+
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'user/redemption';
         $this->load->view('template/layout_right_menu', $this->data);
     }
-    
+
+    function review_adv($act_type = NULL, $users_id = NULL, $category = NULL)
+    {
+        if (!check_correct_login_type($this->main_group_id))
+        {
+            redirect('/', 'refresh');
+        }
+        $user_id = $users_id == NULL ? $this->ion_auth->user()->row()->id : $users_id;
+        $act_type = $act_type == NULL ? $this->config->item('user_activity_comment') : $act_type;
+
+        //PAGE PATH NAME
+        $data['page_path_name'] = 'user/review_adv';
+        $data['message'] = $this->session->flashdata('message');
+        $data['title'] = "Review (" . $this->m_custom->display_static_option($act_type) . ") ";
+
+        $data['user_review_like'] = base_url() . "user/review_adv/" . $this->config->item('user_activity_like');
+        $data['user_review_rating'] = base_url() . "user/review_adv/" . $this->config->item('user_activity_rating');
+        $data['user_review_comment'] = base_url() . "user/review_adv/" . $this->config->item('user_activity_comment');
+        $data['review_list'] = $this->m_user->user_review_list($act_type, $user_id, $category);
+        if ($this->ion_auth->logged_in())
+        {
+            //LOGGED IN
+            $this->load->view('template/layout_right_menu', $data);
+        }
+        else
+        {
+            //NOT LOGGED IN
+            $this->load->view('template/layout', $data);
+        }
+    }
+
+    function review_merchant($act_type = NULL, $users_id = NULL, $category = NULL)
+    {
+        if (!check_correct_login_type($this->main_group_id))
+        {
+            redirect('/', 'refresh');
+        }
+        $user_id = $users_id == NULL ? $this->ion_auth->user()->row()->id : $users_id;
+        $act_type = $act_type == NULL ? $this->config->item('user_activity_comment') : $act_type;
+
+        //PAGE PATH NAME
+        $data['page_path_name'] = 'user/review_merchant';
+        $data['message'] = $this->session->flashdata('message');
+        $data['title'] = "Review (" . $this->m_custom->display_static_option($act_type) . ") ";
+
+        $data['user_review_like'] = base_url() . "user/review_merchant/" . $this->config->item('user_activity_like');
+        $data['user_review_rating'] = base_url() . "user/review_merchant/" . $this->config->item('user_activity_rating');
+        $data['user_review_comment'] = base_url() . "user/review_merchant/" . $this->config->item('user_activity_comment');
+        $review_list = $this->m_user->user_review_merchant_list($act_type, $user_id, $category);
+        $data['review_list'] = $review_list;
+
+        $review_list_for_know_category = $this->m_user->user_review_merchant_list($act_type, $user_id);
+        $category_list = array();
+        $category_array = array();
+        foreach ($review_list_for_know_category as $row)
+        {
+            if (!in_array($row['me_category_id'], $category_array))
+            {
+                $category_array[] = $row['me_category_id'];
+                $temp_url = base_url() . "user/review_merchant/" . $act_type . "/" . $user_id . "/" . $row['me_category_id'];
+                $category_list[] = "<a href=" . $temp_url . " >" . $row['me_category_name'] . "</a>";
+            }
+        }
+        $data['category_list'] = $category_list;
+
+        $this->load->view('template/layout_right_menu', $data);
+    }
+
     function upload_image()
     {
         if (!check_correct_login_type($this->main_group_id))
