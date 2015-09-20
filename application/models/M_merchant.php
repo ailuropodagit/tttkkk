@@ -25,6 +25,31 @@ class M_merchant extends CI_Model
         return $query->row_array();
     }
 
+    function searchMerchant($search_value = NULL, $want_id = 0)
+    {
+        $return = array();
+        if (!IsNullOrEmptyString($search_value))
+        {
+            $search_word = $this->db->escape('%' . $search_value . '%');
+            $this->db->where("(`company` LIKE $search_word OR `slug` LIKE $search_word)");
+            $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant'), 'hide_flag' => 0));
+            $result = $query->result_array();
+
+            if ($want_id == 1)
+            {
+                foreach ($result as $row)
+                {
+                    $return[] = $row['id'];
+                }
+            }
+            else
+            {
+                $return = $result;
+            }
+        }
+        return $return;
+    }
+
     //Type: view, like, rating, redeem, choose by show race, gender, age, to do, todo
     public function getMerchantAnalysisReport($merchant_id, $the_type, $month_id = NULL, $year = NULL, $advertise_type = NULL)
     {
@@ -44,7 +69,10 @@ class M_merchant extends CI_Model
             case 'view':
                 $condition = "many_time like '%" . $search_date . "%'";
                 $this->db->where($condition);
-                $this->db->where_in('many_parent_id', $advertise_of_merchant);
+                if (!empty($advertise_of_merchant))
+                {
+                    $this->db->where_in('many_parent_id', $advertise_of_merchant);
+                }
                 $query = $this->db->get_where('many_to_many', array('many_type' => 'view_advertise'));
                 break;
             case 'like':
@@ -52,7 +80,10 @@ class M_merchant extends CI_Model
                 $this->db->where($condition);
                 //$this->db->where_in('act_refer_type', array('adv', 'mua'));
                 $this->db->where_in('act_refer_type', array('adv'));  //current hardcode only get analysis from advertisement(hot deal and promotion), dint include analysis for picture upload by user for merchant
-                $this->db->where_in('act_refer_id', $advertise_of_merchant);
+                if (!empty($advertise_of_merchant))
+                {
+                    $this->db->where_in('act_refer_id', $advertise_of_merchant);
+                }
                 $query = $this->db->get_where('activity_history', array('act_type' => 'like', 'act_by_type' => $group_id_user, 'hide_flag' => 0));
                 break;
             case 'rating':
@@ -60,13 +91,19 @@ class M_merchant extends CI_Model
                 $this->db->where($condition);
                 //$this->db->where_in('act_refer_type', array('adv', 'mua'));
                 $this->db->where_in('act_refer_type', array('adv'));  //current hardcode only get analysis from advertisement(hot deal and promotion), dint include analysis for picture upload by user for merchant
-                $this->db->where_in('act_refer_id', $advertise_of_merchant);
+                if (!empty($advertise_of_merchant))
+                {
+                    $this->db->where_in('act_refer_id', $advertise_of_merchant);
+                }
                 $query = $this->db->get_where('activity_history', array('act_type' => 'rating', 'act_by_type' => $group_id_user, 'hide_flag' => 0));
                 break;
             case 'redeem':
                 $condition = "redeem_time like '%" . $search_date . "%'";
                 $this->db->where($condition);
-                $this->db->where_in('advertise_id', $advertise_of_merchant);
+                if (!empty($advertise_of_merchant))
+                {
+                    $this->db->where_in('advertise_id', $advertise_of_merchant);
+                }
                 $query = $this->db->get_where('user_redemption');
                 break;
         }

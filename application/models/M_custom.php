@@ -554,7 +554,10 @@ class M_custom extends CI_Model
         }
 
         $this->db->order_by("advertise_id", "desc");
-        $this->db->where_in('advertise_id', $advertise_list);
+        if (!empty($advertise_list))
+        {
+            $this->db->where_in('advertise_id', $advertise_list);
+        }
         $advertise_query = $this->db->get_where('advertise', array('advertise_type' => 'pro', 'hide_flag' => 0, 'merchant_id' => $merchant_id));
 
         return $advertise_query->result_array();
@@ -727,16 +730,23 @@ class M_custom extends CI_Model
     }
 
     //To get the childlist id from many table by the type and parent id
-    public function many_get_childlist($the_type, $parent_id)
+    public function many_get_childlist($the_type, $parent_id, $want_array = 0)
     {
         $query = $this->db->get_where('many_to_many', array('many_type' => $the_type, 'many_parent_id' => $parent_id));
 
         $return = array();
         if ($query->num_rows() > 0)
         {
-            foreach ($query->result_array() as $row)
+            if ($want_array == 0)
             {
-                $return[] = $row['many_child_id'];
+                foreach ($query->result_array() as $row)
+                {
+                    $return[] = $row['many_child_id'];
+                }
+            }
+            else
+            {
+                return $query->result_array();
             }
         }
         return $return;
@@ -1049,8 +1059,10 @@ class M_custom extends CI_Model
         {
             $advertise_list_id[] = $row['advertise_id'];
         }
-
-        $this->db->where_in('act_refer_id', $advertise_list_id);
+        if (!empty($advertise_list_id))
+        {
+            $this->db->where_in('act_refer_id', $advertise_list_id);
+        }
         $query = $this->db->get_where('activity_history', array('act_type' => 'like', 'act_refer_type' => $refer_type));
 
         return $query->num_rows();
@@ -1066,7 +1078,10 @@ class M_custom extends CI_Model
         {
             $advertise_list_id[] = $row['advertise_id'];
         }
-        $this->db->where_in('act_refer_id', $advertise_list_id);
+        if (!empty($advertise_list_id))
+        {
+            $this->db->where_in('act_refer_id', $advertise_list_id);
+        }
         $query = $this->db->get_where('activity_history', array('act_type' => 'comment', 'act_refer_type' => $refer_type));
 
         return $query->num_rows();
@@ -1165,6 +1180,119 @@ class M_custom extends CI_Model
             //return $created_on . " is old";
             return FALSE;
         }
+    }
+
+    public function home_search_merchant($search_value = NULL, $state_id = 0)
+    {
+        if (!IsNullOrEmptyString($search_value))
+        {
+            $search_word = $this->db->escape('%' . $search_value . '%');
+            $this->db->where("(`company` LIKE $search_word OR `slug` LIKE $search_word)");
+            //$this->db->where("(`company` LIKE $search_word OR `slug` LIKE $search_word OR `address` LIKE $search_word)");
+        }
+
+        if ($state_id != 0)
+        {
+            $this->db->where('me_state_id', $state_id);
+        }
+
+        $this->db->order_by("company", "asc");
+        $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant'), 'hide_flag' => 0));
+        $result = $query->result_array();
+        $return = array();
+        foreach ($result as $row)
+        {
+            $return[] = $this->m_custom->getMerchantInfo($row['id']);
+        }
+        return $return;
+    }
+
+    public function home_search_hotdeal($search_value = NULL, $state_id = 0)
+    {
+        if (!IsNullOrEmptyString($search_value))
+        {
+            $merchant_list_id = $this->m_merchant->searchMerchant($search_value, 1);
+            $search_word = $this->db->escape('%' . $search_value . '%');
+            if (!empty($merchant_list_id))
+            {
+                $merchant_string = implode(',', $merchant_list_id);
+                $this->db->where("((`title` LIKE $search_word OR `description` LIKE $search_word) OR `merchant_id` IN ($merchant_string))");
+            }
+            else
+            {
+                $this->db->where("(`title` LIKE $search_word OR `description` LIKE $search_word)");
+            }
+        }
+
+        $this->db->where('end_time >=', get_part_of_date('all'));
+        $this->db->where('start_time is not null AND end_time is not null');
+        $this->db->order_by("advertise_id", "desc");
+        $query = $this->db->get_where('advertise', array('advertise_type' => 'hot', 'hide_flag' => 0));
+        $result = $query->result_array();
+        $return = array();
+        foreach ($result as $row)
+        {
+            $merchant_info = $this->m_custom->getMerchantInfo($row['merchant_id']);
+            if ($state_id != 0)
+            {
+                if ($merchant_info['me_state_id'] == $state_id)
+                {
+                    $return[] = $row;
+                }
+            }
+            else
+            {
+                $return[] = $row;
+            }
+        }
+        return $return;
+    }
+
+    public function home_search_promotion($search_value = NULL, $state_id = 0)
+    {
+        if (!IsNullOrEmptyString($search_value))
+        {
+            $merchant_list_id = $this->m_merchant->searchMerchant($search_value, 1);
+            $search_word = $this->db->escape('%' . $search_value . '%');
+            if (!empty($merchant_list_id))
+            {
+                $merchant_string = implode(',', $merchant_list_id);
+                $this->db->where("((`title` LIKE $search_word OR `description` LIKE $search_word) OR `merchant_id` IN ($merchant_string))");
+            }
+            else
+            {
+                $this->db->where("(`title` LIKE $search_word OR `description` LIKE $search_word)");
+            }
+        }
+
+        $this->db->where('end_time >=', get_part_of_date('all'));
+        $this->db->where('start_time is not null AND end_time is not null');
+        $this->db->order_by("advertise_id", "desc");
+        $query = $this->db->get_where('advertise', array('advertise_type' => 'pro', 'hide_flag' => 0));
+        $result = $query->result_array();
+        $return = array();
+        foreach ($result as $row)
+        {
+            $advertise_id = $row['advertise_id'];
+            if ($state_id != 0)
+            {
+                $branch_list = $this->m_custom->many_get_childlist('candie_branch', $advertise_id, 1);
+                foreach ($branch_list as $branch)
+                {
+                    $branch_query = $this->db->get_where('merchant_branch', array('branch_id' => $branch['many_child_id']))->row_array();
+                    if ($state_id == $branch_query['state_id'])
+                    {
+                        $return[] = $row;
+                    }
+                }
+                $return = array_unique($return, SORT_REGULAR);
+            }
+            else
+            {
+                $return[] = $row;
+            }
+        }
+        return $return;
     }
 
     public function post_title($refer_id, $refer_type)

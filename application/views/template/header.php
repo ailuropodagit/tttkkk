@@ -128,8 +128,9 @@
                 <div id="search-content">
                     <div id="search-content-box">
                         <div id="search-content-box-content">
+                            <?php echo form_open('all/home_search');?>
                             <div id="search-box-block1">
-                                <input type="text" placeholder="Search: Tony Roma's, Vans, ChatTime">
+                                <input type="text" placeholder="Search: Tony Roma's, Vans, ChatTime" name="search_word">
                                 <span id="search-icon"><i class="fa fa-search"></i></span>
                             </div>
                             <div id="search-box-block2">
@@ -143,8 +144,9 @@
                                 ?>
                             </div>
                             <div id="search-box-block3">
-                                <input type='submit' value='Search'>
+                                <button name="button_action" type="submit" value="search">Search</button>
                             </div>
+                            <?php echo form_close(); ?>
                             <div id="float-fix"></div>
                         </div>
                     </div>

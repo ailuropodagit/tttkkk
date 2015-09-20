@@ -301,7 +301,7 @@ a:hover {
     padding: 0px 0px 0px 5px;
 }
 
-#search-content-box input[type='submit'] {
+#search-content-box button[type='submit'] {
     height: 28px;
     width: 100%;
     box-sizing: border-box;
