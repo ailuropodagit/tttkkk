@@ -6,7 +6,6 @@ if (!defined('BASEPATH'))
 class M_merchant extends CI_Model
 {
 
-    //To get all main category
     function getMerchant($merchant_id = 0, $slug = NULL, $company = NULL)
     {
         $group_id = $this->config->item('group_id_merchant');
@@ -23,6 +22,31 @@ class M_merchant extends CI_Model
             $query = $this->db->get_where('users', array('company' => $company, 'main_group_id' => $group_id));
         }
         return $query->row_array();
+    }
+
+    function searchMerchant($search_value = NULL, $want_id = 0)
+    {
+        $return = array();
+        if (!IsNullOrEmptyString($search_value))
+        {
+            $search_word = $this->db->escape('%' . $search_value . '%');
+            $this->db->where("(`company` LIKE $search_word OR `slug` LIKE $search_word)");
+            $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant'), 'hide_flag' => 0));
+            $result = $query->result_array();
+
+            if ($want_id == 1)
+            {
+                foreach ($result as $row)
+                {
+                    $return[] = $row['id'];
+                }
+            }
+            else
+            {
+                $return = $result;
+            }
+        }
+        return $return;
     }
 
     //Type: view, like, rating, redeem, choose by show race, gender, age, to do, todo
@@ -44,7 +68,10 @@ class M_merchant extends CI_Model
             case 'view':
                 $condition = "many_time like '%" . $search_date . "%'";
                 $this->db->where($condition);
-                $this->db->where_in('many_parent_id', $advertise_of_merchant);
+                if (!empty($advertise_of_merchant))
+                {
+                    $this->db->where_in('many_parent_id', $advertise_of_merchant);
+                }
                 $query = $this->db->get_where('many_to_many', array('many_type' => 'view_advertise'));
                 break;
             case 'like':
@@ -52,7 +79,10 @@ class M_merchant extends CI_Model
                 $this->db->where($condition);
                 //$this->db->where_in('act_refer_type', array('adv', 'mua'));
                 $this->db->where_in('act_refer_type', array('adv'));  //current hardcode only get analysis from advertisement(hot deal and promotion), dint include analysis for picture upload by user for merchant
-                $this->db->where_in('act_refer_id', $advertise_of_merchant);
+                if (!empty($advertise_of_merchant))
+                {
+                    $this->db->where_in('act_refer_id', $advertise_of_merchant);
+                }
                 $query = $this->db->get_where('activity_history', array('act_type' => 'like', 'act_by_type' => $group_id_user, 'hide_flag' => 0));
                 break;
             case 'rating':
@@ -60,13 +90,19 @@ class M_merchant extends CI_Model
                 $this->db->where($condition);
                 //$this->db->where_in('act_refer_type', array('adv', 'mua'));
                 $this->db->where_in('act_refer_type', array('adv'));  //current hardcode only get analysis from advertisement(hot deal and promotion), dint include analysis for picture upload by user for merchant
-                $this->db->where_in('act_refer_id', $advertise_of_merchant);
+                if (!empty($advertise_of_merchant))
+                {
+                    $this->db->where_in('act_refer_id', $advertise_of_merchant);
+                }
                 $query = $this->db->get_where('activity_history', array('act_type' => 'rating', 'act_by_type' => $group_id_user, 'hide_flag' => 0));
                 break;
             case 'redeem':
                 $condition = "redeem_time like '%" . $search_date . "%'";
                 $this->db->where($condition);
-                $this->db->where_in('advertise_id', $advertise_of_merchant);
+                if (!empty($advertise_of_merchant))
+                {
+                    $this->db->where_in('advertise_id', $advertise_of_merchant);
+                }
                 $query = $this->db->get_where('user_redemption');
                 break;
         }
@@ -375,6 +411,50 @@ class M_merchant extends CI_Model
         return $voucher;
     }
 
+    public function hotdeal_hide($advertise_id)
+    {
+        if ($this->ion_auth->logged_in())
+        {
+            $activity = $this->db->get_where('table_row_activity', array('table_row_id' => $advertise_id, 'table_type' => 'advertise'), 1)->row_array();
+            $login_id = $this->ion_auth->user()->row()->id;
+            $login_type = $this->session->userdata('user_group_id');
+
+            if ($activity['create_by'] == $login_id && $activity['create_by_type'] == $login_type)
+            {
+                
+            }
+            else
+            {
+                $mon_hide_type = 'adv';
+                $mon_table_id = $advertise_id;
+                $mon_table = 'advertise';
+                $this->m_custom->insert_row_monitor_process($mon_hide_type, $mon_table_id, $mon_table, $login_type);
+            }
+        }
+    }
+    
+    public function mua_hide($mua_id)
+    {
+        if ($this->ion_auth->logged_in())
+        {
+            $activity = $this->db->get_where('table_row_activity', array('table_row_id' => $mua_id, 'table_type' => 'merchant_user_album'), 1)->row_array();
+            $login_id = $this->ion_auth->user()->row()->id;
+            $login_type = $this->session->userdata('user_group_id');
+
+            if ($activity['create_by'] == $login_id && $activity['create_by_type'] == $login_type)  //mostly will not happen because the creater of mua is user
+            {
+                
+            }
+            else
+            {
+                $mon_hide_type = 'mua';
+                $mon_table_id = $mua_id;
+                $mon_table = 'merchant_user_album';
+                $this->m_custom->insert_row_monitor_process($mon_hide_type, $mon_table_id, $mon_table, $login_type);
+            }
+        }
+    }
+    
     public function transaction_history_insert($merchant_id, $trans_conf_id, $get_from_table_id, $get_from_table = 'activity_history', $allow_duplicate = 0, $amount_overwrite = 0)
     {
         $search_data = array(

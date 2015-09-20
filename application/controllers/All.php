@@ -668,7 +668,7 @@ class All extends CI_Controller
         {
             $current_url = $this->input->post('current_url');
             $act_history_id = $this->input->post('act_history_id');
-            $this->m_custom->activity_hide($act_history_id);
+            $this->m_custom->activity_comment_hide($act_history_id);
         }
         redirect($current_url, 'refresh');
     }
@@ -720,6 +720,40 @@ class All extends CI_Controller
         }
     }
 
+    public function home_search()
+    {
+        if (isset($_POST) && !empty($_POST))
+        {
+            if ($this->input->post('button_action') == "search")
+            {
+                $search_word = $this->input->post('search_word');
+                $search_state = $this->input->post('me_state_id');
+                if (!IsNullOrEmptyString($search_word))
+                {
+                    redirect('all/search_result/'.$search_word.'/'.$search_state, 'refresh');
+                }
+            }
+        }
+        redirect('/','refresh');
+    }
+
+    public function search_result($search_value = NULL, $state_id = 0){       
+        $this->data['home_search_merchant'] = $this->m_custom->home_search_merchant($search_value, $state_id);
+        $this->data['home_search_hotdeal'] = $this->m_custom->home_search_hotdeal($search_value, $state_id);
+        $this->data['home_search_promotion'] = $this->m_custom->home_search_promotion($search_value, $state_id);
+        
+        $this->data['page_path_name'] = 'all/search_result';
+        
+        if ($this->ion_auth->logged_in())
+        {
+            $this->load->view('template/layout_right_menu', $this->data);
+        }
+        else
+        {
+            $this->load->view('template/layout', $this->data);
+        }
+    }
+    
     public function merchant_outlet($slug)
     {
         $the_row = $this->m_custom->get_one_table_record('users', 'slug', $slug);

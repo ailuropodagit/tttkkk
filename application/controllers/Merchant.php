@@ -1713,6 +1713,42 @@ class Merchant extends CI_Controller
         $this->load->view('template/layout_right_menu', $this->data);
     }
 
+    function remove_mua_picture()
+    {
+        if (isset($_POST) && !empty($_POST))
+        {
+            if ($this->input->post('button_action') == "hide_picture")
+            {
+                $login_id = $this->ion_auth->user()->row()->id;
+                $login_type = $this->session->userdata('user_group_id');
+                $merchant_id = $login_id;
+                if (check_correct_login_type($this->group_id_supervisor))
+                {                   
+                    $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;
+                }
+                $picture_id = $this->input->post('hid_picture_id');
+                $group_id_merchant = $this->config->item('group_id_merchant');
+                $group_id_supervisor = $this->config->item('group_id_supervisor');
+                $merchant_allowed_list = $this->m_custom->get_list_of_allow_id('merchant_user_album', 'merchant_id', $merchant_id, 'merchant_user_album_id', 'post_type', 'mer');
+
+                if (check_allowed_list($merchant_allowed_list, $picture_id))
+                {
+                    $merchant = $this->m_custom->getMerchantInfo($merchant_id);
+                    $data = array(
+                        'hide_flag' => 1,
+                    );    
+                    if ($this->m_custom->simple_update('merchant_user_album', $data, 'merchant_user_album_id', $picture_id))
+                    {
+                        $this->m_custom->remove_row_log('merchant_user_album', $picture_id, $login_id, $login_type);
+                        $this->m_merchant->mua_hide($picture_id);
+                    }
+                    redirect('all/merchant_dashboard/' . $merchant['slug'] . "/user-picture", 'refresh');                    
+                }
+            }
+        }
+        redirect('/', 'refresh');
+    }
+
     function upload_hotdeal()
     {
         if (!check_correct_login_type($this->main_group_id) && !check_correct_login_type($this->group_id_supervisor))
@@ -1877,6 +1913,7 @@ class Merchant extends CI_Controller
                             if ($this->m_custom->simple_update('advertise', $data, 'advertise_id', $hotdeal_id))
                             {
                                 $this->m_custom->remove_row_log('advertise', $hotdeal_id, $do_by_id, $do_by_type);
+                                $this->m_merchant->hotdeal_hide($hotdeal_id);
                                 $message_info = add_message_info($message_info, 'Hot Deal success remove.', $title);
                             }
                             else

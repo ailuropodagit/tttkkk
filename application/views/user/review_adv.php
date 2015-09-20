@@ -75,11 +75,11 @@ $(function(){
                                         {
                                             if ($i == round($user_rating))
                                             {
-                                                echo "<input class='star' type='radio' name='rating$advertise_id' disabled='disabled' value='" . $i . "' checked='checked'/>";
+                                                echo "<input class='star' type='radio' name='rating-$advertise_id' disabled='disabled' value='" . $i . "' checked='checked'/>";
                                             }
                                             else
                                             {
-                                                echo "<input class='star' type='radio' name='rating$advertise_id' disabled='disabled' value='" . $i . "'/>";
+                                                echo "<input class='star' type='radio' name='rating-$advertise_id' disabled='disabled' value='" . $i . "'/>";
                                             }
                                         } //end of for
                                         ?>
@@ -96,11 +96,11 @@ $(function(){
                                         {
                                             if ($i == round($average_rating))
                                             {
-                                                echo "<input class='star' type='radio' name='a-rating$advertise_id' disabled='disabled' value='" . $i . "' checked='checked'/>";
+                                                echo "<input class='star' type='radio' name='a-rating-$advertise_id' disabled='disabled' value='" . $i . "' checked='checked'/>";
                                             }
                                             else
                                             {
-                                                echo "<input class='star' type='radio' name='a-rating$advertise_id' disabled='disabled' value='" . $i . "'/>";
+                                                echo "<input class='star' type='radio' name='a-rating-$advertise_id' disabled='disabled' value='" . $i . "'/>";
                                             }
                                         } //end of for
                                         echo " from ". $rating_count . " users";

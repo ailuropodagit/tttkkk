@@ -14,6 +14,7 @@ $(function(){
 <div id="payment">
     <h1><?php echo $title; ?></h1>
     <div id='payment-content'>
+        <?php if($this->router->fetch_method() == 'review_merchant') { ?>
         <div id='payment-print'>
             <a href="<?php echo $user_review_like; ?>" >Like</a> | 
             <a href="<?php echo $user_review_comment; ?>" >Comment</a> | 
@@ -27,6 +28,7 @@ $(function(){
             }
             ?> - 
         </div><br/>
+         <?php } ?>
     <?php 
     
 if($review_list!=null){
@@ -41,11 +43,11 @@ if($review_list!=null){
 
         ?>
         <div id='advertise-list-box'>
-                    <?php if($this->router->fetch_method() != 'merchant_dashboard') { ?>
+      
                     <div id="advertise-list-title1">
                         <a href='<?php echo $merchant_dashboard_url ?>'> <?php echo $merchant_name ?></a>
                     </div>
-                    <?php } ?>
+
                     <div id="advertise-list-photo">
                         <div id="advertise-list-photo-box">
                             <a href='<?php echo $merchant_dashboard_url ?>'><img src='<?php echo base_url($this->config->item('album_merchant_profile') . $row['profile_image']) ?>'></a>
