@@ -668,7 +668,7 @@ class All extends CI_Controller
         {
             $current_url = $this->input->post('current_url');
             $act_history_id = $this->input->post('act_history_id');
-            $this->m_custom->activity_hide($act_history_id);
+            $this->m_custom->activity_comment_hide($act_history_id);
         }
         redirect($current_url, 'refresh');
     }

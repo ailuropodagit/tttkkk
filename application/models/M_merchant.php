@@ -6,7 +6,6 @@ if (!defined('BASEPATH'))
 class M_merchant extends CI_Model
 {
 
-    //To get all main category
     function getMerchant($merchant_id = 0, $slug = NULL, $company = NULL)
     {
         $group_id = $this->config->item('group_id_merchant');
@@ -412,6 +411,50 @@ class M_merchant extends CI_Model
         return $voucher;
     }
 
+    public function hotdeal_hide($advertise_id)
+    {
+        if ($this->ion_auth->logged_in())
+        {
+            $activity = $this->db->get_where('table_row_activity', array('table_row_id' => $advertise_id, 'table_type' => 'advertise'), 1)->row_array();
+            $login_id = $this->ion_auth->user()->row()->id;
+            $login_type = $this->session->userdata('user_group_id');
+
+            if ($activity['create_by'] == $login_id && $activity['create_by_type'] == $login_type)
+            {
+                
+            }
+            else
+            {
+                $mon_hide_type = 'adv';
+                $mon_table_id = $advertise_id;
+                $mon_table = 'advertise';
+                $this->m_custom->insert_row_monitor_process($mon_hide_type, $mon_table_id, $mon_table, $login_type);
+            }
+        }
+    }
+    
+    public function mua_hide($mua_id)
+    {
+        if ($this->ion_auth->logged_in())
+        {
+            $activity = $this->db->get_where('table_row_activity', array('table_row_id' => $mua_id, 'table_type' => 'merchant_user_album'), 1)->row_array();
+            $login_id = $this->ion_auth->user()->row()->id;
+            $login_type = $this->session->userdata('user_group_id');
+
+            if ($activity['create_by'] == $login_id && $activity['create_by_type'] == $login_type)  //mostly will not happen because the creater of mua is user
+            {
+                
+            }
+            else
+            {
+                $mon_hide_type = 'mua';
+                $mon_table_id = $mua_id;
+                $mon_table = 'merchant_user_album';
+                $this->m_custom->insert_row_monitor_process($mon_hide_type, $mon_table_id, $mon_table, $login_type);
+            }
+        }
+    }
+    
     public function transaction_history_insert($merchant_id, $trans_conf_id, $get_from_table_id, $get_from_table = 'activity_history', $allow_duplicate = 0, $amount_overwrite = 0)
     {
         $search_data = array(

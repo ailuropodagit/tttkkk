@@ -12,13 +12,40 @@
             <?php
             if (check_is_login())
             {
-                $user_id = $this->ion_auth->user()->row()->id;
-                $allowed_list = $this->m_custom->get_list_of_allow_id('merchant_user_album', 'user_id', $user_id, 'merchant_user_album_id', 'post_type', 'mer');
-                if (check_correct_login_type($this->config->item('group_id_user'), $allowed_list, $picture_id))
+                $group_id_user = $this->config->item('group_id_user');
+                
+                $login_id = $this->ion_auth->user()->row()->id;
+                $user_allowed_list = $this->m_custom->get_list_of_allow_id('merchant_user_album', 'user_id', $login_id, 'merchant_user_album_id', 'post_type', 'mer');
+                if (check_correct_login_type($group_id_user, $user_allowed_list, $picture_id))
                 {
-                    ?>
-                    <a href='<?php echo base_url() . "user/edit_merchant_picture/" . $picture_id ?>' >Edit Picture</a>
-                    <?php
+                    $edit_url = base_url() . "user/edit_merchant_picture/" . $picture_id;
+                    echo "<a href='".$edit_url."'>Edit Picture</a>";
+                }
+                
+                $group_id_merchant = $this->config->item('group_id_merchant');
+                $group_id_supervisor = $this->config->item('group_id_supervisor');
+                if (check_correct_login_type($group_id_merchant) || check_correct_login_type($group_id_supervisor))
+                {  
+                    $merchant_id = $login_id;
+                    if (check_correct_login_type($group_id_supervisor))
+                    {                   
+                        $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;
+                    }
+
+                    $merchant_allowed_list = $this->m_custom->get_list_of_allow_id('merchant_user_album', 'merchant_id', $merchant_id, 'merchant_user_album_id', 'post_type', 'mer');
+                    $hide_url = base_url() . "merchant/remove_mua_picture/" . $picture_id;
+
+                    if (check_allowed_list($merchant_allowed_list, $picture_id))
+                    {
+                        $action_url = base_url() . "merchant/remove_mua_picture";
+                        $confirm_message = "Confirm that you want to remove this picture that user upload for your company? ";
+                        ?>
+                        <form action="<?php echo $action_url; ?>" onSubmit="return confirm('<?php echo $confirm_message ?>')" method="post" accept-charset="utf-8">
+                        <?php
+                        echo "<input type='hidden' name='hid_picture_id' value='".$picture_id."' />";
+                        echo "<button name='button_action' type='submit' value='hide_picture'>Remove Picture</button>";
+                        echo form_close(); 
+                    }
                 }
             }
             ?>

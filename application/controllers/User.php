@@ -1207,6 +1207,7 @@ class User extends CI_Controller
 
         $message_info = '';
         $user_id = $this->ion_auth->user()->row()->id;
+        $login_type = $this->session->userdata('user_group_id');
         $user_data = $this->m_custom->get_one_table_record('users', 'id', $user_id);
 
         if (!IsNullOrEmptyString($slug))
@@ -1284,6 +1285,7 @@ class User extends CI_Controller
                             $new_id = $this->m_custom->get_id_after_insert('merchant_user_album', $data);
                             if ($new_id)
                             {
+                                $this->m_custom->insert_row_log('merchant_user_album', $new_id, $user_id, $login_type);
                                 $this->m_user->candie_history_insert(4, $new_id, 'merchant_user_album');
                                 $this->m_merchant->transaction_history_insert($post_merchant_id, 14, $new_id, 'merchant_user_album');
                                 $message_info = add_message_info($message_info, 'Image for merchant ' . $this->m_custom->display_users($post_merchant_id) . ' success create.', $post_title);

@@ -1001,6 +1001,30 @@ class M_custom extends CI_Model
         }
     }
 
+    public function activity_comment_hide($act_history_id)
+    {
+        $this->m_custom->activity_hide($act_history_id);
+        if ($this->ion_auth->logged_in())
+        {
+            $activity = $this->db->get_where('activity_history', array('act_history_id' => $act_history_id), 1)->row_array();
+
+            $login_id = $this->ion_auth->user()->row()->id;
+            $login_type = $this->session->userdata('user_group_id');
+
+            if ($activity['act_by_id'] == $login_id && $activity['act_by_type'] == $login_type)
+            {
+                
+            }
+            else
+            {
+                $mon_hide_type = 'com';
+                $mon_table_id = $act_history_id;
+                $mon_table = 'activity_history';
+                $this->m_custom->insert_row_monitor_process($mon_hide_type, $mon_table_id, $mon_table, $login_type);
+            }
+        }
+    }
+
     //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
     public function activity_like_is_exist($refer_id, $refer_type)
     {
@@ -1343,6 +1367,69 @@ class M_custom extends CI_Model
             }
         }
         return FALSE;
+    }
+
+    
+    public function insert_row_monitor_process($mon_hide_type, $mon_table_id, $mon_table, $login_type)
+    {
+        $group_id_merchant = $this->config->item('group_id_merchant');
+        $group_id_supervisor = $this->config->item('group_id_supervisor');
+        $group_id_admin = $this->config->item('group_id_admin');
+        $group_id_worker = $this->config->item('group_id_worker');
+
+        if ($login_type == $group_id_supervisor)
+        {
+            $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;
+            $this->m_custom->insert_row_monitor($mon_hide_type, false, $merchant_id, $group_id_merchant, $mon_table_id, $mon_table);        //for this supervisor merchant monitor     
+            $this->m_custom->insert_row_monitor($mon_hide_type, true, 0, $group_id_admin, $mon_table_id, $mon_table);            //for all admin monitor
+            $this->m_custom->insert_row_monitor($mon_hide_type, true, 0, $group_id_worker, $mon_table_id, $mon_table);           //for all worker monitor
+        }
+        else if ($login_type == $group_id_merchant)
+        {
+            $this->m_custom->insert_row_monitor($mon_hide_type, true, 0, $group_id_admin, $mon_table_id, $mon_table);            //for all admin monitor
+            $this->m_custom->insert_row_monitor($mon_hide_type, true, 0, $group_id_worker, $mon_table_id, $mon_table);           //for all worker monitor
+        }
+    }
+    
+    public function insert_row_monitor($mon_hide_type, $mon_is_public, $mon_for_id, $mon_for_type, $mon_table_id, $mon_table)
+    {
+        if ($this->ion_auth->logged_in())
+        {
+            $login_id = $this->ion_auth->user()->row()->id;
+            $login_type = $this->session->userdata('user_group_id');
+            $the_data = array(
+                'mon_hide_type' => $mon_hide_type,
+                'mon_is_public' => $mon_is_public,
+                'mon_for_id' => $mon_for_id,
+                'mon_for_type' => $mon_for_type,
+                'mon_table_id' => $mon_table_id,
+                'mon_table' => $mon_table,
+                'hide_by' => $login_id,
+                'hide_by_type' => $login_type,
+            );
+            $this->db->insert('monitoring', $the_data);
+        }
+    }
+
+    public function update_row_monitor($mon_id, $mon_status, $mon_remark)
+    {
+        if ($this->ion_auth->logged_in())
+        {
+            $login_id = $this->ion_auth->user()->row()->id;
+            $login_type = $this->session->userdata('user_group_id');
+            $query = $this->db->get_where('monitoring', array('mon_id' => $mon_id), 1);
+            if ($query->num_rows() == 1)
+            {
+                $the_data = array(
+                    'mon_status' => $mon_status,
+                    'mon_remark' => $mon_remark,
+                    'review_by' => $login_id,
+                    'review_by_type' => $login_type,
+                );
+                $this->db->where('mon_id', $mon_id);
+                $this->db->update('monitoring', $the_data);
+            }
+        }
     }
 
     public function insert_row_log($the_table, $new_id, $do_by = NULL, $do_by_type = NULL)
