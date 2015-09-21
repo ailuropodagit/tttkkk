@@ -181,7 +181,7 @@ class M_custom extends CI_Model
     }
 
     //Get one static option text by it option id
-    public function display_users($user_id = NULL, $with_icon = 0)
+    public function display_users($user_id = NULL, $with_icon = 0, $want_supervisor = 0)
     {
         if (IsNullOrEmptyString($user_id))
         {
@@ -232,9 +232,16 @@ class M_custom extends CI_Model
         }
         else if ($return->main_group_id == $this->config->item('group_id_supervisor'))
         {
-            $merchant_query = $this->db->get_where('users', array('id' => $return->su_merchant_id));
-            $merchant_row = $merchant_query->row_array();
-            return $prefix . $merchant_row['company'];
+            if ($want_supervisor == 1)
+            {
+                return $prefix . $return->username;
+            }
+            else
+            {
+                $merchant_query = $this->db->get_where('users', array('id' => $return->su_merchant_id));
+                $merchant_row = $merchant_query->row_array();
+                return $prefix . $merchant_row['company'];
+            }
         }
         else
         {
@@ -1074,6 +1081,23 @@ class M_custom extends CI_Model
         }
     }
 
+    public function activity_get_one_row($activity_id, $ignore_hide = 0)
+    {
+        if ($ignore_hide != 0)
+        {
+            $this->db->where('hide_flag', 0);
+        }
+        $query = $this->db->get_where('activity_history', array('act_history_id' => $activity_id));
+        if ($query->num_rows() == 1)
+        {
+            return $query->row_array();
+        }
+        else
+        {
+            return FALSE;
+        }
+    }
+
     //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
     public function merchant_like_count($merchant_id, $refer_type)
     {
@@ -1369,7 +1393,49 @@ class M_custom extends CI_Model
         return FALSE;
     }
 
-    
+    //to do todo
+    public function display_row_monitor()
+    {
+        if ($this->ion_auth->logged_in())
+        {
+            $login_id = $this->ion_auth->user()->row()->id;
+            $login_type = $this->session->userdata('user_group_id');
+            
+            $condition = "(mon_is_public = true or (mon_is_public = false and mon_for_id = " . $login_id . "))";
+            $this->db->where($condition);
+            $mon_query = $this->db->get_where('monitoring', array('mon_for_type' => $login_type, 'mon_status' => 0));
+            $mon_result = $mon_query->result_array();
+            $result = array();
+            foreach ($mon_result as $row)
+            {
+                $hide_item_desc = "";
+                $hide_item_type = "";
+                switch ($row['mon_hide_type'])
+                {
+                    case 'com':
+                        $refer_row = $this->m_custom->activity_get_one_row($row['mon_table_id']);
+                        $hide_item_type = "comment";
+                        break;
+                    case 'mua':
+                        $refer_row = $this->m_custom->getOneMUA($row['mon_table_id']);
+                        $hide_item_type = "picture upload for merchant";
+                        break;
+                }                
+                
+                if ($refer_row != FALSE)
+                {
+                    $extra_info = array(
+                        'hide_item_type' => $hide_item_type,
+                        'hide_by_text' => $this->m_custom->display_users($row['hide_by'], 0, 1),
+                        'hide_by_type_text' => $this->m_custom->display_users_groups($row['hide_by_type'], 'description'),
+                    );
+                    $result[] = $row + $extra_info + $refer_row;
+                }
+            }
+            return $result;
+        }
+    }
+
     public function insert_row_monitor_process($mon_hide_type, $mon_table_id, $mon_table, $login_type)
     {
         $group_id_merchant = $this->config->item('group_id_merchant');

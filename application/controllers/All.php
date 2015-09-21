@@ -426,7 +426,6 @@ class All extends CI_Controller
         }
     }
 
-    //To do todo add submit way, and email send
     function user_redeem_voucher()
     {
         $current_url = '/';
