@@ -460,15 +460,30 @@ class M_custom extends CI_Model
             return FALSE;
         }
 
-        return $query->row_array();
+        $return = $query->row_array();
+        if ($this->m_merchant->have_money($return['merchant_id']))
+        {
+            return $return;
+        }
+        else
+        {
+            return FALSE;
+        }
     }
 
     //To find one record in DB with one keyword
     public function getOneMUA($mua_id)
     {
-        $the_row = $this->m_custom->get_one_table_record('merchant_user_album', 'merchant_user_album_id', $mua_id, 1);
+        $return = $this->m_custom->get_one_table_record('merchant_user_album', 'merchant_user_album_id', $mua_id, 1);
 
-        return $the_row;
+        if ($this->m_merchant->have_money($return['merchant_id']))
+        {
+            return $return;
+        }
+        else
+        {
+            return FALSE;
+        }
     }
 
     //To find one record in DB with one keyword
@@ -514,7 +529,15 @@ class M_custom extends CI_Model
             $query = $this->db->get_where('advertise', array('advertise_type' => $advertise_type, 'hide_flag' => 0));
         }
         //var_dump($query->result_array());
-        return $query->result_array();
+        $return = $query->result_array();
+        $return_final = array();
+        foreach($return as $row){          
+            if($this->m_merchant->have_money($row['merchant_id'])){
+                $return_final[] = $row;
+            }
+        }
+        
+        return $return_final;
     }
 
     //To get merchant promotion list with branch filter or history only
@@ -583,7 +606,16 @@ class M_custom extends CI_Model
 
         $this->db->order_by("merchant_user_album_id", "desc");
         $query = $this->db->get_where('merchant_user_album', array('post_type' => 'mer', 'hide_flag' => 0));
-        return $query->result_array();
+        
+        $return = $query->result_array();
+        $return_final = array();
+        foreach($return as $row){          
+            if($this->m_merchant->have_money($row['merchant_id'])){
+                $return_final[] = $row;
+            }
+        }
+        
+        return $return_final;       
     }
 
     function getAlbumUser($user_id = NULL)

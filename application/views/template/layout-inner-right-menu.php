@@ -4,6 +4,7 @@
         if ($this->session->userdata('user_group_id') == $this->config->item('group_id_merchant'))
         {            
             //MERCHANT SIDEBAR MENU
+            $login_user_id = $this->session->userdata('user_id');
             $dashboard = base_url() . 'all/merchant_dashboard/' . generate_slug($this->session->userdata('company_name'));
             $merchant_album = base_url() . 'all/album_merchant/' . generate_slug($this->session->userdata('company_name'));
             $fetch_method = $this->router->fetch_method();
@@ -16,7 +17,7 @@
             <li><a href='<?php echo $merchant_album; ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'album_merchant'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Picture</a></li>
             <li><a href='<?php echo base_url(); ?>merchant/merchant_redemption_page' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'merchant_redemption_page'){ echo "layout-inner-right-menu-bar-active"; } ?>'>User Redemption</a></li>
             <li><a href='<?php echo base_url(); ?>merchant/analysis_report' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'analysis_report'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Analysis Report</a></li>
-            <li><a href='<?php echo base_url(); ?>merchant/payment_page' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'payment_page'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Payment</a></li>
+            <li><a href='<?php echo base_url(); ?>merchant/payment_page' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'payment_page'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Payment (<?php echo 'RM '.$this->m_merchant->merchant_check_balance($login_user_id); ?>)</a></li>
             <?php
         }
         else if ($this->session->userdata('user_group_id') == $this->config->item('group_id_supervisor'))

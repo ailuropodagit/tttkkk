@@ -338,6 +338,14 @@ class M_merchant extends CI_Model
         return number_format($current_balance, 2);
     }
 
+    public function have_money($merchant_id){       
+        if($this->m_merchant->merchant_check_balance($merchant_id)<$this->config->item('merchant_minimum_balance') && $this->config->item('froze_account_activate')==1){
+            return FALSE;
+        }else{
+            return TRUE;
+        }        
+    }
+    
     public function user_redemption_done($redeem_id, $mark_expired = 0)
     {
         if (check_correct_login_type($this->config->item('group_id_merchant')) || check_correct_login_type($this->config->item('group_id_supervisor')))

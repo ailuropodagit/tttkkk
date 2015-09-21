@@ -46,6 +46,8 @@ $config['user_max_picture_per_day'] = 15;
 
 $config['keppo_email_domain'] = '@keppo.my';
 $config['keppo_admin_email'] = 'wilkinwilly999@gmail.com,weechiat.teo@hotmail.com';
+$config['merchant_minimum_balance'] = 50;
+$config['froze_account_activate'] = 0;
 
 $config['custom_per_page'] = '4';
 
