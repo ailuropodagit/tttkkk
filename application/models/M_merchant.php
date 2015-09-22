@@ -394,16 +394,16 @@ class M_merchant extends CI_Model
 
     public function generate_voucher($id)
     {
-        $result = $this->get_one_table_record('users', 'id', $id, 1);
+        $result = $this->m_custom->get_one_table_record('users', 'id', $id, 1);
         $voucher = '';
-        $web_setting = $this->get_one_table_record('web_setting', 'set_type', 'voucher_counter', 1);
+        $web_setting = $this->m_custom->get_one_table_record('web_setting', 'set_type', 'voucher_counter', 1);
         $counter = $web_setting['set_value'];
         if ($result)
         {
             do
             {
                 $voucher = strtoupper(substr($result['slug'], 0, 3)) . date('Ymd') . str_pad($counter, 3, "0", STR_PAD_LEFT);
-                $check_unique = $this->check_is_value_unique('advertise', 'voucher', $voucher);
+                $check_unique = $this->m_custom->check_is_value_unique('advertise', 'voucher', $voucher);
                 $counter += 1;
             } while (!$check_unique);
             if ($counter == '1000')

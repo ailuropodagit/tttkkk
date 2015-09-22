@@ -389,15 +389,15 @@ class All extends CI_Controller
         $config['next_link'] = ' Next ';
         $config['prev_link'] = ' Previous ';
         $config["base_url"] = $base_url;
-        $config["total_rows"] = count($this->m_custom->getAdvertise('all', NULL, $merchant_id, 1));  //To get the total row              
+        $config["total_rows"] = count($this->m_custom->getAdvertise('hot', NULL, $merchant_id, 1));  //To get the total row              
         $this->pagination->initialize($config);
         $this->data["paging_links"] = $this->pagination->create_links();
         $start_index = $page == 1 ? $page : (($page - 1) * $config["per_page"]);  //For calculate page number to start index
-
-        $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('all', NULL, $merchant_id, 1, $config["per_page"], $start_index);   //To get the limited result only for that current page
-
-        $this->data['title'] = "Merchant Album";
+        
         $this->data['message'] = $this->session->flashdata('message');
+        
+        $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('hot', NULL, $merchant_id, 1, $config["per_page"], $start_index);   //To get the limited result only for that current page
+        $this->data['title'] = "Merchant Album";   
         $this->data['page_path_name'] = 'all/advertise_list';
 
         if ($this->ion_auth->logged_in())
@@ -410,6 +410,62 @@ class All extends CI_Controller
         }
     }
 
+    function album_redemption($slug = NULL, $page = 1)
+    {
+        $this->load->library("pagination");
+        $config = array();
+
+        $merchant_id = 0;
+        $base_url = base_url() . "all/album_redemption";
+        if ($slug != NULL)
+        {
+            $the_row = $this->m_custom->get_one_table_record('users', 'slug', $slug);
+            $merchant_id = $the_row->id;
+            $base_url = base_url() . "all/album_redemption/" . $slug;
+        }
+        else if (check_correct_login_type($this->group_id_merchant))
+        {
+            $merchant_id = $this->ion_auth->user()->row()->id;
+            $the_row = $this->m_custom->get_one_table_record('users', 'id', $merchant_id);
+            $base_url = base_url() . "all/album_redemption/" . $the_row->slug;
+        }
+        else if (check_correct_login_type($this->group_id_supervisor))
+        {
+            $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;    //For supervisor is taking different id for it merchant id
+            $the_row = $this->m_custom->get_one_table_record('users', 'id', $merchant_id);
+            $base_url = base_url() . "all/album_redemption/" . $the_row->slug;
+        }
+
+        //For setting the pagination function
+        $config["per_page"] = $this->config->item('custom_per_page');
+        $config['num_links'] = 5;
+        $config['use_page_numbers'] = TRUE;
+        $config['num_tag_open'] = '&nbsp';
+        $config['num_tag_close'] = '&nbsp';
+        $config['next_link'] = ' Next ';
+        $config['prev_link'] = ' Previous ';
+        $config["base_url"] = $base_url;
+        $config["total_rows"] = count($this->m_custom->getAdvertise('pro', NULL, $merchant_id, 1));  //To get the total row              
+        $this->pagination->initialize($config);
+        $this->data["paging_links"] = $this->pagination->create_links();
+        $start_index = $page == 1 ? $page : (($page - 1) * $config["per_page"]);  //For calculate page number to start index
+        
+        $this->data['message'] = $this->session->flashdata('message');
+        
+        $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('pro', NULL, $merchant_id, 1, $config["per_page"], $start_index);   //To get the limited result only for that current page
+        $this->data['title'] = "Merchant Album";   
+        $this->data['page_path_name'] = 'all/advertise_list';
+
+        if ($this->ion_auth->logged_in())
+        {
+            $this->load->view('template/layout_right_menu', $this->data);
+        }
+        else
+        {
+            $this->load->view('template/layout', $this->data);
+        }
+    }
+    
     //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
     function user_click_like($refer_id, $refer_type)
     {
@@ -672,7 +728,7 @@ class All extends CI_Controller
         redirect($current_url, 'refresh');
     }
 
-    public function merchant_dashboard($slug = NULL, $user_picture = NULL)
+    public function merchant_dashboard($slug = NULL, $bottom_part = NULL)
     {
         $the_row = $this->m_custom->get_one_table_record('users', 'slug', $slug);
         if ($the_row)
@@ -689,20 +745,28 @@ class All extends CI_Controller
             $this->data['message'] = "";
             $this->data['page_path_name'] = 'merchant/dashboard';
             $this->data['offer_deal'] = base_url() . 'all/merchant-dashboard/' . $slug;
-            $this->data['user_picture'] = base_url() . 'all/merchant-dashboard/' . $slug . '/user-picture';
+            $this->data['candie_promotion'] = base_url() . 'all/merchant-dashboard/' . $slug . '/promotion';
+            $this->data['user_picture'] = base_url() . 'all/merchant-dashboard/' . $slug . '/picture';
             $this->data['user_upload_for_merchant'] = base_url() . 'user/upload_for_merchant/' . $slug;
             $this->data['show_expired'] = "<a href='" . base_url() . "all/album_merchant/'. $slug>Show Expired</a><br/>";
-            $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('all', NULL, $the_row->id);
-            if ($user_picture == NULL)
+            
+            if ($bottom_part == NULL)
             {
+                $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('hot', NULL, $the_row->id);
                 $this->data['title'] = "Offer Deals";
                 $this->data['bottom_path_name'] = 'all/advertise_list';
             }
-            else
+            else if($bottom_part == 'picture')
             {
                 $this->data['album_list'] = $this->m_custom->getAlbumUserMerchant(NULL, $the_row->id);
                 $this->data['title'] = "User's Pictures";
                 $this->data['bottom_path_name'] = 'all/album_user_merchant';
+            }
+            else if($bottom_part == 'promotion')
+            {
+                $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('pro', NULL, $the_row->id);
+                $this->data['title'] = "Candie Promotion";
+                $this->data['bottom_path_name'] = 'all/advertise_list';
             }
             if ($this->ion_auth->logged_in())
             {
@@ -727,10 +791,12 @@ class All extends CI_Controller
             {
                 $search_word = $this->input->post('search_word');
                 $search_state = $this->input->post('me_state_id');
-                if (!IsNullOrEmptyString($search_word))
+                if (IsNullOrEmptyString($search_word))
                 {
-                    redirect('all/search_result/'.$search_word.'/'.$search_state, 'refresh');
+                    $search_word = 0;
                 }
+                redirect('all/search_result/'.$search_word.'/'.$search_state, 'refresh');
+
             }
         }
         redirect('/','refresh');

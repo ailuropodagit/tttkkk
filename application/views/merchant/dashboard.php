@@ -57,6 +57,7 @@
         
         <div id="dashboard-navigation">
             <a href="<?php echo $offer_deal; ?>" >Offer deal</a> &nbsp; | &nbsp;
+            <a href="<?php echo $candie_promotion; ?>" >Redemption</a> &nbsp; | &nbsp;
             <a href="<?php echo $user_picture; ?>" > User's Picture</a>
             <?php
             if (check_correct_login_type($this->config->item('group_id_user')))

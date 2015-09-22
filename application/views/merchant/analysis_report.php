@@ -131,6 +131,7 @@
                 <span id="candie-promotion-form-go-button"><button name="button_action" type="submit" value="search_history">Go</button></span>
             </div>
         <?php echo form_close(); ?>
+    <div style="float:right"><?php echo 'Report Period : ' . $first_day . " to " . $last_day; ?></div>
     <div id="container_gender" style="min-width: 400px; height: 400px; margin: 0 auto"></div><br/><br/><br/>
         
         <div id="container_race" style="min-width: 400px; height: 400px; margin: 0 auto"></div><br/><br/><br/>

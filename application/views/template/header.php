@@ -130,7 +130,7 @@
                         <div id="search-content-box-content">
                             <?php echo form_open('all/home_search');?>
                             <div id="search-box-block1">
-                                <input type="text" placeholder="Search: Tony Roma's, Vans, ChatTime" name="search_word">
+                                <input type="text" placeholder="Search: Merchant, Hot Deal, Promotion" name="search_word">
                                 <span id="search-icon"><i class="fa fa-search"></i></span>
                             </div>
                             <div id="search-box-block2">

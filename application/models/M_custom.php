@@ -1202,6 +1202,15 @@ class M_custom extends CI_Model
         }
     }
 
+    public function generate_supervisor_link($supervisor_id = NULL, $with_icon = 0)
+    {
+        $user_name = $this->m_custom->display_users($supervisor_id, $with_icon);
+        $query = $this->db->get_where('users', array('id' => $supervisor_id));
+        $user_row = $query->row_array();
+        $merchant = $this->m_merchant->getMerchant($user_row['su_merchant_id']);
+        return "<a target='_blank' href='" . base_url() . "all/merchant_dashboard/" . $merchant['slug'] . "'>" . $user_name . "</a>";
+    }
+    
     public function generate_merchant_link($merchant_id = NULL, $with_icon = 0)
     {
         $user_name = $this->m_custom->display_users($merchant_id, $with_icon);
@@ -1212,7 +1221,25 @@ class M_custom extends CI_Model
     public function generate_user_link($user_id = NULL, $with_icon = 0)
     {
         $user_name = $this->m_custom->display_users($user_id, $with_icon);
-        return "<a target='_blank' href='" . base_url() . "all/user_dashboard/" . $user_id . "'>" . $user_name . "</a>";
+        $query = $this->db->get_where('users', array('id' => $user_id));
+        if ($query->num_rows() !== 1)
+        {
+            return '';
+        }
+
+        $user_row = $query->row_array();
+        if ($user_row['main_group_id'] == $this->config->item('group_id_merchant'))
+        {
+            return $this->m_custom->generate_merchant_link($user_id, 1);
+        }
+        else if ($user_row['main_group_id'] == $this->config->item('group_id_supervisor'))
+        {           
+            return $this->m_custom->generate_supervisor_link($user_id, 1);
+        }
+        else if ($user_row['main_group_id'] == $this->config->item('group_id_user'))
+        {
+            return "<a target='_blank' href='" . base_url() . "all/user_dashboard/" . $user_id . "'>" . $user_name . "</a>";
+        }
     }
 
     public function generate_advertise_link($advertise_id = NULL)
@@ -1267,8 +1294,8 @@ class M_custom extends CI_Model
         if (!IsNullOrEmptyString($search_value))
         {
             $search_word = $this->db->escape('%' . $search_value . '%');
-            $this->db->where("(`company` LIKE $search_word OR `slug` LIKE $search_word)");
-            //$this->db->where("(`company` LIKE $search_word OR `slug` LIKE $search_word OR `address` LIKE $search_word)");
+            //$this->db->where("(`company` LIKE $search_word OR `slug` LIKE $search_word)");
+            $this->db->where("(`company` LIKE $search_word OR `slug` LIKE $search_word OR `address` LIKE $search_word)");
         }
 
         if ($state_id != 0)

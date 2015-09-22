@@ -613,6 +613,49 @@ if (!function_exists('RemoveLastComma'))
 
 if (!function_exists('displayDate'))
 {
+
+    function displayFirstDay($year = '', $month = '')
+    {
+        if (empty($month))
+        {
+            $month = date('m');
+        }
+        if (empty($year))
+        {
+            $year = date('Y');
+        }
+        $result = strtotime("{$year}-{$month}-01");
+        return date('d-m-Y', $result);
+    }
+
+}
+
+if (!function_exists('displayDate'))
+{
+
+    function displayLastDay($year = '', $month = '', $until_today = 0)
+    {
+        if (empty($month))
+        {
+            $month = date('m');
+        }
+        if (empty($year))
+        {
+            $year = date('Y');
+        }
+        $add_argument = '+1 month';
+        if($until_today == 1 && $month == date('m') && $year == date('Y')){
+            $add_argument = "+" . get_part_of_date('day') . " day";
+        }
+        $result = strtotime("{$year}-{$month}-01");
+        $result = strtotime('-1 second', strtotime($add_argument, $result));
+        return date('d-m-Y', $result);
+    }
+
+}
+
+if (!function_exists('displayDate'))
+{
    function displayDate( $date , $with_time = 0, $db_format = 0)
     {
        if(IsNullOrEmptyString($date)){

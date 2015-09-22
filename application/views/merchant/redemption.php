@@ -45,7 +45,7 @@
                     ?>
                     <th>Name</th>
                     <th>IC Number</th>
-                    <th>Phone</th>
+                    <th>Date of Birth</th>
                     <th>Email</th>
                     <th>Expire Date</th>
                 </tr>
@@ -80,7 +80,7 @@
                         $user_url = $this->m_custom->generate_user_link($user_info['id']);
                         echo "<td>" . $user_url . "</td>";
                         echo "<td>" . $user_info['us_ic'] . "</td>";
-                        echo "<td>" . $user_info['phone'] . "</td>";
+                        echo "<td>" . displayDate($user_info['us_birthday']) . "</td>";
                         echo "<td>" . $user_info['email'] . "</td>";
                         echo "<td>" . displayDate($redeem_row['expired_date']) . "</td>";
                         ?>

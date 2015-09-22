@@ -1659,7 +1659,7 @@ class Merchant extends CI_Controller
                     }
                 }
                 $this->session->set_flashdata('message', $message_info);
-                redirect('merchant/edit_hotdeal/' . $hotdeal_id, 'refresh');
+                redirect('all/advertise/' . $hotdeal_id, 'refresh');
             }
         }
 
@@ -1742,7 +1742,7 @@ class Merchant extends CI_Controller
                         $this->m_custom->remove_row_log('merchant_user_album', $picture_id, $login_id, $login_type);
                         $this->m_merchant->mua_hide($picture_id);
                     }
-                    redirect('all/merchant_dashboard/' . $merchant['slug'] . "/user-picture", 'refresh');                    
+                    redirect('all/merchant_dashboard/' . $merchant['slug'] . "/picture", 'refresh');                    
                 }
             }
         }
@@ -2190,7 +2190,8 @@ class Merchant extends CI_Controller
                 'name' => 'the_year',
                 'id' => 'the_year',
             );
-            $this->data['the_year_selected'] = empty($search_year) ? get_part_of_date('year') : $search_year;
+            $selected_year = empty($search_year) ? get_part_of_date('year') : $search_year;
+            $this->data['the_year_selected'] = $selected_year;
 
             $month_list = $this->ion_auth->get_static_option_list('month');
             $this->data['month_list'] = $month_list;
@@ -2198,7 +2199,8 @@ class Merchant extends CI_Controller
                 'name' => 'the_month',
                 'id' => 'the_month',
             );
-            $this->data['the_month_selected'] = empty($search_month) ? get_part_of_date('month') : $search_month;
+            $selected_month = empty($search_month) ? get_part_of_date('month') : $search_month;
+            $this->data['the_month_selected'] = $selected_month;
 
             $adv_type_list = array(
                 '' => 'All Advertise',
@@ -2223,6 +2225,11 @@ class Merchant extends CI_Controller
             );
             $this->data['the_new_user_selected'] = empty($search_new_user) ? "" : $search_new_user;
 
+            $first_day = displayFirstDay($selected_year, $selected_month);
+            $last_day = displayLastDay($selected_year, $selected_month, 1);
+            $this->data['first_day'] = $first_day;
+            $this->data['last_day'] = $last_day;
+            
             $this->data['message'] = $this->session->flashdata('message');
             $this->data['page_path_name'] = 'merchant/analysis_report';
             $this->load->view('template/layout_right_menu', $this->data);

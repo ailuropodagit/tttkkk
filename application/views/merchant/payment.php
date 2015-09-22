@@ -4,6 +4,7 @@
 
 <div id="payment">
     <h1><?php echo "Payment"; ?></h1>
+    <h1 style="float:right;">Current Balance : RM <?php echo $this_month_balance; ?></h1>
     <div id='payment-content'>
         
         <div id='payment-print'>
