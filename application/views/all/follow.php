@@ -13,23 +13,23 @@ $image_path = $this->album_user_profile;
             if($this->router->fetch_method() == 'follower')
             {
                 $follow_empty = 'No Follower';
-                ?><a href="#">Follower</a><?php
+                ?><span id='follow-navigation-current'>Follower</span><?php
             }
             else
             {
-                ?><a href="<?php echo base_url() ?>user/follower">Follower</a><?php
+                ?><a href="<?php echo base_url() ?>all/follower">Follower</a><?php
             }
             ?>
-            &nbsp;|&nbsp;
+            <span id='follow-navigation-separator'>|</span>
             <?php 
             if($this->router->fetch_method() == 'following')
             {
                 $follow_empty = 'No Following';
-                ?><a href='#'>Following</a><?php
+                ?><span id='follow-navigation-current'>Following</span><?php
             }
             else
             {
-                ?><a href="<?php echo base_url() ?>user/following">Following</a><?php
+                ?><a href="<?php echo base_url() ?>all/following">Following</a><?php
             }
             ?>
         </div>

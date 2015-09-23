@@ -3,7 +3,6 @@
 <div id="dashboard">
     <h1>Dashboard</h1>
     <div id="dashboard-content">
-        
         <div id="dashboard-photo">
             <?php            
             if(IsNullOrEmptyString($image))
@@ -20,7 +19,6 @@
             }
             ?>
         </div>
-        
         <div id="dashboard-info">
             <div id="dashboard-info-title">
                 <?php echo $company_name; ?>
@@ -52,9 +50,22 @@
                     </tr>
                 </table>
             </div>
+            <div id="dashboard-info-followers-following">
+                <?php
+                //FOLLOWER
+                $num_rows_user_follow_follower =  $query_user_follow_follower->num_rows();
+                //FOLLOWING
+                $num_rows_user_follow_following =  $query_user_follow_following->num_rows();
+                ?>
+                <div id="dashboard-info-followers">
+                    Follower : <a href='<?php echo base_url() ?>all/follower/<?php echo $users_id ?>'><?php echo $num_rows_user_follow_follower ?></a>
+                </div>
+                <div id="dashboard-info-following">
+                    Following : <a href='<?php echo base_url() ?>all/following/<?php echo $users_id ?>'><?php echo $num_rows_user_follow_following ?></a>
+                </div>
+            </div>
         </div>
         <div id="float-fix"></div>
-        
         <div id="dashboard-navigation">
             <a href="<?php echo $offer_deal; ?>" >Offer deal</a> &nbsp; | &nbsp;
             <a href="<?php echo $candie_promotion; ?>" >Redemption</a> &nbsp; | &nbsp;
@@ -70,6 +81,5 @@
             ?>
         </div>
         <div id="float-fix"></div>
-        
     </div>
 </div>

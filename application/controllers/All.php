@@ -750,6 +750,15 @@ class All extends CI_Controller
             $this->data['user_upload_for_merchant'] = base_url() . 'user/upload_for_merchant/' . $slug;
             $this->data['show_expired'] = "<a href='" . base_url() . "all/album_merchant/'. $slug>Show Expired</a><br/>";
             
+            $users_id = $this->ion_auth->user()->row()->id;
+            $this->data['users_id'] = $users_id;
+            //QUERY USER FOLLOW FOLLOWER
+            $where_user_follow_follower = array('follow_to_id'=>$users_id);
+            $this->data['query_user_follow_follower'] = $this->albert_model->get_user_follow($where_user_follow_follower);
+            //QUERY USER FOLLOW FOLLOWING
+            $where_user_follow_following = array('follow_from_id'=>$users_id);
+            $this->data['query_user_follow_following'] = $this->albert_model->get_user_follow($where_user_follow_following);
+            
             if ($bottom_part == NULL)
             {
                 $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('hot', NULL, $the_row->id);
@@ -780,42 +789,6 @@ class All extends CI_Controller
         else
         {
             redirect('/', 'refresh');
-        }
-    }
-
-    public function home_search()
-    {
-        if (isset($_POST) && !empty($_POST))
-        {
-            if ($this->input->post('button_action') == "search")
-            {
-                $search_word = $this->input->post('search_word');
-                $search_state = $this->input->post('me_state_id');
-                if (IsNullOrEmptyString($search_word))
-                {
-                    $search_word = 0;
-                }
-                redirect('all/search_result/'.$search_word.'/'.$search_state, 'refresh');
-
-            }
-        }
-        redirect('/','refresh');
-    }
-
-    public function search_result($search_value = NULL, $state_id = 0){       
-        $this->data['home_search_merchant'] = $this->m_custom->home_search_merchant($search_value, $state_id);
-        $this->data['home_search_hotdeal'] = $this->m_custom->home_search_hotdeal($search_value, $state_id);
-        $this->data['home_search_promotion'] = $this->m_custom->home_search_promotion($search_value, $state_id);
-        
-        $this->data['page_path_name'] = 'all/search_result';
-        
-        if ($this->ion_auth->logged_in())
-        {
-            $this->load->view('template/layout_right_menu', $this->data);
-        }
-        else
-        {
-            $this->load->view('template/layout', $this->data);
         }
     }
     
@@ -906,6 +879,70 @@ class All extends CI_Controller
         else
         {
             redirect('/', 'refresh');
+        }
+    }
+    
+    //FOLLOWER
+    public function follower($users_id = NULL)
+    {
+        if(!$users_id)
+        {
+            $users_id = $this->ion_auth->user()->row()->id;
+        }
+        $where_user_follow = array('follow_to_id'=>$users_id);
+        $data['query_user_follow'] = $this->albert_model->get_follower($where_user_follow);
+        $data['page_path_name'] = 'all/follow';
+        $data['page_title'] = 'Follower';
+        $this->load->view('template/layout_right_menu', $data);
+    }
+       
+    //FOLLOWING
+    public function following($users_id = NULL)
+    {
+        if(!$users_id)
+        {
+            $users_id = $this->ion_auth->user()->row()->id;
+        }
+        $where_user_follow = array('follow_from_id'=>$users_id);
+        $data['query_user_follow'] = $this->albert_model->get_following($where_user_follow);
+        $data['page_path_name'] = 'all/follow';
+        $data['page_title'] = 'Following';
+        $this->load->view('template/layout_right_menu', $data);
+    }
+    
+    public function home_search()
+    {
+        if (isset($_POST) && !empty($_POST))
+        {
+            if ($this->input->post('button_action') == "search")
+            {
+                $search_word = $this->input->post('search_word');
+                $search_state = $this->input->post('me_state_id');
+                if (IsNullOrEmptyString($search_word))
+                {
+                    $search_word = 0;
+                }
+                redirect('all/search_result/'.$search_word.'/'.$search_state, 'refresh');
+
+            }
+        }
+        redirect('/','refresh');
+    }
+
+    public function search_result($search_value = NULL, $state_id = 0){       
+        $this->data['home_search_merchant'] = $this->m_custom->home_search_merchant($search_value, $state_id);
+        $this->data['home_search_hotdeal'] = $this->m_custom->home_search_hotdeal($search_value, $state_id);
+        $this->data['home_search_promotion'] = $this->m_custom->home_search_promotion($search_value, $state_id);
+        
+        $this->data['page_path_name'] = 'all/search_result';
+        
+        if ($this->ion_auth->logged_in())
+        {
+            $this->load->view('template/layout_right_menu', $this->data);
+        }
+        else
+        {
+            $this->load->view('template/layout', $this->data);
         }
     }
 

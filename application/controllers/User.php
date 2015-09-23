@@ -644,34 +644,6 @@ class User extends CI_Controller
             return FALSE;
         }
     }
-    
-    //FOLLOWER
-    public function follower($users_id = NULL)
-    {
-        if(!$users_id)
-        {
-            $users_id = $this->ion_auth->user()->row()->id;
-        }
-        $where_user_follow = array('follow_to_id'=>$users_id);
-        $data['query_user_follow'] = $this->albert_model->get_follower($where_user_follow);
-        $data['page_path_name'] = 'user/follow';
-        $data['page_title'] = 'Follower';
-        $this->load->view('template/layout_right_menu', $data);
-    }
-       
-    //FOLLOWING
-    public function following($users_id = NULL)
-    {
-        if(!$users_id)
-        {
-            $users_id = $this->ion_auth->user()->row()->id;
-        }
-        $where_user_follow = array('follow_from_id'=>$users_id);
-        $data['query_user_follow'] = $this->albert_model->get_following($where_user_follow);
-        $data['page_path_name'] = 'user/follow';
-        $data['page_title'] = 'Following';
-        $this->load->view('template/layout_right_menu', $data);
-    }
 
     //user profile view and edit page
     function profile()

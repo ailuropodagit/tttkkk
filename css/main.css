@@ -769,7 +769,7 @@ a:hover {
 }
 
 #dashboard-info-followers-following {
-    margin: 20px 0px 0px 0px;
+    padding: 20px 0px 30px 0px;
 }
 
 #dashboard-info-followers {
@@ -1133,6 +1133,16 @@ a:hover {
 
 #follow-navigation {
     margin: 0px 0px 20px 0px;
+}
+
+#follow-navigation-separator {
+    margin: 0px 9px 0px 9px;
+    color: lightgray;
+}
+
+#follow-navigation-current {
+    color: gray;
+    cursor: default;
 }
 
 #follow-box {
