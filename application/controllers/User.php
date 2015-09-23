@@ -1,6 +1,4 @@
-<?php
-
-defined('BASEPATH') OR exit('No direct script access allowed');
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 class User extends CI_Controller
 {
@@ -648,33 +646,31 @@ class User extends CI_Controller
     }
     
     //FOLLOWER
-    public function follower()
+    public function follower($users_id = NULL)
     {
-        //PAGE PATH NAME
-        $data['page_path_name'] = 'user/follower';
+        if(!$users_id)
+        {
+            $users_id = $this->ion_auth->user()->row()->id;
+        }
+        $where_user_follow = array('follow_to_id'=>$users_id);
+        $data['query_user_follow'] = $this->albert_model->get_follower($where_user_follow);
+        $data['page_path_name'] = 'user/follow';
+        $data['page_title'] = 'Follower';
         $this->load->view('template/layout_right_menu', $data);
     }
-    
+       
     //FOLLOWING
-    public function following()
+    public function following($users_id = NULL)
     {
-        //GET DATA
-        $user_id = $this->ion_auth->user()->row()->id;
-        //QUERY USER FOLLOW
-        $where_user_follow = array('follow_from_id'=>$user_id);
-        $data['query_user_follow_inner_join_users'] = $this->albert_model->get_user_follow_inner_join_users($where_user_follow);      
-        $num_rows_user_follow_inner_join_users = $data['query_user_follow_inner_join_users']->num_rows();
-        if($num_rows_user_follow_inner_join_users)
+        if(!$users_id)
         {
-            //PAGE PATH NAME
-            $data['page_path_name'] = 'user/following';
-            $this->load->view('template/layout_right_menu', $data);
+            $users_id = $this->ion_auth->user()->row()->id;
         }
-        else
-        {
-            //REDIRECT TO ROOT
-            redirect('/', 'refresh');
-        }
+        $where_user_follow = array('follow_from_id'=>$users_id);
+        $data['query_user_follow'] = $this->albert_model->get_following($where_user_follow);
+        $data['page_path_name'] = 'user/follow';
+        $data['page_title'] = 'Following';
+        $this->load->view('template/layout_right_menu', $data);
     }
 
     //user profile view and edit page

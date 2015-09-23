@@ -599,8 +599,8 @@ class All extends CI_Controller
         exit(0);
     }
 
-    //View the user dashboard upper part
-    function user_dashboard($users_id = NULL, $album = NULL)
+    //USER DASHBOARD
+    function user_dashboard($users_id = NULL, $page = NULL)
     {
         if($users_id)
         {
@@ -611,6 +611,8 @@ class All extends CI_Controller
             //USER EXISTS
             if($num_rows_users)
             {
+                //DATA
+                $data['users_id'] = $users_id;
                 //PAGE PATH NAME
                 $data['page_path_name'] = 'user/dashboard';
                 //QUERY USER FOLLOW FOLLOWER
@@ -619,13 +621,12 @@ class All extends CI_Controller
                 //QUERY USER FOLLOW FOLLOWING
                 $where_user_follow_following = array('follow_from_id'=>$users_id);
                 $data['query_user_follow_following'] = $this->albert_model->get_user_follow($where_user_follow_following);
-                
-                if(!$album)
+                if(!$page)
                 {
                     //USER ALBUM
                     $data['title'] = "User Album";
                     $data['bottom_path_name'] = 'all/album_user';
-                    $where_user_album = array('user_id'=>$users_id);
+                    $where_user_album = array('user_id'=>$users_id, 'hide_flag'=>'0');
                     $query_user_album = $this->albert_model->get_user_album($where_user_album);
                     $data['album_list'] = $query_user_album->result_array();
                 }
@@ -634,11 +635,10 @@ class All extends CI_Controller
                     //USER MERCHANT ALBUM
                     $data['title'] = "Merchant Album";
                     $data['bottom_path_name'] = 'all/album_user_merchant';
-                    $where_merchant_user_album = array('user_id'=>$users_id);
+                    $where_merchant_user_album = array('user_id'=>$users_id, 'hide_flag'=>'0');
                     $query_merchant_user_album = $this->albert_model->get_merchant_user_album($where_merchant_user_album);
                     $data['album_list'] = $query_merchant_user_album->result_array();
                 }
-                
                 if ($this->ion_auth->logged_in())
                 {
                     //LOGGED IN

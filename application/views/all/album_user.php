@@ -43,13 +43,13 @@ if($this->router->fetch_method() == 'user_dashboard')
         {
             if ($this->router->fetch_method() == 'album_user')
             {
-                $empty_data_message = "No user's pictures in the moment";
+                $empty_data_message = "No user's pictures";
             }
             if ($this->router->fetch_method() == 'user_dashboard')
             {
-                $empty_data_message = "No user's pictures in the moment";
+                $empty_data_message = "No user's pictures";
             }            
-            ?><div id='album-user-merchant-empty-message'><?php echo $empty_data_message ?></div><?php
+            ?><div id='empty-message'><?php echo $empty_data_message ?></div><?php
         }
         else
         {

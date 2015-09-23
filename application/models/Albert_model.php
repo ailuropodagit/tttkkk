@@ -133,9 +133,27 @@ class Albert_model extends CI_Model
         return $query;
     }
     
-    /* GET USER_FOLLOW INNER JOIN USERS
+    /* GET FOLLOWER
     *************************************************************/
-    public function get_user_follow_inner_join_users($where)
+    public function get_follower($where)
+    {
+        //QUERY
+        $this->db->select('*');
+        $this->db->from('user_follow');
+        $this->db->join('users', 'user_follow.follow_from_id = users.id', 'inner');
+        //WHERE
+        if($where)
+        {
+            $this->db->where($where);
+        }
+        $query = $this->db->get();
+        //RETURN
+        return $query;
+    }
+    
+    /* GET FOLLOWING
+    *************************************************************/
+    public function get_following($where)
     {
         //QUERY
         $this->db->select('*');
