@@ -16,7 +16,7 @@
         }
         ?>
         <div id="home-navigation-c1-bar">
-            <a href='<?php echo base_url(); ?>categories' class="home-navigation-c1-bar-a">Categories</a>
+            <a href='<?php echo base_url(); ?>categories' class="home-navigation-c1-bar-a">Categories...</a>
         </div>   
     </div>
     <div id="home-navigation-c2">
