@@ -1131,16 +1131,22 @@ a:hover {
     margin: 20px 0px 0px 0px;
 }
 
-#follow-navigation {
+#follow-left-navigation {
+    float: left;
     margin: 0px 0px 20px 0px;
 }
 
-#follow-navigation-separator {
+#follow-right-navigation {
+    float: right;
+    margin: 0px 0px 20px 0px;
+}
+
+#follow-left-navigation-separator, #follow-right-navigation-separator {
     margin: 0px 9px 0px 9px;
     color: lightgray;
 }
 
-#follow-navigation-current {
+#follow-left-navigation-current, #follow-right-navigation-current {
     color: gray;
     cursor: default;
 }

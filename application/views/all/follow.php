@@ -8,24 +8,24 @@ $image_path = $this->album_user_profile;
     <h1><?php echo $page_title ?></h1>
     <div id='follow-content'>
         
-        <div id="follow-navigation">
+        <div id="follow-left-navigation">
             <?php
             if($this->router->fetch_method() == 'follower')
             {
                 $follow_empty = 'No Follower';
-                ?><span id='follow-navigation-current'>Follower</span><?php
+                ?><span id='follow-left-navigation-current'>Follower</span><?php
             }
             else
             {
                 ?><a href="<?php echo base_url() ?>all/follower">Follower</a><?php
             }
             ?>
-            <span id='follow-navigation-separator'>|</span>
+            <span id='follow-left-navigation-separator'>|</span>
             <?php 
             if($this->router->fetch_method() == 'following')
             {
                 $follow_empty = 'No Following';
-                ?><span id='follow-navigation-current'>Following</span><?php
+                ?><span id='follow-left-navigation-current'>Following</span><?php
             }
             else
             {
@@ -33,6 +33,11 @@ $image_path = $this->album_user_profile;
             }
             ?>
         </div>
+        <div id='follow-right-navigation'>
+            123
+        </div>
+        <div id='float-fix'></div>
+        
         
         <?php
         $num_rows_user_follow = $query_user_follow->num_rows();
