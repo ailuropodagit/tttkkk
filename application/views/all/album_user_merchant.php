@@ -21,9 +21,9 @@ if($this->router->fetch_method() == 'user_dashboard')
 }
 ?>
 
-<div id="album-user-merchant">
+<div id="album-user">
     <h1><?php echo $title ?></h1>
-    <div id="album-user-merchant-content">
+    <div id="album-user-content">
         
         <?php
         if (check_correct_login_type($this->config->item('group_id_user')) && $this->router->fetch_method() == 'album_user_merchant')
@@ -74,21 +74,21 @@ if($this->router->fetch_method() == 'user_dashboard')
                 $merchant_name = $this->m_custom->display_users($row['merchant_id']);
                 $merchant_dashboard_url = base_url() . "all/merchant-dashboard/" . generate_slug($merchant_name);
                 ?>
-                <div id='album-user-merchant-box'>
-                    <div id='album-user-merchant-main-title'>
+                <div id='album-user-box'>
+                    <div id='album-user-main-title'>
                         <a href='<?php echo $merchant_dashboard_url ?>'><?php echo $merchant_name ?></a>
                     </div>
                     <a href='<?php echo $picture_detail_url ?>'>
-                        <div id='album-user-merchant-photo'>
-                            <div id='album-user-merchant-photo-box'>
+                        <div id='album-user-photo'>
+                            <div id='album-user-photo-box'>
                                 <img src='<?php echo base_url($this->album_user_merchant . $row['image']) ?>'>
                             </div>
                         </div>
                     </a>
-                    <div id='album-user-merchant-sub-title'>
+                    <div id='album-user-sub-title'>
                         <a href='<?php echo $picture_detail_url ?>'><?php echo $row['title'] ?></a>
                     </div>
-                    <div id="album-user-merchant-info">
+                    <div id="album-user-info">
                         <table border="0" cellpadding="4px" cellspacing="0px">
                             <tr>
                                 <td>Like</td>
@@ -102,7 +102,7 @@ if($this->router->fetch_method() == 'user_dashboard')
                             </tr>
                         </table>
                     </div>
-                    <div id='album-user-merchant-upload-by'>
+                    <div id='album-user-upload-by'>
                         Upload by : <?php echo $this->m_custom->generate_user_link($row['user_id']); ?>
                     </div>
                 </div>
@@ -110,7 +110,7 @@ if($this->router->fetch_method() == 'user_dashboard')
             }
             ?>
             <div id='float-fix'></div>
-            <div id='album-user-merchant-bottom-empty-fix'>&nbsp;</div>
+            <div id='album-user-bottom-empty-fix'>&nbsp;</div>
             <?php
         }
         ?>

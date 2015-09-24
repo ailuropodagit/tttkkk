@@ -3,7 +3,7 @@
 <div id="dashboard">
     <h1>Dashboard</h1>
     <div id="dashboard-content">
-        <div id="dashboard-photo">
+        <div id="dashboard-photo-box">
             <?php            
             if(IsNullOrEmptyString($image))
             {
@@ -58,10 +58,10 @@
                 $num_rows_user_follow_following =  $query_user_follow_following->num_rows();
                 ?>
                 <div id="dashboard-info-followers">
-                    Follower : <a href='<?php echo base_url() ?>all/follower/<?php echo $users_id ?>'><?php echo $num_rows_user_follow_follower ?></a>
+                    Follower : <a href='<?php echo base_url() ?>all/follower/all/<?php echo $users_id ?>'><?php echo $num_rows_user_follow_follower ?></a>
                 </div>
                 <div id="dashboard-info-following">
-                    Following : <a href='<?php echo base_url() ?>all/following/<?php echo $users_id ?>'><?php echo $num_rows_user_follow_following ?></a>
+                    Following : <a href='<?php echo base_url() ?>all/following/all/<?php echo $users_id ?>'><?php echo $num_rows_user_follow_following ?></a>
                 </div>
             </div>
         </div>

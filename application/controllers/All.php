@@ -889,20 +889,27 @@ class All extends CI_Controller
         {    
             if($user_type == 'all')
             {
-                $data['page_title'] = 'Follower';
-                $where_user_follow = array('follow_to_id'=>$users_id);
+                $where_user_follower = array('follow_to_id'=>$users_id);
             }
             if($user_type == 'user')
             {
-                $data['page_title'] = 'Follower';
-                $where_user_follow = array('follow_to_id'=>$users_id, 'main_group_id'=>5);
+                $where_user_follower = array('follow_to_id'=>$users_id, 'main_group_id'=>5);
             }
             elseif($user_type == 'merchant')
             {
-                $data['page_title'] = 'Follower';
-                $where_user_follow = array('follow_from_id'=>$users_id, 'main_group_id'=>3);
+                $where_user_follower = array('follow_to_id'=>$users_id, 'main_group_id'=>3);
             }
-            $data['query_user_follow'] = $this->albert_model->get_follower($where_user_follow);
+            $data['page_title'] = 'Follower';
+            $data['query_user_follower'] = $this->albert_model->get_follower($where_user_follower);
+            //COUNT
+            $where_user_following_all = array('follow_from_id'=>$users_id);
+            $data['query_user_following_all'] = $this->albert_model->get_following($where_user_following_all);
+            $where_user_follower_all = array('follow_to_id'=>$users_id);
+            $data['query_user_follower_all'] = $this->albert_model->get_follower($where_user_follower_all);
+            $where_user_follower_user = array('follow_to_id'=>$users_id, 'main_group_id'=>5);
+            $data['query_user_follower_user'] = $this->albert_model->get_follower($where_user_follower_user);            
+            $where_user_follower_merchant = array('follow_to_id'=>$users_id, 'main_group_id'=>3);
+            $data['query_user_follower_merchant'] = $this->albert_model->get_follower($where_user_follower_merchant);
             $data['page_path_name'] = 'all/follow';
             $data['users_id'] = $users_id;
             $this->load->view('template/layout_right_menu', $data);
@@ -920,23 +927,27 @@ class All extends CI_Controller
         {
             if($user_type == 'all')
             {
-                $data['page_title'] = 'Following';
-                $where_user_follow = array('follow_from_id'=>$users_id);
-                $data['query_user_follow'] = $this->albert_model->get_following($where_user_follow);
+                $where_user_following = array('follow_from_id'=>$users_id);
             }
             if($user_type == 'user')
             {
-                $data['page_title'] = 'Following';
-                $where_user_follow = array('follow_from_id'=>$users_id, 'main_group_id'=>5);
-                $data['query_user_follow'] = $this->albert_model->get_following($where_user_follow);
+                $where_user_following = array('follow_from_id'=>$users_id, 'main_group_id'=>5);
             }
             elseif($user_type == 'merchant')
             {
-                $data['page_title'] = 'Following';
-                $where_user_follow = array('follow_from_id'=>$users_id);
-                $where_in_user_follow = array(3, 4);
-                $data['query_user_follow'] = $this->albert_model->get_following_all_merchant($where_user_follow, $where_in_user_follow);
+                $where_user_following = array('follow_from_id'=>$users_id, 'main_group_id'=>3);
             }
+            $data['page_title'] = 'Following';
+            $data['query_user_following'] = $this->albert_model->get_following($where_user_following);
+            //COUNT
+            $where_user_following_all = array('follow_from_id'=>$users_id);
+            $data['query_user_following_all'] = $this->albert_model->get_following($where_user_following_all);
+            $where_user_follower_all = array('follow_to_id'=>$users_id);
+            $data['query_user_follower_all'] = $this->albert_model->get_follower($where_user_follower_all);
+            $where_user_following_user = array('follow_from_id'=>$users_id, 'main_group_id'=>5);
+            $data['query_user_following_user'] = $this->albert_model->get_following($where_user_following_user);            
+            $where_user_following_merchant = array('follow_from_id'=>$users_id, 'main_group_id'=>3);
+            $data['query_user_following_merchant'] = $this->albert_model->get_following($where_user_following_merchant);
             $data['page_path_name'] = 'all/follow';
             $data['users_id'] = $users_id;
             $this->load->view('template/layout_right_menu', $data);

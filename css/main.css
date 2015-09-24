@@ -731,28 +731,39 @@ a:hover {
     margin: 20px 0px 35px 0px;
 }
 
-#dashboard-photo {
+#dashboard-photo-box {
     float: left;
-    width: 200px;
-    height: 200px;
+    width: 250px;
+    height: 250px;
     border: 1px solid lightgray;
     background-color: whitesmoke;
 }
 
-#dashboard-photo img {
+#dashboard-photo-box img {
     width: 100%;
     height: 100%;
     object-fit: contain;
 }
 
 #dashboard-info {
-    margin: 0px 0px 0px 235px;
+    float: left;
+    margin: 0px 0px 0px 30px;
+    width: calc(100% - 290px);
 }
 
 #dashboard-info-title {
     padding: 10px 0px 5px 0px;
     font-weight: bold;
     font-size: 23px;
+}
+
+#dashboard-info-title-name {
+    float: left;
+}
+
+#dashboard-info-title-follow {
+    float: left;
+    margin: -5px 0px 0px 15px;
 }
 
 #dashboard-info-address {
@@ -809,12 +820,12 @@ a:hover {
 #advertise-list-box {
     float: left;
     margin: 0px 50px 50px 0px;
-    width: 200px;
+    width: 250px;
 }
 
 #advertise-list-photo-box {
-    width: 200px;
-    height: 200px;
+    width: 250px;
+    height: 250px;
     border: 1px solid #e1e1e1;
     background-color: whitesmoke;
 }
@@ -885,7 +896,7 @@ a:hover {
 }
 
 #advertise-list-bottom-empty-fix {
-    margin: 0px 0px -60px 0px;
+    margin: 0px 0px -70px 0px;
 }
 
 #advertise-list-empty-message {
@@ -992,8 +1003,8 @@ a:hover {
 }
 
 #profile-photo-box {
-    width: 200px;
-    height: 200px;
+    width: 250px;
+    height: 250px;
     border: 1px solid lightgray;
     background-color: whitesmoke;
 }
@@ -1023,7 +1034,7 @@ a:hover {
 }
 
 #profile-info {
-    margin: 0px 0px 0px 235px;
+    margin: 0px 0px 0px 285px;
 }
 
 #profile-info-form-each-label {
@@ -1133,7 +1144,7 @@ a:hover {
 
 #follow-left-navigation {
     float: left;
-    margin: 0px 0px 30px 0px;
+    margin: 0px 0px 20px 0px;
 }
 
 #follow-right-navigation {
@@ -1148,7 +1159,7 @@ a:hover {
 
 #follow-left-navigation-current, #follow-right-navigation-current {
     cursor: default;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: bold;
 }
 
@@ -1248,8 +1259,8 @@ a:hover {
 }
 
 #hot-deal-photo-box {
-    width: 200px;
-    height: 200px;
+    width: 250px;
+    height: 250px;
     border: 1px solid lightgray;
     background-color: whitesmoke;
     margin: 10px auto 10px auto;
@@ -1349,12 +1360,12 @@ a:hover {
     vertical-align: top;
     display: inline-block;
     width: 250px; 
-    margin: 0px 0px 50px 0px;
+    margin: 0px 50px 50px 0px;
 }
 
 #hot-deal-advertise-form-photo-box {
-    width: 200px;
-    height: 200px;
+    width: 250px;
+    height: 250px;
     border: 1px solid lightgray;
     background-color: whitesmoke;
     margin: 0px 0px 20px 0px;
@@ -1378,14 +1389,14 @@ a:hover {
 
 #hot-deal-advertise-form-each-input input[type='text'] {
     height: 25px;
-    width: 200px;
+    width: 100%;
     margin: 10px 0px 0px 0px;
     box-sizing: border-box;
 }
 
 #hot-deal-advertise-form-each-input select {
     height: 25px;
-    width: 200px;
+    width: 100%;
     margin: 10px 0px 0px 0px;
     box-sizing: border-box;
 }
@@ -1393,7 +1404,7 @@ a:hover {
 #hot-deal-advertise-form-each-input textarea {
     margin: 10px 0px 0px 0px;
     height: 80px;
-    width: 200px;
+    width: 100%;
     box-sizing: border-box;
     resize: none;
 }
@@ -1407,50 +1418,50 @@ a:hover {
     height: 20px;
 }
 
-/* ALBUM USER MERCHANT
+/* ALBUM USER
 ******************************/
 
-#album-user-merchant-content {
+#album-user-content {
     margin: 20px 0px 0px 0px;
 }
 
-#album-user-merchant-box {
+#album-user-box {
     float: left;
     margin: 0px 50px 50px 0px;
-    width: 200px;
+    width: 250px;
 }
 
-#album-user-merchant-photo-box {
-    width: 200px;
-    height: 200px;
+#album-user-photo-box {
+    width: 250px;
+    height: 250px;
     border: 1px solid #e1e1e1;
     background-color: whitesmoke;
 }
 
-#album-user-merchant-photo-box img {
+#album-user-photo-box img {
     width: 100%;
     height: 100%;
     object-fit: contain;
 }
 
-#album-user-merchant-main-title {
+#album-user-main-title {
     margin: 0px 0px 10px 0px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
 }
 
-#album-user-merchant-main-title a {
+#album-user-main-title a {
     font-size: 20px;
     color: black;
     font-weight: bold;
 }
 
-#album-user-merchant-main-title a:hover {
+#album-user-main-title a:hover {
     text-decoration: none;
 }
 
-#album-user-merchant-sub-title {
+#album-user-sub-title {
     margin: 10px 0px 0px 0px;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -1458,25 +1469,25 @@ a:hover {
     font-weight: bold;
 }
 
-#album-user-merchant-sub-title a {
+#album-user-sub-title a {
     font-size: 17px;
     color: black;
 }
 
-#album-user-merchant-sub-title a:hover {
+#album-user-sub-title a:hover {
     text-decoration: none;
 }
 
-#album-user-merchant-info {
+#album-user-info {
     margin: 10px 0px 0px 0px;
 }
 
-#album-user-merchant-upload-by {
+#album-user-upload-by {
     margin: 10px 0px 0px 0px;
     font-size: 15px
 }
 
-#album-user-merchant-bottom-empty-fix {
+#album-user-bottom-empty-fix {
     margin: 0px 0px -70px 0px;
 }
 
@@ -1497,12 +1508,12 @@ a:hover {
     vertical-align: top;
     display: inline-block;
     width: 250px; 
-    margin: 0px 0px 50px 0px;
+    margin: 0px 50px 50px 0px;
 }
 
 #upload-for-merchant-form-photo-box {
-    width: 200px;
-    height: 200px;
+    width: 250px;
+    height: 250px;
     border: 1px solid lightgray;
     background-color: whitesmoke;
     margin: 0px 0px 20px 0px;
@@ -1526,14 +1537,14 @@ a:hover {
 
 #upload-for-merchant-form-each-input input[type='text'] {
     height: 25px;
-    width: 200px;
+    width: 100%;
     margin: 10px 0px 0px 0px;
     box-sizing: border-box;
 }
 
 #upload-for-merchant-form-each-input select {
     height: 25px;
-    width: 200px;
+    width: 100%;
     margin: 10px 0px 0px 0px;
     box-sizing: border-box;
 }
@@ -1541,7 +1552,7 @@ a:hover {
 #upload-for-merchant-form-each-input textarea {
     margin: 10px 0px 0px 0px;
     height: 80px;
-    width: 200px;
+    width: 100%;
     box-sizing: border-box;
     resize: none;
 }
@@ -1646,8 +1657,8 @@ a:hover {
 }
 
 #redemption-photo-box {
-    width: 200px;
-    height: 200px;
+    width: 250px;
+    height: 250px;
     border: 1px solid lightgray;
     background-color: whitesmoke;
     margin: 10px auto 10px auto;
@@ -1881,8 +1892,8 @@ a:hover {
 }
     
 #candie-promotion-form-photo-box {
-    width: 200px;
-    height: 200px;
+    width: 250px;
+    height: 250px;
     border: 1px solid lightgray;
     background-color: whitesmoke;
     margin: 0px 0px 0px 0px;
@@ -1905,7 +1916,7 @@ a:hover {
 }
 
 #candie-promotion-form-info {
-    margin: 0px 0px 0px 235px;
+    margin: 0px 0px 0px 285px;
 }
 
 #candie-promotion-form-each-label {

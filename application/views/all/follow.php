@@ -5,6 +5,27 @@ $empty_image = $this->config->item('empty_image');
 //URL PARAMETER
 $page_type = $this->router->fetch_method();
 $user_type = $this->uri->segment(3);
+
+$num_rows_user_follower_all = $query_user_follower_all->num_rows();
+$num_rows_user_following_all = $query_user_following_all->num_rows();
+
+//PAGE
+if ($page_type == 'follower')
+{
+    $query_user_follow = $query_user_follower;
+    $num_rows_user_follow = $query_user_follower_all->num_rows();
+    $num_rows_user_follow_all = $num_rows_user_follower_all;
+    $num_rows_user_follow_user = $query_user_follower_user->num_rows();
+    $num_rows_user_follow_merchant = $query_user_follower_merchant->num_rows();
+}
+elseif ($page_type == 'following')
+{
+    $query_user_follow = $query_user_following;
+    $num_rows_user_follow = $query_user_following_all->num_rows();
+    $num_rows_user_follow_all = $num_rows_user_following_all;
+    $num_rows_user_follow_user = $query_user_following_user->num_rows();
+    $num_rows_user_follow_merchant = $query_user_following_merchant->num_rows();
+}
 ?>
 
 <div id="follow">
@@ -16,11 +37,11 @@ $user_type = $this->uri->segment(3);
             if($page_type == 'follower')
             {
                 $follow_empty = 'No Follower';
-                ?><span id='follow-left-navigation-current'>Follower</span><?php
+                ?><span id='follow-left-navigation-current'>Follower (<?php echo $num_rows_user_follower_all ?>)</span><?php
             }
             else
             {
-                ?><a href="<?php echo base_url() ?>all/follower/<?php echo $user_type ?>/<?php echo $users_id ?>">Follower</a><?php
+                ?><a href="<?php echo base_url() ?>all/follower/<?php echo $user_type ?>/<?php echo $users_id ?>">Follower (<?php echo $num_rows_user_follower_all ?>)</a><?php
             }
             ?>
             <span id='follow-left-navigation-separator'>|</span>
@@ -28,11 +49,11 @@ $user_type = $this->uri->segment(3);
             if($page_type == 'following')
             {
                 $follow_empty = 'No Following';
-                ?><span id='follow-left-navigation-current'>Following</span><?php
+                ?><span id='follow-left-navigation-current'>Following (<?php echo $num_rows_user_following_all ?>)</span><?php
             }
             else
             {
-                ?><a href="<?php echo base_url() ?>all/following/<?php echo $user_type ?>/<?php echo $users_id ?>">Following</a><?php
+                ?><a href="<?php echo base_url() ?>all/following/<?php echo $user_type ?>/<?php echo $users_id ?>">Following (<?php echo $num_rows_user_following_all ?>)</a><?php
             }
             ?>
         </div>
@@ -40,33 +61,33 @@ $user_type = $this->uri->segment(3);
             <?php            
             if($user_type == 'all')
             {
-                ?><span id='follow-left-navigation-current'>All</span><?php
+                ?><span id='follow-left-navigation-current'>All (<?php echo $num_rows_user_follow_all ?>)</span><?php
             }
             else
             {
-                ?><a href="<?php echo base_url() ?>all/<?php echo $page_type ?>/all/<?php echo $users_id ?>">All</a><?php
+                ?><a href="<?php echo base_url() ?>all/<?php echo $page_type ?>/all/<?php echo $users_id ?>">All (<?php echo $num_rows_user_follow_all ?>)</a><?php
             }
             ?>
             <span id='follow-left-navigation-separator'>|</span>
             <?php            
             if($user_type == 'user')
             {
-                ?><span id='follow-left-navigation-current'>User</span><?php
+                ?><span id='follow-left-navigation-current'>User (<?php echo $num_rows_user_follow_user ?>)</span><?php
             }
             else
             {
-                ?><a href="<?php echo base_url() ?>all/<?php echo $page_type ?>/user/<?php echo $users_id ?>">User</a><?php
+                ?><a href="<?php echo base_url() ?>all/<?php echo $page_type ?>/user/<?php echo $users_id ?>">User (<?php echo $num_rows_user_follow_user ?>)</a><?php
             }
             ?>
             <span id='follow-left-navigation-separator'>|</span>
             <?php            
             if($user_type == 'merchant')
             {
-                ?><span id='follow-left-navigation-current'>Merchant</span><?php
+                ?><span id='follow-left-navigation-current'>Merchant (<?php echo $num_rows_user_follow_merchant ?>)</span><?php
             }
             else
             {
-                ?><a href="<?php echo base_url() ?>all/<?php echo $page_type ?>/merchant/<?php echo $users_id ?>">Merchant</a><?php
+                ?><a href="<?php echo base_url() ?>all/<?php echo $page_type ?>/merchant/<?php echo $users_id ?>">Merchant (<?php echo $num_rows_user_follow_merchant ?>)</a><?php
             }
             ?>
         </div>
@@ -74,7 +95,6 @@ $user_type = $this->uri->segment(3);
         
         
         <?php
-        $num_rows_user_follow = $query_user_follow->num_rows();
         if($num_rows_user_follow)
         {
             //USER FOLLOW INNER JOIN USERS ROW
