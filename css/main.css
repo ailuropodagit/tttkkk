@@ -1133,7 +1133,7 @@ a:hover {
 
 #follow-left-navigation {
     float: left;
-    margin: 0px 0px 20px 0px;
+    margin: 0px 0px 30px 0px;
 }
 
 #follow-right-navigation {
@@ -1147,8 +1147,9 @@ a:hover {
 }
 
 #follow-left-navigation-current, #follow-right-navigation-current {
-    color: gray;
     cursor: default;
+    font-size: 16px;
+    font-weight: bold;
 }
 
 #follow-box {
@@ -1172,6 +1173,10 @@ a:hover {
 #follow-box-name {
     margin: 7px 0px 0px 0px;
     font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100px;
 }
 
 /* HOT DEAL
@@ -1568,6 +1573,19 @@ a:hover {
 
 #redemption-edit-link {
     float: right;
+    margin: 20px 0px 0px 0px;
+}
+
+#redemption-expired-date {
+    margin: 25px 0px 0px 20px;
+    float: left;
+    font-size: 22px;
+}
+
+#redemption-candies {
+    margin: 25px 20px 0px 0px;
+    float: right;
+    font-size: 23px;
 }
 
 #redemption-voucher-barcode {
@@ -1647,10 +1665,6 @@ a:hover {
     color: black;
 }
 
-#redemption-candies {
-    margin: 10px 0px 0px 0px;
-}
-
 #redemption-rate-time {
     margin: 20px 0px 0px 0px;
 }
@@ -1708,8 +1722,8 @@ a:hover {
 
 #redemption-terms-conditions-title {
     font-weight: bold;
-    font-size: 14px;
-    color: #7f7f7f;
+    font-size: 15px;
+    color: black;
     text-decoration: underline;
     margin: 0px 0px 8px 0px;
 }
@@ -1721,8 +1735,8 @@ a:hover {
 
 #redemption-terms-conditions li {
     margin: 0px 0px 8px 0px;
-    color: gray;
-    font-size: 14px;
+    color: black;
+    font-size: 15px;
 }
 
 #redemption-available-branch {
@@ -1732,8 +1746,8 @@ a:hover {
 
 #redemption-available-branch-title {
     font-weight: bold;
-    font-size: 14px;
-    color: #7f7f7f;
+    font-size: 15px;
+    color: black;
     text-decoration: underline;
     margin: 0px 0px 8px 0px;
 }
@@ -1745,13 +1759,13 @@ a:hover {
 
 #redemption-available-branch li {
     margin: 0px 0px 10px 0px;
-    color: gray;
-    font-size: 14px;
+    color: black;
+    font-size: 15px;
 }
 
 #redemption-available-branch-name {
     font-weight: bold;
-    font-size: 13px;
+    font-size: 14px;
 }
 
 #redemption-available-branch-address {
@@ -1766,12 +1780,6 @@ a:hover {
 #redemption-available-branch-view-map {
     float: right;
     margin: 5px 0px 0px 0px;
-}
-
-#redemption-expired-date {
-    text-align: left;
-    font-weight: bold;
-    margin: 20px 0px 0px 0px;
 }
 
 #redemption-redempt-submit {
@@ -1939,7 +1947,7 @@ a:hover {
 #candie-promotion-form-voucher-checkbox-title, #candie-promotion-form-branch-checkbox-title {
     font-weight: bold;
     font-size: 14px;
-    color: #7f7f7f;
+    color: black;
     margin: 0px 0px 8px 0px;
     text-decoration: underline;
 }
@@ -1950,7 +1958,7 @@ a:hover {
 
 #candie-promotion-form-voucher-checkbox-each, #candie-promotion-form-branch-checkbox-each {
     margin: 0px 0px 8px 0px;
-    color: gray;
+    color: black;
 }
 
 #candie-promotion-form-voucher-checkbox-each-label, #candie-promotion-form-branch-checkbox-each-label {

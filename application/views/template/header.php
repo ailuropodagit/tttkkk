@@ -46,9 +46,16 @@
                         <li <?php if($this->router->fetch_class() == 'home'){ echo "class='header-menu-active'"; } ?>>
                             <a href='<?php echo base_url(); ?>home'><i class="fa fa-home header-menu-icon header-menu-icon-home"></i>Home</a>
                         </li>
-                        <li <?php if($this->router->fetch_class() == 'categories'){ echo "class='header-menu-active'"; } ?>>
-                            <a href='<?php echo base_url(); ?>categories'><i class="fa fa-th-large header-menu-icon"></i>Categories</a>
-                        </li>
+                        <?php 
+                        if($this->router->fetch_class() != 'home')
+                        {
+                            ?>
+                            <li <?php if($this->router->fetch_class() == 'categories'){ echo "class='header-menu-active'"; } ?>>
+                                <a href='<?php echo base_url(); ?>categories'><i class="fa fa-th-large header-menu-icon"></i>Categories</a>
+                            </li>
+                            <?php
+                        }
+                        ?>
                         <li <?php if($this->router->fetch_method() == 'hotdeal_list' || $this->uri->segment(4) == 'hot'){ echo "class='header-menu-active'"; } ?>>
                             <a href='<?php echo base_url(); ?>all/hotdeal-list/26/0'><i class="fa fa-fire header-menu-icon"></i>Hot Deal</a>
                         </li>

@@ -79,10 +79,10 @@ $album_user_profile = $this->config->item('album_user_profile');
                 $num_rows_user_follow_following =  $query_user_follow_following->num_rows();
                 ?>
                 <div id="dashboard-info-followers">
-                    Follower : <a href='<?php echo base_url() ?>all/follower/<?php echo $users_id ?>'><?php echo $num_rows_user_follow_follower ?></a>
+                    Follower : <a href='<?php echo base_url() ?>all/follower/user/<?php echo $users_id ?>'><?php echo $num_rows_user_follow_follower ?></a>
                 </div>
                 <div id="dashboard-info-following">
-                    Following : <a href='<?php echo base_url() ?>all/following/<?php echo $users_id ?>'><?php echo $num_rows_user_follow_following ?></a>
+                    Following : <a href='<?php echo base_url() ?>all/following/user/<?php echo $users_id ?>'><?php echo $num_rows_user_follow_following ?></a>
                 </div>
             </div>
         </div>

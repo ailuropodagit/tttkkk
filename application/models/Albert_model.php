@@ -151,6 +151,28 @@ class Albert_model extends CI_Model
         return $query;
     }
     
+    /* GET FOLLOWER ALL MERCHANT
+    *************************************************************/
+    public function get_follower_all_merchant($where, $where_in)
+    {
+        //QUERY
+        $this->db->select('*');
+        $this->db->from('user_follow');
+        $this->db->join('users', 'user_follow.follow_from_id = users.id', 'inner');
+        //WHERE
+        if($where)
+        {
+            $this->db->where($where);
+        }
+        if($where_in)
+        {
+            $this->db->where_in('main_group_id', $where_in);
+        }
+        $query = $this->db->get();
+        //RETURN
+        return $query;
+    }
+    
     /* GET FOLLOWING
     *************************************************************/
     public function get_following($where)
@@ -163,6 +185,28 @@ class Albert_model extends CI_Model
         if($where)
         {
             $this->db->where($where);
+        }
+        $query = $this->db->get();
+        //RETURN
+        return $query;
+    }
+    
+    /* GET FOLLOWING ALL MERCHANT
+    *************************************************************/
+    public function get_following_all_merchant($where, $where_in)
+    {
+        //QUERY
+        $this->db->select('*');
+        $this->db->from('user_follow');
+        $this->db->join('users', 'user_follow.follow_to_id = users.id', 'inner');
+        //WHERE
+        if($where)
+        {
+            $this->db->where($where);
+        }
+        if($where_in)
+        {
+            $this->db->where_in('main_group_id', $where_in);
         }
         $query = $this->db->get();
         //RETURN

@@ -883,31 +883,68 @@ class All extends CI_Controller
     }
     
     //FOLLOWER
-    public function follower($users_id = NULL)
+    public function follower($user_type = NULL, $users_id = NULL)
     {
-        if(!$users_id)
-        {
-            $users_id = $this->ion_auth->user()->row()->id;
+        if($user_type != NULL && $users_id != NULL)
+        {    
+            if($user_type == 'all')
+            {
+                $data['page_title'] = 'Follower';
+                $where_user_follow = array('follow_to_id'=>$users_id);
+            }
+            if($user_type == 'user')
+            {
+                $data['page_title'] = 'Follower';
+                $where_user_follow = array('follow_to_id'=>$users_id, 'main_group_id'=>5);
+            }
+            elseif($user_type == 'merchant')
+            {
+                $data['page_title'] = 'Follower';
+                $where_user_follow = array('follow_from_id'=>$users_id, 'main_group_id'=>3);
+            }
+            $data['query_user_follow'] = $this->albert_model->get_follower($where_user_follow);
+            $data['page_path_name'] = 'all/follow';
+            $data['users_id'] = $users_id;
+            $this->load->view('template/layout_right_menu', $data);
         }
-        $where_user_follow = array('follow_to_id'=>$users_id);
-        $data['query_user_follow'] = $this->albert_model->get_follower($where_user_follow);
-        $data['page_path_name'] = 'all/follow';
-        $data['page_title'] = 'Follower';
-        $this->load->view('template/layout_right_menu', $data);
+        else
+        {
+            redirect('/', 'refresh');
+        }
     }
        
     //FOLLOWING
-    public function following($users_id = NULL)
-    {
-        if(!$users_id)
+    public function following($user_type = NULL, $users_id = NULL)
+    {        
+        if($user_type != NULL && $users_id != NULL)
         {
-            $users_id = $this->ion_auth->user()->row()->id;
+            if($user_type == 'all')
+            {
+                $data['page_title'] = 'Following';
+                $where_user_follow = array('follow_from_id'=>$users_id);
+                $data['query_user_follow'] = $this->albert_model->get_following($where_user_follow);
+            }
+            if($user_type == 'user')
+            {
+                $data['page_title'] = 'Following';
+                $where_user_follow = array('follow_from_id'=>$users_id, 'main_group_id'=>5);
+                $data['query_user_follow'] = $this->albert_model->get_following($where_user_follow);
+            }
+            elseif($user_type == 'merchant')
+            {
+                $data['page_title'] = 'Following';
+                $where_user_follow = array('follow_from_id'=>$users_id);
+                $where_in_user_follow = array(3, 4);
+                $data['query_user_follow'] = $this->albert_model->get_following_all_merchant($where_user_follow, $where_in_user_follow);
+            }
+            $data['page_path_name'] = 'all/follow';
+            $data['users_id'] = $users_id;
+            $this->load->view('template/layout_right_menu', $data);
         }
-        $where_user_follow = array('follow_from_id'=>$users_id);
-        $data['query_user_follow'] = $this->albert_model->get_following($where_user_follow);
-        $data['page_path_name'] = 'all/follow';
-        $data['page_title'] = 'Following';
-        $this->load->view('template/layout_right_menu', $data);
+        else
+        {
+            redirect('/', 'refresh');
+        }
     }
     
     public function home_search()

@@ -15,7 +15,7 @@
             })
             .on('finish.countdown', function (event) {
                 $this.html('Expired!');
-
+                $this.parent().css({color: 'red'});
             });
         });
     });
@@ -132,6 +132,16 @@ $this->album_merchant = $this->config->item('album_merchant');
                     <div id="advertise-list-title2">
                         <a href='<?php echo $advertise_detail_url ?>'><?php echo $row['title'] ?></a>
                     </div>
+                    <?php if ($row['advertise_type'] == 'hot') { ?>
+                        <div id="advertise-list-dynamic-time">
+                            <i class="fa fa-clock-o"></i><span id="advertise-list-dynamic-time-label" data-countdown='<?php echo $row['end_time'] ?>'></span>
+                        </div>
+                    <?php } ?>
+                    <?php if ($row['advertise_type'] == 'pro') { ?>
+                        <div id="advertise-list-dynamic-time">
+                            <i class="fa fa-bullseye"></i><span id="advertise-list-dynamic-time-label"><?php echo $row['voucher_candie'] ?> candies</span>
+                        </div>
+                    <?php } ?>
                     <div id="advertise-list-info">
                         <table border="0" cellpadding="4px" cellspacing="0px">
                             <tr>
@@ -153,16 +163,6 @@ $this->album_merchant = $this->config->item('album_merchant');
                             </tr>
                         </table>
                     </div>
-                    <?php if ($row['advertise_type'] == 'hot') { ?>
-                        <div id="advertise-list-dynamic-time">
-                            <i class="fa fa-clock-o"></i><span id="advertise-list-dynamic-time-label" data-countdown='<?php echo $row['end_time'] ?>'></span>
-                        </div>
-                    <?php } ?>
-                    <?php if ($row['advertise_type'] == 'pro') { ?>
-                        <div id="advertise-list-dynamic-time">
-                            <i class="fa fa-bullseye"></i><span id="advertise-list-dynamic-time-label"><?php echo $row['voucher_candie'] ?> candies</span>
-                        </div>
-                    <?php } ?>
                 </div>
                 <?php
             }
