@@ -1,7 +1,7 @@
 <?php
 if($this->router->fetch_method() == 'user_dashboard')
 {
-    $user_id = $this->ion_auth->user()->row()->id;
+    $user_id = $this->uri->segment(3);
     ?>
     <div id="dashboard-navigation" style="margin:0px 0px 30px 0px;">
         <a href="<?php echo base_url() ?>all/user_dashboard/<?php echo $user_id ?>">User Album</a> &nbsp; | &nbsp;
@@ -26,12 +26,24 @@ if($this->router->fetch_method() == 'user_dashboard')
     <div id="album-user-content">
         
         <?php
-        if (check_correct_login_type($this->config->item('group_id_user')) && $this->router->fetch_method() == 'album_user_merchant')
+        if($this->router->fetch_method() != 'user_dashboard')
         {
-            $user_id = $this->ion_auth->user()->row()->id;
-
-            echo "<a href='" . base_url() . "all/album_user/" . $user_id . "'>Picture Album</a><br/>";
-            echo "<a href='" . base_url() . "user/upload_for_merchant'>Upload</a><br/>";
+            if (check_correct_login_type($this->config->item('group_id_user')))
+            {
+                $user_id = $this->ion_auth->user()->row()->id;
+                ?>
+                <div id="album-user-navigation">
+                    <div id="album-user-navigation-upload">
+                        <a href="<?php echo base_url() ?>all/album_user/<?php echo $user_id ?>">Picture Album</a>
+                    </div>
+                    <div id="album-user-navigation-separater">|</div>
+                    <div id="album-user-navigation-merchant-album">
+                        <a href="<?php echo base_url() ?>user/upload_for_merchant">Upload Picture</a>
+                    </div>
+                    <div id="float-fix"></div>
+                </div>
+                <?php
+            }
         }
         ?>
         
@@ -40,7 +52,7 @@ if($this->router->fetch_method() == 'user_dashboard')
         {
             if ($this->router->fetch_method() == 'album_user_merchant')
             {
-                $empty_data_message = "No user's pictures";
+                $empty_data_message = "No merchant's pictures";
             }
             else if ($this->router->fetch_method() == 'merchant_dashboard' || $this->uri->segment(4) == 'merchant_album')
             {

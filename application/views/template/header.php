@@ -33,6 +33,12 @@
         </script>
     </head>
     <body>
+        
+        <?php        
+        //$this->ion_auth->user()->num_rows();
+        //$this->ion_auth->user()->row()->id;
+        ?>
+        
         <!--HEADER-->
         <div id='header'>
             <div id='wrapper'>

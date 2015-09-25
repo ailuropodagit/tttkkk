@@ -1,7 +1,7 @@
 <?php
 if($this->router->fetch_method() == 'user_dashboard')
 {
-    $user_id = $this->ion_auth->user()->row()->id;
+    $user_id = $this->uri->segment(3);  
     ?>
     <div id="dashboard-navigation" style="margin:0px 0px 30px 0px;">
         <a href="<?php echo base_url() ?>all/user_dashboard/<?php echo $user_id ?>">User Album</a> &nbsp; | &nbsp;
@@ -31,9 +31,18 @@ if($this->router->fetch_method() == 'user_dashboard')
             if (check_correct_login_type($this->config->item('group_id_user')))
             {
                 $user_id = $this->ion_auth->user()->row()->id;
-
-                echo "<a href='" . base_url() . "all/album_user_merchant/" . $user_id . "'>Merchant Album</a><br/>";
-                echo "<a href='" . base_url() . "user/upload_image'>Upload</a><br/>";
+                ?>
+                <div id="album-user-navigation">
+                    <div id="album-user-navigation-upload">
+                        <a href="<?php echo base_url() ?>all/album_user_merchant/<?php echo $user_id ?>">Merchant Album</a>
+                    </div>
+                    <div id="album-user-navigation-separater">|</div>
+                    <div id="album-user-navigation-merchant-album">
+                        <a href="<?php echo base_url() ?>user/upload_image">Upload Picture</a>
+                    </div>
+                    <div id="float-fix"></div>
+                </div>
+                <?php
             }
         }
         ?>
@@ -92,9 +101,20 @@ if($this->router->fetch_method() == 'user_dashboard')
                             </tr>
                         </table>
                     </div>
-                    <div id='album-user-upload-by'>
-                        Upload by : <?php echo $this->m_custom->generate_user_link($row['user_id']); ?>
-                    </div>
+                    <?php
+                    if($this->ion_auth->user()->num_rows())
+                    {
+                        $logged_main_group_id = $this->ion_auth->user()->row()->main_group_id;   
+                        if($logged_main_group_id == $user_id)
+                        {
+                            ?>
+                            <div id='album-user-upload-by'>
+                                Upload by : <?php echo $this->m_custom->generate_user_link($row['user_id']); ?>
+                            </div>
+                            <?php
+                        }
+                    }
+                    ?>
                 </div>
                 <?php
             }

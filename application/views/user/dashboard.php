@@ -4,6 +4,11 @@ $empty_image = $this->config->item('empty_image');
 $album_user_profile = $this->config->item('album_user_profile');
 ?>
 
+<?php
+//DASHBOARD USER ID
+$dashboard_users_id = $this->uri->segment(3);
+?>
+
 <div id="dashboard">
     <h1>Dashboard</h1>
     <div id="dashboard-content">
@@ -40,18 +45,27 @@ $album_user_profile = $this->config->item('album_user_profile');
                 <div id="dashboard-info-title-name">
                     <?php echo $first_name.' '.$last_name; ?>
                 </div>
+                
                 <?php
-                $dashboard_users_id = $this->uri->segment(3) ;
-                $logged_user_id = $this->session->userdata('user_id');
-                if($dashboard_users_id != $logged_user_id)
+                if($this->ion_auth->user()->num_rows())
                 {
-                    ?>
-                    <div id="dashboard-info-title-follow">
-                        <button>Follow</button>
-                    </div>
-                    <?php
+                    $logged_main_group_id = $this->ion_auth->user()->row()->main_group_id;                    
+                    if($logged_main_group_id == 3 || $logged_main_group_id == 5)
+                    {
+                        $logged_user_id = $this->session->userdata('user_id');
+                        if($dashboard_users_id != $logged_user_id)
+                        {
+                            ?>
+                            <div id="dashboard-info-title-follow">
+                                <input type="submit" value="follow" id="submit-simple">
+                                <button>follow</button>
+                            </div>
+                            <?php
+                        }
+                    }
                 }
                 ?>
+                
                 <div id="float-fix"></div>
             </div>
             <div id="dashboard-info-table">

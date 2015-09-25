@@ -733,6 +733,7 @@ class All extends CI_Controller
         $the_row = $this->m_custom->get_one_table_record('users', 'slug', $slug);
         if ($the_row)
         {
+            $users_id = $the_row->id;
             $this->data['image_path'] = $this->album_merchant_profile;
             $this->data['image'] = $the_row->profile_image;
             $this->data['company_name'] = $the_row->company;
@@ -748,9 +749,7 @@ class All extends CI_Controller
             $this->data['candie_promotion'] = base_url() . 'all/merchant-dashboard/' . $slug . '/promotion';
             $this->data['user_picture'] = base_url() . 'all/merchant-dashboard/' . $slug . '/picture';
             $this->data['user_upload_for_merchant'] = base_url() . 'user/upload_for_merchant/' . $slug;
-            $this->data['show_expired'] = "<a href='" . base_url() . "all/album_merchant/'. $slug>Show Expired</a><br/>";
-            
-            $users_id = $this->ion_auth->user()->row()->id;
+            $this->data['show_expired'] = "<a href='" . base_url() . "all/album_merchant/'. $slug>Show Expired</a><br/>";            
             $this->data['users_id'] = $users_id;
             //QUERY USER FOLLOW FOLLOWER
             $where_user_follow_follower = array('follow_to_id'=>$users_id);
@@ -758,22 +757,21 @@ class All extends CI_Controller
             //QUERY USER FOLLOW FOLLOWING
             $where_user_follow_following = array('follow_from_id'=>$users_id);
             $this->data['query_user_follow_following'] = $this->albert_model->get_user_follow($where_user_follow_following);
-            
             if ($bottom_part == NULL)
             {
-                $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('hot', NULL, $the_row->id);
+                $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('hot', NULL, $users_id);
                 $this->data['title'] = "Offer Deals";
                 $this->data['bottom_path_name'] = 'all/advertise_list';
             }
             else if($bottom_part == 'picture')
             {
-                $this->data['album_list'] = $this->m_custom->getAlbumUserMerchant(NULL, $the_row->id);
+                $this->data['album_list'] = $this->m_custom->getAlbumUserMerchant(NULL, $users_id);
                 $this->data['title'] = "User's Pictures";
                 $this->data['bottom_path_name'] = 'all/album_user_merchant';
             }
             else if($bottom_part == 'promotion')
             {
-                $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('pro', NULL, $the_row->id);
+                $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('pro', NULL, $users_id);
                 $this->data['title'] = "Candie Promotion";
                 $this->data['bottom_path_name'] = 'all/advertise_list';
             }
@@ -912,7 +910,14 @@ class All extends CI_Controller
             $data['query_user_follower_merchant'] = $this->albert_model->get_follower($where_user_follower_merchant);
             $data['page_path_name'] = 'all/follow';
             $data['users_id'] = $users_id;
-            $this->load->view('template/layout_right_menu', $data);
+            if($this->ion_auth->user()->num_rows())
+            {
+                $this->load->view('template/layout_right_menu', $data);
+            }
+            else
+            {
+                $this->load->view('template/layout', $data);
+            }
         }
         else
         {
@@ -950,7 +955,14 @@ class All extends CI_Controller
             $data['query_user_following_merchant'] = $this->albert_model->get_following($where_user_following_merchant);
             $data['page_path_name'] = 'all/follow';
             $data['users_id'] = $users_id;
-            $this->load->view('template/layout_right_menu', $data);
+            if($this->ion_auth->user()->num_rows())
+            {
+                $this->load->view('template/layout_right_menu', $data);
+            }
+            else
+            {
+                $this->load->view('template/layout', $data);
+            }
         }
         else
         {

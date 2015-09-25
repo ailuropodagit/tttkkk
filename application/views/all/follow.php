@@ -93,7 +93,6 @@ elseif ($page_type == 'following')
         </div>
         <div id='float-fix'></div>
         
-        
         <?php
         if($num_rows_user_follow)
         {
@@ -144,11 +143,15 @@ elseif ($page_type == 'following')
                 </div>
                 <?php
             }
+            ?>
+            <div id="float-fix"></div>
+            <div id="follow-bottom-empty-fix">&nbsp;</div>
+            <?php
         }
         else
         {
             ?><div id='empty-message'><?php echo $follow_empty; ?></div><?php
         }
-        ?>
+        ?>            
     </div>
 </div>

@@ -99,6 +99,10 @@ input[type='submit'], button[type='submit'], .ahref-button {
     display: inline-block;
 }
 
+#submit-simple {
+    background: linear-gradient(0deg, #5a88bc, #00b4d4);
+}
+
 #button-a-href {
     background: none;
     padding: 0px;
@@ -115,14 +119,6 @@ input[type='submit'], button[type='submit'], .ahref-button {
 #button-a-href:hover {
     text-decoration: underline;
 }
-
-/*input[type='submit']:hover,button[type='submit']:hover {
-    background: linear-gradient(0deg, #00b4d4, #5a88bc);
-}
-
-input[type='submit']:active,button[type='submit']:active {
-    background: linear-gradient(0deg, #00b4d4, #00b4d4);
-}*/
 
 textarea {
     border: 1px solid #a9a9a9;
@@ -1153,14 +1149,12 @@ a:hover {
 }
 
 #follow-left-navigation-separator, #follow-right-navigation-separator {
-    margin: 0px 9px 0px 9px;
+    margin: 0px 10px 0px 10px;
     color: lightgray;
 }
 
 #follow-left-navigation-current, #follow-right-navigation-current {
     cursor: default;
-    font-size: 15px;
-    font-weight: bold;
 }
 
 #follow-box {
@@ -1188,6 +1182,10 @@ a:hover {
     text-overflow: ellipsis;
     white-space: nowrap;
     width: 100px;
+}
+
+#follow-bottom-empty-fix {
+    margin: 0px 0px -50px 0px;
 }
 
 /* HOT DEAL
@@ -1423,6 +1421,24 @@ a:hover {
 
 #album-user-content {
     margin: 20px 0px 0px 0px;
+}
+
+#album-user-navigation {
+    margin: 0px 0px 20px 0px;
+}
+
+#album-user-navigation-upload, #album-user-navigation-merchant-album {
+    float: left;
+}
+
+#album-user-navigation-separater {
+    float: left;
+    margin: 0px 13px 0px 13px;
+    color: lightgray;
+}
+
+#album-user-upload-button {
+    margin: 0px 10px 20px 0px;
 }
 
 #album-user-box {
