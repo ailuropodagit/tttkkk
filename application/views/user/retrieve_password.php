@@ -1,3 +1,11 @@
+<?php
+//MESSAGE
+if(isset($message))
+{
+    ?><div id="message"><?php echo $message; ?></div><?php
+}
+?>
+
 <div id="login">
 
     <div id='login-link'>&nbsp;</div>
@@ -6,8 +14,6 @@
     <div id='login-title'><?php echo lang('forgot_password_heading'); ?></div>
 
     <div id="login-subtitle"><?php echo sprintf(lang('forgot_password_subheading'), $identity_label); ?></div>
-
-    <div id="infoMessage"><?php echo $message; ?></div>
 
     <?php echo form_open("user/retrieve-password"); ?>
 

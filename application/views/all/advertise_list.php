@@ -64,26 +64,22 @@ $this->album_merchant = $this->config->item('album_merchant');
             //SHARE PAGE
             if ($this->router->fetch_method() == 'hotdeal_list')
             {
-                $empty_data_message = 'No hot deal in the moment';
-            }
-            else if ($this->router->fetch_method() == 'user_dashboard')
-            {
-                $empty_data_message = 'No activity in the moment';
+                $empty_data_message = 'No Hot Deal';
             }
             else if ($this->router->fetch_method() == 'merchant_dashboard')
             {
-                $empty_data_message = 'No offer deal in the moment';
+                $empty_data_message = 'No Offer Deal';
             }
             else if ($this->router->fetch_method() == 'promotion_list')
             {
-                $empty_data_message = 'No redemption in the moment';
+                $empty_data_message = 'No Redemption';
             }
             else if ($this->router->fetch_method() == 'album_merchant')
             {
-                $empty_data_message = 'No picture in the moment';
+                $empty_data_message = 'No Picture';
             }
             //EMPTY
-            ?><div id='advertise-list-empty-message'><?php echo $empty_data_message ?></div><?php
+            ?><div id='empty-message'><?php echo $empty_data_message ?></div><?php
         }
         else
         {

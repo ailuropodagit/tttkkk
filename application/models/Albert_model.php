@@ -2,9 +2,9 @@
 
 class Albert_model extends CI_Model
 {
-    /* GET MAIN CATEGORY
+    /* READ MAIN CATEGORY
     ***************************************************/
-    public function get_main_category()
+    public function read_main_category()
     {
         //QUERY
         $this->db->select('category_id, category_label');
@@ -15,9 +15,9 @@ class Albert_model extends CI_Model
         return $query;
     }
     
-    /* GET SUB CATEGORY
+    /* READ SUB CATEGORY
     ***************************************************/
-    public function get_sub_category()
+    public function read_sub_category()
     {
         //QUERY
         $this->db->select('category_id, category_label');
@@ -28,9 +28,9 @@ class Albert_model extends CI_Model
         return $query;
     }
     
-    /* GET BANNER
+    /* READ BANNER
     ***************************************************/
-    public function get_banner($where)
+    public function read_banner($where)
     {
         //QUERY
         $this->db->select('banner_image, banner_url');
@@ -45,9 +45,9 @@ class Albert_model extends CI_Model
         return $query;
     }
     
-    /* GET MERCHANT BY MAIN CATEGORY ID
+    /* READ MERCHANT BY MAIN CATEGORY ID
     ***************************************************/
-    public function get_merchant($where)
+    public function read_merchant($where)
     {
         //QUERY
         $this->db->select('company, slug');
@@ -63,9 +63,9 @@ class Albert_model extends CI_Model
         return $query;
     }
     
-    /* GET USER
+    /* READ USER
     ***************************************************/
-    public function get_users($where)
+    public function read_users($where)
     {
         //QUERY
         $this->db->select('profile_image, first_name, last_name, us_blog_url, us_instagram_url, us_facebook_url');
@@ -80,9 +80,9 @@ class Albert_model extends CI_Model
         return $query;
     }
     
-    /* GET USER_ALBUM
+    /* READ USER_ALBUM
     *************************************************************/
-    public function get_user_album($where)
+    public function read_user_album($where)
     {
         //QUERY
         $this->db->select('*');
@@ -98,9 +98,9 @@ class Albert_model extends CI_Model
         return $query;
     }
     
-    /* GET MERCHANT_USER_ALBUM
+    /* READ MERCHANT_USER_ALBUM
     *************************************************************/
-    public function get_merchant_user_album($where)
+    public function read_merchant_user_album($where)
     {
         //QUERY
         $this->db->select('*');
@@ -116,9 +116,9 @@ class Albert_model extends CI_Model
         return $query;
     }
     
-    /* GET USER_FOLLOW
+    /* READ USER_FOLLOW
     *************************************************************/
-    public function get_user_follow($where)
+    public function read_user_follow($where)
     {
         //QUERY 
         $this->db->select('*');
@@ -133,9 +133,47 @@ class Albert_model extends CI_Model
         return $query;
     }
     
-    /* GET FOLLOWER
+    /* CREATE USER_FOLLOW
     *************************************************************/
-    public function get_follower($where)
+    public function create_user_follow()
+    {
+        $follow_from_id = $this->input->get_post('follow_from_id');
+        $follow_to_id = $this->input->get_post('follow_to_id');
+        $data = array(
+            'follow_from_id' => $follow_from_id,
+            'follow_to_id' => $follow_to_id
+        );
+        return $this->db->insert('user_follow', $data);
+    }
+    
+    /* DELETE USER_FOLLOW
+    *************************************************************/
+    public function delete_user_follow()
+    {
+        $follow_from_id = $this->input->get_post('follow_from_id');
+        $follow_to_id = $this->input->get_post('follow_to_id');
+        $this->db->where('follow_from_id', $follow_from_id);
+        $this->db->where('follow_to_id', $follow_to_id);
+        $this->db->delete('user_follow');
+    }
+    
+    /* EXISTS USER_FOLLOW
+    *************************************************************/
+    public function exists_user_follow($follow_from_id, $follow_to_id)
+    {
+        //QUERY
+        $this->db->select('*');
+        $this->db->from('user_follow');
+        $this->db->where('follow_from_id', $follow_from_id);
+        $this->db->where('follow_to_id', $follow_to_id);
+        $query = $this->db->get();
+        $num_rows = $query->num_rows();
+        return $num_rows;
+    }
+    
+    /* READ FOLLOWER
+    *************************************************************/
+    public function read_follower($where)
     {
         //QUERY
         $this->db->select('*');
@@ -151,9 +189,9 @@ class Albert_model extends CI_Model
         return $query;
     }
         
-    /* GET FOLLOWING
+    /* READ FOLLOWING
     *************************************************************/
-    public function get_following($where)
+    public function read_following($where)
     {
         //QUERY
         $this->db->select('*');
@@ -169,9 +207,9 @@ class Albert_model extends CI_Model
         return $query;
     }
         
-    /* GET ACTIVITY_HISTORY INNER JOIN ADVERTISE
+    /* READ ACTIVITY_HISTORY INNER JOIN ADVERTISE
     *************************************************************/
-    public function get_activity_history_inner_join_advertise($where) 
+    public function read_activity_history_inner_join_advertise($where) 
     {
         //QUERY
         $this->db->select("*");

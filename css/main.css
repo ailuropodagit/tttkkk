@@ -100,7 +100,20 @@ input[type='submit'], button[type='submit'], .ahref-button {
 }
 
 #submit-simple {
-    background: linear-gradient(0deg, #5a88bc, #00b4d4);
+    border-radius: 0px;
+    letter-spacing: 0px;
+    color: #4a4a4a;
+    background: linear-gradient(0deg, #dedede, #f6f6f6);
+    border: 1px solid #aeaeae;
+    -webkit-box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.75);
+    font-size: 13px;
+}
+
+#submit-simple:active {
+    background: linear-gradient(0deg, #f6f6f6, #dedede);
+    border: 1px solid #9a9a9a;
 }
 
 #button-a-href {
@@ -173,6 +186,23 @@ a:hover {
     overflow: hidden; 
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+#message {
+    width: 100%;
+    border: 1px solid #e09600;
+    border-radius: 3px;
+    border-left: 6px solid #e09600;
+    color: #734c00;
+    background: #fdf8ed;
+    margin: 0px 0px 20px 0px;
+    padding: 8px 14px 8px 14px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+#message p {
+    margin: 0px;
 }
 
 #empty-message {
@@ -792,6 +822,16 @@ a:hover {
     margin: 15px 0px 0px 0px;
 }
 
+#dashboard-navigation-each {
+    float: left;
+}
+
+#dashboard-navigation-separater {
+    color: lightgray;
+    margin: 0px 15px 0px 15px;
+    float: left;
+}
+
 /* ADVERTISE LIST
 ******************************/
 
@@ -802,7 +842,7 @@ a:hover {
 #advertise-list-category-breadcrumb {
     font-size: 16px;
     color: #5c5c5c;
-    margin: -10px 0px 30px 0px;
+    margin: -10px 0px 20px 0px;
 }
 
 #advertise-list-upload-button {
@@ -893,11 +933,6 @@ a:hover {
 
 #advertise-list-bottom-empty-fix {
     margin: 0px 0px -70px 0px;
-}
-
-#advertise-list-empty-message {
-    color: gray;
-    font-style: italic;
 }
 
 #advertise-list-pagination {

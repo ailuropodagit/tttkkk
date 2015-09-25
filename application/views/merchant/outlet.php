@@ -1,4 +1,10 @@
-<div id="infoMessage"><?php echo $message; ?></div>
+<?php
+//MESSAGE
+if(isset($message))
+{
+    ?><div id="message"><?php echo $message; ?></div><?php
+}
+?>
 
 <div id="dashboard">
     <h1>Headquaters</h1>

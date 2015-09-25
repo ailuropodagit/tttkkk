@@ -1,4 +1,10 @@
-<div id="infoMessage"><?php echo $message; ?></div>
+<?php
+//MESSAGE
+if(isset($message))
+{
+    ?><div id="message"><?php echo $message; ?></div><?php
+}
+?>
 
 <div id="dashboard">
     <h1>Dashboard</h1>
@@ -67,15 +73,17 @@
         </div>
         <div id="float-fix"></div>
         <div id="dashboard-navigation">
-            <a href="<?php echo $offer_deal; ?>" >Offer deal</a> &nbsp; | &nbsp;
-            <a href="<?php echo $candie_promotion; ?>" >Redemption</a> &nbsp; | &nbsp;
-            <a href="<?php echo $user_picture; ?>" > User's Picture</a>
+            <div id="dashboard-navigation-each"><a href="<?php echo $offer_deal; ?>">Offer Deal</a></div>
+            <div id="dashboard-navigation-separater">|</div>
+            <div id="dashboard-navigation-each"><a href="<?php echo $candie_promotion; ?>">Redemption</a></div>
+            <div id="dashboard-navigation-separater">|</div>
+            <div id="dashboard-navigation-each"><a href="<?php echo $user_picture; ?>" > User's Picture</a></div>
             <?php
             if (check_correct_login_type($this->config->item('group_id_user')))
             {
                 ?>
-                &nbsp; | &nbsp;
-                <a href='<?php echo $user_upload_for_merchant ?>'> Upload Picture </a>
+                <div id="dashboard-navigation-separater">|</div>
+                <div id="dashboard-navigation-each"><a href='<?php echo $user_upload_for_merchant ?>'> Upload Picture </a></div>
                 <?php
             }
             ?>

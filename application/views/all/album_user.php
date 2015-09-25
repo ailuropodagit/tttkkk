@@ -4,19 +4,20 @@ if($this->router->fetch_method() == 'user_dashboard')
     $user_id = $this->uri->segment(3);  
     ?>
     <div id="dashboard-navigation" style="margin:0px 0px 30px 0px;">
-        <a href="<?php echo base_url() ?>all/user_dashboard/<?php echo $user_id ?>">User Album</a> &nbsp; | &nbsp;
-        <a href="<?php echo base_url() ?>all/user_dashboard/<?php echo $user_id ?>/merchant_album">Merchant Album</a>
+        <div id="dashboard-navigation-each"><a href="<?php echo base_url() ?>all/user_dashboard/<?php echo $user_id ?>">User Album</a></div>
+        <div id="dashboard-navigation-separater">|</div>
+        <div id="dashboard-navigation-each"><a href="<?php echo base_url() ?>all/user_dashboard/<?php echo $user_id ?>/merchant_album">Merchant Album</a></div>
         <?php
         if (check_correct_login_type($this->config->item('group_id_user')))
         {
             ?>
-            &nbsp; | &nbsp;
-            <a href='<?php echo base_url() ?>user/upload_image'>Upload Picture</a>
+            <div id="dashboard-navigation-separater">|</div>
+            <div id="dashboard-navigation-each"><a href='<?php echo base_url() ?>user/upload_image'>Upload Picture</a></div>
             <?php
         }
         ?>
+        <div id="float-fix"></div>
     </div>
-    <div id="float-fix"></div>
     <?php
 }
 ?>

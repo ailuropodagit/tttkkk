@@ -5,9 +5,10 @@
 <script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script>
 
 <?php
-if (!empty($message))
+//MESSAGE
+if(isset($message))
 {
-    echo $message;
+    ?><div id="message"><?php echo $message; ?></div><?php
 }
 ?>
 
