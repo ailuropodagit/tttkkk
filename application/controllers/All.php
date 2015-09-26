@@ -599,34 +599,34 @@ class All extends CI_Controller
         exit(0);
     }
 
-    //View the user dashboard upper part
-    function user_dashboard($users_id = NULL, $album = NULL)
+    //USER DASHBOARD
+    function user_dashboard($users_id = NULL, $page = NULL)
     {
         if($users_id)
         {
             //QUERY USERS
             $query_users_where = array('id' => $users_id);
-            $data['query_users'] = $this->albert_model->get_users($query_users_where);
+            $data['query_users'] = $this->albert_model->read_users($query_users_where);
             $num_rows_users = $data['query_users']->num_rows();
             //USER EXISTS
             if($num_rows_users)
             {
-                //PAGE PATH NAME
+                $data['users_id'] = $users_id;
                 $data['page_path_name'] = 'user/dashboard';
+                $data['page_message'] = NULL;
                 //QUERY USER FOLLOW FOLLOWER
                 $where_user_follow_follower = array('follow_to_id'=>$users_id);
-                $data['query_user_follow_follower'] = $this->albert_model->get_user_follow($where_user_follow_follower);
+                $data['query_user_follow_follower'] = $this->albert_model->read_user_follow($where_user_follow_follower);
                 //QUERY USER FOLLOW FOLLOWING
                 $where_user_follow_following = array('follow_from_id'=>$users_id);
-                $data['query_user_follow_following'] = $this->albert_model->get_user_follow($where_user_follow_following);
-                
-                if(!$album)
+                $data['query_user_follow_following'] = $this->albert_model->read_user_follow($where_user_follow_following);
+                if(!$page)
                 {
                     //USER ALBUM
                     $data['title'] = "User Album";
                     $data['bottom_path_name'] = 'all/album_user';
-                    $where_user_album = array('user_id'=>$users_id);
-                    $query_user_album = $this->albert_model->get_user_album($where_user_album);
+                    $where_user_album = array('user_id'=>$users_id, 'hide_flag'=>'0');
+                    $query_user_album = $this->albert_model->read_user_album($where_user_album);
                     $data['album_list'] = $query_user_album->result_array();
                 }
                 else
@@ -634,11 +634,10 @@ class All extends CI_Controller
                     //USER MERCHANT ALBUM
                     $data['title'] = "Merchant Album";
                     $data['bottom_path_name'] = 'all/album_user_merchant';
-                    $where_merchant_user_album = array('user_id'=>$users_id);
-                    $query_merchant_user_album = $this->albert_model->get_merchant_user_album($where_merchant_user_album);
+                    $where_merchant_user_album = array('user_id'=>$users_id, 'hide_flag'=>'0');
+                    $query_merchant_user_album = $this->albert_model->read_merchant_user_album($where_merchant_user_album);
                     $data['album_list'] = $query_merchant_user_album->result_array();
                 }
-                
                 if ($this->ion_auth->logged_in())
                 {
                     //LOGGED IN
@@ -670,14 +669,14 @@ class All extends CI_Controller
         }
         //QUERY USERS
         $query_users_where = array('id' => $users_id);
-        $data['query_users'] = $this->albert_model->get_users($query_users_where);
+        $data['query_users'] = $this->albert_model->read_users($query_users_where);
         //PAGE PATH NAME
         $data['page_path_name'] = 'all/advertise_list';
         //BOTTON PATH NAME
         $data['title'] = "Review";
         //QUERY HOTDEAL LIST
         $hotdeal_list_where = array('act_by_id' => $users_id);
-        $data['hotdeal_list'] = $this->albert_model->get_activity_history_inner_join_advertise($hotdeal_list_where)->result_array();
+        $data['hotdeal_list'] = $this->albert_model->red_activity_history_inner_join_advertise($hotdeal_list_where)->result_array();
         if ($this->ion_auth->logged_in())
         {
             //LOGGED IN
@@ -733,6 +732,7 @@ class All extends CI_Controller
         $the_row = $this->m_custom->get_one_table_record('users', 'slug', $slug);
         if ($the_row)
         {
+            $users_id = $the_row->id;
             $this->data['image_path'] = $this->album_merchant_profile;
             $this->data['image'] = $the_row->profile_image;
             $this->data['company_name'] = $the_row->company;
@@ -748,23 +748,29 @@ class All extends CI_Controller
             $this->data['candie_promotion'] = base_url() . 'all/merchant-dashboard/' . $slug . '/promotion';
             $this->data['user_picture'] = base_url() . 'all/merchant-dashboard/' . $slug . '/picture';
             $this->data['user_upload_for_merchant'] = base_url() . 'user/upload_for_merchant/' . $slug;
-            $this->data['show_expired'] = "<a href='" . base_url() . "all/album_merchant/'. $slug>Show Expired</a><br/>";
-            
+            $this->data['show_expired'] = "<a href='" . base_url() . "all/album_merchant/'. $slug>Show Expired</a><br/>";            
+            $this->data['users_id'] = $users_id;
+            //QUERY USER FOLLOW FOLLOWER
+            $where_user_follow_follower = array('follow_to_id'=>$users_id);
+            $this->data['query_user_follow_follower'] = $this->albert_model->read_user_follow($where_user_follow_follower);
+            //QUERY USER FOLLOW FOLLOWING
+            $where_user_follow_following = array('follow_from_id'=>$users_id);
+            $this->data['query_user_follow_following'] = $this->albert_model->read_user_follow($where_user_follow_following);
             if ($bottom_part == NULL)
             {
-                $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('hot', NULL, $the_row->id);
+                $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('hot', NULL, $users_id);
                 $this->data['title'] = "Offer Deals";
                 $this->data['bottom_path_name'] = 'all/advertise_list';
             }
             else if($bottom_part == 'picture')
             {
-                $this->data['album_list'] = $this->m_custom->getAlbumUserMerchant(NULL, $the_row->id);
+                $this->data['album_list'] = $this->m_custom->getAlbumUserMerchant(NULL, $users_id);
                 $this->data['title'] = "User's Pictures";
                 $this->data['bottom_path_name'] = 'all/album_user_merchant';
             }
             else if($bottom_part == 'promotion')
             {
-                $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('pro', NULL, $the_row->id);
+                $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('pro', NULL, $users_id);
                 $this->data['title'] = "Candie Promotion";
                 $this->data['bottom_path_name'] = 'all/advertise_list';
             }
@@ -780,42 +786,6 @@ class All extends CI_Controller
         else
         {
             redirect('/', 'refresh');
-        }
-    }
-
-    public function home_search()
-    {
-        if (isset($_POST) && !empty($_POST))
-        {
-            if ($this->input->post('button_action') == "search")
-            {
-                $search_word = $this->input->post('search_word');
-                $search_state = $this->input->post('me_state_id');
-                if (IsNullOrEmptyString($search_word))
-                {
-                    $search_word = 0;
-                }
-                redirect('all/search_result/'.$search_word.'/'.$search_state, 'refresh');
-
-            }
-        }
-        redirect('/','refresh');
-    }
-
-    public function search_result($search_value = NULL, $state_id = 0){       
-        $this->data['home_search_merchant'] = $this->m_custom->home_search_merchant($search_value, $state_id);
-        $this->data['home_search_hotdeal'] = $this->m_custom->home_search_hotdeal($search_value, $state_id);
-        $this->data['home_search_promotion'] = $this->m_custom->home_search_promotion($search_value, $state_id);
-        
-        $this->data['page_path_name'] = 'all/search_result';
-        
-        if ($this->ion_auth->logged_in())
-        {
-            $this->load->view('template/layout_right_menu', $this->data);
-        }
-        else
-        {
-            $this->load->view('template/layout', $this->data);
         }
     }
     
@@ -906,6 +876,154 @@ class All extends CI_Controller
         else
         {
             redirect('/', 'refresh');
+        }
+    }
+    
+    //FOLLOWER
+    public function follower($user_type = NULL, $users_id = NULL)
+    {
+        if($user_type != NULL && $users_id != NULL)
+        {    
+            if($user_type == 'all')
+            {
+                $where_user_follower = array('follow_to_id'=>$users_id);
+            }
+            if($user_type == 'user')
+            {
+                $where_user_follower = array('follow_to_id'=>$users_id, 'main_group_id'=>5);
+            }
+            elseif($user_type == 'merchant')
+            {
+                $where_user_follower = array('follow_to_id'=>$users_id, 'main_group_id'=>3);
+            }
+            $data['page_title'] = 'Follower';
+            $data['query_user_follower'] = $this->albert_model->read_follower($where_user_follower);
+            //COUNT
+            $where_user_following_all = array('follow_from_id'=>$users_id);
+            $data['query_user_following_all'] = $this->albert_model->read_following($where_user_following_all);
+            $where_user_follower_all = array('follow_to_id'=>$users_id);
+            $data['query_user_follower_all'] = $this->albert_model->read_follower($where_user_follower_all);
+            $where_user_follower_user = array('follow_to_id'=>$users_id, 'main_group_id'=>5);
+            $data['query_user_follower_user'] = $this->albert_model->read_follower($where_user_follower_user);            
+            $where_user_follower_merchant = array('follow_to_id'=>$users_id, 'main_group_id'=>3);
+            $data['query_user_follower_merchant'] = $this->albert_model->read_follower($where_user_follower_merchant);
+            $data['page_path_name'] = 'all/follow';
+            $data['users_id'] = $users_id;
+            if($this->ion_auth->user()->num_rows())
+            {
+                $this->load->view('template/layout_right_menu', $data);
+            }
+            else
+            {
+                $this->load->view('template/layout', $data);
+            }
+        }
+        else
+        {
+            redirect('/', 'refresh');
+        }
+    }
+       
+    //FOLLOWING
+    public function following($user_type = NULL, $users_id = NULL)
+    {        
+        if($user_type != NULL && $users_id != NULL)
+        {
+            if($user_type == 'all')
+            {
+                $where_user_following = array('follow_from_id'=>$users_id);
+            }
+            if($user_type == 'user')
+            {
+                $where_user_following = array('follow_from_id'=>$users_id, 'main_group_id'=>5);
+            }
+            elseif($user_type == 'merchant')
+            {
+                $where_user_following = array('follow_from_id'=>$users_id, 'main_group_id'=>3);
+            }
+            $data['page_title'] = 'Following';
+            $data['query_user_following'] = $this->albert_model->read_following($where_user_following);
+            //COUNT
+            $where_user_following_all = array('follow_from_id'=>$users_id);
+            $data['query_user_following_all'] = $this->albert_model->read_following($where_user_following_all);
+            $where_user_follower_all = array('follow_to_id'=>$users_id);
+            $data['query_user_follower_all'] = $this->albert_model->read_follower($where_user_follower_all);
+            $where_user_following_user = array('follow_from_id'=>$users_id, 'main_group_id'=>5);
+            $data['query_user_following_user'] = $this->albert_model->read_following($where_user_following_user);            
+            $where_user_following_merchant = array('follow_from_id'=>$users_id, 'main_group_id'=>3);
+            $data['query_user_following_merchant'] = $this->albert_model->read_following($where_user_following_merchant);
+            $data['page_path_name'] = 'all/follow';
+            $data['users_id'] = $users_id;
+            if($this->ion_auth->user()->num_rows())
+            {
+                $this->load->view('template/layout_right_menu', $data);
+            }
+            else
+            {
+                $this->load->view('template/layout', $data);
+            }
+        }
+        else
+        {
+            redirect('/', 'refresh');
+        }
+    }
+    
+    public function create_user_follow() 
+    {
+        $current_url = $_POST['current_url'];
+        $this->albert_model->create_user_follow();
+        if($this->db->affected_rows() > 0)
+        {
+            $this->session->set_flashdata('message', 'Follow Success');
+        }
+        redirect($current_url, 'refresh');
+    }
+    
+    public function delete_user_follow() 
+    {
+        $current_url = $_POST['current_url'];
+        $this->albert_model->delete_user_follow();
+        if($this->db->affected_rows() > 0)
+        {
+            $this->session->set_flashdata('message', 'Unfollow Success');
+        }
+        redirect($current_url, 'refresh');
+    }
+    
+    public function home_search()
+    {
+        if (isset($_POST) && !empty($_POST))
+        {
+            if ($this->input->post('button_action') == "search")
+            {
+                $search_word = $this->input->post('search_word');
+                $search_state = $this->input->post('me_state_id');
+                if (IsNullOrEmptyString($search_word))
+                {
+                    $search_word = 0;
+                }
+                redirect('all/search_result/'.$search_word.'/'.$search_state, 'refresh');
+
+            }
+        }
+        redirect('/','refresh');
+    }
+
+    public function search_result($search_value = NULL, $state_id = 0){       
+        $this->data['home_search_merchant'] = $this->m_custom->home_search_merchant($search_value, $state_id);
+        $this->data['home_search_hotdeal'] = $this->m_custom->home_search_hotdeal($search_value, $state_id);
+        $this->data['home_search_promotion'] = $this->m_custom->home_search_promotion($search_value, $state_id);
+        
+        $this->data['page_path_name'] = 'all/search_result';
+        
+        if ($this->ion_auth->logged_in())
+        {
+            $this->load->view('template/layout_right_menu', $this->data);
+        }
+        else
+        {
+            $this->load->view('template/layout', $this->data);
         }
     }
 

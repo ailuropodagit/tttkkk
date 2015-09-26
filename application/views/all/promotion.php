@@ -5,9 +5,10 @@
 <script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script>
 
 <?php
-if (!empty($message))
+//MESSAGE
+if(isset($message))
 {
-    echo $message;
+    ?><div id="message"><?php echo $message; ?></div><?php
 }
 ?>
 
@@ -23,8 +24,6 @@ if (!empty($message))
         <div id='redemption-print'>
             <a href="#" onclick="printDiv('print-area')"><i class="fa fa-print"></i> Print Statement</a>
         </div>
-        <div id="float-fix"></div>
-        
         <div id="redemption-edit-link">
             <?php
             if (check_is_login())
@@ -34,13 +33,21 @@ if (!empty($message))
                 if (check_correct_login_type($this->config->item('group_id_merchant'), $allowed_list, $advertise_id))
                 {
                     ?>
-                    <a href='<?php echo base_url() . "merchant/candie_promotion/" . $advertise_id ?>' >Edit Redemption</a>
+                    <a href='<?php echo base_url() . "merchant/candie_promotion/" . $advertise_id ?>'><i class="fa fa-pencil"></i> Edit Redemption</a>
                     <?php
                 }
             }
             ?>
         </div>
-        <div id="float-fix"></div>       
+        <div id="float-fix"></div>
+        
+        <div id='redemption-expired-date'>
+            Expiry Date: <?php echo $expire_date; ?>
+        </div>
+        <div id="redemption-candies">
+            Require <?php echo $voucher_candie ?> Candies
+        </div>
+        <div id="float-fix"></div>
         
         <div id='redemption-table'>
             <div id='redemption-table-row'>
@@ -75,9 +82,6 @@ if (!empty($message))
                             </div>                                
                             <div id="redemption-sub-title">
                                 <?php echo $title ?>
-                            </div>
-                            <div id="redemption-candies">
-                                <?php echo $voucher_candie ?> Candies
                             </div>
                             <div id="redemption-rate-time">
                                 <div id="redemption-rate">
@@ -155,9 +159,6 @@ if (!empty($message))
                                     }
                                     ?>  
                                 </ul>
-                            </div>
-                            <div id='redemption-expired-date'>
-                                Expiry Date: <?php echo $expire_date; ?>
                             </div>
                         </div>
                             <div id='redemption-redempt-submit'>

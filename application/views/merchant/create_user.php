@@ -1,3 +1,11 @@
+<?php
+//MESSAGE
+if(isset($message))
+{
+    ?><div id="message"><?php echo $message; ?></div><?php
+}
+?>
+
 <div id='register'>
 
     <div id='register-link'>
@@ -10,8 +18,6 @@
     <div id='register-title'>Merchant Sign Up</div>
 
     <div id='register-subtitle'>Already have register? <a href='<?php echo base_url(); ?>merchant/login'>Log In</a></div>
-
-    <div id="infoMessage"><?php echo $message; ?></div>
 
     <div id='register-horizontal-line'></div>
 

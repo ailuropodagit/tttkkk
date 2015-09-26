@@ -1,6 +1,12 @@
 <script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script>
 
-<div id="infoMessage"><?php echo $message; ?></div>
+<?php
+//MESSAGE
+if(isset($message))
+{
+    ?><div id="message"><?php echo $message; ?></div><?php
+}
+?>
 
 <div id="payment">
     <h1><?php echo "Payment"; ?></h1>

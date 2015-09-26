@@ -9,7 +9,13 @@ $(function(){
 });
 </script>
 
-<div id="infoMessage"><?php echo $message; ?></div>
+<?php
+//MESSAGE
+if(isset($message))
+{
+    ?><div id="message"><?php echo $message; ?></div><?php
+}
+?>
 
 <div id="payment">
     <h1><?php echo $title; ?></h1>

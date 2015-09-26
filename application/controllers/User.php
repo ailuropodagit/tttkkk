@@ -1,6 +1,4 @@
-<?php
-
-defined('BASEPATH') OR exit('No direct script access allowed');
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 class User extends CI_Controller
 {
@@ -644,36 +642,6 @@ class User extends CI_Controller
         {
             $this->form_validation->set_message('date_check', 'Date of Birth: Incorrect date, please set a real date.');
             return FALSE;
-        }
-    }
-    
-    //FOLLOWER
-    public function follower()
-    {
-        //PAGE PATH NAME
-        $data['page_path_name'] = 'user/follower';
-        $this->load->view('template/layout_right_menu', $data);
-    }
-    
-    //FOLLOWING
-    public function following()
-    {
-        //GET DATA
-        $user_id = $this->ion_auth->user()->row()->id;
-        //QUERY USER FOLLOW
-        $where_user_follow = array('follow_from_id'=>$user_id);
-        $data['query_user_follow_inner_join_users'] = $this->albert_model->get_user_follow_inner_join_users($where_user_follow);      
-        $num_rows_user_follow_inner_join_users = $data['query_user_follow_inner_join_users']->num_rows();
-        if($num_rows_user_follow_inner_join_users)
-        {
-            //PAGE PATH NAME
-            $data['page_path_name'] = 'user/following';
-            $this->load->view('template/layout_right_menu', $data);
-        }
-        else
-        {
-            //REDIRECT TO ROOT
-            redirect('/', 'refresh');
         }
     }
 

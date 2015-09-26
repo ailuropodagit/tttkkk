@@ -46,7 +46,13 @@
     }
 </script>
 
-<div id="infoMessage"><?php echo $message; ?></div>
+<?php
+//MESSAGE
+if(isset($message))
+{
+    ?><div id="message"><?php echo $message; ?></div><?php
+}
+?>
 
 <div id="upload-for-merchant">
     <h1>User Upload Image For Merchant</h1>

@@ -14,6 +14,14 @@
     }
 </script>
 
+<?php
+//MESSAGE
+if(isset($message))
+{
+    ?><div id="message"><?php echo $message; ?></div><?php
+}
+?>
+
 <div id="register">
 
     <div id='register-link'>
@@ -26,8 +34,6 @@
     <div id='register-title'>User Sign Up</div>
 
     <div id='register-subtitle'>Already have register? <a href='<?php echo base_url(); ?>user/login'>Log In</a></div>
-
-    <div id="message-box-error"><?php echo $message; ?></div>
 
     <div id='register-facebook-icon'><img src='<?php echo base_url(); ?>image/facebook-icon.png'></div>
 

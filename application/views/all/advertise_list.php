@@ -15,7 +15,7 @@
             })
             .on('finish.countdown', function (event) {
                 $this.html('Expired!');
-
+                $this.parent().css({color: 'red'});
             });
         });
     });
@@ -64,26 +64,22 @@ $this->album_merchant = $this->config->item('album_merchant');
             //SHARE PAGE
             if ($this->router->fetch_method() == 'hotdeal_list')
             {
-                $empty_data_message = 'No hot deal in the moment';
-            }
-            else if ($this->router->fetch_method() == 'user_dashboard')
-            {
-                $empty_data_message = 'No activity in the moment';
+                $empty_data_message = 'No Hot Deal';
             }
             else if ($this->router->fetch_method() == 'merchant_dashboard')
             {
-                $empty_data_message = 'No offer deal in the moment';
+                $empty_data_message = 'No Offer Deal';
             }
             else if ($this->router->fetch_method() == 'promotion_list')
             {
-                $empty_data_message = 'No redemption in the moment';
+                $empty_data_message = 'No Redemption';
             }
             else if ($this->router->fetch_method() == 'album_merchant')
             {
-                $empty_data_message = 'No picture in the moment';
+                $empty_data_message = 'No Picture';
             }
             //EMPTY
-            ?><div id='advertise-list-empty-message'><?php echo $empty_data_message ?></div><?php
+            ?><div id='empty-message'><?php echo $empty_data_message ?></div><?php
         }
         else
         {
@@ -132,6 +128,16 @@ $this->album_merchant = $this->config->item('album_merchant');
                     <div id="advertise-list-title2">
                         <a href='<?php echo $advertise_detail_url ?>'><?php echo $row['title'] ?></a>
                     </div>
+                    <?php if ($row['advertise_type'] == 'hot') { ?>
+                        <div id="advertise-list-dynamic-time">
+                            <i class="fa fa-clock-o"></i><span id="advertise-list-dynamic-time-label" data-countdown='<?php echo $row['end_time'] ?>'></span>
+                        </div>
+                    <?php } ?>
+                    <?php if ($row['advertise_type'] == 'pro') { ?>
+                        <div id="advertise-list-dynamic-time">
+                            <i class="fa fa-bullseye"></i><span id="advertise-list-dynamic-time-label"><?php echo $row['voucher_candie'] ?> candies</span>
+                        </div>
+                    <?php } ?>
                     <div id="advertise-list-info">
                         <table border="0" cellpadding="4px" cellspacing="0px">
                             <tr>
@@ -153,16 +159,6 @@ $this->album_merchant = $this->config->item('album_merchant');
                             </tr>
                         </table>
                     </div>
-                    <?php if ($row['advertise_type'] == 'hot') { ?>
-                        <div id="advertise-list-dynamic-time">
-                            <i class="fa fa-clock-o"></i><span id="advertise-list-dynamic-time-label" data-countdown='<?php echo $row['end_time'] ?>'></span>
-                        </div>
-                    <?php } ?>
-                    <?php if ($row['advertise_type'] == 'pro') { ?>
-                        <div id="advertise-list-dynamic-time">
-                            <i class="fa fa-bullseye"></i><span id="advertise-list-dynamic-time-label"><?php echo $row['voucher_candie'] ?> candies</span>
-                        </div>
-                    <?php } ?>
                 </div>
                 <?php
             }

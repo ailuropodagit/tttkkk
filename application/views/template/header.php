@@ -33,6 +33,12 @@
         </script>
     </head>
     <body>
+        
+        <?php        
+        //$this->ion_auth->user()->num_rows();
+        //$this->ion_auth->user()->row()->id;
+        ?>
+        
         <!--HEADER-->
         <div id='header'>
             <div id='wrapper'>
@@ -46,9 +52,16 @@
                         <li <?php if($this->router->fetch_class() == 'home'){ echo "class='header-menu-active'"; } ?>>
                             <a href='<?php echo base_url(); ?>home'><i class="fa fa-home header-menu-icon header-menu-icon-home"></i>Home</a>
                         </li>
-                        <li <?php if($this->router->fetch_class() == 'categories'){ echo "class='header-menu-active'"; } ?>>
-                            <a href='<?php echo base_url(); ?>categories'><i class="fa fa-th-large header-menu-icon"></i>Categories</a>
-                        </li>
+                        <?php 
+                        if($this->router->fetch_class() != 'home')
+                        {
+                            ?>
+                            <li <?php if($this->router->fetch_class() == 'categories'){ echo "class='header-menu-active'"; } ?>>
+                                <a href='<?php echo base_url(); ?>categories'><i class="fa fa-th-large header-menu-icon"></i>Categories</a>
+                            </li>
+                            <?php
+                        }
+                        ?>
                         <li <?php if($this->router->fetch_method() == 'hotdeal_list' || $this->uri->segment(4) == 'hot'){ echo "class='header-menu-active'"; } ?>>
                             <a href='<?php echo base_url(); ?>all/hotdeal-list/26/0'><i class="fa fa-fire header-menu-icon"></i>Hot Deal</a>
                         </li>
@@ -103,22 +116,42 @@
             <div id="wrapper">
                 <ul>
                     <li><a href='<?php echo base_url(); ?>home'><i class="fa fa-home header-menu-icon header-menu-icon-home"></i>Home</a></li>
-                    <li><a href='<?php echo base_url(); ?>categories'><i class="fa fa-th-large header-menu-icon"></i>Categories</a></li>
+                    <?php 
+                    if($this->router->fetch_class() != 'home')
+                    {
+                        ?>
+                        <li><a href='<?php echo base_url(); ?>categories'><i class="fa fa-th-large header-menu-icon"></i>Categories</a></li>
+                        <?php
+                    }
+                    ?>
                     <li><a href='<?php echo base_url(); ?>all/hotdeal-list/26/0'><i class="fa fa-fire header-menu-icon"></i>Hot Deal</a></li>
                     <li><a href='<?php echo base_url(); ?>all/promotion-list/26/0'><i class="fa fa-diamond header-menu-icon"></i>Redemption</a></li>
-                    <?php if(check_is_login()){ 
-                        if (check_correct_login_type($this->config->item('group_id_user'))) {
-                                echo "<li><a href='" . base_url() . "user/profile'><i class='fa fa-user header-menu-icon'></i>Profile</a></li>";
-                                echo "<li><a href='" . base_url() . "user/logout'><i class='fa fa-sign-out header-menu-icon'></i>Logout</a></li>";
-                            } else {
-                                echo "<li><a href='" . base_url() . "merchant/profile'><i class='fa fa-user header-menu-icon'></i>Profile</a></li>";
-                                echo "<li><a href='" . base_url() . "merchant/logout'><i class='fa fa-sign-out header-menu-icon'></i>Logout</a></li>";
-                            }
-                        ?>             
-                    <?php } else { ?>
-                    <li><a href='<?php echo base_url(); ?>user/login'><i class="fa fa-user header-menu-icon"></i>Login</a></li>
-                    <li><a href='<?php echo base_url(); ?>user/register'><i class="fa fa-user-plus header-menu-icon"></i>Register</a></li>
-                    <?php } ?>
+                    <?php 
+                    if(check_is_login())
+                    {
+                        if (check_correct_login_type($this->config->item('group_id_user'))) 
+                        {
+                            ?>
+                            <li><a href='<?php echo base_url() ?>user/profile'><i class='fa fa-user header-menu-icon'></i>Profile</a></li>
+                            <li><a href='<?php echo base_url() ?>user/logout'><i class='fa fa-sign-out header-menu-icon'></i>Logout</a></li>
+                            <?php
+                        } 
+                        else 
+                        {
+                            ?>
+                            <li><a href='<?php echo base_url() ?>merchant/profile'><i class='fa fa-user header-menu-icon'></i>Profile</a></li>
+                            <li><a href='<?php echo base_url() ?>merchant/logout'><i class='fa fa-sign-out header-menu-icon'></i>Logout</a></li>
+                            <?php
+                        }
+                    } 
+                    else
+                    { 
+                        ?>
+                        <li><a href='<?php echo base_url(); ?>user/login'><i class="fa fa-user header-menu-icon"></i>Login</a></li>
+                        <li><a href='<?php echo base_url(); ?>user/register'><i class="fa fa-user-plus header-menu-icon"></i>Register</a></li>
+                        <?php
+                    }
+                    ?>
                 </ul>
             </div>
         </div>

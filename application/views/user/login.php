@@ -20,6 +20,14 @@ if ($this->ion_auth->logged_in())
     }
 </script>
 
+<?php
+//MESSAGE
+if(isset($message))
+{
+    ?><div id="message"><?php echo $message; ?></div><?php
+}
+?>
+
 <div id="login">
 
     <div id='login-link'>
@@ -32,8 +40,6 @@ if ($this->ion_auth->logged_in())
     <div id='login-title'>User Log In</div>
 
     <div id='login-subtitle'>Don't have an account? <a href='<?php echo base_url(); ?>user/register'>Sign Up</a></div>
-
-    <div id="infoMessage"><?php echo $message; ?></div>
 
     <div id='login-facebook-icon'><img src='<?php echo base_url(); ?>image/facebook-icon.png'></div>
 

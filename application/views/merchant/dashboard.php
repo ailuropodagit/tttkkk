@@ -1,10 +1,15 @@
-<div id="infoMessage"><?php echo $message; ?></div>
+<?php
+//MESSAGE
+if(isset($message))
+{
+    ?><div id="message"><?php echo $message; ?></div><?php
+}
+?>
 
 <div id="dashboard">
     <h1>Dashboard</h1>
     <div id="dashboard-content">
-        
-        <div id="dashboard-photo">
+        <div id="dashboard-photo-box">
             <?php            
             if(IsNullOrEmptyString($image))
             {
@@ -20,7 +25,6 @@
             }
             ?>
         </div>
-        
         <div id="dashboard-info">
             <div id="dashboard-info-title">
                 <?php echo $company_name; ?>
@@ -52,24 +56,38 @@
                     </tr>
                 </table>
             </div>
+            <div id="dashboard-info-followers-following">
+                <?php
+                //FOLLOWER
+                $num_rows_user_follow_follower =  $query_user_follow_follower->num_rows();
+                //FOLLOWING
+                $num_rows_user_follow_following =  $query_user_follow_following->num_rows();
+                ?>
+                <div id="dashboard-info-followers">
+                    Follower : <a href='<?php echo base_url() ?>all/follower/all/<?php echo $users_id ?>'><?php echo $num_rows_user_follow_follower ?></a>
+                </div>
+                <div id="dashboard-info-following">
+                    Following : <a href='<?php echo base_url() ?>all/following/all/<?php echo $users_id ?>'><?php echo $num_rows_user_follow_following ?></a>
+                </div>
+            </div>
         </div>
         <div id="float-fix"></div>
-        
         <div id="dashboard-navigation">
-            <a href="<?php echo $offer_deal; ?>" >Offer deal</a> &nbsp; | &nbsp;
-            <a href="<?php echo $candie_promotion; ?>" >Redemption</a> &nbsp; | &nbsp;
-            <a href="<?php echo $user_picture; ?>" > User's Picture</a>
+            <div id="dashboard-navigation-each"><a href="<?php echo $offer_deal; ?>">Offer Deal</a></div>
+            <div id="dashboard-navigation-separater">|</div>
+            <div id="dashboard-navigation-each"><a href="<?php echo $candie_promotion; ?>">Redemption</a></div>
+            <div id="dashboard-navigation-separater">|</div>
+            <div id="dashboard-navigation-each"><a href="<?php echo $user_picture; ?>" > User's Picture</a></div>
             <?php
             if (check_correct_login_type($this->config->item('group_id_user')))
             {
                 ?>
-                &nbsp; | &nbsp;
-                <a href='<?php echo $user_upload_for_merchant ?>'> Upload Picture </a>
+                <div id="dashboard-navigation-separater">|</div>
+                <div id="dashboard-navigation-each"><a href='<?php echo $user_upload_for_merchant ?>'> Upload Picture </a></div>
                 <?php
             }
             ?>
         </div>
         <div id="float-fix"></div>
-        
     </div>
 </div>
