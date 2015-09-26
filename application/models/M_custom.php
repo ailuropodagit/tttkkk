@@ -213,11 +213,11 @@ class M_custom extends CI_Model
             {
                 if ($return->us_gender_id == $this->config->item('gender_id_male'))
                 {
-                    $prefix = '<i class="fa fa-male"></i> ';
+                    $prefix = '<i class="fa fa-mars"></i> ';
                 }
                 else
                 {
-                    $prefix = '<i class="fa fa-female"></i> ';
+                    $prefix = '<i class="fa fa-venus"></i> ';
                 }
             }
             else
