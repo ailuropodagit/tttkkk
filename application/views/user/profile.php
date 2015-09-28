@@ -73,7 +73,7 @@ if(isset($message))
                 </div>
                 <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_user_contact_number_label', 'contact number'); ?></div>
-                    <div id='profile-info-form-each-input'><?php echo form_input($phone); ?></div>
+                    <div id='profile-info-form-each-input-contact-number'>+60 <?php echo form_input($phone); ?></div>
                 </div>
                 <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_user_dob_label'); ?></div>
@@ -111,15 +111,15 @@ if(isset($message))
                     <div id='profile-info-form-each-input'><?php echo form_input($email); ?></div>
                 </div>
                 <div id='profile-info-form-each'>
-                    <div id='profile-info-form-each-label'><label for='blog_url'>Blog URL</label></div>
+                    <div id='profile-info-form-each-label'><label for='blog_url'>Blog URL:</label><a href="<?php echo base_url() ?>image/exclamation-blogspot-url.jpg" target="_blank"><span id="profile-info-form-each-label-icon"><i class="fa fa-exclamation-circle"></i></span></a></div>
                     <div id='profile-info-form-each-input'><?php echo form_input($blog_url); ?></div>
                 </div>
                 <div id='profile-info-form-each'>
-                    <div id='profile-info-form-each-label'><label for='instagram_url'>Instagram URL</label></div>
+                    <div id='profile-info-form-each-label'><label for='instagram_url'>Instagram URL:</label><a href="<?php echo base_url() ?>image/exclamation-instagram-url.jpg" target="_blank"><span id="profile-info-form-each-label-icon"><i class="fa fa-exclamation-circle"></i></span></a></div>
                     <div id='profile-info-form-each-input'><?php echo form_input($instagram_url); ?></div>
                 </div>
                 <div id='profile-info-form-each'>
-                    <div id='profile-info-form-each-label'><label for='facebook_url'>Facebook URL</label></div>
+                    <div id='profile-info-form-each-label'><label for='facebook_url'>Facebook URL:</label><a href="<?php echo base_url() ?>image/exclamation-facebook-url.jpg" target="_blank"><span id="profile-info-form-each-label-icon"><i class="fa fa-exclamation-circle"></i></span></a></div>
                     <div id='profile-info-form-each-input'><?php echo form_input($facebook_url); ?></div>
                 </div>
             </div>

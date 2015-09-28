@@ -1,6 +1,4 @@
-<?php
-
-defined('BASEPATH') OR exit('No direct script access allowed');
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 class MY_User_agent extends CI_User_agent {
 
@@ -16,6 +14,5 @@ class MY_User_agent extends CI_User_agent {
             return TRUE;
         }
         return False;
-
     }
 }

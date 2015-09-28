@@ -536,7 +536,7 @@ class Merchant extends CI_Controller
         $this->form_validation->set_rules('slug', $this->lang->line('create_merchant_validation_company_label'), 'trim|is_unique[' . $tables['users'] . '.slug]');
         $this->form_validation->set_rules('me_ssm', $this->lang->line('create_merchant_validation_companyssm_label'), 'required');
         $this->form_validation->set_rules('address', $this->lang->line('create_merchant_validation_address_label'), 'required');
-        $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required');
+        $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required|valid_contact_number');
         $this->form_validation->set_rules('username', $this->lang->line('create_merchant_validation_username_label'), 'trim|required|is_unique[' . $tables['users'] . '.username]');
         $this->form_validation->set_rules('email', $this->lang->line('create_merchant_validation_email_label'), 'trim|required|valid_email|is_unique[' . $tables['users'] . '.email]');
         $this->form_validation->set_rules('password', $this->lang->line('create_merchant_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
@@ -634,7 +634,7 @@ class Merchant extends CI_Controller
                 'name' => 'phone',
                 'id' => 'phone',
                 'type' => 'text',
-                'value' => $this->form_validation->set_value('phone') == '' ? '+60' : $this->form_validation->set_value('phone'),
+                'value' => $this->form_validation->set_value('phone'),
             );
             $this->data['me_ssm'] = array(
                 'name' => 'me_ssm',
@@ -678,7 +678,7 @@ class Merchant extends CI_Controller
             $branch = $this->m_custom->get_one_table_record('merchant_branch', 'branch_id', $supervisor->su_branch_id);
         }
         $user = $this->ion_auth->user($merchant_id)->row();
-        $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required');
+        $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required|valid_contact_number');
         $this->form_validation->set_rules('website', $this->lang->line('create_merchant_validation_website_label'));
         $this->form_validation->set_rules('facebook_url', $this->lang->line('create_merchant_validation_facebook_url_label'));
         if (isset($_POST) && !empty($_POST))
@@ -1033,7 +1033,7 @@ class Merchant extends CI_Controller
 
     function add_field_for_phone()
     {
-        return '<input type="text" maxlength="50" value="+60 " name="phone" >';
+        return '<input type="text" maxlength="50" value="" name="phone" >';
     }
 
     function _branch_map($value, $row)

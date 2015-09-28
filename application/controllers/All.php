@@ -742,7 +742,7 @@ class All extends CI_Controller
             $this->data['website_url'] = $the_row->me_website_url;
             $this->data['facebook_url'] = $the_row->me_facebook_url;
             //$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-            $this->data['message'] = "";
+            $this->data['message'] = NULL;
             $this->data['page_path_name'] = 'merchant/dashboard';
             $this->data['offer_deal'] = base_url() . 'all/merchant-dashboard/' . $slug;
             $this->data['candie_promotion'] = base_url() . 'all/merchant-dashboard/' . $slug . '/promotion';

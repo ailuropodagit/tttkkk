@@ -47,22 +47,18 @@ if(isset($message))
             <div id='register-form-each-label'><?php echo lang('create_user_first_name_label', 'first name'); ?></div>
             <div id='register-form-each-input'><?php echo form_input($first_name); ?></div>
         </div>
-
         <div id='register-form-each'>
             <div id='register-form-each-label'><?php echo lang('create_user_last_name_label', 'last name'); ?></div>
             <div id='register-form-each-input'><?php echo form_input($last_name); ?></div>
         </div>
-
         <div id='register-form-each'>
             <div id='register-form-each-label'><?php echo lang('create_user_ic_number_label', 'ic number'); ?></div>
             <div id='register-form-each-input'><?php echo form_input($ic_number); ?></div>
         </div>
-        
         <div id='register-form-each'>
             <div id='register-form-each-label'><?php echo lang('create_user_contact_number_label', 'contact number'); ?></div>
-            <div id='register-form-each-input'><?php echo form_input($phone); ?></div>
+            <div id='register-form-each-input-contact-number'>+60 <?php echo form_input($phone); ?></div>
         </div>
-
         <div id='register-form-each'>
             <div id='register-form-each-label'><?php echo lang('create_user_dob_label'); ?></div>
             <div id='register-form-each-input-dob'>
@@ -72,47 +68,34 @@ if(isset($message))
                 <div id="float-fix"></div>
             </div>
         </div>
-
-<!--        <div id='register-form-each'>
-            <div id='register-form-each-label'><?php //echo lang('create_user_age_label', 'age'); ?></div>
-            <div id='register-form-each-input'><?php //echo form_dropdown($age, $age_list); ?></div>
-        </div>-->
-
         <div id='register-form-each'>
             <div id='register-form-each-label'><?php echo lang('create_user_gender_label', 'gender_id'); ?></div>
             <div id='register-form-each-input'><?php echo form_dropdown($gender_id, $gender_list); ?></div>
         </div>
-
         <div id='register-form-each'>
             <div id='register-form-each-label'><?php echo lang('create_user_race_label', 'race_id'); ?></div>
             <div id='register-form-each-input'><?php echo form_dropdown($race_id, $race_list); ?></div>
         </div>
-
         <div id='register-form-each'>
             <div id='register-form-each-label'><span id="race_other_label" style="display:none"><?php echo lang('create_user_race_other_label', 'race_other'); ?></span></div>
             <div id='register-form-each-input'><?php echo form_input($race_other); ?></div>
         </div>
-
         <div id='register-form-each'>
             <div id='register-form-each-label'><?php echo lang('create_user_username_label', 'username'); ?></div>
             <div id='register-form-each-input'><?php echo form_input($username); ?></div>
         </div>
-
         <div id='register-form-each'>
             <div id='register-form-each-label'><?php echo lang('create_user_email_label', 'email address'); ?></div>
             <div id='register-form-each-input'><?php echo form_input($email); ?></div>
         </div>
-
         <div id='register-form-each'>
             <div id='register-form-each-label'><?php echo lang('create_merchant_password_label', 'password'); ?></div>
             <div id='register-form-each-input'><?php echo form_input($password); ?></div>
         </div>
-
         <div id='register-form-each'>
             <div id='register-form-each-label'><?php echo lang('create_merchant_password_confirm_label', 'password_confirm'); ?></div>
             <div id='register-form-each-input'><?php echo form_input($password_confirm); ?></div>
         </div>
-
         <div id='register-form-submit'>
             <?php echo form_submit('submit', 'Sign Up'); ?>
         </div>

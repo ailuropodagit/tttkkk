@@ -483,8 +483,8 @@ class User extends CI_Controller
         // validate form input
         $this->form_validation->set_rules('first_name', $this->lang->line('create_user_fname_label'), 'required');
         $this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'));
-        $this->form_validation->set_rules('ic_number', $this->lang->line('create_user_ic_number_label'), 'required');
-        $this->form_validation->set_rules('phone', $this->lang->line('create_user_phone_label'), 'required');
+        $this->form_validation->set_rules('ic_number', $this->lang->line('create_user_ic_number_label'));
+        $this->form_validation->set_rules('phone', $this->lang->line('create_user_phone_label'), 'required|valid_contact_number');
         $this->form_validation->set_rules('dob', $this->lang->line('create_user_dob_label'), 'callback_date_check');
         $this->form_validation->set_rules('race_other', $this->lang->line('create_user_race_other_label'));
         $this->form_validation->set_rules('username', $this->lang->line('create_user_username_label'), 'trim|required|is_unique[' . $tables['users'] . '.username]');
@@ -670,7 +670,7 @@ class User extends CI_Controller
         $this->form_validation->set_rules('first_name', $this->lang->line('create_user_fname_label'), 'required');
         $this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'));
         $this->form_validation->set_rules('ic_number', $this->lang->line('create_user_ic_number_label'), 'required');
-        $this->form_validation->set_rules('phone', $this->lang->line('create_user_phone_label'), 'required');
+        $this->form_validation->set_rules('phone', $this->lang->line('create_user_phone_label'), 'required|valid_contact_number');
         $this->form_validation->set_rules('dob', $this->lang->line('create_user_dob_label'), 'callback_date_check');
         $this->form_validation->set_rules('username', $this->lang->line('create_user_username_label'), 'trim|required|is_unique_edit[' . $tables['users'] . '.username.' . $user_id . ']');
         $this->form_validation->set_rules('email', $this->lang->line('create_user_email_label'), 'trim|required|valid_email|is_unique_edit[' . $tables['users'] . '.email.' . $user_id . ']');

@@ -63,14 +63,14 @@ if(isset($message))
                 </div>
                 <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_merchant_phone_label', 'phone'); ?></div>
-                    <div id='profile-info-form-each-input'><?php echo form_input($phone); ?></div>
+                    <div id='profile-info-form-each-input-contact-number'>+60 <?php echo form_input($phone); ?></div>
                 </div>
                 <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_merchant_website_label', 'website'); ?></div>
                     <div id='profile-info-form-each-input'><?php echo form_input($website); ?></div>
                 </div>
                 <div id='profile-info-form-each'>
-                    <div id='profile-info-form-each-label'><?php echo lang('create_merchant_facebook_url_label', 'facebook_url'); ?></div>
+                    <div id='profile-info-form-each-label'><?php echo lang('create_merchant_facebook_url_label', 'facebook_url'); ?><a href="<?php echo base_url() ?>image/exclamation-facebook-url.jpg" target="_blank"><span id="profile-info-form-each-label-icon"><i class="fa fa-exclamation-circle"></i></span></a></div>
                     <div id='profile-info-form-each-input'><?php echo form_input($facebook_url); ?></div>
                 </div>
                 <?php echo form_hidden('id', $user->id); ?>
@@ -86,6 +86,7 @@ if(isset($message))
             </div>
             <?php echo form_close(); ?>
         </div>
+        <div id="float-fix"></div>
         
         <?php 
         if($is_supervisor==1)
