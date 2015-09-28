@@ -734,6 +734,54 @@ class All extends CI_Controller
         redirect($current_url, 'refresh');
     }
 
+    public function comment_edit($act_history_id = NULL)
+    {
+        if ($act_history_id != NULL && $this->ion_auth->logged_in())
+        {
+            $the_comment = $this->m_custom->activity_comment_select($act_history_id);
+            if($the_comment == FALSE){
+                redirect('/', 'refresh');
+            }
+            $data['act_history_id'] = array(
+                'type' => 'hidden',
+                'name' => 'act_history_id',
+                'id' => 'act_history_id',
+                'value' => $act_history_id,
+            );
+            $data['comment'] = array(
+                'name' => 'comment',
+                'id' => 'comment',
+                'value' => $the_comment['comment'],
+            );
+            $data['return_url'] = array(
+                'type' => 'hidden',
+                'name' => 'return_url',
+                'id' => 'return_url',
+                'value' => base_url() . "all/advertise/" . $the_comment['act_refer_id'],
+            );
+            $data['post_title'] = 'Edit Comment';
+            $data['page_path_name'] = 'all/comment_edit';
+            $this->load->view('template/layout_right_menu', $data);
+        }
+        else
+        {
+            redirect('/', 'refresh');
+        }
+    }
+
+    public function comment_update()
+    {
+        $return_url = '/';
+        if (isset($_POST) && !empty($_POST))
+        {
+            $return_url = $this->input->post('return_url');
+            $act_history_id = $this->input->post('act_history_id');
+            $comment = $this->input->post('comment');
+            $this->m_custom->activity_comment_update($act_history_id, $comment);
+        }
+        redirect($return_url, 'refresh');
+    }
+    
     public function comment_hide()
     {
         $current_url = '/';

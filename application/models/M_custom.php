@@ -26,7 +26,7 @@ class M_custom extends CI_Model
     }
 
     //to do todo
-    public function activity_check_access($act_history_id)
+    public function activity_check_access($act_history_id, $allow_other = 0)
     {
         $have_access = FALSE;
 
@@ -58,7 +58,7 @@ class M_custom extends CI_Model
                     }
 
                     $sup_under_this_mer = $this->get_list_of_allow_id('users', 'su_merchant_id', $merchant_id, 'id');
-                    if (in_array($act_by_id, $sup_under_this_mer))
+                    if (in_array($act_by_id, $sup_under_this_mer) && $allow_other == 0)
                     {
                         $have_access = TRUE;
                     }
@@ -74,7 +74,7 @@ class M_custom extends CI_Model
                         if ($advertise_query->num_rows() == 1)
                         {
                             $advertise_row = $advertise_query->row_array();
-                            if ($advertise_row['merchant_id'] == $merchant_id)
+                            if ($advertise_row['merchant_id'] == $merchant_id && $allow_other == 0)
                             {
                                 $have_access = TRUE;
                             }
@@ -86,7 +86,7 @@ class M_custom extends CI_Model
                         if ($mua_query->num_rows() == 1)
                         {
                             $mua_row = $mua_query->row_array();
-                            if ($mua_row['merchant_id'] == $merchant_id)
+                            if ($mua_row['merchant_id'] == $merchant_id && $allow_other == 0)
                             {
                                 $have_access = TRUE;
                             }
@@ -110,7 +110,7 @@ class M_custom extends CI_Model
                         if ($mua_query->num_rows() == 1)
                         {
                             $mua_row = $mua_query->row_array();
-                            if ($mua_row['user_id'] == $login_id)
+                            if ($mua_row['user_id'] == $login_id && $allow_other == 0)
                             {
                                 $have_access = TRUE;
                             }
@@ -1043,6 +1043,45 @@ class M_custom extends CI_Model
         }
     }
 
+    public function activity_comment_select($act_history_id)
+    {
+        if ($this->ion_auth->logged_in())
+        {
+            $login_id = $this->ion_auth->user()->row()->id;
+            $login_type = $this->session->userdata('user_group_id');
+            $query = $this->db->get_where('activity_history', array('act_history_id' => $act_history_id, 'act_type' => 'comment', 'act_by_id' => $login_id, 'act_by_type' => $login_type));
+            if ($query->num_rows() == 1)
+            {
+                return $query->row_array();
+            }
+            else
+            {
+                return FALSE;
+            }
+        }
+    }
+
+    public function activity_comment_update($act_history_id, $comment)
+    {
+        if ($this->ion_auth->logged_in())
+        {
+            $login_id = $this->ion_auth->user()->row()->id;
+            $login_type = $this->session->userdata('user_group_id');
+            $query = $this->db->get_where('activity_history', array('act_history_id' => $act_history_id, 'act_type' => 'comment', 'act_by_id' => $login_id, 'act_by_type' => $login_type));
+            if ($query->num_rows() == 1)
+            {
+                $data = array(
+                        'comment' => $comment,
+                );
+                $this->m_custom->simple_update('activity_history', $data, 'act_history_id', $act_history_id);
+            }
+            else
+            {
+                return FALSE;
+            }
+        }
+    }
+    
     //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
     public function activity_comment_count($refer_id, $refer_type, $want_array = 0)
     {

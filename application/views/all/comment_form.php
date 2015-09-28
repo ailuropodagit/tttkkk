@@ -33,6 +33,13 @@ $all_comment = $this->m_custom->activity_comment_count($item_id['value'],$item_t
                         </div>
                     </td>
                     <td valign='top' align='center'>
+                        <?php                    
+                        if($this->m_custom->activity_check_access($row['act_history_id'], 1))
+                        {
+                            echo "<a target='_blank' href='" . base_url() . "all/comment_edit/" . $row['act_history_id'] . "'><i class='fa fa-pencil'></i></a>";
+                        }
+                        ?>
+                        
                         <?php
                         //FORM OPEN
                         echo form_open("all/comment_hide");
