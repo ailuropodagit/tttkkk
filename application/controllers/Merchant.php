@@ -536,6 +536,8 @@ class Merchant extends CI_Controller
         $this->form_validation->set_rules('slug', $this->lang->line('create_merchant_validation_company_label'), 'trim|is_unique[' . $tables['users'] . '.slug]');
         $this->form_validation->set_rules('me_ssm', $this->lang->line('create_merchant_validation_companyssm_label'), 'required');
         $this->form_validation->set_rules('address', $this->lang->line('create_merchant_validation_address_label'), 'required');
+        $this->form_validation->set_rules('me_category_id', $this->lang->line('create_merchant_category_label'), 'callback_check_main_category');
+        $this->form_validation->set_rules('me_sub_category_id', $this->lang->line('create_merchant_sub_category_label'), 'callback_check_sub_category');
         $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required|valid_contact_number');
         $this->form_validation->set_rules('username', $this->lang->line('create_merchant_validation_username_label'), 'trim|required|is_unique[' . $tables['users'] . '.username]');
         $this->form_validation->set_rules('email', $this->lang->line('create_merchant_validation_email_label'), 'trim|required|valid_email|is_unique[' . $tables['users'] . '.email]');
@@ -551,13 +553,14 @@ class Merchant extends CI_Controller
             $company = $this->input->post('company');
             $me_ssm = $this->input->post('me_ssm');
             $address = $this->input->post('address');
-            $phone = $this->input->post('phone');
+            $phone = '+60'.$this->input->post('phone');
             $additional_data = array(
                 'username' => $username,
                 'company' => $company,
                 'slug' => $slug,
                 'address' => $address,
                 'me_category_id' => $this->input->post('me_category_id'),
+                'me_sub_category_id' => $this->input->post('me_sub_category_id'),
                 'me_state_id' => $this->input->post('me_state_id'),
                 'phone' => $phone,
                 'me_ssm' => $me_ssm,
@@ -618,11 +621,19 @@ class Merchant extends CI_Controller
                 'id' => 'address',
                 'value' => $this->form_validation->set_value('address'),
             );
-            $this->data['category_list'] = $this->ion_auth->get_main_category_list();
+            $me_category_id = $this->form_validation->set_value('me_category_id') == ''? '': $this->form_validation->set_value('me_category_id');
+            $this->data['category_list'] = $this->m_custom->getCategoryList('0','');
             $this->data['me_category_id'] = array(
                 'name' => 'me_category_id',
                 'id' => 'me_category_id',
-                'value' => $this->form_validation->set_value('me_category_id'),
+                'value' => $me_category_id,
+                'onChange' => "get_SubCategory()",
+            );
+            $this->data['sub_category_list'] = $this->m_custom->getSubCategoryList(NULL, NULL, $me_category_id);
+            $this->data['me_sub_category_id'] = array(
+                'name' => 'me_sub_category_id',
+                'id' => 'me_sub_category_id',
+                'value' => $this->form_validation->set_value('me_sub_category_id'),
             );
             $this->data['state_list'] = $this->ion_auth->get_static_option_list('state');
             $this->data['me_state_id'] = array(
@@ -659,6 +670,47 @@ class Merchant extends CI_Controller
         }
     }
 
+    function check_main_category($dropdown_selection)
+    {
+        if ($dropdown_selection == 0)
+        {
+            $this->form_validation->set_message('check_main_category', 'The Company Category field is required');
+            return FALSE;
+        }
+        return TRUE;
+    }
+    
+    function check_sub_category($dropdown_selection)
+    {
+        if ($dropdown_selection == 0)
+        {
+            $this->form_validation->set_message('check_sub_category', 'The Default Sub Category field is required');
+            return FALSE;
+        }
+        return TRUE;
+    }
+
+    public function get_sub_category_by_category($selected_category = NULL)
+    {
+        $sub_category_list = array();
+        if ($selected_category != '0')
+        {
+            $query = $this->m_custom->getSubCategory($selected_category);
+
+            foreach ($query as $item)
+            {
+                $sub_category_list[$item->category_id] = $item->category_label;
+            }
+        }
+
+        $me_sub_category_id = array(
+            'name' => 'me_sub_category_id',
+            'id' => 'me_sub_category_id',
+        );
+        $output = form_dropdown($me_sub_category_id, $sub_category_list);
+        echo $output;
+    }
+    
     //merchant profile view and edit page
     function profile()
     {
@@ -1954,7 +2006,7 @@ class Merchant extends CI_Controller
             );
 
             $hotdeal_category_selected = 'hotdeal_category_selected' . $i;
-            $this->data[$hotdeal_category_selected] = empty($hotdeal_today_result[$i]) ? '' : $hotdeal_today_result[$i]['sub_category_id'];
+            $this->data[$hotdeal_category_selected] = empty($hotdeal_today_result[$i]) ? $merchant_data->me_sub_category_id : $hotdeal_today_result[$i]['sub_category_id'];
 
             $hotdeal_desc = 'hotdeal_desc' . $i;
             $this->data[$hotdeal_desc] = array(

@@ -47,7 +47,7 @@
             //USER SIDEBAR MENU
             $login_user_id = $this->session->userdata('user_id');
             $dashboard = base_url() . 'all/user_dashboard/' . $login_user_id;
-            $review_merchant = base_url() . 'user/review_merchant';   
+            $review_merchant = base_url() . 'all/review_merchant';   
             $user_picture = base_url() . 'all/album_user/' . $login_user_id;  
             $user_candie = base_url() . 'user/candie_page'; 
             $user_redemption = base_url() . 'user/redemption/' . $this->config->item('voucher_active');  

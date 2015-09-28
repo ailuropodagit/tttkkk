@@ -1,3 +1,26 @@
+<script type="text/javascript">
+    function get_SubCategory()
+    {
+        var dep_selected = $('select[name=me_category_id]').val();
+        var post_url = "<?php echo base_url(); ?>" + 'merchant/get_sub_category_by_category/' + dep_selected;
+        $.ajax({
+            type: 'POST',
+            url: post_url,
+            dataType: 'html',
+            success: function (data) 
+            {
+                $('#me_sub_category_id').empty();
+                $('#me_sub_category_id').html(data);
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert(textStatus);
+                alert(errorThrown);
+            }
+        });
+    }
+</script>
+
 <?php
 //MESSAGE
 if(isset($message))
@@ -39,6 +62,10 @@ if(isset($message))
         <div id='register-form-each'>
             <div id='register-form-each-label'><?php echo lang('create_merchant_category_label', 'me_category_id'); ?></div>
             <div id='register-form-each-input'><?php echo form_dropdown($me_category_id, $category_list); ?></div>
+        </div>
+        <div id='register-form-each'>
+            <div id='register-form-each-label'><?php echo lang('create_merchant_sub_category_label', 'me_sub_category_id'); ?></div>
+            <div id='register-form-each-input'><?php echo form_dropdown($me_sub_category_id, $sub_category_list); ?></div>
         </div>
         <div id='register-form-each'>
             <div id='register-form-each-label'><?php echo lang('create_merchant_state_label', 'me_state_id'); ?></div>

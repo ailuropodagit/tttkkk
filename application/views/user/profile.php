@@ -73,7 +73,7 @@ if(isset($message))
                 </div>
                 <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_user_contact_number_label', 'contact number'); ?></div>
-                    <div id='profile-info-form-each-input-contact-number'>+60 <?php echo form_input($phone); ?></div>
+                    <div id='profile-info-form-each-input'><?php echo form_input($phone); ?></div>
                 </div>
                 <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_user_dob_label'); ?></div>

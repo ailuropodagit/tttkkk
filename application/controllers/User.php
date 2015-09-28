@@ -496,7 +496,7 @@ class User extends CI_Controller
             $first_name = $this->input->post('first_name');
             $last_name = $this->input->post('last_name');
             $ic_number = $this->input->post('ic_number');
-            $phone = $this->input->post('phone');
+            $phone = '+60'.$this->input->post('phone');
             $username = strtolower($this->input->post('username'));
             $email = strtolower($this->input->post('email'));
             $password = $this->input->post('password');
@@ -1450,13 +1450,13 @@ class User extends CI_Controller
         $act_type = $act_type == NULL ? $this->config->item('user_activity_comment') : $act_type;
 
         //PAGE PATH NAME
-        $data['page_path_name'] = 'user/review_merchant';
+        $data['page_path_name'] = 'all/review_merchant';
         $data['message'] = $this->session->flashdata('message');
         $data['title'] = "Review (" . $this->m_custom->display_static_option($act_type) . ") ";
 
-        $data['user_review_like'] = base_url() . "user/review_merchant/" . $this->config->item('user_activity_like');
-        $data['user_review_rating'] = base_url() . "user/review_merchant/" . $this->config->item('user_activity_rating');
-        $data['user_review_comment'] = base_url() . "user/review_merchant/" . $this->config->item('user_activity_comment');
+        $data['user_review_like'] = base_url() . "all/review_merchant/" . $this->config->item('user_activity_like');
+        $data['user_review_rating'] = base_url() . "all/review_merchant/" . $this->config->item('user_activity_rating');
+        $data['user_review_comment'] = base_url() . "all/review_merchant/" . $this->config->item('user_activity_comment');
         $review_list = $this->m_user->user_review_merchant_list($act_type, $user_id, $category);
         $data['review_list'] = $review_list;
 
@@ -1468,7 +1468,7 @@ class User extends CI_Controller
             if (!in_array($row['me_category_id'], $category_array))
             {
                 $category_array[] = $row['me_category_id'];
-                $temp_url = base_url() . "user/review_merchant/" . $act_type . "/" . $user_id . "/" . $row['me_category_id'];
+                $temp_url = base_url() . "all/review_merchant/" . $act_type . "/" . $user_id . "/" . $row['me_category_id'];
                 $category_list[] = "<a href=" . $temp_url . " >" . $row['me_category_name'] . "</a>";
             }
         }

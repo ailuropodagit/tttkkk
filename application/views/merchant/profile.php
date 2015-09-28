@@ -63,7 +63,7 @@ if(isset($message))
                 </div>
                 <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_merchant_phone_label', 'phone'); ?></div>
-                    <div id='profile-info-form-each-input-contact-number'>+60 <?php echo form_input($phone); ?></div>
+                    <div id='profile-info-form-each-input'><?php echo form_input($phone); ?></div>
                 </div>
                 <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_merchant_website_label', 'website'); ?></div>

@@ -27,7 +27,7 @@ foreach ($main_category_object as $main_category)
             $sub_category_label = $sub_category->category_label;
             ?>
             <div id="category-each-nav">
-                <a href="<?php echo base_url() ?>all/hotdeal-list/<?php echo $sub_category_id ?>/<?php echo $tab_counter ?>">
+                <a href="<?php echo base_url() ?>all/merchant-category/<?php echo $sub_category_id ?>">
                     <span id="category-each-nav-icon"><i class="fa fa-caret-right"></i></span>
                     <?php echo $sub_category_label ?>
                 </a>

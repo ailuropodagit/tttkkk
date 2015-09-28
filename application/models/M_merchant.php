@@ -147,6 +147,20 @@ class M_merchant extends CI_Model
         return $query->result();
     }
 
+    public function getMerchantList_by_subcategory($sub_category_id = 0)
+    {
+        $this->db->where('me_sub_category_id' , $sub_category_id);
+        $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant'), 'hide_flag' => 0));
+        
+        $result = $query->result_array();
+        $return = array();
+        foreach ($result as $row)
+        {
+            $return[] = $this->m_custom->getMerchantInfo($row['id']);
+        }
+        return $return;
+    }
+    
     public function get_merchant_id_from_advertise($advertise_id)
     {
         $query = $this->db->get_where('advertise', array('advertise_id' => $advertise_id));
