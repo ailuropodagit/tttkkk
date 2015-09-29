@@ -1,6 +1,8 @@
 <?php
 //CONFIG DATA
 $empty_image = $this->config->item('empty_image');
+$user_profile_image_path = $this->album_user_profile;
+$merchant_profile_image_path = $this->album_merchant_profile;
 
 //URL PARAMETER
 $page_type = $this->router->fetch_method();
@@ -107,19 +109,24 @@ elseif ($page_type == 'following')
                 $user_type = $user_follow['main_group_id'];
                 if($user_type == 5)
                 {
+                    //USER
                     $name = $user_follow['first_name'] . ' ' . $user_follow['last_name'];
-                    $image_path = $this->album_user_profile;
+                    $image_path = $user_profile_image_path;
+                    $dashboard_url = "user_dashboard/$id";
                 }
                 elseif($user_type == 3 || $user_type == 4)
                 {
+                    //MERCHANT
                     $name = $user_follow['company'];
-                    $image_path = $this->album_merchant_profile;
+                    $slug = $user_follow['slug'];
+                    $image_path = $merchant_profile_image_path;
+                    $dashboard_url = "merchant_dashboard/$slug";
                 }
                 ?>
                 <div id='follow-box'>
                     <div id="follow-box-photo">
                         <div id="follow-box-photo-box">
-                            <a href='<?php echo base_url() ?>all/user_dashboard/<?php echo $id ?>'>
+                            <a href='<?php echo base_url() ?>all/<?php echo $dashboard_url ?>'>
                                 <?php
                                 if(IsNullOrEmptyString($profile_image))
                                 {

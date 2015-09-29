@@ -1754,6 +1754,136 @@ class User extends CI_Controller
 
         $this->_render_page('user/edit_user', $this->data);
     }
+    
+    function invite_friend()
+    {
+        //SESSION LOGGED DATA
+        $logged_main_group_id = $this->session->userdata('user_group_id');
+        //CONFIG ITEM
+        $group_id_user = $this->config->item('group_id_user');
+        if($logged_main_group_id == $group_id_user)
+        {
+            //LOGGED CORRECT
+            $data['message'] = $this->session->flashdata('message');
+            //POST SUBMIT
+            if($this->input->post())
+            {
+                //LOGGED
+                $logged_user_id = $this->session->userdata('user_id');
+                $where_read_users = array('id' => $logged_user_id);
+                $query_read_user = $this->albert_model->read_users($where_read_users);
+                $logged_user_email = $query_read_user->row()->email;
+                //INPUT POST
+                $input_email = $this->input->post('email');
+                //VALIDATION
+                $this->form_validation->set_rules('email', 'E-mail Address', 'required|valid_email');
+                if ($this->form_validation->run() == true)
+                {
+                    //VALIDATION SUCCESS
+                    $current_month = date("n");
+                    $current_year = date("Y");
+                    //READ USER_INVITE_FRIEND
+                    $where_user_invite_friend = array('user_id' => $logged_user_id, 'friend_email' => $input_email);
+                    $query_user_invite_friend = $this->albert_model->read_user_invite_friend($where_user_invite_friend);
+                    $num_rows_user_invite_friend = $query_user_invite_friend->num_rows();
+                    if ($num_rows_user_invite_friend > 0)
+                    {
+                        //DUPLICATED DATA
+                        $this->session->set_flashdata('message', "You had already invited '$input_email'");
+                    }
+                    else
+                    {
+                        //QUERY CANDIE BALANCE
+                        $where_candie_balance = array('user_id' => $logged_user_id, 'month_id' => $current_month, 'year' => $current_year);
+                        $query_candie_balance = $this->albert_model->read_candie_balance($where_candie_balance);
+                        $num_rows_candie_balance = $query_candie_balance->num_rows();
+                        if ($num_rows_candie_balance > 0)
+                        {
+                            if ($this->invite_friend_send_email($input_email, $logged_user_email))
+                            {
+                                //UPDATE CANDIE BALANCE
+                                $where_candie_balance_invite_friend_count_increment = array('user_id' => $logged_user_id, 'month_id' => $current_month, 'year' => $current_year);
+                                $this->albert_model->update_candie_balance_invite_friend_count_increment($where_candie_balance_invite_friend_count_increment);
+                                if ($this->db->affected_rows() == 0)
+                                {
+                                    //INSERT FAIL
+                                    $this->session->set_flashdata('message', 'Update fail for candie');
+                                }
+                                //INSERT USER_INVITE_FRIEND
+                                $data_user_invite_friend = array('user_id' => $logged_user_id, 'friend_email' => $input_email);
+                                $this->albert_model->insert_user_invite_friend($data_user_invite_friend);
+                                if ($this->db->affected_rows() == 0)
+                                {
+                                    //INSERT FAIL
+                                    $this->session->set_flashdata('message', 'Insert fail for invite friend');
+                                }
+                                //INSERT SUCCESS
+                                $this->session->set_flashdata('message', 'Invitation email sent');
+                            }
+                        }
+                        else
+                        {
+                            if ($this->invite_friend_send_email($input_email, $logged_user_email))
+                            {
+                                $data_candie_balance = array('user_id' => $logged_user_id, 'month_id' => $current_month, 'year' => $current_year);
+                                $this->albert_mode->insert_candie_balance($data_candie_balance);
+                                if ($this->db->affected_rows() == 0)
+                                {
+                                    //INSERT FAIL
+                                    $this->session->set_flashdata('message', 'Insert fail for candie');
+                                }
+                                //INSERT USER_INVITE_FRIEND
+                                $data_user_invite_friend = array('user_id' => $logged_user_id, 'friend_email' => $input_email);
+                                $this->albert_model->insert_user_invite_friend($data_user_invite_friend);
+                                if ($this->db->affected_rows() == 0)
+                                {
+                                    //INSERT FAIL
+                                    $this->session->set_flashdata('message', 'Insert fail for invite friend');
+                                }
+                                //INSERT SUCCESS
+                                $this->session->set_flashdata('message', 'Invitation email sent');
+                            }
+                        }
+                    }
+                    redirect('user/invite_friend', 'refresh');
+                }
+                else
+                {
+                    //VALIDATION FAIL            
+                    $this->session->set_flashdata('message', validation_errors());
+                    redirect('user/invite_friend', 'refresh');
+                }
+            }
+        }
+        else
+        {
+            //LOGGED INCORRECT
+            redirect('/', 'refresh');
+        }
+        $data['page_path_name'] = 'user/invite_friend';
+        $this->load->view('template/layout_right_menu', $data);
+    }
+    
+    //SEND INVITATION EMAIL 
+    function invite_friend_send_email($input_email, $logged_user_email)
+    {
+        //LOAD LIBRARY
+        $this->load->library('email');
+        $this->email->from('info@keppo.my', 'Info Keppo');
+        $this->email->to($input_email);
+        $this->email->bcc('weechiat.teo@hotmail.com');
+        $this->email->subject('Email Test');
+        $this->email->message("
+            You has been invited by $logged_user_email to join <a href='http://www.keppo.my/'>www.keppo.my</a> <br/><br/>
+            <a href='http://keppo.my/user/register'>Sign Up</a> Now
+        ");
+        return $this->email->send();
+    }
+    
+    function invite_friend_update()
+    {
+ 
+    }
 
     function _get_csrf_nonce()
     {

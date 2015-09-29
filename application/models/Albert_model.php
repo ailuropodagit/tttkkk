@@ -68,7 +68,7 @@ class Albert_model extends CI_Model
     public function read_users($where)
     {
         //QUERY
-        $this->db->select('profile_image, first_name, last_name, us_blog_url, us_instagram_url, us_facebook_url');
+        $this->db->select('*');
         $this->db->from('users');
         //WHERE
         if($where)
@@ -205,6 +205,61 @@ class Albert_model extends CI_Model
         $query = $this->db->get();
         //RETURN
         return $query;
+    }
+    
+    /* READ CANDIE_BALANCE
+    *************************************************************/
+    public function read_candie_balance($where)
+    {
+        //QUERY
+        $this->db->select('*');
+        $this->db->from('candie_balance');
+        if($where)
+        {
+            $this->db->where($where);
+        }
+        $query = $this->db->get();
+        return $query;
+    }
+    
+    /* INSERT CANDIE_BALANCE
+    *************************************************************/
+    public function insert_candie_balance($data)
+    {
+        $this->db->insert('candie_balance', $data);
+    }
+    
+    /* UPDATE CANDIE BALANCE INVITE FRIEND COUNT INCREMENT
+    *************************************************************/
+    public function update_candie_balance_invite_friend_count_increment($where)
+    {
+        $this->db->set('invite_friend_count', 'invite_friend_count+1', FALSE);
+        if($where)
+        {
+            $this->db->where($where);
+        }
+        $this->db->update('candie_balance');
+    }    
+    
+    /* READ USER INVITE FRIEND
+    * *************************************************************/
+    public function read_user_invite_friend($where)
+    {
+        $this->db->select('*');
+        $this->db->from('user_invite_friend');
+        if($where)
+        {
+            $this->db->where($where);
+        }
+        $query = $this->db->get();
+        return $query;
+    }
+    
+    /* INSERT USER INVITE FRIEND
+    *************************************************************/
+    public function insert_user_invite_friend($data)
+    {
+        $this->db->insert('user_invite_friend', $data);
     }
         
     /* READ ACTIVITY_HISTORY INNER JOIN ADVERTISE

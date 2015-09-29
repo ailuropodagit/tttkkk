@@ -5,6 +5,14 @@ if(isset($message))
     ?><div id="message"><?php echo $message; ?></div><?php
 }
 ?>
+    
+<?php
+//DASHBOARD USER ID
+$dashboard_slug = $this->uri->segment(3);
+$where_user = array('slug' => $dashboard_slug);
+$query_user = $this->albert_model->read_users($where_user);
+$dashboard_users_id = $query_user->row_array()['id'];
+?>
 
 <div id="dashboard">
     <h1>Dashboard</h1>
@@ -27,7 +35,52 @@ if(isset($message))
         </div>
         <div id="dashboard-info">
             <div id="dashboard-info-title">
-                <?php echo $company_name; ?>
+                <div id="dashboard-info-title-name">
+                    <?php echo $company_name; ?>
+                </div>
+                <?php
+                if($this->ion_auth->user()->num_rows())
+                {
+                    $logged_main_group_id = $this->ion_auth->user()->row()->main_group_id;                       
+                    if($logged_main_group_id == 3 || $logged_main_group_id == 5)
+                    {                        
+                        $logged_user_id = $this->session->userdata('user_id');                        
+                        if($dashboard_users_id != $logged_user_id)
+                        {       
+                            ?>
+                            <div id="dashboard-info-title-follow">
+                                <?php
+                                $exists_user_follow = $this->albert_model->exists_user_follow($logged_user_id, $dashboard_users_id);
+                                if($exists_user_follow)
+                                {
+                                    ?>
+                                    <form method="POST" action="<?php echo base_url() ?>all/delete_user_follow">
+                                        <input type="submit" value="Unfollow" id="submit-simple">
+                                        <input type="hidden" name="follow_from_id" value="<?php echo $logged_user_id ?>">
+                                        <input type="hidden" name="follow_to_id" value="<?php echo $dashboard_users_id ?>">
+                                        <input type="hidden" name="current_url" value="<?php echo current_url() ?>">
+                                    </form>
+                                    <?php
+                                }
+                                else
+                                {
+                                    ?>
+                                    <form method="POST" action="<?php echo base_url() ?>all/create_user_follow">
+                                        <input type="submit" value="Follow" id="submit-simple">
+                                        <input type="hidden" name="follow_from_id" value="<?php echo $logged_user_id ?>">
+                                        <input type="hidden" name="follow_to_id" value="<?php echo $dashboard_users_id ?>">
+                                        <input type="hidden" name="current_url" value="<?php echo current_url() ?>">
+                                    </form>
+                                    <?php
+                                }
+                                ?>
+                            </div>        
+                            <?php
+                        }
+                    }
+                }
+                ?>
+                <div id="float-fix"></div>
             </div>
             <div id="dashboard-info-address">
                 <?php echo $address; ?>

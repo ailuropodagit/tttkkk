@@ -61,7 +61,7 @@
             <li><a href='<?php echo $user_picture; ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'album_user' || $fetch_method == 'upload_image' || $fetch_method == 'upload_for_merchant' || $fetch_method == 'album_user_merchant'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Picture</a></li>
             <li><a href='<?php echo $user_candie; ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'candie_page'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Candies (<?php echo $this->m_user->candie_check_balance($login_user_id); ?>)</a></li>
             <li><a href='<?php echo $user_redemption; ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'redemption'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Redemption</a></li>
-            <li><a href='#' class='layout-inner-right-menu-bar'>Invite Friend</a></li>
+            <li><a href='<?php echo base_url() ?>user/invite_friend' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'invite_friend'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Invite Friend</a></li>
             <?php
         }
         ?>

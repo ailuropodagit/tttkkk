@@ -2052,6 +2052,28 @@ a:hover {
     margin: 20px 0px 0px 0px;
 }
 
+/* INVITE FRIEND
+******************************/
+
+#invite-friend-content {
+    margin: 20px 0px 0px 0px;
+}
+
+#invite-friend-form-label {
+    margin: 10px 0px 10px 0px;
+}
+
+#invite-friend-form-input input[type='text'] {
+    height: 25px;
+    width: 290px;
+    margin: 0px 0px 10px 0px;
+    box-sizing: border-box;
+}
+
+#invite-friend-form-submit {
+    margin: 10px 0px 0px 0px;
+}
+
 /* USER COMMENT
 ******************************/
 

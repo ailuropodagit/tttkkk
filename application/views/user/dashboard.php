@@ -60,7 +60,6 @@ $dashboard_users_id = $this->uri->segment(3);
                 <div id="dashboard-info-title-name">
                     <?php echo $first_name.' '.$last_name; ?>
                 </div>
-                
                 <?php
                 if($this->ion_auth->user()->num_rows())
                 {
@@ -103,7 +102,6 @@ $dashboard_users_id = $this->uri->segment(3);
                     }
                 }
                 ?>
-                
                 <div id="float-fix"></div>
             </div>
             <div id="dashboard-info-table">
