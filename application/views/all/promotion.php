@@ -21,9 +21,9 @@ if(isset($message))
         </div>
         <div id="float-fix"></div>
         
-        <div id='redemption-print'>
+<!--        <div id='redemption-print'>
             <a href="#" onclick="printDiv('print-area')"><i class="fa fa-print"></i> Print Statement</a>
-        </div>
+        </div>-->
         <div id="redemption-edit-link">
             <?php
             if (check_is_login())

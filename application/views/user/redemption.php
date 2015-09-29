@@ -25,7 +25,7 @@ if(isset($message))
         //var_dump($redemption);
         foreach ($redemption as $row)
         {
-            $advertise_detail_url = base_url() . "all/advertise/" . $row['advertise_id'];
+            $advertise_detail_url = base_url() . "all/voucher/" . $row['advertise_id'];
             ?>
             <div id='advertise-list-box'>
 
@@ -35,11 +35,11 @@ if(isset($message))
 
                 <div id="advertise-list-photo">
                     <div id="advertise-list-photo-box">
-                        <a href='<?php echo $advertise_detail_url; ?>'><img src='<?php echo base_url().$this->config->item('album_merchant') . $row['image']; ?>'></a>
+                        <a href='<?php echo $advertise_detail_url; ?>' target='_blank'><img src='<?php echo base_url().$this->config->item('album_merchant') . $row['image']; ?>'></a>
                     </div>
                 </div>
                 <div id="advertise-list-title2">
-                    <a href='<?php echo $advertise_detail_url; ?>'><?php echo $row['title'] ?></a>
+                    <a href='<?php echo $advertise_detail_url; ?>' target='_blank'><?php echo $row['title'] ?></a>
                 </div>
                 <div id="advertise-list-info">
                     <table border="0" cellpadding="4px" cellspacing="0px">

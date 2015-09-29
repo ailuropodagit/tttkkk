@@ -49,6 +49,7 @@ if(isset($message))
                         <?php
                     }
                     ?>
+                    <th>User ID</th>
                     <th>Name</th>
                     <th>IC Number</th>
                     <th>Date of Birth</th>
@@ -58,8 +59,9 @@ if(isset($message))
                 <?php
                 foreach ($redeem_list as $redeem_row)
                 {
-                    $user_info = $this->m_custom->getUser($redeem_row['user_id']);
-                    $user_name = $this->m_custom->display_users($redeem_row['user_id']);
+                    $user_id = $redeem_row['user_id'];
+                    $user_info = $this->m_custom->getUser($user_id);
+                    $user_name = $this->m_custom->display_users($user_id);
                     $action_url = base_url() . "merchant/redeem_done";
                     ?>
                     <tr>
@@ -72,7 +74,7 @@ if(isset($message))
                             <form action="<?php echo $action_url; ?>" onSubmit="return confirm('<?php echo $confirm_message ?>')" method="post" accept-charset="utf-8">
                             <?php
                             echo "<input type='hidden' name='redeem_id' id='redeem_id' value='" . $redeem_row['redeem_id'] . "'/>";
-                            echo "<input type='hidden' name='user_id' id='user_id' value='" . $redeem_row['user_id'] . "'/>";
+                            echo "<input type='hidden' name='user_id' id='user_id' value='" . $user_id . "'/>";
                             echo "<input type='hidden' name='advertise_id' id='advertise_id' value='" . $redeem_row['advertise_id'] . "'/>";
                             echo "<input type='hidden' name='current_url' id='current_url' value='" . get_current_url() . "'/>";
 
@@ -84,6 +86,7 @@ if(isset($message))
                             echo "</td>";
                         }
                         $user_url = $this->m_custom->generate_user_link($user_info['id']);
+                        echo "<td>" . $user_id . "</td>";
                         echo "<td>" . $user_url . "</td>";
                         echo "<td>" . $user_info['us_ic'] . "</td>";
                         echo "<td>" . displayDate($user_info['us_birthday']) . "</td>";
