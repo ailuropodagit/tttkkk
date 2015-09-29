@@ -186,6 +186,15 @@ class M_user extends CI_Model
         return $query->row_array();
     }
 
+    public function user_redemption_check($user_id, $advertise_id){
+        $query = $this->db->get_where('user_redemption', array('user_id' => $user_id, 'advertise_id' => $advertise_id));
+        if($query->num_rows() == 0){
+            return FALSE;
+        }else{
+            return TRUE;
+        }
+    }
+    
     public function user_redemption($user_id, $status_id = NULL, $sub_category = NULL)
     {
         if (!IsNullOrEmptyString($status_id))

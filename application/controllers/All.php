@@ -146,6 +146,70 @@ class All extends CI_Controller
         }
     }
 
+    function voucher($advertise_id)
+    {
+        if ($this->ion_auth->logged_in())
+        {
+            $login_id = $this->ion_auth->user()->row()->id;
+            $login_data = $this->m_custom->get_one_table_record('users', 'id', $login_id, 1);
+        }else{
+            redirect('/', 'refresh');
+        }
+
+        $the_row = $this->m_custom->getOneAdvertise($advertise_id);
+        if ($the_row)
+        {        
+            if ($the_row['advertise_type'] != "pro" || !$this->m_user->user_redemption_check($login_id, $advertise_id))
+            {
+                redirect('/', 'refresh');
+            }
+            
+            $merchant_row = $this->m_merchant->getMerchant($the_row['merchant_id']);
+            $this->data['merchant_dashboard_url'] = base_url() . "all/merchant-dashboard/" . $merchant_row['slug'];
+
+            if (check_correct_login_type($this->group_id_user)) //Check if user logged in
+            {
+                $this->data['user_id'] = $login_id;
+                $this->data['user_name'] = $this->m_custom->display_users($login_id);
+                $this->data['user_ic'] = $login_data['us_ic'];
+                $this->data['user_dob'] = displayDate($login_data['us_birthday']);
+                $this->data['user_email'] = $login_data['email'];
+                $this->data['current_candie'] = $this->m_user->candie_check_balance($login_id);
+            }
+            
+            $this->data['advertise_id'] = $advertise_id;
+            $this->data['merchant_name'] = $merchant_row['company'];
+            $this->data['title'] = $the_row['title'];
+            $this->data['description'] = $the_row['description'];
+            $this->data['image_url'] = base_url($this->album_merchant . $the_row['image']);
+            $this->data['sub_category'] = $this->m_custom->display_category($the_row['sub_category_id']);
+            $this->data['start_date'] = displayDate($the_row['start_time']);
+            $this->data['end_date'] = displayDate($the_row['end_time']);
+            $this->data['message'] = $this->session->flashdata('message');       
+
+            $this->data['voucher'] = $the_row['voucher'];
+            $this->data['voucher_barcode'] = base_url("barcode/generate/" . $the_row['voucher']);
+            $this->data['voucher_candie'] = $the_row['voucher_candie'];
+            $this->data['expire_date'] = displayDate($the_row['voucher_expire_date']);
+            $this->data['candie_term'] = $this->m_custom->many_get_childlist_detail('candie_term', $advertise_id, 'dynamic_option', 'option_id');
+            $this->data['candie_branch'] = $this->m_custom->many_get_childlist_detail('candie_branch', $advertise_id, 'merchant_branch', 'branch_id');
+            $this->data['page_path_name'] = 'all/voucher';
+
+            if ($this->ion_auth->logged_in())
+            {
+                $this->load->view('template/layout_right_menu', $this->data);
+            }
+            else
+            {
+                $this->load->view('template/layout', $this->data);
+            }
+        }
+        else
+        {
+            redirect('/', 'refresh');
+        }
+    }
+    
     function merchant_category($sub_category_id = NULL)
     {
         //PAGE PATH NAME
