@@ -1,5 +1,6 @@
 <?php
 //CONFIG DATA
+$merchant_group_id = $this->config->item('group_id_merchant');
 $empty_image = $this->config->item('empty_image');
 $user_profile_image_path = $this->album_user_profile;
 $merchant_profile_image_path = $this->album_merchant_profile;
@@ -7,6 +8,11 @@ $merchant_profile_image_path = $this->album_merchant_profile;
 //URL PARAMETER
 $page_type = $this->router->fetch_method();
 $user_type = $this->uri->segment(3);
+$user_id = $this->uri->segment(4);
+
+//USER MAIN GROUP ID
+$where_get_users = array('id' => $user_id);
+$user_main_group_id = $this->albert_model->read_users($where_get_users)->row_array()['main_group_id'];
 
 $num_rows_user_follower_all = $query_user_follower_all->num_rows();
 $num_rows_user_following_all = $query_user_following_all->num_rows();
@@ -60,36 +66,42 @@ elseif ($page_type == 'following')
             ?>
         </div>
         <div id='follow-right-navigation'>
-            <?php            
-            if($user_type == 'all')
+            <?php    
+            //ALL
+            if($user_main_group_id != $merchant_group_id)
             {
-                ?><span id='follow-left-navigation-current'>All (<?php echo $num_rows_user_follow_all ?>)</span><?php
-            }
-            else
-            {
-                ?><a href="<?php echo base_url() ?>all/<?php echo $page_type ?>/all/<?php echo $users_id ?>">All (<?php echo $num_rows_user_follow_all ?>)</a><?php
-            }
-            ?>
-            <span id='follow-left-navigation-separator'>|</span>
-            <?php            
-            if($user_type == 'user')
-            {
-                ?><span id='follow-left-navigation-current'>User (<?php echo $num_rows_user_follow_user ?>)</span><?php
-            }
-            else
-            {
-                ?><a href="<?php echo base_url() ?>all/<?php echo $page_type ?>/user/<?php echo $users_id ?>">User (<?php echo $num_rows_user_follow_user ?>)</a><?php
-            }
-            ?>
-            <span id='follow-left-navigation-separator'>|</span>
-            <?php            
-            if($user_type == 'merchant')
-            {
-                ?><span id='follow-left-navigation-current'>Merchant (<?php echo $num_rows_user_follow_merchant ?>)</span><?php
-            }
-            else
-            {
-                ?><a href="<?php echo base_url() ?>all/<?php echo $page_type ?>/merchant/<?php echo $users_id ?>">Merchant (<?php echo $num_rows_user_follow_merchant ?>)</a><?php
+                if($user_type == 'all')
+                {
+                    ?><span id='follow-left-navigation-current'>All (<?php echo $num_rows_user_follow_all ?>)</span><?php
+                }
+                else
+                {
+                    ?><a href="<?php echo base_url() ?>all/<?php echo $page_type ?>/all/<?php echo $users_id ?>">All (<?php echo $num_rows_user_follow_all ?>)</a><?php
+                }
+                
+                ?><span id='follow-left-navigation-separator'>|</span><?php
+
+                //USER
+                if($user_type == 'user')
+                {
+                    ?><span id='follow-left-navigation-current'>User (<?php echo $num_rows_user_follow_user ?>)</span><?php
+                }
+                else
+                {
+                    ?><a href="<?php echo base_url() ?>all/<?php echo $page_type ?>/user/<?php echo $users_id ?>">User (<?php echo $num_rows_user_follow_user ?>)</a><?php
+                }
+
+                ?><span id='follow-left-navigation-separator'>|</span><?php
+                
+                //MERCHANT
+                if($user_type == 'merchant')
+                {
+                    ?><span id='follow-left-navigation-current'>Merchant (<?php echo $num_rows_user_follow_merchant ?>)</span><?php
+                }
+                else
+                {
+                    ?><a href="<?php echo base_url() ?>all/<?php echo $page_type ?>/merchant/<?php echo $users_id ?>">Merchant (<?php echo $num_rows_user_follow_merchant ?>)</a><?php
+                }
             }
             ?>
         </div>

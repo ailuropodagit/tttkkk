@@ -906,14 +906,35 @@ class All extends CI_Controller
             if($user_type == 'all')
             {
                 $where_user_follower = array('follow_to_id'=>$users_id);
+                //WRONG USER GROUP
+                $where_read_user = array('id' => $users_id);
+                $user_main_group_id = $this->albert_model->read_users($where_read_user)->row()->main_group_id;
+                if ($user_main_group_id != $this->group_id_user)
+                {
+                    redirect('/', 'refresh');
+                }
             }
             if($user_type == 'user')
             {
                 $where_user_follower = array('follow_to_id'=>$users_id, 'main_group_id'=>$this->group_id_user);
+//                //WRONG USER GROUP
+//                $where_read_user = array('id' => $users_id);
+//                $user_main_group_id = $this->albert_model->read_users($where_read_user)->row()->main_group_id;
+//                if ($user_main_group_id != $this->group_id_user)
+//                {
+//                    redirect('/', 'refresh');
+//                }
             }
             elseif($user_type == 'merchant')
             {
                 $where_user_follower = array('follow_to_id'=>$users_id, 'main_group_id'=>$this->group_id_merchant);
+                //WRONG USER GROUP
+                $where_read_user = array('id' => $users_id);
+                $user_main_group_id = $this->albert_model->read_users($where_read_user)->row()->main_group_id;
+                if ($user_main_group_id != $this->group_id_merchant)
+                {
+                    redirect('/', 'refresh');
+                }
             }
             $data['query_user_follower'] = $this->albert_model->read_follower($where_user_follower);
             //COUNT
@@ -962,14 +983,35 @@ class All extends CI_Controller
             if($user_type == 'all')
             {
                 $where_user_following = array('follow_from_id'=>$users_id);
+                //WRONG USER GROUP
+                $where_read_user = array('id' => $users_id);
+                $user_main_group_id = $this->albert_model->read_users($where_read_user)->row()->main_group_id;
+                if ($user_main_group_id != $this->group_id_user)
+                {
+                    redirect('/', 'refresh');
+                }
             }
             if($user_type == 'user')
             {
                 $where_user_following = array('follow_from_id'=>$users_id, 'main_group_id'=>$this->group_id_user);
+//                //WRONG USER GROUP
+//                $where_read_user = array('id' => $users_id);
+//                $user_main_group_id = $this->albert_model->read_users($where_read_user)->row()->main_group_id;
+//                if ($user_main_group_id != $this->group_id_user)
+//                {
+//                    redirect('/', 'refresh');
+//                }
             }
             elseif($user_type == 'merchant')
             {
                 $where_user_following = array('follow_from_id'=>$users_id, 'main_group_id'=>$this->group_id_merchant);
+                //WRONG USER GROUP
+                $where_read_user = array('id' => $users_id);
+                $user_main_group_id = $this->albert_model->read_users($where_read_user)->row()->main_group_id;
+                if ($user_main_group_id != $this->group_id_merchant)
+                {
+                    redirect('/', 'refresh');
+                }
             }
             $data['query_user_following'] = $this->albert_model->read_following($where_user_following);
             //COUNT
