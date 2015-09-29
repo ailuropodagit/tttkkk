@@ -60,7 +60,7 @@ class All extends CI_Controller
             {
                 $login_id = $this->ion_auth->user()->row()->id;
                 $login_data = $this->m_custom->get_one_table_record('users', 'id', $login_id);
-                $this->m_custom->activity_view($advertise_id);
+                $this->m_custom->activity_view($advertise_id, 'adv');
             }
 
             $merchant_row = $this->m_merchant->getMerchant($the_row['merchant_id']);
@@ -240,7 +240,8 @@ class All extends CI_Controller
             if ($this->ion_auth->logged_in())
             {
                 $login_id = $this->ion_auth->user()->row()->id;
-                $login_data = $this->m_custom->getUser($login_id);
+                //$login_data = $this->m_custom->getUser($login_id);
+                $this->m_custom->activity_view($picture_id, 'mua');
             }
 
             //$user_row = $this->m_custom->getUser($the_row['user_id']);    //Temporary hide because no use, but maybe future will use

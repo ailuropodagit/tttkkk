@@ -77,8 +77,8 @@ class M_merchant extends CI_Model
             case 'like':
                 $condition = "act_time like '%" . $search_date . "%'";
                 $this->db->where($condition);
-                //$this->db->where_in('act_refer_type', array('adv', 'mua'));
-                $this->db->where_in('act_refer_type', array('adv'));  //current hardcode only get analysis from advertisement(hot deal and promotion), dint include analysis for picture upload by user for merchant
+                $this->db->where_in('act_refer_type', array('adv', 'mua'));
+                //$this->db->where_in('act_refer_type', array('adv'));  //current hardcode only get analysis from advertisement(hot deal and promotion), dint include analysis for picture upload by user for merchant
                 if (!empty($advertise_of_merchant))
                 {
                     $this->db->where_in('act_refer_id', $advertise_of_merchant);
@@ -88,8 +88,8 @@ class M_merchant extends CI_Model
             case 'rating':
                 $condition = "act_time like '%" . $search_date . "%'";
                 $this->db->where($condition);
-                //$this->db->where_in('act_refer_type', array('adv', 'mua'));
-                $this->db->where_in('act_refer_type', array('adv'));  //current hardcode only get analysis from advertisement(hot deal and promotion), dint include analysis for picture upload by user for merchant
+                $this->db->where_in('act_refer_type', array('adv', 'mua'));
+                //$this->db->where_in('act_refer_type', array('adv'));  //current hardcode only get analysis from advertisement(hot deal and promotion), dint include analysis for picture upload by user for merchant
                 if (!empty($advertise_of_merchant))
                 {
                     $this->db->where_in('act_refer_id', $advertise_of_merchant);

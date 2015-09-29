@@ -839,8 +839,13 @@ class M_custom extends CI_Model
         return $query->num_rows();
     }
 
-    public function many_check_and_insert($the_type, $parent_id, $child_id)
+    public function many_check_and_insert($the_type, $parent_id, $child_id, $remark = NULL)
     {
+        if (!IsNullOrEmptyString($remark))
+        {
+            $this->db->where('many_remark', $remark);
+        }
+        
         $query = $this->db->get_where('many_to_many', array('many_type' => $the_type, 'many_parent_id' => $parent_id, 'many_child_id' => $child_id));
         if ($query->num_rows() == 0)
         {
@@ -848,6 +853,7 @@ class M_custom extends CI_Model
                 'many_type' => $the_type,
                 'many_parent_id' => $parent_id,
                 'many_child_id' => $child_id,
+                'many_remark' => $remark,
             );
             $this->db->insert('many_to_many', $the_data);
             $insert_id = $this->db->insert_id();
@@ -862,12 +868,13 @@ class M_custom extends CI_Model
         }
     }
 
-    public function activity_view($advertise_id)
+    // refer type = 'adv', 'mua'
+    public function activity_view($advertise_id, $refer_type)
     {
         if (check_correct_login_type($this->config->item('group_id_user')))
         {
             $user_id = $this->ion_auth->user()->row()->id;
-            $this->many_check_and_insert('view_advertise', $advertise_id, $user_id);
+            $this->many_check_and_insert('view_advertise', $advertise_id, $user_id, $refer_type);
         }
     }
 

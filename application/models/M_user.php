@@ -295,7 +295,8 @@ class M_user extends CI_Model
         $act_type_name = $this->m_custom->display_static_option($act_type);
         $group_id_user = $this->config->item('group_id_user');
 
-        $this->db->where('act_refer_type', 'adv');  //current hardcode only get analysis from advertisement(hot deal and promotion), dint include analysis for picture upload by user for merchant
+        $this->db->where_in('act_refer_type', array('adv', 'mua'));
+        //$this->db->where('act_refer_type', 'adv');  //current hardcode only get analysis from advertisement(hot deal and promotion), dint include analysis for picture upload by user for merchant
         $act_query = $this->db->get_where('activity_history', array('act_by_id' => $user_id, 'act_type' => $act_type_name, 'act_by_type' => $group_id_user));
         $act_result = $act_query->result_array();
 
