@@ -95,6 +95,7 @@ class M_user extends CI_Model
                             "Remain Candie : " . $new_balance . " <br/>";
                     $redeem_status = TRUE;
                     $this->m_user->candie_balance_update($user_id);
+                    $this->m_custom->notification_process('user_redemption', $insert_id);
                 }
                 else
                 {

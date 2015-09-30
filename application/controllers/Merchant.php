@@ -710,7 +710,7 @@ class Merchant extends CI_Controller
     
     //merchant profile view and edit page
     function profile()
-    {
+    {    
         if (!check_correct_login_type($this->main_group_id) && !check_correct_login_type($this->group_id_supervisor))
         {
             redirect('/', 'refresh');

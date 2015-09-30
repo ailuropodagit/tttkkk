@@ -1256,6 +1256,7 @@ class User extends CI_Controller
                                 $this->m_custom->insert_row_log('merchant_user_album', $new_id, $user_id, $login_type);
                                 $this->m_user->candie_history_insert(4, $new_id, 'merchant_user_album');
                                 $this->m_merchant->transaction_history_insert($post_merchant_id, 14, $new_id, 'merchant_user_album');
+                                $this->m_custom->notification_process('merchant_user_album', $new_id);
                                 $message_info = add_message_info($message_info, 'Image for merchant ' . $this->m_custom->display_users($post_merchant_id) . ' success create.', $post_title);
                             }
                             else
@@ -1819,6 +1820,12 @@ class User extends CI_Controller
                                 }
                                 //INSERT SUCCESS
                                 $this->session->set_flashdata('message', 'Invitation email sent');
+                                
+                                //GIVE USER CANDIE FOR THE FIRST 5 INVITATION MONTHLY
+                                $invitation_send_current_month = $query_candie_balance->row_array();
+                                if($invitation_send_current_month['invite_friend_count'] <= $this->config->item('user_max_invitation_get_candie_per_month')){
+                                    $this->m_user->candie_history_insert(6, $invitation_send_current_month['balance_id'], 'candie_balance', 1);
+                                }
                             }
                         }
                         else

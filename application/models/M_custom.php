@@ -163,6 +163,22 @@ class M_custom extends CI_Model
         return $query->row()->category_label;
     }
 
+    //Get one static option text by it option id
+    public function display_notification_message($id, $title = '')
+    {
+        $query = $this->db->get_where('notification_message', array('msg_id' => $id));
+        if ($query->num_rows() !== 1)
+        {
+            return '';
+        }
+        $result = $query->row_array();
+        $prefix = $result['msg_prefix'] == NULL ? "" : $result['msg_prefix'];
+        $text = $result['msg_text'] == NULL ? "" : $result['msg_text'];
+        $postfix = $result['msg_postfix'] == NULL ? "" : $result['msg_postfix'];
+        $message = $prefix . $text . $title . $postfix;
+        return $message;
+    }
+
     //GET MAIN CATEGORY BY SUB CATEGORY ID
     public function display_main_category($category_id = NULL)
     {
@@ -451,7 +467,7 @@ class M_custom extends CI_Model
     }
 
     //To find one record in DB with one keyword
-    public function getOneAdvertise($advertise_id)
+    public function getOneAdvertise($advertise_id, $ignore_have_money = 0)
     {
         $this->db->where('start_time is not null AND end_time is not null');
         $query = $this->db->get_where('advertise', array('advertise_id' => $advertise_id, 'hide_flag' => 0), 1);
@@ -461,7 +477,7 @@ class M_custom extends CI_Model
         }
 
         $return = $query->row_array();
-        if ($this->m_merchant->have_money($return['merchant_id']))
+        if (($this->m_merchant->have_money($return['merchant_id']) && $ignore_have_money == 0) || $ignore_have_money != 0)
         {
             return $return;
         }
@@ -472,11 +488,11 @@ class M_custom extends CI_Model
     }
 
     //To find one record in DB with one keyword
-    public function getOneMUA($mua_id)
+    public function getOneMUA($mua_id, $ignore_have_money = 0)
     {
         $return = $this->m_custom->get_one_table_record('merchant_user_album', 'merchant_user_album_id', $mua_id, 1);
 
-        if ($this->m_merchant->have_money($return['merchant_id']))
+        if (($this->m_merchant->have_money($return['merchant_id']) && $ignore_have_money == 0) || $ignore_have_money != 0)
         {
             return $return;
         }
@@ -936,11 +952,15 @@ class M_custom extends CI_Model
                 case 'like':
                     $this->m_user->candie_history_insert(2, $insert_id);
                     $this->m_merchant->transaction_history_insert($merchant_id, 12, $insert_id);
+                    $this->m_custom->notification_process('activity_history',$insert_id);
                     break;
                 case 'rating':
                     $this->m_user->candie_history_insert(3, $insert_id);
                     $this->m_merchant->transaction_history_insert($merchant_id, 13, $insert_id);
+                    $this->m_custom->notification_process('activity_history',$insert_id);
                     break;
+                case 'comment':
+                    $this->m_custom->notification_process('activity_history',$insert_id);
             }
         }
     }
@@ -1195,6 +1215,159 @@ class M_custom extends CI_Model
         }
     }
 
+    public function notification_process($noti_refer_table = NULL, $noti_refer_table_id = NULL)
+    {
+        switch ($noti_refer_table)
+        {
+            case 'activity_history':
+                $this->m_custom->notification_process_activity($noti_refer_table, $noti_refer_table_id);
+                break;
+            case 'merchant_user_album':
+                $result = $this->m_custom->getOneMUA($noti_refer_table_id, 1);
+                $noti_url = base_url() . 'all/merchant_user_picture/' . $noti_refer_table_id;
+                $this->m_custom->notification_insert($result['merchant_id'], 10, $noti_url, $noti_refer_table, 'merchant_user_album_id', $noti_refer_table_id);
+                break;
+            case 'user_redemption':
+                $result = $this->m_custom->get_one_table_record('user_redemption', 'redeem_id', $noti_refer_table_id, 1);
+                $noti_url = base_url() . 'all/advertise/' . $result['advertise_id'];
+                $advertise = $this->m_custom->getOneAdvertise($result['advertise_id']);
+                $this->m_custom->notification_insert($advertise['merchant_id'], 11, $noti_url, 'advertise', 'advertise_id', $result['advertise_id']);
+                break;
+        }
+    }
+
+    //todo to do
+    public function notification_process_activity($noti_refer_table = NULL, $noti_refer_table_id = NULL)
+    {
+        $query = $this->m_custom->activity_get_one_row($noti_refer_table_id);
+        $act_type = $query['act_type'];
+        $refer_type = $query['act_refer_type'];
+        $refer_id = $query['act_refer_id'];
+        switch ($act_type)
+        {
+            case "like":
+                if ($refer_type == "mua")
+                {
+                    $result = $this->m_custom->getOneMUA($refer_id, 1);
+                    $noti_url = base_url() . 'all/merchant_user_picture/' . $result['merchant_user_album_id'];
+                    $this->m_custom->notification_insert($result['merchant_id'], 3, $noti_url, 'merchant_user_album', 'merchant_user_album_id', $result['merchant_user_album_id']);
+                }else if($refer_type == "usa"){
+                    $result = $this->m_custom->getOneUserPicture($refer_id);
+                    $noti_url = base_url() . 'all/user_picture/' . $result['user_album_id'];
+                    $this->m_custom->notification_insert($result['user_id'], 3, $noti_url, 'user_album', 'user_album_id', $result['user_album_id']);
+                }else if($refer_type == "adv"){
+                    $result = $this->m_custom->getOneAdvertise($refer_id);
+                    $noti_url = base_url() . 'all/advertise/' . $result['advertise_id'];
+                    if($result['advertise_type'] == "hot"){
+                        $this->m_custom->notification_insert($result['merchant_id'], 1, $noti_url, 'advertise', 'advertise_id', $result['advertise_id']);
+                    }else if($result['advertise_type'] == "pro"){
+                        $this->m_custom->notification_insert($result['merchant_id'], 2, $noti_url, 'advertise', 'advertise_id', $result['advertise_id']);
+                    }
+                }
+                break;          
+            case "rating":
+                if ($refer_type == "mua")
+                {
+                    $result = $this->m_custom->getOneMUA($refer_id, 1);
+                    $noti_url = base_url() . 'all/merchant_user_picture/' . $result['merchant_user_album_id'];
+                    $this->m_custom->notification_insert($result['merchant_id'], 6, $noti_url, 'merchant_user_album', 'merchant_user_album_id', $result['merchant_user_album_id'], $query['rating']);
+                }else if($refer_type == "usa"){
+                    $result = $this->m_custom->getOneUserPicture($refer_id);
+                    $noti_url = base_url() . 'all/user_picture/' . $result['user_album_id'];
+                    $this->m_custom->notification_insert($result['user_id'], 6, $noti_url, 'user_album', 'user_album_id', $result['user_album_id'], $query['rating']);
+                }else if($refer_type == "adv"){
+                    $result = $this->m_custom->getOneAdvertise($refer_id);
+                    $noti_url = base_url() . 'all/advertise/' . $result['advertise_id'];
+                    if($result['advertise_type'] == "hot"){
+                        $this->m_custom->notification_insert($result['merchant_id'], 4, $noti_url, 'advertise', 'advertise_id', $result['advertise_id'], $query['rating']);
+                    }else if($result['advertise_type'] == "pro"){
+                        $this->m_custom->notification_insert($result['merchant_id'], 5, $noti_url, 'advertise', 'advertise_id', $result['advertise_id'], $query['rating']);
+                    }
+                }
+                break;
+            case "comment":
+                if ($refer_type == "mua")
+                {
+                    $result = $this->m_custom->getOneMUA($refer_id, 1);
+                    $noti_url = base_url() . 'all/merchant_user_picture/' . $result['merchant_user_album_id'];
+                    $this->m_custom->notification_insert($result['merchant_id'], 9, $noti_url, 'merchant_user_album', 'merchant_user_album_id', $result['merchant_user_album_id']);
+                }else if($refer_type == "usa"){
+                    $result = $this->m_custom->getOneUserPicture($refer_id);
+                    $noti_url = base_url() . 'all/user_picture/' . $result['user_album_id'];
+                    $this->m_custom->notification_insert($result['user_id'], 9, $noti_url, 'user_album', 'user_album_id', $result['user_album_id']);
+                }else if($refer_type == "adv"){
+                    $result = $this->m_custom->getOneAdvertise($refer_id);
+                    $noti_url = base_url() . 'all/advertise/' . $result['advertise_id'];
+                    if($result['advertise_type'] == "hot"){
+                        $this->m_custom->notification_insert($result['merchant_id'], 7, $noti_url, 'advertise', 'advertise_id', $result['advertise_id']);
+                    }else if($result['advertise_type'] == "pro"){
+                        $this->m_custom->notification_insert($result['merchant_id'], 8, $noti_url, 'advertise', 'advertise_id', $result['advertise_id']);
+                    }
+                }
+                break;
+        }
+    }
+
+    public function notification_insert($noti_to_id, $noti_msg_id, $noti_url, $noti_refer_table = NULL, $noti_refer_table_column = NULL, $noti_refer_table_id = NULL, $noti_remark = NULL)
+    {
+        if ($this->ion_auth->logged_in())
+        {
+            $login_id = $this->ion_auth->user()->row()->id;
+            $login_type = $this->session->userdata('user_group_id');
+
+            if ($noti_to_id != $login_id)
+            {
+                $the_data = array(
+                    'noti_to_id' => $noti_to_id,
+                    'noti_by_id' => $login_id,
+                    'noti_msg_id' => $noti_msg_id,
+                    'noti_url' => $noti_url,
+                    'noti_refer_table' => $noti_refer_table,
+                    'noti_refer_table_column' => $noti_refer_table_column,
+                    'noti_refer_table_id' => $noti_refer_table_id,
+                    'noti_remark' => $noti_remark,
+                );
+                $this->db->insert('notification', $the_data);
+            }
+        }
+    }
+
+    public function notification_display($noti_to_id, $noti_read_already = 0){
+        $this->db->order_by("noti_id", "desc");
+        $query_list = $this->db->get_where('notification', array('noti_to_id' => $noti_to_id, 'noti_read_already' => $noti_read_already), 100)->result_array();
+        $notification_list = array();
+        foreach($query_list as $notification){
+            $title = '';
+            $msg_type = $notification['noti_msg_id'];
+            $table_name = $notification['noti_refer_table'];
+            $table_column = $notification['noti_refer_table_column'];
+            $table_id = $notification['noti_refer_table_id'];
+            $record = $this->m_custom->get_one_table_record($table_name, $table_column, $table_id, 1, 1);
+            switch ($table_name){
+                case 'advertise':
+                case 'merchant_user_album':
+                case 'user_album':
+                    $title = $record['title'];
+                    break;
+            }                       
+            
+            //If it is rating, then add the rating remark
+            if (in_array($msg_type, array(4, 5, 6)))
+            {
+                $title = $title . " as " . $notification['noti_remark'] . " star";
+            }
+
+            $noti_message = $this->m_custom->display_users($notification['noti_by_id'], 1) . $this->m_custom->display_notification_message($msg_type, $title) ;
+            $notification_list[] = array(
+                'noti_message' => $noti_message,
+                'noti_url' => $notification['noti_url'],
+                'noti_read_already' =>  $notification['noti_read_already'],
+                'noti_time' => displayDate($notification['noti_time'], 1),
+            );
+        }
+        return $notification_list;
+    }
+    
     //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
     public function merchant_like_count($merchant_id, $refer_type)
     {
