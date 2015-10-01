@@ -292,6 +292,7 @@ class All extends CI_Controller
             $this->data['picture_id'] = $picture_id;
             $this->data['merchant_name'] = $merchant_row['company'];
             $this->data['user_name_url'] = $this->m_custom->generate_user_link($the_row['user_id']);
+            $this->data['upload_by_user_id'] = $the_row['user_id'];
             $this->data['title'] = $the_row['title'];
             $this->data['description'] = $the_row['description'];
             $this->data['image_url'] = base_url($this->album_user_merchant . $the_row['image']);

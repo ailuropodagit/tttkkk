@@ -441,4 +441,140 @@ class M_user extends CI_Model
         }
     }
 
+    public function user_balance_update($user_id, $month_id = NULL, $year = NULL)
+    {
+        $search_date = date_for_db_search($month_id, $year);
+
+        if (empty($month_id))
+        {
+            $month_id = get_part_of_date('month');
+        }
+        if (empty($year))
+        {
+            $year = get_part_of_date('year');
+        }
+
+        $history_condition = "trans_time like '%" . $search_date . "%'";
+        $history_search_data = array(
+            'user_id' => $user_id,
+        );
+        $this->db->where($history_condition);
+        $history_query = $this->db->get_where('user_trans_history', $history_search_data);
+        $history_result = $history_query->result_array();
+        if ($history_query->num_rows() != 0)
+        {
+            $monthly_balance = 0;
+            foreach ($history_result as $history_row)
+            {
+                $monthly_balance = $monthly_balance + $history_row['amount_plus'] - $history_row['amount_minus'];
+            }
+
+            $balance_search_data = array(
+                'user_id' => $user_id,
+                'month_id' => $month_id,
+                'year' => $year,
+            );
+            $balance_query = $this->db->get_where('user_balance', $balance_search_data);
+            if ($balance_query->num_rows() == 0)
+            {
+                $insert_data = array(
+                    'user_id' => $user_id,
+                    'balance' => $monthly_balance,
+                    'month_id' => $month_id,
+                    'year' => $year,
+                );
+                $this->db->insert('user_balance', $insert_data);
+            }
+            else
+            {
+                $balance_result = $balance_query->row_array();
+                $update_data = array(
+                    'balance' => $monthly_balance,
+                );
+                $this->db->where('balance_id', $balance_result['balance_id']);
+                $this->db->update('user_balance', $update_data);
+            }
+        }
+    }
+    
+    public function user_check_balance($user_id, $exclude_this_month = 0)
+    {
+        $this->m_user->user_balance_update($user_id);
+        if ($exclude_this_month == 0)
+        {
+            $history_query = $this->db->get_where('user_balance', array('user_id' => $user_id));
+        }
+        else
+        {
+            $current_month = ltrim(get_part_of_date('month'), '0');
+            $current_year = get_part_of_date('year');
+            $condition = "(month_id !=" . $current_month . " or year !=" . $current_year . ")";
+            $this->db->where($condition);
+            $history_query = $this->db->get_where('user_balance', array('user_id' => $user_id));
+        }
+        $current_balance = 0;
+        $history_result = $history_query->result_array();
+        foreach ($history_result as $history_row)
+        {
+            $current_balance += $history_row['balance'];
+        }
+        return number_format($current_balance, 2);
+    }
+    
+    public function user_this_month_transaction($user_id)
+    {
+        $search_date = date_for_db_search();
+        $condition = "trans_time like '%" . $search_date . "%'";
+        $this->db->where($condition);
+        $this->db->select("trans_conf_id, SUM(amount_plus) AS plus, SUM(amount_minus) AS minus, COUNT(trans_history_id) As quantity");
+        $this->db->group_by('trans_conf_id');
+        $this->db->order_by('trans_conf_id', 'asc');
+        $query = $this->db->get_where('user_trans_history', array('user_id' => $user_id));
+        $result = $query->result_array();
+        return $result;
+    }
+    
+    public function user_trans_history_insert($user_id, $trans_conf_id, $get_from_table_id, $get_from_table = 'merchant_user_album', $allow_duplicate = 0, $amount_overwrite = 0)
+    {
+        $search_data = array(
+            'user_id' => $user_id,
+            'trans_conf_id' => $trans_conf_id,
+            'get_from_table' => $get_from_table,
+            'get_from_table_id' => $get_from_table_id,
+        );
+        $query = $this->db->get_where('user_trans_history', $search_data);
+        if (($query->num_rows() == 0 && $allow_duplicate == 0) || $allow_duplicate != 0)
+        {
+            $config_query = $this->db->get_where('transaction_config', array('trans_conf_id' => $trans_conf_id, 'conf_type' => 'uba'));
+            if ($config_query->num_rows() == 1)
+            {
+                $config_result = $config_query->row_array();
+                $amount_plus = 0;
+                $amount_minus = 0;
+                if ($config_result['change_type'] == 'dec')
+                {
+                    $amount_minus = $config_result['amount_change'];
+                    //If is User Use Money, then the amount is key in by user
+                    if ($trans_conf_id == 23)
+                    {
+                        $amount_minus = $amount_overwrite;
+                    }
+                }
+                else
+                {
+                    $amount_plus = $config_result['amount_change'];
+                }
+                $the_data = array(
+                    'user_id' => $user_id,
+                    'trans_conf_id' => $trans_conf_id,
+                    'amount_plus' => $amount_plus,
+                    'amount_minus' => $amount_minus,
+                    'get_from_table' => $get_from_table,
+                    'get_from_table_id' => $get_from_table_id,
+                );
+                $this->db->insert('user_trans_history', $the_data);
+            }
+        }
+    }
+    
 }

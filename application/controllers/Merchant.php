@@ -1776,6 +1776,7 @@ class Merchant extends CI_Controller
                     $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;
                 }
                 $picture_id = $this->input->post('hid_picture_id');
+                $upload_by_user_id = $this->input->post('hid_upload_by_user_id');
                 $group_id_merchant = $this->config->item('group_id_merchant');
                 $group_id_supervisor = $this->config->item('group_id_supervisor');
                 $merchant_allowed_list = $this->m_custom->get_list_of_allow_id('merchant_user_album', 'merchant_id', $merchant_id, 'merchant_user_album_id', 'post_type', 'mer');
@@ -1790,6 +1791,7 @@ class Merchant extends CI_Controller
                     {
                         $this->m_custom->remove_row_log('merchant_user_album', $picture_id, $login_id, $login_type);
                         $this->m_merchant->mua_hide($picture_id);
+                        $this->m_user->user_trans_history_insert($upload_by_user_id, 22, $picture_id);
                     }
                     redirect('all/merchant_dashboard/' . $merchant['slug'] . "/picture", 'refresh');                    
                 }
