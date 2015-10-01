@@ -1332,9 +1332,58 @@ class M_custom extends CI_Model
         }
     }
 
-    public function notification_display($noti_to_id, $noti_read_already = 0){
+    public function notification_hide($noti_id)
+    {
+        if ($this->ion_auth->logged_in())
+        {
+            $the_data = array(
+                'hide_flag' => 1,
+            );
+            $this->db->where('noti_id', $noti_id);
+            $this->db->update('notification', $the_data);
+        }
+    }
+    
+    public function notification_read($noti_to_id)
+    {
+        if ($this->ion_auth->logged_in())
+        {
+            $the_data = array(
+                'noti_read_already' => 1,
+            );
+            $this->db->where('noti_to_id' , $noti_to_id);
+            $this->db->where('noti_read_already', 0);
+            $this->db->update('notification', $the_data);
+        }
+    }
+    
+    public function notification_read_toggle($noti_id)
+    {
+        if ($this->ion_auth->logged_in())
+        {
+            $query = $this->db->get_where('notification', array('noti_id' => $noti_id))->row_array();
+            if($query['noti_read_already'] == 0){
+                $the_data = array(
+                    'noti_read_already' => 1,
+                );
+            }else{
+                $the_data = array(
+                    'noti_read_already' => 0,
+                );
+            }
+            $this->db->where('noti_id', $noti_id);
+            $this->db->update('notification', $the_data);
+        }
+    }
+    
+    public function notification_count($noti_to_id, $noti_read_already = 0){
+        $query_list = $this->db->get_where('notification', array('noti_to_id' => $noti_to_id, 'hide_flag' => 0, 'noti_read_already' => $noti_read_already))->num_rows();
+        return $query_list;
+    }
+    
+    public function notification_display($noti_to_id){
         $this->db->order_by("noti_id", "desc");
-        $query_list = $this->db->get_where('notification', array('noti_to_id' => $noti_to_id, 'noti_read_already' => $noti_read_already), 100)->result_array();
+        $query_list = $this->db->get_where('notification', array('noti_to_id' => $noti_to_id, 'hide_flag' => 0), 100)->result_array();
         $notification_list = array();
         foreach($query_list as $notification){
             $title = '';
@@ -1347,7 +1396,7 @@ class M_custom extends CI_Model
                 case 'advertise':
                 case 'merchant_user_album':
                 case 'user_album':
-                    $title = $record['title'];
+                    $title = "<b>" . $record['title'] ."</b>";
                     break;
             }                       
             
@@ -1357,8 +1406,10 @@ class M_custom extends CI_Model
                 $title = $title . " as " . $notification['noti_remark'] . " star";
             }
 
-            $noti_message = $this->m_custom->display_users($notification['noti_by_id'], 1) . $this->m_custom->display_notification_message($msg_type, $title) ;
+            $noti_message = $this->m_custom->display_notification_message($msg_type, $title) ;
             $notification_list[] = array(
+                'noti_id' => $notification['noti_id'],
+                'noti_user_url' => "<b>" . $this->m_custom->generate_user_link($notification['noti_by_id'], 1) ."</b>",
                 'noti_message' => $noti_message,
                 'noti_url' => $notification['noti_url'],
                 'noti_read_already' =>  $notification['noti_read_already'],

@@ -146,6 +146,47 @@ class All extends CI_Controller
         }
     }
 
+    function notification(){
+        if ($this->ion_auth->logged_in())
+        {
+            $user_id = $this->ion_auth->user()->row()->id;
+            
+            if (check_correct_login_type($this->group_id_supervisor))
+            {
+                $user_id = $this->ion_auth->user()->row()->su_merchant_id;
+            }
+            
+            $notification_list = $this->m_custom->notification_display($user_id);
+            $this->data['notification_list'] = $notification_list;
+            $this->data['page_path_name'] = 'all/notification';
+            $this->load->view('template/layout_right_menu', $this->data);
+            if($this->config->item('notification_auto_mark_as_read') == 1){
+                $this->m_custom->notification_read($user_id);
+            }
+        }
+        else
+        {
+            redirect('/', 'refresh');
+        }
+    }
+    
+    function notification_process(){
+        $current_url = '/';
+        if (isset($_POST) && !empty($_POST))
+        {
+            $current_url = $this->input->post('current_url');
+            $noti_id = $this->input->post('noti_id');
+            if ($this->input->post('button_action') == "hide_notification")
+            {
+                $this->m_custom->notification_hide($noti_id);
+            }else if($this->input->post('button_action') == "read_notification")
+            {
+                $this->m_custom->notification_read_toggle($noti_id);
+            }
+        }
+        redirect($current_url, 'refresh');
+    }
+    
     function voucher($advertise_id)
     {
         if ($this->ion_auth->logged_in())
