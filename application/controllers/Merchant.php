@@ -1370,17 +1370,19 @@ class Merchant extends CI_Controller
                 //$candie_vender = $this->input->post('candie_vender');
                 $image_data = NULL;
 
-                if (!empty($this->input->post('candie_term')))
+                $post_candie_term = $this->input->post('candie_term');
+                if (!empty($post_candie_term))
                 {
-                    foreach ($this->input->post('candie_term') as $key => $value)
+                    foreach ($post_candie_term as $key => $value)
                     {
                         $candie_term_selected[] = $value;
                     }
                 }
 
-                if (!empty($this->input->post('candie_branch')))
+                $post_candie_branch = $this->input->post('candie_branch');
+                if (!empty($post_candie_branch))
                 {
-                    foreach ($this->input->post('candie_branch') as $key => $value)
+                    foreach ($post_candie_branch as $key => $value)
                     {
                         $candie_branch_selected[] = $value;
                     }
