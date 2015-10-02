@@ -12,7 +12,8 @@ $user_id = $this->uri->segment(4);
 
 //USER MAIN GROUP ID
 $where_get_users = array('id' => $user_id);
-$user_main_group_id = $this->albert_model->read_users($where_get_users)->row_array()['main_group_id'];
+$user_main_group_id = $this->albert_model->read_users($where_get_users)->row_array();
+$user_main_group_id = $user_main_group_id['main_group_id'];
 
 $num_rows_user_follower_all = $query_user_follower_all->num_rows();
 $num_rows_user_following_all = $query_user_following_all->num_rows();

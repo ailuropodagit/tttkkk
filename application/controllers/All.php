@@ -1103,14 +1103,19 @@ class All extends CI_Controller
             $data['query_user_follower_merchant'] = $this->albert_model->read_follower($where_user_follower_merchant);
             //DISPLAY NAME/COMPANY
             $where_user = array('id'=>$users_id);
-            $user_group_id = $this->albert_model->read_users($where_user)->row_array()['main_group_id'];
+            $user_group_id = $this->albert_model->read_users($where_user)->row_array();
+            $user_group_id = $user_group_id['main_group_id'];
             if ($user_group_id == $this->group_id_user)
             {
-                $name = $this->albert_model->read_users($where_user)->row_array()['first_name'] . ' ' . $this->albert_model->read_users($where_user)->row_array()['last_name'];
+                $query_read_user = $this->albert_model->read_users($where_user)->row_array();
+                $first_name = $query_read_user['first_name'];
+                $last_name = $query_read_user['last_name'];
+                $name = $first_name . ' ' . $last_name;
             }
             elseif ($user_group_id == $this->group_id_merchant)
             {
-                $name = $this->albert_model->read_users($where_user)->row_array()['company'];
+                $query_read_user = $this->albert_model->read_users($where_user)->row_array();
+                $name = $query_read_user['company'];
             }
             $data['page_title'] = $name . ' Follower';
             $data['page_path_name'] = 'all/follow';
@@ -1180,14 +1185,19 @@ class All extends CI_Controller
             $data['query_user_following_merchant'] = $this->albert_model->read_following($where_user_following_merchant);
             //DISPLAY NAME/COMPANY
             $where_user = array('id'=>$users_id);
-            $user_group_id = $this->albert_model->read_users($where_user)->row_array()['main_group_id'];
+            $user_group_id = $this->albert_model->read_users($where_user)->row_array();
+            $user_group_id = $user_group_id['main_group_id'];
             if ($user_group_id == $this->group_id_user)
             {
-                $name = $this->albert_model->read_users($where_user)->row_array()['first_name'] . ' ' . $this->albert_model->read_users($where_user)->row_array()['last_name'];
+                $query_read_user = $this->albert_model->read_users($where_user)->row_array();
+                $first_name = $query_read_user['first_name'];
+                $last_name = $query_read_user['last_name'];
+                $name = $first_name . ' ' . $last_name;
             }
             elseif ($user_group_id == $this->group_id_merchant)
             {
-                $name = $this->albert_model->read_users($where_user)->row_array()['company'];
+                $query_read_user = $this->albert_model->read_users($where_user)->row_array();
+                $name = $query_read_user['company'];
             }
             $data['page_title'] = $name . ' Following';
             $data['page_path_name'] = 'all/follow';
