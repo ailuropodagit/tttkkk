@@ -661,8 +661,17 @@ a:hover {
     font-size: 18px;
 }
 
-#login-facebook-icon, #register-facebook-icon {
+#login-facebook, #register-facebook {
     padding: 0px 0px 10px 0px;
+}
+
+#login-facebook-button {
+    height: 35px;
+}
+
+#login-facebook-label {
+    font-size: 14px;
+    margin: 0px 0px 0px 0px;
 }
 
 #login-horizontal-line, #register-horizontal-line {

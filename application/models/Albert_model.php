@@ -80,6 +80,22 @@ class Albert_model extends CI_Model
         return $query;
     }
     
+    /* UPDATE USERS
+    ***************************************************/
+    public function asd_user($where, $data)
+    {
+        //WHERE
+        if($where)
+        {
+            $this->db->where($where);
+        }
+        //UPDATE
+        if($data)
+        {
+            $this->db->update('users', $data);
+        }
+    }
+    
     /* READ USER_ALBUM
     *************************************************************/
     public function read_user_album($where)

@@ -1,5 +1,5 @@
 <?php
-//IF MERCHANT LOGGED IN
+//IF LOGGED IN
 if ($this->ion_auth->logged_in())
 {
     redirect('user/profile');
@@ -41,7 +41,11 @@ if(isset($message))
 
     <div id='login-subtitle'>Don't have an account? <a href='<?php echo base_url(); ?>user/register'>Sign Up</a></div>
 
-    <div id='login-facebook-icon'><img src='<?php echo base_url(); ?>image/facebook-icon.png'></div>
+    <div id='login-facebook'>
+        <div id="login-facebook-button"><fb:login-button data-size="large" scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button></div>
+        <div id="login-facebook-label">Log In with facebook</div>
+        <a href="#" onclick="fbLogout()">Logout</a>
+    </div>
 
     <div id='login-horizontal-line'></div>
 

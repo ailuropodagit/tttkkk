@@ -5,7 +5,6 @@
         <title>Keppo</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <?php echo link_tag('css/main.css') ?>
-        <link rel="stylesheet" href="<?php echo base_url() ?>css/main-1300.css" media="screen and (max-width: 1300px)">
         <link rel="stylesheet" href="<?php echo base_url() ?>css/main-1100.css" media="screen and (max-width: 1100px)">
         <link rel="stylesheet" href="<?php echo base_url() ?>css/main-0900.css" media="screen and (max-width: 0900px)">
         <link rel="stylesheet" href="<?php echo base_url() ?>css/main-0700.css" media="screen and (max-width: 0700px)">
@@ -15,7 +14,6 @@
         <script type="text/javascript" src='<?php echo base_url() ?>js/jquery/jquery-2.1.4.min.js'></script>
         <script>
             $(function(){
-                
                 //BROSWER RESIZE
                 $(window).resize(function(){
                     var window_width = $(window).width();
@@ -23,22 +21,111 @@
                         $('#header-menu-mobile').hide();
                     }
                 });   
-                
                 //HEADER MENU MOBILE 
                 $('#header-menu-mobile-icon').click(function(){
                     $('#header-menu-mobile').toggle();
                 });
-                
             });
         </script>
     </head>
     <body>
-        
-        <?php        
-        //$this->ion_auth->user()->num_rows();
-        //$this->ion_auth->user()->row()->id;
-        ?>
-        
+<!--if(!$this->ion_auth->logged_in())-->
+
+            <script>
+                // Call from FB.getLoginStatus().
+                function statusChangeCallback(response) {
+                    //console.log(response);
+                    // Login status
+                    if (response.status === 'connected') {
+                        // connected
+                        FB.api('/me/permissions/public_profile', function (response) {
+                            if (response.data[0].status === 'granted') {
+                                //public profile granted
+                                FB.api('/me/permissions/email', function (response) {
+                                    if (response.data[0].status === 'granted') {
+                                        //email granted
+                                        FB.api('/me', {fields: 'id,first_name,last_name,email,gender'}, function (response) {
+                                            document.getElementById('login-facebook-label').innerHTML = "Logged in";
+                                            var fb_id = response.id;
+                                            var fb_email = response.email;
+                                            var fb_first_name = response.first_name;
+                                            var fb_last_name = response.last_name;
+                                            var fb_gender = response.gender;
+                                            $.ajax({
+                                                type: "POST",
+                                                url: "<?php echo base_url() ?>user/login_facebook",
+                                                data: {fb_id:fb_id, fb_email:fb_email, fb_first_name:fb_first_name, fb_last_name:fb_last_name, fb_gender:fb_gender},
+                                                success: function(data) {
+                                                    document.getElementById('login-facebook-label').innerHTML = data;
+                                                    
+                                                }
+                                            });
+                                            //window.location.replace("<?php echo base_url() ?>user/login_facebook");
+                                        });
+                                    } else {
+                                        //email declined
+                                        document.getElementById('login-facebook-label').innerHTML = "Email Declined";
+                                        FB.login(function(response) {
+                                            //console.log(response);
+                                        }, {
+                                            scope: 'email',
+                                            auth_type: 'rerequest'
+                                        });
+                                    }
+                                });
+                            } else {
+                                //public profile declined
+                                document.getElementById('login-facebook-label').innerHTML = "Public Profile Declined";
+                            }
+                        });
+                    } else if (response.status === 'not_authorized') {
+                        // not_authorized
+                    } else {
+                        // unknown
+                    }
+                }
+
+                // Check Login Status
+                function checkLoginState() {
+                    FB.getLoginStatus(function (response) {
+                        statusChangeCallback(response);
+                    });
+                }
+                
+                // Logout
+                function fbLogout() {
+                    FB.logout(function(response) {
+                        console.log(response);
+                        document.getElementById('login-facebook-label').innerHTML = "Log In with facebook";
+                    });
+                }
+
+                window.fbAsyncInit = function () {
+                    FB.init({
+                        appId: '1636247466623391',
+                        cookie: true,
+                        xfbml: true,
+                        version: 'v2.2'
+                    });
+                    //Get if logged in
+                    FB.getLoginStatus(function (response) {
+                        statusChangeCallback(response);
+                    });
+                };
+
+                // Load the SDK asynchronously
+                (function (d, s, id) {
+                    var js, fjs = d.getElementsByTagName(s)[0];
+                    if (d.getElementById(id)) {
+                        return;
+                    }
+                    js = d.createElement(s);
+                    js.id = id;
+                    js.src = "//connect.facebook.net/en_US/sdk.js";
+                    fjs.parentNode.insertBefore(js, fjs);
+                }(document, 'script', 'facebook-jssdk'));
+            </script>
+
         <!--HEADER-->
         <div id='header'>
             <div id='wrapper'>
@@ -78,7 +165,7 @@
                                     <a href='<?php echo base_url() ?>user/profile'><i class='fa fa-user header-menu-icon'></i>Profile</a>
                                 </li>
                                 <li>
-                                    <a href='<?php echo base_url() ?>user/logout'><i class='fa fa-sign-out header-menu-icon'></i>Logout</a>
+                                    <a href='<?php echo base_url() ?>user/logout' onclick="fbLogout()"><i class='fa fa-sign-out header-menu-icon'></i>Logout</a>
                                 </li>
                                 <?php
                             } 
@@ -89,7 +176,7 @@
                                     <a href='<?php echo base_url() ?>merchant/profile'><i class='fa fa-user header-menu-icon'></i>Profile</a>
                                 </li>
                                 <li>
-                                    <a href='<?php echo base_url() ?>merchant/logout'><i class='fa fa-sign-out header-menu-icon'></i>Logout</a>
+                                    <a href='<?php echo base_url() ?>merchant/logout' onclick="fbLogout()"><i class='fa fa-sign-out header-menu-icon'></i>Logout</a>
                                 </li>
                                 <?php
                             }
@@ -133,14 +220,14 @@
                         {
                             ?>
                             <li><a href='<?php echo base_url() ?>user/profile'><i class='fa fa-user header-menu-icon'></i>Profile</a></li>
-                            <li><a href='<?php echo base_url() ?>user/logout'><i class='fa fa-sign-out header-menu-icon'></i>Logout</a></li>
+                            <li><a href='<?php echo base_url() ?>user/logout' onclick="fbLogout()"><i class='fa fa-sign-out header-menu-icon'></i>Logout</a></li>
                             <?php
                         } 
                         else 
                         {
                             ?>
                             <li><a href='<?php echo base_url() ?>merchant/profile'><i class='fa fa-user header-menu-icon'></i>Profile</a></li>
-                            <li><a href='<?php echo base_url() ?>merchant/logout'><i class='fa fa-sign-out header-menu-icon'></i>Logout</a></li>
+                            <li><a href='<?php echo base_url() ?>merchant/logout' onclick="fbLogout()"><i class='fa fa-sign-out header-menu-icon'></i>Logout</a></li>
                             <?php
                         }
                     } 

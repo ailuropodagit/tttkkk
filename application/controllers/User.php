@@ -97,6 +97,49 @@ class User extends CI_Controller
             $this->load->view('template/layout', $this->data);
         }
     }
+    
+    function login_facebook()
+    {
+        //POST VALUE
+        $fb_id = $this->input->post('fb_id');
+        $fb_email = $this->input->post('fb_email');
+        $fb_first_name = $this->input->post('fb_first_name');
+        $fb_last_name = $this->input->post('fb_last_name');
+        $fb_gender = $this->input->post('fb_gender');
+        //READ USERS
+        $where_user = array('email' => $fb_email);
+        $query_user = $this->albert_model->read_users($where_user);
+        $num_rows_user = $query_user->num_rows();
+        if($num_rows_user)
+        {
+            //EMAIL EXISTS
+            echo 'got email';
+            $where_update_user = array('email' => $fb_email);
+            $data_update_user = array('us_fb_id' => $fb_id);
+            
+            $this->albert_model->read_users($where_update_user);
+            
+//            $this->albert_model->update_user($where_update_user, $data_update_user);
+//            echo $this->db->affected_row();
+        }
+        else
+        {
+            //EMAIL NOT EXISTS
+            echo 'no email';
+        }
+        
+        echo "<br/>";
+        echo "<br/>";
+        echo strlen($fb_id);
+        echo "<br/>";
+        echo $this->input->post('fb_email');
+        echo "<br/>";
+        echo $this->input->post('fb_first_name');
+        echo "<br/>";
+        echo $this->input->post('fb_last_name');
+        echo "<br/>";
+        echo $this->input->post('fb_gender');
+    }
 
     // log the user out
     function logout()
@@ -1878,11 +1921,6 @@ class User extends CI_Controller
             <a href='http://keppo.my/user/register'>Sign Up</a> Now
         ");
         return $this->email->send();
-    }
-    
-    function invite_friend_update()
-    {
- 
     }
 
     function _get_csrf_nonce()

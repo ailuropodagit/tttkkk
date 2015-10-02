@@ -1044,7 +1044,7 @@ class All extends CI_Controller
                 //WRONG USER GROUP
                 $where_read_user = array('id' => $users_id);
                 $user_main_group_id = $this->albert_model->read_users($where_read_user)->row()->main_group_id;
-                if ($user_main_group_id != $this->group_id_merchant)
+                if ($user_main_group_id != $this->group_id_user)
                 {
                     redirect('/', 'refresh');
                 }
@@ -1121,7 +1121,7 @@ class All extends CI_Controller
                 //WRONG USER GROUP
                 $where_read_user = array('id' => $users_id);
                 $user_main_group_id = $this->albert_model->read_users($where_read_user)->row()->main_group_id;
-                if ($user_main_group_id != $this->group_id_merchant)
+                if ($user_main_group_id != $this->group_id_user)
                 {
                     redirect('/', 'refresh');
                 }
