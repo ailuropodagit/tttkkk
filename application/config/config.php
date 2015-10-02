@@ -20,7 +20,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 //$config['base_url'] = '';  //original
 switch($_SERVER["SERVER_NAME"]) {
 case "localhost":
-$config["base_url"] = "http://localhost/keppo/";
+//$config["base_url"] = "http://localhost/keppo/";
+$config["base_url"] = "";
 break;
 case "keppo.my":
 $config["base_url"] = "http://www.keppo.my/";
