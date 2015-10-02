@@ -3,7 +3,7 @@
 <div id="dashboard">
     <h1>Map</h1>
     <div id="dashboard-content">
-        <div id="dashboard-photo">
+        <div id="dashboard-photo-box">
             <?php            
             if(IsNullOrEmptyString($image))
             {

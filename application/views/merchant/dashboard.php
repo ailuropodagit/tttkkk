@@ -11,7 +11,8 @@ if(isset($message))
 $dashboard_slug = $this->uri->segment(3);
 $where_user = array('slug' => $dashboard_slug);
 $query_user = $this->albert_model->read_users($where_user);
-$dashboard_users_id = $query_user->row_array()['id'];
+$dashboard_users_id = $query_user->row_array();
+$dashboard_users_id = $dashboard_users_id['id'];
 ?>
 
 <div id="dashboard">
