@@ -68,6 +68,7 @@ class User extends CI_Controller
                 //if the login is successful
                 //redirect them back to the home page
                 //$this->session->set_flashdata('message', $this->ion_auth->messages());
+                $this->update_whole_year_balance();
                 redirect('user/profile', 'refresh');
                 //echo $this->session->userdata('user_id');
             }
@@ -225,6 +226,18 @@ class User extends CI_Controller
         }
     }
 
+    function update_whole_year_balance()
+    {
+        if (check_correct_login_type($this->main_group_id))
+        {
+            $user_id = $this->ion_auth->user()->row()->id;
+            for ($i = 1; $i < 13; $i++)
+            {
+                $this->m_user->user_balance_update($user_id, $i);
+            }
+        }
+    }
+    
     function retrieve_password()
     {
         $this->form_validation->set_rules('username_email', $this->lang->line('forgot_password_username_email_label'), 'required');
@@ -1299,6 +1312,8 @@ class User extends CI_Controller
                                 $this->m_custom->insert_row_log('merchant_user_album', $new_id, $user_id, $login_type);
                                 $this->m_user->candie_history_insert(4, $new_id, 'merchant_user_album');
                                 $this->m_merchant->transaction_history_insert($post_merchant_id, 14, $new_id, 'merchant_user_album');
+                                $this->m_user->user_trans_history_insert($user_id, 21, $new_id);
+                                $this->m_custom->notification_process('merchant_user_album', $new_id);
                                 $message_info = add_message_info($message_info, 'Image for merchant ' . $this->m_custom->display_users($post_merchant_id) . ' success create.', $post_title);
                             }
                             else
@@ -1409,6 +1424,23 @@ class User extends CI_Controller
         }
     }
 
+    function balance_page(){
+        if (check_correct_login_type($this->main_group_id))
+        {
+            $user_id = $this->ion_auth->user()->row()->id;
+            
+            $this->data['this_month_balance'] = $this->m_user->user_check_balance($user_id);
+            
+            $this->data['message'] = $this->session->flashdata('message');
+            $this->data['page_path_name'] = 'user/balance_page';
+            $this->load->view('template/layout_right_menu', $this->data);
+        }
+        else
+        {
+            redirect('/', 'refresh');
+        }
+    }
+    
     function redemption($status_id = NULL, $sub_category = NULL)
     {
         if (!check_correct_login_type($this->main_group_id))
@@ -1862,6 +1894,12 @@ class User extends CI_Controller
                                 }
                                 //INSERT SUCCESS
                                 $this->session->set_flashdata('message', 'Invitation email sent');
+                                
+                                //GIVE USER CANDIE FOR THE FIRST 5 INVITATION MONTHLY
+                                $invitation_send_current_month = $query_candie_balance->row_array();
+                                if($invitation_send_current_month['invite_friend_count'] <= $this->config->item('user_max_invitation_get_candie_per_month')){
+                                    $this->m_user->candie_history_insert(6, $invitation_send_current_month['balance_id'], 'candie_balance', 1);
+                                }
                             }
                         }
                         else

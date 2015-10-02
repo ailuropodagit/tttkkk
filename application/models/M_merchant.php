@@ -330,7 +330,7 @@ class M_merchant extends CI_Model
 
     public function merchant_check_balance($merchant_id, $exclude_this_month = 0)
     {
-        $this->m_user->candie_balance_update($merchant_id);
+        $this->m_merchant->merchant_balance_update($merchant_id);
         if ($exclude_this_month == 0)
         {
             $history_query = $this->db->get_where('merchant_balance', array('merchant_id' => $merchant_id));

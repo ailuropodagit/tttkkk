@@ -43,6 +43,7 @@
                         <form action="<?php echo $action_url; ?>" onSubmit="return confirm('<?php echo $confirm_message ?>')" method="post" accept-charset="utf-8">
                         <?php
                         echo "<input type='hidden' name='hid_picture_id' value='".$picture_id."' />";
+                        echo "<input type='hidden' name='hid_upload_by_user_id' value='".$upload_by_user_id."' />";
                         echo "<button name='button_action' type='submit' value='hide_picture'>Remove Picture</button>";
                         echo form_close(); 
                     }
