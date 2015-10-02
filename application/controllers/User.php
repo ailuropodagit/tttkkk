@@ -99,8 +99,9 @@ class User extends CI_Controller
         }
     }
     
+    //LOGIN FACEBOOK
     function login_facebook()
-    {
+    {        
         //POST VALUE
         $fb_id = $this->input->post('fb_id');
         $fb_email = $this->input->post('fb_email');
@@ -108,17 +109,13 @@ class User extends CI_Controller
         $fb_last_name = $this->input->post('fb_last_name');
         $fb_gender = $this->input->post('fb_gender');
         //READ USERS
-        $where_user = array('email' => $fb_email);
+        $where_user = array('us_fb_id' => $fb_id);
         $query_user = $this->albert_model->read_users($where_user);
         $num_rows_user = $query_user->num_rows();
         if($num_rows_user)
         {
             //EMAIL EXISTS
-            echo 'got email';
-            $where_update_user = array('email' => $fb_email);
-            $data_update_user = array('us_fb_id' => $fb_id);
-            
-            $this->albert_model->read_users($where_update_user);
+
             
 //            $this->albert_model->update_user($where_update_user, $data_update_user);
 //            echo $this->db->affected_row();
@@ -126,12 +123,20 @@ class User extends CI_Controller
         else
         {
             //EMAIL NOT EXISTS
-            echo 'no email';
+            //POST VALUE ARRAY
+            $post_value_array = array('fb_id' => $fb_id, 'fb_email' => $fb_email);
+            $this->session->set_flashdata('post_value_array', $post_value_array);
+            //UPDATE USER
+//            $where_update_user = array('email' => $fb_email);
+//            $data_update_user = array('us_fb_id' => $fb_id);
+//            $this->albert_model->update_user($where_update_user, $data_update_user);
+            //RESPONSE
+            ?><div id="login-facebook-email-not-exists">1</div><?php
         }
         
         echo "<br/>";
         echo "<br/>";
-        echo strlen($fb_id);
+        echo $fb_id;
         echo "<br/>";
         echo $this->input->post('fb_email');
         echo "<br/>";
@@ -140,6 +145,69 @@ class User extends CI_Controller
         echo $this->input->post('fb_last_name');
         echo "<br/>";
         echo $this->input->post('fb_gender');
+    }
+    
+    // login facebook first time
+    function login_facebook_first_time()
+    {
+        //flash data
+        $this->session->keep_flashdata('post_value_array');
+        $data['post_value_array'] = $this->session->flashdata('post_value_array');
+        //post
+        if ($this->input->post())
+        {
+            //post value
+            $email = $this->input->post('email');
+            $contact_number = $this->input->post('contact_number');
+            $dob_day = $this->input->post('dob_day');
+            $dob_month = $this->input->post('dob_month');
+            $dob_year = $this->input->post('dob_year');
+            //date format
+            $dob_day_format = date('d',strtotime($dob_day));
+            $dob_month_format = date('m',strtotime($dob_month));
+            $dob_year_format = date('Y',strtotime($dob_year));  
+            $_POST['dob'] = $dob_day_format.'-'.$dob_month_format.'-'.$dob_year_format;
+            $race = $this->input->post('race');
+            $gender = $this->input->post('gender');
+            //validation
+            $this->form_validation->set_rules('email', 'E-mail address:', 'required|valid_email'); 
+            $this->form_validation->set_rules('contact_number', 'Contact Number:', 'required|valid_contact_number'); 
+            $this->form_validation->set_rules('dob', 'Date of Birth:', 'valid_date');
+            if ($this->form_validation->run() == TRUE) 
+            {
+                //valid
+                echo $email;
+                echo "<br/>";
+                echo $contact_number;
+                echo "<br/>";
+                echo $dob_day;
+                echo "<br/>";
+                echo $dob_month;
+                echo "<br/>";
+                echo $dob_year;
+                echo "<br/>";
+                echo $race;
+                echo "<br/>";
+                echo $gender;
+                echo "<br/>";
+            }
+            else
+            {
+                //$this->session->set_flashdata('message', validation_errors());
+                $data['message'] = validation_errors();
+            }
+        }
+        
+        //dob
+        $data['dob_day_array'] = generate_number_option(1, 31);
+        $data['query_static_option_month'] = $this->albert_model->read_static_option_month();
+        $data['dob_year_array'] = generate_number_option(1930, 2010);
+        //race
+        $data['query_static_option_race'] = $this->albert_model->read_static_option_race();
+        //gender
+        $data['query_static_option_gender'] = $this->albert_model->read_static_option_gender();
+        $data['page_path_name'] = 'user/login_facebook_first_time';
+        $this->load->view('template/layout', $data);
     }
 
     // log the user out

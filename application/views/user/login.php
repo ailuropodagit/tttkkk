@@ -18,6 +18,104 @@ if ($this->ion_auth->logged_in())
             document.getElementById('password').type = 'password';
         }
     }
+    
+//    // Call from FB.getLoginStatus().
+//    function statusChangeCallback(response) {
+//        //console.log(response);
+//        // Login status
+//        if (response.status === 'connected') {
+//            // connected
+//            FB.api('/me/permissions/public_profile', function (response) {
+//                if (response.data[0].status === 'granted') {
+//                    //public profile granted
+//                    FB.api('/me/permissions/email', function (response) {
+//                        if (response.data[0].status === 'granted') {
+//                            //email granted
+//                            FB.api('/me', {fields: 'id,first_name,last_name,email,gender'}, function (response) {
+//                                document.getElementById('login-facebook-label').innerHTML = "Logged in";
+//                                var fb_id = response.id;
+//                                var fb_email = response.email;
+//                                var fb_first_name = response.first_name;
+//                                var fb_last_name = response.last_name;
+//                                var fb_gender = response.gender;
+//                                $.ajax({
+//                                    type: "POST",
+//                                    url: "<?php echo base_url() ?>user/login_facebook",
+//                                    data: {fb_id:fb_id, fb_email:fb_email, fb_first_name:fb_first_name, fb_last_name:fb_last_name, fb_gender:fb_gender},
+//                                    success: function(data) {
+//                                        //display data
+//                                        $('#login-facebook-label').html(data);
+//                                        var $response = $(data);
+//                                        var login_facebook_email_not_exists = $response.filter('#login-facebook-email-not-exists').text()
+//                                        if (login_facebook_email_not_exists) {
+//                                            window.location.replace("<?php echo base_url() ?>user/login_facebook_first_time");
+//                                        }
+//                                    }
+//                                });
+//                                //window.location.replace("<?php echo base_url() ?>user/login_facebook");
+//                            });
+//                        } else {
+//                            //email declined
+//                            document.getElementById('login-facebook-label').innerHTML = "Email Declined";
+//                            FB.login(function(response) {
+//                                //console.log(response);
+//                            }, {
+//                                scope: 'email',
+//                                auth_type: 'rerequest'
+//                            });
+//                        }
+//                    });
+//                } else {
+//                    //public profile declined
+//                    document.getElementById('login-facebook-label').innerHTML = "Public Profile Declined";
+//                }
+//            });
+//        } else if (response.status === 'not_authorized') {
+//            // not_authorized
+//        } else {
+//            // unknown
+//        }
+//    }
+//
+//    // Check Login Status
+//    function checkLoginState() {
+//        FB.getLoginStatus(function (response) {
+//            statusChangeCallback(response);
+//        });
+//    }
+//
+//    // Logout
+//    function fbLogout() {
+//        FB.logout(function(response) {
+//            console.log(response);
+//            document.getElementById('login-facebook-label').innerHTML = "Log In with facebook";
+//        });
+//    }
+//
+//    window.fbAsyncInit = function () {
+//        FB.init({
+//            appId: '1636247466623391',
+//            cookie: true,
+//            xfbml: true,
+//            version: 'v2.2'
+//        });
+//        //Get if logged in
+//        FB.getLoginStatus(function (response) {
+//            statusChangeCallback(response);
+//        });
+//    };
+//
+//    // Load the SDK asynchronously
+//    (function (d, s, id) {
+//        var js, fjs = d.getElementsByTagName(s)[0];
+//        if (d.getElementById(id)) {
+//            return;
+//        }
+//        js = d.createElement(s);
+//        js.id = id;
+//        js.src = "//connect.facebook.net/en_US/sdk.js";
+//        fjs.parentNode.insertBefore(js, fjs);
+//    }(document, 'script', 'facebook-jssdk'));
 </script>
 
 <?php

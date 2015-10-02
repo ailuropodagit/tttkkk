@@ -692,7 +692,7 @@ a:hover {
     margin: 10px 0px 0px 0px;
 }
 
-#register-form-each-input-contact-number input[type='text'] {
+#login-form-each-input-contact-number input[type='text'] , #register-form-each-input-contact-number input[type='text'] {
     height: 25px;
     width: 238px;
     margin: 10px 0px 0px 0px;
@@ -715,6 +715,10 @@ a:hover {
     width: 285px;
     height: 28px;
     margin: 10px 0px 0px 0px;
+}
+
+#register-form-each-other {
+    display: none;
 }
 
 #register-form-each-input-dob {

@@ -82,7 +82,7 @@ class Albert_model extends CI_Model
     
     /* UPDATE USERS
     ***************************************************/
-    public function asd_user($where, $data)
+    public function update_user($where, $data)
     {
         //WHERE
         if($where)
@@ -292,6 +292,39 @@ class Albert_model extends CI_Model
             $this->db->where($where);
         }
         $this->db->group_by("advertise_id"); 
+        $query = $this->db->get();
+        return $query;
+    }
+    
+    /* READ STATUS OPTION MONTH
+    *************************************************************/
+    public function read_static_option_month() {
+        //QUERY
+        $this->db->select("*");
+        $this->db->from("static_option");
+        $this->db->where('option_type', 'month');
+        $query = $this->db->get();
+        return $query;
+    }
+    
+    /* READ STATUS OPTION RACE
+    *************************************************************/
+    public function read_static_option_race() {
+        //QUERY
+        $this->db->select("*");
+        $this->db->from("static_option");
+        $this->db->where('option_type', 'race');
+        $query = $this->db->get();
+        return $query;
+    }
+    
+    /* READ STATUS OPTION GENDER
+    *************************************************************/
+    public function read_static_option_gender() {
+        //QUERY
+        $this->db->select("*");
+        $this->db->from("static_option");
+        $this->db->where('option_type', 'gender');
         $query = $this->db->get();
         return $query;
     }
