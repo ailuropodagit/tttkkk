@@ -17,8 +17,9 @@ $this->load->view('template/header');
                     $tab_counter = 0;
                     //GET CURRENT CATEGORY ID
                     $page_category_id = $this->uri->segment('3');
+                    $fetch_method = $this->router->fetch_method();
                     //GET MAIN CATEGORY
-                    if ($this->router->fetch_method() == 'promotion_list')
+                    if ($fetch_method == 'promotion_list' || $fetch_method == 'redemption_list')
                         {
                             $main_category_object = $this->m_custom->getCategory(1);
                         }else{
@@ -46,12 +47,15 @@ $this->load->view('template/header');
                             $sub_category_id = $t_subcat->category_id;
                             $sub_category_label = $t_subcat->category_label;
                             //NAVIGATE TO
-                            if ($this->router->fetch_method() == 'promotion_list')
+                            if ($fetch_method == 'promotion_list' || $fetch_method == 'redemption_list')
                             {
                                 //PROMOTION LIST
                                 $navigate_to = base_url() . "all/promotion-list/" . $sub_category_id . "/" . $tab_counter;
+                                if($t_subcat->hide_special == 1){
+                                    $navigate_to = base_url() . "all/redemption-list/" . $sub_category_id . "/" . $tab_counter;
+                                }
                             }
-                            if ($this->router->fetch_method() == 'hotdeal_list')
+                            if ($fetch_method == 'hotdeal_list')
                             {
                                 //HOTDEAL LIST
                                 $navigate_to = base_url()."all/hotdeal-list/" . $sub_category_id . "/" . $tab_counter;

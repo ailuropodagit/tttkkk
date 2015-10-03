@@ -51,6 +51,20 @@ class All extends CI_Controller
         $this->load->view('template/layout_category', $this->data);
     }
 
+    function redemption_list()
+    {
+        $sub_category_id = $this->uri->segment(3);
+        $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('adm', $sub_category_id);
+        $this->data['title'] = "Redemption";
+        if (!IsNullOrEmptyString($sub_category_id))
+        {
+            $this->data['main_category'] = $this->m_custom->display_main_category($sub_category_id);
+            $this->data['sub_category'] = $this->m_custom->display_category($sub_category_id);
+        }
+        $this->data['page_path_name'] = 'all/advertise_list';
+        $this->load->view('template/layout_category', $this->data);
+    }
+    
     function advertise($advertise_id, $advertise_type = NULL, $sub_category_id = NULL, $merchant_id = NULL, $show_expired = 0)
     {
         $the_row = $this->m_custom->getOneAdvertise($advertise_id);
@@ -101,7 +115,8 @@ class All extends CI_Controller
                 $this->data['radio_level'] = "disabled";
             }
 
-            if ($the_row['advertise_type'] == "pro")
+            $row_advertise_type = $the_row['advertise_type'];
+            if ($row_advertise_type == "pro")
             {
                 $this->data['voucher'] = $the_row['voucher'];
                 $this->data['voucher_worth'] = $the_row['voucher_worth'];
@@ -112,10 +127,12 @@ class All extends CI_Controller
                 $this->data['candie_branch'] = $this->m_custom->many_get_childlist_detail('candie_branch', $advertise_id, 'merchant_branch', 'branch_id');
                 $this->data['page_path_name'] = 'all/promotion';
             }
-            else if($the_row['advertise_type'] == "hot")
+            else if($row_advertise_type == "hot")
             {
                 $this->data['end_time'] = displayDate($the_row['end_time'], 1, 1);
                 $this->data['page_path_name'] = 'all/hotdeal';
+            }else if($row_advertise_type == "adm"){
+                //to do todo
             }
 
             if ($advertise_type != NULL)
