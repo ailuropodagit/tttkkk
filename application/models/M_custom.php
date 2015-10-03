@@ -647,8 +647,12 @@ class M_custom extends CI_Model
     }
 
     //Get all the static option of an option type
-    public function getCategoryList($default_value = NULL, $default_text = NULL)
+    public function getCategoryList($default_value = NULL, $default_text = NULL, $get_special = 0)
     {
+        if ($get_special == 0)
+        {
+            $this->db->where('hide_special', 0);
+        }
         $query = $this->db->get_where('category', array('category_level' => '0', 'hide_flag' => 0));
         $return = array();
         if ($default_value != NULL)
@@ -685,8 +689,12 @@ class M_custom extends CI_Model
     }
     
     //To get all main category
-    function getCategory()
+    function getCategory($get_special = 0)
     {
+        if ($get_special == 0)
+        {
+            $this->db->where('hide_special', 0);
+        }
         $query = $this->db->get_where('category', array('category_level' => '0'));
         return $query->result();
     }

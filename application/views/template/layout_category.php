@@ -18,7 +18,12 @@ $this->load->view('template/header');
                     //GET CURRENT CATEGORY ID
                     $page_category_id = $this->uri->segment('3');
                     //GET MAIN CATEGORY
-                    $main_category_object = $this->m_custom->getCategory();
+                    if ($this->router->fetch_method() == 'promotion_list')
+                        {
+                            $main_category_object = $this->m_custom->getCategory(1);
+                        }else{
+                            $main_category_object = $this->m_custom->getCategory();
+                        }
                     //MAIN CATEGORY
                     foreach ($main_category_object as $main_category)
                     {
