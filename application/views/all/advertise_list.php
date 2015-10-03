@@ -140,6 +140,15 @@ $this->album_merchant = $this->config->item('album_merchant');
                     <?php } ?>
                     <div id="advertise-list-info">
                         <table border="0" cellpadding="4px" cellspacing="0px">
+                            <?php if ($row['advertise_type'] == 'pro' && !empty($row['voucher_worth'])) { ?>
+                            <tr>
+                                <td>Worth</td>
+                                <td>:</td>
+                                <td>
+                                    <div id="advertise-list-voucher-worth"><?php echo "RM " . $row['voucher_worth']; ?></div>
+                                </td>
+                            </tr>    
+                            <?php } ?>
                             <tr>
                                 <td>Category</td>
                                 <td>:</td>

@@ -1420,10 +1420,11 @@ class M_custom extends CI_Model
     }
     
     //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
-    public function merchant_like_count($merchant_id, $refer_type)
+    public function merchant_like_count($merchant_id, $refer_type, $include_mua = 0)
     {
         $advertise_list = $this->m_custom->getAdvertise('all', NULL, $merchant_id, 1);
         $advertise_list_id = array();
+        
         foreach ($advertise_list as $row)
         {
             $advertise_list_id[] = $row['advertise_id'];
@@ -1431,14 +1432,21 @@ class M_custom extends CI_Model
         if (!empty($advertise_list_id))
         {
             $this->db->where_in('act_refer_id', $advertise_list_id);
-        }
+        }      
+        
         $query = $this->db->get_where('activity_history', array('act_type' => 'like', 'act_refer_type' => $refer_type));
+        $counter = $query->num_rows();
+        
+        if ($include_mua == 1)
+        {
+            $counter += $this->m_custom->merchant_mua_activity_count($merchant_id, 'like');;       
+        }
 
-        return $query->num_rows();
+        return $counter;
     }
 
     //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
-    public function merchant_comment_count($merchant_id, $refer_type)
+    public function merchant_comment_count($merchant_id, $refer_type, $include_mua = 0)
     {
         $advertise_list = $this->m_custom->getAdvertise('all', NULL, $merchant_id, 1);
         $advertise_list_id = array();
@@ -1450,12 +1458,55 @@ class M_custom extends CI_Model
         if (!empty($advertise_list_id))
         {
             $this->db->where_in('act_refer_id', $advertise_list_id);
-        }
+        }      
+        
         $query = $this->db->get_where('activity_history', array('act_type' => 'comment', 'act_refer_type' => $refer_type));
+        $counter = $query->num_rows();
+        
+        if ($include_mua == 1)
+        {
+            $counter += $this->m_custom->merchant_mua_activity_count($merchant_id, 'comment');;
+        }
 
-        return $query->num_rows();
+        return $counter;
     }
 
+    public function merchant_mua_activity_count($merchant_id, $act_type)
+    {
+        $mua_list = $this->m_custom->getAlbumUserMerchant(NULL, $merchant_id);
+        $mua_list_id = array();
+        
+        foreach ($mua_list as $row)
+        {
+            $mua_list_id[] = $row['merchant_user_album_id'];
+        }
+        
+        $counter = 0;
+        
+        if (!empty($mua_list_id))
+        {
+            $this->db->where_in('act_refer_id', $mua_list_id);
+            $query = $this->db->get_where('activity_history', array('act_type' => $act_type, 'act_refer_type' => 'mua'));
+            $counter = $query->num_rows();
+        }
+        return $counter;
+    }
+
+    public function merchant_picture_count($merchant_id, $include_adv = 0)
+    {       
+        $query = $this->db->get_where('merchant_user_album', array('merchant_id' => $merchant_id, 'post_type' => 'mer', 'hide_flag' => 0));
+        $counter = $query->num_rows();
+        
+        if ($include_adv == 1)
+        {
+            $this->db->where('start_time is not null AND end_time is not null');         
+            $query = $this->db->get_where('advertise', array('merchant_id' => $merchant_id, 'hide_flag' => 0));
+            $counter += $query->num_rows();
+        }
+        
+        return $counter;
+    }
+    
     //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
     public function merchant_rating_average($merchant_id, $refer_type, $want_count = 0)
     {

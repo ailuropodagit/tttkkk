@@ -83,6 +83,14 @@ if(isset($message))
                             <div id="redemption-sub-title">
                                 <?php echo $title ?>
                             </div>
+                            <div id="redemption-voucher-worth">
+                                <?php
+                                if (!empty($voucher_worth))
+                                {
+                                    echo "Worth : RM " . $voucher_worth;
+                                }
+                                ?>
+                            </div>
                             <div id="redemption-rate-time">
                                 <div id="redemption-rate">
                                     <div style="display:inline;">

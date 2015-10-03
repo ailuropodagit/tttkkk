@@ -80,6 +80,11 @@
                                 <td><?php echo $this->m_custom->merchant_comment_count($merchant_id, 'adv'); ?></td>
                             </tr>
                             <tr>
+                                <td>Picture</td>
+                                <td>:</td>
+                                <td><a href='<?php echo $merchant_dashboard_url."/picture"; ?>'><?php echo $this->m_custom->merchant_picture_count($merchant_id, 1); ?></a></td>
+                            </tr>
+                            <tr>
                                 <td>Average Rating</td>
                                 <td>:</td>
                                 <td>

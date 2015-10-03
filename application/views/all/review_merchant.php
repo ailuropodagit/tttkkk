@@ -71,12 +71,17 @@ if($review_list!=null){
                             <tr>
                                 <td>Like</td>
                                 <td>:</td>
-                                <td><?php echo $this->m_custom->merchant_like_count($merchant_id, 'adv'); ?></td>
+                                <td><?php echo $this->m_custom->merchant_like_count($merchant_id, 'adv', 1); ?></td>
                             </tr>
                             <tr>
                                 <td>Comment</td>
                                 <td>:</td>
-                                <td><?php echo $this->m_custom->merchant_comment_count($merchant_id, 'adv'); ?></td>
+                                <td><?php echo $this->m_custom->merchant_comment_count($merchant_id, 'adv', 1); ?></td>
+                            </tr>
+                            <tr>
+                                <td>Picture</td>
+                                <td>:</td>
+                                <td><a href='<?php echo $merchant_dashboard_url."/picture"; ?>'><?php echo $this->m_custom->merchant_picture_count($merchant_id, 1); ?></a></td>
                             </tr>
                             <tr>
                                 <td>Average Rating</td>

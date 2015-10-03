@@ -8,6 +8,7 @@ class All extends CI_Controller
         parent::__construct();
         $this->load->library(array('ion_auth'));
         $this->album_merchant_profile = $this->config->item('album_merchant_profile');
+        $this->album_admin = $this->config->item('album_admin');
         $this->album_merchant = $this->config->item('album_merchant');
         $this->album_user_profile = $this->config->item('album_user_profile');
         $this->album_user_merchant = $this->config->item('album_user_merchant');
@@ -103,6 +104,7 @@ class All extends CI_Controller
             if ($the_row['advertise_type'] == "pro")
             {
                 $this->data['voucher'] = $the_row['voucher'];
+                $this->data['voucher_worth'] = $the_row['voucher_worth'];
                 $this->data['voucher_barcode'] = base_url("barcode/generate/" . $the_row['voucher']);
                 $this->data['voucher_candie'] = $the_row['voucher_candie'];
                 $this->data['expire_date'] = displayDate($the_row['voucher_expire_date']);
@@ -110,7 +112,7 @@ class All extends CI_Controller
                 $this->data['candie_branch'] = $this->m_custom->many_get_childlist_detail('candie_branch', $advertise_id, 'merchant_branch', 'branch_id');
                 $this->data['page_path_name'] = 'all/promotion';
             }
-            else
+            else if($the_row['advertise_type'] == "hot")
             {
                 $this->data['end_time'] = displayDate($the_row['end_time'], 1, 1);
                 $this->data['page_path_name'] = 'all/hotdeal';
@@ -229,6 +231,7 @@ class All extends CI_Controller
             $this->data['message'] = $this->session->flashdata('message');       
 
             $this->data['voucher'] = $the_row['voucher'];
+            $this->data['voucher_worth'] = $the_row['voucher_worth'];
             $this->data['voucher_barcode'] = base_url("barcode/generate/" . $the_row['voucher']);
             $this->data['voucher_candie'] = $the_row['voucher_candie'];
             $this->data['expire_date'] = displayDate($the_row['voucher_expire_date']);
