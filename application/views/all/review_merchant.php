@@ -100,7 +100,7 @@ if($review_list!=null){
                                                 echo "<input class='star' type='radio' name='a-rating-$merchant_id' disabled='disabled' value='" . $i . "'/>";
                                             }
                                         } //end of for
-                                        echo " from ". $rating_count . " users";
+                                        echo $rating_count . " reviews";
                                         ?>
                                     </div>
                                 </td>

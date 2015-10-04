@@ -69,8 +69,8 @@ class User extends CI_Controller
                 //redirect them back to the home page
                 //$this->session->set_flashdata('message', $this->ion_auth->messages());
                 $this->update_whole_year_balance();
-                redirect('user/profile', 'refresh');
-                //echo $this->session->userdata('user_id');
+                $user_id = $this->session->userdata('user_id');
+                redirect('all/user_dashboard/'.$user_id, 'refresh');
             }
             else
             {
@@ -605,21 +605,21 @@ class User extends CI_Controller
             $_POST['dob'] = $this->d_year . '-' . $this->d_month . '-' . $this->d_day;
         }
         // validate form input
-        $this->form_validation->set_rules('first_name', $this->lang->line('create_user_fname_label'), 'required');
+        $this->form_validation->set_rules('first_name', $this->lang->line('create_user_validation_fname_label'), 'required');
         $this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'));
-        $this->form_validation->set_rules('ic_number', $this->lang->line('create_user_ic_number_label'));
-        $this->form_validation->set_rules('phone', $this->lang->line('create_user_phone_label'), 'required|valid_contact_number');
-        $this->form_validation->set_rules('dob', $this->lang->line('create_user_dob_label'), 'callback_date_check');
+        $this->form_validation->set_rules('phone', $this->lang->line('create_user_validation_phone_label'), 'required|valid_contact_number');
+        $this->form_validation->set_rules('dob', $this->lang->line('create_user_validation_dob_label'), 'callback_date_check');
+        $this->form_validation->set_rules('gender_id', $this->lang->line('create_user_validation_gender_label'), 'callback_check_gender_id');
+        $this->form_validation->set_rules('race_id', $this->lang->line('create_user_validation_race_label'), 'callback_check_race_id');
         $this->form_validation->set_rules('race_other', $this->lang->line('create_user_race_other_label'));
-        $this->form_validation->set_rules('username', $this->lang->line('create_user_username_label'), 'trim|required|is_unique[' . $tables['users'] . '.username]');
-        $this->form_validation->set_rules('email', $this->lang->line('create_user_email_label'), 'trim|required|valid_email|is_unique[' . $tables['users'] . '.email]');
-        $this->form_validation->set_rules('password', $this->lang->line('create_user_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
+        $this->form_validation->set_rules('username', $this->lang->line('create_user_validation_username_label'), 'trim|required|is_unique[' . $tables['users'] . '.username]');
+        $this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'trim|required|valid_email|is_unique[' . $tables['users'] . '.email]');
+        $this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
         $this->form_validation->set_rules('password_confirm', $this->lang->line('create_user_password_confirm_label'), 'required');
         if ($this->form_validation->run() == true)
         {
             $first_name = $this->input->post('first_name');
             $last_name = $this->input->post('last_name');
-            $ic_number = $this->input->post('ic_number');
             $phone = '+60'.$this->input->post('phone');
             $username = strtolower($this->input->post('username'));
             $email = strtolower($this->input->post('email'));
@@ -628,7 +628,6 @@ class User extends CI_Controller
             $additional_data = array(
                 'first_name' => $first_name,
                 'last_name' => $last_name,
-                'us_ic' => $ic_number,
                 'phone' => $phone,
                 'us_birthday' => $this->input->post('dob'),
                 'us_age' => age_count($this->input->post('dob')),
@@ -706,13 +705,15 @@ class User extends CI_Controller
                 'name' => 'year',
                 'id' => 'year',
             );
-            $this->data['gender_list'] = $this->ion_auth->get_static_option_list('gender');
+            //$this->data['gender_list'] = $this->ion_auth->get_static_option_list('gender');
+            $this->data['gender_list'] = $this->m_custom->get_static_option_array('gender', '0', 'Please Select');
             $this->data['gender_id'] = array(
                 'name' => 'gender_id',
                 'id' => 'gender_id',
                 'value' => $this->form_validation->set_value('gender_id'),
             );
-            $this->data['race_list'] = $this->ion_auth->get_static_option_list('race');
+            //$this->data['race_list'] = $this->ion_auth->get_static_option_list('race');
+            $this->data['race_list'] = $this->m_custom->get_static_option_array('race', '0', 'Please Select');
             $this->data['race_id'] = array(
                 'name' => 'race_id',
                 'id' => 'race_id',
@@ -725,12 +726,6 @@ class User extends CI_Controller
                 'type' => 'text',
                 'style' => 'display:none',
                 'value' => $this->form_validation->set_value('race_other'),
-            );
-            $this->data['ic_number'] = array(
-                'name' => 'ic_number',
-                'id' => 'ic_number',
-                'type' => 'text',
-                'value' => $this->form_validation->set_value('ic_number'),
             );
             $this->data['phone'] = array(
                 'name' => 'phone',
@@ -769,6 +764,26 @@ class User extends CI_Controller
         }
     }
 
+    function check_gender_id($dropdown_selection)
+    {
+        if ($dropdown_selection == 0)
+        {
+            $this->form_validation->set_message('check_gender_id', 'The Gender field is required');
+            return FALSE;
+        }
+        return TRUE;
+    }
+    
+    function check_race_id($dropdown_selection)
+    {
+        if ($dropdown_selection == 0)
+        {
+            $this->form_validation->set_message('check_race_id', 'The Race field is required');
+            return FALSE;
+        }
+        return TRUE;
+    }
+    
     //user profile view and edit page
     function profile()
     {
@@ -793,12 +808,15 @@ class User extends CI_Controller
         // validate form input
         $this->form_validation->set_rules('first_name', $this->lang->line('create_user_fname_label'), 'required');
         $this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'));
-        $this->form_validation->set_rules('ic_number', $this->lang->line('create_user_ic_number_label'), 'required');
+        $this->form_validation->set_rules('description', $this->lang->line('create_user_validation_description_label'));
         $this->form_validation->set_rules('phone', $this->lang->line('create_user_phone_label'), 'required|valid_contact_number');
         $this->form_validation->set_rules('dob', $this->lang->line('create_user_dob_label'), 'callback_date_check');
-        $this->form_validation->set_rules('username', $this->lang->line('create_user_username_label'), 'trim|required|is_unique_edit[' . $tables['users'] . '.username.' . $user_id . ']');
-        $this->form_validation->set_rules('email', $this->lang->line('create_user_email_label'), 'trim|required|valid_email|is_unique_edit[' . $tables['users'] . '.email.' . $user_id . ']');
+        $this->form_validation->set_rules('username', $this->lang->line('create_user_validation_username_label'), 'trim|required|is_unique_edit[' . $tables['users'] . '.username.' . $user_id . ']');
+        $this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'trim|required|valid_email|is_unique_edit[' . $tables['users'] . '.email.' . $user_id . ']');
         $this->form_validation->set_rules('race_other', $this->lang->line('create_user_race_other_label'));
+        $this->form_validation->set_rules('blog_url', $this->lang->line('create_user_validation_blog_label'));
+        $this->form_validation->set_rules('instagram_url', $this->lang->line('create_user_validation_instagram_label'));
+        $this->form_validation->set_rules('facebook_url', $this->lang->line('create_user_validation_facebook_label'));
 
         if (isset($_POST) && !empty($_POST))
         {
@@ -822,7 +840,7 @@ class User extends CI_Controller
                     $data = array(
                         'first_name' => $first_name,
                         'last_name' => $last_name,
-                        'us_ic' => $this->input->post('ic_number'),
+                        'description' => $this->input->post('description'),
                         'phone' => $this->input->post('phone'),
                         'us_birthday' => $this->input->post('dob'),
                         'us_age' => $this->input->post('age'),
@@ -842,6 +860,7 @@ class User extends CI_Controller
                         // redirect them back to the admin page if admin, or to the base url if non admin
                         $this->session->set_flashdata('message', $this->ion_auth->messages());
                         $user = $this->ion_auth->user($user_id)->row();
+                        redirect('all/user_dashboard/'.$user_id, 'refresh');
                     }
                     else
                     {
@@ -925,6 +944,11 @@ class User extends CI_Controller
             'type' => 'text',
             'value' => $this->form_validation->set_value('last_name', $user->last_name),
         );
+        $this->data['description'] = array(
+                'name' => 'description',
+                'id' => 'description',
+                'value' => $this->form_validation->set_value('description', $user->description),
+        );
         $this->data['email'] = array(
             'name' => 'email',
             'id' => 'email',
@@ -946,11 +970,6 @@ class User extends CI_Controller
             'name' => 'year',
             'id' => 'year',
         );
-//            $this->data['age_list'] = generate_number_option(10,90);
-//            $this->data['age'] = array(
-//                'name' => 'age',
-//                'id' => 'age',
-//            );
         $this->data['age'] = array(
             'name' => 'age',
             'id' => 'age',
@@ -979,12 +998,6 @@ class User extends CI_Controller
         $this->data['race_other_attributes'] = array(
             'id' => 'race_other_label',
             'style' => $this->m_custom->display_static_option($user->us_race_id) == 'Other' ? 'display:inline' : 'display:none',
-        );
-        $this->data['ic_number'] = array(
-            'name' => 'ic_number',
-            'id' => 'ic_number',
-            'type' => 'text',
-            'value' => $this->form_validation->set_value('ic_number', $user->us_ic),
         );
         $this->data['phone'] = array(
             'name' => 'phone',

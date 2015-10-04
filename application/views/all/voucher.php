@@ -126,11 +126,6 @@
                                 <td><?php echo $user_name; ?></td>
                             </tr>
                             <tr>
-                                <td>User IC</td>
-                                <td>:</td>
-                                <td><?php echo $user_ic; ?></td>
-                            </tr>
-                            <tr>
                                 <td>User DOB</td>
                                 <td>:</td>
                                 <td><?php echo $user_dob; ?></td>

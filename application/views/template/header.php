@@ -163,7 +163,12 @@
                                     'name' => 'me_state_id',
                                     'id' => 'me_state_id',
                                 );
+                                $selected_state = $this->uri->segment(4);
+                                if(!empty($selected_state) && $this->router->fetch_method() == 'search_result'){
+                                    echo form_dropdown($me_state_id, $state_list, $selected_state);
+                                }else{
                                 echo form_dropdown($me_state_id, $state_list);
+                                }
                                 ?>
                             </div>
                             <div id="search-box-block3">

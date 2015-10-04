@@ -52,10 +52,6 @@ if(isset($message))
             <div id='register-form-each-input'><?php echo form_input($last_name); ?></div>
         </div>
         <div id='register-form-each'>
-            <div id='register-form-each-label'><?php echo lang('create_user_ic_number_label', 'ic number'); ?></div>
-            <div id='register-form-each-input'><?php echo form_input($ic_number); ?></div>
-        </div>
-        <div id='register-form-each'>
             <div id='register-form-each-label'><?php echo lang('create_user_contact_number_label', 'contact number'); ?></div>
             <div id='register-form-each-input-contact-number'>+60 <?php echo form_input($phone); ?></div>
         </div>
@@ -81,12 +77,12 @@ if(isset($message))
             <div id='register-form-each-input'><?php echo form_input($race_other); ?></div>
         </div>
         <div id='register-form-each'>
-            <div id='register-form-each-label'><?php echo lang('create_user_username_label', 'username'); ?></div>
-            <div id='register-form-each-input'><?php echo form_input($username); ?></div>
-        </div>
-        <div id='register-form-each'>
             <div id='register-form-each-label'><?php echo lang('create_user_email_label', 'email address'); ?></div>
             <div id='register-form-each-input'><?php echo form_input($email); ?></div>
+        </div>
+        <div id='register-form-each'>
+            <div id='register-form-each-label'><?php echo lang('create_user_username_label', 'username'); ?></div>
+            <div id='register-form-each-input'><?php echo form_input($username); ?></div>
         </div>
         <div id='register-form-each'>
             <div id='register-form-each-label'><?php echo lang('create_merchant_password_label', 'password'); ?></div>

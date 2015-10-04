@@ -1647,16 +1647,21 @@ class M_custom extends CI_Model
 
     public function home_search_merchant($search_value = NULL, $state_id = 0)
     {
+        if ($state_id != 0)
+        {
+            $have_branch_at_this_state = $this->m_custom->get_list_of_allow_id('merchant_branch', 'state_id', $state_id, 'merchant_id');
+        }
+        
         if (!IsNullOrEmptyString($search_value))
         {
             $search_word = $this->db->escape('%' . $search_value . '%');
-            //$this->db->where("(`company` LIKE $search_word OR `slug` LIKE $search_word)");
             $this->db->where("(`company` LIKE $search_word OR `slug` LIKE $search_word OR `address` LIKE $search_word)");
         }
 
         if ($state_id != 0)
         {
-            $this->db->where('me_state_id', $state_id);
+            $this->db->where_in('id', $have_branch_at_this_state);
+            $this->db->or_where('me_state_id', $state_id);           
         }
 
         $this->db->order_by("company", "asc");

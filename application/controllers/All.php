@@ -1,4 +1,6 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php
+
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 class All extends CI_Controller
 {
@@ -64,7 +66,7 @@ class All extends CI_Controller
         $this->data['page_path_name'] = 'all/advertise_list';
         $this->load->view('template/layout_category', $this->data);
     }
-    
+
     function advertise($advertise_id, $advertise_type = NULL, $sub_category_id = NULL, $merchant_id = NULL, $show_expired = 0)
     {
         $the_row = $this->m_custom->getOneAdvertise($advertise_id);
@@ -128,11 +130,13 @@ class All extends CI_Controller
                 $this->data['candie_branch'] = $this->m_custom->many_get_childlist_detail('candie_branch', $advertise_id, 'merchant_branch', 'branch_id');
                 $this->data['page_path_name'] = 'all/promotion';
             }
-            else if($row_advertise_type == "hot")
+            else if ($row_advertise_type == "hot")
             {
                 $this->data['end_time'] = displayDate($the_row['end_time'], 1, 1);
                 $this->data['page_path_name'] = 'all/hotdeal';
-            }else if($row_advertise_type == "adm"){
+            }
+            else if ($row_advertise_type == "adm")
+            {
                 //For admin promotion, overwrite some info
                 $this->data['image_url'] = base_url($this->album_admin . $the_row['image']);
                 $this->data['voucher_not_need'] = $the_row['voucher_not_need'];
@@ -175,21 +179,23 @@ class All extends CI_Controller
         }
     }
 
-    function notification(){
+    function notification()
+    {
         if ($this->ion_auth->logged_in())
         {
             $user_id = $this->ion_auth->user()->row()->id;
-            
+
             if (check_correct_login_type($this->group_id_supervisor))
             {
                 $user_id = $this->ion_auth->user()->row()->su_merchant_id;
             }
-            
+
             $notification_list = $this->m_custom->notification_display($user_id);
             $this->data['notification_list'] = $notification_list;
             $this->data['page_path_name'] = 'all/notification';
             $this->load->view('template/layout_right_menu', $this->data);
-            if($this->config->item('notification_auto_mark_as_read') == 1){
+            if ($this->config->item('notification_auto_mark_as_read') == 1)
+            {
                 $this->m_custom->notification_read($user_id);
             }
         }
@@ -198,8 +204,9 @@ class All extends CI_Controller
             redirect('/', 'refresh');
         }
     }
-    
-    function notification_process(){
+
+    function notification_process()
+    {
         $current_url = '/';
         if (isset($_POST) && !empty($_POST))
         {
@@ -208,33 +215,36 @@ class All extends CI_Controller
             if ($this->input->post('button_action') == "hide_notification")
             {
                 $this->m_custom->notification_hide($noti_id);
-            }else if($this->input->post('button_action') == "read_notification")
+            }
+            else if ($this->input->post('button_action') == "read_notification")
             {
                 $this->m_custom->notification_read_toggle($noti_id);
             }
         }
         redirect($current_url, 'refresh');
     }
-    
+
     function voucher($advertise_id)
     {
         if ($this->ion_auth->logged_in())
         {
             $login_id = $this->ion_auth->user()->row()->id;
             $login_data = $this->m_custom->get_one_table_record('users', 'id', $login_id, 1);
-        }else{
+        }
+        else
+        {
             redirect('/', 'refresh');
         }
 
         $the_row = $this->m_custom->getOneAdvertise($advertise_id);
         if ($the_row)
-        {        
+        {
             $advertise_type = $the_row['advertise_type'];
             if (($advertise_type != "pro" && $advertise_type != "adm") || !$this->m_user->user_redemption_check($login_id, $advertise_id))
             {
                 redirect('/', 'refresh');
             }
-            
+
             $merchant_row = $this->m_merchant->getMerchant($the_row['merchant_id']);
             $this->data['merchant_dashboard_url'] = base_url() . "all/merchant-dashboard/" . $merchant_row['slug'];
 
@@ -242,26 +252,28 @@ class All extends CI_Controller
             {
                 $this->data['user_id'] = $login_id;
                 $this->data['user_name'] = $this->m_custom->display_users($login_id);
-                $this->data['user_ic'] = $login_data['us_ic'];
                 $this->data['user_dob'] = displayDate($login_data['us_birthday']);
                 $this->data['user_email'] = $login_data['email'];
                 $this->data['current_candie'] = $this->m_user->candie_check_balance($login_id);
             }
-            
+
             $this->data['advertise_type'] = $advertise_type;
             $this->data['advertise_id'] = $advertise_id;
             $this->data['merchant_name'] = $merchant_row['company'];
             $this->data['title'] = $the_row['title'];
-            $this->data['description'] = $the_row['description'];          
-            if ($advertise_type == "adm"){
+            $this->data['description'] = $the_row['description'];
+            if ($advertise_type == "adm")
+            {
                 $this->data['image_url'] = base_url($this->album_admin . $the_row['image']);
-            }else{
+            }
+            else
+            {
                 $this->data['image_url'] = base_url($this->album_merchant . $the_row['image']);
             }
             $this->data['sub_category'] = $this->m_custom->display_category($the_row['sub_category_id']);
             $this->data['start_date'] = displayDate($the_row['start_time']);
             $this->data['end_date'] = displayDate($the_row['end_time']);
-            $this->data['message'] = $this->session->flashdata('message');       
+            $this->data['message'] = $this->session->flashdata('message');
 
             $this->data['voucher'] = $the_row['voucher'];
             $this->data['voucher_not_need'] = $the_row['voucher_not_need'];
@@ -287,7 +299,7 @@ class All extends CI_Controller
             redirect('/', 'refresh');
         }
     }
-    
+
     function merchant_category($sub_category_id = NULL)
     {
         //PAGE PATH NAME
@@ -295,7 +307,7 @@ class All extends CI_Controller
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['title'] = "Merchant (" . $this->m_custom->display_category($sub_category_id) . ") ";
 
-        $this->data['review_list'] = $this->m_merchant->getMerchantList_by_subcategory($sub_category_id);   
+        $this->data['review_list'] = $this->m_merchant->getMerchantList_by_subcategory($sub_category_id);
 
         if ($this->ion_auth->logged_in())
         {
@@ -306,7 +318,7 @@ class All extends CI_Controller
             $this->load->view('template/layout', $this->data);
         }
     }
-    
+
     function merchant_user_picture($picture_id, $user_id = NULL, $merchant_id = NULL)
     {
 
@@ -556,11 +568,11 @@ class All extends CI_Controller
         $this->pagination->initialize($config);
         $this->data["paging_links"] = $this->pagination->create_links();
         $start_index = $page == 1 ? $page : (($page - 1) * $config["per_page"]);  //For calculate page number to start index
-        
+
         $this->data['message'] = $this->session->flashdata('message');
-        
+
         $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('hot', NULL, $merchant_id, 1, $config["per_page"], $start_index);   //To get the limited result only for that current page
-        $this->data['title'] = "Merchant Album";   
+        $this->data['title'] = "Merchant Album";
         $this->data['page_path_name'] = 'all/advertise_list';
 
         if ($this->ion_auth->logged_in())
@@ -612,11 +624,11 @@ class All extends CI_Controller
         $this->pagination->initialize($config);
         $this->data["paging_links"] = $this->pagination->create_links();
         $start_index = $page == 1 ? $page : (($page - 1) * $config["per_page"]);  //For calculate page number to start index
-        
+
         $this->data['message'] = $this->session->flashdata('message');
-        
+
         $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('pro', NULL, $merchant_id, 1, $config["per_page"], $start_index);   //To get the limited result only for that current page
-        $this->data['title'] = "Merchant Album";   
+        $this->data['title'] = "Merchant Album";
         $this->data['page_path_name'] = 'all/advertise_list';
 
         if ($this->ion_auth->logged_in())
@@ -628,7 +640,7 @@ class All extends CI_Controller
             $this->load->view('template/layout', $this->data);
         }
     }
-    
+
     //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
     function user_click_like($refer_id, $refer_type)
     {
@@ -657,14 +669,16 @@ class All extends CI_Controller
                 $user_email = $this->session->userdata('email');
                 $phone_required = $this->input->post('phone_required');
                 $top_up_phone = NULL;
-                if($phone_required == 1){
+                if ($phone_required == 1)
+                {
                     $top_up_phone = $this->input->post('phone');
-                    if(!$this->m_custom->check_valid_phone($top_up_phone)){
+                    if (!$this->m_custom->check_valid_phone($top_up_phone))
+                    {
                         $this->session->set_flashdata('message', 'The top up phone number is incorrect, please set a real phone number');
                         redirect($current_url, 'refresh');
                     }
                 }
-                
+
                 $redeem_info = $this->m_user->user_redemption_insert($advertise_id, $top_up_phone);
 
                 if ($redeem_info['redeem_status'])
@@ -692,11 +706,11 @@ class All extends CI_Controller
     function send_redeem_mail_process()
     {
         $mail_info = $this->session->flashdata('mail_info');
-        
-        $mail_voucher_code = $mail_info['redeem_info']['redeem_voucher_not_need'] == 0? 'Voucher Code : ' . $mail_info['redeem_info']['redeem_voucher'] . '<br/>' : NULL;
-        $mail_expire_code = $mail_info['redeem_info']['redeem_expire'] == NULL? NULL : 'Expire Date : ' . $mail_info['redeem_info']['redeem_expire'];
-        $mail_top_up_phone = $mail_info['redeem_info']['redeem_top_up_phone'] == NULL? NULL : 'Top Up Phone : ' . $mail_info['redeem_info']['redeem_top_up_phone'] . '<br/>';
-        
+
+        $mail_voucher_code = $mail_info['redeem_info']['redeem_voucher_not_need'] == 0 ? 'Voucher Code : ' . $mail_info['redeem_info']['redeem_voucher'] . '<br/>' : NULL;
+        $mail_expire_code = $mail_info['redeem_info']['redeem_expire'] == NULL ? NULL : 'Expire Date : ' . $mail_info['redeem_info']['redeem_expire'];
+        $mail_top_up_phone = $mail_info['redeem_info']['redeem_top_up_phone'] == NULL ? NULL : 'Top Up Phone : ' . $mail_info['redeem_info']['redeem_top_up_phone'] . '<br/>';
+
         $mail_message = 'Merchant : ' . $mail_info['redeem_info']['redeem_merchant'] . '<br/>'
                 . 'Promotion Title : ' . $mail_info['redeem_info']['redeem_title'] . '<br/>'
                 . $mail_voucher_code
@@ -781,30 +795,30 @@ class All extends CI_Controller
     //USER DASHBOARD
     function user_dashboard($users_id = NULL, $page = NULL)
     {
-        if($users_id)
-        {            
+        if ($users_id)
+        {
             //QUERY USERS
             $query_users_where = array('id' => $users_id, 'main_group_id' => $this->config->item('group_id_user'));
             $data['query_users'] = $this->albert_model->read_users($query_users_where);
             $num_rows_users = $data['query_users']->num_rows();
             //USER EXISTS
-            if($num_rows_users)
+            if ($num_rows_users)
             {
                 $data['users_id'] = $users_id;
                 $data['page_path_name'] = 'user/dashboard';
                 $data['page_message'] = NULL;
                 //QUERY USER FOLLOW FOLLOWER
-                $where_user_follow_follower = array('follow_to_id'=>$users_id);
+                $where_user_follow_follower = array('follow_to_id' => $users_id);
                 $data['query_user_follow_follower'] = $this->albert_model->read_user_follow($where_user_follow_follower);
                 //QUERY USER FOLLOW FOLLOWING
-                $where_user_follow_following = array('follow_from_id'=>$users_id);
+                $where_user_follow_following = array('follow_from_id' => $users_id);
                 $data['query_user_follow_following'] = $this->albert_model->read_user_follow($where_user_follow_following);
-                if(!$page)
+                if (!$page)
                 {
                     //USER ALBUM
                     $data['title'] = "User Album";
                     $data['bottom_path_name'] = 'all/album_user';
-                    $where_user_album = array('user_id'=>$users_id, 'hide_flag'=>'0');
+                    $where_user_album = array('user_id' => $users_id, 'hide_flag' => '0');
                     $query_user_album = $this->albert_model->read_user_album($where_user_album);
                     $data['album_list'] = $query_user_album->result_array();
                 }
@@ -813,7 +827,7 @@ class All extends CI_Controller
                     //USER MERCHANT ALBUM
                     $data['title'] = "Merchant Album";
                     $data['bottom_path_name'] = 'all/album_user_merchant';
-                    $where_merchant_user_album = array('user_id'=>$users_id, 'hide_flag'=>'0');
+                    $where_merchant_user_album = array('user_id' => $users_id, 'hide_flag' => '0');
                     $query_merchant_user_album = $this->albert_model->read_merchant_user_album($where_merchant_user_album);
                     $data['album_list'] = $query_merchant_user_album->result_array();
                 }
@@ -832,7 +846,7 @@ class All extends CI_Controller
             {
                 //REDIRECT TO ROOT
                 redirect('/', 'refresh');
-            } 
+            }
         }
         else
         {
@@ -843,7 +857,8 @@ class All extends CI_Controller
 
     function user_review($users_id = NULL)
     {
-        if($users_id == NULL){
+        if ($users_id == NULL)
+        {
             redirect('/', 'refresh');
         }
         //QUERY USERS
@@ -867,7 +882,7 @@ class All extends CI_Controller
             $this->load->view('template/layout', $data);
         }
     }
-    
+
     public function comment_add()
     {
         $message_info = '';
@@ -899,7 +914,8 @@ class All extends CI_Controller
         if ($act_history_id != NULL && $this->ion_auth->logged_in())
         {
             $the_comment = $this->m_custom->activity_comment_select($act_history_id);
-            if($the_comment == FALSE){
+            if ($the_comment == FALSE)
+            {
                 redirect('/', 'refresh');
             }
             $data['act_history_id'] = array(
@@ -941,7 +957,7 @@ class All extends CI_Controller
         }
         redirect($return_url, 'refresh');
     }
-    
+
     public function comment_hide()
     {
         $current_url = '/';
@@ -962,8 +978,9 @@ class All extends CI_Controller
             $users_id = $the_row->id;
             $this->data['image_path'] = $this->album_merchant_profile;
             $this->data['image'] = $the_row->profile_image;
-            $this->data['company_name'] = $the_row->company;
+            $this->data['company_name'] = $the_row->company;           
             $this->data['address'] = $the_row->address;
+            $this->data['description'] = $the_row->description;
             $this->data['phone'] = $the_row->phone;
             $this->data['show_outlet'] = base_url() . 'all/merchant_outlet/' . $slug;
             $this->data['website_url'] = $the_row->me_website_url;
@@ -975,13 +992,13 @@ class All extends CI_Controller
             $this->data['candie_promotion'] = base_url() . 'all/merchant-dashboard/' . $slug . '/promotion';
             $this->data['user_picture'] = base_url() . 'all/merchant-dashboard/' . $slug . '/picture';
             $this->data['user_upload_for_merchant'] = base_url() . 'user/upload_for_merchant/' . $slug;
-            $this->data['show_expired'] = "<a href='" . base_url() . "all/album_merchant/'. $slug>Show Expired</a><br/>";            
+            $this->data['show_expired'] = "<a href='" . base_url() . "all/album_merchant/'. $slug>Show Expired</a><br/>";
             $this->data['users_id'] = $users_id;
             //QUERY USER FOLLOW FOLLOWER
-            $where_user_follow_follower = array('follow_to_id'=>$users_id);
+            $where_user_follow_follower = array('follow_to_id' => $users_id);
             $this->data['query_user_follow_follower'] = $this->albert_model->read_user_follow($where_user_follow_follower);
             //QUERY USER FOLLOW FOLLOWING
-            $where_user_follow_following = array('follow_from_id'=>$users_id);
+            $where_user_follow_following = array('follow_from_id' => $users_id);
             $this->data['query_user_follow_following'] = $this->albert_model->read_user_follow($where_user_follow_following);
             if ($bottom_part == NULL)
             {
@@ -989,13 +1006,13 @@ class All extends CI_Controller
                 $this->data['title'] = "Offer Deals";
                 $this->data['bottom_path_name'] = 'all/advertise_list';
             }
-            else if($bottom_part == 'picture')
+            else if ($bottom_part == 'picture')
             {
                 $this->data['album_list'] = $this->m_custom->getAlbumUserMerchant(NULL, $users_id);
                 $this->data['title'] = "User's Pictures";
                 $this->data['bottom_path_name'] = 'all/album_user_merchant';
             }
-            else if($bottom_part == 'promotion')
+            else if ($bottom_part == 'promotion')
             {
                 $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('pro', NULL, $users_id);
                 $this->data['title'] = "Candie Promotion";
@@ -1015,7 +1032,7 @@ class All extends CI_Controller
             redirect('/', 'refresh');
         }
     }
-    
+
     public function merchant_outlet($slug)
     {
         $the_row = $this->m_custom->get_one_table_record('users', 'slug', $slug);
@@ -1105,15 +1122,15 @@ class All extends CI_Controller
             redirect('/', 'refresh');
         }
     }
-    
+
     //FOLLOWER
     public function follower($user_type = NULL, $users_id = NULL)
     {
-        if($user_type != NULL && $users_id != NULL)
-        {    
-            if($user_type == 'all')
+        if ($user_type != NULL && $users_id != NULL)
+        {
+            if ($user_type == 'all')
             {
-                $where_user_follower = array('follow_to_id'=>$users_id);
+                $where_user_follower = array('follow_to_id' => $users_id);
                 //WRONG USER GROUP
                 $where_read_user = array('id' => $users_id);
                 $user_main_group_id = $this->albert_model->read_users($where_read_user)->row()->main_group_id;
@@ -1122,9 +1139,9 @@ class All extends CI_Controller
                     redirect('/', 'refresh');
                 }
             }
-            if($user_type == 'user')
+            if ($user_type == 'user')
             {
-                $where_user_follower = array('follow_to_id'=>$users_id, 'main_group_id'=>$this->group_id_user);
+                $where_user_follower = array('follow_to_id' => $users_id, 'main_group_id' => $this->group_id_user);
 //                //WRONG USER GROUP
 //                $where_read_user = array('id' => $users_id);
 //                $user_main_group_id = $this->albert_model->read_users($where_read_user)->row()->main_group_id;
@@ -1133,9 +1150,9 @@ class All extends CI_Controller
 //                    redirect('/', 'refresh');
 //                }
             }
-            elseif($user_type == 'merchant')
+            elseif ($user_type == 'merchant')
             {
-                $where_user_follower = array('follow_to_id'=>$users_id, 'main_group_id'=>$this->group_id_merchant);
+                $where_user_follower = array('follow_to_id' => $users_id, 'main_group_id' => $this->group_id_merchant);
                 //WRONG USER GROUP
                 $where_read_user = array('id' => $users_id);
                 $user_main_group_id = $this->albert_model->read_users($where_read_user)->row()->main_group_id;
@@ -1146,16 +1163,16 @@ class All extends CI_Controller
             }
             $data['query_user_follower'] = $this->albert_model->read_follower($where_user_follower);
             //COUNT
-            $where_user_following_all = array('follow_from_id'=>$users_id);
+            $where_user_following_all = array('follow_from_id' => $users_id);
             $data['query_user_following_all'] = $this->albert_model->read_following($where_user_following_all);
-            $where_user_follower_all = array('follow_to_id'=>$users_id);
+            $where_user_follower_all = array('follow_to_id' => $users_id);
             $data['query_user_follower_all'] = $this->albert_model->read_follower($where_user_follower_all);
-            $where_user_follower_user = array('follow_to_id'=>$users_id, 'main_group_id'=>$this->group_id_user);
-            $data['query_user_follower_user'] = $this->albert_model->read_follower($where_user_follower_user);            
-            $where_user_follower_merchant = array('follow_to_id'=>$users_id, 'main_group_id'=>$this->group_id_merchant);
+            $where_user_follower_user = array('follow_to_id' => $users_id, 'main_group_id' => $this->group_id_user);
+            $data['query_user_follower_user'] = $this->albert_model->read_follower($where_user_follower_user);
+            $where_user_follower_merchant = array('follow_to_id' => $users_id, 'main_group_id' => $this->group_id_merchant);
             $data['query_user_follower_merchant'] = $this->albert_model->read_follower($where_user_follower_merchant);
             //DISPLAY NAME/COMPANY
-            $where_user = array('id'=>$users_id);
+            $where_user = array('id' => $users_id);
             $user_group_id = $this->albert_model->read_users($where_user)->row_array();
             $user_group_id = $user_group_id['main_group_id'];
             if ($user_group_id == $this->group_id_user)
@@ -1173,7 +1190,7 @@ class All extends CI_Controller
             $data['page_title'] = $name . ' Follower';
             $data['page_path_name'] = 'all/follow';
             $data['users_id'] = $users_id;
-            if($this->ion_auth->user()->num_rows())
+            if ($this->ion_auth->user()->num_rows())
             {
                 $this->load->view('template/layout_right_menu', $data);
             }
@@ -1187,15 +1204,15 @@ class All extends CI_Controller
             redirect('/', 'refresh');
         }
     }
-       
+
     //FOLLOWING
     public function following($user_type = NULL, $users_id = NULL)
-    {        
-        if($user_type != NULL && $users_id != NULL)
+    {
+        if ($user_type != NULL && $users_id != NULL)
         {
-            if($user_type == 'all')
+            if ($user_type == 'all')
             {
-                $where_user_following = array('follow_from_id'=>$users_id);
+                $where_user_following = array('follow_from_id' => $users_id);
                 //WRONG USER GROUP
                 $where_read_user = array('id' => $users_id);
                 $user_main_group_id = $this->albert_model->read_users($where_read_user)->row()->main_group_id;
@@ -1204,9 +1221,9 @@ class All extends CI_Controller
                     redirect('/', 'refresh');
                 }
             }
-            if($user_type == 'user')
+            if ($user_type == 'user')
             {
-                $where_user_following = array('follow_from_id'=>$users_id, 'main_group_id'=>$this->group_id_user);
+                $where_user_following = array('follow_from_id' => $users_id, 'main_group_id' => $this->group_id_user);
 //                //WRONG USER GROUP
 //                $where_read_user = array('id' => $users_id);
 //                $user_main_group_id = $this->albert_model->read_users($where_read_user)->row()->main_group_id;
@@ -1215,9 +1232,9 @@ class All extends CI_Controller
 //                    redirect('/', 'refresh');
 //                }
             }
-            elseif($user_type == 'merchant')
+            elseif ($user_type == 'merchant')
             {
-                $where_user_following = array('follow_from_id'=>$users_id, 'main_group_id'=>$this->group_id_merchant);
+                $where_user_following = array('follow_from_id' => $users_id, 'main_group_id' => $this->group_id_merchant);
                 //WRONG USER GROUP
                 $where_read_user = array('id' => $users_id);
                 $user_main_group_id = $this->albert_model->read_users($where_read_user)->row()->main_group_id;
@@ -1228,16 +1245,16 @@ class All extends CI_Controller
             }
             $data['query_user_following'] = $this->albert_model->read_following($where_user_following);
             //COUNT
-            $where_user_following_all = array('follow_from_id'=>$users_id);
+            $where_user_following_all = array('follow_from_id' => $users_id);
             $data['query_user_following_all'] = $this->albert_model->read_following($where_user_following_all);
-            $where_user_follower_all = array('follow_to_id'=>$users_id);
+            $where_user_follower_all = array('follow_to_id' => $users_id);
             $data['query_user_follower_all'] = $this->albert_model->read_follower($where_user_follower_all);
-            $where_user_following_user = array('follow_from_id'=>$users_id, 'main_group_id'=>$this->group_id_user);
-            $data['query_user_following_user'] = $this->albert_model->read_following($where_user_following_user);            
-            $where_user_following_merchant = array('follow_from_id'=>$users_id, 'main_group_id'=>$this->group_id_merchant);
+            $where_user_following_user = array('follow_from_id' => $users_id, 'main_group_id' => $this->group_id_user);
+            $data['query_user_following_user'] = $this->albert_model->read_following($where_user_following_user);
+            $where_user_following_merchant = array('follow_from_id' => $users_id, 'main_group_id' => $this->group_id_merchant);
             $data['query_user_following_merchant'] = $this->albert_model->read_following($where_user_following_merchant);
             //DISPLAY NAME/COMPANY
-            $where_user = array('id'=>$users_id);
+            $where_user = array('id' => $users_id);
             $user_group_id = $this->albert_model->read_users($where_user)->row_array();
             $user_group_id = $user_group_id['main_group_id'];
             if ($user_group_id == $this->group_id_user)
@@ -1255,7 +1272,7 @@ class All extends CI_Controller
             $data['page_title'] = $name . ' Following';
             $data['page_path_name'] = 'all/follow';
             $data['users_id'] = $users_id;
-            if($this->ion_auth->user()->num_rows())
+            if ($this->ion_auth->user()->num_rows())
             {
                 $this->load->view('template/layout_right_menu', $data);
             }
@@ -1269,29 +1286,29 @@ class All extends CI_Controller
             redirect('/', 'refresh');
         }
     }
-    
-    public function create_user_follow() 
+
+    public function create_user_follow()
     {
         $current_url = $_POST['current_url'];
         $this->albert_model->create_user_follow();
-        if($this->db->affected_rows() > 0)
+        if ($this->db->affected_rows() > 0)
         {
             $this->session->set_flashdata('message', 'Follow Success');
         }
         redirect($current_url, 'refresh');
     }
-    
-    public function delete_user_follow() 
+
+    public function delete_user_follow()
     {
         $current_url = $_POST['current_url'];
         $this->albert_model->delete_user_follow();
-        if($this->db->affected_rows() > 0)
+        if ($this->db->affected_rows() > 0)
         {
             $this->session->set_flashdata('message', 'Unfollow Success');
         }
         redirect($current_url, 'refresh');
     }
-    
+
     public function home_search()
     {
         if (isset($_POST) && !empty($_POST))
@@ -1304,20 +1321,26 @@ class All extends CI_Controller
                 {
                     $search_word = 0;
                 }
-                redirect('all/search_result/'.$search_word.'/'.$search_state, 'refresh');
-
+                redirect('all/search_result/' . $search_word . '/' . $search_state, 'refresh');
             }
         }
-        redirect('/','refresh');
+        redirect('/', 'refresh');
     }
 
-    public function search_result($search_value = NULL, $state_id = 0){       
+    public function search_result($search_value = NULL, $state_id = 0)
+    {
         $this->data['home_search_merchant'] = $this->m_custom->home_search_merchant($search_value, $state_id);
         $this->data['home_search_hotdeal'] = $this->m_custom->home_search_hotdeal($search_value, $state_id);
         $this->data['home_search_promotion'] = $this->m_custom->home_search_promotion($search_value, $state_id);
-        
+
+        $this->data['state_name'] = "";
+        if ($state_id != 0)
+        {
+            $this->data['state_name'] = " : " . $this->m_custom->display_static_option($state_id);
+        }
+
         $this->data['page_path_name'] = 'all/search_result';
-        
+
         if ($this->ion_auth->logged_in())
         {
             $this->load->view('template/layout_right_menu', $this->data);

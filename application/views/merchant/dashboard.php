@@ -93,6 +93,9 @@ $dashboard_users_group_id = $row_array_dashboard_users_id['main_group_id'];
             <div id="dashboard-info-outlet-address">
                 <a href="<?php echo $show_outlet ?>">Show outlet Address <i class="fa fa-map-o"></i></a>
             </div>
+            <div id="user-comment-input">
+                <textarea id="descripton" name="descripton"><?php echo $description; ?></textarea>
+            </div>
             <div id="dashboard-info-table">
                 <table border="0px" cellspacing="0px" cellpadding="5px" style="width: 100%; table-layout: fixed;">
                     <colgroup style="width:118px;"></colgroup>

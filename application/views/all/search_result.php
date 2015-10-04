@@ -30,7 +30,7 @@
 </script>
 
 <div id="profile">
-    <h1>Search Result</h1></br>
+    <h1>Search Result<?php echo $state_name; ?></h1></br>
     <div id='profile-content'>     
         <?php
 //var_dump($home_search_merchant);
@@ -101,7 +101,7 @@
                                                 echo "<input class='star' type='radio' name='a-rating-$merchant_id' disabled='disabled' value='" . $i . "'/>";
                                             }
                                         } //end of for
-                                        echo " from " . $rating_count . " users";
+                                        echo $rating_count . " reviews";
                                         ?>
                                     </div>
                                 </td>
