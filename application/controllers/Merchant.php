@@ -529,6 +529,7 @@ class Merchant extends CI_Controller
             $slug = $_POST['slug'];
         }
         // validate form input
+        $this->form_validation->set_rules('company', $this->lang->line('create_merchant_validation_company_main_label'), "trim|required|min_length[3]");
         $this->form_validation->set_rules('company', $this->lang->line('create_merchant_validation_company_label'), "trim|required|min_length[3]");
         $this->form_validation->set_rules('slug', $this->lang->line('create_merchant_validation_company_label'), 'trim|is_unique[' . $tables['users'] . '.slug]');
         $this->form_validation->set_rules('me_ssm', $this->lang->line('create_merchant_validation_companyssm_label'), 'required');
@@ -547,12 +548,14 @@ class Merchant extends CI_Controller
             $username = strtolower($this->input->post('username'));
             $email = strtolower($this->input->post('email'));
             $password = $this->input->post('password');
+            $company_main = $this->input->post('company_main');
             $company = $this->input->post('company');
             $me_ssm = $this->input->post('me_ssm');
             $address = $this->input->post('address');
             $phone = '+60'.$this->input->post('phone');
             $additional_data = array(
                 'username' => $username,
+                'company_main' => $company_main,
                 'company' => $company,
                 'slug' => $slug,
                 'address' => $address,
@@ -575,8 +578,9 @@ class Merchant extends CI_Controller
         if ($this->form_validation->run() == true && $this->ion_auth->register($username, $password, $email, $additional_data, $group_ids))
         {
             $this->session->set_flashdata('message', $this->ion_auth->messages());
-            $get_status = send_mail_simple($email, 'Your Keppo Merchant Account Success Created', 'Company Name : ' . $company .
+            $get_status = send_mail_simple($email, 'Your Keppo Merchant Account Success Created', 'Company Name : ' . $company_main .
                     '<br/>Register No(SSM) : ' . $me_ssm .
+                    '<br/>Shop Name : ' . $company .
                     '<br/>Company Address : ' . $address .
                     '<br/>Contact Number : ' . $phone .
                     '<br/>Username : ' . $username .
@@ -606,6 +610,12 @@ class Merchant extends CI_Controller
                 'id' => 'email',
                 'type' => 'text',
                 'value' => $this->form_validation->set_value('email'),
+            );
+            $this->data['company_main'] = array(
+                'name' => 'company_main',
+                'id' => 'company_main',
+                'type' => 'text',
+                'value' => $this->form_validation->set_value('company_main'),
             );
             $this->data['company'] = array(
                 'name' => 'company',
@@ -831,6 +841,13 @@ class Merchant extends CI_Controller
         // pass the user to the view
         $this->data['user'] = $user;
         $this->data['is_supervisor'] = $is_supervisor;
+        $this->data['company_main'] = array(
+            'name' => 'company_main',
+            'id' => 'company_main',
+            'type' => 'text',
+            'readonly ' => 'true',
+            'value' => $this->form_validation->set_value('company_main', $user->company_main),
+        );
         $this->data['company'] = array(
             'name' => 'company',
             'id' => 'company',

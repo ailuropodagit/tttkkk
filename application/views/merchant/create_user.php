@@ -48,12 +48,16 @@ if(isset($message))
 
     <div id='register-form'>
         <div id='register-form-each'>
-            <div id='register-form-each-label'><?php echo lang('create_merchant_company_label', 'company'); ?></div>
-            <div id='register-form-each-input'><?php echo form_input($company); ?></div>
+            <div id='register-form-each-label'><?php echo lang('create_merchant_company_main_label', 'company_main'); ?></div>
+            <div id='register-form-each-input'><?php echo form_input($company_main); ?></div>
         </div>
         <div id='register-form-each'>
             <div id='register-form-each-label'><?php echo lang('create_merchant_companyssm_label', 'me_ssm'); ?></div>
             <div id='register-form-each-input'><?php echo form_input($me_ssm); ?></div>
+        </div>
+        <div id='register-form-each'>
+            <div id='register-form-each-label'><?php echo lang('create_merchant_company_label', 'company'); ?></div>
+            <div id='register-form-each-input'><?php echo form_input($company); ?></div>
         </div>
         <div id='register-form-each'>
             <div id='register-form-each-label'><?php echo lang('create_merchant_address_label', 'address'); ?></div>
