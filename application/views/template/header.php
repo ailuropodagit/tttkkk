@@ -26,6 +26,39 @@
                     $('#header-menu-mobile').toggle();
                 });
             });
+            
+            // Logout
+            function fbLogout() {
+                ////log out both facebook and app
+                //FB.logout();
+                //logout fb only but required permission pop up
+                FB.api('/me/permissions', 'delete', function(response) {
+                   console.log(response.status); // true for successful logout.
+                });
+            }
+
+            window.fbAsyncInit = function () {
+                FB.init({
+                    appId: '1636247466623391',
+                    cookie: true,
+                    xfbml: true,
+                    version: 'v2.2'
+                });
+                //Get if logged in
+                FB.getLoginStatus();
+            };
+
+            // Load the SDK asynchronously
+            (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) {
+                    return;
+                }
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "//connect.facebook.net/en_US/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
         </script>
     </head>
     <body>
@@ -60,7 +93,7 @@
                         </li>
                         <?php
                         if (check_is_login())
-                        {                            
+                        {
                             if (check_correct_login_type($this->config->item('group_id_user'))) 
                             {
                                 ?>
@@ -79,7 +112,7 @@
                                     <a href='<?php echo base_url() ?>merchant/profile'><i class='fa fa-user header-menu-icon'></i>Profile</a>
                                 </li>
                                 <li>
-                                    <a href='<?php echo base_url() ?>merchant/logout' onclick="fbLogout()"><i class='fa fa-sign-out header-menu-icon'></i>Logout</a>
+                                    <a href='<?php echo base_url() ?>merchant/logout'><i class='fa fa-sign-out header-menu-icon'></i>Logout</a>
                                 </li>
                                 <?php
                             }
@@ -91,7 +124,7 @@
                             <li><a href='<?php echo base_url(); ?>user/register'><i class="fa fa-user-plus header-menu-icon"></i>Register</a></li>
                             <?php
                         } 
-                        ?>
+                        ?>                            
                     </ul>
                 </div>
                 <!--HEADER MENU MOBILE ICON-->
@@ -123,14 +156,14 @@
                         {
                             ?>
                             <li><a href='<?php echo base_url() ?>user/profile'><i class='fa fa-user header-menu-icon'></i>Profile</a></li>
-                            <li><a href='<?php echo base_url() ?>user/logout' onclick="fbLogout()"><i class='fa fa-sign-out header-menu-icon'></i>Logout</a></li>
+                            <li><a href='<?php echo base_url() ?>user/logout'><i class='fa fa-sign-out header-menu-icon'></i>Logout</a></li>
                             <?php
                         } 
                         else 
                         {
                             ?>
                             <li><a href='<?php echo base_url() ?>merchant/profile'><i class='fa fa-user header-menu-icon'></i>Profile</a></li>
-                            <li><a href='<?php echo base_url() ?>merchant/logout' onclick="fbLogout()"><i class='fa fa-sign-out header-menu-icon'></i>Logout</a></li>
+                            <li><a href='<?php echo base_url() ?>merchant/logout'><i class='fa fa-sign-out header-menu-icon'></i>Logout</a></li>
                             <?php
                         }
                     } 

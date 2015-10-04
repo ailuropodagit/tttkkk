@@ -96,6 +96,13 @@ class Albert_model extends CI_Model
         }
     }
     
+    /* CREATE USER_FOLLOW
+    *************************************************************/
+    public function create_user($data)
+    {
+        return $this->db->insert('users', $data);
+    }
+    
     /* READ USER_ALBUM
     *************************************************************/
     public function read_user_album($where)
@@ -296,36 +303,51 @@ class Albert_model extends CI_Model
         return $query;
     }
     
-    /* READ STATUS OPTION MONTH
+    /* READ STATIC OPTION MONTH ASSOCIATIVE ARRAY
     *************************************************************/
-    public function read_static_option_month() {
+    public function read_static_option_month_associative_array() {
         //QUERY
         $this->db->select("*");
         $this->db->from("static_option");
         $this->db->where('option_type', 'month');
         $query = $this->db->get();
-        return $query;
+        $associative_array = array();
+        foreach ($query->result_array() as $row)
+        {
+            $associative_array[$row['option_value']] = $row['option_text'];
+        }
+        return $associative_array;
     }
     
-    /* READ STATUS OPTION RACE
+    /* READ STATIC OPTION RACE ASSOCIATIVE ARRAY
     *************************************************************/
-    public function read_static_option_race() {
+    public function read_static_option_race_associative_array() {
         //QUERY
         $this->db->select("*");
         $this->db->from("static_option");
         $this->db->where('option_type', 'race');
         $query = $this->db->get();
-        return $query;
+        $associative_array = array();
+        foreach ($query->result_array() as $row)
+        {
+            $associative_array[$row['option_id']] = $row['option_text'];
+        }
+        return $associative_array;
     }
     
-    /* READ STATUS OPTION GENDER
+    /* READ STATIC OPTION GENDER ASSOCIATIVE ARRAY
     *************************************************************/
-    public function read_static_option_gender() {
+    public function read_static_option_gender_associative_array() {
         //QUERY
         $this->db->select("*");
         $this->db->from("static_option");
         $this->db->where('option_type', 'gender');
         $query = $this->db->get();
-        return $query;
+        $associative_array = array();
+        foreach ($query->result_array() as $row)
+        {
+            $associative_array[$row['option_id']] = $row['option_text'];
+        }
+        return $associative_array;
     }
 }

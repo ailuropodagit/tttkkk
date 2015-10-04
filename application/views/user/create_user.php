@@ -68,7 +68,7 @@ if(isset($message))
                 <div id="float-fix"></div>
             </div>
         </div>
-        <div id='register-form-each'>
+        <div id='register-form-each'>            
             <div id='register-form-each-label'><?php echo lang('create_user_gender_label', 'gender_id'); ?></div>
             <div id='register-form-each-input'><?php echo form_dropdown($gender_id, $gender_list); ?></div>
         </div>
