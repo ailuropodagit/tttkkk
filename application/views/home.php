@@ -1,5 +1,8 @@
 <div id="home-navigation">    
     <div id="home-navigation-c1">
+        <div id="home-navigation-c1-bar">
+            <a href='<?php echo base_url(); ?>categories' class="home-navigation-c1-bar-a">Categories</a>
+        </div>
         <?php
         //CATEGORY ROW
         $row_category = $query_category->result_array();
@@ -15,9 +18,6 @@
             <?php
         }
         ?>
-        <div id="home-navigation-c1-bar">
-            <a href='<?php echo base_url(); ?>categories' class="home-navigation-c1-bar-a">Categories...</a>
-        </div>   
     </div>
     <div id="home-navigation-c2">
         <div id="home-navigation-c2-c1">
@@ -42,7 +42,7 @@
             <div id="home-navigation-c2-c2-content">
                 <table border="0px" cellpadding="0px" cellspacing="5px" style="width: 100%; table-layout: fixed; border-collapse: separate">
                     <tr>
-                        <td colspan="6">
+                        <td colspan="8" rowspan="2">
                             <?php 
                             //BANNER POSITION 1
                             $row_banner_position_1 = $query_banner_position_1->row_array();
@@ -63,7 +63,7 @@
                             }
                             ?>
                         </td>
-                        <td colspan="6">
+                        <td colspan="4">
                             <?php 
                             //BANNER POSITION 2
                             $row_banner_position_2 = $query_banner_position_2->row_array();
@@ -86,7 +86,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="8"> 
+                        <td colspan="4" rowspan="2">                               
                             <?php 
                             //BANNER POSITION 3
                             $row_banner_position_3 = $query_banner_position_3->row_array();
@@ -107,7 +107,9 @@
                             }
                             ?>
                         </td>
-                        <td colspan="4" rowspan="2">                               
+                    </tr>
+                    <tr>
+                        <td colspan="4">
                             <?php 
                             //BANNER POSITION 4
                             $row_banner_position_4 = $query_banner_position_4->row_array();
@@ -128,10 +130,8 @@
                             }
                             ?>
                         </td>
-                    </tr>
-                    <tr>
-                        <td colspan="4">
-                            <?php 
+                        <td colspan="4" rowspan="2">
+                            <?php
                             //BANNER POSITION 5
                             $row_banner_position_5 = $query_banner_position_5->row_array();
                             $num_rows_banner_position_5 = $query_banner_position_5->num_rows();
@@ -151,7 +151,9 @@
                             }
                             ?>
                         </td>
-                        <td colspan="4" rowspan="2">
+                    </tr>
+                    <tr>
+                        <td colspan="4">
                             <?php
                             //BANNER POSITION 6
                             $row_banner_position_6 = $query_banner_position_6->row_array();
@@ -172,8 +174,6 @@
                             }
                             ?>
                         </td>
-                    </tr>
-                    <tr>
                         <td colspan="4">
                             <?php
                             //BANNER POSITION 7
@@ -192,27 +192,6 @@
                             else
                             {
                                 ?><img src="<?php echo base_url() ?>folder_upload/home_banner/0-empty-banner-7.jpg"><?php
-                            }
-                            ?>
-                        </td>
-                        <td colspan="4">
-                            <?php
-                            //BANNER POSITION 8
-                            $row_banner_position_8 = $query_banner_position_8->row_array();
-                            $num_rows_banner_position_8 = $query_banner_position_8->num_rows();
-                            if($num_rows_banner_position_8)
-                            {
-                                $banner_image_position_8 = $row_banner_position_8['banner_image'];
-                                $banner_url_position_8 = $row_banner_position_8['banner_url'];
-                                ?>
-                                <a href='<?php echo $banner_url_position_8 ?>'>
-                                    <img src="<?php echo base_url() ?>folder_upload/home_banner/<?php echo $banner_image_position_8 ?>">
-                                </a>
-                                <?php
-                            }
-                            else
-                            {
-                                ?><img src="<?php echo base_url() ?>folder_upload/home_banner/0-empty-banner-8.jpg"><?php
                             }
                             ?>
                         </td>

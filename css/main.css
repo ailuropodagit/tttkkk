@@ -76,8 +76,7 @@ input:read-only, textarea:read-only {
 
 input[type='submit'], button[type='submit'], .ahref-button {
     padding: 5px 14px 5px 14px;
-    /*background: linear-gradient(0deg, #5a88bc, #00b4d4);*/
-    background-color: #2a5575;
+    background-color: #1ba1d5;
     color: white;
     border: 0px;
     cursor: pointer;
@@ -88,10 +87,6 @@ input[type='submit'], button[type='submit'], .ahref-button {
     -webkit-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
     box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
-    /*border-right: 1px solid #25a0b6;
-    border-bottom: 1px solid #25a0b6;*/
-    border-right: 1px solid #205378;
-    border-bottom: 1px solid #205378;
 }
 
 .ahref-button { 
@@ -224,7 +219,7 @@ a:hover {
 
 #header {
     /*background: linear-gradient(0deg, #2a97ab, #3c7aa8);*/
-    background-color: #244964;
+    background-color: #1aa0d4;
     -webkit-box-shadow: 0px 0px 7px 0px rgba(0,0,0,1);
     -moz-box-shadow: 0px 0px 7px 0px rgba(0,0,0,1);
     box-shadow: 0px 0px 7px 0px rgba(0,0,0,1);
@@ -237,12 +232,12 @@ a:hover {
 }
 
 #header-logo-img {
-    width: 180px;
+    width: 165px;
 }
 
 #header-menu {
     float: right;
-    margin: 23px 0px 23px 0px;
+    margin: 19px 0px 19px 0px;
 }
 
 #header-menu ul {
@@ -255,7 +250,7 @@ a:hover {
     float: left;
     padding: 5px 8px 5px 8px;
     margin: 0px 13px 0px 0px;
-    border: 1px solid #244964;
+    border: 1px solid #1aa0d4;
 }
 
 #header-menu li:last-child { 
@@ -272,11 +267,11 @@ a:hover {
 
 .header-menu-active {
     border-radius: 5px;
-    -moz-box-shadow:    inset 0 0 1px #061b2a;
-    -webkit-box-shadow: inset 0 0 1px #061b2a;
-    box-shadow:         inset 0 0 1px #061b2a;
-    border: 1px solid #1a364b;
-    background-color: #1a364b;
+    -moz-box-shadow: inset 0 0 1px #066c94;
+    -webkit-box-shadow: inset 0 0 1px #066c94;
+    box-shadow: inset 0 0 1px #066c94;
+    border: 1px solid #1aa0d4;
+    background-color: #138ebe;
     box-sizing: border-box;
 }
 
