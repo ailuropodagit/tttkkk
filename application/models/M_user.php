@@ -62,7 +62,7 @@ class M_user extends CI_Model
         }
     }
 
-    public function user_redemption_insert($advertise_id)
+    public function user_redemption_insert($advertise_id, $top_up_phone = NULL)
     {
         $redeem_status = FALSE;
         $redeem_message = '';
@@ -77,6 +77,11 @@ class M_user extends CI_Model
                 $new_balance = $this->m_user->candie_enough($user_id, $voucher_candie, 1);
                 $voucher = $promotion_row['voucher'];
                 $merchant_name = $this->m_custom->display_users($promotion_row['merchant_id']);
+                
+                //If is admin promotin, overwrite some info
+                if($promotion_row['advertise_type'] == "adm"){
+                    $merchant_name = $this->config->item('keppo_company_name');
+                }
                 if ($new_balance >= 0)
                 {
                     $the_data = array(
@@ -84,6 +89,7 @@ class M_user extends CI_Model
                         'advertise_id' => $advertise_id,
                         'status_id' => $this->config->item('voucher_active'),
                         'expired_date' => $promotion_row['end_time'],
+                        'top_up_phone' => $top_up_phone,
                     );
                     $this->db->insert('user_redemption', $the_data);
                     $insert_id = $this->db->insert_id();
@@ -109,10 +115,12 @@ class M_user extends CI_Model
             'redeem_status' => $redeem_status,
             'redeem_message' => $redeem_message,
             'redeem_voucher' => $voucher,
+            'redeem_voucher_not_need' => $promotion_row['voucher_not_need'],
             'redeem_title' => $promotion_row['title'],
             'redeem_merchant' => $merchant_name,
             'redeem_expire' => displayDate($promotion_row['voucher_expire_date']),
             'redeem_email_subject' => $merchant_name . ' Keppo Voucher Success Redeem : ' . $voucher,
+            'redeem_top_up_phone' => $top_up_phone,
         );
         return $redeem_info;
     }

@@ -92,7 +92,7 @@ $this->album_admin = $this->config->item('album_admin');
                 $sub_category_id = $row['sub_category_id'];
                 $merchant_id = $row['merchant_id'];
                 $merchant_name = $this->m_custom->display_users($merchant_id);
-                $merchant_dashboard_url = base_url() . "all/merchant-dashboard/" . generate_slug($merchant_name);
+                $merchant_dashboard_url = $this->m_custom->generate_merchant_link($merchant_id);
                 $advertise_type = $row['advertise_type'];
                 if ($advertise_type == 'adm') { 
                     $image_url = base_url($this->album_admin . $row['image']);
@@ -126,9 +126,9 @@ $this->album_admin = $this->config->item('album_admin');
                 }
                 ?>
                 <div id='advertise-list-box'>
-                    <?php if($fetch_method != 'merchant_dashboard' && $fetch_method != 'redemption_list') { ?>
+                    <?php if($fetch_method != 'merchant_dashboard') { ?>
                     <div id="advertise-list-title1">
-                        <a href='<?php echo $merchant_dashboard_url ?>'> <?php echo $merchant_name ?></a>
+                        <?php echo $merchant_dashboard_url ?>
                     </div>
                     <?php } ?>
                     <div id="advertise-list-photo">

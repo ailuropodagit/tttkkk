@@ -92,6 +92,7 @@ class All extends CI_Controller
             $this->data['like_url'] = $this->m_custom->generate_like_link($advertise_id, 'adv');
             $this->data['comment_url'] = $this->m_custom->generate_comment_link($advertise_id, 'adv');
             $this->data['average_rating'] = $this->m_custom->activity_rating_average($advertise_id, 'adv');
+            $this->data['phone_required'] = $the_row['phone_required'];
             $this->data['message'] = $this->session->flashdata('message');
             $this->data['item_id'] = array(
                 'type' => 'hidden',
@@ -132,7 +133,16 @@ class All extends CI_Controller
                 $this->data['end_time'] = displayDate($the_row['end_time'], 1, 1);
                 $this->data['page_path_name'] = 'all/hotdeal';
             }else if($row_advertise_type == "adm"){
-                //to do todo
+                //For admin promotion, overwrite some info
+                $this->data['image_url'] = base_url($this->album_admin . $the_row['image']);
+                $this->data['voucher_not_need'] = $the_row['voucher_not_need'];
+                $this->data['voucher'] = $the_row['voucher'];
+                $this->data['voucher_worth'] = $the_row['voucher_worth'];
+                $this->data['voucher_barcode'] = $the_row['voucher'] == NULL ? NULL : base_url("barcode/generate/" . $the_row['voucher']);
+                $this->data['voucher_candie'] = $the_row['voucher_candie'];
+                $this->data['expire_date'] = displayDate($the_row['voucher_expire_date']);
+                $this->data['candie_term'] = $this->m_custom->many_get_childlist_detail('candie_term', $advertise_id, 'dynamic_option', 'option_id');
+                $this->data['page_path_name'] = 'all/promotion_admin';
             }
 
             if ($advertise_type != NULL)
@@ -219,7 +229,8 @@ class All extends CI_Controller
         $the_row = $this->m_custom->getOneAdvertise($advertise_id);
         if ($the_row)
         {        
-            if ($the_row['advertise_type'] != "pro" || !$this->m_user->user_redemption_check($login_id, $advertise_id))
+            $advertise_type = $the_row['advertise_type'];
+            if (($advertise_type != "pro" && $advertise_type != "adm") || !$this->m_user->user_redemption_check($login_id, $advertise_id))
             {
                 redirect('/', 'refresh');
             }
@@ -237,17 +248,23 @@ class All extends CI_Controller
                 $this->data['current_candie'] = $this->m_user->candie_check_balance($login_id);
             }
             
+            $this->data['advertise_type'] = $advertise_type;
             $this->data['advertise_id'] = $advertise_id;
             $this->data['merchant_name'] = $merchant_row['company'];
             $this->data['title'] = $the_row['title'];
-            $this->data['description'] = $the_row['description'];
-            $this->data['image_url'] = base_url($this->album_merchant . $the_row['image']);
+            $this->data['description'] = $the_row['description'];          
+            if ($advertise_type == "adm"){
+                $this->data['image_url'] = base_url($this->album_admin . $the_row['image']);
+            }else{
+                $this->data['image_url'] = base_url($this->album_merchant . $the_row['image']);
+            }
             $this->data['sub_category'] = $this->m_custom->display_category($the_row['sub_category_id']);
             $this->data['start_date'] = displayDate($the_row['start_time']);
             $this->data['end_date'] = displayDate($the_row['end_time']);
             $this->data['message'] = $this->session->flashdata('message');       
 
             $this->data['voucher'] = $the_row['voucher'];
+            $this->data['voucher_not_need'] = $the_row['voucher_not_need'];
             $this->data['voucher_worth'] = $the_row['voucher_worth'];
             $this->data['voucher_barcode'] = base_url("barcode/generate/" . $the_row['voucher']);
             $this->data['voucher_candie'] = $the_row['voucher_candie'];
@@ -638,7 +655,17 @@ class All extends CI_Controller
                 $current_url = $this->input->post('current_url');
                 $advertise_id = $this->input->post('item_id');
                 $user_email = $this->session->userdata('email');
-                $redeem_info = $this->m_user->user_redemption_insert($advertise_id);
+                $phone_required = $this->input->post('phone_required');
+                $top_up_phone = NULL;
+                if($phone_required == 1){
+                    $top_up_phone = $this->input->post('phone');
+                    if(!$this->m_custom->check_valid_phone($top_up_phone)){
+                        $this->session->set_flashdata('message', 'The top up phone number is incorrect, please set a real phone number');
+                        redirect($current_url, 'refresh');
+                    }
+                }
+                
+                $redeem_info = $this->m_user->user_redemption_insert($advertise_id, $top_up_phone);
 
                 if ($redeem_info['redeem_status'])
                 {
@@ -665,10 +692,16 @@ class All extends CI_Controller
     function send_redeem_mail_process()
     {
         $mail_info = $this->session->flashdata('mail_info');
+        
+        $mail_voucher_code = $mail_info['redeem_info']['redeem_voucher_not_need'] == 0? 'Voucher Code : ' . $mail_info['redeem_info']['redeem_voucher'] . '<br/>' : NULL;
+        $mail_expire_code = $mail_info['redeem_info']['redeem_expire'] == NULL? NULL : 'Expire Date : ' . $mail_info['redeem_info']['redeem_expire'];
+        $mail_top_up_phone = $mail_info['redeem_info']['redeem_top_up_phone'] == NULL? NULL : 'Top Up Phone : ' . $mail_info['redeem_info']['redeem_top_up_phone'] . '<br/>';
+        
         $mail_message = 'Merchant : ' . $mail_info['redeem_info']['redeem_merchant'] . '<br/>'
                 . 'Promotion Title : ' . $mail_info['redeem_info']['redeem_title'] . '<br/>'
-                . 'Voucher Code : ' . $mail_info['redeem_info']['redeem_voucher'] . '<br/>'
-                . 'End Date : ' . $mail_info['redeem_info']['redeem_expire'] . '<br/><br/>'
+                . $mail_voucher_code
+                . $mail_top_up_phone
+                . $mail_expire_code . '<br/><br/>'
                 . $mail_info['message'];
         $get_status = send_mail_simple($mail_info['email'], $mail_info['redeem_info']['redeem_email_subject'], $mail_message, 'keppo_redeem_send_email_success');
         if ($get_status)

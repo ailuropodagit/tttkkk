@@ -1561,9 +1561,17 @@ class M_custom extends CI_Model
     
     public function generate_merchant_link($merchant_id = NULL, $with_icon = 0)
     {
-        $user_name = $this->m_custom->display_users($merchant_id, $with_icon);
-        $merchant = $this->m_merchant->getMerchant($merchant_id);
-        return "<a target='_blank' href='" . base_url() . "all/merchant_dashboard/" . $merchant['slug'] . "'>" . $user_name . "</a>";
+        //If is post by admin
+        if ($merchant_id == $this->config->item('keppo_admin_id'))
+        {
+            return "<a>".$this->config->item('keppo_company_name')."</a>";
+        }
+        else
+        {
+            $user_name = $this->m_custom->display_users($merchant_id, $with_icon);
+            $merchant = $this->m_merchant->getMerchant($merchant_id);
+            return "<a target='_blank' href='" . base_url() . "all/merchant_dashboard/" . $merchant['slug'] . "'>" . $user_name . "</a>";
+        }
     }
 
     public function generate_user_link($user_id = NULL, $with_icon = 0)
@@ -1958,6 +1966,17 @@ class M_custom extends CI_Model
         $this->db->update('table_row_activity', $the_data);
     }
 
+    public function check_valid_phone($str){
+        if (preg_match("/^([\.+\s-0-9_-])+$/i", $str))
+        {
+            return TRUE;
+        }
+        else
+        {
+            return FALSE;
+        }
+    }
+    
     //wanted display: name, description, short
     public function display_users_groups($groups_id, $wanted_display)
     {

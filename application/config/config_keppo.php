@@ -47,6 +47,8 @@ $config['hotdeal_per_day'] = 5;
 $config['user_max_picture_per_day'] = 15;
 $config['user_max_invitation_get_candie_per_month'] = 5;
 
+$config['keppo_admin_id'] = '1';
+$config['keppo_company_name'] = 'Fuyoo Advertising & Services';
 $config['keppo_email_domain'] = '@keppo.my';
 $config['keppo_admin_email'] = 'wilkinwilly999@gmail.com,weechiat.teo@hotmail.com';
 $config['merchant_minimum_balance'] = 50;
