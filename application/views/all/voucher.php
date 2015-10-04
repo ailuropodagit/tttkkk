@@ -3,7 +3,7 @@
 <div id="redemption">
     <h1>Redemption</h1>
     <div id='redemption-print'>
-        <a href="#" onclick="printDiv('redemption-content')"><i class="fa fa-print"></i> Print Statement</a>
+        <a href="#" onclick="printDiv('redemption-content')"><i class="fa fa-print"></i> Print Voucher</a>
     </div>
             <div id="float-fix"></div>
     <div id="redemption-content">
@@ -11,7 +11,12 @@
         <div id="float-fix"></div>
 
         <div id='redemption-expired-date'>
-            Expiry Date: <?php echo $expire_date; ?>
+            <?php
+            if (!empty($expire_date))
+            {
+                echo "Expiry Date: " . $expire_date;
+            }
+            ?>
         </div>
         <div id="redemption-candies">
             Require <?php echo $voucher_candie ?> Candies
@@ -24,11 +29,20 @@
                     <div id='redemption-center'>
                         <div id="print-area">
                             <div id="redemption-voucher-barcode">
-                                <img src="<?php echo $voucher_barcode; ?>"  alt="not show"/>
+                                <?php
+                                if (!empty($voucher_barcode) && $voucher_not_need == 0)
+                                {
+                                echo "<img src='" . $voucher_barcode . "'  alt='not show'/>";
+                                }
+                                ?>
                             </div>
                             <div id="float-fix"></div>
                             <div id="redemption-title">
-                                <a href='<?php echo $merchant_dashboard_url ?>'> <?php echo $merchant_name ?></a>
+                                <?php if($advertise_type == "adm"){ ?>
+                                    <?php echo $sub_category; ?>
+                                <?php }else{ ?>
+                                    <a href='<?php echo $merchant_dashboard_url ?>'> <?php echo $merchant_name ?></a>
+                                <?php } ?>
                             </div>
                             <div id="redemption-photo">
                                 <div id="redemption-photo-box">
@@ -38,14 +52,24 @@
                             <div id="redemption-sub-title">
                                 <?php echo $title ?>
                             </div>
+                            <div id="redemption-voucher-worth">
+                                <?php
+                                if (!empty($voucher_worth))
+                                {
+                                    echo "Worth : RM " . $voucher_worth;
+                                }
+                                ?>
+                            </div>
                             <div id="redemption-rate-time">
+                                <?php if($advertise_type == "pro"){ ?>
                                 <div id="redemption-category">
                                     Category: <?php echo $sub_category; ?>
-                                </div>
+                                </div>                               
                                 <div id="redemption-time">
                                     <i class="fa fa-gift header-menu-icon"></i>
                                     <span id="redemption-time-label">Redeem Period:  <?php echo $start_date ?> to <?php echo $end_date ?></span>
                                 </div>
+                                <?php } ?>
                                 <div id="float-fix"></div>
                             </div>
                             <div id="redemption-description">
@@ -62,6 +86,7 @@
                                     ?>  
                                 </ul>
                             </div>
+                            <?php if($advertise_type == "pro"){ ?>
                             <div id="redemption-available-branch">
                                 <div id="redemption-available-branch-title">Available Branch:</div>
                                 <ul>
@@ -80,6 +105,7 @@
                                     ?>  
                                 </ul>
                             </div>
+                            <?php } ?>
                             <?php
                             if (check_correct_login_type($this->group_id_user)) //Check if user logged in
                             {
@@ -98,11 +124,6 @@
                                 <td>User Name</td>
                                 <td>:</td>
                                 <td><?php echo $user_name; ?></td>
-                            </tr>
-                            <tr>
-                                <td>User IC</td>
-                                <td>:</td>
-                                <td><?php echo $user_ic; ?></td>
                             </tr>
                             <tr>
                                 <td>User DOB</td>

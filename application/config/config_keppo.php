@@ -6,6 +6,7 @@ $config['group_id_merchant'] = '3';
 $config['group_id_supervisor'] = '4';
 $config['group_id_user'] = '5';
 
+$config['album_admin_phy'] = realpath(APPPATH . '..\folder_upload\album_admin');
 $config['album_merchant_phy'] = realpath(APPPATH . '..\folder_upload\album_merchant');
 $config['album_merchant_profile_phy'] = realpath(APPPATH . '..\folder_upload\album_merchant_profile');
 $config['album_user_phy'] = realpath(APPPATH . '..\folder_upload\album_user');
@@ -13,6 +14,7 @@ $config['album_user_profile_phy'] = realpath(APPPATH . '..\folder_upload\album_u
 $config['album_user_merchant_phy'] = realpath(APPPATH . '..\folder_upload\album_user_merchant');
 $config['folder_merchant_ssm_phy'] = realpath(APPPATH . '..\folder_upload\merchant_ssm');
 
+$config['album_admin'] = 'folder_upload/album_admin/';
 $config['album_merchant'] = 'folder_upload/album_merchant/';
 $config['album_merchant_profile'] = 'folder_upload/album_merchant_profile/';
 $config['album_user'] = 'folder_upload/album_user/';
@@ -45,6 +47,8 @@ $config['hotdeal_per_day'] = 5;
 $config['user_max_picture_per_day'] = 15;
 $config['user_max_invitation_get_candie_per_month'] = 5;
 
+$config['keppo_admin_id'] = '1';
+$config['keppo_company_name'] = 'Fuyoo Advertising & Services';
 $config['keppo_email_domain'] = '@keppo.my';
 $config['keppo_admin_email'] = 'wilkinwilly999@gmail.com,weechiat.teo@hotmail.com';
 $config['merchant_minimum_balance'] = 50;

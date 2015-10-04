@@ -67,12 +67,12 @@ class Merchant extends CI_Controller
                 //redirect them back to the home page
                 //$this->session->set_flashdata('message', $this->ion_auth->messages());
                 $this->update_whole_year_balance();
-                redirect('all/merchant_dashboard/' . generate_slug($this->session->userdata('company_name')), 'refresh');
+                redirect('all/merchant_dashboard/' . $this->session->userdata('company_slug'), 'refresh');
             }
             else if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember, $this->group_id_supervisor))
             {
                 //$this->session->set_flashdata('message', $this->ion_auth->messages());
-                redirect('/', 'refresh');
+                redirect('all/merchant_dashboard/' . $this->session->userdata('company_slug'), 'refresh');
             }
             else
             {
@@ -728,6 +728,7 @@ class Merchant extends CI_Controller
         }
         $user = $this->ion_auth->user($merchant_id)->row();
         $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required|valid_contact_number');
+        $this->form_validation->set_rules('description', $this->lang->line('create_merchant_validation_description_label'));
         $this->form_validation->set_rules('website', $this->lang->line('create_merchant_validation_website_label'));
         $this->form_validation->set_rules('facebook_url', $this->lang->line('create_merchant_validation_facebook_url_label'));
         if (isset($_POST) && !empty($_POST))
@@ -743,6 +744,7 @@ class Merchant extends CI_Controller
                 {
 
                     $data = array(
+                        'description' => $this->input->post('description'),
                         'phone' => $this->input->post('phone'),
                         //'slug' => generate_slug($this->input->post('company')),
                         //'me_category_id' => $this->input->post('me_category_id'),
@@ -756,6 +758,7 @@ class Merchant extends CI_Controller
                         // redirect them back to the admin page if admin, or to the base url if non admin
                         $this->session->set_flashdata('message', $this->ion_auth->messages());
                         $user = $this->ion_auth->user($merchant_id)->row();
+                        redirect('all/merchant_dashboard/'.$user->slug, 'refresh');
                     }
                     else
                     {
@@ -861,6 +864,11 @@ class Merchant extends CI_Controller
             'id' => 'address',
             'readonly ' => 'true',
             'value' => $this->form_validation->set_value('address', $user->address),
+        );
+        $this->data['description'] = array(
+            'name' => 'description',
+            'id' => 'description',
+            'value' => $this->form_validation->set_value('description', $user->description),
         );
         $this->data['phone'] = array(
             'name' => 'phone',

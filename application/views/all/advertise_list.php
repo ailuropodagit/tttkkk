@@ -23,6 +23,7 @@
 
 <?php
 $this->album_merchant = $this->config->item('album_merchant');
+$this->album_admin = $this->config->item('album_admin');
 ?>
 
 <div id="advertise-list">
@@ -45,9 +46,10 @@ $this->album_merchant = $this->config->item('album_merchant');
         
         <?php
         //UPLOAD BUTTON
+        $fetch_method = $this->router->fetch_method();
         if ($this->ion_auth->logged_in())
         {
-            if ($this->router->fetch_method() == 'album_merchant')
+            if ($fetch_method == 'album_merchant')
             {
                 ?>            
                 <div id='advertise-list-upload-button'>
@@ -62,19 +64,19 @@ $this->album_merchant = $this->config->item('album_merchant');
         if (empty($hotdeal_list)) 
         {
             //SHARE PAGE
-            if ($this->router->fetch_method() == 'hotdeal_list')
+            if ($fetch_method == 'hotdeal_list')
             {
                 $empty_data_message = 'No Hot Deal';
             }
-            else if ($this->router->fetch_method() == 'merchant_dashboard')
+            else if ($fetch_method == 'merchant_dashboard')
             {
                 $empty_data_message = 'No Offer Deal';
             }
-            else if ($this->router->fetch_method() == 'promotion_list')
+            else if ($fetch_method == 'promotion_list' || $fetch_method == 'redemption_list')
             {
                 $empty_data_message = 'No Redemption';
             }
-            else if ($this->router->fetch_method() == 'album_merchant')
+            else if ($fetch_method == 'album_merchant')
             {
                 $empty_data_message = 'No Picture';
             }
@@ -90,24 +92,33 @@ $this->album_merchant = $this->config->item('album_merchant');
                 $sub_category_id = $row['sub_category_id'];
                 $merchant_id = $row['merchant_id'];
                 $merchant_name = $this->m_custom->display_users($merchant_id);
-                $merchant_dashboard_url = base_url() . "all/merchant-dashboard/" . generate_slug($merchant_name);
-                
+                $merchant_dashboard_url = $this->m_custom->generate_merchant_link($merchant_id);
+                $advertise_type = $row['advertise_type'];
+                if ($advertise_type == 'adm') { 
+                    $image_url = base_url($this->album_admin . $row['image']);
+                }else{
+                    $image_url = base_url($this->album_merchant . $row['image']);
+                }
                 //SHARE PAGE
-                if ($this->router->fetch_method() == 'hotdeal_list')
+                if ($fetch_method == 'hotdeal_list')
                 {
                     $advertise_detail_url = base_url() . "all/advertise/" . $advertise_id . "/hot/" . $sub_category_id;
                 }
-                else if ($this->router->fetch_method() == 'album_merchant')
+                else if ($fetch_method == 'album_merchant')
                 {
                     $advertise_detail_url = base_url() . "all/advertise/" . $row['advertise_id'] . "/all/0/" . $row['merchant_id'] . '/1';
                 }
-                else if ($this->router->fetch_method() == 'merchant_dashboard')
+                else if ($fetch_method == 'merchant_dashboard')
                 {
                     $advertise_detail_url = base_url() . "all/advertise/" . $advertise_id . "/all/0/" . $merchant_id;
                 }
-                else if ($this->router->fetch_method() == 'promotion_list')
+                else if ($fetch_method == 'promotion_list')
                 {
                     $advertise_detail_url = base_url() . "all/advertise/" . $advertise_id . "/pro/" . $sub_category_id;
+                }
+                else if ($fetch_method == 'redemption_list')
+                {
+                    $advertise_detail_url = base_url() . "all/advertise/" . $advertise_id . "/adm/" . $sub_category_id;
                 }
                 else
                 {
@@ -115,31 +126,40 @@ $this->album_merchant = $this->config->item('album_merchant');
                 }
                 ?>
                 <div id='advertise-list-box'>
-                    <?php if($this->router->fetch_method() != 'merchant_dashboard') { ?>
+                    <?php if($fetch_method != 'merchant_dashboard') { ?>
                     <div id="advertise-list-title1">
-                        <a href='<?php echo $merchant_dashboard_url ?>'> <?php echo $merchant_name ?></a>
+                        <?php echo $merchant_dashboard_url ?>
                     </div>
                     <?php } ?>
                     <div id="advertise-list-photo">
                         <div id="advertise-list-photo-box">
-                            <a href='<?php echo $advertise_detail_url ?>'><img src='<?php echo base_url($this->album_merchant . $row['image']) ?>'></a>
+                            <a href='<?php echo $advertise_detail_url ?>'><img src='<?php echo $image_url ?>'></a>
                         </div>
                     </div>
                     <div id="advertise-list-title2">
                         <a href='<?php echo $advertise_detail_url ?>'><?php echo $row['title'] ?></a>
                     </div>
-                    <?php if ($row['advertise_type'] == 'hot') { ?>
+                    <?php if ($advertise_type == 'hot') { ?>
                         <div id="advertise-list-dynamic-time">
                             <i class="fa fa-clock-o"></i><span id="advertise-list-dynamic-time-label" data-countdown='<?php echo $row['end_time'] ?>'></span>
                         </div>
                     <?php } ?>
-                    <?php if ($row['advertise_type'] == 'pro') { ?>
+                    <?php if ($advertise_type == 'pro' || $advertise_type == 'adm') { ?>
                         <div id="advertise-list-dynamic-time">
                             <i class="fa fa-bullseye"></i><span id="advertise-list-dynamic-time-label"><?php echo $row['voucher_candie'] ?> candies</span>
                         </div>
                     <?php } ?>
                     <div id="advertise-list-info">
                         <table border="0" cellpadding="4px" cellspacing="0px">
+                            <?php if (($advertise_type == 'pro' || $advertise_type == 'adm') && !empty($row['voucher_worth'])) { ?>
+                            <tr>
+                                <td>Worth</td>
+                                <td>:</td>
+                                <td>
+                                    <div id="advertise-list-voucher-worth"><?php echo "RM " . $row['voucher_worth']; ?></div>
+                                </td>
+                            </tr>    
+                            <?php } ?>
                             <tr>
                                 <td>Category</td>
                                 <td>:</td>
@@ -147,6 +167,9 @@ $this->album_merchant = $this->config->item('album_merchant');
                                     <div id="advertise-list-info-category"><?php echo $this->m_custom->display_category($row['sub_category_id']) ?></div>
                                 </td>
                             </tr>
+                            <?php 
+                            if ($advertise_type != 'adm'){
+                            ?>
                             <tr>
                                 <td>Like</td>
                                 <td>:</td>
@@ -157,6 +180,7 @@ $this->album_merchant = $this->config->item('album_merchant');
                                 <td>:</td>
                                 <td><?php echo $this->m_custom->activity_comment_count($row['advertise_id'], 'adv'); ?></td>
                             </tr>
+                            <?php } ?>
                         </table>
                     </div>
                 </div>

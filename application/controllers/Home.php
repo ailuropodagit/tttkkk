@@ -11,7 +11,7 @@ class Home extends CI_Controller
     {
         //PAGE PATH NAME
         $data['page_path_name'] = 'home'; 
-        //QUERY CATEGORY
+        //QUERY CATEGORY  
         $data['query_category'] = $this->albert_model->read_main_category();
         //QUERY MERCHANT 
         $merchant_where = array('me_category_id'=>$main_category_id);

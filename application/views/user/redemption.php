@@ -25,24 +25,46 @@ if(isset($message))
         //var_dump($redemption);
         foreach ($redemption as $row)
         {
+            //var_dump($row);
+            $advertise_type = $row['advertise_type'];
+            if($advertise_type == "adm"){
+                $image_url = base_url().$this->config->item('album_admin') . $row['image'];
+            }else{               
+                $image_url = base_url().$this->config->item('album_merchant') . $row['image'];
+            }
+            $merchant_link = $this->m_custom->generate_merchant_link($row['merchant_id']);
             $advertise_detail_url = base_url() . "all/voucher/" . $row['advertise_id'];
+            
+            $top_up_phone = $row['top_up_phone'];
             ?>
             <div id='advertise-list-box'>
 
                 <div id="advertise-list-title1">
-                    <?php echo $this->m_custom->generate_merchant_link($row['merchant_id']); ?>
+                    <?php echo $merchant_link; ?>
                 </div>
 
                 <div id="advertise-list-photo">
                     <div id="advertise-list-photo-box">
-                        <a href='<?php echo $advertise_detail_url; ?>' target='_blank'><img src='<?php echo base_url().$this->config->item('album_merchant') . $row['image']; ?>'></a>
+                        <a href='<?php echo $advertise_detail_url; ?>' target='_blank'><img src='<?php echo $image_url; ?>'></a>
                     </div>
                 </div>
                 <div id="advertise-list-title2">
                     <a href='<?php echo $advertise_detail_url; ?>' target='_blank'><?php echo $row['title'] ?></a>
                 </div>
+                <div id="advertise-list-dynamic-time">
+                    <i class="fa fa-bullseye"></i><span id="advertise-list-dynamic-time-label"><?php echo $row['voucher_candie'] ?> candies</span>
+                </div>
                 <div id="advertise-list-info">
-                    <table border="0" cellpadding="4px" cellspacing="0px">
+                    <table border="0" cellpadding="4px" cellspacing="0px">                       
+                        <?php if (($advertise_type == 'pro' || $advertise_type == 'adm') && !empty($row['voucher_worth'])) { ?>
+                            <tr>
+                                <td>Worth</td>
+                                <td>:</td>
+                                <td>
+                                    <div id="advertise-list-voucher-worth"><?php echo "RM " . $row['voucher_worth']; ?></div>
+                                </td>
+                            </tr>    
+                        <?php } ?>
                         <tr>
                             <td>Category</td>
                             <td>:</td>
@@ -50,6 +72,9 @@ if(isset($message))
                                 <div id="advertise-list-info-category"><?php echo $this->m_custom->display_category($row['sub_category_id']) ?></div>
                             </td>
                         </tr>
+                        <?php 
+                        if ($advertise_type != 'adm'){
+                        ?>
                         <tr>
                             <td>Like</td>
                             <td>:</td>
@@ -60,11 +85,18 @@ if(isset($message))
                             <td>:</td>
                             <td><?php echo $this->m_custom->activity_comment_count($row['advertise_id'], 'adv'); ?></td>
                         </tr>
+                        <?php } ?>
+                        <?php 
+                        if (!empty($top_up_phone)){
+                        ?>
+                        <tr>
+                            <td>Top Up To</td>
+                            <td>:</td>
+                            <td><?php echo $top_up_phone; ?></td>
+                        </tr>
+                        <?php } ?>
                     </table>
-                </div>
-                <div id="advertise-list-dynamic-time">
-                    <i class="fa fa-bullseye"></i><span id="advertise-list-dynamic-time-label"><?php echo $row['voucher_candie'] ?> candies</span>
-                </div>
+                </div>               
             </div>
             <?php
         }

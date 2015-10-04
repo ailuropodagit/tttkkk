@@ -647,8 +647,12 @@ class M_custom extends CI_Model
     }
 
     //Get all the static option of an option type
-    public function getCategoryList($default_value = NULL, $default_text = NULL)
+    public function getCategoryList($default_value = NULL, $default_text = NULL, $get_special = 0)
     {
+        if ($get_special == 0)
+        {
+            $this->db->where('hide_special', 0);
+        }
         $query = $this->db->get_where('category', array('category_level' => '0', 'hide_flag' => 0));
         $return = array();
         if ($default_value != NULL)
@@ -685,8 +689,12 @@ class M_custom extends CI_Model
     }
     
     //To get all main category
-    function getCategory()
+    function getCategory($get_special = 0)
     {
+        if ($get_special == 0)
+        {
+            $this->db->where('hide_special', 0);
+        }
         $query = $this->db->get_where('category', array('category_level' => '0'));
         return $query->result();
     }
@@ -1420,10 +1428,11 @@ class M_custom extends CI_Model
     }
     
     //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
-    public function merchant_like_count($merchant_id, $refer_type)
+    public function merchant_like_count($merchant_id, $refer_type, $include_mua = 0)
     {
         $advertise_list = $this->m_custom->getAdvertise('all', NULL, $merchant_id, 1);
         $advertise_list_id = array();
+        
         foreach ($advertise_list as $row)
         {
             $advertise_list_id[] = $row['advertise_id'];
@@ -1431,14 +1440,21 @@ class M_custom extends CI_Model
         if (!empty($advertise_list_id))
         {
             $this->db->where_in('act_refer_id', $advertise_list_id);
-        }
+        }      
+        
         $query = $this->db->get_where('activity_history', array('act_type' => 'like', 'act_refer_type' => $refer_type));
+        $counter = $query->num_rows();
+        
+        if ($include_mua == 1)
+        {
+            $counter += $this->m_custom->merchant_mua_activity_count($merchant_id, 'like');;       
+        }
 
-        return $query->num_rows();
+        return $counter;
     }
 
     //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
-    public function merchant_comment_count($merchant_id, $refer_type)
+    public function merchant_comment_count($merchant_id, $refer_type, $include_mua = 0)
     {
         $advertise_list = $this->m_custom->getAdvertise('all', NULL, $merchant_id, 1);
         $advertise_list_id = array();
@@ -1450,12 +1466,55 @@ class M_custom extends CI_Model
         if (!empty($advertise_list_id))
         {
             $this->db->where_in('act_refer_id', $advertise_list_id);
-        }
+        }      
+        
         $query = $this->db->get_where('activity_history', array('act_type' => 'comment', 'act_refer_type' => $refer_type));
+        $counter = $query->num_rows();
+        
+        if ($include_mua == 1)
+        {
+            $counter += $this->m_custom->merchant_mua_activity_count($merchant_id, 'comment');;
+        }
 
-        return $query->num_rows();
+        return $counter;
     }
 
+    public function merchant_mua_activity_count($merchant_id, $act_type)
+    {
+        $mua_list = $this->m_custom->getAlbumUserMerchant(NULL, $merchant_id);
+        $mua_list_id = array();
+        
+        foreach ($mua_list as $row)
+        {
+            $mua_list_id[] = $row['merchant_user_album_id'];
+        }
+        
+        $counter = 0;
+        
+        if (!empty($mua_list_id))
+        {
+            $this->db->where_in('act_refer_id', $mua_list_id);
+            $query = $this->db->get_where('activity_history', array('act_type' => $act_type, 'act_refer_type' => 'mua'));
+            $counter = $query->num_rows();
+        }
+        return $counter;
+    }
+
+    public function merchant_picture_count($merchant_id, $include_adv = 0)
+    {       
+        $query = $this->db->get_where('merchant_user_album', array('merchant_id' => $merchant_id, 'post_type' => 'mer', 'hide_flag' => 0));
+        $counter = $query->num_rows();
+        
+        if ($include_adv == 1)
+        {
+            $this->db->where('start_time is not null AND end_time is not null');         
+            $query = $this->db->get_where('advertise', array('merchant_id' => $merchant_id, 'hide_flag' => 0));
+            $counter += $query->num_rows();
+        }
+        
+        return $counter;
+    }
+    
     //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
     public function merchant_rating_average($merchant_id, $refer_type, $want_count = 0)
     {
@@ -1502,9 +1561,17 @@ class M_custom extends CI_Model
     
     public function generate_merchant_link($merchant_id = NULL, $with_icon = 0)
     {
-        $user_name = $this->m_custom->display_users($merchant_id, $with_icon);
-        $merchant = $this->m_merchant->getMerchant($merchant_id);
-        return "<a target='_blank' href='" . base_url() . "all/merchant_dashboard/" . $merchant['slug'] . "'>" . $user_name . "</a>";
+        //If is post by admin
+        if ($merchant_id == $this->config->item('keppo_admin_id'))
+        {
+            return "<a>".$this->config->item('keppo_company_name')."</a>";
+        }
+        else
+        {
+            $user_name = $this->m_custom->display_users($merchant_id, $with_icon);
+            $merchant = $this->m_merchant->getMerchant($merchant_id);
+            return "<a target='_blank' href='" . base_url() . "all/merchant_dashboard/" . $merchant['slug'] . "'>" . $user_name . "</a>";
+        }
     }
 
     public function generate_user_link($user_id = NULL, $with_icon = 0)
@@ -1580,16 +1647,21 @@ class M_custom extends CI_Model
 
     public function home_search_merchant($search_value = NULL, $state_id = 0)
     {
+        if ($state_id != 0)
+        {
+            $have_branch_at_this_state = $this->m_custom->get_list_of_allow_id('merchant_branch', 'state_id', $state_id, 'merchant_id');
+        }
+        
         if (!IsNullOrEmptyString($search_value))
         {
             $search_word = $this->db->escape('%' . $search_value . '%');
-            //$this->db->where("(`company` LIKE $search_word OR `slug` LIKE $search_word)");
             $this->db->where("(`company` LIKE $search_word OR `slug` LIKE $search_word OR `address` LIKE $search_word)");
         }
 
         if ($state_id != 0)
         {
-            $this->db->where('me_state_id', $state_id);
+            $this->db->where_in('id', $have_branch_at_this_state);
+            $this->db->or_where('me_state_id', $state_id);           
         }
 
         $this->db->order_by("company", "asc");
@@ -1899,6 +1971,17 @@ class M_custom extends CI_Model
         $this->db->update('table_row_activity', $the_data);
     }
 
+    public function check_valid_phone($str){
+        if (preg_match("/^([\.+\s-0-9_-])+$/i", $str))
+        {
+            return TRUE;
+        }
+        else
+        {
+            return FALSE;
+        }
+    }
+    
     //wanted display: name, description, short
     public function display_users_groups($groups_id, $wanted_display)
     {

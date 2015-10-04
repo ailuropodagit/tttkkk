@@ -34,6 +34,7 @@ $dashboard_users_id = $this->uri->segment(3);
         $profile_image = $row_users['profile_image'];
         $first_name = $row_users['first_name'];
         $last_name = $row_users['last_name'];
+        $description = $row_users['description'];
         $blog_url = $row_users['us_blog_url'];
         $instagram_url = $row_users['us_instagram_url'];
         $facebook_url = $row_users['us_facebook_url'];
@@ -103,6 +104,9 @@ $dashboard_users_id = $this->uri->segment(3);
                 }
                 ?>
                 <div id="float-fix"></div>
+            </div>
+            <div id="user-comment-input">
+                <textarea id="descripton" name="descripton"><?php echo $description; ?></textarea>
             </div>
             <div id="dashboard-info-table">
                 <table border="0px" cellspacing="0px" cellpadding="5px" style="width: 100%; table-layout: fixed;">

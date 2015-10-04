@@ -4,12 +4,17 @@ class Albert_model extends CI_Model
 {
     /* READ MAIN CATEGORY
     ***************************************************/
-    public function read_main_category()
+    public function read_main_category($get_special = 0)
     {
         //QUERY
         $this->db->select('category_id, category_label');
         $this->db->from('category');
         $this->db->where('main_category_id', NULL);
+        //WHERE
+        if ($get_special == 0)
+        {
+            $this->db->where('hide_special', 0);
+        }
         $query = $this->db->get();
         //RETURN
         return $query;

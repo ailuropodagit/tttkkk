@@ -68,8 +68,8 @@ if(isset($message))
                     <div id='profile-info-form-each-input'><?php echo form_input($last_name); ?></div>
                 </div>
                 <div id='profile-info-form-each'>
-                    <div id='profile-info-form-each-label'><?php echo lang('create_user_ic_number_label', 'ic number'); ?></div>
-                    <div id='profile-info-form-each-input'><?php echo form_input($ic_number); ?></div>
+                    <div id='profile-info-form-each-label'><?php echo lang('create_user_description_label', 'description'); ?></div>
+                    <div id='profile-info-form-each-input'><?php echo form_textarea($description); ?></div>
                 </div>
                 <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_user_contact_number_label', 'contact number'); ?></div>
@@ -103,12 +103,12 @@ if(isset($message))
                     <div id='profile-info-form-each-input'><?php echo form_input($race_other); ?></div>
                 </div>
                 <div id='profile-info-form-each'>
-                    <div id='profile-info-form-each-label'><?php echo lang('create_user_username_label', 'username'); ?></div>
-                    <div id='profile-info-form-each-input'><?php echo form_input($username); ?></div>
-                </div>
-                <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_user_email_label', 'email address'); ?></div>
                     <div id='profile-info-form-each-input'><?php echo form_input($email); ?></div>
+                </div>
+                <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><?php echo lang('create_user_username_label', 'username'); ?></div>
+                    <div id='profile-info-form-each-input'><?php echo form_input($username); ?></div>
                 </div>
                 <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><label for='blog_url'>Blog URL:</label><a href="<?php echo base_url() ?>image/exclamation-blogspot-url.jpg" target="_blank"><span id="profile-info-form-each-label-icon"><i class="fa fa-exclamation-circle"></i></span></a></div>

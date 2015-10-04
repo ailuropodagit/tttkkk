@@ -71,12 +71,17 @@ if($review_list!=null){
                             <tr>
                                 <td>Like</td>
                                 <td>:</td>
-                                <td><?php echo $this->m_custom->merchant_like_count($merchant_id, 'adv'); ?></td>
+                                <td><?php echo $this->m_custom->merchant_like_count($merchant_id, 'adv', 1); ?></td>
                             </tr>
                             <tr>
                                 <td>Comment</td>
                                 <td>:</td>
-                                <td><?php echo $this->m_custom->merchant_comment_count($merchant_id, 'adv'); ?></td>
+                                <td><?php echo $this->m_custom->merchant_comment_count($merchant_id, 'adv', 1); ?></td>
+                            </tr>
+                            <tr>
+                                <td>Picture</td>
+                                <td>:</td>
+                                <td><a href='<?php echo $merchant_dashboard_url."/picture"; ?>'><?php echo $this->m_custom->merchant_picture_count($merchant_id, 1); ?></a></td>
                             </tr>
                             <tr>
                                 <td>Average Rating</td>
@@ -95,7 +100,7 @@ if($review_list!=null){
                                                 echo "<input class='star' type='radio' name='a-rating-$merchant_id' disabled='disabled' value='" . $i . "'/>";
                                             }
                                         } //end of for
-                                        echo " from ". $rating_count . " users";
+                                        echo $rating_count . " reviews";
                                         ?>
                                     </div>
                                 </td>

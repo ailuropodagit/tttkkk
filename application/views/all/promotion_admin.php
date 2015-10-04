@@ -1,7 +1,3 @@
-<script type="text/javascript" src="<?php echo base_url() ?>js/star-rating/jquery.rating.js"></script>
-<?php echo link_tag('js/star-rating/jquery.rating.css') ?>
-<script type="text/javascript" src="<?php echo base_url() ?>js/jgrowl/jquery.jgrowl.js"></script>
-<?php echo link_tag('js/jgrowl/jquery.jgrowl.css') ?>
 <script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script>
 
 <?php
@@ -42,7 +38,12 @@ if(isset($message))
         <div id="float-fix"></div>
         
         <div id='redemption-expired-date'>
-            Expiry Date: <?php echo $expire_date; ?>
+            <?php
+            if (!empty($expire_date))
+            {
+                echo "Expiry Date: " . $expire_date;
+            }
+            ?>
         </div>
         <div id="redemption-candies">
             Require <?php echo $voucher_candie ?> Candies
@@ -69,12 +70,14 @@ if(isset($message))
                     <div id='redemption-center'>
                         <div id="print-area">
 <!--                            <div id="redemption-voucher-barcode">
-                                <img src="<?php //echo $voucher_barcode; ?>"  alt="not show"/>
+                                <?php
+//                                if (!empty($voucher_barcode) && $voucher_not_need == 0)
+//                                {
+//                                echo "<img src='" . $voucher_barcode . "'  alt='not show'/>";
+//                                }
+                                ?>
                             </div>-->
                             <div id="float-fix"></div>
-                            <div id="redemption-title">
-                                <a href='<?php echo $merchant_dashboard_url ?>'> <?php echo $merchant_name ?></a>
-                            </div>
                             <div id="redemption-photo">
                                 <div id="redemption-photo-box">
                                     <img src='<?php echo $image_url ?>'>
@@ -91,52 +94,8 @@ if(isset($message))
                                 }
                                 ?>
                             </div>
-                            <div id="redemption-rate-time">
-                                <div id="redemption-rate">
-                                    <div style="display:inline;">
-                                        <?php
-                                        echo form_input($item_id);
-                                        echo form_input($item_type);
-                                        for ($i = 1; $i <= 5; $i++)
-                                        {
-                                            if ($i == round($average_rating))
-                                            {
-                                                echo "<input class='auto-submit-star' type='radio' name='rating' " . $radio_level . " value='" . $i . "' checked='checked'/>";
-                                            }
-                                            else
-                                            {
-                                                echo "<input class='auto-submit-star' type='radio' name='rating' " . $radio_level . " value='" . $i . "'/>";
-                                            }
-                                        }
-                                        ?>
-                                    </div>
-                                </div>
-                                <div id="redemption-time">
-                                    <i class="fa fa-gift header-menu-icon"></i>
-                                    <span id="redemption-time-label">Redeem Period:  <?php echo $start_date ?> to <?php echo $end_date ?></span>
-                                </div>
-                                <div id="float-fix"></div>
-                            </div>
                             <div id="redemption-description">
                                 <?php echo $description ?>
-                            </div>
-                            <div id="redemption-like-comment-share">
-                                <div id="redemption-like">
-                                    <?php echo $like_url; ?>
-                                </div>
-                                <div id="redemption-comment">
-                                    <?php echo $comment_url; ?>
-                                </div>
-                                <div id="redemption-share">
-                                    <?php echo "Share :"; ?>
-                                    <span id="redemption-share-facebook">
-                                        <a href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook-square"></i></a>
-                                    </span>
-                                    <span id="redemption-share-instagram">
-                                        <a href="https://instagram.com" target="_blank"><i class="fa fa-instagram"></i></a>
-                                    </span>
-                                </div>
-                                <div id="float-fix"></div>
                             </div>
                             <div id="redemption-terms-conditions">
                                 <div id="redemption-terms-conditions-title">Terms & Condition:</div>
@@ -149,38 +108,33 @@ if(isset($message))
                                     ?>  
                                 </ul>
                             </div>
-                            <div id="redemption-available-branch">
-                                <div id="redemption-available-branch-title">Available Branch:</div>
-                                <ul>
-                                    <?php
-                                    foreach ($candie_branch as $value)
-                                    {
-                                        ?>
-                                        <li>
-                                            <div id="redemption-available-branch-name"><?php echo $value['name'] ?></div>
-                                            <div id="redemption-available-branch-address"><?php echo $value['address'] ?></div>
-                                            <div id="redemption-available-branch-tel"><a href='tel: <?php echo $value['phone'] ?>'><?php echo $value['phone'] ?></a></div>
-                                            <div id="redemption-available-branch-view-map"><a href='<?php echo base_url() ?>all/merchant-map/<?php echo $value['branch_id'] ?>' target='_blank'>View Map</a></div>
-                                            <div id='float-fix'></div>
-                                        </li>
-                                        <?php
-                                    }
-                                    ?>  
-                                </ul>
-                            </div>
                         </div>
                             <div id='redemption-redempt-submit'>
                                 <?php
                                 if (check_correct_login_type($this->config->item('group_id_user')))
                                 {
-                                    //FORM OPEN
+                                    //FORM OPEN            
                                     $action_url = base_url() . "all/user_redeem_voucher";
                                     $confirm_message = "Confirm that you want to redeem this voucher? ";
+                                    if($phone_required == 1){                                       
+                                        $confirm_message = "Confirm that this is the correct phone number to top up? ";
+                                    }
                                     ?>
                                     <form action="<?php echo $action_url; ?>" onSubmit="return confirm('<?php echo $confirm_message ?>')" method="post" accept-charset="utf-8">
                                     <?php
                                     echo form_input($item_id);
+                                    if($phone_required == 1){
                                     ?>
+                                    <div id="contact-us-right-form">
+                                        <div style="color:red;font-weight:bold">Please Make Sure You Key In The Correct Phone Number To Prevent Wrong Top Up!</div>
+                                        <div id="contact-us-right-form-each">
+                                        <input type="text" placeholder="Top Up Phone Number (Example: 012-345 6789)" id="phone" name="phone"><br/>
+                                        </div>
+                                     </div>
+                                    <?php
+                                    }
+                                    ?>
+                                    <input type='hidden' name='phone_required' id='phone_required' value='<?php echo $phone_required ?>'/>        
                                     <input type='hidden' name='current_url' id='current_url' value='<?php echo get_current_url() ?>'/>
                                     <button name="button_action" type="submit" value="redeem" >Redeem</button>
                                     <?php
@@ -188,9 +142,6 @@ if(isset($message))
                                     echo form_close();
                                 }
                                 ?>
-                            </div>
-                            <div id='redemption-comment-list'>
-                                <?php $this->load->view('all/comment_form'); ?>
                             </div>
                     </div>
                 </div>

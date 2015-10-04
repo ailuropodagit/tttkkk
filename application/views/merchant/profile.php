@@ -62,6 +62,10 @@ if(isset($message))
                     <div id='profile-info-form-each-input'><?php echo form_textarea($address); ?></div>
                 </div>
                 <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><?php echo lang('create_merchant_description_label', 'description'); ?></div>
+                    <div id='profile-info-form-each-input'><?php echo form_textarea($description); ?></div>
+                </div>
+                <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_merchant_phone_label', 'phone'); ?></div>
                     <div id='profile-info-form-each-input'><?php echo form_input($phone); ?></div>
                 </div>
