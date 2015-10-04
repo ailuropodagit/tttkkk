@@ -135,7 +135,8 @@ $lang['edit_user_validation_password_label']         = 'Password';
 $lang['edit_user_validation_password_confirm_label'] = 'Password Confirmation';
 
 // Create Merchant
-$lang['create_merchant_company_label']                     = 'Company Name:';
+$lang['create_merchant_company_main_label']                = 'Company Name:';
+$lang['create_merchant_company_label']                     = 'Shop Name:';
 $lang['create_merchant_fname_label']                       = 'Register Name:';
 $lang['create_merchant_companyssm_label']                  = 'Register No(SSM):';
 $lang['create_merchant_description_label']                 = 'Company Description:';
@@ -151,7 +152,8 @@ $lang['create_merchant_password_confirm_label']            = 'Re-Password:';
 $lang['create_merchant_website_label']                     = 'Website:';
 $lang['create_merchant_facebook_url_label']                = 'Facebook URL:';
 
-$lang['create_merchant_validation_company_label']                     = 'Company Name';
+$lang['create_merchant_validation_company_main_label']                = 'Company Name';
+$lang['create_merchant_validation_company_label']                     = 'Shop Name';
 $lang['create_merchant_validation_fname_label']                       = 'Register Name';
 $lang['create_merchant_validation_companyssm_label']                  = 'Register No(SSM)';
 $lang['create_merchant_validation_address_label']                     = 'Company Address';

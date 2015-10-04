@@ -46,6 +46,10 @@ if(isset($message))
             <?php echo form_open(uri_string()); ?>
             <div id='profile-info-form'>
                 <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><?php echo lang('create_merchant_company_main_label', 'company_main'); ?></div>
+                    <div id='profile-info-form-each-input'><?php echo form_input($company_main); ?></div>
+                </div>
+                <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_merchant_company_label', 'company'); ?></div>
                     <div id='profile-info-form-each-input'><?php echo form_input($company); ?></div>
                 </div>
