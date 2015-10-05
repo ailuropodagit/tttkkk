@@ -48,4 +48,14 @@ class Home extends CI_Controller
         //LOAD TEMPLATE
         $this->load->view('template/layout_advertisement', $data);
     }
+    
+    function get_merchant_list()
+    {
+        if (isset($_GET['term']))
+        {
+            $q = strtolower($_GET['term']);
+            $this->m_custom->home_search_get_merchant($q);
+        }
+    }
+
 }

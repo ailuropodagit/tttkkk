@@ -1,3 +1,6 @@
+<script type="text/javascript" src="<?php echo base_url() ?>js/chosen/chosen.jquery.min.js"></script>
+<?php echo link_tag('js/chosen/chosen.min.css') ?>
+
 <script type="text/javascript">
     function get_Merchant(the_I)
     {
@@ -11,6 +14,7 @@
             {
                 $('#image_merchant-' + the_I).empty();
                 $('#image_merchant-' + the_I).html(data);
+                $(".chosen-select").chosen();        
             },
             error: function (jqXHR, textStatus, errorThrown)
             {
@@ -44,6 +48,9 @@
         }
         return false;
     }
+    $(document).ready(function () {
+        $(".chosen-select").chosen();
+    });
 </script>
 
 <?php
@@ -65,12 +72,12 @@ if(isset($message))
                 $user_id = $this->ion_auth->user()->row()->id;
                 ?>
                 <div id="album-user-navigation">
-                    <div id="album-user-navigation-each">
+                    <div id="album-user-navigation-upload">
                         <a href="<?php echo base_url() ?>all/album_user/<?php echo $user_id ?>">My Album</a>
                     </div>
-                    <div id='album-user-navigation-separater'>|</div>
-                    <div id="album-user-navigation-each">
-                        <a href="<?php echo base_url() ?>all/album_user_merchant/<?php echo $user_id ?>">Merchant Album</a>
+                    <div id="album-user-navigation-separater">|</div>
+                    <div id="album-user-navigation-upload">
+                        <a href="<?php echo base_url() ?>all/album_user_merchant/<?php echo $user_id ?>">Merchants Album</a>
                     </div>
                     <div id="float-fix"></div>
                 </div>

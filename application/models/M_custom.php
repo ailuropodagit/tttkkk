@@ -1982,6 +1982,21 @@ class M_custom extends CI_Model
         }
     }
     
+    public function home_search_get_merchant($q)
+    {
+        $this->db->select('company');
+        $this->db->like('company', $q);
+        $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant'), 'hide_flag' => 0));
+        if ($query->num_rows() > 0)
+        {
+            foreach ($query->result_array() as $row)
+            {
+                $row_set[] = stripslashes($row['company']); //build an array
+            }
+            echo json_encode($row_set); //format the array into json data
+        }
+    }
+
     //wanted display: name, description, short
     public function display_users_groups($groups_id, $wanted_display)
     {

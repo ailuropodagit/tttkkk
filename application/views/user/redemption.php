@@ -12,9 +12,9 @@ if(isset($message))
 
         <div id='payment-print'>
             <a href="<?php echo $candie_url; ?>" >Candies Balance</a> | 
-            <a href="<?php echo $voucher_active_url; ?>" >Active Voucher</a> | 
-            <a href="<?php echo $voucher_used_url; ?>" >Used Voucher</a> | 
-            <a href="<?php echo $voucher_expired_url; ?>" >Expired Voucher</a>
+            <a href="<?php echo $voucher_active_url; ?>" ><?php echo $voucher_active_count; ?></a> | 
+            <a href="<?php echo $voucher_used_url; ?>" ><?php echo $voucher_used_count; ?></a> | 
+            <a href="<?php echo $voucher_expired_url; ?>" ><?php echo $voucher_expired_count; ?></a>
         </div><br/>
             <?php echo form_open(uri_string());?>
             <span id="candie-promotion-form-go-label"><?php echo "Category "; ?></span>
@@ -70,6 +70,13 @@ if(isset($message))
                             <td>:</td>
                             <td>
                                 <div id="advertise-list-info-category"><?php echo $this->m_custom->display_category($row['sub_category_id']) ?></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Expire Date</td>
+                            <td>:</td>
+                            <td>
+                                <div id="advertise-list-info-category"><?php echo displayDate($row['expired_date']) ?></div>
                             </td>
                         </tr>
                         <?php 

@@ -64,6 +64,7 @@ $this->album_admin = $this->config->item('album_admin');
         if (empty($hotdeal_list)) 
         {
             //SHARE PAGE
+            $empty_data_message = 'No Picture';
             if ($fetch_method == 'hotdeal_list')
             {
                 $empty_data_message = 'No Hot Deal';
