@@ -29,12 +29,8 @@ $user_id = $this->uri->segment(3);
                 $user_id = $this->ion_auth->user()->row()->id;
                 ?>
                 <div id="album-user-navigation">
-                    <div id="album-user-navigation-upload">
+                    <div id="album-user-navigation-each">
                         <a href="<?php echo base_url() ?>all/album_user/<?php echo $user_id ?>">My Album</a>
-                    </div>
-                    <div id="album-user-navigation-separater">|</div>
-                    <div id="album-user-navigation-upload">
-                        <a href="<?php echo base_url() ?>all/album_user_merchant/<?php echo $user_id ?>">Merchants Album</a>
                     </div>
                     <div id='album-user-navigation-separater'>|</div>
                     <div id="album-user-navigation-each">

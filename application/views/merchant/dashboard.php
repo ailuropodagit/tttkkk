@@ -125,10 +125,10 @@ $dashboard_users_group_id = $row_array_dashboard_users_id['main_group_id'];
                 $num_rows_user_follow_following =  $query_user_follow_following->num_rows();
                 ?>
                 <div id="dashboard-info-followers">
-                    Follower : <a href='<?php echo base_url() ?>all/follower/user/<?php echo $users_id ?>'><?php echo $num_rows_user_follow_follower ?></a>
+                    User followers : <a href='<?php echo base_url() ?>all/follower/user/<?php echo $users_id ?>'><?php echo $num_rows_user_follow_follower ?></a>
                 </div>
                 <div id="dashboard-info-following">
-                    Following : <a href='<?php echo base_url() ?>all/following/user/<?php echo $users_id ?>'><?php echo $num_rows_user_follow_following ?></a>
+                    Merchants following : <a href='<?php echo base_url() ?>all/following/user/<?php echo $users_id ?>'><?php echo $num_rows_user_follow_following ?></a>
                 </div>
             </div>
         </div>

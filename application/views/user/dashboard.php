@@ -149,7 +149,7 @@ $dashboard_users_id = $this->uri->segment(3);
                 $num_rows_user_follow_following =  $query_user_follow_following->num_rows();
                 ?>
                 <div id="dashboard-info-followers">
-                    Follower : <a href='<?php echo base_url() ?>all/follower/all/<?php echo $users_id ?>'><?php echo $num_rows_user_follow_follower ?></a>
+                    Followers : <a href='<?php echo base_url() ?>all/follower/all/<?php echo $users_id ?>'><?php echo $num_rows_user_follow_follower ?></a>
                 </div>
                 <div id="dashboard-info-following">
                     Following : <a href='<?php echo base_url() ?>all/following/all/<?php echo $users_id ?>'><?php echo $num_rows_user_follow_following ?></a>
