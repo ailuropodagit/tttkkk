@@ -17,6 +17,15 @@ $user_main_group_id = $this->albert_model->read_users($where_get_users)->row()->
 $num_rows_user_follower_all = $query_user_follower_all->num_rows();
 $num_rows_user_following_all = $query_user_following_all->num_rows();
 
+//SPECIAL FOR MERCHANT
+if($user_main_group_id == $merchant_group_id)
+{
+    if($page_type == 'following' && $user_type == 'user')
+    {
+        $page_title = str_replace("User","Merchants",$page_title);
+    }
+}
+
 //PAGE
 if ($page_type == 'follower')
 {
@@ -52,22 +61,37 @@ elseif ($page_type == 'following')
                 ?><a href="<?php echo base_url() ?>all/follower/user/<?php echo $users_id ?>">User Followers ()</a><?php
             }
             ?>
-            <span id='follow-left-navigation-separator'>|</span>
+            <span id='follow-left-navigation-separator'>|</span>            
             <?php 
-            if($page_type == 'following' && $user_type == 'user')
+            //SPECIAL FOR MERCHANT
+            if($user_main_group_id == $merchant_group_id)
             {
-                $follow_empty = 'No Following';
-                ?><span id='follow-left-navigation-current'>User Following ()</span><?php
+                if($page_type == 'following' && $user_type == 'user')
+                {
+                    $follow_empty = 'No Following';
+                    ?><span id='follow-left-navigation-current'>Merchants Following ()</span><?php
+                }
+                else
+                {
+                    ?><a href="<?php echo base_url() ?>all/following/user/<?php echo $users_id ?>">Merchants Following ()</a><?php
+                }
             }
             else
             {
-                ?><a href="<?php echo base_url() ?>all/following/user/<?php echo $users_id ?>">User Following ()</a><?php
+                if($page_type == 'following' && $user_type == 'user')
+                {
+                    $follow_empty = 'No Following';
+                    ?><span id='follow-left-navigation-current'>User Following ()</span><?php
+                }
+                else
+                {
+                    ?><a href="<?php echo base_url() ?>all/following/user/<?php echo $users_id ?>">User Following ()</a><?php
+                }
             }
             ?>
-            <?php    
-            //ALL
+            <?php
             if($user_main_group_id != $merchant_group_id)
-            {  
+            {
                 ?>
                 <span id='follow-left-navigation-separator'>|</span>
                 <?php
