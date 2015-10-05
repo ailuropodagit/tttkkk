@@ -70,7 +70,18 @@ if(isset($message))
             if (check_correct_login_type($this->config->item('group_id_user')))
             {
                 $user_id = $this->ion_auth->user()->row()->id;
-                echo "<a href='" . base_url() . "all/album_user_merchant/" . $user_id . "'>Merchant Album</a><br/>";
+                ?>
+                <div id="album-user-navigation">
+                    <div id="album-user-navigation-upload">
+                        <a href="<?php echo base_url() ?>all/album_user/<?php echo $user_id ?>">My Album</a>
+                    </div>
+                    <div id="album-user-navigation-separater">|</div>
+                    <div id="album-user-navigation-upload">
+                        <a href="<?php echo base_url() ?>all/album_user_merchant/<?php echo $user_id ?>">Merchants Album</a>
+                    </div>
+                    <div id="float-fix"></div>
+                </div>
+                <?php
             }
             ?>
         </div>

@@ -35,7 +35,11 @@ if($this->router->fetch_method() == 'user_dashboard')
                 ?>
                 <div id="album-user-navigation">
                     <div id="album-user-navigation-upload">
-                        <a href="<?php echo base_url() ?>all/album_user/<?php echo $user_id ?>">Picture Album</a>
+                        <a href="<?php echo base_url() ?>all/album_user/<?php echo $user_id ?>">My Album</a>
+                    </div>
+                    <div id="album-user-navigation-separater">|</div>
+                    <div id="album-user-navigation-upload">
+                        <a href="<?php echo base_url() ?>all/album_user_merchant/<?php echo $user_id ?>">Merchants Album</a>
                     </div>
                     <div id="album-user-navigation-separater">|</div>
                     <div id="album-user-navigation-merchant-album">
