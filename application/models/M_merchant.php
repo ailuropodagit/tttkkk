@@ -139,6 +139,7 @@ class M_merchant extends CI_Model
                 $category_id = $sub_category->main_category_id;
             }
         }
+        $this->db->order_by('company','asc');
         $query = $this->db->get_where('users', array('me_category_id' => $category_id));
         if ($query->num_rows() == 0 && $return_empty == 0)
         {

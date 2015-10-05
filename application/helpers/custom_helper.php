@@ -3,7 +3,7 @@
 if (!function_exists('set_simple_message'))
 {
 
-    function set_simple_message($title = '', $sentence1 = '', $sentence2 = '', $back_page_url = '', $back_page = '', $maintain_page = '', $have_session = 1)
+    function set_simple_message($title = '', $sentence1 = '', $sentence2 = '', $back_page_url = '', $back_page = '', $maintain_page = '', $have_session = 1, $redirect_second = 10)
     {
         $ci = & get_instance();
         $simple_info = array(
@@ -13,6 +13,7 @@ if (!function_exists('set_simple_message'))
             'back_page_url' => $back_page_url,
             'back_page' => $back_page,
             'maintain_page' => $maintain_page,
+            'redirect_second' => $redirect_second*1000,
         );
 
         if ($have_session == 1)

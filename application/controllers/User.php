@@ -379,7 +379,7 @@ class User extends CI_Controller
                 //if the password was successfully changed
                 $this->session->set_flashdata('message', $this->ion_auth->messages());
                 //$this->logout();
-                set_simple_message('Thank you!', 'Your Password has been saved!', '', 'user/change_password', 'Back', 'all/simple_message');
+                set_simple_message('Thank you!', 'Your Password has been saved!', '', 'all/user_dashboard/'.$user->id, 'Back to Dashboard', 'all/simple_message', 1, 3);
             }
             else
             {
@@ -1535,6 +1535,7 @@ class User extends CI_Controller
             $this->data[$image_merchant] = array(
                 'name' => 'image-merchant-' . $i,
                 'id' => 'image-merchant-' . $i,
+                'class' => 'chosen-select',
             );
 
             $image_merchant_selected = 'image_merchant_selected' . $i;
@@ -1569,6 +1570,7 @@ class User extends CI_Controller
         $image_merchant = array(
             'name' => 'image-merchant-' . $i,
             'id' => 'image-merchant-' . $i,
+            'class' => 'chosen-select',
         );
         $output = form_dropdown($image_merchant, $merchant_list);
         echo $output;
@@ -1585,6 +1587,10 @@ class User extends CI_Controller
             $this->data['this_month_redemption'] = $this->m_user->user_this_month_redemption($user_id);
             $this->data['this_month_candie_gain'] = $this->m_user->user_this_month_candie_gain($user_id);
 
+            $this->data['voucher_active_count'] = 'Active Voucher ('.count($this->m_user->user_redemption($user_id, $this->config->item('voucher_active'))).')';
+            $this->data['voucher_used_count'] = 'Used Voucher ('.count($this->m_user->user_redemption($user_id, $this->config->item('voucher_used'))).')';
+            $this->data['voucher_expired_count'] = 'Expired Voucher ('.count($this->m_user->user_redemption($user_id, $this->config->item('voucher_expired'))).')';
+            
             $this->data['candie_url'] = base_url() . "user/candie_page";
             $this->data['voucher_active_url'] = base_url() . "user/redemption/" . $this->config->item('voucher_active');
             $this->data['voucher_used_url'] = base_url() . "user/redemption/" . $this->config->item('voucher_used');
@@ -1651,6 +1657,10 @@ class User extends CI_Controller
         );
         $this->data['sub_category_selected'] = empty($sub_category) ? "" : $sub_category;
 
+        $this->data['voucher_active_count'] = 'Active Voucher ('.count($this->m_user->user_redemption($user_id, $this->config->item('voucher_active'), $sub_category)).')';
+        $this->data['voucher_used_count'] = 'Used Voucher ('.count($this->m_user->user_redemption($user_id, $this->config->item('voucher_used'), $sub_category)).')';
+        $this->data['voucher_expired_count'] = 'Expired Voucher ('.count($this->m_user->user_redemption($user_id, $this->config->item('voucher_expired'), $sub_category)).')';
+        
         $this->data['candie_url'] = base_url() . "user/candie_page";
         $this->data['voucher_active_url'] = base_url() . "user/redemption/" . $this->config->item('voucher_active');
         $this->data['voucher_used_url'] = base_url() . "user/redemption/" . $this->config->item('voucher_used');

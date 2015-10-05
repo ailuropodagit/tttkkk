@@ -12,6 +12,8 @@
         <link rel="stylesheet" href="<?php echo base_url() ?>css/main-0400.css" media="screen and (max-width: 0400px)">
         <link rel="stylesheet" href="<?php echo base_url() ?>library/font-awesome/font-awesome-4.4.0.css">
         <script type="text/javascript" src='<?php echo base_url() ?>js/jquery/jquery-2.1.4.min.js'></script>
+        <script type="text/javascript" src="<?php echo base_url() ?>js/jquery-ui-1.11.4.custom/jquery-ui.js"></script>
+        <?php echo link_tag('js/jquery-ui-1.11.4.custom/jquery-ui.css') ?>
         <script>
             $(function(){
                 //BROSWER RESIZE
@@ -59,6 +61,13 @@
                 js.src = "//connect.facebook.net/en_US/sdk.js";
                 fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
+            
+        $(function(){
+  $("#search_word").autocomplete({
+            source: "home/get_merchant_list" // path to the get_birds method
+  });
+});
+
         </script>
     </head>
     <body>
@@ -186,7 +195,7 @@
                         <div id="search-content-box-content">
                             <?php echo form_open('all/home_search');?>
                             <div id="search-box-block1">
-                                <input type="text" placeholder="Search: Merchant, Hot Deal, Promotion" name="search_word">
+                                <input type="text" placeholder="Search: Merchant, Hot Deal, Promotion" name="search_word" id="search_word">
                                 <span id="search-icon"><i class="fa fa-search"></i></span>
                             </div>
                             <div id="search-box-block2">

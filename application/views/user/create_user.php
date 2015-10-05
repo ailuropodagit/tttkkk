@@ -1,4 +1,18 @@
 <script type="text/javascript">
+    function showpassword()
+    {
+        if (document.getElementById('show_password').checked)
+        {
+            document.getElementById('password').type = 'text';
+            document.getElementById('password_confirm').type = 'text';
+        } 
+        else
+        {
+            document.getElementById('password').type = 'password';
+            document.getElementById('password_confirm').type = 'password';
+        }
+    }
+    
     function showraceother()
     {
         var race_id_selected = document.getElementById("race_id");
@@ -91,6 +105,13 @@ if(isset($message))
         <div id='register-form-each'>
             <div id='register-form-each-label'><?php echo lang('create_merchant_password_confirm_label', 'password_confirm'); ?></div>
             <div id='register-form-each-input'><?php echo form_input($password_confirm); ?></div>
+        </div>
+        <div id='login-form-remember-me-forgot-password'>
+            <div id='login-form-forgot-password'>
+                <input type="checkbox" id="show_password" name="show_password" onclick="showpassword();"/>
+                <span class="checkbox-text"><label for='show_password'>Show Password</label></span>
+            </div>   
+            <div id='float-fix'></div>
         </div>
         <div id='register-form-submit'>
             <?php echo form_submit('submit', 'Sign Up'); ?>

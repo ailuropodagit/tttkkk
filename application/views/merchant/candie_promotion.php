@@ -1,5 +1,5 @@
-<link rel="stylesheet" href="http://localhost/keppo/js/jquery-ui-1.11.4.custom/jquery-ui.css">
-<script src="http://localhost/keppo/js/jquery-ui-1.11.4.custom/jquery-ui.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>js/jquery-ui-1.11.4.custom/jquery-ui.js"></script>
+<?php echo link_tag('js/jquery-ui-1.11.4.custom/jquery-ui.css') ?>
 
 <script type="text/javascript">
     $(document).ready(function () {

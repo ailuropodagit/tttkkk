@@ -12,9 +12,9 @@
                 <div id='footer-copyright'>
                     Copyright &copy 2015 Fuyoo Advertising and Services
                 </div>
-                <div id='footer-server-time'>
-                    Server Time <?php echo date($this->config->item('keppo_format_date_time_display')) ?>
-                </div>
+<!--                <div id='footer-server-time'>
+                    Server Time <?php //echo date($this->config->item('keppo_format_date_time_display')) ?>
+                </div>-->
                 <div id="float-fix"></div>
             </div>
         </div>

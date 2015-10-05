@@ -1,3 +1,9 @@
+<script>
+    setTimeout(function(){
+       window.location="<?php echo '/keppo/'.$simple_info['back_page_url']; ?>";
+    }, <?php echo $simple_info['redirect_second']; ?>);
+</script>
+
 <div id="success-message">
     <div id="success-message-title">
         <?php echo $simple_info['title']; ?>

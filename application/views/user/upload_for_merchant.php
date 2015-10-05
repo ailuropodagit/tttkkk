@@ -1,3 +1,6 @@
+<script type="text/javascript" src="<?php echo base_url() ?>js/chosen/chosen.jquery.min.js"></script>
+<?php echo link_tag('js/chosen/chosen.min.css') ?>
+
 <script type="text/javascript">
     function get_Merchant(the_I)
     {
@@ -11,6 +14,7 @@
             {
                 $('#image_merchant-' + the_I).empty();
                 $('#image_merchant-' + the_I).html(data);
+                $(".chosen-select").chosen();        
             },
             error: function (jqXHR, textStatus, errorThrown)
             {
@@ -44,6 +48,9 @@
         }
         return false;
     }
+    $(document).ready(function () {
+        $(".chosen-select").chosen();
+    });
 </script>
 
 <?php
