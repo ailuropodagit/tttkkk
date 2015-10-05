@@ -1,14 +1,21 @@
 <script>
     $(function(){
+        //sessionStorage
+        var race_other = sessionStorage['race_other'];
+        if (race_other) {
+            $("#register-form-each-other").css({display: 'block'});
+        }
         //race other
-        $("#race").on('change', function() {
-            if($("#race option:selected").val() === 'other')
+        $("#race").on('change', function() {            
+            if($("#race option:selected").val() === '19') //19 = other
             {
                 $("#register-form-each-other").css({display: 'block'});
+                sessionStorage['race_other'] = "yes";
             }
             else
             {
                 $("#register-form-each-other").css({display: 'none'});
+                sessionStorage.removeItem('race_other');
             }
         });
     });

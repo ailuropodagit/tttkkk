@@ -7,7 +7,7 @@ if(isset($message))
 ?>
 
 <div id="upload-for-merchant">
-    <h1>User Upload Image</h1>
+    <h1>Upload Picture for My Album</h1>
     <div id="upload-for-merchant-content">
         
         <div id="upload-for-merchant-merchant-album">
@@ -15,7 +15,18 @@ if(isset($message))
             if (check_correct_login_type($this->config->item('group_id_user')))
             {
                 $user_id = $this->ion_auth->user()->row()->id;
-                echo "<a href='" . base_url() . "all/album_user/" . $user_id . "'>Picture Album</a><br/>";
+                ?>
+                <div id="album-user-navigation">
+                    <div id="album-user-navigation-each">
+                        <a href="<?php echo base_url() ?>all/album_user/<?php echo $user_id ?>">My Album</a>
+                    </div>
+                    <div id='album-user-navigation-separater'>|</div>
+                    <div id="album-user-navigation-each">
+                        <a href="<?php echo base_url() ?>all/album_user_merchant/<?php echo $user_id ?>">Merchant Album</a>
+                    </div>
+                    <div id="float-fix"></div>
+                </div>
+                <?php
             }
             ?>
         </div>

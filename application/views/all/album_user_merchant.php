@@ -1,29 +1,23 @@
 <?php
-if($this->router->fetch_method() == 'user_dashboard')
-{
-    $user_id = $this->uri->segment(3);
-    ?>
-    <div id="dashboard-navigation" style="margin:0px 0px 30px 0px;">
-        <div id="dashboard-navigation-each"><a href="<?php echo base_url() ?>all/user_dashboard/<?php echo $user_id ?>">User Album</a></div>
-        <div id="dashboard-navigation-separater">|</div>
-        <div id="dashboard-navigation-each"><a href="<?php echo base_url() ?>all/user_dashboard/<?php echo $user_id ?>/merchant_album">Merchant Album</a></div>
-        <?php
-        if (check_correct_login_type($this->config->item('group_id_user')))
-        {
-            ?>
-            <div id="dashboard-navigation-separater">|</div>
-            <div id="dashboard-navigation-each"><a href='<?php echo base_url() ?>user/upload_image'>Upload Picture</a></div>
-            <?php
-        }
-        ?>
-        <div id="float-fix"></div>
-    </div>
-    <?php
-}
+//USER ID
+$user_id = $this->uri->segment(3);
 ?>
 
 <div id="album-user">
-    <h1><?php echo $title ?></h1>
+    <div id='album-user-title'><?php echo $title ?></div>
+    <?php
+    if (check_correct_login_type($this->config->item('group_id_user')))
+    {
+        ?>
+        <div id='album-user-title-upload'>
+            <a href='<?php echo base_url() ?>user/upload_for_merchant'><i class="fa fa-upload album-user-title-upload-icon"></i>Upload Picture</a>
+        </div>
+        <?php
+    }
+    ?>
+    <div id='float-fix'></div>
+    <div id='album-user-title-bottom-line'></div>
+    
     <div id="album-user-content">
         
         <?php
@@ -34,12 +28,12 @@ if($this->router->fetch_method() == 'user_dashboard')
                 $user_id = $this->ion_auth->user()->row()->id;
                 ?>
                 <div id="album-user-navigation">
-                    <div id="album-user-navigation-upload">
-                        <a href="<?php echo base_url() ?>all/album_user/<?php echo $user_id ?>">Picture Album</a>
+                    <div id="album-user-navigation-each">
+                        <a href="<?php echo base_url() ?>all/album_user/<?php echo $user_id ?>">My Album</a>
                     </div>
-                    <div id="album-user-navigation-separater">|</div>
-                    <div id="album-user-navigation-merchant-album">
-                        <a href="<?php echo base_url() ?>user/upload_for_merchant">Upload Picture</a>
+                    <div id='album-user-navigation-separater'>|</div>
+                    <div id="album-user-navigation-each">
+                        <a href="<?php echo base_url() ?>all/album_user_merchant/<?php echo $user_id ?>">Merchant Album</a>
                     </div>
                     <div id="float-fix"></div>
                 </div>
@@ -53,11 +47,11 @@ if($this->router->fetch_method() == 'user_dashboard')
         {
             if ($this->router->fetch_method() == 'album_user_merchant')
             {
-                $empty_data_message = "No merchant's pictures";
+                $empty_data_message = "No merchant picture";
             }
             else if ($this->router->fetch_method() == 'merchant_dashboard' || $this->uri->segment(4) == 'merchant_album')
             {
-                $empty_data_message = "No merchant's pictures";
+                $empty_data_message = "No merchant picture";
             }else{
                 $empty_data_message = "";
             }

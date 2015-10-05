@@ -516,7 +516,7 @@ class All extends CI_Controller
         }
         $this->data['album_list'] = $album_list;
 
-        $this->data['title'] = "User Picture Album";
+        $this->data['title'] = "My Album";
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'all/album_user';
         if ($this->ion_auth->logged_in())
@@ -988,7 +988,7 @@ class All extends CI_Controller
             //$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
             $this->data['message'] = NULL;
             $this->data['page_path_name'] = 'merchant/dashboard';
-            $this->data['offer_deal'] = base_url() . 'all/merchant-dashboard/' . $slug;
+            $this->data['hot_deal'] = base_url() . 'all/merchant-dashboard/' . $slug;
             $this->data['candie_promotion'] = base_url() . 'all/merchant-dashboard/' . $slug . '/promotion';
             $this->data['user_picture'] = base_url() . 'all/merchant-dashboard/' . $slug . '/picture';
             $this->data['user_upload_for_merchant'] = base_url() . 'user/upload_for_merchant/' . $slug;

@@ -62,4 +62,17 @@ class MY_Form_validation extends CI_Form_validation
         }
     }
     
+    public function required_dropdown($str)
+    {
+        if($str != 0)
+        {
+            return TRUE;
+        }
+        else
+        {
+            $this->CI->form_validation->set_message('required_dropdown', 'The %s field is required. Please select.');
+            return FALSE; 
+        }
+    }
+    
 }

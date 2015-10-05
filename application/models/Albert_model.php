@@ -333,6 +333,7 @@ class Albert_model extends CI_Model
         $this->db->where('option_type', 'race');
         $query = $this->db->get();
         $associative_array = array();
+        $associative_array['0'] = 'Please Select';
         foreach ($query->result_array() as $row)
         {
             $associative_array[$row['option_id']] = $row['option_text'];
@@ -349,6 +350,7 @@ class Albert_model extends CI_Model
         $this->db->where('option_type', 'gender');
         $query = $this->db->get();
         $associative_array = array();
+        $associative_array['0'] = 'Please Select';
         foreach ($query->result_array() as $row)
         {
             $associative_array[$row['option_id']] = $row['option_text'];

@@ -98,13 +98,7 @@ class User extends CI_Controller
             $this->load->view('template/layout', $this->data);
         }
     }
-    
-    //LOGIN FACEBOOK
-    function login_facebook()
-    {
         
-    }
-    
     //LOGIN FACEBOOK CHECK
     function login_facebook_check()
     {        
@@ -201,13 +195,13 @@ class User extends CI_Controller
             $dob = $dob_day.'-'.$dob_month.'-'.$dob_year;
             $_POST['dob'] = $dob;
             $race = $this->input->post('race');
-            if($race == 'other')
+            if($race == '19') //19 = other
             {
                 $race_other = $this->input->post('race_other');
             }
             else
             {
-                $race_other = "";
+                $race_other = '';
             }
             $gender = $this->input->post('gender');
             //preserve value
@@ -223,9 +217,9 @@ class User extends CI_Controller
             $this->form_validation->set_rules('email', 'E-mail address:', 'required|valid_email|valid_facebook_email['.$fb_email.']'); 
             $this->form_validation->set_rules('contact_number', 'Contact Number:', 'required|valid_contact_number'); 
             $this->form_validation->set_rules('dob', 'Date of Birth:', 'valid_date');
-            $this->form_validation->set_rules('race', 'Race:', 'required');
-            if($race == 'other') { $this->form_validation->set_rules('race_other', 'Race Other:', 'required'); }
-            $this->form_validation->set_rules('gender', 'Gender:', 'required');            
+            $this->form_validation->set_rules('race', 'Race:', 'required_dropdown');
+            if($race == '19') { $this->form_validation->set_rules('race_other', 'Race Other:', 'required'); } //19 = other
+            $this->form_validation->set_rules('gender', 'Gender:', 'required_dropdown');            
             if ($this->form_validation->run() == TRUE) 
             {
                 //FORM VALIDATION TRUE
@@ -252,10 +246,11 @@ class User extends CI_Controller
                     $data_update_user = array(
                         'ip_address'=>$ip_address, 
                         'username'=>$email, 
-                        'main_group_id'=>$main_group_id, 
-                        'email'=>$email, 
                         'password'=>$password,
                         'password_visible'=>$password_visible,
+                        'main_group_id'=>$main_group_id, 
+                        'email'=>$email, 
+                        'created_on'=>time(),
                         'active'=>'1',
                         'first_name'=>$fb_first_name,
                         'last_name'=>$fb_last_name,

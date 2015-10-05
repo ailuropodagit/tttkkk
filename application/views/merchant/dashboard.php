@@ -134,17 +134,23 @@ $dashboard_users_group_id = $row_array_dashboard_users_id['main_group_id'];
         </div>
         <div id="float-fix"></div>
         <div id="dashboard-navigation">
-            <div id="dashboard-navigation-each"><a href="<?php echo $offer_deal; ?>">Offer Deal</a></div>
+            <div id="dashboard-navigation-each">
+                <a href="<?php echo $hot_deal; ?>"><i class="fa fa-fire dashboard-navigation-each-icon"></i>Hot Deal</a>
+            </div>
             <div id="dashboard-navigation-separater">|</div>
-            <div id="dashboard-navigation-each"><a href="<?php echo $candie_promotion; ?>">Redemption</a></div>
+            <div id="dashboard-navigation-each">
+                <a href="<?php echo $candie_promotion; ?>"><i class="fa fa-gift dashboard-navigation-each-icon"></i>Redemption</a>
+            </div>
             <div id="dashboard-navigation-separater">|</div>
-            <div id="dashboard-navigation-each"><a href="<?php echo $user_picture; ?>" > User's Picture</a></div>
+            <div id="dashboard-navigation-each">
+                <a href="<?php echo $user_picture; ?>" ><i class="fa fa-picture-o dashboard-navigation-each-icon"></i>User's Picture</a>
+            </div>
             <?php
             if (check_correct_login_type($this->config->item('group_id_user')))
             {
                 ?>
                 <div id="dashboard-navigation-separater">|</div>
-                <div id="dashboard-navigation-each"><a href='<?php echo $user_upload_for_merchant ?>'> Upload Picture </a></div>
+                <div id="dashboard-navigation-each"><a href='<?php echo $user_upload_for_merchant ?>'>Upload Picture</a></div>
                 <?php
             }
             ?>
