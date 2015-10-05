@@ -1660,7 +1660,9 @@ class M_custom extends CI_Model
 
         if ($state_id != 0)
         {
+            if(!empty($have_branch_at_this_state)){
             $this->db->where_in('id', $have_branch_at_this_state);
+            }
             $this->db->or_where('me_state_id', $state_id);           
         }
 

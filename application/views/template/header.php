@@ -64,7 +64,7 @@
             
         $(function(){
   $("#search_word").autocomplete({
-            source: "home/get_merchant_list" // path to the get_birds method
+            source: "home/get_merchant_list", 
   });
 });
 

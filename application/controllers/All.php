@@ -1326,7 +1326,7 @@ class All extends CI_Controller
         }
         redirect('/', 'refresh');
     }
-
+    
     public function search_result($search_value = NULL, $state_id = 0)
     {
         $this->data['home_search_merchant'] = $this->m_custom->home_search_merchant($search_value, $state_id);
