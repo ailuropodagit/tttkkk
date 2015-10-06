@@ -7,7 +7,7 @@ $main_category_object = $this->m_custom->getCategory();
 
 //LOOP MAIN CATEGORY
 foreach ($main_category_object as $main_category) 
-{ 
+{
     //GET DATA
     $main_category_id = $main_category->category_id;
     $main_category_label = $main_category->category_label;
@@ -41,3 +41,84 @@ foreach ($main_category_object as $main_category)
 
     <?php
 }
+?>
+
+<div id="category-advertisement">
+    <div id="category-advertisement-box">
+        <table style="width: 100%; height: 100%; vertical-align: middle;">
+            <tr>
+                <td>Advertisement <br/> 160px (W) x 100px (H)</td>
+            </tr>
+        </table>
+    </div>
+    <div id="category-advertisement-box">
+        <table style="width: 100%; height: 100%; vertical-align: middle;">
+            <tr>
+                <td>Advertisement <br/> 160px (W) x 100px (H)</td>
+            </tr>
+        </table>
+    </div>
+    <div id="category-advertisement-box">
+        <table style="width: 100%; height: 100%; vertical-align: middle;">
+            <tr>
+                <td>Advertisement <br/> 160px (W) x 100px (H)</td>
+            </tr>
+        </table>
+    </div>
+    <div id="category-advertisement-box">
+        <table style="width: 100%; height: 100%; vertical-align: middle;">
+            <tr>
+                <td>Advertisement <br/> 160px (W) x 100px (H)</td>
+            </tr>
+        </table>
+    </div>
+    <div id="category-advertisement-box">
+        <table style="width: 100%; height: 100%; vertical-align: middle;">
+            <tr>
+                <td>Advertisement <br/> 160px (W) x 100px (H)</td>
+            </tr>
+        </table>
+    </div>
+    <div id="category-advertisement-box">
+        <table style="width: 100%; height: 100%; vertical-align: middle;">
+            <tr>
+                <td>Advertisement <br/> 160px (W) x 100px (H)</td>
+            </tr>
+        </table>
+    </div>
+    <div id="category-advertisement-box">
+        <table style="width: 100%; height: 100%; vertical-align: middle;">
+            <tr>
+                <td>Advertisement <br/> 160px (W) x 100px (H)</td>
+            </tr>
+        </table>
+    </div>
+    <div id="category-advertisement-box">
+        <table style="width: 100%; height: 100%; vertical-align: middle;">
+            <tr>
+                <td>Advertisement <br/> 160px (W) x 100px (H)</td>
+            </tr>
+        </table>
+    </div>
+    <div id="category-advertisement-box">
+        <table style="width: 100%; height: 100%; vertical-align: middle;">
+            <tr>
+                <td>Advertisement <br/> 160px (W) x 100px (H)</td>
+            </tr>
+        </table>
+    </div>
+    <div id="category-advertisement-box">
+        <table style="width: 100%; height: 100%; vertical-align: middle;">
+            <tr>
+                <td>Advertisement <br/> 160px (W) x 100px (H)</td>
+            </tr>
+        </table>
+    </div>
+    <div id="category-advertisement-box">
+        <table style="width: 100%; height: 100%; vertical-align: middle;">
+            <tr>
+                <td>Advertisement <br/> 160px (W) x 100px (H)</td>
+            </tr>
+        </table>
+    </div>
+</div>
