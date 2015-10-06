@@ -163,42 +163,19 @@ class Albert_model extends CI_Model
     
     /* CREATE USER_FOLLOW
     *************************************************************/
-    public function create_user_follow()
+    public function create_user_follow($data)
     {
-        $follow_from_id = $this->input->get_post('follow_from_id');
-        $follow_to_id = $this->input->get_post('follow_to_id');
-        $data = array(
-            'follow_from_id' => $follow_from_id,
-            'follow_to_id' => $follow_to_id
-        );
         return $this->db->insert('user_follow', $data);
     }
     
     /* DELETE USER_FOLLOW
     *************************************************************/
-    public function delete_user_follow()
+    public function delete_user_follow($where)
     {
-        $follow_from_id = $this->input->get_post('follow_from_id');
-        $follow_to_id = $this->input->get_post('follow_to_id');
-        $this->db->where('follow_from_id', $follow_from_id);
-        $this->db->where('follow_to_id', $follow_to_id);
+        $this->db->where($where);
         $this->db->delete('user_follow');
     }
-    
-    /* EXISTS USER_FOLLOW
-    *************************************************************/
-    public function exists_user_follow($follow_from_id, $follow_to_id)
-    {
-        //QUERY
-        $this->db->select('*');
-        $this->db->from('user_follow');
-        $this->db->where('follow_from_id', $follow_from_id);
-        $this->db->where('follow_to_id', $follow_to_id);
-        $query = $this->db->get();
-        $num_rows = $query->num_rows();
-        return $num_rows;
-    }
-    
+        
     /* READ FOLLOWER
     *************************************************************/
     public function read_follower($where)
@@ -206,12 +183,32 @@ class Albert_model extends CI_Model
         //QUERY
         $this->db->select('*');
         $this->db->from('user_follow');
-        $this->db->join('users', 'user_follow.follow_from_id = users.id', 'inner');
+        $this->db->join('users', 'user_follow.follower_id = users.id', 'inner');
         //WHERE
         if($where)
         {
             $this->db->where($where);
         }
+        $query = $this->db->get();
+        //RETURN
+        return $query;
+    }
+    
+    /* READ FOLLOWER MERCHANT
+    *************************************************************/
+    public function read_follower_merchant($where)
+    {
+        //QUERY
+        $this->db->select('*');
+        $this->db->from('user_follow');
+        $this->db->join('users', 'user_follow.follower_main_id = users.id', 'inner');
+        //WHERE
+        if($where)
+        {
+            $this->db->where($where);
+        }
+        $main_group_id_array = array(3,4);
+        $this->db->where_in('follower_group_id', $main_group_id_array); 
         $query = $this->db->get();
         //RETURN
         return $query;
@@ -224,12 +221,32 @@ class Albert_model extends CI_Model
         //QUERY
         $this->db->select('*');
         $this->db->from('user_follow');
-        $this->db->join('users', 'user_follow.follow_to_id = users.id', 'inner');
+        $this->db->join('users', 'user_follow.following_id = users.id', 'inner');
         //WHERE
         if($where)
         {
             $this->db->where($where);
         }
+        $query = $this->db->get();
+        //RETURN
+        return $query;
+    }
+    
+    /* READ FOLLOWING MERCHANT
+    *************************************************************/
+    public function read_following_merchant($where)
+    {
+        //QUERY
+        $this->db->select('*');
+        $this->db->from('user_follow');
+        $this->db->join('users', 'user_follow.following_main_id = users.id', 'inner');
+        //WHERE
+        if($where)
+        {
+            $this->db->where($where);
+        }
+        $main_group_id_array = array(3,4);
+        $this->db->where_in('following_group_id', $main_group_id_array); 
         $query = $this->db->get();
         //RETURN
         return $query;
@@ -333,6 +350,7 @@ class Albert_model extends CI_Model
         $this->db->where('option_type', 'race');
         $query = $this->db->get();
         $associative_array = array();
+        $associative_array['0'] = 'Please Select';
         foreach ($query->result_array() as $row)
         {
             $associative_array[$row['option_id']] = $row['option_text'];
@@ -349,6 +367,7 @@ class Albert_model extends CI_Model
         $this->db->where('option_type', 'gender');
         $query = $this->db->get();
         $associative_array = array();
+        $associative_array['0'] = 'Please Select';
         foreach ($query->result_array() as $row)
         {
             $associative_array[$row['option_id']] = $row['option_text'];

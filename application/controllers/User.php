@@ -98,13 +98,7 @@ class User extends CI_Controller
             $this->load->view('template/layout', $this->data);
         }
     }
-    
-    //LOGIN FACEBOOK
-    function login_facebook()
-    {
         
-    }
-    
     //LOGIN FACEBOOK CHECK
     function login_facebook_check()
     {        
@@ -202,13 +196,13 @@ class User extends CI_Controller
             $dob = $dob_day.'-'.$dob_month.'-'.$dob_year;
             $_POST['dob'] = $dob;
             $race = $this->input->post('race');
-            if($race == 'other')
+            if($race == '19') //19 = other
             {
                 $race_other = $this->input->post('race_other');
             }
             else
             {
-                $race_other = "";
+                $race_other = '';
             }
             $gender = $this->input->post('gender');
             //preserve value
@@ -224,9 +218,9 @@ class User extends CI_Controller
             $this->form_validation->set_rules('email', 'E-mail address:', 'required|valid_email|valid_facebook_email['.$fb_email.']'); 
             $this->form_validation->set_rules('contact_number', 'Contact Number:', 'required|valid_contact_number'); 
             $this->form_validation->set_rules('dob', 'Date of Birth:', 'valid_date');
-            $this->form_validation->set_rules('race', 'Race:', 'required');
-            if($race == 'other') { $this->form_validation->set_rules('race_other', 'Race Other:', 'required'); }
-            $this->form_validation->set_rules('gender', 'Gender:', 'required');            
+            $this->form_validation->set_rules('race', 'Race:', 'required_dropdown');
+            if($race == '19') { $this->form_validation->set_rules('race_other', 'Race Other:', 'required'); } //19 = other
+            $this->form_validation->set_rules('gender', 'Gender:', 'required_dropdown');            
             if ($this->form_validation->run() == TRUE) 
             {
                 //FORM VALIDATION TRUE
@@ -253,10 +247,11 @@ class User extends CI_Controller
                     $data_update_user = array(
                         'ip_address'=>$ip_address, 
                         'username'=>$email, 
-                        'main_group_id'=>$main_group_id, 
-                        'email'=>$email, 
                         'password'=>$password,
                         'password_visible'=>$password_visible,
+                        'main_group_id'=>$main_group_id, 
+                        'email'=>$email, 
+                        'created_on'=>time(),
                         'active'=>'1',
                         'first_name'=>$fb_first_name,
                         'last_name'=>$fb_last_name,
@@ -387,6 +382,104 @@ class User extends CI_Controller
                 $this->session->set_flashdata('message', $this->ion_auth->errors());
                 redirect($function_use_for, 'refresh');
             }
+        }
+    }
+    
+    //FOLLOWER
+    function follower($user_type, $user_id)
+    {
+        //CONFIG DATA
+        $group_id_user = $this->config->item('group_id_user');
+        //READ USER
+        $where_read_users = array('id'=>$user_id);
+        $query_read_user = $this->albert_model->read_users($where_read_users);
+        $user_name = $query_read_user->row()->first_name . ' ' . $query_read_user->row()->last_name;
+        //USER
+        if ($user_type == 'user')
+        {
+            //DATA
+            $data['page_title'] = $user_name . ' User Followers';
+        }
+        //MERCHANT
+        if ($user_type == 'merchant')
+        {
+            //DATA
+            $data['page_title'] = $user_name . ' Merchant Followers';
+        }
+        //QUERY USER FOLLOWER
+        $where_user_follower = array('following_id' => $user_id, 'main_group_id' => $group_id_user);
+        $data['query_user_follower'] = $this->albert_model->read_follower($where_user_follower);
+        //QUERY USER FOLLOWING
+        $where_user_following = array('follower_id' => $user_id, 'main_group_id' => $group_id_user);
+        $data['query_user_following'] = $this->albert_model->read_following($where_user_following);
+        //QUERY MERCHANT FOLLOWER
+        $where_merchant_follower = array('following_id' => $user_id);
+        $data['query_merchant_follower'] = $this->albert_model->read_follower_merchant($where_merchant_follower);
+        //QUERY MERCHANT FOLLOWING
+        $where_merchant_following = array('follower_id' => $user_id);
+        $data['query_merchant_following'] = $this->albert_model->read_following_merchant($where_merchant_following);
+        //DATA
+        $data['user_id'] = $user_id;
+        //TEMPLATE
+        $data['page_path_name'] = 'user/follow';
+        if ($this->ion_auth->logged_in())
+        {
+            //LOGGED IN
+            $this->load->view('template/layout_right_menu', $data);
+        }
+        else
+        {
+            //NOT LOGGED IN
+            $this->load->view('template/layout', $data);
+        }
+    }
+    
+    //FOLLOWING
+    function following($user_type, $user_id)
+    {
+        //CONFIG DATA
+        $group_id_user = $this->config->item('group_id_user');
+        //READ USER
+        $where_read_users = array('id'=>$user_id);
+        $query_read_user = $this->albert_model->read_users($where_read_users);
+        $user_name = $query_read_user->row()->first_name . ' ' . $query_read_user->row()->last_name;
+        //USER
+        if ($user_type == 'user')
+        {
+            //DATA
+            $data['page_title'] = $user_name . ' User Following';
+        }
+        //MERCHANT
+        if ($user_type == 'merchant')
+        {
+            //DATA
+            $data['page_title'] = $user_name . ' Merchant Following';
+        }
+        //QUERY USER FOLLOWER
+        $where_user_follower = array('following_id' => $user_id, 'main_group_id' => $group_id_user);
+        $data['query_user_follower'] = $this->albert_model->read_follower($where_user_follower);
+        //QUERY USER FOLLOWING
+        $where_user_following = array('follower_id' => $user_id, 'main_group_id' => $group_id_user);
+        $data['query_user_following'] = $this->albert_model->read_following($where_user_following);
+        //QUERY MERCHANT FOLLOWER
+        $where_merchant_follower = array('following_id' => $user_id);
+        $data['query_merchant_follower'] = $this->albert_model->read_follower_merchant($where_merchant_follower);
+        //QUERY MERCHANT FOLLOWING
+        $where_merchant_following = array('follower_id' => $user_id);
+        $data['query_merchant_following'] = $this->albert_model->read_following_merchant($where_merchant_following);
+        //DATA
+        $data['user_id'] = $user_id;
+        //TEMPLATE
+        $data['page_path_name'] = 'user/follow';
+        if ($this->ion_auth->logged_in())
+        {
+            //LOGGED IN
+            $this->load->view('template/layout_right_menu', $data);
+        }
+        else
+        {
+            //NOT LOGGED IN
+            $this->load->view('template/layout', $data);
         }
     }
 

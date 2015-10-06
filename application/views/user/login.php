@@ -92,11 +92,11 @@ if ($this->ion_auth->logged_in())
 
     // Logout
     function fbLogout() {
-//        //log out both facebook and app
-//        FB.logout(function(response) {
-//            console.log(response);
-//            document.getElementById('login-facebook-label').innerHTML = "Log In with facebook";
-//        });
+    //    //log out both facebook and app
+    //    FB.logout(function(response) {
+    //        console.log(response);
+    //        document.getElementById('login-facebook-label').innerHTML = "Log In with facebook";
+    //    });
         //logout fb only but required permission pop up
         FB.api('/me/permissions', 'delete', function(response) {
             console.log(response.status); // true for successful logout.
