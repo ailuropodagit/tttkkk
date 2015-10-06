@@ -290,7 +290,7 @@ class M_custom extends CI_Model
                 $image = $return['profile_image'];
             }
         }                    
-        return "<div style='text-align:center'><img src=".base_url() . $image_path . $image."  style='max-height:50px;max-width:50px'><div>";
+        return "<img src=".base_url() . $image_path . $image."  style='max-height:40px;max-width:40px'> ";
     }
     
     //Get one static option text by it option id
