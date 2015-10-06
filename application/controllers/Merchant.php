@@ -188,6 +188,80 @@ class Merchant extends CI_Controller
             }
         }
     }
+    
+    //FOLLOWER
+    function follower($user_type, $user_id)
+    {
+        //CONFIG DATA
+        $group_id_user = $this->config->item('group_id_user');
+        //READ USER
+        $where_read_users = array('id'=>$user_id);
+        $query_read_user = $this->albert_model->read_users($where_read_users);
+        $user_name = $query_read_user->row()->first_name . ' ' . $query_read_user->row()->last_name;
+        //USER
+        if ($user_type == 'user')
+        {
+            //DATA
+            $data['page_title'] = $user_name . ' User Followers';
+        }
+        //QUERY USER FOLLOWER
+        $where_user_follower = array('following_id' => $user_id, 'main_group_id' => $group_id_user);
+        $data['query_user_follower'] = $this->albert_model->read_follower($where_user_follower);
+        //QUERY USER FOLLOWING
+        $where_user_following = array('follower_id' => $user_id, 'main_group_id' => $group_id_user);
+        $data['query_user_following'] = $this->albert_model->read_following($where_user_following);
+        //DATA
+        $data['user_id'] = $user_id;
+        //TEMPLATE
+        $data['page_path_name'] = 'merchant/follow';
+        if ($this->ion_auth->logged_in())
+        {
+            //LOGGED IN
+            $this->load->view('template/layout_right_menu', $data);
+        }
+        else
+        {
+            //NOT LOGGED IN
+            $this->load->view('template/layout', $data);
+        }
+    }
+    
+    //FOLLOWING
+    function following($user_type, $user_id)
+    {
+        //CONFIG DATA
+        $group_id_user = $this->config->item('group_id_user');
+        //READ USER
+        $where_read_users = array('id'=>$user_id);
+        $query_read_user = $this->albert_model->read_users($where_read_users);
+        $user_name = $query_read_user->row()->first_name . ' ' . $query_read_user->row()->last_name;
+        //USER
+        if ($user_type == 'user')
+        {
+            //DATA
+            $data['page_title'] = $user_name . ' User Following';
+        }
+        //QUERY USER FOLLOWER
+        $where_user_follower = array('following_id' => $user_id, 'main_group_id' => $group_id_user);
+        $data['query_user_follower'] = $this->albert_model->read_follower($where_user_follower);
+        //QUERY USER FOLLOWING
+        $where_user_following = array('follower_id' => $user_id, 'main_group_id' => $group_id_user);
+        $data['query_user_following'] = $this->albert_model->read_following($where_user_following);
+        //DATA
+        $data['user_id'] = $user_id;
+        //TEMPLATE
+        $data['page_path_name'] = 'merchant/follow';
+        if ($this->ion_auth->logged_in())
+        {
+            //LOGGED IN
+            $this->load->view('template/layout_right_menu', $data);
+        }
+        else
+        {
+            //NOT LOGGED IN
+            $this->load->view('template/layout', $data);
+        }
+    }
 
     function update_whole_year_balance()
     {

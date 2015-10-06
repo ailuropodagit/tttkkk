@@ -6,14 +6,27 @@ if(isset($message))
 }
 ?>
     
-<?php
-//DASHBOARD USER ID
-$dashboard_slug = $this->uri->segment(3);
-$where_user = array('slug' => $dashboard_slug);
-$query_user = $this->albert_model->read_users($where_user);
-$row_array_dashboard_users_id = $query_user->row_array();
-$dashboard_users_id = $row_array_dashboard_users_id['id'];
-$dashboard_users_group_id = $row_array_dashboard_users_id['main_group_id'];
+<?php 
+//CONFIG DATA
+$empty_image = $this->config->item('empty_image');
+$album_user_profile = $this->config->item('album_user_profile');
+
+//DASHBOARD
+$dashboard_merchant_slug = $this->uri->segment(3);
+$where_read_user = array('slug'=>$dashboard_merchant_slug);
+$dashboard_users_id = $this->albert_model->read_users($where_read_user)->row()->id;
+
+//LOGGED
+if($this->ion_auth->user()->num_rows())
+{  
+    //LOGGED
+    $logged_main_group_id = $this->ion_auth->user()->row()->main_group_id; 
+    $logged_user_id = $this->session->userdata('user_id');
+    
+    //DASHBOARD
+    $where_read_user = array('id'=>$dashboard_users_id);
+    $dashboard_user_group_id = $this->albert_model->read_users($where_read_user)->row()->main_group_id;
+}
 ?>
 
 <div id="dashboard">
@@ -41,47 +54,46 @@ $dashboard_users_group_id = $row_array_dashboard_users_id['main_group_id'];
                     <?php echo $company_name; ?>
                 </div>
                 <?php
+                //LOGGED IN
                 if($this->ion_auth->user()->num_rows())
-                {
-                    $logged_main_group_id = $this->ion_auth->user()->row()->main_group_id;                       
-                    if($logged_main_group_id == 3 || $logged_main_group_id == 5)
+                {  
+                    //USER ONLY
+                    if($logged_main_group_id == 5)
                     {
-                        if(($logged_main_group_id == 5 && $dashboard_users_group_id == 3))
-                        {
-                            $logged_user_id = $this->session->userdata('user_id');                        
-                            if($dashboard_users_id != $logged_user_id)
-                            {       
+                        ?>
+                        <div id="dashboard-info-title-follow">
+                            <?php
+                            $where_user_follow = array('follower_main_id'=>$logged_user_id, 'following_main_id'=>$dashboard_users_id);
+                            $num_rows_user_follow = $this->albert_model->read_user_follow($where_user_follow)->num_rows();  
+                            if($num_rows_user_follow)
+                            {
                                 ?>
-                                <div id="dashboard-info-title-follow">
-                                    <?php
-                                    $exists_user_follow = $this->albert_model->exists_user_follow($logged_user_id, $dashboard_users_id);
-                                    if($exists_user_follow)
-                                    {
-                                        ?>
-                                        <form method="POST" action="<?php echo base_url() ?>all/delete_user_follow">
-                                            <input type="submit" value="Unfollow" id="submit-simple">
-                                            <input type="hidden" name="follow_from_id" value="<?php echo $logged_user_id ?>">
-                                            <input type="hidden" name="follow_to_id" value="<?php echo $dashboard_users_id ?>">
-                                            <input type="hidden" name="current_url" value="<?php echo current_url() ?>">
-                                        </form>
-                                        <?php
-                                    }
-                                    else
-                                    {
-                                        ?>
-                                        <form method="POST" action="<?php echo base_url() ?>all/create_user_follow">
-                                            <input type="submit" value="Follow" id="submit-simple">
-                                            <input type="hidden" name="follow_from_id" value="<?php echo $logged_user_id ?>">
-                                            <input type="hidden" name="follow_to_id" value="<?php echo $dashboard_users_id ?>">
-                                            <input type="hidden" name="current_url" value="<?php echo current_url() ?>">
-                                        </form>
-                                        <?php
-                                    }
-                                    ?>
-                                </div>        
+                                <form method="POST" action="<?php echo base_url() ?>all/delete_user_follow">
+                                    <input type="hidden" name="follower_main_id" value="<?php echo $logged_user_id ?>">
+                                    <input type="hidden" name="following_main_id" value="<?php echo $dashboard_users_id ?>">
+                                    <input type="hidden" name="current_url" value="<?php echo current_url() ?>">
+                                    <input type="submit" value="Unfollow" id="submit-simple">
+                                </form>
                                 <?php
                             }
-                        }
+                            else
+                            {
+                                ?>
+                                <form method="POST" action="<?php echo base_url() ?>all/create_user_follow">
+                                    <input type="hidden" name="follower_id" value="<?php echo $logged_user_id ?>">
+                                    <input type="hidden" name="follower_main_id" value="<?php echo $logged_user_id ?>">
+                                    <input type="hidden" name="follower_group_id" value="<?php echo $logged_main_group_id ?>">
+                                    <input type="hidden" name="following_id" value="<?php echo $dashboard_users_id ?>">
+                                    <input type="hidden" name="following_main_id" value="<?php echo $dashboard_users_id ?>">
+                                    <input type="hidden" name="following_group_id" value="<?php echo $dashboard_user_group_id ?>">
+                                    <input type="hidden" name="current_url" value="<?php echo current_url() ?>">
+                                    <input type="submit" value="Follow" id="submit-simple">
+                                </form>
+                                <?php
+                            }
+                            ?>
+                        </div>        
+                        <?php
                     }
                 }
                 ?>
@@ -120,15 +132,15 @@ $dashboard_users_group_id = $row_array_dashboard_users_id['main_group_id'];
             <div id="dashboard-info-followers-following">
                 <?php
                 //FOLLOWER
-                $num_rows_user_follow_follower =  $query_user_follow_follower->num_rows();
+                $num_rows_user_follower =  $query_user_follower->num_rows();
                 //FOLLOWING
-                $num_rows_user_follow_following =  $query_user_follow_following->num_rows();
+                $num_rows_user_following =  $query_user_following->num_rows();
                 ?>
                 <div id="dashboard-info-followers">
-                    User followers : <a href='<?php echo base_url() ?>all/follower/user/<?php echo $users_id ?>'><?php echo $num_rows_user_follow_follower ?></a>
+                    User followers : <a href='<?php echo base_url() ?>merchant/follower/user/<?php echo $users_id ?>'><?php echo $num_rows_user_follower ?></a>
                 </div>
                 <div id="dashboard-info-following">
-                    Merchants following : <a href='<?php echo base_url() ?>all/following/user/<?php echo $users_id ?>'><?php echo $num_rows_user_follow_following ?></a>
+                    Merchants following : <a href='<?php echo base_url() ?>merchant/following/user/<?php echo $users_id ?>'><?php echo $num_rows_user_following ?></a>
                 </div>
             </div>
         </div>

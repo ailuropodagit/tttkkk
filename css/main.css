@@ -1210,23 +1210,18 @@ a:hover {
     margin: 20px 0px 0px 0px;
 }
 
-#follow-left-navigation {
+#follow-navigation {
+    margin: 0px 0px 20px 0px;
+}
+
+#follow-navigation-each {
     float: left;
-    margin: 0px 0px 20px 0px;
 }
 
-#follow-right-navigation {
-    float: right;
-    margin: 0px 0px 20px 0px;
-}
-
-#follow-left-navigation-separator, #follow-right-navigation-separator {
+#follow-navigation-separator {
+    float: left;
     margin: 0px 10px 0px 10px;
     color: lightgray;
-}
-
-#follow-left-navigation-current, #follow-right-navigation-current {
-    cursor: default;
 }
 
 #follow-box {

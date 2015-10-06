@@ -223,6 +223,48 @@ class All extends CI_Controller
         }
         redirect($current_url, 'refresh');
     }
+    
+    public function create_user_follow()
+    {
+        $current_url = $_POST['current_url'];
+        $follower_id = $_POST['follower_id'];
+        $follower_main_id = $_POST['follower_main_id'];
+        $follower_group_id = $_POST['follower_group_id'];
+        $following_id = $_POST['following_id'];
+        $following_main_id = $_POST['following_main_id'];
+        $following_group_id = $_POST['following_group_id'];
+        $data = array(
+            'follower_id' => $follower_id,
+            'follower_main_id' => $follower_main_id,
+            'follower_group_id' => $follower_group_id,
+            'following_id' => $following_id,
+            'following_main_id' => $following_main_id,
+            'following_group_id' => $following_group_id
+        );
+        $this->albert_model->create_user_follow($data);
+        if ($this->db->affected_rows() > 0)
+        {
+            $this->session->set_flashdata('message', 'Follow Success');
+        }
+        redirect($current_url, 'refresh');
+    }
+
+    public function delete_user_follow()
+    {
+        $current_url = $_POST['current_url'];
+        $follower_main_id = $_POST['follower_main_id'];
+        $following_main_id = $_POST['following_main_id'];
+        $where_delete_user = array (
+            'follower_main_id' => $follower_main_id,
+            'following_main_id' => $following_main_id
+        );
+        $this->albert_model->delete_user_follow($where_delete_user);
+        if ($this->db->affected_rows() > 0)
+        {
+            $this->session->set_flashdata('message', 'Unfollow Success');
+        }
+        redirect($current_url, 'refresh');
+    }
 
     function voucher($advertise_id)
     {
@@ -807,12 +849,12 @@ class All extends CI_Controller
                 $data['users_id'] = $users_id;
                 $data['page_path_name'] = 'user/dashboard';
                 $data['page_message'] = NULL;
-                //QUERY USER FOLLOW FOLLOWER
-                $where_user_follow_follower = array('follow_to_id' => $users_id);
-                $data['query_user_follow_follower'] = $this->albert_model->read_user_follow($where_user_follow_follower);
-                //QUERY USER FOLLOW FOLLOWING
-                $where_user_follow_following = array('follow_from_id' => $users_id);
-                $data['query_user_follow_following'] = $this->albert_model->read_user_follow($where_user_follow_following);
+                //QUERY USER FOLLOWER
+                $where_user_follower = array('following_id' => $users_id);
+                $data['query_follower'] = $this->albert_model->read_follower($where_user_follower);
+                //QUERY USER FOLLOWING
+                $where_user_following = array('follower_id' => $users_id);
+                $data['query_following'] = $this->albert_model->read_following($where_user_following);
                 if (!$page)
                 {
                     //USER ALBUM
@@ -994,12 +1036,12 @@ class All extends CI_Controller
             $this->data['user_upload_for_merchant'] = base_url() . 'user/upload_for_merchant/' . $slug;
             $this->data['show_expired'] = "<a href='" . base_url() . "all/album_merchant/'. $slug>Show Expired</a><br/>";
             $this->data['users_id'] = $users_id;
-            //QUERY USER FOLLOW FOLLOWER
-            $where_user_follow_follower = array('follow_to_id' => $users_id);
-            $this->data['query_user_follow_follower'] = $this->albert_model->read_user_follow($where_user_follow_follower);
-            //QUERY USER FOLLOW FOLLOWING
-            $where_user_follow_following = array('follow_from_id' => $users_id);
-            $this->data['query_user_follow_following'] = $this->albert_model->read_user_follow($where_user_follow_following);
+            //QUERY USER FOLLOWER
+            $where_user_follower = array('following_id' => $users_id);
+            $this->data['query_user_follower'] = $this->albert_model->read_follower($where_user_follower);
+            //QUERY USER FOLLOWING
+            $where_user_following = array('follower_id' => $users_id);
+            $this->data['query_user_following'] = $this->albert_model->read_following($where_user_following);
             if ($bottom_part == NULL)
             {
                 $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('hot', NULL, $users_id);
@@ -1121,162 +1163,6 @@ class All extends CI_Controller
         {
             redirect('/', 'refresh');
         }
-    }
-
-    //FOLLOWER
-    public function follower($user_type = NULL, $users_id = NULL)
-    {
-        if ($user_type != NULL && $users_id != NULL)
-        {
-            //user
-            if ($user_type == 'user')
-            {
-                $where_user_follower = array('follow_to_id' => $users_id, 'main_group_id' => $this->group_id_user);
-            }
-            //merchant
-            elseif ($user_type == 'merchant')
-            {
-                $where_user_follower = array('follow_to_id' => $users_id, 'main_group_id' => $this->group_id_merchant);
-            }
-            $data['query_user_follower'] = $this->albert_model->read_follower($where_user_follower);
-            //COUNT
-            $where_user_following_all = array('follow_from_id' => $users_id);
-            $data['query_user_following_all'] = $this->albert_model->read_following($where_user_following_all);
-            $where_user_follower_all = array('follow_to_id' => $users_id);
-            $data['query_user_follower_all'] = $this->albert_model->read_follower($where_user_follower_all);
-            $where_user_follower_user = array('follow_to_id' => $users_id, 'main_group_id' => $this->group_id_user);
-            $data['query_user_follower_user'] = $this->albert_model->read_follower($where_user_follower_user);
-            $where_user_follower_merchant = array('follow_to_id' => $users_id, 'main_group_id' => $this->group_id_merchant);
-            $data['query_user_follower_merchant'] = $this->albert_model->read_follower($where_user_follower_merchant);
-            //DISPLAY NAME/COMPANY
-            $where_user = array('id' => $users_id);
-            $user_group_id = $this->albert_model->read_users($where_user)->row()->main_group_id;
-            if ($user_group_id == $this->group_id_user)
-            {
-                $query_read_user = $this->albert_model->read_users($where_user)->row_array();
-                $first_name = $query_read_user['first_name'];
-                $last_name = $query_read_user['last_name'];
-                $name = $first_name . ' ' . $last_name;
-            }
-            elseif ($user_group_id == $this->group_id_merchant)
-            {
-                $query_read_user = $this->albert_model->read_users($where_user)->row_array();
-                $name = $query_read_user['company'];
-            }
-            //user
-            if ($user_type == 'user')
-            {
-                $data['page_title'] = $name . ' User Followers';
-            }
-            //merchant
-            elseif ($user_type == 'merchant')
-            {
-                $data['page_title'] = $name . ' Merchant Followers';
-            }
-            $data['page_path_name'] = 'all/follow';
-            $data['users_id'] = $users_id;
-            if ($this->ion_auth->user()->num_rows())
-            {
-                $this->load->view('template/layout_right_menu', $data);
-            }
-            else
-            {
-                $this->load->view('template/layout', $data);
-            }
-        }
-        else
-        {
-            redirect('/', 'refresh');
-        }
-    }
-
-    //FOLLOWING
-    public function following($user_type = NULL, $users_id = NULL)
-    {
-        if ($user_type != NULL && $users_id != NULL)
-        {
-            //user
-            if ($user_type == 'user')
-            {
-                $where_user_following = array('follow_from_id' => $users_id, 'main_group_id' => $this->group_id_user);
-            }
-            //merchant
-            elseif ($user_type == 'merchant')
-            {
-                $where_user_following = array('follow_from_id' => $users_id, 'main_group_id' => $this->group_id_merchant);
-            }
-            $data['query_user_following'] = $this->albert_model->read_following($where_user_following);
-            //COUNT
-            $where_user_following_all = array('follow_from_id' => $users_id);
-            $data['query_user_following_all'] = $this->albert_model->read_following($where_user_following_all);
-            $where_user_follower_all = array('follow_to_id' => $users_id);
-            $data['query_user_follower_all'] = $this->albert_model->read_follower($where_user_follower_all);
-            $where_user_following_user = array('follow_from_id' => $users_id, 'main_group_id' => $this->group_id_user);
-            $data['query_user_following_user'] = $this->albert_model->read_following($where_user_following_user);
-            $where_user_following_merchant = array('follow_from_id' => $users_id, 'main_group_id' => $this->group_id_merchant);
-            $data['query_user_following_merchant'] = $this->albert_model->read_following($where_user_following_merchant);
-            //DISPLAY NAME/COMPANY
-            $where_user = array('id' => $users_id);
-            $user_group_id = $this->albert_model->read_users($where_user)->row()->main_group_id;
-            if ($user_group_id == $this->group_id_user)
-            {
-                $query_read_user = $this->albert_model->read_users($where_user)->row_array();
-                $first_name = $query_read_user['first_name'];
-                $last_name = $query_read_user['last_name'];
-                $name = $first_name . ' ' . $last_name;
-            }
-            elseif ($user_group_id == $this->group_id_merchant)
-            {
-                $query_read_user = $this->albert_model->read_users($where_user)->row_array();
-                $name = $query_read_user['company'];
-            }
-            //user
-            if ($user_type == 'user')
-            {
-                $data['page_title'] = $name . ' User Following';
-            }
-            //merchant
-            elseif ($user_type == 'merchant')
-            {
-                $data['page_title'] = $name . ' Merchant Following';
-            }
-            $data['page_path_name'] = 'all/follow';
-            $data['users_id'] = $users_id;
-            if ($this->ion_auth->user()->num_rows())
-            {
-                $this->load->view('template/layout_right_menu', $data);
-            }
-            else
-            {
-                $this->load->view('template/layout', $data);
-            }
-        }
-        else
-        {
-            redirect('/', 'refresh');
-        }
-    }
-
-    public function create_user_follow()
-    {
-        $current_url = $_POST['current_url'];
-        $this->albert_model->create_user_follow();
-        if ($this->db->affected_rows() > 0)
-        {
-            $this->session->set_flashdata('message', 'Follow Success');
-        }
-        redirect($current_url, 'refresh');
-    }
-
-    public function delete_user_follow()
-    {
-        $current_url = $_POST['current_url'];
-        $this->albert_model->delete_user_follow();
-        if ($this->db->affected_rows() > 0)
-        {
-            $this->session->set_flashdata('message', 'Unfollow Success');
-        }
-        redirect($current_url, 'refresh');
     }
 
     public function home_search()
