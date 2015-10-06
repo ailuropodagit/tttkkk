@@ -157,7 +157,8 @@ class User extends CI_Controller
     // login facebook first time
     function login_facebook_first_time()
     {
-        if(empty($this->session->flashdata('post_value_array')))
+        $post_value_array_temp = $this->session->flashdata('post_value_array');
+        if(empty($post_value_array_temp))
         {
             redirect('./', 'refresh');
         }

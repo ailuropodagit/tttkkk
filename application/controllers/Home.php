@@ -49,7 +49,7 @@ class Home extends CI_Controller
         $this->load->view('template/layout_advertisement', $data);
     }
     
-    function get_merchant_list()
+    public function get_merchant_list()
     {
         if (isset($_GET['term']))
         {
