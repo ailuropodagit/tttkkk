@@ -1058,50 +1058,6 @@ class User extends CI_Controller
                     }
                 }
             }
-            else if ($this->input->post('button_action') == "change_image")
-            {
-                $upload_rule = array(
-                    'upload_path' => $this->album_user_profile,
-                    'allowed_types' => $this->config->item('allowed_types_image'),
-                    'max_size' => $this->config->item('max_size'),
-                    'max_width' => $this->config->item('max_width'),
-                    'max_height' => $this->config->item('max_height'),
-                );
-
-                $this->load->library('upload', $upload_rule);
-
-                if (!$this->upload->do_upload())
-                {
-                    $error = array('error' => $this->upload->display_errors());
-                    $this->session->set_flashdata('message', $this->upload->display_errors());
-                }
-                else
-                {
-                    $image_data = array('upload_data' => $this->upload->data());
-                    //$this->ion_auth->set_message('image_upload_successful');
-
-                    $data = array(
-                        'profile_image' => $this->upload->data('file_name'),
-                    );
-
-                    if ($this->ion_auth->update($user_id, $data))
-                    {
-                        $this->session->set_flashdata('message', 'User profile image success update.');
-                        redirect('user/profile', 'refresh');
-                    }
-                    else
-                    {
-
-                        $this->session->set_flashdata('message', $this->ion_auth->errors());
-                    }
-                }
-
-                redirect('user/profile', 'refresh');
-            }
-            else
-            {
-                
-            }
         }
         $this->data['image_path'] = $this->album_user_profile;
         $this->data['image'] = $user->profile_image;
@@ -1214,6 +1170,57 @@ class User extends CI_Controller
         );
         $this->data['page_path_name'] = 'user/profile';
         $this->load->view('template/layout_right_menu', $this->data);
+    }
+
+    function update_profile_image()
+    {
+        if (!check_correct_login_type($this->main_group_id))
+        {
+            redirect('/', 'refresh');
+        }
+        $user_id = $this->ion_auth->user()->row()->id;
+        if (isset($_POST) && !empty($_POST))
+        {
+            if ($this->input->post('button_action') == "change_image")
+            {
+                $upload_rule = array(
+                    'upload_path' => $this->album_user_profile,
+                    'allowed_types' => $this->config->item('allowed_types_image'),
+                    'max_size' => $this->config->item('max_size'),
+                    'max_width' => $this->config->item('max_width'),
+                    'max_height' => $this->config->item('max_height'),
+                );
+
+                $this->load->library('upload', $upload_rule);
+
+                if (!$this->upload->do_upload())
+                {
+                    $error = array('error' => $this->upload->display_errors());
+                    $this->session->set_flashdata('message', $this->upload->display_errors());
+                }
+                else
+                {
+                    $image_data = array('upload_data' => $this->upload->data());
+                    //$this->ion_auth->set_message('image_upload_successful');
+
+                    $data = array(
+                        'profile_image' => $this->upload->data('file_name'),
+                    );
+
+                    if ($this->ion_auth->update($user_id, $data))
+                    {
+                        $this->session->set_flashdata('message', 'User profile image success update.');
+                    }
+                    else
+                    {
+
+                        $this->session->set_flashdata('message', $this->ion_auth->errors());
+                    }
+                }
+
+                redirect('all/user_dashboard/' . $user_id, 'refresh');
+            }
+        }
     }
 
     function edit_merchant_picture($picture_id = NULL)

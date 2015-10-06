@@ -61,10 +61,24 @@
                 js.src = "//connect.facebook.net/en_US/sdk.js";
                 fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
-            
+
         $(function(){
   $("#search_word").autocomplete({
-            source: "home/get_merchant_list", 
+            source: function(request, response) {
+            $.ajax({
+            url: "/keppo/home/get_merchant_list/",
+            data: { term: $("#search_word").val()},
+            dataType: "json",
+            type: "POST",
+            success: function(data){
+        var resp = $.map(data,function(obj){                     
+        return obj.tag;                  
+               }); 
+
+               response(data);
+            }
+        });
+    },
   });
 });
 
@@ -206,7 +220,7 @@
                                     'id' => 'me_state_id',
                                 );
                                 $selected_state = $this->uri->segment(4);
-                                if(!empty($selected_state) && $this->router->fetch_method() == 'search_result'){
+                                if(!empty($selected_state) && $this->router->fetch_method() == 'home_search'){
                                     echo form_dropdown($me_state_id, $state_list, $selected_state);
                                 }else{
                                 echo form_dropdown($me_state_id, $state_list);

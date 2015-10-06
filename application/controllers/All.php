@@ -1172,40 +1172,35 @@ class All extends CI_Controller
         {
             if ($this->input->post('button_action') == "search")
             {
-                $search_word = $this->input->post('search_word');
-                $search_state = $this->input->post('me_state_id');
-                if (IsNullOrEmptyString($search_word))
+                $search_value = $this->input->post('search_word');
+                $state_id = $this->input->post('me_state_id');
+                if (IsNullOrEmptyString($search_value))
                 {
-                    $search_word = 0;
+                    $search_value = 0;
                 }
-                redirect('all/search_result/' . $search_word . '/' . $search_state, 'refresh');
+                $this->data['home_search_merchant'] = $this->m_custom->home_search_merchant($search_value, $state_id);
+                $this->data['home_search_hotdeal'] = $this->m_custom->home_search_hotdeal($search_value, $state_id);
+                $this->data['home_search_promotion'] = $this->m_custom->home_search_promotion($search_value, $state_id);
+
+                $this->data['state_name'] = "";
+                if ($state_id != 0)
+                {
+                    $this->data['state_name'] = " : " . $this->m_custom->display_static_option($state_id);
+                }
+
+                $this->data['page_path_name'] = 'all/search_result';
+
+                if ($this->ion_auth->logged_in())
+                {
+                    $this->load->view('template/layout_right_menu', $this->data);
+                }
+                else
+                {
+                    $this->load->view('template/layout', $this->data);
+                }
             }
         }
-        redirect('/', 'refresh');
-    }
-    
-    public function search_result($search_value = NULL, $state_id = 0)
-    {
-        $this->data['home_search_merchant'] = $this->m_custom->home_search_merchant($search_value, $state_id);
-        $this->data['home_search_hotdeal'] = $this->m_custom->home_search_hotdeal($search_value, $state_id);
-        $this->data['home_search_promotion'] = $this->m_custom->home_search_promotion($search_value, $state_id);
-
-        $this->data['state_name'] = "";
-        if ($state_id != 0)
-        {
-            $this->data['state_name'] = " : " . $this->m_custom->display_static_option($state_id);
-        }
-
-        $this->data['page_path_name'] = 'all/search_result';
-
-        if ($this->ion_auth->logged_in())
-        {
-            $this->load->view('template/layout_right_menu', $this->data);
-        }
-        else
-        {
-            $this->load->view('template/layout', $this->data);
-        }
+        //redirect('/', 'refresh');
     }
 
 }

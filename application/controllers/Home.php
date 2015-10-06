@@ -51,10 +51,10 @@ class Home extends CI_Controller
     
     public function get_merchant_list()
     {
-        if (isset($_GET['term']))
+        if (isset($_POST) && !empty($_POST))
         {
-            $q = strtolower($_GET['term']);
-            $this->m_custom->home_search_get_merchant($q);
+            $term = $this->input->post('term', TRUE);
+            $this->m_custom->home_search_get_merchant($term);
         }
     }
 

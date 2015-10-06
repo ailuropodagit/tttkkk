@@ -47,6 +47,20 @@ if($this->ion_auth->user()->num_rows())
                 <?php
             }
             ?>
+            <?php if (check_correct_login_type($this->config->item('group_id_merchant'))) { ?>
+                <?php echo form_open_multipart('merchant/update_profile_image'); ?>
+            
+                <div id="profile-photo-note">
+                    <?php echo $this->config->item('upload_guide_image'); ?>
+                </div>
+                <div id="profile-photo-input-file">
+                    <input type="file" name="userfile" size="10"/>
+                </div>
+                <div id="profile-photo-button">
+                    <button name="button_action" type="submit" value="change_image" >Change Logo</button>
+                </div>          
+                <?php echo form_close(); ?>
+            <?php  } ?>
         </div>
         <div id="dashboard-info">
             <div id="dashboard-info-title">
@@ -120,12 +134,12 @@ if($this->ion_auth->user()->num_rows())
                     <tr>
                         <td>Website</td>
                         <td>:</td>
-                        <td><div class="text-ellipsis"><?php echo anchor_popup($website_url, $website_url); ?></div></td>
+                        <td><div class="text-ellipsis"><?php echo "<a target='_blank' href='".$website_url."' >".$website_url."</a>";?></div></td>
                     </tr>
                     <tr>
                         <td>Facebook URL</td>
                         <td>:</td>
-                        <td><div class="text-ellipsis"><?php echo anchor_popup($facebook_url, $facebook_url); ?></div></td>
+                        <td><div class="text-ellipsis"><?php echo "<a target='_blank' href='".$facebook_url."' >".$facebook_url."</a>"; ?></div></td>
                     </tr>
                 </table>
             </div>

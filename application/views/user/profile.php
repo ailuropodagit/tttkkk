@@ -43,17 +43,19 @@ if(isset($message))
                 }
                 ?>
             </div>
-            <?php echo form_open_multipart(uri_string()); ?>
-                <div id="profile-photo-note">
-                    <?php echo $this->config->item('upload_guide_image'); ?>
-                </div>
-                <div id="profile-photo-input-file">
-                    <input type="file" name="userfile" size="10"/>
-                </div>
-                <div id="profile-photo-button">
-                    <button name="button_action" type="submit" value="change_image" >Change Image</button>
-                </div>
-            <?php echo form_close(); ?>
+            <?php if (check_correct_login_type($this->config->item('group_id_user'))) { ?>
+                <?php echo form_open_multipart('user/update_profile_image'); ?>
+                    <div id="profile-photo-note">
+                        <?php echo $this->config->item('upload_guide_image'); ?>
+                    </div>
+                    <div id="profile-photo-input-file">
+                        <input type="file" name="userfile" size="10"/>
+                    </div>
+                    <div id="profile-photo-button">
+                        <button name="button_action" type="submit" value="change_image" >Change Image</button>
+                    </div>
+                <?php echo form_close(); ?>
+            <?php  } ?>
         </div>
         
         <div id='profile-info'> 

@@ -2130,7 +2130,7 @@ a:hover {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    width: 120px;
+    width: 150px;
 }
 
 #user-comment-list-each-comment-time {

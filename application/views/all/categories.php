@@ -30,7 +30,7 @@ foreach ($main_category_object as $main_category)
                 <a href="<?php echo base_url() ?>all/merchant-category/<?php echo $sub_category_id ?>">
                     <span id="category-each-nav-icon"><i class="fa fa-caret-right"></i></span>
                     <?php echo $sub_category_label ?>
-                </a>
+                </a> (<?php echo $this->m_merchant->getMerchantCount_by_subcategory($sub_category_id); ?>)
             </div>
             <?php
         }
