@@ -26,9 +26,10 @@ if(isset($message))
                     <?php
                 }
                 ?>  
-            </div>
-            <?php echo form_open_multipart(uri_string()); ?>
-            <?php if (check_correct_login_type($this->main_group_id)) { ?>
+            </div>          
+            <?php if (check_correct_login_type($this->config->item('group_id_merchant'))) { ?>
+                <?php echo form_open_multipart('merchant/update_profile_image'); ?>
+            
                 <div id="profile-photo-note">
                     <?php echo $this->config->item('upload_guide_image'); ?>
                 </div>
@@ -37,9 +38,9 @@ if(isset($message))
                 </div>
                 <div id="profile-photo-button">
                     <button name="button_action" type="submit" value="change_image" >Change Logo</button>
-                </div>
+                </div>          
+                <?php echo form_close(); ?>
             <?php  } ?>
-            <?php echo form_close(); ?>
         </div>
 
         <div id='profile-info'> 

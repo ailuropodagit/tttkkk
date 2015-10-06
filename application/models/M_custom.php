@@ -216,30 +216,31 @@ class M_custom extends CI_Model
         $postfix = '';
         if ($with_icon == 1)
         {
+            $prefix = $this->m_custom->display_user_profile_image($user_id);
             if ($return->main_group_id == $this->config->item('group_id_merchant'))
             {
-                $prefix = '<i class="fa fa-user-secret"></i> ';
+                //$prefix = '<i class="fa fa-user-secret"></i> ';
                 $postfix = ' <i class="fa fa-star"></i> ';
             }
-            else if ($return->main_group_id == $this->config->item('group_id_supervisor'))
-            {
-                $prefix = '<i class="fa fa-user-secret"></i> ';
-            }
-            else if ($return->main_group_id == $this->config->item('group_id_user'))
-            {
-                if ($return->us_gender_id == $this->config->item('gender_id_male'))
-                {
-                    $prefix = '<i class="fa fa-mars"></i> ';
-                }
-                else
-                {
-                    $prefix = '<i class="fa fa-venus"></i> ';
-                }
-            }
-            else
-            {
-                $prefix = '<i class="fa fa-user"></i> ';
-            }
+//            else if ($return->main_group_id == $this->config->item('group_id_supervisor'))
+//            {
+//                $prefix = '<i class="fa fa-user-secret"></i> ';
+//            }
+//            else if ($return->main_group_id == $this->config->item('group_id_user'))
+//            {
+//                if ($return->us_gender_id == $this->config->item('gender_id_male'))
+//                {
+//                    $prefix = '<i class="fa fa-mars"></i> ';
+//                }
+//                else
+//                {
+//                    $prefix = '<i class="fa fa-venus"></i> ';
+//                }
+//            }
+//            else
+//            {
+//                $prefix = '<i class="fa fa-user"></i> ';
+//            }
         }
 
         if ($return->main_group_id == $this->config->item('group_id_merchant'))
@@ -265,6 +266,33 @@ class M_custom extends CI_Model
         }
     }
 
+    public function display_user_profile_image($user_id){
+        $this->db->select('main_group_id,profile_image,su_merchant_id');
+        $query = $this->db->get_where('users', array('id' => $user_id));
+        if ($query->num_rows() > 0)   {        
+            $return = $query->row_array();
+            if ($return['main_group_id'] == $this->config->item('group_id_merchant'))
+            {
+                $image_path = $this->config->item('album_merchant_profile');
+                $image = $return['profile_image'];
+            }
+            else if ($return['main_group_id'] == $this->config->item('group_id_supervisor'))
+            {
+                $image_path = $this->config->item('album_merchant_profile');
+                $this->db->select('profile_image');
+                $merchant_query = $this->db->get_where('users', array('id' => $return['su_merchant_id']));
+                $merchant_row = $merchant_query->row_array();
+                $image = $merchant_row['profile_image'];
+            }
+            else if ($return['main_group_id'] == $this->config->item('group_id_user'))
+            {
+                $image_path = $this->config->item('album_user_profile');
+                $image = $return['profile_image'];
+            }
+        }                    
+        return "<div style='text-align:center'><img src=".base_url() . $image_path . $image."  style='max-height:50px;max-width:50px'><div>";
+    }
+    
     //Get one static option text by it option id
     public function display_static_option($option_id = NULL)
     {

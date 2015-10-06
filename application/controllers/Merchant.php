@@ -851,44 +851,6 @@ class Merchant extends CI_Controller
                     }
                 }
             }
-            else if ($this->input->post('button_action') == "change_image")
-            {
-                $upload_rule = array(
-                    'upload_path' => $this->album_merchant_profile,
-                    'allowed_types' => $this->config->item('allowed_types_image'),
-                    'max_size' => $this->config->item('max_size'),
-                    'max_width' => $this->config->item('max_width'),
-                    'max_height' => $this->config->item('max_height'),
-                );
-
-                $this->load->library('upload', $upload_rule);
-
-                if (!$this->upload->do_upload())
-                {
-                    $error = array('error' => $this->upload->display_errors());
-                    $this->session->set_flashdata('message', $this->upload->display_errors());
-                }
-                else
-                {
-                    $image_data = array('upload_data' => $this->upload->data());
-                    //$this->ion_auth->set_message('image_upload_successful');
-
-                    $data = array(
-                        'profile_image' => $this->upload->data('file_name'),
-                    );
-
-                    if ($this->ion_auth->update($merchant_id, $data))
-                    {
-                        $this->session->set_flashdata('message', 'Merchant logo success update.');
-                        redirect('merchant/profile', 'refresh');
-                    }
-                    else
-                    {
-                        $this->session->set_flashdata('message', $this->ion_auth->errors());
-                    }
-                }
-                redirect('merchant/profile', 'refresh');
-            }
             else if ($this->input->post('button_action') == "view_branch")
             {
                 redirect('merchant/branch', 'refresh');
@@ -1017,6 +979,55 @@ class Merchant extends CI_Controller
         );
         $this->data['page_path_name'] = 'merchant/profile';
         $this->load->view('template/layout_right_menu', $this->data);
+    }
+
+    public function update_profile_image()
+    {
+        if (!check_correct_login_type($this->main_group_id))
+        {
+            redirect('/', 'refresh');
+        }
+        $merchant_id = $this->ion_auth->user()->row()->id;
+        if (isset($_POST) && !empty($_POST))
+        {
+            if ($this->input->post('button_action') == "change_image")
+            {
+                $upload_rule = array(
+                    'upload_path' => $this->album_merchant_profile,
+                    'allowed_types' => $this->config->item('allowed_types_image'),
+                    'max_size' => $this->config->item('max_size'),
+                    'max_width' => $this->config->item('max_width'),
+                    'max_height' => $this->config->item('max_height'),
+                );
+
+                $this->load->library('upload', $upload_rule);
+
+                if (!$this->upload->do_upload())
+                {
+                    $error = array('error' => $this->upload->display_errors());
+                    $this->session->set_flashdata('message', $this->upload->display_errors());
+                }
+                else
+                {
+                    $image_data = array('upload_data' => $this->upload->data());
+                    //$this->ion_auth->set_message('image_upload_successful');
+
+                    $data = array(
+                        'profile_image' => $this->upload->data('file_name'),
+                    );
+
+                    if ($this->ion_auth->update($merchant_id, $data))
+                    {
+                        $this->session->set_flashdata('message', 'Merchant logo success update.');
+                    }
+                    else
+                    {
+                        $this->session->set_flashdata('message', $this->ion_auth->errors());
+                    }
+                }
+                redirect('all/merchant_dashboard/'.$this->session->userdata('company_slug'), 'refresh');
+            }
+        }
     }
 
     public function merchant_redemption_page($show_used = 0)
