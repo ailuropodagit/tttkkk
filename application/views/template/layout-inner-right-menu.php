@@ -16,7 +16,7 @@
                 $merchant_balance_text = '<span style="color:green" >(RM '.$merchant_balance . ')</span>';
             }
             //FOLLOWER COUNT
-            $where_user_follower = array('following_id' => $login_user_id);
+            $where_user_follower = array('following_main_id' => $login_user_id);
             $follower_num_rows = $this->albert_model->read_follower($where_user_follower)->num_rows();
             ?>
             <li><a href='<?php echo $dashboard ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'merchant_dashboard' || $fetch_method == 'merchant_outlet' || $fetch_method == 'map'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Dashboard</a></li>
@@ -44,7 +44,9 @@
             $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;
             $fetch_method = $this->router->fetch_method();
             //FOLLOWER COUNT
-            $where_user_follower = array('following_id' => $login_user_id);
+            $where_read_user = array('id'=>$login_user_id);
+            $login_main_merchant_id = $this->albert_model->read_users($where_read_user)->row()->su_merchant_id;
+            $where_user_follower = array('following_main_id' => $login_main_merchant_id);
             $follower_num_rows = $this->albert_model->read_follower($where_user_follower)->num_rows();
             ?>
             <li><a href='<?php echo $dashboard; ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'merchant_dashboard' || $fetch_method == 'merchant_outlet' || $fetch_method == 'map'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Dashboard</a></li>
@@ -69,7 +71,7 @@
             $user_redemption = base_url() . 'user/redemption/' . $this->config->item('voucher_active');  
             $fetch_method = $this->router->fetch_method();
             //FOLLOWER COUNT
-            $where_user_follower = array('following_id' => $login_user_id);
+            $where_user_follower = array('following_main_id' => $login_user_id);
             $follower_num_rows = $this->albert_model->read_follower($where_user_follower)->num_rows();
             ?>
             <li><a href='<?php echo $dashboard; ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'user_dashboard'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Dashboard</a></li>
