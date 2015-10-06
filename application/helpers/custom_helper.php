@@ -34,6 +34,18 @@ if (!function_exists('display_simple_message'))
         $simple_info = $ci->session->flashdata('simple_info');
         if (!empty($simple_info))
         {
+            $redirect_url = $simple_info['back_page_url'];
+            $pos = strpos($redirect_url, 'http://');
+            if ($pos === false)
+            {
+                $ci->data['redirect_url'] = base_url() . $redirect_url;
+            }
+            else
+            {
+                $ci->data['redirect_url'] = $redirect_url;
+            }
+
+            if($simple_info['back_page_url'])
             $ci->data['simple_info'] = $simple_info;
             $ci->data['page_path_name'] = 'simple_message';
             $ci->load->view('template/layout', $ci->data);

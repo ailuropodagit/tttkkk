@@ -1,6 +1,6 @@
 <script>
     setTimeout(function(){
-       window.location="<?php echo '/keppo/'.$simple_info['back_page_url']; ?>";
+       window.location="<?php echo $redirect_url; ?>";
     }, <?php echo $simple_info['redirect_second']; ?>);
 </script>
 

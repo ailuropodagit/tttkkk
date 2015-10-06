@@ -720,7 +720,8 @@ class All extends CI_Controller
         $get_status = send_mail_simple($mail_info['email'], $mail_info['redeem_info']['redeem_email_subject'], $mail_message, 'keppo_redeem_send_email_success');
         if ($get_status)
         {
-            set_simple_message('Thank you!', 'Please check your e-mail (Inbox/Junk) or keppo.my redemption "active". <br/><br/>Please present this voucher before you purchase.<br/><br/>Enjoy your gift from merchants & Keppo.my.', $mail_message, $mail_info['return_url'], 'Back', 'all/simple_message');
+            set_simple_message('Thank you!', 'Please check your e-mail (Inbox/Junk) or keppo.my redemption "active". <br/><br/>Please present this voucher before you purchase.<br/><br/>Enjoy your gift from merchants & Keppo.my.', 
+                    $mail_message, $mail_info['return_url'], 'Back', 'all/simple_message');
         }
         else
         {
