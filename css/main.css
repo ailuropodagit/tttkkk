@@ -1341,8 +1341,7 @@ a:hover {
 }
 
 #hot-deal-photo-box {
-    width: 250px;
-    height: 250px;
+    width: 100%;
     border: 1px solid lightgray;
     background-color: whitesmoke;
     margin: 10px auto 10px auto;
@@ -1781,8 +1780,7 @@ a:hover {
 }
 
 #redemption-photo-box {
-    width: 250px;
-    height: 250px;
+    width: 100%;
     border: 1px solid lightgray;
     background-color: whitesmoke;
     margin: 10px auto 10px auto;
