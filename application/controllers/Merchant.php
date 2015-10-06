@@ -239,7 +239,7 @@ class Merchant extends CI_Controller
         if ($user_type == 'user')
         {
             //DATA
-            $data['page_title'] = $user_name . ' User Following';
+            $data['page_title'] = $user_name . ' Merchant Following';
         }
         //QUERY USER FOLLOWER
         $where_user_follower = array('following_id' => $user_id, 'main_group_id' => $group_id_user);
