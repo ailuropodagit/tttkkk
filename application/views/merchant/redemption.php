@@ -10,7 +10,15 @@ if(isset($message))
     <h1><?php echo $title; ?></h1>
     <div id='user-redemption-content'>
         
-        <?php
+                <?php echo form_open(uri_string()); ?>
+<div id="search-box-block1">
+    <input type="text" placeholder="Search: User Name, Email, Voucher Code" name="search_word" id="search_word">
+    <button name="button_action" type="submit" value="search">Search</button>
+</div>
+<?php echo form_close(); ?>
+     <br/>  <br/>
+        <?php      
+        
         $voucher_active = $this->config->item('voucher_active');
         if ($show_used == 1)
         {
@@ -22,12 +30,12 @@ if(isset($message))
         }
         ?>
         
-        <?php
+        <?php       
         foreach ($promotion_list as $promotion_row)
         {
             $advertise_url = "<a target='_blank' href='" . base_url() . "all/advertise/" . $promotion_row['advertise_id'] . "'>" . $promotion_row['title'] . "</a>";
             echo $advertise_url . "<br/><br/>";
-            $redeem_list = $this->m_merchant->getUserRedemption($promotion_row['advertise_id'], $voucher_active);
+            $redeem_list = $this->m_merchant->getUserRedemption($promotion_row['advertise_id'], $voucher_active, 0, $search_word);
             ?>
             <table border='1px' cellpadding='0px' cellspacing='0px'>
                 <colgroup>

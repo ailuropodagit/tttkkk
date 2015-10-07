@@ -1046,6 +1046,16 @@ class Merchant extends CI_Controller
                 $supervisor = $this->m_custom->getUser($supervisor_id);
             }
 
+            $search_word = '';
+            if (isset($_POST) && !empty($_POST))
+            {
+                if ($this->input->post('button_action') == "search")
+                {
+                    $search_word = $this->input->post('search_word');
+                }
+            }
+            $this->data['search_word'] = $search_word;
+                    
             $this->data['title'] = "User Redemption";
             if ($show_used == 1)
             {

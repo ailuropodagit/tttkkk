@@ -739,6 +739,39 @@ class M_custom extends CI_Model
         return $query->row_array();
     }
 
+    function getUserInfo($user_id)
+    {
+        $query = $this->db->get_where('users', array('id' => $user_id, 'main_group_id' => $this->config->item('group_id_user')));
+        $user = $query->row_array();
+        $user_info = array(
+            'id' => $user['id'],
+            'email' => $user['email'],       
+            'phone' => $user['phone'],
+            'address' => $user['address'],
+            'first_name' => $user['first_name'],
+            'last_name' => $user['last_name'],
+            'name' => $user['first_name'] . ' ' . $user['last_name'],
+            'profile_image' => $user['profile_image'],
+            'us_ic' => $user['us_ic'],
+            'us_race_id' => $user['us_race_id'],
+            'us_race_id_name' => $this->m_custom->display_static_option($user['us_race_id']),
+            'us_race_other' => $user['us_race_other'],
+            'us_age' => $user['us_age'],
+            'us_gender_id' => $user['us_gender_id'],
+            'us_gender_id_name' => $this->m_custom->display_static_option($user['us_gender_id']),
+            'us_birthday' => $user['us_birthday'],
+            'us_birthday_text' => displayDate($user['us_birthday']),
+            'us_blog_url' => $user['us_blog_url'],
+            'us_instagram_url' => $user['us_instagram_url'],
+            'us_facebook_url' => $user['us_facebook_url'],
+            'us_register_type' => $user['us_register_type'],
+            'us_fb_id' => $user['us_fb_id'],
+            'user_dashboard_url' => base_url() . "all/user-dashboard/" . $user_id,
+            'user_dashboard_link' => $this->m_custom->generate_user_link($user_id),
+        );
+        return $user_info;
+    }
+    
     function getMerchantInfo($merchant_id)
     {
         $query = $this->db->get_where('users', array('id' => $merchant_id));
@@ -2018,10 +2051,10 @@ class M_custom extends CI_Model
         }
     }
     
-    public function home_search_get_merchant($q)
+    public function home_search_get_merchant($search_word)
     {
         $this->db->select('company');
-        $this->db->like('company', $q);
+        $this->db->like('company', $search_word);
         $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant'), 'hide_flag' => 0));
         if ($query->num_rows() > 0)
         {
