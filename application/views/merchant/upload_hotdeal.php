@@ -60,7 +60,9 @@ if(isset($message))
                     <div id='hot-deal-advertise-form-each-label'><?php echo lang("hotdeal_description_label"); ?></div>
                     <div id='hot-deal-advertise-form-each-input'>
                         <?php
-                        echo form_textarea(${'hotdeal_desc' . $i});
+                        //echo form_textarea(${'hotdeal_desc' . $i});
+                        echo "<textarea name='".${'hotdeal_desc' . $i}."' cols='40' rows='10' id='".${'hotdeal_desc' . $i}."' maxlength='500' placeholder='Max 500 words'>"
+                                .${'hotdeal_desc_value' . $i}. "</textarea>";
                         ?>
                     </div>
                 </div>

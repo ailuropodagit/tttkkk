@@ -405,17 +405,35 @@ class M_merchant extends CI_Model
         return FALSE;
     }
 
-    function getUserRedemption($promotion_id, $status_id, $hide_expired = 0)
+    function getUserRedemption($promotion_id, $status_id, $hide_expired = 0, $search_word = '')
     {
+        $this->db->order_by('voucher', 'asc');
         if ($hide_expired == 1)
         {
             $this->db->where('expired_date >=', get_part_of_date('all'));
         }
         $redeem_query = $this->db->get_where('user_redemption', array('advertise_id' => $promotion_id, 'status_id' => $status_id));
-        return $redeem_query->result_array();
+        $result = $redeem_query->result_array();
+        $return = array();
+        foreach ($result as $row)
+        {
+            if (!empty($search_word))
+            {
+                $user_info = $this->m_custom->getUserInfo($row['user_id']);
+                if((searchWord($user_info['name'], $search_word))||(searchWord($user_info['email'], $search_word))||(searchWord($row['voucher'], $search_word))){
+                    $return[] = $row;
+                }
+            }
+            else
+            {
+                $return[] = $row;
+            }
+        }
+
+        return $return;
     }
 
-    public function generate_voucher($id)
+    public function generate_voucher($id, $user_id = 0)
     {
         $result = $this->m_custom->get_one_table_record('users', 'id', $id, 1);
         $voucher = '';
@@ -425,7 +443,7 @@ class M_merchant extends CI_Model
         {
             do
             {
-                $voucher = strtoupper(substr($result['slug'], 0, 3)) . date('Ymd') . str_pad($counter, 3, "0", STR_PAD_LEFT);
+                $voucher = strtoupper(substr($result['slug'], 0, 3)) . date('Ym') . str_pad($user_id, 4, "0", STR_PAD_LEFT) . str_pad($counter, 3, "0", STR_PAD_LEFT);
                 $check_unique = $this->m_custom->check_is_value_unique('advertise', 'voucher', $voucher);
                 $counter += 1;
             } while (!$check_unique);

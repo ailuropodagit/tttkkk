@@ -102,6 +102,12 @@
                             ?>
                             <div id="float-fix"></div>
                         </div>
+                            <?php if($post_hour!=0) { ?>
+                            <div id="hot-deal-time">
+                                <i class="fa fa-clock-o"></i>
+                                <span id="hot-deal-time-label" data-countdown='<?php echo $end_time ?>'></span>
+                            </div>
+                            <?php } ?>
                         <div id="hot-deal-description">
                             <?php echo $description ?>
                         </div>

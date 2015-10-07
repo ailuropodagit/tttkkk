@@ -664,6 +664,25 @@ if (!function_exists('displayDate'))
 
 }
 
+if (!function_exists('searchWord'))
+{
+    function searchWord($search_string, $search_key)
+    {
+        $search_string = strtolower($search_string);
+        $search_key = strtolower($search_key);
+        $pos = strpos($search_string, $search_key);
+
+        if ($pos === false)
+        {
+            return FALSE;
+        }
+        else
+        {
+            return TRUE;
+        }
+    }
+}
+
 if (!function_exists('displayDate'))
 {
    function displayDate( $date , $with_time = 0, $db_format = 0)

@@ -107,43 +107,42 @@
                             </div>
                             <?php } ?>
                             <?php
-                            if (check_correct_login_type($this->group_id_user)) //Check if user logged in
-                            {
+                            //if (check_correct_login_type($this->group_id_user)){
                                 ?>
-                            <div id='redemption-comment-list'>
+<!--                            <div id='redemption-comment-list'>
                                 <div id="redemption-available-branch-title">User Info:</div>
                                 <table border="0" cellpadding="4px" cellspacing="0px">
                             <tr>
                                 <td>User ID</td>
                                 <td>:</td>
                                 <td>
-                                    <div id="advertise-list-info-category"><?php echo $user_id; ?></div>
+                                    <div id="advertise-list-info-category"><?php //echo $user_id; ?></div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>User Name</td>
                                 <td>:</td>
-                                <td><?php echo $user_name; ?></td>
+                                <td><?php //echo $user_name; ?></td>
                             </tr>
                             <tr>
                                 <td>User DOB</td>
                                 <td>:</td>
-                                <td><?php echo $user_dob; ?></td>
+                                <td><?php //echo $user_dob; ?></td>
                             </tr>
                             <tr>
                                 <td>User Email</td>
                                 <td>:</td>
-                                <td><?php echo $user_email; ?></td>
+                                <td><?php //echo $user_email; ?></td>
                             </tr>
                             <tr>
                                 <td>Current Candie</td>
                                 <td>:</td>
-                                <td><?php echo $current_candie; ?></td>
+                                <td><?php //echo $current_candie; ?></td>
                             </tr>
                         </table>
-                            </div>
+                            </div>-->
                                   <?php
-                                    }
+                                    //}
                                     ?>  
                         </div>                        
                     </div>

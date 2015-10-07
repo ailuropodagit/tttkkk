@@ -68,9 +68,6 @@ if(isset($message))
                 <div id='redemption-table-row-cell' class='redemption-center-cell'>
                     <div id='redemption-center'>
                         <div id="print-area">
-<!--                            <div id="redemption-voucher-barcode">
-                                <img src="<?php //echo $voucher_barcode; ?>"  alt="not show"/>
-                            </div>-->
                             <div id="float-fix"></div>
                             <div id="redemption-title">
                                 <a href='<?php echo $merchant_dashboard_url ?>'> <?php echo $merchant_name ?></a>
