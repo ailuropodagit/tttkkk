@@ -1330,14 +1330,10 @@ a:hover {
 }
 
 #hot-deal-title {
-    font-size: 20px;
+    font-size: 26px;
     color: black;
     font-weight: bold;
-}
-
-#hot-deal-title a {
-    color: black;
-    text-decoration: none;
+    margin: 0px 0px 10px 0px;
 }
 
 #hot-deal-photo-box {
@@ -1354,26 +1350,25 @@ a:hover {
 }
 
 #hot-deal-sub-title {
+    margin: 20px 0px 0px 0px;
     font-weight: bold;
-    font-size: 17px;
+    font-size: 21px;
     color: black;
 }
 
-#hot-deal-rate-time {
-    margin: 20px 0px 0px 0px;
-}
-
-#hot-deal-rate {
-    float: left;
-}
-
 #hot-deal-time {
-    float: right;
-    font-size: 15px;
+    margin: 20px 0px 20px 0px;
+    font-size: 20px;
+    font-weight: bold;
+    color: green;
 }
 
 #hot-deal-time-label {
-    margin: 0px 0px 0px 2px;
+    margin: 0px 0px 0px 10px;
+}
+
+#hot-deal-rate {
+    margin: 5px 0px 5px 0px;
 }
 
 #hot-deal-description {
@@ -1382,7 +1377,10 @@ a:hover {
     text-align: left;
     border-radius: 4px;
     border: 1px solid #a9a9a9;
-    min-height: 100px;
+    height: 200px;
+    overflow-y: scroll;
+    line-height: 25px;
+    text-align: justify;
 }
 
 #hot-deal-like-comment-share {
@@ -1769,14 +1767,10 @@ a:hover {
 }
 
 #redemption-title {
-    font-size: 20px;
+    font-size: 26px;
     color: black;
     font-weight: bold;
-}
-
-#redemption-title a {
-    color: black;
-    text-decoration: none;
+    margin: 0px 0px 10px 0px;
 }
 
 #redemption-photo-box {
@@ -1794,8 +1788,9 @@ a:hover {
 
 #redemption-sub-title {
     font-weight: bold;
-    font-size: 17px;
+    font-size: 21px;
     color: black;
+    margin: 20px 0px 0px 0px;
 }
 
 #redemption-voucher-worth {
@@ -1804,16 +1799,15 @@ a:hover {
     font-size: 14px;
 }
 
-#redemption-rate-time {
-    margin: 20px 0px 0px 0px;
-}
-
-#redemption-rate {
-    float: left;
-}
-
 #redemption-time {
-    float: right;
+    margin: 20px 0px 20px 0px;
+    font-size: 20px;
+    font-weight: bold;
+    color: green;
+}
+
+#redemption-time-label {
+    margin: 0px 0px 0px 10px;
 }
 
 #redemption-description {
@@ -1822,7 +1816,10 @@ a:hover {
     text-align: left;
     border-radius: 4px;
     border: 1px solid #a9a9a9;
-    min-height: 100px;
+    height: 200px;
+    overflow-y: scroll;
+    line-height: 25px;
+    text-align: justify;
 }
 
 #redemption-like-comment-share {
@@ -1969,17 +1966,17 @@ a:hover {
     margin: 20px 0px 0px 0px;
 }
 
-#payment-content table {
+#payment-table table {
     border: 1px solid lightgray;
 }
 
-#payment-content table th {
+#payment-table table th {
     background-color: whitesmoke;
     padding: 4px 0px 4px 0px;
     font-size: 14px;
 }
 
-#payment-content table td {
+#payment-table table td {
     font-size: 14px;
     padding: 5px 8px 5px 8px;
 }
@@ -1998,6 +1995,16 @@ a:hover {
 
 #payment-assistance {
     margin: 10px 0px 0px 0px;
+}
+
+#payment-bank-icon {
+    margin: 30px 0px 0px 0px;
+}
+
+#payment-bank-icon-each {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0px 10px 10px 10px;
 }
 
 /* CANDIE PROMOTION

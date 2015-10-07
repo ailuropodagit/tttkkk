@@ -1,54 +1,3 @@
-<script>
-    $(function(){        
-        var ajax_post;
-        $(".home-navigation-c1-bar-hover").on({
-            mouseenter: function() {
-                //prevent duplicated ajax post
-                if(ajax_post !== undefined){ ajax_post.abort(); }
-                //menu active
-                $(".home-navigation-c1-bar-hover").find('a').removeClass('home-navigation-c1-bar-a-active');
-                $(this).find('a').addClass('home-navigation-c1-bar-a-active');
-                //data
-                var category_id = $(this).attr("category_id");
-                //ajax post
-                ajax_post = $.ajax({
-                    type: 'post',
-                    url: '<?php echo base_url() ?>home/home_banner_ajax',
-                    data: {category_id:category_id},
-                    beforeSend: function() {
-                        $("#home-navigation-c2").html('<table border="0" style="height:400px; width:100%; text-align:center;"><tr><td><img src="<?php echo base_url() ?>image/loading.gif" style="width: 60px;"></td></tr></table>');
-                    },   
-                    success: function(data) {
-                        $("#home-navigation-c2").html(data);
-                    }
-                });
-            }
-        });
-    });
-</script>
-
-<div id="home-navigation">    
-    <div id="home-navigation-c1">
-        <div id="home-navigation-c1-bar">
-            <a href='<?php echo base_url(); ?>categories' class="home-navigation-c1-bar-a">Categories</a>
-        </div>
-        <?php
-        //CATEGORY ROW
-        $row_category = $query_category->result_array();
-        foreach ($row_category as $category)
-        {
-            //CATEGORY DATA
-            $category_id = $category['category_id'];
-            $category_label = $category['category_label'];
-            ?>
-            <div id="home-navigation-c1-bar" class="home-navigation-c1-bar-hover" category_id="<?php echo $category_id ?>">
-                <a href="<?php echo base_url() . 'home/index/' . $category_id ?>" class="home-navigation-c1-bar-a <?php if($category_id == $main_category_id){ echo 'home-navigation-c1-bar-a-active'; } ?>"><?php echo $category_label; ?></a>
-            </div>
-            <?php
-        }
-        ?>
-    </div>
-    <div id="home-navigation-c2">
         <div id="home-navigation-c2-c1">
             <div id="home-navigation-c2-c1-content">
                 <?php     
@@ -228,6 +177,3 @@
                 </table>
             </div>
         </div>
-    </div>
-    <div id="float-fix"></div>
-</div>

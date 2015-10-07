@@ -171,15 +171,6 @@ if($this->ion_auth->user()->num_rows())
             <div id="dashboard-navigation-each">
                 <a href="<?php echo $user_picture; ?>" ><i class="fa fa-picture-o dashboard-navigation-each-icon"></i>User's Picture</a>
             </div>
-            <?php
-            if (check_correct_login_type($this->config->item('group_id_user')))
-            {
-                ?>
-                <div id="dashboard-navigation-separater">|</div>
-                <div id="dashboard-navigation-each"><a href='<?php echo $user_upload_for_merchant ?>'>Upload Picture</a></div>
-                <?php
-            }
-            ?>
         </div>
         <div id="float-fix"></div>
     </div>

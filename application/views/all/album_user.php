@@ -1,4 +1,7 @@
 <?php
+//CONFIG DATA
+$page_name = $this->router->fetch_method();
+
 //USER ID
 $user_id = $this->uri->segment(3);
 ?>
@@ -22,7 +25,7 @@ $user_id = $this->uri->segment(3);
         
         <?php
         //NAVIGATION
-        if($this->router->fetch_method() != 'user_dashboard')
+        if($page_name != 'user_dashboard' && $page_name != 'merchant_dashboard')
         {
             if (check_correct_login_type($this->config->item('group_id_user')))
             {

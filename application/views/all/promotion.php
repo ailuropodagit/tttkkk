@@ -91,30 +91,25 @@ if(isset($message))
                                 }
                                 ?>
                             </div>
-                            <div id="redemption-rate-time">
-                                <div id="redemption-rate">
-                                    <div style="display:inline;">
-                                        <?php
-                                        echo form_input($item_id);
-                                        echo form_input($item_type);
-                                        for ($i = 1; $i <= 5; $i++)
-                                        {
-                                            if ($i == round($average_rating))
-                                            {
-                                                echo "<input class='auto-submit-star' type='radio' name='rating' " . $radio_level . " value='" . $i . "' checked='checked'/>";
-                                            }
-                                            else
-                                            {
-                                                echo "<input class='auto-submit-star' type='radio' name='rating' " . $radio_level . " value='" . $i . "'/>";
-                                            }
-                                        }
-                                        ?>
-                                    </div>
-                                </div>
-                                <div id="redemption-time">
-                                    <i class="fa fa-gift header-menu-icon"></i>
-                                    <span id="redemption-time-label">Redeem Period:  <?php echo $start_date ?> to <?php echo $end_date ?></span>
-                                </div>
+                            <div id="redemption-time">
+                                <i class="fa fa-gift header-menu-icon"></i><span id="redemption-time-label">Redeem Period:  <?php echo $start_date ?> to <?php echo $end_date ?></span>
+                            </div>
+                            <div id="redemption-rate">
+                                <?php
+                                echo form_input($item_id);
+                                echo form_input($item_type);
+                                for ($i = 1; $i <= 5; $i++)
+                                {
+                                    if ($i == round($average_rating))
+                                    {
+                                        echo "<input class='auto-submit-star' type='radio' name='rating' " . $radio_level . " value='" . $i . "' checked='checked'/>";
+                                    }
+                                    else
+                                    {
+                                        echo "<input class='auto-submit-star' type='radio' name='rating' " . $radio_level . " value='" . $i . "'/>";
+                                    }
+                                }
+                                ?>
                                 <div id="float-fix"></div>
                             </div>
                             <div id="redemption-description">
