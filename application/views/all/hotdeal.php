@@ -81,33 +81,34 @@
                         <div id="hot-deal-sub-title">
                             <?php echo $title ?>
                         </div>
-                        <div id="hot-deal-time">
-                            <i class="fa fa-clock-o"></i><span id="hot-deal-time-label" data-countdown='<?php echo $end_time ?>'></span>
-                        </div>
-                        <div id="hot-deal-rate">
-                            <?php
-                            echo form_input($item_id);
-                            echo form_input($item_type);
-                            for ($i = 1; $i <= 5; $i++)
-                            {
-                                if ($i == round($average_rating))
-                                {
-                                    echo "<input class='auto-submit-star' type='radio' name='rating' " . $radio_level . " value='" . $i . "' checked='checked'/>";
-                                }
-                                else
-                                {
-                                    echo "<input class='auto-submit-star' type='radio' name='rating' " . $radio_level . " value='" . $i . "'/>";
-                                }
-                            } //end of for
-                            ?>
-                            <div id="float-fix"></div>
-                        </div>
+                        <div id="hot-deal-rate-time">
+                            <div id="hot-deal-rate">
+                                <div style="display:inline;">
+                                    <?php
+                                    echo form_input($item_id);
+                                    echo form_input($item_type);
+                                    for ($i = 1; $i <= 5; $i++)
+                                    {
+                                        if ($i == round($average_rating))
+                                        {
+                                            echo "<input class='auto-submit-star' type='radio' name='rating' " . $radio_level . " value='" . $i . "' checked='checked'/>";
+                                        }
+                                        else
+                                        {
+                                            echo "<input class='auto-submit-star' type='radio' name='rating' " . $radio_level . " value='" . $i . "'/>";
+                                        }
+                                    } //end of for
+                                    ?>
+                                </div>
+                            </div>
                             <?php if($post_hour!=0) { ?>
                             <div id="hot-deal-time">
                                 <i class="fa fa-clock-o"></i>
                                 <span id="hot-deal-time-label" data-countdown='<?php echo $end_time ?>'></span>
                             </div>
                             <?php } ?>
+                            <div id="float-fix"></div>
+                        </div>
                         <div id="hot-deal-description">
                             <?php echo $description ?>
                         </div>

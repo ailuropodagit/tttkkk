@@ -164,6 +164,12 @@ if(isset($message))
                     }
                     ?>  
                 </div>
+                <div id='candie-promotion-form-each'>
+                    <div id='candie-promotion-form-voucher-checkbox-title'><?php echo lang("candie_extra_term_label"); ?></div>
+                    <div>
+                        <?php echo form_textarea($extra_term); ?>
+                    </div>
+                </div>
                 <div id="candie-promotion-form-branch-checkbox">
                     <div id="candie-promotion-form-branch-checkbox-title">Select Branch:</div>
                     <div id="candie-promotion-form-branch-checkbox-each">

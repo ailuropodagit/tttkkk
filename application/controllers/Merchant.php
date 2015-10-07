@@ -1487,7 +1487,7 @@ class Merchant extends CI_Controller
                 $search_year = $this->input->post('candie_year');
                 $candie_point = check_is_positive_numeric($this->input->post('candie_point'));
                 $expire_date = validateDate($this->input->post('expire_date'));
-                //$candie_vender = $this->input->post('candie_vender');
+                $candie_extra_term = $this->input->post('candie_extra_term');
                 $image_data = NULL;
 
                 $post_candie_term = $this->input->post('candie_term');
@@ -1535,7 +1535,7 @@ class Merchant extends CI_Controller
                         //'voucher' => $this->m_merchant->generate_voucher($merchant_id),
                         'voucher_candie' => $candie_point,
                         'voucher_expire_date' => $expire_date,
-                        //'extra_field' => $candie_vender
+                        'extra_term' => $candie_extra_term,
                     );
 
                     $new_id = $this->m_custom->get_id_after_insert('advertise', $data);
@@ -1584,7 +1584,7 @@ class Merchant extends CI_Controller
                         'end_time' => $end_date,
                         'voucher_candie' => $candie_point,
                         'voucher_expire_date' => $expire_date,
-                            //'extra_field' => $candie_vender
+                        'extra_term' => $candie_extra_term,
                     );
 
                     if ($this->m_custom->simple_update('advertise', $data, 'advertise_id', $candie_id))
@@ -1689,11 +1689,12 @@ class Merchant extends CI_Controller
             'value' => empty($this_month_candie) ? '' : displayDate($this_month_candie['voucher_expire_date']),
         );
 
-//        $this->data['candie_vender'] = array(
-//            'name' => 'candie_vender',
-//            'id' => 'candie_vender',
-//            'value' => empty($this_month_candie) ? '' : $this_month_candie['extra_field'],
-//        );
+        $this->data['extra_term'] = array(
+            'name' => 'candie_extra_term',
+            'id' => 'candie_extra_term',
+            'value' => empty($this_month_candie) ? '' : $this_month_candie['extra_term'],
+            'cols' => 90,
+        );
 
         $this->data['candie_term'] = $candie_term;
         $this->data['candie_branch'] = $candie_branch;

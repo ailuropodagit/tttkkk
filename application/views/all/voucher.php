@@ -84,6 +84,16 @@
                                         echo "<li>" . $value['option_desc'] . "</li>";
                                     }
                                     ?>  
+                                    <?php
+                                    if (!empty($extra_term))
+                                    {
+                                        $extra_term_array = explode("\n", $extra_term);
+                                        foreach ($extra_term_array as $extra_term_row)
+                                        {
+                                            echo "<li>" . $extra_term_row . "</li>";
+                                        }
+                                    }
+                                    ?>
                                 </ul>
                             </div>
                             <?php if($advertise_type == "pro"){ ?>
