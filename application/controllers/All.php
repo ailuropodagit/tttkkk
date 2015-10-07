@@ -95,6 +95,7 @@ class All extends CI_Controller
             $this->data['comment_url'] = $this->m_custom->generate_comment_link($advertise_id, 'adv');
             $this->data['average_rating'] = $this->m_custom->activity_rating_average($advertise_id, 'adv');
             $this->data['phone_required'] = $the_row['phone_required'];
+            $this->data['extra_term'] = $the_row['extra_term'];
             $this->data['message'] = $this->session->flashdata('message');
             $this->data['item_id'] = array(
                 'type' => 'hidden',
@@ -306,6 +307,7 @@ class All extends CI_Controller
             $this->data['merchant_name'] = $merchant_row['company'];
             $this->data['title'] = $the_row['title'];
             $this->data['description'] = $the_row['description'];
+            $this->data['extra_term'] = $the_row['extra_term'];
             if ($advertise_type == "adm")
             {
                 $this->data['image_url'] = base_url($this->album_admin . $the_row['image']);
