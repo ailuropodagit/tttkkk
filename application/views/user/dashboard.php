@@ -30,14 +30,14 @@ if($this->ion_auth->user()->num_rows())
 
     //DASHBOARD
     $where_read_user = array('id'=>$dashboard_users_id);
-    $dashboard_user_group_id = $this->albert_model->read_users($where_read_user)->row()->main_group_id;
+    $dashboard_user_group_id = $this->albert_model->read_user($where_read_user)->row()->main_group_id;
     
     //SUPERVISOR LOGIN
     if($logged_main_group_id == 4)
     {
         //SUPERVISOR LOGIN
         $where_read_user = array('id'=>$logged_user_id);
-        $query_read_user = $this->albert_model->read_users($where_read_user);
+        $query_read_user = $this->albert_model->read_user($where_read_user);
         $logged_main_id = $query_read_user->row()->su_merchant_id;
     }
     else

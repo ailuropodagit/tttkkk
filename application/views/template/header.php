@@ -62,57 +62,82 @@
                 fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
 
-        $(function(){
-  $("#search_word").autocomplete({
-            source: function(request, response) {
-            $.ajax({
-            url: "/keppo/home/get_merchant_list/",
-            data: { term: $("#search_word").val()},
-            dataType: "json",
-            type: "POST",
-            success: function(data){
-        var resp = $.map(data,function(obj){                     
-        return obj.tag;                  
-               }); 
-
-               response(data);
-            }
-        });
-    },
-  });
-});
-
+            $(function(){
+                //AUTO COMPLETE
+                $("#search_word").autocomplete({
+                    source: function(request, response) {
+                        $.ajax({
+                            url: "/keppo/home/get_merchant_list/",
+                            data: { term: $("#search_word").val()},
+                            dataType: "json",
+                            type: "POST",
+                            success: function(data){
+                                var resp = $.map(data,function(obj){                     
+                                    return obj.tag;                  
+                                });
+                                response(data);
+                            }
+                        });
+                    }
+                });
+            });
         </script>
     </head>
     <body>        
         <!--HEADER-->
         <div id='header'>
+            <?php
+            //URI
+            $header_fetch_class = $this->router->fetch_class();
+            $header_fetch_method = $this->router->fetch_method();
+            $header_uri_segment4 = $this->uri->segment(4);
+            ?>
             <div id='wrapper'>
-                <!--HEADER LOGO-->
+                <!--LOGO-->
                 <div id='header-logo'>
-                    <a href='<?php echo base_url(); ?>home'><img src="<?php echo base_url(); ?>image/header-logo-red.png" id='header-logo-img'></a>
+                    <a href='<?php echo base_url('home') ?>'>
+                        <img src='<?php echo base_url('image/header-logo-red.png') ?>' id='header-logo-img'>
+                    </a>
                 </div>
-                <!--HEADER MENU-->
+                <!--NORMAL MENU-->
                 <div id="header-menu">
                     <ul>
-                        <li <?php if($this->router->fetch_class() == 'home'){ echo "class='header-menu-active'"; } ?>>
-                            <a href='<?php echo base_url(); ?>home'><i class="fa fa-home header-menu-icon header-menu-icon-home"></i>Home</a>
+                        <!--NORMAL MENU HOME-->
+                        <li <?php if($header_fetch_class == 'home'){ echo "class='header-menu-active'"; } ?>>
+                            <a href='<?php echo base_url('home') ?>'>
+                                <i class="fa fa-home header-menu-icon header-menu-icon-home"></i>Home
+                            </a>
                         </li>
                         <?php 
                         if($this->router->fetch_class() != 'home')
                         {
                             ?>
-                            <li <?php if($this->router->fetch_class() == 'categories'){ echo "class='header-menu-active'"; } ?>>
-                                <a href='<?php echo base_url(); ?>categories'><i class="fa fa-th-large header-menu-icon"></i>Categories</a>
+                            <!--NORMAL MENU CATEGORIES-->
+                            <li <?php if($header_fetch_class == 'categories'){ echo "class='header-menu-active'"; } ?>>
+                                <a href='<?php echo base_url('categories') ?>'>
+                                    <i class="fa fa-th-large header-menu-icon"></i>Categories
+                                </a>
                             </li>
                             <?php
                         }
                         ?>
-                        <li <?php if($this->router->fetch_method() == 'hotdeal_list' || $this->uri->segment(4) == 'hot'){ echo "class='header-menu-active'"; } ?>>
-                            <a href='<?php echo base_url(); ?>all/hotdeal-list/26/0'><i class="fa fa-fire header-menu-icon"></i>Hot Deal</a>
+                        <!--NORMAL MENU HOT DEAL-->     
+                        <li <?php if($header_fetch_method == 'hotdeal_list' || $header_uri_segment4 == 'hot'){ echo "class='header-menu-active'"; } ?>>
+                            <a href='<?php echo base_url('all/hotdeal-list/26/0') ?>'>
+                                <i class="fa fa-fire header-menu-icon"></i>Hot Deal
+                            </a>
                         </li>
-                        <li <?php if($this->router->fetch_method() == 'promotion_list' || $this->uri->segment(4) == 'pro'){ echo "class='header-menu-active'"; } ?>>
-                            <a href='<?php echo base_url(); ?>all/promotion-list/26/0'><i class="fa fa-gift header-menu-icon"></i>Redemption</a>
+                        <!--NORMAL MENU REDEMPTION-->
+                        <li <?php if($header_fetch_method == 'promotion_list' || $header_uri_segment4 == 'pro'){ echo "class='header-menu-active'"; } ?>>
+                            <a href="<?php echo base_url('all/promotion-list/26/0') ?>">
+                                <i class="fa fa-gift header-menu-icon"></i>Redemption
+                            </a>
+                        </li>
+                        <!--NORMAL MENU BLOGGER-->
+                        <li <?php if($header_fetch_class == 'blogger'){ echo "class='header-menu-active'"; } ?>>
+                            <a href='<?php echo base_url('blogger') ?>'>
+                                <i class="fa fa-pencil header-menu-icon"></i>Blogger
+                            </a>
                         </li>
                         <?php
                         if (check_is_login())
@@ -120,81 +145,151 @@
                             if (check_correct_login_type($this->config->item('group_id_user'))) 
                             {
                                 ?>
-                                <li <?php if($this->router->fetch_method() == 'profile'){ echo "class='header-menu-active'"; } ?>>
-                                    <a href='<?php echo base_url() ?>user/profile'><i class='fa fa-user header-menu-icon'></i>Profile</a>
+                                <!--NORMAL MENU USER PROFILE-->
+                                <li <?php if($header_fetch_method == 'profile'){ echo "class='header-menu-active'"; } ?>>
+                                    <a href='<?php echo base_url('user/profile') ?>'>
+                                        <i class='fa fa-user header-menu-icon'></i>Profile
+                                    </a>
                                 </li>
+                                <!--NORMAL MENU USER LOGOUT-->
                                 <li>
-                                    <a href='<?php echo base_url() ?>user/logout' onclick="fbLogout()"><i class='fa fa-sign-out header-menu-icon'></i>Logout</a>
-                                </li>
-                                <?php
-                            } 
-                            else 
-                            {
-                                ?>
-                                <li <?php if($this->router->fetch_method() == 'profile'){ echo "class='header-menu-active'"; } ?>>
-                                    <a href='<?php echo base_url() ?>merchant/profile'><i class='fa fa-user header-menu-icon'></i>Profile</a>
-                                </li>
-                                <li>
-                                    <a href='<?php echo base_url() ?>merchant/logout'><i class='fa fa-sign-out header-menu-icon'></i>Logout</a>
+                                    <a href='<?php echo base_url('user/logout') ?>' onclick="fbLogout()">
+                                        <i class='fa fa-sign-out header-menu-icon'></i>Logout
+                                    </a>
                                 </li>
                                 <?php
                             }
-                        } 
+                            else 
+                            {
+                                ?>
+                                <!--NORMAL MENU MERCHANT PROFILE-->
+                                <li <?php if($header_fetch_method == 'profile'){ echo "class='header-menu-active'"; } ?>>
+                                    <a href='<?php echo base_url('merchant/profile') ?>'>
+                                        <i class='fa fa-user header-menu-icon'></i>Profile
+                                    </a>
+                                </li>
+                                <!--NORMAL MENU MERCHANT LOGOUT-->
+                                <li>
+                                    <a href='<?php echo base_url('merchant/logout') ?>'>
+                                        <i class='fa fa-sign-out header-menu-icon'></i>Logout
+                                    </a>
+                                </li>
+                                <?php
+                            }
+                        }
                         else
                         { 
                             ?>
-                            <li><a href='<?php echo base_url(); ?>user/login'><i class="fa fa-user header-menu-icon"></i>Login</a></li>
-                            <li><a href='<?php echo base_url(); ?>user/register'><i class="fa fa-user-plus header-menu-icon"></i>Register</a></li>
+                            <!--NORMAL MENU USER LOGIN-->
+                            <li>
+                                <a href='<?php echo base_url('user/login') ?>'>
+                                    <i class="fa fa-user header-menu-icon"></i>Login
+                                </a>
+                            </li>
+                            <!--NORMAL MENU USER REGISTER-->
+                            <li>
+                                <a href='<?php echo base_url('user/register') ?>'>
+                                    <i class="fa fa-user-plus header-menu-icon"></i>Register
+                                </a>
+                            </li>
                             <?php
                         } 
                         ?>                            
                     </ul>
                 </div>
-                <!--HEADER MENU MOBILE ICON-->
-                <div id="header-menu-mobile-icon">
-                    <i class="fa fa-bars"></i>
-                </div>
-                <div id="float-fix"></div>
+                <div id='float-fix'></div>
+                <!--MOBILE MENU ICON-->
+                <div id="header-menu-mobile-icon"><i class="fa fa-bars"></i></div>
             </div>
         </div>
-        <!--HEADER MENU MOBILE-->
+        <!-- MENU MOBILE-->
         <div id="header-menu-mobile">
             <div id="wrapper">
                 <ul>
-                    <li><a href='<?php echo base_url(); ?>home'><i class="fa fa-home header-menu-icon header-menu-icon-home"></i>Home</a></li>
-                    <?php 
-                    if($this->router->fetch_class() != 'home')
+                    <!--MOBILE MENU HOME-->
+                    <li>
+                        <a href='<?php echo base_url('home') ?>'>
+                            <i class="fa fa-home header-menu-icon header-menu-icon-home"></i>Home
+                        </a>
+                    </li>
+                    <?php
+                    if($header_fetch_class != 'home')
                     {
                         ?>
-                        <li><a href='<?php echo base_url(); ?>categories'><i class="fa fa-th-large header-menu-icon"></i>Categories</a></li>
+                        <!--MOBILE MENU CATEGORIES-->
+                        <li>
+                            <a href='<?php echo base_url('categories') ?>'>
+                                <i class="fa fa-th-large header-menu-icon"></i>Categories
+                            </a>
+                        </li>
                         <?php
                     }
                     ?>
-                    <li><a href='<?php echo base_url(); ?>all/hotdeal-list/26/0'><i class="fa fa-fire header-menu-icon"></i>Hot Deal</a></li>
-                    <li><a href='<?php echo base_url(); ?>all/promotion-list/26/0'><i class="fa fa-diamond header-menu-icon"></i>Redemption</a></li>
-                    <?php 
+                    <!--MOBILE MENU HOT DEAL-->
+                    <li>
+                        <a href='<?php echo base_url('all/hotdeal-list/26/0') ?>'>
+                            <i class="fa fa-fire header-menu-icon"></i>Hot Deal
+                        </a>
+                    </li>
+                    <!--MOBILE MENU REDEMPTION-->
+                    <li>
+                        <a href='<?php echo base_url('all/promotion-list/26/0') ?>'>
+                            <i class="fa fa-diamond header-menu-icon"></i>Redemption
+                        </a>
+                    </li>
+                    <?php
                     if(check_is_login())
                     {
                         if (check_correct_login_type($this->config->item('group_id_user'))) 
                         {
                             ?>
-                            <li><a href='<?php echo base_url() ?>user/profile'><i class='fa fa-user header-menu-icon'></i>Profile</a></li>
-                            <li><a href='<?php echo base_url() ?>user/logout'><i class='fa fa-sign-out header-menu-icon'></i>Logout</a></li>
+                            <!--MOBILE MENU USER PROFILE-->
+                            <li>
+                                <a href='<?php echo base_url('user/profile') ?>'>
+                                    <i class='fa fa-user header-menu-icon'></i>Profile
+                                </a>
+                            </li>
+                            <!--MOBILE MENU USER LOGOUT-->
+                            <li>
+                                <a href='<?php echo base_url('user/logout') ?>' onclick="fbLogout()">
+                                    <i class='fa fa-sign-out header-menu-icon'></i>Logout
+                                </a>
+                            </li>
                             <?php
                         } 
                         else 
                         {
                             ?>
-                            <li><a href='<?php echo base_url() ?>merchant/profile'><i class='fa fa-user header-menu-icon'></i>Profile</a></li>
-                            <li><a href='<?php echo base_url() ?>merchant/logout'><i class='fa fa-sign-out header-menu-icon'></i>Logout</a></li>
+                            <!--MOBILE MENU MERCHANT PROFILE-->
+                            <li>
+                                <a href='<?php echo base_url('merchant/profile') ?>'>
+                                    <i class='fa fa-user header-menu-icon'></i>Profile
+                                </a>
+                            </li>
+                            <!--MOBILE MENU MERCHANT LOGOUT-->
+                            <li>
+                                <a href='<?php echo base_url('merchant/logout') ?>'>
+                                    <i class='fa fa-sign-out header-menu-icon'></i>Logout
+                                </a>
+                            </li>
                             <?php
                         }
                     } 
                     else
                     { 
                         ?>
-                        <li><a href='<?php echo base_url(); ?>user/login'><i class="fa fa-user header-menu-icon"></i>Login</a></li>
-                        <li><a href='<?php echo base_url(); ?>user/register'><i class="fa fa-user-plus header-menu-icon"></i>Register</a></li>
+                        <!--MOBILE MENU USER LOGIN-->
+                        <li>
+                            <a href='<?php echo base_url('user/login') ?>'>
+                                <i class="fa fa-user header-menu-icon"></i>Login
+                            </a>
+                        </li>
+                        <!--MOBILE MENU USER REGISTER-->
+                        <li>
+                            <a href='<?php echo base_url('user/login'); ?>'>
+                                <i class="fa fa-user-plus header-menu-icon"></i>Register
+                            </a>
+                        </li>
                         <?php
                     }
                     ?>

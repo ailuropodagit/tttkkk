@@ -70,7 +70,7 @@ class Albert_model extends CI_Model
     
     /* READ USER
     ***************************************************/
-    public function read_users($where)
+    public function read_user($where)
     {
         //QUERY
         $this->db->select('*');
@@ -106,6 +106,24 @@ class Albert_model extends CI_Model
     public function create_user($data)
     {
         return $this->db->insert('users', $data);
+    }
+    
+    /* READ BLOGGER
+    ***************************************************/
+    public function read_blogger($where)
+    {
+        //QUERY
+        $this->db->select('*');
+        $this->db->from('users');
+        $this->db->where('us_blog_url', NULL);
+        //WHERE
+        if($where)
+        {
+            $this->db->where($where);
+        }
+        $query = $this->db->get();
+        //RETURN
+        return $query;
     }
     
     /* READ USER_ALBUM
