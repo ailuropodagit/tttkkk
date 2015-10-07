@@ -69,14 +69,6 @@ if(isset($message))
                 <div id='redemption-table-row-cell' class='redemption-center-cell'>
                     <div id='redemption-center'>
                         <div id="print-area">
-<!--                            <div id="redemption-voucher-barcode">
-                                <?php
-//                                if (!empty($voucher_barcode) && $voucher_not_need == 0)
-//                                {
-//                                echo "<img src='" . $voucher_barcode . "'  alt='not show'/>";
-//                                }
-                                ?>
-                            </div>-->
                             <div id="float-fix"></div>
                             <div id="redemption-photo">
                                 <div id="redemption-photo-box">

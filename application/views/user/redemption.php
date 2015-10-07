@@ -33,7 +33,7 @@ if(isset($message))
                 $image_url = base_url().$this->config->item('album_merchant') . $row['image'];
             }
             $merchant_link = $this->m_custom->generate_merchant_link($row['merchant_id']);
-            $advertise_detail_url = base_url() . "all/voucher/" . $row['advertise_id'];
+            $advertise_detail_url = base_url() . "all/voucher/" . $row['advertise_id'] . "/" . $row['redeem_id'];
             
             $top_up_phone = $row['top_up_phone'];
             ?>
@@ -50,9 +50,12 @@ if(isset($message))
                 </div>
                 <div id="advertise-list-title2">
                     <a href='<?php echo $advertise_detail_url; ?>' target='_blank'><?php echo $row['title'] ?></a>
-                </div>
+                </div>                
                 <div id="advertise-list-dynamic-time">
                     <i class="fa fa-bullseye"></i><span id="advertise-list-dynamic-time-label"><?php echo $row['voucher_candie'] ?> candies</span>
+                </div>
+                <div id="advertise-list-dynamic-time">
+                    <span id="advertise-list-dynamic-time-label"><?php echo "Voucher : ".$row['voucher'] ?></span>
                 </div>
                 <div id="advertise-list-info">
                     <table border="0" cellpadding="4px" cellspacing="0px">                       

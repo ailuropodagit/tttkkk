@@ -1078,7 +1078,7 @@ class Merchant extends CI_Controller
             $redeem_id = $this->input->post('redeem_id');
             $user_id = $this->input->post('user_id');
             $advertise_id = $this->input->post('advertise_id');
-            $voucher = $this->m_custom->get_one_field_by_key('advertise', 'advertise_id', $advertise_id, 'voucher');
+            $voucher = $this->input->post('voucher');
             $user_name = $this->m_custom->display_users($user_id);
             if ($this->input->post('button_action') == "submit_used")
             {
@@ -1522,10 +1522,10 @@ class Merchant extends CI_Controller
                         'end_time' => $end_date,
                         'month_id' => $search_month,
                         'year' => $search_year,
-                        'voucher' => $this->m_merchant->generate_voucher($merchant_id),
+                        //'voucher' => $this->m_merchant->generate_voucher($merchant_id),
                         'voucher_candie' => $candie_point,
                         'voucher_expire_date' => $expire_date,
-                            //'extra_field' => $candie_vender
+                        //'extra_field' => $candie_vender
                     );
 
                     $new_id = $this->m_custom->get_id_after_insert('advertise', $data);
@@ -1785,7 +1785,7 @@ class Merchant extends CI_Controller
                     'description' => $description,
                     'image' => empty($image_data) ? $previous_image_name : $image_data['upload_data']['file_name'],
                     'post_hour' => $hotdeal_hour,
-                    'end_time' => add_hour_to_date($hotdeal_hour, $previous_start_time),
+                    'end_time' => $hotdeal_hour == 0? add_hour_to_date(99999, $previous_start_time): add_hour_to_date($hotdeal_hour, $previous_start_time),
                 );
 
                 $hotdeal_hide = $this->input->post('hotdeal_hide');
@@ -1988,7 +1988,7 @@ class Merchant extends CI_Controller
                                 $message_info = add_message_info($message_info, $this->upload->display_errors(), $title);
                             }
                             else
-                            {
+                            {                                                              
                                 $image_data = array('upload_data' => $this->upload->data());
                                 $data = array(
                                     'advertise_type' => 'hot',
@@ -1999,7 +1999,7 @@ class Merchant extends CI_Controller
                                     'image' => $image_data['upload_data']['file_name'],
                                     'post_hour' => $hotdeal_hour,
                                     'start_time' => get_part_of_date('all'),
-                                    'end_time' => add_hour_to_date($hotdeal_hour),
+                                    'end_time' => $hotdeal_hour == 0? add_hour_to_date(99999): add_hour_to_date($hotdeal_hour),
                                     'month_id' => get_part_of_date('month'),
                                     'year' => get_part_of_date('year'),
                                 );
@@ -2050,7 +2050,7 @@ class Merchant extends CI_Controller
                             'description' => $description,
                             'image' => empty($image_data) ? $previous_image_name : $image_data['upload_data']['file_name'],
                             'post_hour' => $hotdeal_hour,
-                            'end_time' => add_hour_to_date($hotdeal_hour, $previous_start_time),
+                            'end_time' => $hotdeal_hour == 0? add_hour_to_date(99999, $previous_start_time): add_hour_to_date($hotdeal_hour, $previous_start_time),
                         );
 
                         $hotdeal_hide = $this->input->post('hotdeal_hide-' . $i);
@@ -2120,11 +2120,15 @@ class Merchant extends CI_Controller
             $this->data[$hotdeal_category_selected] = empty($hotdeal_today_result[$i]) ? $merchant_data->me_sub_category_id : $hotdeal_today_result[$i]['sub_category_id'];
 
             $hotdeal_desc = 'hotdeal_desc' . $i;
-            $this->data[$hotdeal_desc] = array(
-                'name' => 'desc-' . $i,
-                'id' => 'desc-' . $i,
-                'value' => empty($hotdeal_today_result[$i]) ? '' : $hotdeal_today_result[$i]['description'],
-            );
+            $this->data[$hotdeal_desc] = 'desc-' . $i;
+            $hotdeal_desc_value = 'hotdeal_desc_value' . $i;
+            $this->data[$hotdeal_desc_value] = empty($hotdeal_today_result[$i]) ? '' : $hotdeal_today_result[$i]['description'];
+//            $hotdeal_desc = 'hotdeal_desc' . $i;
+//            $this->data[$hotdeal_desc] = array(
+//                'name' => 'desc-' . $i,
+//                'id' => 'desc-' . $i,
+//                'value' => empty($hotdeal_today_result[$i]) ? '' : $hotdeal_today_result[$i]['description'],
+//            );
 
             $hotdeal_hour = 'hotdeal_hour' . $i;
             $this->data[$hotdeal_hour] = array(

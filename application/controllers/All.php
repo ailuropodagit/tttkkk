@@ -121,9 +121,7 @@ class All extends CI_Controller
             $row_advertise_type = $the_row['advertise_type'];
             if ($row_advertise_type == "pro")
             {
-                $this->data['voucher'] = $the_row['voucher'];
                 $this->data['voucher_worth'] = $the_row['voucher_worth'];
-                $this->data['voucher_barcode'] = base_url("barcode/generate/" . $the_row['voucher']);
                 $this->data['voucher_candie'] = $the_row['voucher_candie'];
                 $this->data['expire_date'] = displayDate($the_row['voucher_expire_date']);
                 $this->data['candie_term'] = $this->m_custom->many_get_childlist_detail('candie_term', $advertise_id, 'dynamic_option', 'option_id');
@@ -132,6 +130,7 @@ class All extends CI_Controller
             }
             else if ($row_advertise_type == "hot")
             {
+                $this->data['post_hour'] = $the_row['post_hour'];
                 $this->data['end_time'] = displayDate($the_row['end_time'], 1, 1);
                 $this->data['page_path_name'] = 'all/hotdeal';
             }
@@ -140,9 +139,7 @@ class All extends CI_Controller
                 //For admin promotion, overwrite some info
                 $this->data['image_url'] = base_url($this->album_admin . $the_row['image']);
                 $this->data['voucher_not_need'] = $the_row['voucher_not_need'];
-                $this->data['voucher'] = $the_row['voucher'];
                 $this->data['voucher_worth'] = $the_row['voucher_worth'];
-                $this->data['voucher_barcode'] = $the_row['voucher'] == NULL ? NULL : base_url("barcode/generate/" . $the_row['voucher']);
                 $this->data['voucher_candie'] = $the_row['voucher_candie'];
                 $this->data['expire_date'] = displayDate($the_row['voucher_expire_date']);
                 $this->data['candie_term'] = $this->m_custom->many_get_childlist_detail('candie_term', $advertise_id, 'dynamic_option', 'option_id');
@@ -266,8 +263,12 @@ class All extends CI_Controller
         redirect($current_url, 'refresh');
     }
 
-    function voucher($advertise_id)
+    function voucher($advertise_id = NULL, $redeem_id = NULL)
     {
+        if($advertise_id == NULL || $redeem_id == NULL){
+            redirect('/', 'refresh');
+        }
+        
         if ($this->ion_auth->logged_in())
         {
             $login_id = $this->ion_auth->user()->row()->id;
@@ -289,15 +290,16 @@ class All extends CI_Controller
 
             $merchant_row = $this->m_merchant->getMerchant($the_row['merchant_id']);
             $this->data['merchant_dashboard_url'] = base_url() . "all/merchant-dashboard/" . $merchant_row['slug'];
-
-            if (check_correct_login_type($this->group_id_user)) //Check if user logged in
-            {
-                $this->data['user_id'] = $login_id;
-                $this->data['user_name'] = $this->m_custom->display_users($login_id);
-                $this->data['user_dob'] = displayDate($login_data['us_birthday']);
-                $this->data['user_email'] = $login_data['email'];
-                $this->data['current_candie'] = $this->m_user->candie_check_balance($login_id);
-            }
+            $redeem_row = $this->m_custom->getOneUserRedemption($redeem_id);
+            
+//            if (check_correct_login_type($this->group_id_user)) 
+//            {
+//                $this->data['user_id'] = $login_id;
+//                $this->data['user_name'] = $this->m_custom->display_users($login_id);
+//                $this->data['user_dob'] = displayDate($login_data['us_birthday']);
+//                $this->data['user_email'] = $login_data['email'];
+//                $this->data['current_candie'] = $this->m_user->candie_check_balance($login_id);
+//            }
 
             $this->data['advertise_type'] = $advertise_type;
             $this->data['advertise_id'] = $advertise_id;
@@ -316,11 +318,11 @@ class All extends CI_Controller
             $this->data['start_date'] = displayDate($the_row['start_time']);
             $this->data['end_date'] = displayDate($the_row['end_time']);
             $this->data['message'] = $this->session->flashdata('message');
-
-            $this->data['voucher'] = $the_row['voucher'];
+            
+            $this->data['voucher'] = $redeem_row['voucher'];
             $this->data['voucher_not_need'] = $the_row['voucher_not_need'];
-            $this->data['voucher_worth'] = $the_row['voucher_worth'];
-            $this->data['voucher_barcode'] = base_url("barcode/generate/" . $the_row['voucher']);
+            $this->data['voucher_worth'] = $the_row['voucher_worth'];           
+            $this->data['voucher_barcode'] = base_url("barcode/generate/" . $redeem_row['voucher']);
             $this->data['voucher_candie'] = $the_row['voucher_candie'];
             $this->data['expire_date'] = displayDate($the_row['voucher_expire_date']);
             $this->data['candie_term'] = $this->m_custom->many_get_childlist_detail('candie_term', $advertise_id, 'dynamic_option', 'option_id');

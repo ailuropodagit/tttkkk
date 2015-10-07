@@ -75,7 +75,7 @@ class M_user extends CI_Model
                 $voucher_candie = $promotion_row['voucher_candie'];
                 $current_balance = $this->m_user->candie_check_balance($user_id);
                 $new_balance = $this->m_user->candie_enough($user_id, $voucher_candie, 1);
-                $voucher = $promotion_row['voucher'];
+                $voucher = $this->m_merchant->generate_voucher($promotion_row['merchant_id'],$user_id);
                 $merchant_name = $this->m_custom->display_users($promotion_row['merchant_id']);
                 
                 //If is admin promotin, overwrite some info
@@ -88,6 +88,7 @@ class M_user extends CI_Model
                         'user_id' => $user_id,
                         'advertise_id' => $advertise_id,
                         'status_id' => $this->config->item('voucher_active'),
+                        'voucher' => $voucher,
                         'expired_date' => $promotion_row['end_time'],
                         'top_up_phone' => $top_up_phone,
                     );

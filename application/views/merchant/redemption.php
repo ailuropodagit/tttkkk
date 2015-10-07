@@ -26,7 +26,7 @@ if(isset($message))
         foreach ($promotion_list as $promotion_row)
         {
             $advertise_url = "<a target='_blank' href='" . base_url() . "all/advertise/" . $promotion_row['advertise_id'] . "'>" . $promotion_row['title'] . "</a>";
-            echo $advertise_url . " (" . $promotion_row['voucher'] . ")<br/><br/>";
+            echo $advertise_url . "<br/><br/>";
             $redeem_list = $this->m_merchant->getUserRedemption($promotion_row['advertise_id'], $voucher_active);
             ?>
             <table border='1px' cellpadding='0px' cellspacing='0px'>
@@ -48,11 +48,12 @@ if(isset($message))
                         <th>Mark As</th>
                         <?php
                     }
-                    ?>
+                    ?>                       
                     <th>User ID</th>
                     <th>Name</th>
                     <th>Date of Birth</th>
                     <th>Email</th>
+                    <th>Voucher</th>
                     <th>Expire Date</th>
                 </tr>
                 <?php
@@ -68,7 +69,7 @@ if(isset($message))
                         if ($show_used == 0)
                         {
                             echo "<td align='center'>";
-                            $confirm_message = "Confirm that you want to change " . $user_name . " voucher " . $promotion_row['voucher'] . " status?";
+                            $confirm_message = "Confirm that you want to change " . $user_name . " voucher " . $redeem_row['voucher'] . " status?";
                             ?>
                             <form action="<?php echo $action_url; ?>" onSubmit="return confirm('<?php echo $confirm_message ?>')" method="post" accept-charset="utf-8">
                             <?php
@@ -76,7 +77,8 @@ if(isset($message))
                             echo "<input type='hidden' name='user_id' id='user_id' value='" . $user_id . "'/>";
                             echo "<input type='hidden' name='advertise_id' id='advertise_id' value='" . $redeem_row['advertise_id'] . "'/>";
                             echo "<input type='hidden' name='current_url' id='current_url' value='" . get_current_url() . "'/>";
-
+                            echo "<input type='hidden' name='voucher' id='voucher' value='" . $redeem_row['voucher'] . "'/>";
+                            
                             echo "<button name='button_action' type='submit' value='submit_used' id='button-a-href'>Used</button>";
                             echo " | ";
                             echo "<button name='button_action' type='submit' value='submit_expired' id='button-a-href'>Expired</button>";
@@ -89,6 +91,7 @@ if(isset($message))
                         echo "<td>" . $user_url . "</td>";
                         echo "<td>" . displayDate($user_info['us_birthday']) . "</td>";
                         echo "<td>" . $user_info['email'] . "</td>";
+                        echo "<td>" . $redeem_row['voucher'] . "</td>";
                         echo "<td>" . displayDate($redeem_row['expired_date']) . "</td>";
                         ?>
                     </tr>

@@ -538,6 +538,12 @@ class M_custom extends CI_Model
         return $the_row;
     }
 
+    public function getOneUserRedemption($redeem_id)
+    {
+        $return = $this->m_custom->get_one_table_record('user_redemption', 'redeem_id', $redeem_id, 1);
+        return $return;
+    }
+    
     function getAdvertise($advertise_type, $sub_category_id = NULL, $merchant_id = NULL, $show_expired = 0, $limit = NULL, $start = NULL)
     {
         if (!IsNullOrEmptyString($sub_category_id))

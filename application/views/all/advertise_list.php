@@ -140,10 +140,12 @@ $this->album_admin = $this->config->item('album_admin');
                     <div id="advertise-list-title2">
                         <a href='<?php echo $advertise_detail_url ?>'><?php echo $row['title'] ?></a>
                     </div>
-                    <?php if ($advertise_type == 'hot') { ?>
-                        <div id="advertise-list-dynamic-time">
-                            <i class="fa fa-clock-o"></i><span id="advertise-list-dynamic-time-label" data-countdown='<?php echo $row['end_time'] ?>'></span>
-                        </div>
+                    <?php if ($advertise_type == 'hot') {    ?>                       
+                            <?php if($row['post_hour']!=0) { ?>
+                                <div id="advertise-list-dynamic-time">
+                                    <i class="fa fa-clock-o"></i><span id="advertise-list-dynamic-time-label" data-countdown='<?php echo $row['end_time'] ?>'></span>
+                                </div>
+                            <?php } ?>                      
                     <?php } ?>
                     <?php if ($advertise_type == 'pro' || $advertise_type == 'adm') { ?>
                         <div id="advertise-list-dynamic-time">

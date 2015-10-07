@@ -170,10 +170,11 @@
                             </tr>
                         </table>
                     </div>
+                    <?php if($row['post_hour']!=0) { ?>
                     <div id="advertise-list-dynamic-time">
                         <i class="fa fa-clock-o"></i><span id="advertise-list-dynamic-time-label" data-countdown='<?php echo $row['end_time'] ?>'></span>
                     </div>
-
+                    <?php } ?>
                 </div>
                 <?php
             }
