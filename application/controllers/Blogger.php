@@ -4,8 +4,25 @@ class Blogger extends CI_Controller
 {
     public function index()
     {
-        //QUERY USER
-        $data['query_user'] = $this->albert_model->read_blogger($where = NULL);
+        //POST
+        if($this->input->post('search'))
+        {
+            //POST VALUE
+            $keyword = $this->input->post('keyword');
+        }
+        else
+        {
+            //POST VALUE
+            $keyword = '';
+        }
+        //FORM
+        $data['keyword'] = array(
+            'name'=>'keyword',
+            'placeholder'=>'Search: Blogger Name, Blog URL',
+            'value'=>$keyword
+        );
+        //QUERY BLOGGER
+        $data['query_blogger'] = $this->albert_model->read_blogger($keyword);
         //TEMPLATE
         $data['page_path_name'] = 'blogger';
         $this->load->view('template/layout', $data);

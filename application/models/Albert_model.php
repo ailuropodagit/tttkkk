@@ -110,18 +110,20 @@ class Albert_model extends CI_Model
     
     /* READ BLOGGER
     ***************************************************/
-    public function read_blogger($where)
+    public function read_blogger($search)
     {
         //QUERY
         $this->db->select('*');
         $this->db->from('users');
-        $this->db->where('us_blog_url', NULL);
+        $this->db->where('us_blog_url !=', "");
         //WHERE
-        if($where)
+        if($search)
         {
-            $this->db->where($where);
+            $this->db->where("concat_ws(' ', first_name, last_name) LIKE", '%'.$search.'%');
+            $this->db->or_where('us_blog_url LIKE', '%'.$search.'%');
         }
-        $query = $this->db->get();
+        $this->db->order_by('first_name', 'asc');
+        $query = $this->db->get();        
         //RETURN
         return $query;
     }

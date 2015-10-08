@@ -53,7 +53,7 @@ $this->album_admin = $this->config->item('album_admin');
             {
                 ?>            
                 <div id='advertise-list-upload-button'>
-                    <a href='<?php echo base_url() ?>merchant/upload_hotdeal' class='ahref-button'>Upload</a>
+                    <a href='<?php echo base_url() ?>merchant/upload_hotdeal' class='a-href-button'>Upload</a>
                 </div>
                 <?php
             }

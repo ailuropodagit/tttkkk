@@ -1,3 +1,16 @@
+<script>
+    $(function(){
+        //textarea submit by enter, alt shift new line
+        $('.textarea-comment').on('keyup', function(e) {
+            if (e.which == 13 && ! e.shiftKey) {
+                $(this).closest("form").submit();
+                $(this).attr('disabled','disabled');
+                $("#comment-submit").attr('disabled','disabled');
+            }
+        }); 
+    });   
+</script>
+
 <?php
 //GET ALL COMMENT
 $all_comment = $this->m_custom->activity_comment_count($item_id['value'],$item_type['value'],1);
@@ -75,12 +88,11 @@ $all_comment = $this->m_custom->activity_comment_count($item_id['value'],$item_t
         ?>
         <!--INPUT HIDDEN-->
         <input type='hidden' name='current_url' id='current_url' value='<?php echo get_current_url() ?>'/>
-    
         <div id="user-comment-input">
-            <textarea placeholder="Write a comment..." id="comment" name="comment"></textarea>
+            <textarea placeholder="Write a comment..." id="comment" class="textarea-comment" name="comment"></textarea>
         </div>
         <div id="user-comment-submit">
-            <button name="button_action" type="submit" value="add_comment" >Add Comment</button>
+            <button name="button_action" type="submit" value="add_comment" id="comment-submit">Add Comment</button>
         </div>
         <?php
         //FORM CLOSE

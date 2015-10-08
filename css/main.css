@@ -48,10 +48,12 @@ input[type='text'] {
     outline: none;
     border-radius: 3px;
     border: 1px solid #a9a9a9;
+    height: 30px;
+    box-sizing: border-box;
 }
 
 input[type='text']::-webkit-input-placeholder {
-    font-size: 14px;
+    font-size: 13px;
     letter-spacing: 1px;
     font-style: italic;
 }
@@ -62,6 +64,8 @@ input[type='password'] {
     outline: none;
     border-radius: 3px;
     border: 1px solid #a9a9a9;
+    height: 30px;
+    box-sizing: border-box;
 }
 
 input:-moz-read-only, textarea:-moz-read-only {
@@ -74,7 +78,7 @@ input:read-only, textarea:read-only {
     color: gray;
 }
 
-input[type='submit'], button[type='submit'], .ahref-button {
+input[type='submit'], input[type='button'], button[type='submit'], .a-href-button {
     padding: 5px 14px 5px 14px;
     background-color: #51adcf;
     color: white;
@@ -87,9 +91,23 @@ input[type='submit'], button[type='submit'], .ahref-button {
     -webkit-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
     box-shadow: 0px 0px 2px 0px rgba(0,0,0,0.75);
+    height: 28px;
 }
 
-.ahref-button { 
+.a-href-button {
+    padding: 6px 14px 6px 14px;
+    height: auto;
+}
+
+.a-href-button:hover {
+    text-decoration: none;
+}
+
+.a-href-button:hover:active {
+    color: white;
+}
+
+.a-href-button { 
     font-size: 13px;
     display: inline-block;
 }
@@ -313,9 +331,7 @@ a:hover {
 }
 
 #search-content-box input[type='text'] {
-    height: 32px;
     width: 100%;
-    box-sizing: border-box;
     padding: 0px 0px 0px 30px;
 }
 
@@ -697,20 +713,17 @@ a:hover {
 }
 
 #login-form-each-input input[type='text'], #register-form-each-input input[type='text'] {
-    height: 25px;
-    width: 270px;
-    margin: 10px 0px 0px 0px;
-}
-
-#login-form-each-input-contact-number input[type='text'] , #register-form-each-input-contact-number input[type='text'] {
-    height: 25px;
-    width: 238px;
+    width: 290px;
     margin: 10px 0px 0px 0px;
 }
 
 #login-form-each-input input[type='password'], #register-form-each-input input[type='password'] {
-    height: 25px;
-    width: 270px;
+    width: 290px;
+    margin: 10px 0px 0px 0px;
+}
+
+#login-form-each-input-contact-number input[type='text'] , #register-form-each-input-contact-number input[type='text'] {
+    width: 238px;
     margin: 10px 0px 0px 0px;
 }
 
@@ -1164,6 +1177,10 @@ a:hover {
 
 #profile-info-form-submit {
     margin: 15px 0px 0px 0px;
+}
+#profile-branch-info {
+    width: 290px;
+    margin: 20px 0px 0px 285px;
 }
 
 #profile-bottom-link {
@@ -1923,9 +1940,93 @@ a:hover {
     text-align: left;
 }
 
+#redemption-line {
+    margin: 30px 0px 30px 0px;
+    border-bottom: 1px solid lightgray;
+}
+
 #redemption-comment-list {
-    margin: 20px 0px 0px 0px;
+    width: 500px;
+    margin: 0px auto 0px auto;
     text-align: left;
+}
+
+/* BLOGGER
+******************************/
+
+#blogger-content {
+    margin: 20px 0px 0px 0px;
+}
+
+#blogger-search {
+    margin: 0px 0px 20px 0px;
+}
+
+#blogger-search-input {
+    display: inline;
+}
+
+#blogger-search-input input[type='text'] {
+    width: calc(100% - 165px);
+}
+
+#blogger-search-submit {
+    display: inline;
+    margin: 0px 0px 0px 5px;
+}
+
+#blogger-search-clear {
+    display: inline;
+    margin: 0px 0px 0px 5px;
+}
+
+#blogger-box {
+    display: inline-block;
+    margin: 0px 15px 15px 0px;
+}
+
+#blogger-box-photo-box {
+    float: left;
+    width: 70px;
+    height: 70px;
+    border: 1px solid lightgray;
+    background-color: whitesmoke;
+}
+
+#blogger-box-photo-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#blogger-box-info {
+    float: left;
+    margin: 0px 0px 0px 15px;
+}
+
+#blogger-box-info-name {
+    margin: 5px 0px 0px 0px;
+    width: 190px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#blogger-box-info-name a {
+    text-decoration: none;
+    color: black;
+}
+
+#blogger-box-info-blog-url {
+    margin: 10px 0px 0px 0px;
+    width: 190px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#blogger-box-bottom-empty-fix {
+    margin: 0px 0px -15px 0px;
 }
 
 /* USER REDEMPTION

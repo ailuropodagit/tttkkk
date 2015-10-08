@@ -1092,8 +1092,6 @@ class All extends CI_Controller
             $this->data['view_map_path'] = 'all/merchant-map/';
             $this->data['website_url'] = $the_row->me_website_url;
             $this->data['facebook_url'] = $the_row->me_facebook_url;
-            $this->data['message'] = "";
-
             if (isset($_POST) && !empty($_POST))
             {
                 $search_word = $this->input->post('search_word');
