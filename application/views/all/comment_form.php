@@ -42,7 +42,7 @@ $all_comment = $this->m_custom->activity_comment_count($item_id['value'],$item_t
                     </td>
                     <td valign='top'>
                         <div id="user-comment-list-each-comment">
-                            <?php echo $user_comment; ?>
+                            <?php echo nl2br($user_comment) ?>
                         </div>
                     </td>
                     <td valign='top' align='center'>
