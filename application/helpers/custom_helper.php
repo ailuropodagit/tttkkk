@@ -210,11 +210,15 @@ if (!function_exists('incrementDate'))
 if (!function_exists('month_previous'))
 {
 
-    function month_previous($theDate)
+    function month_previous($theDate, $want_yearmonth = 0)
     {
         $currentDate = new DateTime($theDate);
         $lastMonth = incrementDate($currentDate, 0);
-        return $lastMonth->format(format_date_server());
+        if($want_yearmonth == 1){
+            return $lastMonth->format('Y') . '-' . $lastMonth->format('m');
+        }else{
+            return $lastMonth->format(format_date_server());
+        }
     }
 
 }

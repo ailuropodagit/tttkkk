@@ -309,6 +309,7 @@ class M_merchant extends CI_Model
                     'balance' => $monthly_balance,
                     'month_id' => $month_id,
                     'year' => $year,
+                    'month_last_date' => displayDate(displayLastDay($year,$month_id),0,1),
                 );
                 $this->db->insert('merchant_balance', $insert_data);
             }
@@ -324,9 +325,9 @@ class M_merchant extends CI_Model
         }
     }
 
-    public function merchant_this_month_transaction($merchant_id)
+    public function merchant_this_month_transaction($merchant_id, $search_year_month = NULL)
     {
-        $search_date = date_for_db_search();
+        $search_date = $search_year_month == NULL ? date_for_db_search() : $search_year_month;
         $condition = "trans_time like '%" . $search_date . "%'";
         $this->db->where($condition);
         $this->db->select("trans_conf_id, SUM(amount_plus) AS plus, SUM(amount_minus) AS minus, COUNT(trans_history_id) As quantity");
@@ -337,7 +338,7 @@ class M_merchant extends CI_Model
         return $result;
     }
 
-    public function merchant_check_balance($merchant_id, $exclude_this_month = 0)
+    public function merchant_check_balance($merchant_id, $exclude_this_month = 0, $search_year_month = NULL)
     {
         $this->m_merchant->merchant_balance_update($merchant_id);
         if ($exclude_this_month == 0)
@@ -346,9 +347,11 @@ class M_merchant extends CI_Model
         }
         else
         {
-            $current_month = ltrim(get_part_of_date('month'), '0');
-            $current_year = get_part_of_date('year');
-            $condition = "(month_id !=" . $current_month . " or year !=" . $current_year . ")";
+//            $current_month = ltrim(get_part_of_date('month'), '0');
+//            $current_year = get_part_of_date('year');
+//            $condition = "(month_id !=" . $current_month . " or year !=" . $current_year . ")";
+            $search_date = $search_year_month == NULL ? date_for_db_search() : $search_year_month;
+            $condition = "month_last_date <= '" . $search_date . "'";
             $this->db->where($condition);
             $history_query = $this->db->get_where('merchant_balance', array('merchant_id' => $merchant_id));
         }
@@ -359,6 +362,30 @@ class M_merchant extends CI_Model
             $current_balance += $history_row['balance'];
         }
         return number_format($current_balance, 2);
+    }
+
+    //to do todo
+    public function money_spend_on_list($merchant_id)
+    {
+        $list_advertise = $this->db->get_where('advertise', array('merchant_id' => $merchant_id))->result_array();
+        
+        $return_final = array();
+        foreach ($list_advertise as $row)
+        {
+            $sub_total = 0;
+            $act_refer_id = $row['advertise_id'];
+            $list_activity = $this->db->get_where('activity_history', array('act_refer_id' => $act_refer_id, 'act_refer_type' => 'adv'))->result_array();  //not yet do
+            $return_final[] = $row;
+        }
+
+        $list_mua = $this->db->get_where('merchant_user_album', array('post_type' => 'mer', 'merchant_id' => $merchant_id))->result_array();
+
+        foreach ($list_mua as $row)
+        {
+            $return_final[] = $row;
+        }
+
+        return $return_final;
     }
 
     public function have_money($merchant_id){       

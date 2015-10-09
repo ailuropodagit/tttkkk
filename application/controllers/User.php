@@ -1700,12 +1700,14 @@ class User extends CI_Controller
             $this->data['the_month_selected'] = $selected_month;
             $selected_month_text = $this->m_custom->explode_year_month($selected_month);
             $this->data['the_month_selected_text'] = $selected_month_text['month_year_text'];
-
+            $month_last_date = $selected_month_text['month_last_date'];
+            $this->data['previous_month_selected_text'] = $this->m_custom->explode_year_month(month_previous($month_last_date, 1));
+            
             $user_id = $this->ion_auth->user()->row()->id;
             $this->m_user->candie_balance_update($user_id);
-            $this->data['previous_end_month_balance'] = $this->m_user->candie_check_balance($user_id, 1, month_previous($selected_month_text['month_last_date']));
-            $this->data['end_month_balance'] = $this->m_user->candie_check_balance($user_id, 1, $selected_month_text['month_last_date']);
-            $this->data['current_balance'] = $this->m_user->candie_check_balance($user_id, 0, $selected_month_text['month_last_date']);
+            $this->data['previous_end_month_balance'] = $this->m_user->candie_check_balance($user_id, 1, month_previous($month_last_date));
+            $this->data['end_month_balance'] = $this->m_user->candie_check_balance($user_id, 1, $month_last_date);
+            $this->data['current_balance'] = $this->m_user->candie_check_balance($user_id, 0, $month_last_date);
             $this->data['this_month_redemption'] = $this->m_user->user_this_month_redemption($user_id, $selected_month);
             $this->data['this_month_candie_gain'] = $this->m_user->user_this_month_candie_gain($user_id, $selected_month);
             $this->data['this_month_candie'] = $this->m_user->user_this_month_candie($user_id, $selected_month);          

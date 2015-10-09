@@ -34,19 +34,20 @@ if(isset($message))
         <div id='footer-server-time' style="float:right;">
             Date & Time : <?php echo date($this->config->item('keppo_format_date_time_display')) ?>
         </div>
-        <div id="print-area">
             <?php echo form_open(uri_string()); ?>
             <div id="candie-promotion-form-go">
-                <span id="candie-promotion-form-go-label"><?php echo "Month "; ?></span>
+                <span id="candie-promotion-form-go-label"><?php echo "Period "; ?></span>
                 <span id="candie-promotion-form-go-month"><?php echo form_dropdown($the_month, $month_list, $the_month_selected); ?></span>
                 <span id="candie-promotion-form-go-button"><button name="button_action" type="submit" value="search_history">Go</button></span>
             </div>
             <?php echo form_close(); ?>
+        <div id="print-area">
+            <h2><?php echo $the_month_selected_text. ' Balance'; ?></h2>
             <div id='payment-table'>
                 <table border='1px' cellspacing='0px' cellpadding='0px'>
                     <colgroup>
                         <col>
-                        <col style='width: 300px;'>
+                        <col style='width: 320px;'>
                         <col style='width: 110px;'>
                         <col style='width: 110px;'>
                         <col style='width: 120px;'>
@@ -61,7 +62,7 @@ if(isset($message))
                         <th>Candies</th>
                     </tr>
                     <tr>
-                        <td>Previous Month End Candies</td>
+                        <td><?php echo $previous_month_selected_text['month_year_text']; ?> End Candies</td>
                         <td colspan="5"></td>
                         <td style="text-align:right"><?php echo $previous_end_month_balance ?></td>
                     </tr>
