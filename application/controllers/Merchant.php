@@ -195,8 +195,8 @@ class Merchant extends CI_Controller
         //CONFIG DATA
         $group_id_user = $this->config->item('group_id_user');
         //READ USER
-        $where_read_users = array('id'=>$user_id);
-        $query_read_user = $this->albert_model->read_users($where_read_users);
+        $where_read_user = array('id'=>$user_id);
+        $query_read_user = $this->albert_model->read_user($where_read_user);
         $user_name = $query_read_user->row()->first_name . ' ' . $query_read_user->row()->last_name;
         //USER
         if ($user_type == 'user')
@@ -232,8 +232,8 @@ class Merchant extends CI_Controller
         //CONFIG DATA
         $group_id_user = $this->config->item('group_id_user');
         //READ USER
-        $where_read_users = array('id'=>$user_id);
-        $query_read_user = $this->albert_model->read_users($where_read_users);
+        $where_read_user = array('id'=>$user_id);
+        $query_read_user = $this->albert_model->read_user($where_read_user);
         $user_name = $query_read_user->row()->first_name . ' ' . $query_read_user->row()->last_name;
         //USER
         if ($user_type == 'user')

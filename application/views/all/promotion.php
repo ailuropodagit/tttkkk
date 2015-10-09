@@ -88,30 +88,25 @@ if(isset($message))
                                 }
                                 ?>
                             </div>
-                            <div id="redemption-rate-time">
-                                <div id="redemption-rate">
-                                    <div style="display:inline;">
-                                        <?php
-                                        echo form_input($item_id);
-                                        echo form_input($item_type);
-                                        for ($i = 1; $i <= 5; $i++)
-                                        {
-                                            if ($i == round($average_rating))
-                                            {
-                                                echo "<input class='auto-submit-star' type='radio' name='rating' " . $radio_level . " value='" . $i . "' checked='checked'/>";
-                                            }
-                                            else
-                                            {
-                                                echo "<input class='auto-submit-star' type='radio' name='rating' " . $radio_level . " value='" . $i . "'/>";
-                                            }
-                                        }
-                                        ?>
-                                    </div>
-                                </div>
-                                <div id="redemption-time">
-                                    <i class="fa fa-gift header-menu-icon"></i>
-                                    <span id="redemption-time-label">Redeem Period:  <?php echo $start_date ?> to <?php echo $end_date ?></span>
-                                </div>
+                            <div id="redemption-time">
+                                <i class="fa fa-gift header-menu-icon"></i><span id="redemption-time-label">Redeem Period:  <?php echo $start_date ?> to <?php echo $end_date ?></span>
+                            </div>
+                            <div id="redemption-rate">
+                                <?php
+                                echo form_input($item_id);
+                                echo form_input($item_type);
+                                for ($i = 1; $i <= 5; $i++)
+                                {
+                                    if ($i == round($average_rating))
+                                    {
+                                        echo "<input class='auto-submit-star' type='radio' name='rating' " . $radio_level . " value='" . $i . "' checked='checked'/>";
+                                    }
+                                    else
+                                    {
+                                        echo "<input class='auto-submit-star' type='radio' name='rating' " . $radio_level . " value='" . $i . "'/>";
+                                    }
+                                }
+                                ?>
                                 <div id="float-fix"></div>
                             </div>
                             <div id="redemption-description">
@@ -176,29 +171,26 @@ if(isset($message))
                                 </ul>
                             </div>
                         </div>
-                            <div id='redemption-redempt-submit'>
-                                <?php
-                                if (check_correct_login_type($this->config->item('group_id_user')))
-                                {
-                                    //FORM OPEN
-                                    $action_url = base_url() . "all/user_redeem_voucher";
-                                    $confirm_message = "Confirm that you want to redeem this voucher? ";
-                                    ?>
-                                    <form action="<?php echo $action_url; ?>" onSubmit="return confirm('<?php echo $confirm_message ?>')" method="post" accept-charset="utf-8">
-                                    <?php
-                                    echo form_input($item_id);
-                                    ?>
-                                    <input type='hidden' name='current_url' id='current_url' value='<?php echo get_current_url() ?>'/>
-                                    <button name="button_action" type="submit" value="redeem" >Redeem</button>
-                                    <?php
-                                    //FORM CLOSE
-                                    echo form_close();
-                                }
+                        <div id='redemption-redempt-submit'>
+                            <?php
+                            if (check_correct_login_type($this->config->item('group_id_user')))
+                            {
+                                //FORM OPEN
+                                $action_url = base_url() . "all/user_redeem_voucher";
+                                $confirm_message = "Confirm that you want to redeem this voucher? ";
                                 ?>
-                            </div>
-                            <div id='redemption-comment-list'>
-                                <?php $this->load->view('all/comment_form'); ?>
-                            </div>
+                                <form action="<?php echo $action_url; ?>" onSubmit="return confirm('<?php echo $confirm_message ?>')" method="post" accept-charset="utf-8">
+                                <?php
+                                echo form_input($item_id);
+                                ?>
+                                <input type='hidden' name='current_url' id='current_url' value='<?php echo get_current_url() ?>'/>
+                                <button name="button_action" type="submit" value="redeem" >Redeem</button>
+                                <?php
+                                //FORM CLOSE
+                                echo form_close();
+                            }
+                            ?>
+                        </div>
                     </div>
                 </div>
                 <div id='redemption-table-row-cell' class='redemption-right-cell'>
@@ -216,6 +208,12 @@ if(isset($message))
                     </div>
                 </div>
             </div>
+        </div>
+        
+        <div id="redemption-line"></div>
+
+        <div id='redemption-comment-list'>
+            <?php $this->load->view('all/comment_form'); ?>
         </div>
 
     </div>

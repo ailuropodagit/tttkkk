@@ -14,7 +14,7 @@ $album_user_profile = $this->config->item('album_user_profile');
 //DASHBOARD
 $dashboard_merchant_slug = $this->uri->segment(3);
 $where_read_user = array('slug'=>$dashboard_merchant_slug);
-$dashboard_users_id = $this->albert_model->read_users($where_read_user)->row()->id;
+$dashboard_users_id = $this->albert_model->read_user($where_read_user)->row()->id;
 
 //LOGGED
 if($this->ion_auth->user()->num_rows())
@@ -25,7 +25,7 @@ if($this->ion_auth->user()->num_rows())
     
     //DASHBOARD
     $where_read_user = array('id'=>$dashboard_users_id);
-    $dashboard_user_group_id = $this->albert_model->read_users($where_read_user)->row()->main_group_id;
+    $dashboard_user_group_id = $this->albert_model->read_user($where_read_user)->row()->main_group_id;
 }
 ?>
 
@@ -171,15 +171,6 @@ if($this->ion_auth->user()->num_rows())
             <div id="dashboard-navigation-each">
                 <a href="<?php echo $user_picture; ?>" ><i class="fa fa-picture-o dashboard-navigation-each-icon"></i>User's Picture</a>
             </div>
-            <?php
-            if (check_correct_login_type($this->config->item('group_id_user')))
-            {
-                ?>
-                <div id="dashboard-navigation-separater">|</div>
-                <div id="dashboard-navigation-each"><a href='<?php echo $user_upload_for_merchant ?>'>Upload Picture</a></div>
-                <?php
-            }
-            ?>
         </div>
         <div id="float-fix"></div>
     </div>

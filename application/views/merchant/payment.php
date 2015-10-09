@@ -66,5 +66,23 @@ if(isset($message))
             </div>
         </div>
         
+        <div id="payment-bank-icon">
+            <div id="payment-bank-icon-each">
+                <a href="https://www.cimbclicks.com.my/" target="_blank"><img src="<?php echo base_url() ?>/image/payment-cimb.jpg"></a>
+            </div>
+            <div id="payment-bank-icon-each">
+                <a href="http://www.maybank2u.com.my/" target="_blank"><img src="<?php echo base_url() ?>/image/payment-maybank.jpg"></a>
+            </div>
+            <div id="payment-bank-icon-each">
+                <a href="https://www.pbebank.com/" target="_blank"><img src="<?php echo base_url() ?>/image/payment-publicbank.jpg"></a>
+            </div>
+            <div id="payment-bank-icon-each">
+                <a href="https://www.citibank.com.my" target="_blank"><img src="<?php echo base_url() ?>/image/payment-citibank.jpg"></a>
+            </div>
+            <div id="payment-bank-icon-each">
+                <a href="https://www.alliancebank.com.my/" target="_blank"><img src="<?php echo base_url() ?>/image/payment-alliancebank.jpg"></a>
+            </div>
+        </div>
+        
     </div>
 </div>

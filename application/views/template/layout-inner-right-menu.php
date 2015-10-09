@@ -45,7 +45,7 @@
             $fetch_method = $this->router->fetch_method();
             //FOLLOWER COUNT
             $where_read_user = array('id'=>$login_user_id);
-            $login_main_merchant_id = $this->albert_model->read_users($where_read_user)->row()->su_merchant_id;
+            $login_main_merchant_id = $this->albert_model->read_user($where_read_user)->row()->su_merchant_id;
             $where_user_follower = array('following_main_id' => $login_main_merchant_id);
             $follower_num_rows = $this->albert_model->read_follower($where_user_follower)->num_rows();
             ?>

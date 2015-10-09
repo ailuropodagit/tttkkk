@@ -1,6 +1,4 @@
-<?php
-
-defined('BASEPATH') OR exit('No direct script access allowed');
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 class All extends CI_Controller
 {
@@ -846,7 +844,7 @@ class All extends CI_Controller
         {
             //QUERY USERS
             $query_users_where = array('id' => $users_id, 'main_group_id' => $this->config->item('group_id_user'));
-            $data['query_users'] = $this->albert_model->read_users($query_users_where);
+            $data['query_users'] = $this->albert_model->read_user($query_users_where);
             $num_rows_users = $data['query_users']->num_rows();
             //USER EXISTS
             if ($num_rows_users)
@@ -910,7 +908,7 @@ class All extends CI_Controller
         }
         //QUERY USERS
         $query_users_where = array('id' => $users_id);
-        $data['query_users'] = $this->albert_model->read_users($query_users_where);
+        $data['query_users'] = $this->albert_model->read_user($query_users_where);
         //PAGE PATH NAME
         $data['page_path_name'] = 'all/advertise_list';
         //BOTTON PATH NAME
@@ -1094,8 +1092,6 @@ class All extends CI_Controller
             $this->data['view_map_path'] = 'all/merchant-map/';
             $this->data['website_url'] = $the_row->me_website_url;
             $this->data['facebook_url'] = $the_row->me_facebook_url;
-            $this->data['message'] = "";
-
             if (isset($_POST) && !empty($_POST))
             {
                 $search_word = $this->input->post('search_word');

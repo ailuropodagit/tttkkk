@@ -49,7 +49,7 @@ class Contact_us extends CI_Controller
         }
         $this->data['message'] = $this->session->flashdata('message');
 
-        $this->data['page_path_name'] = 'page/contact-us';
+        $this->data['page_path_name'] = 'page/contact_us';
         $this->load->view('template/layout', $this->data);
     }
 
