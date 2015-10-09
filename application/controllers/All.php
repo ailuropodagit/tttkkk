@@ -938,7 +938,6 @@ class All extends CI_Controller
             $refer_id = $this->input->post('item_id');
             $refer_type = $this->input->post('item_type');
             $comment = $this->input->post('comment');
-
             if (IsNullOrEmptyString($comment))
             {
                 $message_info = add_message_info($message_info, 'Comment cannot be empty.');
@@ -972,8 +971,8 @@ class All extends CI_Controller
             $data['comment'] = array(
                 'name' => 'comment',
                 'id' => 'comment',
-                'value' => $the_comment['comment'],
-            );
+                'value' =>  $the_comment['comment'],
+            );            
             $data['return_url'] = array(
                 'type' => 'hidden',
                 'name' => 'return_url',

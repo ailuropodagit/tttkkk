@@ -71,10 +71,16 @@ if(isset($message))
         <?php
         foreach ($branch_list as $one_row)
         {
+            $address = $one_row->address;
+            $address_with_plus_symbol = str_replace(' ', '+', $address); 
             ?>
             <div id="outlet-info">
                 <div id="outlet-info-name"><?php echo $one_row->name ?></div>
-                <div id="outlet-info-address"><?php echo $one_row->address ?></div>
+                <div id="outlet-info-address">
+                    <a href="https://maps.google.com?saddr=Current+Location&daddr=<?php echo $address_with_plus_symbol ?>">
+                        <?php echo $address ?>
+                    </a>
+                </div>
                 <div id="outlet-info-tel"><?php echo "<a href='tel:".$phone."' >".$one_row->phone."</a>"; ?></div>
                 <div id="outlet-info-view-map"><a href="<?php echo base_url() . $view_map_path . $one_row->branch_id ?>">View Map</a></div>
             </div>
