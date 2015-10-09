@@ -25,6 +25,19 @@ class M_custom extends CI_Model
         return $return;
     }
 
+    public function explode_year_month($year_month)
+    {
+        $pieces = explode("-", $year_month);
+        $return = array(
+            'year' => $pieces[0],
+            'month' => $pieces[1],
+            'month_text' => $this->m_custom->display_static_option($pieces[1]),
+            'month_year_text' => $this->m_custom->display_static_option($pieces[1]) . ' ' . $pieces[0],
+            'month_last_date' => displayDate(displayLastDay($pieces[0],$pieces[1]),0,1),
+        );
+        return $return;
+    }
+
     //to do todo
     public function activity_check_access($act_history_id, $allow_other = 0)
     {

@@ -491,6 +491,7 @@ class User extends CI_Controller
             for ($i = 1; $i < 13; $i++)
             {
                 $this->m_user->user_balance_update($user_id, $i);
+                $this->m_user->candie_balance_update($user_id, $i);
             }
         }
     }
@@ -1677,17 +1678,40 @@ class User extends CI_Controller
         echo $output;
     }
 
-    function candie_page()
+    function candie_page($search_month = NULL)
     {
         if (check_correct_login_type($this->main_group_id))
         {
+            if (isset($_POST) && !empty($_POST))
+            {
+                if ($this->input->post('button_action') == "search_history")
+                {
+                    $search_month = $this->input->post('the_month');
+                }
+            }
+            
+            $month_list = limited_month_select(2,1);
+            $this->data['month_list'] = $month_list;
+            $this->data['the_month'] = array(
+                'name' => 'the_month',
+                'id' => 'the_month',
+            );
+            $selected_month = empty($search_month) ? date_for_db_search() : $search_month;
+            $this->data['the_month_selected'] = $selected_month;
+            $selected_month_text = $this->m_custom->explode_year_month($selected_month);
+            $this->data['the_month_selected_text'] = $selected_month_text['month_year_text'];
+            $month_last_date = $selected_month_text['month_last_date'];
+            $this->data['previous_month_selected_text'] = $this->m_custom->explode_year_month(month_previous($month_last_date, 1));
+            
             $user_id = $this->ion_auth->user()->row()->id;
             $this->m_user->candie_balance_update($user_id);
-            $this->data['last_month_balance'] = $this->m_user->candie_check_balance($user_id, 1);
-            $this->data['this_month_balance'] = $this->m_user->candie_check_balance($user_id);
-            $this->data['this_month_redemption'] = $this->m_user->user_this_month_redemption($user_id);
-            $this->data['this_month_candie_gain'] = $this->m_user->user_this_month_candie_gain($user_id);
-
+            $this->data['previous_end_month_balance'] = $this->m_user->candie_check_balance($user_id, 1, month_previous($month_last_date));
+            $this->data['end_month_balance'] = $this->m_user->candie_check_balance($user_id, 1, $month_last_date);
+            $this->data['current_balance'] = $this->m_user->candie_check_balance($user_id, 0, $month_last_date);
+            $this->data['this_month_redemption'] = $this->m_user->user_this_month_redemption($user_id, $selected_month);
+            $this->data['this_month_candie_gain'] = $this->m_user->user_this_month_candie_gain($user_id, $selected_month);
+            $this->data['this_month_candie'] = $this->m_user->user_this_month_candie($user_id, $selected_month);          
+            
             $this->data['voucher_active_count'] = 'Active Voucher ('.count($this->m_user->user_redemption($user_id, $this->config->item('voucher_active'))).')';
             $this->data['voucher_used_count'] = 'Used Voucher ('.count($this->m_user->user_redemption($user_id, $this->config->item('voucher_used'))).')';
             $this->data['voucher_expired_count'] = 'Expired Voucher ('.count($this->m_user->user_redemption($user_id, $this->config->item('voucher_expired'))).')';
@@ -2193,7 +2217,7 @@ class User extends CI_Controller
                         {
                             if ($this->invite_friend_send_email($input_email, $logged_user_email))
                             {
-                                $data_candie_balance = array('user_id' => $logged_user_id, 'month_id' => $current_month, 'year' => $current_year);
+                                $data_candie_balance = array('user_id' => $logged_user_id, 'month_id' => $current_month, 'year' => $current_year, 'month_last_date' => displayDate(displayLastDay($year,$month_id),0,1));
                                 $this->albert_mode->insert_candie_balance($data_candie_balance);
                                 if ($this->db->affected_rows() == 0)
                                 {
