@@ -139,7 +139,7 @@ class M_merchant extends CI_Model
                 $category_id = $sub_category->main_category_id;
             }
         }
-        $this->db->order_by('company','asc');
+        $this->db->order_by('company', 'asc');
         $query = $this->db->get_where('users', array('me_category_id' => $category_id));
         if ($query->num_rows() == 0 && $return_empty == 0)
         {
@@ -150,9 +150,9 @@ class M_merchant extends CI_Model
 
     public function getMerchantList_by_subcategory($sub_category_id = 0)
     {
-        $this->db->where('me_sub_category_id' , $sub_category_id);
+        $this->db->where('me_sub_category_id', $sub_category_id);
         $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant'), 'hide_flag' => 0));
-        
+
         $result = $query->result_array();
         $return = array();
         foreach ($result as $row)
@@ -161,15 +161,15 @@ class M_merchant extends CI_Model
         }
         return $return;
     }
-    
+
     public function getMerchantCount_by_subcategory($sub_category_id = 0)
     {
-        $this->db->where('me_sub_category_id' , $sub_category_id);
+        $this->db->where('me_sub_category_id', $sub_category_id);
         $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant'), 'hide_flag' => 0));
-        
+
         return $query->num_rows();
     }
-    
+
     public function get_merchant_id_from_advertise($advertise_id)
     {
         $query = $this->db->get_where('advertise', array('advertise_id' => $advertise_id));
@@ -309,7 +309,7 @@ class M_merchant extends CI_Model
                     'balance' => $monthly_balance,
                     'month_id' => $month_id,
                     'year' => $year,
-                    'month_last_date' => displayDate(displayLastDay($year,$month_id),0,1),
+                    'month_last_date' => displayDate(displayLastDay($year, $month_id), 0, 1),
                 );
                 $this->db->insert('merchant_balance', $insert_data);
             }
@@ -365,37 +365,177 @@ class M_merchant extends CI_Model
     }
 
     //to do todo
-    public function money_spend_on_list($merchant_id)
+    public function money_spend_on_list($merchant_id, $filter_type = NULL)
     {
-        $list_advertise = $this->db->get_where('advertise', array('merchant_id' => $merchant_id))->result_array();
-        
-        $return_final = array();
-        foreach ($list_advertise as $row)
+        if ($filter_type == NULL || $filter_type == 'pro' || $filter_type == 'hot')
         {
-            $sub_total = 0;
-            $act_refer_id = $row['advertise_id'];
-            $list_activity = $this->db->get_where('activity_history', array('act_refer_id' => $act_refer_id, 'act_refer_type' => 'adv'))->result_array();  //not yet do
-            $return_final[] = $row;
+            if (!empty($filter_type))
+            {
+                $this->db->where('advertise_type', $filter_type);
+            }
+            $list_advertise = $this->db->get_where('advertise', array('merchant_id' => $merchant_id))->result_array();
+
+            $return = array();
+            foreach ($list_advertise as $row)
+            {
+                $type_text = '';
+                if ($row['advertise_type'] == 'pro')
+                {
+                    $type_text = 'Candie Voucher';
+                }
+                elseif ($row['advertise_type'] == 'hot')
+                {
+                    $type_text = 'Hot Deal Advertise';
+                }
+                $return[] = array(
+                    'create_date' => $row['create_date'],
+                    'id' => $row['advertise_id'],
+                    'type' => $row['advertise_type'],
+                    'type_text' => $type_text,
+                    'table' => 'advertise',
+                    'title' => $row['title'],
+                    'title_url' => $this->m_custom->generate_advertise_link($row['advertise_id']),                 
+                    'hide_flag' => $row['hide_flag'],
+                );
+            }
+        }
+        if ($filter_type == NULL || $filter_type == 'mua')
+        {
+            $list_mua = $this->db->get_where('merchant_user_album', array('post_type' => 'mer', 'merchant_id' => $merchant_id))->result_array();
+
+            foreach ($list_mua as $row)
+            {
+                $return[] = array(
+                    'create_date' => $row['create_date'],
+                    'id' => $row['merchant_user_album_id'],
+                    'type' => 'mua',
+                    'type_text' => 'User Upload Picture',
+                    'table' => 'merchant_user_album',
+                    'title' => $row['title'],
+                    'title_url' => $this->m_custom->generate_mua_link($row['merchant_user_album_id']),                  
+                    'hide_flag' => $row['hide_flag'],
+                );
+            }
         }
 
-        $list_mua = $this->db->get_where('merchant_user_album', array('post_type' => 'mer', 'merchant_id' => $merchant_id))->result_array();
-
-        foreach ($list_mua as $row)
+        $return_final = array();
+        foreach ($return as $row)
         {
-            $return_final[] = $row;
+            $row_id = $row['id'];
+            $row_type = $row['type'];
+            $row_table = $row['table'];
+            $total_amount = 0;
+
+            $this->db->select('many_id, many_parent_id, amount_minus');
+            $this->db->from('many_to_many');
+            $this->db->join('transaction_history', 'many_to_many.many_id = transaction_history.get_from_table_id', 'inner');
+            $this->db->where(array('many_to_many.many_parent_id' => $row_id, 'many_to_many.many_type' => 'view_advertise', 'transaction_history.get_from_table' => 'many_to_many', 'transaction_history.trans_conf_id' => 11));
+            $list_view = $this->db->get()->result_array();
+            $view_count = count($list_view);
+            $view_amount = 0;
+            foreach ($list_view as $row_small)
+            {
+                $view_amount += $row_small['amount_minus'];
+            }
+            $total_amount += $view_amount;
+            //var_dump($list_view);
+
+            $this->db->select('act_history_id, act_refer_id, amount_minus');
+            $this->db->from('activity_history');
+            $this->db->join('transaction_history', 'activity_history.act_history_id = transaction_history.get_from_table_id', 'inner');
+            $this->db->where(array('activity_history.act_refer_id' => $row_id, 'activity_history.act_type' => 'like', 'transaction_history.get_from_table' => 'activity_history', 'transaction_history.trans_conf_id' => 12));
+            $list_like = $this->db->get()->result_array();
+            $like_count = count($list_like);
+            $like_amount = 0;
+            foreach ($list_like as $row_small)
+            {
+                $like_amount += $row_small['amount_minus'];
+            }
+            $total_amount += $like_amount;
+            //var_dump($list_like);
+
+            $this->db->select('act_history_id, act_refer_id, amount_minus');
+            $this->db->from('activity_history');
+            $this->db->join('transaction_history', 'activity_history.act_history_id = transaction_history.get_from_table_id', 'inner');
+            $this->db->where(array('activity_history.act_refer_id' => $row_id, 'activity_history.act_type' => 'rating', 'transaction_history.get_from_table' => 'activity_history', 'transaction_history.trans_conf_id' => 13));
+            $list_rating = $this->db->get()->result_array();
+            $rating_count = count($list_rating);
+            $rating_amount = 0;
+            foreach ($list_rating as $row_small)
+            {
+                $rating_amount += $row_small['amount_minus'];
+            }
+            $total_amount += $rating_amount;
+            //var_dump($list_rating);
+
+            $redeem_count = NULL;
+            $redeem_amount = NULL;
+            if ($row_type == 'pro')
+            {
+                $this->db->select('*');
+                $this->db->from('user_redemption');
+                $this->db->join('transaction_history', 'user_redemption.redeem_id = transaction_history.get_from_table_id', 'inner');
+                $this->db->where(array('user_redemption.advertise_id' => $row_id, 'transaction_history.get_from_table' => 'user_redemption', 'transaction_history.trans_conf_id' => 18));
+                $list_redeem = $this->db->get()->result_array();
+                $redeem_count = count($list_redeem);
+                $redeem_amount = 0;
+                foreach ($list_redeem as $row_small)
+                {
+                    $redeem_amount += $row_small['amount_minus'];
+                }
+                $total_amount += $redeem_amount;
+                //var_dump($list_redeem);
+            }
+
+            $userupload_count = NULL;
+            $userupload_amount = NULL;
+            if ($row_type == 'mua')
+            {
+                $this->db->select('*');
+                $this->db->from('transaction_history');
+                $this->db->where(array('get_from_table_id' => $row_id, 'get_from_table' => 'merchant_user_album', 'transaction_history.trans_conf_id' => 14));
+                $list_userupload = $this->db->get()->result_array();
+                $userupload_count = count($list_userupload);
+                $userupload_amount = 0;
+                foreach ($list_userupload as $row_small)
+                {
+                    $userupload_amount += $row_small['amount_minus'];
+                }
+                $total_amount += $userupload_amount;
+                //var_dump($list_userupload);
+            }
+
+            $combine_result = array(
+                'view_count' => $view_count,
+                'view_amount' => $view_amount,
+                'like_count' => $like_count,
+                'like_amount' => $like_amount,
+                'rating_count' => $rating_count,
+                'rating_amount' => $rating_amount,
+                'redeem_count' => $redeem_count,
+                'redeem_amount' => $redeem_amount,
+                'userupload_count' => $userupload_count,
+                'userupload_amount' => $userupload_amount,
+                'total_amount' => $total_amount,
+            );
+            $return_final[] = $row + $combine_result;
         }
 
         return $return_final;
     }
 
-    public function have_money($merchant_id){       
-        if($this->m_merchant->merchant_check_balance($merchant_id)<$this->config->item('merchant_minimum_balance') && $this->config->item('froze_account_activate')==1){
+    public function have_money($merchant_id)
+    {
+        if ($this->m_merchant->merchant_check_balance($merchant_id) < $this->config->item('merchant_minimum_balance') && $this->config->item('froze_account_activate') == 1)
+        {
             return FALSE;
-        }else{
+        }
+        else
+        {
             return TRUE;
-        }        
+        }
     }
-    
+
     public function user_redemption_done($redeem_id, $mark_expired = 0)
     {
         if (check_correct_login_type($this->config->item('group_id_merchant')) || check_correct_login_type($this->config->item('group_id_supervisor')))
@@ -447,7 +587,8 @@ class M_merchant extends CI_Model
             if (!empty($search_word))
             {
                 $user_info = $this->m_custom->getUserInfo($row['user_id']);
-                if((searchWord($user_info['name'], $search_word))||(searchWord($user_info['email'], $search_word))||(searchWord($row['voucher'], $search_word))){
+                if ((searchWord($user_info['name'], $search_word)) || (searchWord($user_info['email'], $search_word)) || (searchWord($row['voucher'], $search_word)))
+                {
                     $return[] = $row;
                 }
             }
@@ -508,7 +649,7 @@ class M_merchant extends CI_Model
             }
         }
     }
-    
+
     public function mua_hide($mua_id)
     {
         if ($this->ion_auth->logged_in())
@@ -530,7 +671,7 @@ class M_merchant extends CI_Model
             }
         }
     }
-    
+
     public function transaction_history_insert($merchant_id, $trans_conf_id, $get_from_table_id, $get_from_table = 'activity_history', $allow_duplicate = 0, $amount_overwrite = 0)
     {
         $search_data = array(

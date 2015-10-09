@@ -223,6 +223,16 @@ if (!function_exists('month_previous'))
 
 }
 
+if (!function_exists('money'))
+{
+
+    function money($amount)
+    {
+        return "RM ".number_format($amount,2);
+    }
+
+}
+
 if (!function_exists('limited_month_select'))
 {
 

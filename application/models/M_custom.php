@@ -531,7 +531,7 @@ class M_custom extends CI_Model
     //To find one record in DB with one keyword
     public function getOneMUA($mua_id, $ignore_have_money = 0)
     {
-        $return = $this->m_custom->get_one_table_record('merchant_user_album', 'merchant_user_album_id', $mua_id, 1);
+        $return = $this->m_custom->get_one_table_record('merchant_user_album', 'merchant_user_album_id', $mua_id, 1, 1);
 
         if (($this->m_merchant->have_money($return['merchant_id']) && $ignore_have_money == 0) || $ignore_have_money != 0)
         {
@@ -546,7 +546,7 @@ class M_custom extends CI_Model
     //To find one record in DB with one keyword
     public function getOneUserPicture($picture_id)
     {
-        $the_row = $this->m_custom->get_one_table_record('user_album', 'user_album_id', $picture_id, 1);
+        $the_row = $this->m_custom->get_one_table_record('user_album', 'user_album_id', $picture_id, 1, 1);
 
         return $the_row;
     }
@@ -1681,9 +1681,15 @@ class M_custom extends CI_Model
     public function generate_advertise_link($advertise_id = NULL)
     {
         $adv_row = $this->m_custom->get_one_table_record('advertise', 'advertise_id', $advertise_id, 1);
-        return "<a target='_blank' href='" . base_url() . "all/advertise/" . $adv_row['advertise_id'] . "'>" . $adv_row['title'] . "</a>";
+        return "<a target='_blank' href='" . base_url() . "all/advertise/" . $advertise_id . "'>" . $adv_row['title'] . "</a>";
     }
 
+    public function generate_mua_link($mua_id = NULL)
+    {
+        $adv_row = $this->m_custom->get_one_table_record('merchant_user_album', 'merchant_user_album_id', $mua_id, 1);
+        return "<a target='_blank' href='" . base_url() . "all/merchant-user-picture/" . $mua_id . "'>" . $adv_row['title'] . "</a>";
+    }
+    
     //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
     public function generate_like_link($refer_id, $refer_type)
     {

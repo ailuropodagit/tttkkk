@@ -317,6 +317,58 @@ class Merchant extends CI_Controller
         }
     }
 
+    function payment_charge_page($search_type = NULL)
+    {
+        if (check_correct_login_type($this->main_group_id))
+        {
+            $merchant_id = $this->ion_auth->user()->row()->id;
+            
+            if (isset($_POST) && !empty($_POST))
+            {
+                if ($this->input->post('button_action') == "search_history")
+                {
+                    $search_type = $this->input->post('the_adv_type');
+                }
+            }
+            
+            $adv_type_list = array(
+                '' => 'All Type',
+                'hot' => 'Hot Deal Advertise',
+                'pro' => 'Candie Voucher',
+                'mua' => 'User Upload Picture'
+            );
+            $this->data['adv_type_list'] = $adv_type_list;
+            $this->data['the_adv_type'] = array(
+                'name' => 'the_adv_type',
+                'id' => 'the_adv_type',
+            );
+            $this->data['the_adv_type_selected'] = empty($search_type) ? "" : $search_type;
+            
+            $the_result = $this->m_merchant->money_spend_on_list($merchant_id, $search_type);
+            usort($the_result, function($a, $b)
+            {
+                $ad = new DateTime($a['create_date']);
+                $bd = new DateTime($b['create_date']);
+
+                if ($ad == $bd)
+                {
+                    return 0;
+                }
+
+                return $ad < $bd ? 1 : -1;
+            });
+            $this->data['the_result'] = $the_result;
+
+            $this->data['message'] = $this->session->flashdata('message');
+            $this->data['page_path_name'] = 'merchant/payment_charge';
+            $this->load->view('template/layout_right_menu', $this->data);
+        }
+        else
+        {
+            redirect('/', 'refresh');
+        }
+    }
+        
     function retrieve_password()
     {
         $this->form_validation->set_rules('username_email', $this->lang->line('forgot_password_username_email_label'), 'required');
