@@ -180,6 +180,86 @@ if (!function_exists('send_mail_simple'))
 
 }
 
+/*
+  Handles month/year increment calculations in a safe way,
+  avoiding the pitfall of 'fuzzy' month units.
+
+  Returns a DateTime object with incremented month values, and a date value == 1.
+ */
+if (!function_exists('incrementDate'))
+{
+
+    function incrementDate($startDate, $monthIncrement = 0)
+    {
+
+        $startingTimeStamp = $startDate->getTimestamp();
+        // Get the month value of the given date:
+        $monthString = date('Y-m', $startingTimeStamp);
+        // Create a date string corresponding to the 1st of the give month,
+        // making it safe for monthly calculations:
+        $safeDateString = "first day of $monthString";
+        // Increment date by given month increments:
+        $incrementedDateString = "$safeDateString $monthIncrement month";
+        $newTimeStamp = strtotime($incrementedDateString);
+        $newDate = DateTime::createFromFormat('U', $newTimeStamp);
+        return $newDate;
+    }
+
+}
+
+if (!function_exists('month_previous'))
+{
+
+    function month_previous($theDate)
+    {
+        $currentDate = new DateTime($theDate);
+        $lastMonth = incrementDate($currentDate, 0);
+        return $lastMonth->format(format_date_server());
+    }
+
+}
+
+if (!function_exists('limited_month_select'))
+{
+
+    function limited_month_select($how_many_month_before, $want_dropdown = 0)
+    {
+        $currentDate = new DateTime();
+        $month_list = array();
+        for ($i = 0; $i <= $how_many_month_before; $i++)
+        {
+            $temp_i = ($i - 1) * -1;
+            $MonthAgo = incrementDate($currentDate, $temp_i);
+            if ($want_dropdown == 1)
+            {
+                $month_list[$MonthAgo->format('Y') . '-' . $MonthAgo->format('m')] = $MonthAgo->format('F Y');
+            }
+            else
+            {
+                $month_list[] = array(
+                    'year' => $MonthAgo->format('Y'),
+                    'month' => $MonthAgo->format('m'),
+                    'key' => $MonthAgo->format('Y') . '-' . $MonthAgo->format('m'),
+                    'text' => $MonthAgo->format('F Y'),
+                );
+            }
+        }
+
+        return $month_list;
+//        $zeroMonthAgo = incrementDate($currentDate, 0);
+//        $oneMonthAgo = incrementDate($currentDate, -1);
+//        $twoMonthsAgo = incrementDate($currentDate, -2);
+//        $threeMonthsAgo = incrementDate($currentDate, -3);
+//
+//        echo "THIS: " . $currentDate->format('F Y') . "<br>";
+//        echo "0 AGO: " . $zeroMonthAgo->format('F Y') . "<br>";
+//        echo "1 AGO: " . $oneMonthAgo->format('F Y') . "<br>";
+//        echo "2 AGO: " . $twoMonthsAgo->format('F Y') . "<br>";
+//        echo "3 AGO: " . $threeMonthsAgo->format('F Y') . "<br>";
+    }
+
+}
+
 if (!function_exists('date_for_db_search'))
 {
     function date_for_db_search($month_id = NULL, $year = NULL){

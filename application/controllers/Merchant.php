@@ -1694,6 +1694,7 @@ class Merchant extends CI_Controller
             'id' => 'candie_extra_term',
             'value' => empty($this_month_candie) ? '' : $this_month_candie['extra_term'],
             'cols' => 90,
+            'placeholder' => 'Add extra T&C seperate by Enter, one line one T&C',
         );
 
         $this->data['candie_term'] = $candie_term;
