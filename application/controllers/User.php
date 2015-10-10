@@ -390,6 +390,23 @@ class User extends CI_Controller
     {
         //CONFIG DATA
         $group_id_user = $this->config->item('group_id_user');
+        //POST
+        if($this->input->post('search'))
+        {
+            //POST VALUE
+            $keyword = $this->input->post('keyword');
+        }
+        else
+        {
+            //POST VALUE 
+            $keyword = '';
+        }
+        //FORM DATA
+        $data['keyword'] = array(
+            'name'=>'keyword',
+            'placeholder'=>'Search',
+            'value'=>$keyword
+        );
         //READ USER
         $where_read_user = array('id'=>$user_id);
         $query_read_user = $this->albert_model->read_user($where_read_user);
@@ -399,25 +416,24 @@ class User extends CI_Controller
         {
             //DATA
             $data['page_title'] = $user_name . ' User Followers';
+            //QUERY USER FOLLOWER
+            $where_user_follower = array('following_id' => $user_id, 'main_group_id' => $group_id_user);
+            $data['query_follow'] = $this->albert_model->read_follower($where_user_follower, $keyword);
         }
         //MERCHANT
         if ($user_type == 'merchant')
         {
             //DATA
             $data['page_title'] = $user_name . ' Merchant Followers';
+            //QUERY MERCHANT FOLLOWER
+            $where_merchant_follower = array('following_id' => $user_id);
+            $data['query_follow'] = $this->albert_model->read_follower_merchant($where_merchant_follower, $keyword);
         }
-        //QUERY USER FOLLOWER
-        $where_user_follower = array('following_id' => $user_id, 'main_group_id' => $group_id_user);
-        $data['query_user_follower'] = $this->albert_model->read_follower($where_user_follower);
-        //QUERY USER FOLLOWING
-        $where_user_following = array('follower_id' => $user_id, 'main_group_id' => $group_id_user);
-        $data['query_user_following'] = $this->albert_model->read_following($where_user_following);
-        //QUERY MERCHANT FOLLOWER
-        $where_merchant_follower = array('following_id' => $user_id);
-        $data['query_merchant_follower'] = $this->albert_model->read_follower_merchant($where_merchant_follower);
-        //QUERY MERCHANT FOLLOWING
-        $where_merchant_following = array('follower_id' => $user_id);
-        $data['query_merchant_following'] = $this->albert_model->read_following_merchant($where_merchant_following);
+        //COUNT 
+        $data['user_follower_count'] = $this->albert_model->user_follower_count($user_id);
+        $data['user_following_count'] = $this->albert_model->user_following_count($user_id);
+        $data['merchant_follower_count'] = $this->albert_model->merchant_follower_count($user_id);
+        $data['merchant_following_count'] = $this->albert_model->merchant_following_count($user_id);        
         //DATA
         $data['user_id'] = $user_id;
         //TEMPLATE
@@ -439,6 +455,23 @@ class User extends CI_Controller
     {
         //CONFIG DATA
         $group_id_user = $this->config->item('group_id_user');
+        //POST
+        if($this->input->post('search'))
+        {
+            //POST VALUE
+            $keyword = $this->input->post('keyword');
+        }
+        else
+        {
+            //POST VALUE 
+            $keyword = '';
+        }
+        //FORM DATA
+        $data['keyword'] = array(
+            'name'=>'keyword',
+            'placeholder'=>'Search',
+            'value'=>$keyword
+        );
         //READ USER
         $where_read_user = array('id'=>$user_id);
         $query_read_user = $this->albert_model->read_user($where_read_user);
@@ -448,25 +481,24 @@ class User extends CI_Controller
         {
             //DATA
             $data['page_title'] = $user_name . ' User Following';
+            //QUERY USER FOLLOWING
+            $where_user_following = array('follower_id' => $user_id, 'main_group_id' => $group_id_user);
+            $data['query_follow'] = $this->albert_model->read_following($where_user_following, $keyword);
         }
         //MERCHANT
         if ($user_type == 'merchant')
         {
             //DATA
             $data['page_title'] = $user_name . ' Merchant Following';
+            //QUERY MERCHANT FOLLOWING
+            $where_merchant_following = array('follower_id' => $user_id);
+            $data['query_follow'] = $this->albert_model->read_following_merchant($where_merchant_following, $keyword);
         }
-        //QUERY USER FOLLOWER
-        $where_user_follower = array('following_id' => $user_id, 'main_group_id' => $group_id_user);
-        $data['query_user_follower'] = $this->albert_model->read_follower($where_user_follower);
-        //QUERY USER FOLLOWING
-        $where_user_following = array('follower_id' => $user_id, 'main_group_id' => $group_id_user);
-        $data['query_user_following'] = $this->albert_model->read_following($where_user_following);
-        //QUERY MERCHANT FOLLOWER
-        $where_merchant_follower = array('following_id' => $user_id);
-        $data['query_merchant_follower'] = $this->albert_model->read_follower_merchant($where_merchant_follower);
-        //QUERY MERCHANT FOLLOWING
-        $where_merchant_following = array('follower_id' => $user_id);
-        $data['query_merchant_following'] = $this->albert_model->read_following_merchant($where_merchant_following);
+        //COUNT 
+        $data['user_follower_count'] = $this->albert_model->user_follower_count($user_id);
+        $data['user_following_count'] = $this->albert_model->user_following_count($user_id);
+        $data['merchant_follower_count'] = $this->albert_model->merchant_follower_count($user_id);
+        $data['merchant_following_count'] = $this->albert_model->merchant_following_count($user_id);
         //DATA
         $data['user_id'] = $user_id;
         //TEMPLATE

@@ -838,32 +838,29 @@ class All extends CI_Controller
     }
 
     //USER DASHBOARD
-    function user_dashboard($users_id = NULL, $page = NULL)
+    function user_dashboard($user_id = NULL, $page = NULL)
     {
-        if ($users_id)
+        if ($user_id)
         {
             //QUERY USERS
-            $query_users_where = array('id' => $users_id, 'main_group_id' => $this->config->item('group_id_user'));
+            $query_users_where = array('id' => $user_id, 'main_group_id' => $this->config->item('group_id_user'));
             $data['query_users'] = $this->albert_model->read_user($query_users_where);
             $num_rows_users = $data['query_users']->num_rows();
             //USER EXISTS
             if ($num_rows_users)
             {
-                $data['users_id'] = $users_id;
+                $data['user_id'] = $user_id;
                 $data['page_path_name'] = 'user/dashboard';
                 $data['page_message'] = NULL;
-                //QUERY USER FOLLOWER
-                $where_user_follower = array('following_id' => $users_id);
-                $data['query_follower'] = $this->albert_model->read_follower($where_user_follower);
-                //QUERY USER FOLLOWING
-                $where_user_following = array('follower_id' => $users_id);
-                $data['query_following'] = $this->albert_model->read_following($where_user_following);
+                //FOLLOWER or FOLLOWING COUNT
+                $data['follower_count'] = $this->albert_model->follower_count($user_id);
+                $data['following_count'] = $this->albert_model->following_count($user_id);
                 if (!$page)
                 {
                     //USER ALBUM
                     $data['title'] = "User Album";
                     $data['bottom_path_name'] = 'all/album_user';
-                    $where_user_album = array('user_id' => $users_id, 'hide_flag' => '0');
+                    $where_user_album = array('user_id' => $user_id, 'hide_flag' => '0');
                     $query_user_album = $this->albert_model->read_user_album($where_user_album);
                     $data['album_list'] = $query_user_album->result_array();
                 }
@@ -872,7 +869,7 @@ class All extends CI_Controller
                     //USER MERCHANT ALBUM
                     $data['title'] = "Merchant Album";
                     $data['bottom_path_name'] = 'all/album_user_merchant';
-                    $where_merchant_user_album = array('user_id' => $users_id, 'hide_flag' => '0');
+                    $where_merchant_user_album = array('user_id' => $user_id, 'hide_flag' => '0');
                     $query_merchant_user_album = $this->albert_model->read_merchant_user_album($where_merchant_user_album);
                     $data['album_list'] = $query_merchant_user_album->result_array();
                 }
@@ -1019,7 +1016,7 @@ class All extends CI_Controller
         $the_row = $this->m_custom->get_one_table_record('users', 'slug', $slug);
         if ($the_row)
         {
-            $users_id = $the_row->id;
+            $user_id = $the_row->id;
             $this->data['image_path'] = $this->album_merchant_profile;
             $this->data['image'] = $the_row->profile_image;
             $this->data['company_name'] = $the_row->company;           
@@ -1037,28 +1034,25 @@ class All extends CI_Controller
             $this->data['user_picture'] = base_url() . 'all/merchant-dashboard/' . $slug . '/picture';
             $this->data['user_upload_for_merchant'] = base_url() . 'user/upload_for_merchant/' . $slug;
             $this->data['show_expired'] = "<a href='" . base_url() . "all/album_merchant/'. $slug>Show Expired</a><br/>";
-            $this->data['users_id'] = $users_id;
-            //QUERY USER FOLLOWER
-            $where_user_follower = array('following_id' => $users_id);
-            $this->data['query_user_follower'] = $this->albert_model->read_follower($where_user_follower);
-            //QUERY USER FOLLOWING
-            $where_user_following = array('follower_id' => $users_id);
-            $this->data['query_user_following'] = $this->albert_model->read_following($where_user_following);
+            $this->data['users_id'] = $user_id;
+            //FOLLOWER or FOLLOWING COUNT
+            $this->data['follower_count'] = $this->albert_model->follower_count($user_id);
+            $this->data['following_count'] = $this->albert_model->following_count($user_id);
             if ($bottom_part == NULL)
             {
-                $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('hot', NULL, $users_id);
+                $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('hot', NULL, $user_id);
                 $this->data['title'] = "Offer Deals";
                 $this->data['bottom_path_name'] = 'all/advertise_list';
             }
             else if ($bottom_part == 'picture')
             {
-                $this->data['album_list'] = $this->m_custom->getAlbumUserMerchant(NULL, $users_id);
+                $this->data['album_list'] = $this->m_custom->getAlbumUserMerchant(NULL, $user_id);
                 $this->data['title'] = "User's Pictures";
                 $this->data['bottom_path_name'] = 'all/album_user_merchant';
             }
             else if ($bottom_part == 'promotion')
             {
-                $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('pro', NULL, $users_id);
+                $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('pro', NULL, $user_id);
                 $this->data['title'] = "Candie Promotion";
                 $this->data['bottom_path_name'] = 'all/advertise_list';
             }

@@ -11,21 +11,15 @@ $image_path_merchant_profile = $this->config->item('album_merchant_profile');
 $user_page = $this->router->fetch_method();
 $user_type = $this->uri->segment(3);
 $user_id = $this->uri->segment(4);
-
-//NUM ROWS
-$num_rows_user_follower = $query_user_follower->num_rows();
-$num_rows_user_following = $query_user_following->num_rows();
 ?>
 
 <?php
 if($user_page == 'follower' && $user_type == 'user')
 {
-    $query_user_follow = $query_user_follower;
     $empty_message_follow = 'No user followers';
 }
 if($user_page == 'following' && $user_type == 'user')
 {
-    $query_user_follow = $query_user_following;
     $empty_message_follow = 'No merchant following';
 }
 ?>
@@ -36,11 +30,11 @@ if($user_page == 'following' && $user_type == 'user')
         <!--NAVIGATION-->
         <div id="follow-navigation">
             <div id="follow-navigation-each">
-                <a href="<?php echo base_url() ?>merchant/follower/user/<?php echo $user_id ?>">User Followers (<?php echo $num_rows_user_follower ?>)</a>
+                <a href="<?php echo base_url() ?>merchant/follower/user/<?php echo $user_id ?>">User Followers (<?php echo $user_follower_count ?>)</a>
             </div>
             <div id="follow-navigation-separator">|</div>
             <div id="follow-navigation-each">
-                <a href="<?php echo base_url() ?>merchant/following/user/<?php echo $user_id ?>">Merchant Following (<?php echo $num_rows_user_following ?>)</a>
+                <a href="<?php echo base_url() ?>merchant/following/user/<?php echo $user_id ?>">Merchant Following (<?php echo $user_following_count ?>)</a>
             </div>
             <div id="float-fix"></div>
         </div>
@@ -48,28 +42,28 @@ if($user_page == 'following' && $user_type == 'user')
 </div>
 
 <?php
-$result_array_user_follow = $query_user_follow->result_array();
-$num_rows_user_follow = $query_user_follow->num_rows();
-if($num_rows_user_follow)
+$result_array_follow = $query_follow->result_array();
+$num_rows_follow = $query_follow->num_rows();
+if($num_rows_follow)
 {
-    foreach($result_array_user_follow as $user_follow)
+    foreach($result_array_follow as $follow)
     {
-        $profile_image = $user_follow['profile_image'];
-        $main_group_id = $user_follow['main_group_id'];
+        $profile_image = $follow['profile_image'];
+        $main_group_id = $follow['main_group_id'];
         //DEFINE IMAGE PATH
         if($main_group_id == $group_id_user)
         {
             //USER
-            $id = $user_follow['id'];
-            $name = $user_follow['first_name'] . ' ' . $user_follow['last_name'];
+            $id = $follow['id'];
+            $name = $follow['first_name'] . ' ' . $follow['last_name'];
             $image_path = $image_path_user_profile;
             $dashboard_url = "user_dashboard/$id";
         }
         if($main_group_id == $group_id_merchant || $main_group_id == $group_id_supervisor)
         {
             //MERCHANT or SUPERVISOR
-            $slug = $user_follow['slug'];
-            $name = $user_follow['company'];
+            $slug = $follow['slug'];
+            $name = $follow['company'];
             $image_path = $image_path_merchant_profile;
             $dashboard_url = "merchant_dashboard/$slug";
         }
