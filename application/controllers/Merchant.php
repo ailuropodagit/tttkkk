@@ -2039,7 +2039,7 @@ class Merchant extends CI_Controller
                 for ($i = 0; $i < $hotdeal_per_day; $i++)
                 {
 
-                    $hotdeal_today_count = $this->m_merchant->get_merchant_today_hotdeal($merchant_id, 1, $search_date);
+                    $hotdeal_today_count = $this->m_merchant->get_merchant_today_hotdeal($merchant_id, 1, $search_date, 1);
 
                     $hotdeal_id = $this->input->post('hotdeal_id-' . $i);
                     $hotdeal_file = "hotdeal-file-" . $i;
@@ -2061,7 +2061,8 @@ class Merchant extends CI_Controller
                         if ($hotdeal_today_count >= $hotdeal_per_day)
                         {
                             $message_info = add_message_info($message_info, 'Already reach max ' . $hotdeal_per_day . ' hot deal per day.');
-                            redirect('merchant/upload_hotdeal', 'refresh');
+                            //redirect('merchant/upload_hotdeal', 'refresh');
+                            goto direct_go;
                         }
 
                         //To check new hot deal is it got image upload or not
@@ -2175,6 +2176,7 @@ class Merchant extends CI_Controller
                         }
                     }
                 }
+                direct_go:
                 $this->session->set_flashdata('message', $message_info);
                 redirect('merchant/upload_hotdeal', 'refresh');
             }
@@ -2182,7 +2184,8 @@ class Merchant extends CI_Controller
 
         //To get today hot deal result row
         $hotdeal_today_result = $this->m_merchant->get_merchant_today_hotdeal($merchant_id, 0, $search_date);
-        $this->data['hotdeal_today_count'] = $this->m_merchant->get_merchant_today_hotdeal($merchant_id, 1, $search_date);
+        $this->data['hotdeal_today_count'] = $this->m_merchant->get_merchant_today_hotdeal($merchant_id, 1, $search_date, 1);
+        $this->data['hotdeal_today_count_removed'] = $this->m_merchant->get_merchant_today_hotdeal_removed($merchant_id, $search_date);
         //$this->data['hour_list'] = generate_number_option(1, 24);
         $this->data['sub_category_list'] = $this->ion_auth->get_sub_category_list($merchant_data->me_category_id);
 

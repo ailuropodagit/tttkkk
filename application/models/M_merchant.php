@@ -249,7 +249,7 @@ class M_merchant extends CI_Model
         return $query->row_array();
     }
 
-    public function get_merchant_today_hotdeal($merchant_id, $counter_only = 0, $date = NULL)
+    public function get_merchant_today_hotdeal($merchant_id, $counter_only = 0, $date = NULL, $ignore_hide = 0)
     {
         if (!IsNullOrEmptyString($date))
         {
@@ -262,7 +262,9 @@ class M_merchant extends CI_Model
         $condition = "start_time like '%" . $search_date . "%'";
         $this->db->where('advertise_type', 'hot');
         $this->db->where($condition);
-        $this->db->where('hide_flag', 0);
+        if($ignore_hide == 0){
+            $this->db->where('hide_flag', 0);
+        }
         $query = $this->db->get_where('advertise', array('merchant_id' => $merchant_id));
         if ($query->num_rows() == 0)
         {
@@ -285,6 +287,24 @@ class M_merchant extends CI_Model
         }
     }
 
+    public function get_merchant_today_hotdeal_removed($merchant_id, $date = NULL)
+    {
+        if (!IsNullOrEmptyString($date))
+        {
+            $search_date = $date;
+        }
+        else
+        {
+            $search_date = date(format_date_server());
+        }
+        $this->db->where('hide_flag', 1);
+        $condition = "start_time like '%" . $search_date . "%'";
+        $this->db->where('advertise_type', 'hot');
+        $this->db->where($condition);
+        $query = $this->db->get_where('advertise', array('merchant_id' => $merchant_id));
+        return $query->num_rows();
+    }
+    
     public function merchant_balance_update($merchant_id, $month_id = NULL, $year = NULL)
     {
         $search_date = date_for_db_search($month_id, $year);
