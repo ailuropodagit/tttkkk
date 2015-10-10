@@ -1,4 +1,10 @@
 <h1>Your notifications</h1></br>
+<?php 
+if (check_correct_login_type($this->group_id_merchant) || check_correct_login_type($this->group_id_admin) || check_correct_login_type($this->group_id_worker))
+        { ?>
+<div style="float:right"><a href='<?php echo base_url() . "all/monitor-remove" ?>' >Monitoring Remove Action</a></div>
+<div id='float-fix'></div><br/>
+        <?php } ?>
 <?php
 
 foreach ($notification_list as $row)
@@ -11,7 +17,11 @@ foreach ($notification_list as $row)
         echo "<div style='border:1px solid #DDD' >";
         $read_button_tooltip = "Mark as Unread";
     }
-    echo "<div style='float:left'>".$row['noti_user_url']."<a href=".$row['noti_url']." target='_blank' >".$row['noti_message'] . "</a></div>";
+    if(empty($row['noti_url'])){
+        echo "<div style='float:left'>".$row['noti_user_url'].$row['noti_message'] . "</div>";
+    }else{
+        echo "<div style='float:left'>".$row['noti_user_url']."<a href=".$row['noti_url']." target='_blank' >".$row['noti_message'] . "</a></div>";
+    }
     
     echo "<div style='float:right'>";
     //FORM OPEN

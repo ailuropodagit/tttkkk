@@ -55,6 +55,7 @@
             success: function (data) {
                 options.series.length = 0;
                 options.title.text = 'Gender Analysis Report';
+                options.xAxis.categories = ['View', 'Like', 'Rating', 'Redeem'];
                 options.yAxis.title.text = 'Gender';
                 options.chart.renderTo = 'container_gender';
                 options.series[0] = data[0];
@@ -77,6 +78,7 @@
             success: function (data) {
                 options.series.length = 0;
                 options.title.text = 'Race Analysis Report';
+                options.xAxis.categories = ['View', 'Like', 'Rating', 'Redeem'];
                 options.yAxis.title.text = 'Race';
                 options.chart.renderTo = 'container_race';
                 options.series[0] = data[0];
@@ -101,6 +103,7 @@
             success: function (data) {
                 options.series.length = 0;
                 options.title.text = 'Age Analysis Report';
+                options.xAxis.categories = ['View', 'Like', 'Rating', 'Redeem'];
                 options.yAxis.title.text = 'Age';
                 options.chart.renderTo = 'container_age';
                 options.series[0] = data[0];
@@ -117,12 +120,41 @@
             }
         });
 
+        var post_url4 = 'http://' + $(location).attr('hostname') + '/keppo/merchant/getChart_redeem';
+        $.ajax({
+            type: "POST",
+            url: post_url4,
+            dataType: 'json',
+            data: "&the_year=" + the_year + "&the_month=" + the_month + "&the_adv_type=" + the_adv_type + "&the_new_user=" + the_new_user,
+            success: function (data) {
+                options.series.length = 0;
+                options.title.text = 'Redeem Status Analysis Report';
+                options.xAxis.categories = ['Male', 'Female'];
+                options.yAxis.title.text = 'Redeem';
+                options.chart.renderTo = 'container_redeem';
+                options.series[0] = data[0];
+                options.series[1] = data[1];
+                options.series[2] = data[2];
+
+                chart = new Highcharts.Chart(options);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                //alert(textStatus);
+                //alert(errorThrown);
+            }
+        });
+        
     });
 </script>
 
+<script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script> <!-- Dunno why cannot put on top, if put on top then the chart is not working -->
+   <div id='payment-print' style="float:right">
+            <a href="#" onclick="printDiv('print-area')"><i class="fa fa-print"></i> Print Report</a>
+        </div>
+<div id="print-area">
 <h1>Analysis Report</h1>
 <?php echo form_open(uri_string()); ?>
-<div id="candie-promotion-form-go">
+<div id="candie-promotion-form-go" style="float:left">
     <span id="candie-promotion-form-go-label"><?php echo "Filter "; ?></span>
     <span id="candie-promotion-form-go-year"><?php echo form_dropdown($the_year, $year_list, $the_year_selected); ?></span>
     <span id="candie-promotion-form-go-month"><?php echo form_dropdown($the_month, $month_list, $the_month_selected); ?></span>
@@ -131,9 +163,14 @@
     <span id="candie-promotion-form-go-button"><button name="button_action" type="submit" value="search_history">Go</button></span>
 </div>
 <?php echo form_close(); ?>
+
 <div style="float:right"><?php echo 'Report Period : ' . $first_day . " to " . $last_day; ?></div>
+   <div id='float-fix'></div>
 <div id="container_gender" style="min-width: 400px; height: 400px; margin: 0 auto"></div><br/><br/><br/>
 
 <div id="container_race" style="min-width: 400px; height: 400px; margin: 0 auto"></div><br/><br/><br/>
 
 <div id="container_age" style="min-width: 400px; height: 400px; margin: 0 auto"></div><br/><br/><br/>
+
+<div id="container_redeem" style="min-width: 400px; height: 400px; margin: 0 auto"></div><br/><br/><br/>
+</div>

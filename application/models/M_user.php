@@ -380,7 +380,7 @@ class M_user extends CI_Model
                 break;
         }
     }
-
+    
     public function get_user_today_upload_count($user_id, $date = NULL)
     {
         if (!IsNullOrEmptyString($date))

@@ -16,6 +16,8 @@ class All extends CI_Controller
         $this->group_id_merchant = $this->config->item('group_id_merchant');
         $this->group_id_supervisor = $this->config->item('group_id_supervisor');
         $this->group_id_user = $this->config->item('group_id_user');
+        $this->group_id_admin = $this->config->item('group_id_admin');
+        $this->group_id_worker = $this->config->item('group_id_worker');
         $this->login_type = 0;
         if ($this->ion_auth->logged_in())
         {
@@ -175,6 +177,22 @@ class All extends CI_Controller
         }
     }
 
+    function monitor_remove(){
+        if (check_correct_login_type($this->group_id_merchant) || check_correct_login_type($this->group_id_admin) || check_correct_login_type($this->group_id_worker))
+        {
+            $user_id = $this->ion_auth->user()->row()->id;
+
+            $notification_list = $this->m_custom->display_row_monitor();
+            $this->data['notification_list'] = $notification_list;
+            $this->data['page_path_name'] = 'all/monitoring';
+            $this->load->view('template/layout_right_menu', $this->data);
+        }
+        else
+        {
+            redirect('/', 'refresh');
+        }
+    }
+    
     function notification()
     {
         if ($this->ion_auth->logged_in())
@@ -240,6 +258,8 @@ class All extends CI_Controller
         $this->albert_model->create_user_follow($data);
         if ($this->db->affected_rows() > 0)
         {
+            $new_id = $this->db->insert_id();
+            $this->m_custom->notification_process('user_follow',$new_id);
             $this->session->set_flashdata('message', 'Follow Success');
         }
         redirect($current_url, 'refresh');

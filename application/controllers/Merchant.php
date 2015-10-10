@@ -343,6 +343,58 @@ class Merchant extends CI_Controller
         }
     }
 
+    function payment_charge_page($search_type = NULL)
+    {
+        if (check_correct_login_type($this->main_group_id))
+        {
+            $merchant_id = $this->ion_auth->user()->row()->id;
+            
+            if (isset($_POST) && !empty($_POST))
+            {
+                if ($this->input->post('button_action') == "search_history")
+                {
+                    $search_type = $this->input->post('the_adv_type');
+                }
+            }
+            
+            $adv_type_list = array(
+                '' => 'All Type',
+                'hot' => 'Hot Deal Advertise',
+                'pro' => 'Candie Voucher',
+                'mua' => 'User Upload Picture'
+            );
+            $this->data['adv_type_list'] = $adv_type_list;
+            $this->data['the_adv_type'] = array(
+                'name' => 'the_adv_type',
+                'id' => 'the_adv_type',
+            );
+            $this->data['the_adv_type_selected'] = empty($search_type) ? "" : $search_type;
+            
+            $the_result = $this->m_merchant->money_spend_on_list($merchant_id, $search_type);
+            usort($the_result, function($a, $b)
+            {
+                $ad = new DateTime($a['create_date']);
+                $bd = new DateTime($b['create_date']);
+
+                if ($ad == $bd)
+                {
+                    return 0;
+                }
+
+                return $ad < $bd ? 1 : -1;
+            });
+            $this->data['the_result'] = $the_result;
+
+            $this->data['message'] = $this->session->flashdata('message');
+            $this->data['page_path_name'] = 'merchant/payment_charge';
+            $this->load->view('template/layout_right_menu', $this->data);
+        }
+        else
+        {
+            redirect('/', 'refresh');
+        }
+    }
+        
     function retrieve_password()
     {
         $this->form_validation->set_rules('username_email', $this->lang->line('forgot_password_username_email_label'), 'required');
@@ -2013,7 +2065,7 @@ class Merchant extends CI_Controller
                 for ($i = 0; $i < $hotdeal_per_day; $i++)
                 {
 
-                    $hotdeal_today_count = $this->m_merchant->get_merchant_today_hotdeal($merchant_id, 1, $search_date);
+                    $hotdeal_today_count = $this->m_merchant->get_merchant_today_hotdeal($merchant_id, 1, $search_date, 1);
 
                     $hotdeal_id = $this->input->post('hotdeal_id-' . $i);
                     $hotdeal_file = "hotdeal-file-" . $i;
@@ -2035,7 +2087,8 @@ class Merchant extends CI_Controller
                         if ($hotdeal_today_count >= $hotdeal_per_day)
                         {
                             $message_info = add_message_info($message_info, 'Already reach max ' . $hotdeal_per_day . ' hot deal per day.');
-                            redirect('merchant/upload_hotdeal', 'refresh');
+                            //redirect('merchant/upload_hotdeal', 'refresh');
+                            goto direct_go;
                         }
 
                         //To check new hot deal is it got image upload or not
@@ -2068,6 +2121,9 @@ class Merchant extends CI_Controller
                                 if ($new_id)
                                 {
                                     $this->m_custom->insert_row_log('advertise', $new_id, $do_by_id, $do_by_type);
+                                    if($do_by_type == $this->group_id_supervisor){
+                                        $this->m_custom->notification_process('advertise',$new_id);
+                                    }
                                     $message_info = add_message_info($message_info, 'Hot Deal success create.', $title);
                                 }
                                 else
@@ -2146,6 +2202,7 @@ class Merchant extends CI_Controller
                         }
                     }
                 }
+                direct_go:
                 $this->session->set_flashdata('message', $message_info);
                 redirect('merchant/upload_hotdeal', 'refresh');
             }
@@ -2153,7 +2210,8 @@ class Merchant extends CI_Controller
 
         //To get today hot deal result row
         $hotdeal_today_result = $this->m_merchant->get_merchant_today_hotdeal($merchant_id, 0, $search_date);
-        $this->data['hotdeal_today_count'] = $this->m_merchant->get_merchant_today_hotdeal($merchant_id, 1, $search_date);
+        $this->data['hotdeal_today_count'] = $this->m_merchant->get_merchant_today_hotdeal($merchant_id, 1, $search_date, 1);
+        $this->data['hotdeal_today_count_removed'] = $this->m_merchant->get_merchant_today_hotdeal_removed($merchant_id, $search_date);
         //$this->data['hour_list'] = generate_number_option(1, 24);
         $this->data['sub_category_list'] = $this->ion_auth->get_sub_category_list($merchant_data->me_category_id);
 
@@ -2420,7 +2478,7 @@ class Merchant extends CI_Controller
             $selected_year = empty($search_year) ? get_part_of_date('year') : $search_year;
             $this->data['the_year_selected'] = $selected_year;
 
-            $month_list = $this->ion_auth->get_static_option_list('month');
+            $month_list = $this->m_custom->month_group_list();
             $this->data['month_list'] = $month_list;
             $this->data['the_month'] = array(
                 'name' => 'the_month',
@@ -2979,6 +3037,102 @@ class Merchant extends CI_Controller
         }
     }
 
+    function getChart_redeem()
+    {
+        if (check_correct_login_type($this->main_group_id))
+        {
+            $merchant_id = $this->ion_auth->user()->row()->id;
+            $group_by = 'gender';
+
+            $the_year = $this->input->post("the_year", true);
+            $the_month = $this->input->post("the_month", true);
+            $the_new_user = $this->input->post("the_new_user", true) == '' ? 0 : $this->input->post("the_new_user", true);
+
+            $active_result = $this->m_merchant->getMerchantAnalysisReportRedeem($merchant_id, $this->config->item('voucher_active'), $the_month, $the_year);
+            $active_male_count = 0;
+            $active_female_count = 0;
+            foreach ($active_result as $row)
+            {
+                $user_id = $row['user_id'];
+                $return = $this->m_user->getUserAnalysisGroup($user_id, $group_by);
+                if ($the_new_user == 0 || ($this->m_custom->check_is_new_user($user_id) && $the_new_user == 1))
+                {
+                    if ($return == $this->config->item('gender_id_male'))
+                    {
+                        $active_male_count++;
+                    }
+                    else
+                    {
+                        $active_female_count++;
+                    }
+                }
+            }
+
+            $used_result = $this->m_merchant->getMerchantAnalysisReportRedeem($merchant_id, $this->config->item('voucher_used'), $the_month, $the_year);
+            $used_male_count = 0;
+            $used_female_count = 0;
+            foreach ($used_result as $row)
+            {
+                $user_id = $row['user_id'];
+                $return = $this->m_user->getUserAnalysisGroup($user_id, $group_by);
+                if ($the_new_user == 0 || ($this->m_custom->check_is_new_user($user_id) && $the_new_user == 1))
+                {
+                    if ($return == $this->config->item('gender_id_male'))
+                    {
+                        $used_male_count++;
+                    }
+                    else
+                    {
+                        $used_female_count++;
+                    }
+                }
+            }
+
+            $expired_result = $this->m_merchant->getMerchantAnalysisReportRedeem($merchant_id, $this->config->item('voucher_expired'), $the_month, $the_year);
+            $expired_male_count = 0;
+            $expired_female_count = 0;
+            foreach ($expired_result as $row)
+            {
+                $user_id = $row['user_id'];
+                $return = $this->m_user->getUserAnalysisGroup($user_id, $group_by);
+                if ($the_new_user == 0 || ($this->m_custom->check_is_new_user($user_id) && $the_new_user == 1))
+                {
+                    if ($return == $this->config->item('gender_id_male'))
+                    {
+                        $expired_male_count++;
+                    }
+                    else
+                    {
+                        $expired_female_count++;
+                    }
+                }
+            }
+           
+            $active_array = array();
+            $active_array['name'] = 'Non-Redeem';
+            $active_array['data'][] = $active_male_count;
+            $active_array['data'][] = $active_female_count;
+            
+            $used_array = array();
+            $used_array['name'] = 'Redeem';
+            $used_array['data'][] = $used_male_count;
+            $used_array['data'][] = $used_female_count;
+
+            $expired_array = array();
+            $expired_array['name'] = 'Expired';
+            $expired_array['data'][] = $expired_male_count;
+            $expired_array['data'][] = $expired_female_count;
+            
+            $result = array();
+            array_push($result, $expired_array);         
+            array_push($result, $used_array);
+            array_push($result, $active_array);
+            
+            echo json_encode($result);
+        }
+
+    }
+    
     function _get_csrf_nonce()
     {
         $this->load->helper('string');

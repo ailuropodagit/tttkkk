@@ -16,6 +16,11 @@ if(isset($message))
         
         <div id='hot-deal-advertise-today'>
             Today Hot Deal <?php echo $hotdeal_today_count . ' / ' . $hotdeal_per_day ?> per day
+            <?php
+            if($hotdeal_today_count_removed!=0){
+                echo "(".$hotdeal_today_count_removed. " hot deal today already removed.)";
+            }
+            ?>
         </div>
         
         <div id='hot-deal-advertise-upload-image-note'>
@@ -80,7 +85,7 @@ if(isset($message))
                 if (${'advertise_id_value' . $i} != 0)
                 {
                     ?>
-                    <div id='hot-deal-advertise-remove'>
+                    <div id='hot-deal-advertise-remove' style="display:none">
                         <?php echo form_checkbox(${'hotdeal_hide' . $i}); ?>
                         <label for="hotdeal_hide-<?php echo $i ?>" id="hot-deal-advertise-remove-label">Remove</label>
                     </div>
