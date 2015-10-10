@@ -9,7 +9,7 @@
 
     <?php if (!IsNullOrEmptyString($me_ssm_file))
     { ?>
-        Current SSM File : <?php echo $me_ssm_file ?><br/><br/>
+        Current SSM File : <a href="<?php echo $me_ssm_url; ?>" ><?php echo $me_ssm_file; ?></a><br/><br/>
 
         <button name="button_action" type="submit" value="download_ssm" >Download</button><br/><br/>
 
