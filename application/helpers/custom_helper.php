@@ -715,7 +715,7 @@ if (!function_exists('RemoveLastComma'))
 
 }
 
-if (!function_exists('displayDate'))
+if (!function_exists('displayFirstDay'))
 {
 
     function displayFirstDay($year = '', $month = '')
@@ -734,7 +734,7 @@ if (!function_exists('displayDate'))
 
 }
 
-if (!function_exists('displayDate'))
+if (!function_exists('displayLastDay'))
 {
 
     function displayLastDay($year = '', $month = '', $until_today = 0)
@@ -756,6 +756,83 @@ if (!function_exists('displayDate'))
         return date('d-m-Y', $result);
     }
 
+}
+
+if (!function_exists('displayFirstDayTime'))
+{
+
+    function displayFirstDayTime($year = '', $month = '')
+    {
+        $the_date = displayFirstDay($year, $month);
+        $return_date = displayDate($the_date,1,1);
+        return $return_date;
+    }
+
+}
+
+if (!function_exists('displayLastDayTime'))
+{
+
+    function displayLastDayTime($year = '', $month = '', $until_today = 0)
+    {
+        $the_date = displayLastDay($year, $month, $until_today);
+        $return_date = displayDate($the_date,0,1);
+        return $return_date . " 23:59:59";
+    }
+
+}
+
+if (!function_exists('getFirstLastTime'))
+{
+    function getFirstLastTime($year = '', $month_value = '', $first_or_last = 'first')
+    {
+        if (strpos($month_value, 'q') !== FALSE){
+            switch($month_value){
+                case 'q1':
+                    $start_time = displayFirstDayTime($year, 1);
+                    $end_time = displayLastDayTime($year, 3);
+                    break;
+                case 'q2':
+                    $start_time = displayFirstDayTime($year, 4);
+                    $end_time = displayLastDayTime($year, 6);
+                    break;
+                case 'q3':
+                    $start_time = displayFirstDayTime($year, 7);
+                    $end_time = displayLastDayTime($year, 9);
+                    break;
+                case 'q4':
+                    $start_time = displayFirstDayTime($year, 10);
+                    $end_time = displayLastDayTime($year, 12);
+                    break;
+            }
+        }else if (strpos($month_value, 'h') !== FALSE){
+            switch($month_value){
+                case 'h1':
+                    $start_time = displayFirstDayTime($year, 1);
+                    $end_time = displayLastDayTime($year, 6);
+                    break;
+                case 'h2':
+                    $start_time = displayFirstDayTime($year, 7);
+                    $end_time = displayLastDayTime($year, 12);
+                    break;
+            }
+        }else if (strpos($month_value, 'y') !== FALSE){
+            switch($month_value){
+                case 'y1':
+                    $start_time = displayFirstDayTime($year, 1);
+                    $end_time = displayLastDayTime($year, 12);
+                    break;
+            }
+        }else{       
+            $start_time = displayFirstDayTime($year, $month_value);
+            $end_time = displayLastDayTime($year, $month_value);
+        }
+        if($first_or_last == 'first'){
+            return $start_time;
+        }else{
+            return $end_time;
+        }
+    }
 }
 
 if (!function_exists('searchWord'))

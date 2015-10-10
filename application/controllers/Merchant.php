@@ -2452,7 +2452,7 @@ class Merchant extends CI_Controller
             $selected_year = empty($search_year) ? get_part_of_date('year') : $search_year;
             $this->data['the_year_selected'] = $selected_year;
 
-            $month_list = $this->ion_auth->get_static_option_list('month');
+            $month_list = $this->m_custom->month_group_list();
             $this->data['month_list'] = $month_list;
             $this->data['the_month'] = array(
                 'name' => 'the_month',
@@ -3020,10 +3020,9 @@ class Merchant extends CI_Controller
 
             $the_year = $this->input->post("the_year", true);
             $the_month = $this->input->post("the_month", true);
-            $the_adv_type = $this->input->post("the_adv_type", true) == '' ? NULL : $this->input->post("the_adv_type", true);
             $the_new_user = $this->input->post("the_new_user", true) == '' ? 0 : $this->input->post("the_new_user", true);
 
-            $active_result = $this->m_merchant->getMerchantAnalysisReportRedeem($merchant_id, $this->config->item('voucher_active'));
+            $active_result = $this->m_merchant->getMerchantAnalysisReportRedeem($merchant_id, $this->config->item('voucher_active'), $the_month, $the_year);
             $active_male_count = 0;
             $active_female_count = 0;
             foreach ($active_result as $row)
@@ -3043,7 +3042,7 @@ class Merchant extends CI_Controller
                 }
             }
 
-            $used_result = $this->m_merchant->getMerchantAnalysisReportRedeem($merchant_id, $this->config->item('voucher_used'));
+            $used_result = $this->m_merchant->getMerchantAnalysisReportRedeem($merchant_id, $this->config->item('voucher_used'), $the_month, $the_year);
             $used_male_count = 0;
             $used_female_count = 0;
             foreach ($used_result as $row)
@@ -3063,7 +3062,7 @@ class Merchant extends CI_Controller
                 }
             }
 
-            $expired_result = $this->m_merchant->getMerchantAnalysisReportRedeem($merchant_id, $this->config->item('voucher_expired'));
+            $expired_result = $this->m_merchant->getMerchantAnalysisReportRedeem($merchant_id, $this->config->item('voucher_expired'), $the_month, $the_year);
             $expired_male_count = 0;
             $expired_female_count = 0;
             foreach ($expired_result as $row)

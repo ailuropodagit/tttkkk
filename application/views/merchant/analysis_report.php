@@ -55,6 +55,7 @@
             success: function (data) {
                 options.series.length = 0;
                 options.title.text = 'Gender Analysis Report';
+                options.xAxis.categories = ['View', 'Like', 'Rating', 'Redeem'];
                 options.yAxis.title.text = 'Gender';
                 options.chart.renderTo = 'container_gender';
                 options.series[0] = data[0];
@@ -77,6 +78,7 @@
             success: function (data) {
                 options.series.length = 0;
                 options.title.text = 'Race Analysis Report';
+                options.xAxis.categories = ['View', 'Like', 'Rating', 'Redeem'];
                 options.yAxis.title.text = 'Race';
                 options.chart.renderTo = 'container_race';
                 options.series[0] = data[0];
@@ -101,6 +103,7 @@
             success: function (data) {
                 options.series.length = 0;
                 options.title.text = 'Age Analysis Report';
+                options.xAxis.categories = ['View', 'Like', 'Rating', 'Redeem'];
                 options.yAxis.title.text = 'Age';
                 options.chart.renderTo = 'container_age';
                 options.series[0] = data[0];

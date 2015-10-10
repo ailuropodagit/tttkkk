@@ -161,6 +161,19 @@ class M_custom extends CI_Model
         return $return;
     }
 
+    public function month_group_list()
+    {
+        $month_list = $this->ion_auth->get_static_option_list('month');
+        $month_list['q1'] = 'Quarter: Jan - Mar';
+        $month_list['q2'] = 'Quarter: Apr - Jun';
+        $month_list['q3'] = 'Quarter: Jul - Sep';
+        $month_list['q4'] = 'Quarter: Oct - Dec';
+        $month_list['h1'] = 'Semiannual: Jan - Jun';
+        $month_list['h2'] = 'Semiannual: Jul - Dec';
+        $month_list['y1'] = 'Yearly: Jan - Dec';
+        return $month_list;
+    }
+
     //Get one static option text by it option id
     public function display_category($category_id = NULL)
     {

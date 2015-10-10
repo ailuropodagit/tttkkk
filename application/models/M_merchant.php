@@ -53,7 +53,11 @@ class M_merchant extends CI_Model
     public function getMerchantAnalysisReport($merchant_id, $the_type, $month_id = NULL, $year = NULL, $advertise_type = NULL)
     {
         $group_id_user = $this->config->item('group_id_user');
-        $search_date = date_for_db_search($month_id, $year);
+        //$search_date = date_for_db_search($month_id, $year);
+        
+        $start_time = getFirstLastTime($year, $month_id);
+        $end_time = getFirstLastTime($year, $month_id, 'last');
+        
         if ($advertise_type == NULL)
         {
             $advertise_of_merchant = $this->m_custom->get_list_of_allow_id('advertise', 'merchant_id', $merchant_id, 'advertise_id');
@@ -66,7 +70,8 @@ class M_merchant extends CI_Model
         switch ($the_type)
         {
             case 'view':
-                $condition = "many_time like '%" . $search_date . "%'";
+                //$condition = "many_time like '%" . $search_date . "%'";
+                $condition = "many_time >= '" . $start_time . "' AND many_time <= '" . $end_time . "'";
                 $this->db->where($condition);
                 if (!empty($advertise_of_merchant))
                 {
@@ -75,10 +80,11 @@ class M_merchant extends CI_Model
                 $query = $this->db->get_where('many_to_many', array('many_type' => 'view_advertise'));
                 break;
             case 'like':
-                $condition = "act_time like '%" . $search_date . "%'";
+                //$condition = "act_time like '%" . $search_date . "%'";
+                $condition = "act_time >= '" . $start_time . "' AND act_time <= '" . $end_time . "'";
                 $this->db->where($condition);
                 $this->db->where_in('act_refer_type', array('adv', 'mua'));
-                //$this->db->where_in('act_refer_type', array('adv'));  //current hardcode only get analysis from advertisement(hot deal and promotion), dint include analysis for picture upload by user for merchant
+                //$this->db->where_in('act_refer_type', array('adv')); 
                 if (!empty($advertise_of_merchant))
                 {
                     $this->db->where_in('act_refer_id', $advertise_of_merchant);
@@ -86,10 +92,11 @@ class M_merchant extends CI_Model
                 $query = $this->db->get_where('activity_history', array('act_type' => 'like', 'act_by_type' => $group_id_user, 'hide_flag' => 0));
                 break;
             case 'rating':
-                $condition = "act_time like '%" . $search_date . "%'";
+                //$condition = "act_time like '%" . $search_date . "%'";
+                $condition = "act_time >= '" . $start_time . "' AND act_time <= '" . $end_time . "'";
                 $this->db->where($condition);
                 $this->db->where_in('act_refer_type', array('adv', 'mua'));
-                //$this->db->where_in('act_refer_type', array('adv'));  //current hardcode only get analysis from advertisement(hot deal and promotion), dint include analysis for picture upload by user for merchant
+                //$this->db->where_in('act_refer_type', array('adv'));
                 if (!empty($advertise_of_merchant))
                 {
                     $this->db->where_in('act_refer_id', $advertise_of_merchant);
@@ -97,7 +104,8 @@ class M_merchant extends CI_Model
                 $query = $this->db->get_where('activity_history', array('act_type' => 'rating', 'act_by_type' => $group_id_user, 'hide_flag' => 0));
                 break;
             case 'redeem':
-                $condition = "redeem_time like '%" . $search_date . "%'";
+                //$condition = "redeem_time like '%" . $search_date . "%'";
+                $condition = "redeem_time >= '" . $start_time . "' AND redeem_time <= '" . $end_time . "'";
                 $this->db->where($condition);
                 if (!empty($advertise_of_merchant))
                 {
@@ -111,12 +119,13 @@ class M_merchant extends CI_Model
     }
 
     
-    public function getMerchantAnalysisReportRedeem($merchant_id, $status_id, $start_date = NULL, $end_date = NULL)
-    {
-        if(!empty($start_date) && !empty($end_date)){
-            $condition = "redeem_time >= '" . $start_date . "' AND redeem_time <= '" . $end_date . "'";
-            $this->db->where($condition);
-        }
+    public function getMerchantAnalysisReportRedeem($merchant_id, $status_id, $month_id = NULL, $year = NULL)
+    {    
+        $start_time = getFirstLastTime($year, $month_id);
+        $end_time = getFirstLastTime($year, $month_id, 'last');
+        
+        $condition = "redeem_time >= '" . $start_time . "' AND redeem_time <= '" . $end_time . "'";
+        $this->db->where($condition);
 
         $this->db->select('*');
         $this->db->from('user_redemption');
