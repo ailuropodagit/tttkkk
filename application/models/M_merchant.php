@@ -49,7 +49,7 @@ class M_merchant extends CI_Model
         return $return;
     }
 
-    //Type: view, like, rating, redeem, choose by show race, gender, age, to do, todo
+    //Type: view, like, rating, redeem, choose by show race, gender, age
     public function getMerchantAnalysisReport($merchant_id, $the_type, $month_id = NULL, $year = NULL, $advertise_type = NULL)
     {
         $group_id_user = $this->config->item('group_id_user');
@@ -110,13 +110,14 @@ class M_merchant extends CI_Model
         return $query->result_array();
     }
 
-      //Type: view, like, rating, redeem, choose by show race, gender, age, to do, todo
-    public function getMerchantAnalysisReportRedeem($merchant_id, $status_id)
+    
+    public function getMerchantAnalysisReportRedeem($merchant_id, $status_id, $start_date = NULL, $end_date = NULL)
     {
-        //$search_date = date_for_db_search($month_id, $year);
+        if(!empty($start_date) && !empty($end_date)){
+            $condition = "redeem_time >= '" . $start_date . "' AND redeem_time <= '" . $end_date . "'";
+            $this->db->where($condition);
+        }
 
-//                $condition = "redeem_time like '%" . $search_date . "%'";
-//                $this->db->where($condition);
         $this->db->select('*');
         $this->db->from('user_redemption');
         $this->db->join('advertise', 'user_redemption.advertise_id = advertise.advertise_id', 'inner');

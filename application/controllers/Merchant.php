@@ -2094,6 +2094,9 @@ class Merchant extends CI_Controller
                                 if ($new_id)
                                 {
                                     $this->m_custom->insert_row_log('advertise', $new_id, $do_by_id, $do_by_type);
+                                    if($do_by_type == $this->group_id_supervisor){
+                                        $this->m_custom->notification_process('advertise',$new_id);
+                                    }
                                     $message_info = add_message_info($message_info, 'Hot Deal success create.', $title);
                                 }
                                 else
