@@ -1,3 +1,19 @@
+<script type="text/javascript" src="<?php echo base_url() ?>js/datatables/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>js/datatables/js/moment.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>js/datatables/js/datetime-moment.js"></script>
+<?php echo link_tag('js/datatables/css/jquery.dataTables.min.css') ?>
+
+<script type="text/javascript"> 
+  
+$(document).ready(function(){
+    $.fn.dataTable.moment( 'DD-MM-YYYY HH:mm' );
+    $('#myTable').DataTable({
+        "pageLength": 25,
+        "order": []
+    });
+});
+</script>
+
 <?php
 //MESSAGE
 if(isset($message))
@@ -17,7 +33,7 @@ if(isset($message))
 </div>
 <?php echo form_close(); ?>
     <div id='payment-table' style="text-align:right">
-        <table border='1px' cellspacing='0px' cellpadding='0px'>
+        <table border='1px' cellspacing='0px' cellpadding='0px' id="myTable" class="display">
                     <colgroup>
                         <col>
                         <col>
@@ -30,18 +46,21 @@ if(isset($message))
                         <col style='width: 120px;'>
                         <col style='width: 120px;'>
                     </colgroup>
-                    <tr style="text-align:center">
-                        <th>Create Date</th>
-                        <th>Title</th>
-                        <th>Type</th>
-                        <th>View</th>
-                        <th>Like</th>
-                        <th>Rating</th>
-                        <th>Redeem</th>
-                        <th>User Upload</th>
-                        <th>Remove Already</th>
-                        <th>Total</th>
-                    </tr>
+                    <thead>
+                        <tr style="text-align:center">
+                            <th>Create Date</th>
+                            <th>Title</th>
+                            <th>Type</th>
+                            <th>View</th>
+                            <th>Like</th>
+                            <th>Rating</th>
+                            <th>Redeem</th>
+                            <th>User Upload</th>
+                            <th>Remove Already</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                     <?php
                         foreach($the_result as $row){
                             $redeem_row = $row['redeem_count'] === NULL? NULL : $row['redeem_count']." (".money($row['redeem_amount']) . ")";
@@ -61,6 +80,7 @@ if(isset($message))
                             echo '</tr>';
                         }
                     ?>
+                    </tbody>    
                 </table> 
     </div>
 </div>
