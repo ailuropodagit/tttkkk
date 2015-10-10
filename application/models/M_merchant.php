@@ -110,6 +110,22 @@ class M_merchant extends CI_Model
         return $query->result_array();
     }
 
+      //Type: view, like, rating, redeem, choose by show race, gender, age, to do, todo
+    public function getMerchantAnalysisReportRedeem($merchant_id, $status_id)
+    {
+        //$search_date = date_for_db_search($month_id, $year);
+
+//                $condition = "redeem_time like '%" . $search_date . "%'";
+//                $this->db->where($condition);
+        $this->db->select('*');
+        $this->db->from('user_redemption');
+        $this->db->join('advertise', 'user_redemption.advertise_id = advertise.advertise_id', 'inner');
+        $this->db->where(array('advertise.advertise_type' => 'pro', 'advertise.merchant_id' => $merchant_id, 'user_redemption.status_id' => $status_id));
+        $query = $this->db->get();
+
+        return $query->result_array();
+    }
+    
     //Get all the static option of an option type
     public function getMerchantList($default_value = NULL, $default_text = NULL)
     {
@@ -612,7 +628,7 @@ class M_merchant extends CI_Model
             do
             {
                 $voucher = strtoupper(substr($result['slug'], 0, 3)) . date('Ym') . str_pad($user_id, 4, "0", STR_PAD_LEFT) . str_pad($counter, 3, "0", STR_PAD_LEFT);
-                $check_unique = $this->m_custom->check_is_value_unique('advertise', 'voucher', $voucher);
+                $check_unique = $this->m_custom->check_is_value_unique('user_redemption', 'voucher', $voucher);
                 $counter += 1;
             } while (!$check_unique);
             if ($counter == '1000')

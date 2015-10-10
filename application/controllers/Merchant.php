@@ -3005,6 +3005,103 @@ class Merchant extends CI_Controller
         }
     }
 
+    function getChart_redeem()
+    {
+        if (check_correct_login_type($this->main_group_id))
+        {
+            $merchant_id = $this->ion_auth->user()->row()->id;
+            $group_by = 'gender';
+
+            $the_year = $this->input->post("the_year", true);
+            $the_month = $this->input->post("the_month", true);
+            $the_adv_type = $this->input->post("the_adv_type", true) == '' ? NULL : $this->input->post("the_adv_type", true);
+            $the_new_user = $this->input->post("the_new_user", true) == '' ? 0 : $this->input->post("the_new_user", true);
+
+            $active_result = $this->m_merchant->getMerchantAnalysisReportRedeem($merchant_id, $this->config->item('voucher_active'));
+            $active_male_count = 0;
+            $active_female_count = 0;
+            foreach ($active_result as $row)
+            {
+                $user_id = $row['user_id'];
+                $return = $this->m_user->getUserAnalysisGroup($user_id, $group_by);
+                if ($the_new_user == 0 || ($this->m_custom->check_is_new_user($user_id) && $the_new_user == 1))
+                {
+                    if ($return == $this->config->item('gender_id_male'))
+                    {
+                        $active_male_count++;
+                    }
+                    else
+                    {
+                        $active_female_count++;
+                    }
+                }
+            }
+
+            $used_result = $this->m_merchant->getMerchantAnalysisReportRedeem($merchant_id, $this->config->item('voucher_used'));
+            $used_male_count = 0;
+            $used_female_count = 0;
+            foreach ($used_result as $row)
+            {
+                $user_id = $row['user_id'];
+                $return = $this->m_user->getUserAnalysisGroup($user_id, $group_by);
+                if ($the_new_user == 0 || ($this->m_custom->check_is_new_user($user_id) && $the_new_user == 1))
+                {
+                    if ($return == $this->config->item('gender_id_male'))
+                    {
+                        $used_male_count++;
+                    }
+                    else
+                    {
+                        $used_female_count++;
+                    }
+                }
+            }
+
+            $expired_result = $this->m_merchant->getMerchantAnalysisReportRedeem($merchant_id, $this->config->item('voucher_expired'));
+            $expired_male_count = 0;
+            $expired_female_count = 0;
+            foreach ($expired_result as $row)
+            {
+                $user_id = $row['user_id'];
+                $return = $this->m_user->getUserAnalysisGroup($user_id, $group_by);
+                if ($the_new_user == 0 || ($this->m_custom->check_is_new_user($user_id) && $the_new_user == 1))
+                {
+                    if ($return == $this->config->item('gender_id_male'))
+                    {
+                        $expired_male_count++;
+                    }
+                    else
+                    {
+                        $expired_female_count++;
+                    }
+                }
+            }
+           
+            $active_array = array();
+            $active_array['name'] = 'Non-Redeem';
+            $active_array['data'][] = $active_male_count;
+            $active_array['data'][] = $active_female_count;
+            
+            $used_array = array();
+            $used_array['name'] = 'Redeem';
+            $used_array['data'][] = $used_male_count;
+            $used_array['data'][] = $used_female_count;
+
+            $expired_array = array();
+            $expired_array['name'] = 'Expired';
+            $expired_array['data'][] = $expired_male_count;
+            $expired_array['data'][] = $expired_female_count;
+            
+            $result = array();
+            array_push($result, $expired_array);         
+            array_push($result, $used_array);
+            array_push($result, $active_array);
+            
+            echo json_encode($result);
+        }
+
+    }
+    
     function _get_csrf_nonce()
     {
         $this->load->helper('string');
