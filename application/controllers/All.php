@@ -1054,7 +1054,7 @@ class All extends CI_Controller
             $this->data['user_picture'] = base_url() . 'all/merchant-dashboard/' . $slug . '/picture';
             $this->data['user_upload_for_merchant'] = base_url() . 'user/upload_for_merchant/' . $slug;
             $this->data['show_expired'] = "<a href='" . base_url() . "all/album_merchant/'. $slug>Show Expired</a><br/>";
-            $this->data['users_id'] = $user_id;
+            $this->data['user_id'] = $user_id;
             //FOLLOWER or FOLLOWING COUNT
             $this->data['follower_count'] = $this->albert_model->follower_count($user_id);
             $this->data['following_count'] = $this->albert_model->following_count($user_id);
