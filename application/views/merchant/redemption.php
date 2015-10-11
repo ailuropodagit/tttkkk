@@ -9,16 +9,14 @@ if(isset($message))
 <div id="user-redemption">
     <h1><?php echo $title; ?></h1>
     <div id='user-redemption-content'>
-        
-                <?php echo form_open(uri_string()); ?>
-<div id="search-box-block1">
-    <input type="text" placeholder="Search: User Name, Email, Voucher Code" name="search_word" id="search_word">
-    <button name="button_action" type="submit" value="search">Search</button>
-</div>
-<?php echo form_close(); ?>
-     <br/>  <br/>
-        <?php      
-        
+        <!--SEARCH-->
+        <div id="user-redemption-search">
+            <?php echo form_open(uri_string()); ?>
+            <div id="user-redemption-search-input"><input type="text" placeholder="Search: User Name, Email, Voucher Code" name="search_word"></div>
+            <div id="user-redemption-search-submit"><button name="button_action" type="submit" value="search">Search</button></div>
+            <?php echo form_close(); ?>
+        </div>
+        <?php
         $voucher_active = $this->config->item('voucher_active');
         if ($show_used == 1)
         {
@@ -29,7 +27,6 @@ if(isset($message))
             $voucher_active = $this->config->item('voucher_expired');
         }
         ?>
-        
         <?php       
         foreach ($promotion_list as $promotion_row)
         {
@@ -106,7 +103,7 @@ if(isset($message))
                     <?php
                 }
                 ?>        
-            </table><br/><br/>
+            </table><br/>
             <?php
         }
         ?>

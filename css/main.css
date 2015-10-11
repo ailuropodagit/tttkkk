@@ -2062,6 +2062,23 @@ a:hover {
     margin: 20px 0px 0px 0px;
 }
 
+#user-redemption-search {
+    margin: 0px 0px 20px 0px;
+}
+
+#user-redemption-search-input {
+    display: inline;
+}
+
+#user-redemption-search-input input[type='text'] {
+    width: calc(100% - 90px);
+}
+
+#user-redemption-search-submit {
+    display: inline;
+    margin: 0px 0px 0px 5px;
+}
+
 #user-redemption table {
     width: 100%;
     border: 1px solid lightgray;
