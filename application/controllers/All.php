@@ -193,6 +193,25 @@ class All extends CI_Controller
         }
     }
     
+    function monitor_process()
+    {
+        $current_url = '/';
+        if (isset($_POST) && !empty($_POST))
+        {
+            $current_url = $this->input->post('current_url');
+            $the_id = $this->input->post('the_id');
+            if ($this->input->post('button_action') == "removed_approve")
+            {
+                $this->m_custom->approve_row_monitor($the_id);
+            }
+            else if ($this->input->post('button_action') == "removed_recover")
+            {
+                $this->m_custom->recover_row_monitor($the_id);
+            }
+        }
+        redirect($current_url, 'refresh');
+    }
+    
     function notification()
     {
         if ($this->ion_auth->logged_in())
