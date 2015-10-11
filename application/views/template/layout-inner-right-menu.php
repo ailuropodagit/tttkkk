@@ -17,11 +17,13 @@
             }
             //FOLLOWER COUNT
             $follower_count = $this->albert_model->follower_count($login_user_id);
+            
+            $notification_count = $this->m_custom->notification_count($login_user_id) + $this->m_custom->display_row_monitor(1);
             ?>
             <li><a href='<?php echo $dashboard ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'merchant_dashboard' || $fetch_method == 'merchant_outlet' || $fetch_method == 'map'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Dashboard</a></li>
             <li><a href='<?php echo base_url(); ?>merchant/profile' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'profile' || $fetch_method == 'upload_ssm' || $fetch_method == 'branch' || $fetch_method == 'supervisor'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Profile</a></li>
             <li><a href='<?php echo base_url(); ?>merchant/change_password' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'change_password'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Change Password</a></li>
-            <li><a href='<?php echo base_url(); ?>all/notification' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'notification'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Notification (<?php echo $this->m_custom->notification_count($login_user_id); ?> new)</a></li>
+            <li><a href='<?php echo base_url(); ?>all/notification' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'notification'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Notification (<?php echo $notification_count; ?> new)</a></li>
             <li><a href='<?php echo base_url(); ?>merchant/follower/user/<?php echo $login_user_id ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'follower' || $fetch_method == 'following'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Follower (<?php echo $follower_count ?>)</a></li>
             <li><a href='<?php echo base_url(); ?>merchant/upload_hotdeal' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'upload_hotdeal' || $fetch_method == 'edit_hotdeal'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Hot Deal Advertise</a></li>
             <li><a href='<?php echo $album_merchant; ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'album_merchant'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Hot Deal Advertise's Album</a></li>
@@ -46,10 +48,12 @@
             $where_read_user = array('id'=>$login_user_id);
             $login_main_merchant_id = $this->albert_model->read_user($where_read_user)->row()->su_merchant_id;
             $follower_count = $this->albert_model->follower_count($login_main_merchant_id);
+            
+            $notification_count = $this->m_custom->notification_count($merchant_id); 
             ?>
             <li><a href='<?php echo $dashboard; ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'merchant_dashboard' || $fetch_method == 'merchant_outlet' || $fetch_method == 'map'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Dashboard</a></li>
             <li><a href='<?php echo base_url(); ?>merchant/profile' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'profile'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Profile</a></li>
-            <li><a href='<?php echo base_url(); ?>all/notification' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'notification'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Notification (<?php echo $this->m_custom->notification_count($merchant_id); ?> new)</a></li>
+            <li><a href='<?php echo base_url(); ?>all/notification' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'notification'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Notification (<?php echo $notification_count; ?> new)</a></li>
             <li><a href='<?php echo base_url(); ?>merchant/follower/user/<?php echo $login_user_id ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'follower' || $fetch_method == 'following'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Follower (<?php echo $follower_count ?>)</a></li>
             <li><a href='<?php echo base_url(); ?>merchant/upload_hotdeal' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'upload_hotdeal' || $fetch_method == 'edit_hotdeal'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Hot Deal Advertise</a></li>
             <li><a href='<?php echo $album_merchant; ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'album_merchant'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Hot Deal Advertise's Album</a></li>
@@ -70,11 +74,13 @@
             $fetch_method = $this->router->fetch_method();
             //FOLLOWER COUNT
             $follower_count = $this->albert_model->follower_count($login_user_id);
+            
+            $notification_count = $this->m_custom->notification_count($login_user_id);
             ?>
             <li><a href='<?php echo $dashboard; ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'user_dashboard'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Dashboard</a></li>
             <li><a href='<?php echo base_url(); ?>user/profile' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'profile'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Profile</a></li>
             <li><a href='<?php echo base_url(); ?>user/change_password' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'change_password'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Change Password</a></li>
-            <li><a href='<?php echo base_url(); ?>all/notification' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'notification'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Notification (<?php echo $this->m_custom->notification_count($login_user_id); ?> new)</a></li>
+            <li><a href='<?php echo base_url(); ?>all/notification' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'notification'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Notification (<?php echo $notification_count; ?> new)</a></li>
             <li><a href='<?php echo base_url(); ?>user/follower/user/<?php echo $login_user_id ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'follower' || $fetch_method == 'following'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Follower (<?php echo $follower_count ?>)</a></li>
             <li><a href='<?php echo $review_merchant; ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'review_merchant'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Reviews</a></li>
             <li><a href='<?php echo $user_picture; ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'album_user' || $fetch_method == 'upload_image' || $fetch_method == 'upload_for_merchant' || $fetch_method == 'album_user_merchant'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Album</a></li>
