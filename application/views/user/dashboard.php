@@ -98,6 +98,14 @@ if($this->ion_auth->user()->num_rows())
                 <div id="dashboard-info-title-name">
                     <?php echo $first_name.' '.$last_name; ?>
                 </div>
+                <div id="dashboard-info-title-name" style="float:right">
+                    <?php 
+                    if (check_correct_login_type($this->config->item('group_id_user')) && $dashboard_users_id == $logged_user_id){
+                    echo "<a href='".base_url()."user/profile'>Edit My Profile</a>";
+                    }
+                    ?>
+                </div>
+                <div id="float-fix"></div>
                 <?php
                 //LOGGED IN
                 if($this->ion_auth->user()->num_rows())

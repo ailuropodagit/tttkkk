@@ -2543,8 +2543,8 @@ class Merchant extends CI_Controller
             );
             $this->data['the_new_user_selected'] = empty($search_new_user) ? "" : $search_new_user;
 
-            $first_day = displayFirstDay($selected_year, $selected_month);
-            $last_day = displayLastDay($selected_year, $selected_month, 1);
+            $first_day = displayDate(getFirstLastTime($selected_year, $selected_month));
+            $last_day = displayDate(getFirstLastTime($selected_year, $selected_month, 1));
             $this->data['first_day'] = $first_day;
             $this->data['last_day'] = $last_day;
             
