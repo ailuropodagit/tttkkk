@@ -116,7 +116,7 @@ class Albert_model extends CI_Model
         $this->db->select('*');
         $this->db->from('users');
         $this->db->where('us_blog_url !=', "");
-        //WHERE
+        //SEARCH
         if($search)
         {
             $this->db->where("concat_ws(' ', first_name, last_name) LIKE", '%'.$search.'%');
@@ -195,10 +195,88 @@ class Albert_model extends CI_Model
         $this->db->where($where);
         $this->db->delete('user_follow');
     }
-        
+    
+    /* FOLLOWER COUNT
+    *************************************************************/
+    public function follower_count($user_id) 
+    {
+        //QUERY
+        $this->db->from('user_follow');
+        $this->db->where('following_main_id', $user_id);
+        //COUNT
+        $count = $this->db->count_all_results();
+        return $count;
+    }
+    
+    /* USER FOLLOWER COUNT
+    *************************************************************/
+    public function user_follower_count($user_id) 
+    {
+        //QUERY
+        $this->db->from('user_follow');
+        $this->db->where('following_main_id', $user_id);
+        $this->db->where('follower_group_id', '5');
+        //COUNT
+        $count = $this->db->count_all_results();
+        return $count;
+    }
+    
+    /* MERCHANT FOLLOWER COUNT
+    *************************************************************/
+    public function merchant_follower_count($user_id) 
+    {
+        //QUERY
+        $this->db->from('user_follow');
+        $this->db->where('following_main_id', $user_id);
+        $main_group_id_array = array('3','4');
+        $this->db->where_in('follower_group_id', $main_group_id_array);
+        //COUNT
+        $count = $this->db->count_all_results();
+        return $count;
+    }
+    
+    /* FOLLOWING COUNT
+    *************************************************************/
+    public function following_count($user_id) 
+    {
+        //QUERY
+        $this->db->from('user_follow');
+        $this->db->where('follower_main_id', $user_id);
+        //COUNT
+        $count = $this->db->count_all_results();
+        return $count;
+    }
+    
+    /* USER FOLLOWING COUNT
+    *************************************************************/
+    public function user_following_count($user_id) 
+    {
+        //QUERY
+        $this->db->from('user_follow');
+        $this->db->where('follower_main_id', $user_id);
+        $this->db->where('following_group_id', '5');
+        //COUNT
+        $count = $this->db->count_all_results();
+        return $count;
+    }
+    
+    /* FOLLOWING COUNT
+    *************************************************************/
+    public function merchant_following_count($user_id) 
+    {
+        //QUERY
+        $this->db->from('user_follow');
+        $this->db->where('follower_main_id', $user_id);
+        $main_group_id_array = array('3','4');
+        $this->db->where_in('following_group_id', $main_group_id_array);
+        //COUNT
+        $count = $this->db->count_all_results();
+        return $count;
+    }
+    
     /* READ FOLLOWER
     *************************************************************/
-    public function read_follower($where)
+    public function read_follower($where, $search)
     {
         //QUERY
         $this->db->select('*');
@@ -209,6 +287,11 @@ class Albert_model extends CI_Model
         {
             $this->db->where($where);
         }
+        //SEARCH
+        if($search)
+        {
+            $this->db->where("concat_ws(' ', first_name, last_name) LIKE", '%'.$search.'%');
+        }
         $query = $this->db->get();
         //RETURN
         return $query;
@@ -216,7 +299,7 @@ class Albert_model extends CI_Model
     
     /* READ FOLLOWER MERCHANT
     *************************************************************/
-    public function read_follower_merchant($where)
+    public function read_follower_merchant($where, $search)
     {
         //QUERY
         $this->db->select('*');
@@ -227,6 +310,11 @@ class Albert_model extends CI_Model
         {
             $this->db->where($where);
         }
+        //SEARCH
+        if($search)
+        {
+            $this->db->where('company LIKE', '%'.$search.'%');
+        }
         $main_group_id_array = array(3,4);
         $this->db->where_in('follower_group_id', $main_group_id_array); 
         $query = $this->db->get();
@@ -236,7 +324,7 @@ class Albert_model extends CI_Model
         
     /* READ FOLLOWING
     *************************************************************/
-    public function read_following($where)
+    public function read_following($where, $search)
     {
         //QUERY
         $this->db->select('*');
@@ -247,6 +335,11 @@ class Albert_model extends CI_Model
         {
             $this->db->where($where);
         }
+        //SEARCH
+        if($search)
+        {
+            $this->db->where("concat_ws(' ', first_name, last_name) LIKE", '%'.$search.'%');
+        }
         $query = $this->db->get();
         //RETURN
         return $query;
@@ -254,7 +347,7 @@ class Albert_model extends CI_Model
     
     /* READ FOLLOWING MERCHANT
     *************************************************************/
-    public function read_following_merchant($where)
+    public function read_following_merchant($where, $search)
     {
         //QUERY
         $this->db->select('*');
@@ -264,6 +357,11 @@ class Albert_model extends CI_Model
         if($where)
         {
             $this->db->where($where);
+        }
+        //SEARCH
+        if($search)
+        {
+            $this->db->where('company LIKE', '%'.$search.'%');
         }
         $main_group_id_array = array(3,4);
         $this->db->where_in('following_group_id', $main_group_id_array); 

@@ -152,17 +152,11 @@ if($this->ion_auth->user()->num_rows())
                 </table>
             </div>
             <div id="dashboard-info-followers-following">
-                <?php
-                //FOLLOWER
-                $num_rows_user_follower =  $query_user_follower->num_rows();
-                //FOLLOWING
-                $num_rows_user_following =  $query_user_following->num_rows();
-                ?>
                 <div id="dashboard-info-followers">
-                    User followers : <a href='<?php echo base_url() ?>merchant/follower/user/<?php echo $users_id ?>'><?php echo $num_rows_user_follower ?></a>
+                    User followers : <a href='<?php echo base_url() ?>merchant/follower/user/<?php echo $user_id ?>'><?php echo $follower_count ?></a>
                 </div>
                 <div id="dashboard-info-following">
-                    Merchants following : <a href='<?php echo base_url() ?>merchant/following/user/<?php echo $users_id ?>'><?php echo $num_rows_user_following ?></a>
+                    Merchants following : <a href='<?php echo base_url() ?>merchant/following/user/<?php echo $user_id ?>'><?php echo $following_count ?></a>
                 </div>
             </div>
         </div>

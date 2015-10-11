@@ -1262,6 +1262,28 @@ a:hover {
     color: lightgray;
 }
 
+#follow-search {
+    margin: 0px 0px 20px 0px;
+}
+
+#follow-search-input {
+    display: inline;
+}
+
+#follow-search-input input[type='text'] {
+    width: calc(100% - 165px);
+}
+
+#follow-search-submit {
+    display: inline;
+    margin: 0px 0px 0px 5px;
+}
+
+#follow-search-clear {
+    display: inline;
+    margin: 0px 0px 0px 5px;
+}
+
 #follow-box {
     float: left;
     margin: 0px 25px 25px 0px;
@@ -1984,12 +2006,12 @@ a:hover {
     margin: 0px 0px 0px 5px;
 }
 
-#blogger-box {
+#blogger-box-each {
     display: inline-block;
     margin: 0px 15px 15px 0px;
 }
 
-#blogger-box-photo-box {
+#blogger-box-each-photo-box {
     float: left;
     width: 70px;
     height: 70px;
@@ -1997,18 +2019,18 @@ a:hover {
     background-color: whitesmoke;
 }
 
-#blogger-box-photo-box img {
+#blogger-box-each-photo-box img {
     width: 100%;
     height: 100%;
     object-fit: contain;
 }
 
-#blogger-box-info {
+#blogger-box-each-info {
     float: left;
     margin: 0px 0px 0px 15px;
 }
 
-#blogger-box-info-name {
+#blogger-box-each-info-name {
     margin: 5px 0px 0px 0px;
     width: 190px;
     overflow: hidden;
@@ -2016,12 +2038,12 @@ a:hover {
     white-space: nowrap;
 }
 
-#blogger-box-info-name a {
+#blogger-box-each-info-name a {
     text-decoration: none;
     color: black;
 }
 
-#blogger-box-info-blog-url {
+#blogger-box-each-info-blog-url {
     margin: 10px 0px 0px 0px;
     width: 190px;
     overflow: hidden;
@@ -2030,7 +2052,7 @@ a:hover {
 }
 
 #blogger-box-bottom-empty-fix {
-    margin: 0px 0px -15px 0px;
+    margin: 0px 0px -18px 0px;
 }
 
 /* USER REDEMPTION
