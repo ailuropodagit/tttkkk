@@ -2102,8 +2102,42 @@ a:hover {
     margin: 20px 0px 0px 0px;
 }
 
+#payment-go {
+    float: left;
+}
+
+#payment-go-label {
+    display: inline;
+}
+
+#payment-go-dropdown {
+    display: inline;
+}
+
+#payment-go-dropdown select {
+    height: 30px;
+    display: inline;
+}
+
+#payment-go-button {
+    display: inline;
+    margin: 0px 0px 0px 5px;
+}
+
+#payment-balance {
+    float: right;
+    font-size: 25px;
+    font-weight: bold;
+}
+
 #payment-print {
-    margin: 20px 0px 0px 0px;
+    float: left;
+    margin: 20px 0px 20px 0px;
+}
+
+#payment-money-spend {
+    float: right;
+    margin: 20px 0px 20px 0px;
 }
 
 #payment-table {

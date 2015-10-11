@@ -9,26 +9,30 @@ if(isset($message))
 ?>
 
 <div id="payment">
-    <h1><?php echo "Payment"; ?></h1>
-            <div style="float:left">
-        <?php echo form_open(uri_string()); ?>
-            <div id="candie-promotion-form-go">
-                <span id="candie-promotion-form-go-label"><?php echo "Statement Period "; ?></span>
-                <span id="candie-promotion-form-go-month"><?php echo form_dropdown($the_month, $month_list, $the_month_selected); ?></span>
-                <span id="candie-promotion-form-go-button"><button name="button_action" type="submit" value="search_history">Go</button></span>
-            </div>
+    <h1>Payment</h1>
+    <div id='payment-content'>
+        <!--PAYMENT GO-->
+        <div id="payment-go">
+            <?php echo form_open(uri_string()); ?>
+            <div id="payment-go-label">Statement Period:</div>
+            <div id="payment-go-dropdown"><?php echo form_dropdown($the_month, $month_list, $the_month_selected); ?></div>
+            <div id="payment-go-button"><button name="button_action" type="submit" value="search_history">Go</button></div>
             <?php echo form_close(); ?>
         </div>
-    <h1 style="float:right;">Current Balance : RM <?php echo $current_balance; ?></h1>
-        <div id='float-fix'></div>
-    <div id='payment-content'>          
-   <div id='payment-print' style="float:left">
+        <!--PAYMENT BALANCE-->
+        <div id="payment-balance">
+            Current Balance : RM <?php echo $current_balance; ?>
+        </div>
+        <div id="float-fix"></div>
+        <!--PAYMENT PRINT-->
+        <div id='payment-print'>
             <a href="#" onclick="printDiv('print-area')"><i class="fa fa-print"></i> Print Statement</a>
         </div>
-         <div style="float:right">
-             <?php echo "<a href='" . base_url() . "merchant/payment-charge-page' >View Money Spend By Post</a>"; ?>
-         </div>     
-                   <div id='float-fix'></div>
+        <!--PAYMENT MONEY SPEND-->
+        <div id="payment-money-spend">
+            <?php echo "<a href='" . base_url() . "merchant/payment-charge-page' >View Money Spend By Post</a>"; ?>
+        </div>
+        <div id='float-fix'></div>
         <div id="print-area">
             <h2><?php echo $the_month_selected_text. ' Statement'; ?></h2>
             <div id='payment-table' style="text-align:right">
