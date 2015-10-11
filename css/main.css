@@ -224,6 +224,22 @@ a:hover {
     font-style: italic;
 }
 
+#table-all table {
+    width: 100%;
+    border: 1px solid lightgray;
+}
+
+#table-all table th {
+    background-color: whitesmoke;
+    padding: 4px 0px 4px 0px;
+    font-size: 14px;
+}
+
+#table-all table td {
+    font-size: 14px;
+    padding: 5px 8px 5px 8px;
+}
+
 /* WRAPPER
 ******************************/
 
@@ -803,8 +819,11 @@ a:hover {
     margin: 20px 0px 35px 0px;
 }
 
-#dashboard-photo-box {
+#dashboard-photo {
     float: left;
+}
+
+#dashboard-photo-box {
     width: 250px;
     height: 250px;
     border: 1px solid lightgray;
@@ -817,6 +836,24 @@ a:hover {
     object-fit: contain;
 }
 
+#dashboard-photo-note {
+    font-size: smaller;
+    font-style: italic;
+    margin: 5px 0px 15px 0px;
+}
+
+#dashboard-photo-input-file {
+    margin: 15px 0px 15px 0px;
+}
+
+#dashboard-photo-input-file input[type='file'] {
+    width: 200px;
+}
+
+#dashboard-photo-button {
+    margin: 20px 0px 20px 0px;
+}
+
 #dashboard-info {
     float: left;
     margin: 0px 0px 0px 30px;
@@ -825,12 +862,16 @@ a:hover {
 
 #dashboard-info-title {
     padding: 10px 0px 5px 0px;
-    font-weight: bold;
-    font-size: 23px;
 }
 
 #dashboard-info-title-name {
     float: left;
+    font-weight: bold;
+    font-size: 23px;
+}
+
+#dashboard-info-edit-link {
+    float: right;
 }
 
 #dashboard-info-title-follow {
@@ -2079,22 +2120,6 @@ a:hover {
     margin: 0px 0px 0px 5px;
 }
 
-#user-redemption table {
-    width: 100%;
-    border: 1px solid lightgray;
-}
-
-#user-redemption table th {
-    background-color: whitesmoke;
-    padding: 4px 0px 4px 0px;
-    font-size: 14px;
-}
-
-#user-redemption table td {
-    font-size: 14px;
-    padding: 5px 8px 5px 8px;
-}
-
 /* PAYMENT
 ******************************/
 
@@ -2141,26 +2166,15 @@ a:hover {
 }
 
 #payment-table {
-    margin: 20px 0px 0px 0px;
+    margin: 10px 0px 0px 0px;
 }
 
-#payment-table table {
-    border: 1px solid lightgray;
+#payment-table td:nth-child(2), #payment-table td:nth-child(3), #payment-table td:nth-child(4) {
+    text-align: right;
 }
-
-#payment-table table th {
-    background-color: whitesmoke;
-    padding: 4px 0px 4px 0px;
-    font-size: 14px;
-}
-
-#payment-table table td {
-    font-size: 14px;
-    padding: 5px 8px 5px 8px;
-}
-
-#payment-current-balance {
-    margin: 20px 0px 0px 0px;
+    
+#payment-your-current-balance {
+    margin: 30px 0px 0px 0px;
 }
 
 #payment-your-balance {
@@ -2183,6 +2197,40 @@ a:hover {
     display: inline-block;
     vertical-align: middle;
     margin: 0px 10px 10px 10px;
+}
+
+/* PAYMENT CHARGE
+******************************/
+
+#payment-charge-content {
+    margin: 20px 0px 0px 0px;
+}
+
+#payment-charge-go-label {
+    display: inline;
+}
+
+#payment-charge-go-dropdown {
+    display: inline;
+}
+
+#payment-charge-go-dropdown select {
+    height: 30px;
+    display: inline;
+}
+
+#payment-charge-go-button {
+    display: inline;
+    margin: 0px 0px 0px 5px;
+}
+
+#payment-charge-table {
+    margin: 20px 0px 0px 0px;
+}
+
+#payment-charge-table table {
+    border: 1px solid lightgray;
+    border-collapse: collapse;
 }
 
 /* CANDIE PROMOTION

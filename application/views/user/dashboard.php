@@ -63,49 +63,49 @@ if($this->ion_auth->user()->num_rows())
         $instagram_url = $row_users['us_instagram_url'];
         $facebook_url = $row_users['us_facebook_url'];
         ?>
-        <div id="dashboard-photo-box">
-            <?php            
-            if(IsNullOrEmptyString($profile_image))
-            {
+        <div id='dashboard-photo'>
+            <div id="dashboard-photo-box">
+                <?php            
+                if(IsNullOrEmptyString($profile_image))
+                {
+                    ?>
+                    <img src="<?php echo base_url() . $empty_image ?>">
+                    <?php
+                }
+                else
+                {
+                    ?>
+                    <img src="<?php echo base_url() . $album_user_profile . $profile_image ?>">
+                    <?php
+                }
                 ?>
-                <img src="<?php echo base_url() . $empty_image ?>">
-                <?php
-            }
-            else
-            {
-                ?>
-                <img src="<?php echo base_url() . $album_user_profile . $profile_image ?>">
-                <?php
-            }
-            ?>
+            </div>
             <?php if (check_correct_login_type($this->config->item('group_id_user'))) { ?>
                 <?php echo form_open_multipart('user/update_profile_image'); ?>
-                    <div id="profile-photo-note">
+                    <div id="dashboard-photo-note">
                         <?php echo $this->config->item('upload_guide_image'); ?>
                     </div>
-                    <div id="profile-photo-input-file">
+                    <div id="dashboard-photo-input-file">
                         <input type="file" name="userfile" size="10"/>
                     </div>
-                    <div id="profile-photo-button">
+                    <div id="dashboard-photo-button">
                         <button name="button_action" type="submit" value="change_image" >Change Image</button>
                     </div>
                 <?php echo form_close(); ?>
             <?php  } ?>
         </div>
-        <br/><br/><br/>
         <div id="dashboard-info">
             <div id="dashboard-info-title">
                 <div id="dashboard-info-title-name">
                     <?php echo $first_name.' '.$last_name; ?>
                 </div>
-                <div id="dashboard-info-title-name" style="float:right">
+                <div id="dashboard-info-edit-link">
                     <?php 
                     if (check_correct_login_type($this->config->item('group_id_user')) && $dashboard_users_id == $logged_user_id){
                     echo "<a href='".base_url()."user/profile'>Edit My Profile</a>";
                     }
                     ?>
                 </div>
-                <div id="float-fix"></div>
                 <?php
                 //LOGGED IN
                 if($this->ion_auth->user()->num_rows())
