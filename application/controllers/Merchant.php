@@ -1269,6 +1269,35 @@ class Merchant extends CI_Controller
             $crud->callback_column('name', array($this, '_branch_map'));
             $crud->callback_column('address', array($this, '_full_text'));
             $crud->callback_column('supervisor', array($this, '_branch_supervisor'));
+            
+            $controller = 'merchant';
+            $function = 'profile';
+            $crud->set_lang_string('insert_success_message', 'Your data has been successfully stored into the database.
+		 <script type="text/javascript">
+                 var originallocation = window.location.pathname;
+                 if(originallocation.indexOf("/branch/add") > -1)
+                {
+		  window.location = "'.site_url($controller . '/' . $function).'";
+                }
+		 </script>
+		 <div style="display:none">
+		 '
+            );
+            $crud->set_lang_string('update_success_message', 'Your data has been successfully stored into the database.
+		 <script type="text/javascript">
+                 var originallocation = window.location.pathname;
+                 if(originallocation.indexOf("/branch/edit") > -1)
+                {
+                window.location = "' . site_url($controller . '/' . $function) . '";
+                 }
+		 </script>
+		 <div style="display:none">
+		 '
+            );
+            
+            $crud->set_lang_string('form_save_and_go_back','Save and View Branch');
+            $crud->set_lang_string('form_update_and_go_back','Update and View Branch');          
+            
             $crud->unset_export();
             $crud->unset_print();
 
@@ -1378,6 +1407,35 @@ class Merchant extends CI_Controller
             $crud->callback_insert(array($this, 'supervisor_insert_callback'));
             $crud->callback_update(array($this, 'supervisor_update_callback'));
             $crud->set_rules('username', 'Username', 'trim|required|callback_supervisor_username_check');
+      
+            $controller = 'merchant';
+            $function = 'profile';
+            $crud->set_lang_string('insert_success_message', 'Your data has been successfully stored into the database.
+		 <script type="text/javascript">
+                 var originallocation = window.location.pathname;
+                 if(originallocation.indexOf("/supervisor/add") > -1)
+                {
+		  window.location = "'.site_url($controller . '/' . $function).'";
+                }
+		 </script>
+		 <div style="display:none">
+		 '
+            );
+            $crud->set_lang_string('update_success_message', 'Your data has been successfully stored into the database.
+		 <script type="text/javascript">
+                 var originallocation = window.location.pathname;
+                 if(originallocation.indexOf("/supervisor/edit") > -1)
+                {
+                window.location = "' . site_url($controller . '/' . $function) . '";
+                 }
+		 </script>
+		 <div style="display:none">
+		 '
+            );
+            
+            $crud->set_lang_string('form_save_and_go_back','Save and View Supervisor');
+            $crud->set_lang_string('form_update_and_go_back','Update and View Supervisor');        
+            
             $crud->unset_export();
             $crud->unset_print();
             $crud->unset_read();
@@ -1468,6 +1526,7 @@ class Merchant extends CI_Controller
         }
         $merchant_id = $this->ion_auth->user()->row()->id;
         $me_ssm_file = $this->ion_auth->user()->row()->me_ssm_file;
+        $this->data['me_ssm_url'] = base_url(). $this->folder_merchant_ssm .$me_ssm_file;
         $this->data['me_ssm_file'] = $me_ssm_file;
         if (isset($_POST) && !empty($_POST))
         {
