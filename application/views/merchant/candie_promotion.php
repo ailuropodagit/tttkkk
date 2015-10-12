@@ -65,7 +65,7 @@ if(isset($message))
                     <?php echo $this->config->item('upload_guide_image') ?>
                 </div>
                 <div id='candie-promotion-form-input-file'>
-                    <input type='file' name='candie-file'/>
+                    <input type='file' accept='image/*' name='candie-file'/>
                 </div>
             </div>
 

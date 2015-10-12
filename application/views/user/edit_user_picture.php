@@ -24,7 +24,7 @@ if(isset($message))
                     <?php echo "<img src='".base_url($picture_image)."' id='post-img'>"; ?>
                 </div>
                 <div id='hot-deal-advertise-form-input-file'>
-                    <?php echo "<input type='file' name='post-file' />"; ?> 
+                    <?php echo "<input type='file' accept='image/*' name='post-file' />"; ?> 
                 </div>
                 <div id='hot-deal-advertise-form-each'>
                     <div id='hot-deal-advertise-form-each-label'><?php echo lang('hotdeal_title_label'); ?></div>
