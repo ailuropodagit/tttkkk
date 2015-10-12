@@ -214,7 +214,7 @@ class Merchant extends CI_Controller
         //READ USER
         $where_read_user = array('id'=>$user_id);
         $query_read_user = $this->albert_model->read_user($where_read_user);
-        $user_name = $query_read_user->row()->first_name . ' ' . $query_read_user->row()->last_name;
+        $user_name = $query_read_user->row()->company;
         //DATA
         $data['page_title'] = $user_name . ' User Followers';
         //QUERY USER FOLLOWER
@@ -264,7 +264,7 @@ class Merchant extends CI_Controller
         //READ USER
         $where_read_user = array('id'=>$user_id);
         $query_read_user = $this->albert_model->read_user($where_read_user);
-        $user_name = $query_read_user->row()->first_name . ' ' . $query_read_user->row()->last_name;
+        $user_name = $query_read_user->row()->company;
         //DATA
         $data['page_title'] = $user_name . ' Merchant Following';
         //QUERY USER FOLLOWING

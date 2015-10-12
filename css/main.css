@@ -224,6 +224,22 @@ a:hover {
     font-style: italic;
 }
 
+#table-all table {
+    width: 100%;
+    border: 1px solid lightgray;
+}
+
+#table-all table th {
+    background-color: whitesmoke;
+    padding: 4px 8px 4px 8px;
+    font-size: 14px;
+}
+
+#table-all table td {
+    font-size: 14px;
+    padding: 5px 8px 5px 8px;
+}
+
 /* WRAPPER
 ******************************/
 
@@ -803,8 +819,11 @@ a:hover {
     margin: 20px 0px 35px 0px;
 }
 
-#dashboard-photo-box {
+#dashboard-photo {
     float: left;
+}
+
+#dashboard-photo-box {
     width: 250px;
     height: 250px;
     border: 1px solid lightgray;
@@ -817,6 +836,24 @@ a:hover {
     object-fit: contain;
 }
 
+#dashboard-photo-note {
+    font-size: smaller;
+    font-style: italic;
+    margin: 5px 0px 15px 0px;
+}
+
+#dashboard-photo-input-file {
+    margin: 15px 0px 15px 0px;
+}
+
+#dashboard-photo-input-file input[type='file'] {
+    width: 200px;
+}
+
+#dashboard-photo-button {
+    margin: 20px 0px 20px 0px;
+}
+
 #dashboard-info {
     float: left;
     margin: 0px 0px 0px 30px;
@@ -825,12 +862,16 @@ a:hover {
 
 #dashboard-info-title {
     padding: 10px 0px 5px 0px;
-    font-weight: bold;
-    font-size: 23px;
 }
 
 #dashboard-info-title-name {
     float: left;
+    font-weight: bold;
+    font-size: 23px;
+}
+
+#dashboard-info-edit-link {
+    float: right;
 }
 
 #dashboard-info-title-follow {
@@ -1234,6 +1275,110 @@ a:hover {
 }
 
 #change-password-submit {
+    margin: 20px 0px 0px 0px;
+}
+
+/* NOTIFICATION
+******************************/
+
+#notification-content {
+    margin: 20px 0px 0px 0px;
+}
+
+#notification-monitoring-remove-action {
+    float: right;
+    margin: 0px 0px 20px 0px;
+}
+
+#notification-table table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+#notification-table table td {
+    padding: 4px 0px 4px 0px;
+}
+    
+#notification-table table td:first-child {
+    width: 40px;
+}
+
+#notification-table table td:nth-child(2) {
+    width: 150px;
+    padding: 0px 5px 0px 0px;
+}
+
+#notification-table table td:nth-child(4) {
+    width: 15px;
+}
+
+#notification-table tr:first-child {
+    border-top: 1px solid lightgray;
+}
+
+#notification-table tr {
+    border-bottom: 1px solid lightgray;
+}
+
+.notification-table-row-unread {
+    background: whitesmoke;
+}
+
+#notification-table-photo-box {
+    width: 30px;
+    height: 30px;
+    border: 1px solid lightgray;
+    background-color: whitesmoke;
+}
+
+#notification-table-photo-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+#notification-table-name {
+    width: 100%;
+    overflow: hidden; 
+    white-space: nowrap; 
+    text-overflow: ellipsis;
+}
+
+#notification-table-name a {
+    color: black;
+}
+
+#notification-table-name a:hover {
+    color: blue;
+}
+
+#notification-table-message {
+    width: 100%;
+    overflow: hidden; 
+    white-space: nowrap; 
+    text-overflow: ellipsis;
+}
+
+#notification-table-message a {
+    color: black;
+}
+
+#notification-table-message a:hover {
+    color: blue;
+}
+
+#notification-table-delete button {
+    color: black;
+}
+
+#notification-table-delete button:hover {
+    color: blue;
+}
+
+/* MONITORING
+******************************/
+
+#monitoring-content {
     margin: 20px 0px 0px 0px;
 }
 
@@ -2062,20 +2207,39 @@ a:hover {
     margin: 20px 0px 0px 0px;
 }
 
-#user-redemption table {
-    width: 100%;
-    border: 1px solid lightgray;
+#user-redemption-search {
+    margin: 0px 0px 20px 0px;
 }
 
-#user-redemption table th {
-    background-color: whitesmoke;
-    padding: 4px 0px 4px 0px;
-    font-size: 14px;
+#user-redemption-search-input {
+    display: inline;
 }
 
-#user-redemption table td {
-    font-size: 14px;
-    padding: 5px 8px 5px 8px;
+#user-redemption-search-input input[type='text'] {
+    width: calc(100% - 90px);
+}
+
+#user-redemption-search-submit {
+    display: inline;
+    margin: 0px 0px 0px 5px;
+}
+
+#user-redemption-table {
+    margin: 0px 0px 20px 0px;
+}
+
+#user-redemption-navigation {
+    margin: 30px 0px 0px 0px;
+}
+
+#user-redemption-navigation-each {
+    float: left;
+}
+
+#user-redemption-navigation-each-separater {
+    float: left;
+    margin: 0px 13px 0px 13px;
+    color: lightgray;
 }
 
 /* PAYMENT
@@ -2085,31 +2249,54 @@ a:hover {
     margin: 20px 0px 0px 0px;
 }
 
+#payment-go {
+    float: left;
+}
+
+#payment-go-label {
+    display: inline;
+}
+
+#payment-go-dropdown {
+    display: inline;
+}
+
+#payment-go-dropdown select {
+    height: 30px;
+    display: inline;
+}
+
+#payment-go-button {
+    display: inline;
+    margin: 0px 0px 0px 5px;
+}
+
+#payment-balance {
+    float: right;
+    font-size: 25px;
+    font-weight: bold;
+}
+
 #payment-print {
-    margin: 20px 0px 0px 0px;
+    float: left;
+    margin: 20px 0px 20px 0px;
+}
+
+#payment-money-spend {
+    float: right;
+    margin: 20px 0px 20px 0px;
 }
 
 #payment-table {
-    margin: 20px 0px 0px 0px;
+    margin: 10px 0px 0px 0px;
 }
 
-#payment-table table {
-    border: 1px solid lightgray;
+#payment-table td:nth-child(2), #payment-table td:nth-child(3), #payment-table td:nth-child(4) {
+    text-align: right;
 }
-
-#payment-table table th {
-    background-color: whitesmoke;
-    padding: 4px 0px 4px 0px;
-    font-size: 14px;
-}
-
-#payment-table table td {
-    font-size: 14px;
-    padding: 5px 8px 5px 8px;
-}
-
-#payment-current-balance {
-    margin: 20px 0px 0px 0px;
+    
+#payment-your-current-balance {
+    margin: 30px 0px 0px 0px;
 }
 
 #payment-your-balance {
@@ -2132,6 +2319,40 @@ a:hover {
     display: inline-block;
     vertical-align: middle;
     margin: 0px 10px 10px 10px;
+}
+
+/* PAYMENT CHARGE
+******************************/
+
+#payment-charge-content {
+    margin: 20px 0px 0px 0px;
+}
+
+#payment-charge-go-label {
+    display: inline;
+}
+
+#payment-charge-go-dropdown {
+    display: inline;
+}
+
+#payment-charge-go-dropdown select {
+    height: 30px;
+    display: inline;
+}
+
+#payment-charge-go-button {
+    display: inline;
+    margin: 0px 0px 0px 5px;
+}
+
+#payment-charge-table {
+    margin: 20px 0px 0px 0px;
+}
+
+#payment-charge-table table {
+    border: 1px solid lightgray;
+    border-collapse: collapse;
 }
 
 /* CANDIE PROMOTION

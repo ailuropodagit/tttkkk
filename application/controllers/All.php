@@ -217,12 +217,10 @@ class All extends CI_Controller
         if ($this->ion_auth->logged_in())
         {
             $user_id = $this->ion_auth->user()->row()->id;
-
             if (check_correct_login_type($this->group_id_supervisor))
             {
                 $user_id = $this->ion_auth->user()->row()->su_merchant_id;
             }
-
             $notification_list = $this->m_custom->notification_display($user_id);
             $this->data['notification_list'] = $notification_list;
             $this->data['page_path_name'] = 'all/notification';

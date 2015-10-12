@@ -1564,7 +1564,8 @@ class M_custom extends CI_Model
 
             $notification_list[] = array(
                 'noti_id' => $notification['noti_id'],
-                'noti_user_url' => "<b>" . $this->m_custom->generate_user_link($notification['noti_by_id'], 1, 1) . "</b>",
+                'noti_by_id' => $notification['noti_by_id'],
+                //'noti_user_url' => "<b>" . $this->m_custom->generate_user_link($notification['noti_by_id'], 1, 1) . "</b>",
                 'noti_message' => $noti_message,
                 'noti_url' => $notification['noti_url'],
                 'noti_read_already' => $notification['noti_read_already'],
