@@ -1198,8 +1198,9 @@ class All extends CI_Controller
 
     public function upload_image_temp()
     {
+        $temp_folder = $this->config->item('folder_image_temp');
         $upload_rule = array(
-            'upload_path' => $this->config->item('folder_image_temp'),
+            'upload_path' => $temp_folder,
             'allowed_types' => $this->config->item('allowed_types_image'),
             'max_size' => $this->config->item('max_size'),
             'max_width' => $this->config->item('max_width'),
@@ -1210,6 +1211,11 @@ class All extends CI_Controller
         $post_file = $this->input->post('file_name');
         $post_image_box = $this->input->post('image_box_id');
         
+        if (!is_dir($temp_folder))
+        {
+            mkdir($temp_folder, 0777, TRUE);
+        }
+
         if (!empty($_FILES[$post_file]['name']))
         {
             $this->upload->do_upload($post_file);
