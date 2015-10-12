@@ -32,24 +32,25 @@ if($this->ion_auth->user()->num_rows())
 <div id="dashboard">
     <h1>Dashboard</h1>
     <div id="dashboard-content">
-        <div id="dashboard-photo-box">
-            <?php            
-            if(IsNullOrEmptyString($image))
-            {
+        <div id='dashboard-photo'>
+            <div id="dashboard-photo-box">
+                <?php            
+                if(IsNullOrEmptyString($image))
+                {
+                    ?>
+                    <img src="<?php echo base_url().$this->config->item('empty_image'); ?>">
+                    <?php
+                }
+                else
+                {
+                    ?>
+                    <img src="<?php echo base_url() . $image_path . $image ?>">
+                    <?php
+                }
                 ?>
-                <img src="<?php echo base_url().$this->config->item('empty_image'); ?>">
-                <?php
-            }
-            else
-            {
-                ?>
-                <img src="<?php echo base_url() . $image_path . $image ?>">
-                <?php
-            }
-            ?>
+            </div>
             <?php if (check_correct_login_type($this->config->item('group_id_merchant'))) { ?>
                 <?php echo form_open_multipart('merchant/update_profile_image'); ?>
-            
                 <div id="profile-photo-note">
                     <?php echo $this->config->item('upload_guide_image'); ?>
                 </div>
@@ -67,7 +68,7 @@ if($this->ion_auth->user()->num_rows())
                 <div id="dashboard-info-title-name">
                     <?php echo $company_name; ?>
                 </div>
-                <div id="dashboard-info-title-name" style="float:right">
+                <div id="dashboard-info-edit-link">
                     <?php 
                     if (check_correct_login_type($this->config->item('group_id_merchant')) && $dashboard_users_id == $logged_user_id){
                     echo "<a href='".base_url()."merchant/profile'>Edit My Profile</a>";
