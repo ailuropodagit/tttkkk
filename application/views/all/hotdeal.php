@@ -6,6 +6,18 @@
 <script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script>
 
 <script type="text/javascript">
+
+//    //FB SHARE
+//    function fbShare() {
+//        FB.ui({
+//            method: 'share',
+//            href: 'http://skymedia.com.my/keppo/all/advertise/56/hot/26',           
+//            picture: 'http://skymedia.com.my/keppo/folder_upload/album_merchant/KFC13.jpg',
+//            title: 'title here',
+//            description: "description here"
+//        }, function(response){});
+//    }
+    
     $( document ).ready(function() {
         $('[data-countdown]').each(function() {
             var $this = $(this), finalDate = $(this).data('countdown');
@@ -121,11 +133,11 @@
                             </div>
                             <div id="hot-deal-share">
                                 <?php echo "Share :"; ?>
-                                <span id="hot-deal-share-facebook">
-                                    <a href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook-square"></i></a>
+                                <span id="hot-deal-share-facebook" onclick="fbShare()">
+                                    <i class="fa fa-facebook-square"></i>
                                 </span>
                                 <span id="hot-deal-share-instagram">
-                                    <a href="https://instagram.com" target="_blank"><i class="fa fa-instagram"></i></a>
+                                    <i class="fa fa-instagram"></i>
                                 </span>
                             </div>
                             <div id="float-fix"></div>

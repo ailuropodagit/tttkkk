@@ -28,8 +28,8 @@
                     $('#header-menu-mobile').toggle();
                 });
             });
-            
-            // Logout
+                        
+            //FB LOGOUT
             function fbLogout() {
                 ////log out both facebook and app
                 //FB.logout();

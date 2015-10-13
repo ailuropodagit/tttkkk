@@ -1588,15 +1588,15 @@ a:hover {
     float: right;
 }
 
-#hot-deal-share-facebook a {
+#hot-deal-share-facebook {
     color: #4a5e91;
-    font-size: 18px;
+    font-size: 22px;
     margin: 0px 3px 0px 3px;
 }
 
-#hot-deal-share-instagram a {
+#hot-deal-share-instagram {
     color: #7d5846;
-    font-size: 18px;
+    font-size: 22px;
     margin: 0px 3px 0px 3px;
 }
 
@@ -2027,15 +2027,15 @@ a:hover {
     float: right;
 }
 
-#redemption-share-facebook a {
+#redemption-share-facebook {
     color: #4a5e91;
-    font-size: 18px;
+    font-size: 22px;
     margin: 0px 3px 0px 3px;
 }
 
-#redemption-share-instagram a {
+#redemption-share-instagram {
     color: #7d5846;
-    font-size: 18px;
+    font-size: 22px;
     margin: 0px 3px 0px 3px;
 }
 

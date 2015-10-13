@@ -122,10 +122,10 @@ if(isset($message))
                                 <div id="redemption-share">
                                     <?php echo "Share :"; ?>
                                     <span id="redemption-share-facebook">
-                                        <a href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook-square"></i></a>
+                                        <i class="fa fa-facebook-square"></i>
                                     </span>
                                     <span id="redemption-share-instagram">
-                                        <a href="https://instagram.com" target="_blank"><i class="fa fa-instagram"></i></a>
+                                        <i class="fa fa-instagram"></i>
                                     </span>
                                 </div>
                                 <div id="float-fix"></div>
