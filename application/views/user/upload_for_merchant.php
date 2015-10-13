@@ -104,7 +104,7 @@ if(isset($message))
                         <?php echo "<img src='" . base_url(${'image_url' . $i}) . "' id='image_url-" . $i . "'>"; ?>
                     </div>
                     <div id='upload-for-merchant-form-input-file'>
-                        <?php echo "<input type='file' name='image-file-" . $i . "' id='image-file-" . $i . "' />"; ?> 
+                        <?php echo "<input type='file' accept='image/*' name='image-file-" . $i . "' id='image-file-" . $i . "' />"; ?> 
                     </div>
                     <div id='upload-for-merchant-form-each'>
                         <div id='upload-for-merchant-form-each-label'><?php echo lang('album_title_label'); ?></div>

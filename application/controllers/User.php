@@ -1637,6 +1637,7 @@ class User extends CI_Controller
                 $this->session->set_flashdata('message', $message_info);
                 if ($validate_fail == 0)
                 {
+                    $this->m_custom->remove_image_temp();
                     redirect('all/album_user_merchant/' . $user_id, 'refresh');
                 }
             }
@@ -1683,6 +1684,7 @@ class User extends CI_Controller
             );
         }
 
+        $this->data['temp_folder'] = $this->config->item('folder_image_temp');  
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'user/upload_for_merchant';
         $this->load->view('template/layout_right_menu', $this->data);
@@ -1894,7 +1896,7 @@ class User extends CI_Controller
 
         $this->load->view('template/layout_right_menu', $data);
     }
-
+    
     function upload_image()
     {
         if (!check_correct_login_type($this->main_group_id))
@@ -1973,8 +1975,10 @@ class User extends CI_Controller
                 $this->session->set_flashdata('message', $message_info);
                 if ($validate_fail == 0)
                 {
+                    $this->m_custom->remove_image_temp();
                     redirect('all/album_user/' . $user_id, 'refresh');
                 }
+                
             }
         }
 
@@ -1997,7 +2001,8 @@ class User extends CI_Controller
                 'value' => $this->form_validation->set_value('image-desc-' . $i),
             );
         }
-
+        
+        $this->data['temp_folder'] = $this->config->item('folder_image_temp');             
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'user/upload_image';
         $this->load->view('template/layout_right_menu', $this->data);

@@ -1,3 +1,28 @@
+<script type="text/javascript" src="<?php echo base_url() ?>js/jquery.ajaxfileupload.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function(){        
+        var temp_folder = '<?php echo $temp_folder ?>';
+        for (var counter = 0; counter < <?php echo $box_number ?>; counter++) {
+            $('#image-file-'+counter).ajaxfileupload({
+      'action': 'http://' + $(location).attr('hostname') + '/keppo/all/upload_image_temp',
+      'params': {
+        'file_name': 'image-file-'+counter,
+        'image_box_id': 'image_url-'+counter
+      },
+      'onComplete': function(response) {
+        //alert(JSON.stringify(response));
+        var post_url = 'http://' + $(location).attr('hostname') + '/keppo/' + temp_folder
+        //var post_image = "<img src='" + post_url + response + "'>";
+        var post_image = post_url + response[0];
+        //$( '#upload-for-merchant-form-photo-box' ).html(post_image);
+        $('img#'+ response[1]).attr('src', post_image);
+      }
+    });
+    }
+});
+</script>
+
 <?php
 //MESSAGE
 if(isset($message))
@@ -46,10 +71,12 @@ if(isset($message))
             <div id="upload-for-merchant-form">
                 <div id="upload-for-merchant-form-each">
                     <div id='upload-for-merchant-form-photo-box'>
-                        <?php echo "<img src='" . base_url(${'image_url' . $i}) . "' id='image_url-" . $i . "'>"; ?>
+                        <?php 
+                        echo "<img src='" . base_url(${'image_url' . $i}) . "' id='image_url-" . $i . "'>"; 
+                        ?>
                     </div>
                     <div id='upload-for-merchant-form-input-file'>
-                        <?php echo "<input type='file' name='image-file-" . $i . "' id='image-file-" . $i . "' />"; ?> 
+                        <?php echo "<input type='file' accept='image/*' name='image-file-" . $i . "' id='image-file-" . $i . "' />"; ?> 
                     </div>
                     <div id='upload-for-merchant-form-each'>
                         <div id='upload-for-merchant-form-each-label'><?php echo lang('album_title_label'); ?></div>
