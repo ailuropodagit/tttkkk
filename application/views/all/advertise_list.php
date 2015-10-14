@@ -25,10 +25,35 @@
 //CONFIG DATA
 $this->album_merchant = $this->config->item('album_merchant');
 $this->album_admin = $this->config->item('album_admin');
+
+//URI
+$fetch_method = $this->router->fetch_method();
 ?>
 
 <div id="advertise-list">
-    <h1><?php echo $title ?></h1>
+    <div id="advertise-list-title"><?php echo $title ?></div>
+    <?php
+    //UPLOAD BUTTON
+    if ($this->ion_auth->logged_in())
+    {
+        if ($fetch_method == 'album_merchant')
+        {
+            $upload_picture_url = 'merchant/upload_hotdeal';
+        }
+        elseif ($fetch_method == 'album_redemption')
+        {
+            $upload_picture_url = 'merchant/candie_promotion';
+        }
+        ?>     
+        <div id='advertise-list-title-upload'>
+            <a href='<?php echo base_url($upload_picture_url) ?>'><i class="fa fa-upload advertise-list-title-upload-icon"></i>Upload Picture</a>
+        </div>
+        <?php
+    }
+    ?>
+    <div id="float-fix"></div>
+    <div id='advertise-list-title-bottom-line'></div>
+    
     <div id="advertise-list-content">
                 
         <?php
@@ -42,22 +67,6 @@ $this->album_admin = $this->config->item('album_admin');
                 <?php echo $sub_category; ?>
             </div>
             <?php
-        }
-        ?>
-        
-        <?php
-        //UPLOAD BUTTON
-        $fetch_method = $this->router->fetch_method();
-        if ($this->ion_auth->logged_in())
-        {
-            if ($fetch_method == 'album_merchant')
-            {
-                ?>            
-                <div id='advertise-list-upload-button'>
-                    <a href='<?php echo base_url() ?>merchant/upload_hotdeal' class='a-href-button'>Upload</a>
-                </div>
-                <?php
-            }
         }
         ?>
 
@@ -316,3 +325,5 @@ $this->album_admin = $this->config->item('album_admin');
         ?>
     </div>
 </div>
+
+<div id="advertise-list-empty-bottom-fix"></div>

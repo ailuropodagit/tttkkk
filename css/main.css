@@ -529,8 +529,8 @@ a:hover {
 }
 
 #layout-category-right {
-    margin-left: 280px;
-    width: calc(100% - 280px);
+    float: left;
+    width: calc(100% - 250px);
 }
 
 /* HOME
@@ -756,7 +756,7 @@ a:hover {
 
 #register-form-each-input select {
     width: 285px;
-    height: 28px;
+    height: 30px;
     margin: 10px 0px 0px 0px;
 }
 
@@ -772,7 +772,7 @@ a:hover {
 #register-form-each-input-dob-year select, #register-form-each-input-dob-month select, #register-form-each-input-dob-day select {
     float: left;
     width: 30%;
-    height: 28px;
+    height: 30px;
     margin: 10px 5% 0px 0px;
 }
 
@@ -874,7 +874,7 @@ a:hover {
     float: right;
 }
 
-#dashboard-info-title-follow {
+#dashboard-info-title-candie {
     float: left;
     margin: -5px 0px 0px 15px;
 }
@@ -937,12 +937,28 @@ a:hover {
     margin: -10px 0px 20px 0px;
 }
 
-#advertise-list-upload-button {
-    margin: 0px 0px 25px 0px;
+#advertise-list-title {
+    color: #244964;
+    font-size: 25px;
+    letter-spacing: 1px;
+    font-weight: bold;
+    float: left;
 }
 
-#advertise-list-upload-button a:hover {
-    text-decoration: none;
+#advertise-list-title-upload {
+    float: left;
+    margin: 6px 0px 0px 20px;
+}
+
+.advertise-list-title-upload-icon {
+    font-size: 14px;
+    margin-right: 7px;
+}
+
+#advertise-list-title-bottom-line {
+    border-bottom: 1px solid lightgray;
+    padding: 0px 0px 6px 0px;
+    margin: 0px 0px 10px 0px;
 }
 
 #advertise-list-box {
@@ -1043,6 +1059,10 @@ a:hover {
     font-size: 15px;
 }
 
+#advertise-list-empty-bottom-fix {
+    margin: 0px 0px -55px 0px;
+}
+
 /* ADVERTISE LIST SUGGESTION
 ******************************/
 
@@ -1073,7 +1093,6 @@ a:hover {
 
 #outlet-search-button {
     width: 130px;
-    height: 28px;
 }
 
 #outlet-info {
@@ -2257,12 +2276,12 @@ a:hover {
     margin: 20px 0px 0px 0px;
 }
 
-#analysis-report-form-go {
+#analysis-report-go {
     margin: 0px 0px 25px 0px;
 }
 
-#candie-promotion-form-go-each select {
-    height: 28px;
+#analysis-report-go-each select {
+    height: 30px;
 }
 
 #analysis-report-print {
@@ -2400,7 +2419,7 @@ a:hover {
 }
 
 #candie-promotion-form-go-year select, #candie-promotion-form-go-month select {
-    height: 28px;
+    height: 30px;
 }
 
 #candie-promotion-form-photo {
@@ -2463,7 +2482,7 @@ a:hover {
 
 .candie-promotion-form-each-input-datepicker input[type='text'] {
     background-size: 10px;
-    background: url(http://localhost/keppo/image/icon_calendar.png) no-repeat;
+    background: url(../image/icon_calendar.png) no-repeat;
     background-position: right 5px center;
 }
 
@@ -2492,8 +2511,138 @@ a:hover {
     padding: 0px 0px 0px 7px;
 }
 
+#candie-promotion-extra-terms-n-conditions {
+    margin: 20px 0px 0px 0px;
+}
+
+#candie-promotion-extra-terms-n-conditions-title {
+    font-weight: bold;
+    font-size: 14px;
+    color: black;
+    margin: 0px 0px 8px 0px;
+    text-decoration: underline;
+}
+
+#candie-promotion-extra-terms-n-conditions textarea {
+    box-sizing: border-box;
+    width: 100%;
+    resize: none;
+}
+
 #candie-promotion-form-submit {
     margin: 20px 0px 0px 0px;
+}
+
+/* CANDIE
+******************************/
+
+#candie-content {
+    margin: 20px 0px 0px 0px;
+}
+
+#candie-navigation {
+    margin: 0px 0px 20px 0px;
+}
+
+#candie-navigation-each {
+    float: left;
+}
+
+#candie-navigation-each-separator {
+    float: left;
+    margin: 0px 10px 0px 10px;
+    color: lightgray;
+}
+
+#candie-go {
+    margin: 20px 0px 0px 0px;
+    float: left;
+}
+
+#candie-go-label {
+    display: inline;
+}
+
+#candie-go-dropdown {
+    display: inline;
+}
+
+#candie-go-dropdown select {
+    height: 30px;
+    display: inline;
+}
+
+#candie-go-button {
+    display: inline;
+    margin: 0px 0px 0px 5px;
+}
+
+#candie-balance {
+    margin: 20px 0px 0px 0px;
+    float: right;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+#candie-subtitle {
+    float: left;
+    margin: 20px 0px 0px 0px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#candie-date-time {
+    float: right;
+    margin: 20px 0px 0px 0px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#candie-table {
+    margin: 20px 0px 0px 0px;
+}
+
+/* VOUCHER
+******************************/
+
+#voucher-content {
+    margin: 20px 0px 0px 0px;
+}
+
+#voucher-navigation {
+    margin: 0px 0px 20px 0px;
+}
+
+#voucher-navigation-each {
+    float: left;
+}
+
+#voucher-navigation-each-separator {
+    float: left;
+    margin: 0px 10px 0px 10px;
+    color: lightgray;
+}
+
+#voucher-go {
+    margin: 20px 0px 20px 0px;
+}
+
+#voucher-go-label {
+    display: inline;
+}
+
+#voucher-go-dropdown {
+    display: inline;
+}
+
+#voucher-go-dropdown select {
+    height: 30px;
+    display: inline;
+}
+
+#voucher-go-button {
+    display: inline;
+    margin: 0px 0px 0px 5px;
 }
 
 /* INVITE FRIEND

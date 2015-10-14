@@ -32,7 +32,7 @@ $this->load->view('template/header');
                         ?>
 
                         <div id="layout-category-left-label">
-                        <?php echo $main_category_label ?>
+                            <?php echo $main_category_label ?>
                         </div>
 
                         <?php
@@ -76,10 +76,10 @@ $this->load->view('template/header');
                 </div>
                 <!--LAYOUT CATEGORY RIGHT-->
                 <div id="layout-category-right">
-                <?php
-                //VIEW PAGE
-                $this->load->view($page_path_name);
-                ?>
+                    <?php
+                    //VIEW PAGE
+                    $this->load->view($page_path_name);
+                    ?>
                 </div>
                 <div id="float-fix"></div>
             </div>

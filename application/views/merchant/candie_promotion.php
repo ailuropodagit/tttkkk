@@ -51,7 +51,7 @@ if(isset($message))
             ?>
 
             <div id="candie-promotion-form-go">
-                <span id="candie-promotion-form-go-label"><?php echo lang("candie_year_month_label"); ?></span>
+                <span id="candie-promotion-form-go-label"><?php echo lang("candie_year_month_label") ?></span>
                 <span id="candie-promotion-form-go-year"><?php echo form_dropdown($candie_year, $year_list, $candie_year_selected); ?></span>
                 <span id="candie-promotion-form-go-month"><?php echo form_dropdown($candie_month, $month_list, $candie_month_selected); ?></span>
                 <span id="candie-promotion-form-go-button"><button name="button_action" type="submit" value="search_voucher">Go</button></span>
@@ -123,7 +123,7 @@ if(isset($message))
                     </div>
                 </div>
                 <div id="candie-promotion-form-voucher-checkbox">
-                    <div id="candie-promotion-form-voucher-checkbox-title">Select Terms & Conditions</div>
+                    <div id="candie-promotion-form-voucher-checkbox-title">Select Terms & Conditions :</div>
                     <?php
                     foreach ($candie_term as $key => $value)
                     {
@@ -164,14 +164,12 @@ if(isset($message))
                     }
                     ?>  
                 </div>
-                <div id='candie-promotion-form-each'>
-                    <div id='candie-promotion-form-voucher-checkbox-title'><?php echo lang("candie_extra_term_label"); ?></div>
-                    <div>
-                        <?php echo form_textarea($extra_term); ?>
-                    </div>
+                <div id='candie-promotion-extra-terms-n-conditions'>
+                    <div id='candie-promotion-extra-terms-n-conditions-title'><?php echo lang("candie_extra_term_label"); ?></div>
+                    <?php echo form_textarea($extra_term); ?>
                 </div>
                 <div id="candie-promotion-form-branch-checkbox">
-                    <div id="candie-promotion-form-branch-checkbox-title">Select Branch:</div>
+                    <div id="candie-promotion-form-branch-checkbox-title">Select Branch :</div>
                     <div id="candie-promotion-form-branch-checkbox-each">
                         <table border="0" cellpadding="0px" cellspacing="0px">
                             <tr>

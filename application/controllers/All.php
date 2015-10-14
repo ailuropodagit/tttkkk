@@ -635,7 +635,6 @@ class All extends CI_Controller
     {
         $this->load->library("pagination");
         $config = array();
-
         $merchant_id = 0;
         $base_url = base_url() . "all/album_merchant";
         if ($slug != NULL)
@@ -656,7 +655,6 @@ class All extends CI_Controller
             $the_row = $this->m_custom->get_one_table_record('users', 'id', $merchant_id);
             $base_url = base_url() . "all/album_merchant/" . $the_row->slug;
         }
-
         //For setting the pagination function
         $config["per_page"] = $this->config->item('custom_per_page');
         $config['num_links'] = 5;
@@ -674,7 +672,6 @@ class All extends CI_Controller
         $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('hot', NULL, $merchant_id, 1, $config["per_page"], $start_index);   //To get the limited result only for that current page
         $this->data['title'] = "Hot Deal Advertise's Album";
         $this->data['page_path_name'] = 'all/advertise_list';
-
         if ($this->ion_auth->logged_in())
         {
             $this->load->view('template/layout_right_menu', $this->data);

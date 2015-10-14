@@ -22,7 +22,6 @@ $user_id = $this->uri->segment(3);
     <div id='album-user-title-bottom-line'></div>
     
     <div id="album-user-content">
-        
         <?php
         //NAVIGATION
         if($page_name != 'user_dashboard' && $page_name != 'merchant_dashboard')
@@ -75,9 +74,7 @@ $user_id = $this->uri->segment(3);
                             </div>
                         </div>
                     </a>
-                    <div id='album-user-sub-title'>
-                        
-                    </div>
+                    <div id='album-user-sub-title'></div>
                     <div id="album-user-info">
                         <table border="0" cellpadding="4px" cellspacing="0px">
                             <tr>

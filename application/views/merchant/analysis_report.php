@@ -154,14 +154,14 @@
     <h1>Insights</h1>
     <div id="analysis-report-content">
         
-        <div id="analysis-report-form-go">
+        <div id="analysis-report-go">
             <?php echo form_open(uri_string()) ?>
-            <span id="candie-promotion-form-go-each">Filter :</span>
-            <span id="candie-promotion-form-go-each"><?php echo form_dropdown($the_year, $year_list, $the_year_selected); ?></span>
-            <span id="candie-promotion-form-go-each"><?php echo form_dropdown($the_month, $month_list, $the_month_selected); ?></span>
-            <span id="candie-promotion-form-go-each"><?php echo form_dropdown($the_adv_type, $adv_type_list, $the_adv_type_selected); ?></span>
-            <span id="candie-promotion-form-go-each"><?php echo form_dropdown($the_new_user, $new_user_list, $the_new_user_selected); ?></span>
-            <span id="candie-promotion-form-go-each"><button name="button_action" type="submit" value="search_history">Go</button></span>
+            <span id="analysis-report-go-each">Filter :</span>
+            <span id="analysis-report-go-each"><?php echo form_dropdown($the_year, $year_list, $the_year_selected); ?></span>
+            <span id="analysis-report-go-each"><?php echo form_dropdown($the_month, $month_list, $the_month_selected); ?></span>
+            <span id="analysis-report-go-each"><?php echo form_dropdown($the_adv_type, $adv_type_list, $the_adv_type_selected); ?></span>
+            <span id="analysis-report-go-each"><?php echo form_dropdown($the_new_user, $new_user_list, $the_new_user_selected); ?></span>
+            <span id="analysis-report-go-each"><button name="button_action" type="submit" value="search_history">Go</button></span>
             <?php echo form_close() ?>
         </div>
         
