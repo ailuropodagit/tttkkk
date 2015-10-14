@@ -6,25 +6,23 @@ $this->load->view('template/header');
 <div id='wrapper'>
     <div id='body'>
         <div id='body-content'>
-            
             <!--LAYOUT CATEGORY-->
             <div id="layout-category">
-                
                 <!--LAYOUT CATEGORY LEFT-->
                 <div id="layout-category-left">
                     <?php
-                    //PRESET VAR
-                    $tab_counter = 0;
                     //GET CURRENT CATEGORY ID
                     $page_category_id = $this->uri->segment('3');
                     $fetch_method = $this->router->fetch_method();
                     //GET MAIN CATEGORY
                     if ($fetch_method == 'promotion_list' || $fetch_method == 'redemption_list')
-                        {
-                            $main_category_object = $this->m_custom->getCategory(1);
-                        }else{
-                            $main_category_object = $this->m_custom->getCategory();
-                        }
+                    {
+                        $main_category_object = $this->m_custom->getCategory(1);
+                    }
+                    else
+                    {
+                        $main_category_object = $this->m_custom->getCategory();
+                    }
                     //MAIN CATEGORY
                     foreach ($main_category_object as $main_category)
                     {
@@ -34,12 +32,12 @@ $this->load->view('template/header');
                         ?>
 
                         <div id="layout-category-left-label">
-                            <?php echo $main_category_label ?>
+                        <?php echo $main_category_label ?>
                         </div>
 
-                        <?php 
+                        <?php
                         //GET SUB CATEGORY
-                        $subcat_list = $this->m_custom->getSubCategory($main_category_id); 
+                        $subcat_list = $this->m_custom->getSubCategory($main_category_id);
                         //SUB CATEGORY
                         foreach ($subcat_list as $t_subcat)
                         {
@@ -50,42 +48,41 @@ $this->load->view('template/header');
                             if ($fetch_method == 'promotion_list' || $fetch_method == 'redemption_list')
                             {
                                 //PROMOTION LIST
-                                $navigate_to = base_url() . "all/promotion-list/" . $sub_category_id . "/" . $tab_counter;
-                                if($t_subcat->hide_special == 1){
-                                    $navigate_to = base_url() . "all/redemption-list/" . $sub_category_id . "/" . $tab_counter;
+                                $navigate_to = base_url() . "all/promotion-list/" . $sub_category_id;
+                                if ($t_subcat->hide_special == 1)
+                                {
+                                    $navigate_to = base_url() . "all/redemption-list/" . $sub_category_id;
                                 }
                             }
                             if ($fetch_method == 'hotdeal_list')
                             {
                                 //HOTDEAL LIST
-                                $navigate_to = base_url()."all/hotdeal-list/" . $sub_category_id . "/" . $tab_counter;
+                                $navigate_to = base_url() . "all/hotdeal-list/" . $sub_category_id;
                             }
                             ?>                    
-                            <div id="layout-category-left-nav" class="<?php if ($page_category_id == $sub_category_id) { echo 'layout-category-left-nav-active'; } ?>">
+                            <div id="layout-category-left-nav" class="<?php if ($page_category_id == $sub_category_id)
+                            {
+                                echo 'layout-category-left-nav-active';
+                            } ?>">
                                 <a href="<?php echo $navigate_to ?>">
                                     <span id="layout-category-left-nav-icon"><i class="fa fa-caret-right"></i></span>
-                                    <?php echo $sub_category_label ?>
+                            <?php echo $sub_category_label ?>
                                 </a>                        
                             </div>
-                            <?php 
+                            <?php
                         }
-                        //COUNTER ++
-                        $tab_counter = $tab_counter + 1;
                     }
                     ?>
                 </div>
-
                 <!--LAYOUT CATEGORY RIGHT-->
                 <div id="layout-category-right">
-                    <?php 
-                    //VIEW PAGE
-                    $this->load->view($page_path_name);
-                    ?>
+                <?php
+                //VIEW PAGE
+                $this->load->view($page_path_name);
+                ?>
                 </div>
                 <div id="float-fix"></div>
-                
             </div>
-                                    
         </div>
     </div>
 </div>

@@ -75,7 +75,6 @@ if($this->ion_auth->user()->num_rows())
                     }
                     ?>
                 </div>
-                <div id="float-fix"></div>
                 <?php
                 //LOGGED IN
                 if($this->ion_auth->user()->num_rows())

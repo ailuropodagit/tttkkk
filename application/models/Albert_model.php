@@ -2,19 +2,65 @@
 
 class Albert_model extends CI_Model
 {
+    /* READ ADVERTISE HOT DEAL SUGGESTION
+    ***************************************************/
+    public function read_advertise_hot_deal_suggestion($array_sub_category_id)
+    {      
+        //QUERY        
+        $this->db->select('*');
+        $this->db->from('advertise');
+        $this->db->where('advertise_type', 'hot');
+        $this->db->where('end_time >=', date("Y-m-d H:i:s"));
+        $this->db->where_in('sub_category_id', $array_sub_category_id);
+        $this->db->limit(3);
+        $this->db->order_by('category_id', 'RANDOM');
+        $query = $this->db->get();
+        //RETURN
+        return $query;
+    }
+    
+    /* READ ADVERTISE REDEMPTION SUGGESTION
+    ***************************************************/
+    public function read_advertise_redemption_suggestion($array_sub_category_id)
+    {      
+        //QUERY        
+        $this->db->select('*');
+        $this->db->from('advertise');
+        $this->db->where('advertise_type', 'pro');
+        $this->db->where('end_time >=', date("Y-m-d H:i:s"));
+        $this->db->where_in('sub_category_id', $array_sub_category_id);
+        $this->db->limit(3);
+        $this->db->order_by('category_id', 'RANDOM');
+        $query = $this->db->get();
+        //RETURN
+        return $query;
+    }
+    
+    /* READ CATEGORY
+    ***************************************************/
+    public function read_category($where)
+    {
+        //QUERY
+        $this->db->select('*');
+        $this->db->from('category');
+        //WHERE
+        if ($where)
+        {
+            $this->db->where($where);
+        }
+        $query = $this->db->get();
+        //RETURN
+        return $query;
+    }
+    
     /* READ MAIN CATEGORY
     ***************************************************/
-    public function read_main_category($get_special = 0)
+    public function read_main_category()
     {
         //QUERY
         $this->db->select('category_id, category_label');
         $this->db->from('category');
         $this->db->where('main_category_id', NULL);
-        //WHERE
-        if ($get_special == 0)
-        {
-            $this->db->where('hide_special', 0);
-        }
         $query = $this->db->get();
         //RETURN
         return $query;

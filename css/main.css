@@ -219,7 +219,7 @@ a:hover {
 }
 
 #empty-message {
-    padding: 10px;
+    padding: 20px;
     color: gray;
     font-style: italic;
 }
@@ -946,7 +946,8 @@ a:hover {
 }
 
 #advertise-list-box {
-    float: left;
+    vertical-align: top;
+    display: inline-block;
     margin: 0px 50px 50px 0px;
     width: 250px;
 }
@@ -1028,10 +1029,6 @@ a:hover {
     margin: 0px 0px 0px 6px;
 }
 
-#advertise-list-bottom-empty-fix {
-    margin: 0px 0px -70px 0px;
-}
-
 #advertise-list-pagination {
     margin: 25px 0px 0px 0px;
 }
@@ -1044,6 +1041,17 @@ a:hover {
 #advertise-list-pagination a {
     margin: 0px 7px 0px 0px;
     font-size: 15px;
+}
+
+/* ADVERTISE LIST SUGGESTION
+******************************/
+
+#advertise-list-suggestion {
+    margin: 20px 0px 0px 0px;
+}
+
+#advertise-list-suggestion-content {
+    margin: 20px 0px 0px 0px;
 }
 
 /* OUTLET

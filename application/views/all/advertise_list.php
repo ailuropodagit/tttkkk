@@ -22,12 +22,13 @@
 </script>
 
 <?php
+//CONFIG DATA
 $this->album_merchant = $this->config->item('album_merchant');
 $this->album_admin = $this->config->item('album_admin');
 ?>
 
 <div id="advertise-list">
-    <h1><?php echo $title; ?></h1>
+    <h1><?php echo $title ?></h1>
     <div id="advertise-list-content">
                 
         <?php
@@ -64,25 +65,23 @@ $this->album_admin = $this->config->item('album_admin');
         if (empty($hotdeal_list)) 
         {
             //SHARE PAGE
-            $empty_data_message = 'No Picture';
-            if ($fetch_method == 'hotdeal_list')
+            $empty_message = 'No Picture';
+            if ($fetch_method == 'hotdeal_list' || $fetch_method == 'merchant_dashboard')
             {
-                $empty_data_message = 'No Hot Deal';
-            }
-            else if ($fetch_method == 'merchant_dashboard')
-            {
-                $empty_data_message = 'No Offer Deal';
+                $empty_message = 'No Hot Deal';
+                $bottom_empty_message = 'No Hot Deal Suggestion';
             }
             else if ($fetch_method == 'promotion_list' || $fetch_method == 'redemption_list')
             {
-                $empty_data_message = 'No Redemption';
+                $empty_message = 'No Redemption';
+                $bottom_empty_message = 'No Redemption Suggestion';
             }
             else if ($fetch_method == 'album_merchant')
             {
-                $empty_data_message = 'No Picture';
+                $empty_message = 'No Picture';
             }
             //EMPTY
-            ?><div id='empty-message'><?php echo $empty_data_message ?></div><?php
+            ?><div id='empty-message'><?php echo $empty_message ?></div><?php
         }
         else
         {
@@ -189,12 +188,6 @@ $this->album_admin = $this->config->item('album_admin');
                 </div>
                 <?php
             }
-            ?>
-            
-            <div id='float-fix'></div>
-            <div id='advertise-list-bottom-empty-fix'>&nbsp;</div>
-            
-            <?php
             //PAGINATION
             if (!empty($paging_links))
             {
@@ -204,9 +197,122 @@ $this->album_admin = $this->config->item('album_admin');
                 </div>
                 <?php
             }
-            
         }
         ?>
-        
+            
+        <?php
+        if ($fetch_method != 'album_merchant')
+        {
+            //CONFIG DATA
+            $album_merchant_path = $this->config->item('album_merchant');
+            ?>
+            <!--ADVERTISE LIST SUGGESTION-->
+            <div id="advertise-list-suggestion">
+                <h1><?php echo $advertise_suggestion_page_title ?></h1>
+                <div id="advertise-list-suggestion-content">
+                    <?php
+                    $result_array_advertise_suggestion = $query_advertise_suggestion->result_array();
+                    $num_rows_advertise_suggestion = $query_advertise_suggestion->num_rows();
+                    if ($num_rows_advertise_suggestion)
+                    {
+                        foreach($result_array_advertise_suggestion as $advertise_suggestion)
+                        {
+                            //DATA
+                            $advertise_suggestion_merchant_id = $advertise_suggestion['merchant_id'];
+                            //READ USER
+                            $where_read_user = array('id'=>$advertise_suggestion_merchant_id);
+                            $advertise_suggestion_merchant_slug = $this->albert_model->read_user($where_read_user)->row()->slug;
+                            $advertise_suggestion_merchant_company = $this->albert_model->read_user($where_read_user)->row()->company;
+                            //DATA
+                            $advertise_suggestion_advertise_id = $advertise_suggestion['advertise_id'];
+                            $advertise_suggestion_type = $advertise_suggestion['advertise_type'];
+                            $advertise_suggestion_sub_category_id = $advertise_suggestion['sub_category_id'];
+                            $advertise_suggestion_sub_title = $advertise_suggestion['title'];
+                            $advertise_suggestion_image = $advertise_suggestion['image'];
+                            $advertise_suggestion_post_hour = $advertise_suggestion['post_hour'];
+                            $advertise_suggestion_end_time = $advertise_suggestion['end_time'];
+                            $advertise_suggestion_voucher_candie = $advertise_suggestion['voucher_candie'];
+                            $advertise_suggestion_voucher_worth = $advertise_suggestion['voucher_worth'];
+                            ?>
+                            <div id='advertise-list-box'>
+                                <?php if($fetch_method != 'merchant_dashboard') { ?>
+                                    <div id="advertise-list-title1">
+                                        <a href="<?php echo base_url("all/merchant_dashboard/$advertise_suggestion_merchant_slug") ?>">
+                                            <?php echo $advertise_suggestion_merchant_company ?>
+                                        </a>
+                                    </div>
+                                <?php } ?>
+                                <div id="advertise-list-photo">
+                                    <div id="advertise-list-photo-box">
+                                        <a href='<?php echo base_url("all/advertise/$advertise_suggestion_advertise_id/$advertise_suggestion_type/$advertise_suggestion_sub_category_id") ?>'>
+                                            <img src='<?php echo base_url("$album_merchant_path/$advertise_suggestion_image") ?>'>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div id="advertise-list-title2">
+                                    <a href='<?php echo base_url("all/advertise/$advertise_suggestion_advertise_id/$advertise_suggestion_type/$advertise_suggestion_sub_category_id") ?>'>
+                                        <?php echo $advertise_suggestion_sub_title ?>
+                                    </a>
+                                </div>
+                                <?php if ($advertise_suggestion_type == 'hot') {    ?>                       
+                                    <?php if($advertise_suggestion_post_hour != 0) { ?>
+                                        <div id="advertise-list-dynamic-time">
+                                            <i class="fa fa-clock-o"></i><span id="advertise-list-dynamic-time-label" data-countdown='<?php echo $advertise_suggestion_end_time ?>'></span>
+                                        </div>
+                                    <?php } ?>                      
+                                <?php } ?>
+                                <?php if ($advertise_suggestion_type == 'pro' || $advertise_suggestion_type == 'adm') { ?>
+                                    <div id="advertise-list-dynamic-time">
+                                        <i class="fa fa-bullseye"></i><span id="advertise-list-dynamic-time-label"><?php echo $advertise_suggestion_voucher_candie ?> candies</span>
+                                    </div>
+                                <?php } ?>
+                                <div id="advertise-list-info">
+                                    <table border="0" cellpadding="4px" cellspacing="0px">
+                                        <?php if (($advertise_suggestion_type == 'pro' || $advertise_suggestion_type == 'adm') && !empty($advertise_suggestion_voucher_worth)){ ?>
+                                            <tr>
+                                                <td>Worth</td>
+                                                <td>:</td>
+                                                <td>
+                                                    <div id="advertise-list-voucher-worth"><?php echo "RM " . $advertise_suggestion_voucher_worth; ?></div>
+                                                </td>
+                                            </tr>    
+                                        <?php } ?>
+                                        <tr>
+                                            <td>Category</td>
+                                            <td>:</td>
+                                            <td>
+                                                <div id="advertise-list-info-category"><?php echo $this->m_custom->display_category($advertise_suggestion_sub_category_id) ?></div>
+                                            </td>
+                                        </tr>
+                                        <?php 
+                                        if ($advertise_suggestion_type != 'adm'){
+                                        ?>
+                                        <tr>
+                                            <td>Like</td>
+                                            <td>:</td>
+                                            <td><?php echo $this->m_custom->generate_like_list_link($advertise_suggestion_advertise_id, 'adv'); ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Comment</td>
+                                            <td>:</td>
+                                            <td><?php echo $this->m_custom->activity_comment_count($advertise_suggestion_advertise_id, 'adv'); ?></td>
+                                        </tr>
+                                        <?php } ?>
+                                    </table>
+                                </div>
+                            </div>
+                            <?php
+                        }
+                    }
+                    else
+                    {
+                        ?><div id='empty-message'><?php echo $bottom_empty_message ?></div><?php
+                    }
+                    ?>
+                </div>
+            </div>
+            <?php
+        }
+        ?>
     </div>
 </div>

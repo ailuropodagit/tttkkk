@@ -40,11 +40,9 @@
 <div id='hot-deal'>
     <h1>Hot Deal</h1>
     <div id='hot-deal-content'>
-        
         <div id="hot-deal-category">
             Category: <?php echo $sub_category; ?>
         </div>
-        
         <div id="hot-deal-edit-link">
             <?php
             if (check_is_login())
@@ -65,7 +63,6 @@
             ?>
         </div>
         <div id="float-fix"></div>
-        
         <div id='hot-deal-table'>
             <div id='hot-deal-table-row'>
                 <div id='hot-deal-table-row-cell' class='hot-deal-left-cell'>
@@ -168,6 +165,5 @@
                 </div>
             </div>
         </div>
-        
     </div>
 </div>

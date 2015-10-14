@@ -48,23 +48,7 @@ $user_id = $this->uri->segment(3);
         <?php        
         if(empty($album_list))
         {
-            if ($this->router->fetch_method() == 'album_user')
-            {
-                $empty_data_message = "No picture";
-            }
-            if ($this->router->fetch_method() == 'album_user_merchant')
-            {
-                $empty_data_message = "No merchant picture";
-            }
-            else if ($this->router->fetch_method() == 'merchant_dashboard')
-            {
-                $empty_data_message = "No user's picture";
-            }
-            else
-            {
-                $empty_data_message = "";
-            }
-            ?><div id='empty-message'><?php echo $empty_data_message ?></div><?php
+            ?><div id='empty-message'>No Picture</div><?php
         }
         else
         {

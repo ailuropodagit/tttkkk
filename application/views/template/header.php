@@ -123,13 +123,13 @@
                         ?>
                         <!--NORMAL MENU HOT DEAL-->     
                         <li <?php if($header_fetch_method == 'hotdeal_list' || $header_uri_segment4 == 'hot'){ echo "class='header-menu-active'"; } ?>>
-                            <a href='<?php echo base_url('all/hotdeal-list/26/0') ?>'>
+                            <a href='<?php echo base_url('all/hotdeal-list/26') ?>'>
                                 <i class="fa fa-fire header-menu-icon"></i>Hot Deal
                             </a>
                         </li>
                         <!--NORMAL MENU REDEMPTION-->
                         <li <?php if($header_fetch_method == 'promotion_list' || $header_uri_segment4 == 'pro'){ echo "class='header-menu-active'"; } ?>>
-                            <a href="<?php echo base_url('all/promotion-list/26/0') ?>">
+                            <a href="<?php echo base_url('all/promotion-list/26') ?>">
                                 <i class="fa fa-gift header-menu-icon"></i>Redemption
                             </a>
                         </li>
@@ -227,13 +227,13 @@
                     ?>
                     <!--MOBILE MENU HOT DEAL-->
                     <li>
-                        <a href='<?php echo base_url('all/hotdeal-list/26/0') ?>'>
+                        <a href='<?php echo base_url('all/hotdeal-list/26') ?>'>
                             <i class="fa fa-fire header-menu-icon"></i>Hot Deal
                         </a>
                     </li>
                     <!--MOBILE MENU REDEMPTION-->
                     <li>
-                        <a href='<?php echo base_url('all/promotion-list/26/0') ?>'>
+                        <a href='<?php echo base_url('all/promotion-list/26') ?>'>
                             <i class="fa fa-diamond header-menu-icon"></i>Redemption
                         </a>
                     </li>

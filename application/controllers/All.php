@@ -25,16 +25,26 @@ class All extends CI_Controller
         }
     }
 
-    function hotdeal_list()
+    function hotdeal_list($sub_category_id)
     {
-        $sub_category_id = $this->uri->segment(3);
         $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('hot', $sub_category_id);
-        $this->data['title'] = "Hot Deals";
+        $this->data['title'] = "Hot Deal";
         if (!IsNullOrEmptyString($sub_category_id))
         {
             $this->data['main_category'] = $this->m_custom->display_main_category($sub_category_id);
             $this->data['sub_category'] = $this->m_custom->display_category($sub_category_id);
         }
+        //ADVERTISE SUGGESTION
+        $where_read_category = array('category_id'=>$sub_category_id);
+        $main_category_id = $this->albert_model->read_category($where_read_category)->row()->main_category_id;        
+        $where_read_category2 = array('main_category_id'=>$main_category_id);
+        $result_array_sub_category_id = $this->albert_model->read_category($where_read_category2)->result_array();
+        $array_sub_category_id_all = array_column($result_array_sub_category_id, 'category_id');  
+        $array_sub_category_id_exclude = array_diff($array_sub_category_id_all, array($sub_category_id));
+        $this->data['query_advertise_suggestion'] = $this->albert_model->read_advertise_hot_deal_suggestion($array_sub_category_id_exclude);
+        $this->data['advertise_suggestion_page_path_name'] = 'all/hot_deal_list_suggestion';
+        $this->data['advertise_suggestion_page_title'] = 'Hot Deal Suggestion';
+        //NORMAL PAGE
         $this->data['page_path_name'] = 'all/advertise_list';
         $this->load->view('template/layout_category', $this->data);
     }
@@ -49,6 +59,17 @@ class All extends CI_Controller
             $this->data['main_category'] = $this->m_custom->display_main_category($sub_category_id);
             $this->data['sub_category'] = $this->m_custom->display_category($sub_category_id);
         }
+        //ADVERTISE SUGGESTION
+        $where_read_category = array('category_id'=>$sub_category_id);
+        $main_category_id = $this->albert_model->read_category($where_read_category)->row()->main_category_id;        
+        $where_read_category2 = array('main_category_id'=>$main_category_id);
+        $result_array_sub_category_id = $this->albert_model->read_category($where_read_category2)->result_array();
+        $array_sub_category_id_all = array_column($result_array_sub_category_id, 'category_id');  
+        $array_sub_category_id_exclude = array_diff($array_sub_category_id_all, array($sub_category_id));
+        $this->data['query_advertise_suggestion'] = $this->albert_model->read_advertise_redemption_suggestion($array_sub_category_id_exclude);
+        $this->data['advertise_suggestion_page_path_name'] = 'all/hot_deal_list_suggestion';
+        $this->data['advertise_suggestion_page_title'] = 'Hot Deal Suggestion';
+        //NORMAL PAGE
         $this->data['page_path_name'] = 'all/advertise_list';
         $this->load->view('template/layout_category', $this->data);
     }
@@ -1078,20 +1099,38 @@ class All extends CI_Controller
             if ($bottom_part == NULL)
             {
                 $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('hot', NULL, $user_id);
-                $this->data['title'] = "Offer Deals";
+                $this->data['title'] = "Hot Deal";
                 $this->data['bottom_path_name'] = 'all/advertise_list';
+                //ADVERTISE SUGGESTION
+                $where_user = array('slug'=>$slug);
+                $main_category_id = $this->albert_model->read_user($where_user)->row()->me_category_id;
+                $where_read_category2 = array('main_category_id'=>$main_category_id);
+                $result_array_sub_category_id = $this->albert_model->read_category($where_read_category2)->result_array();
+                $array_sub_category_id = array_column($result_array_sub_category_id, 'category_id');  
+                $this->data['query_advertise_suggestion'] = $this->albert_model->read_advertise_hot_deal_suggestion($array_sub_category_id);
+                $this->data['advertise_suggestion_page_path_name'] = 'all/hot_deal_list_suggestion';
+                $this->data['advertise_suggestion_page_title'] = 'Hot Deal Suggestion';
+            }
+            else if ($bottom_part == 'promotion')
+            {
+                $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('pro', NULL, $user_id);
+                $this->data['title'] = "Redemption";
+                $this->data['bottom_path_name'] = 'all/advertise_list';
+                //ADVERTISE SUGGESTION
+                $where_user = array('slug'=>$slug);
+                $main_category_id = $this->albert_model->read_user($where_user)->row()->me_category_id;
+                $where_read_category2 = array('main_category_id'=>$main_category_id);
+                $result_array_sub_category_id = $this->albert_model->read_category($where_read_category2)->result_array();
+                $array_sub_category_id = array_column($result_array_sub_category_id, 'category_id');  
+                $this->data['query_advertise_suggestion'] = $this->albert_model->read_advertise_redemption_suggestion($array_sub_category_id);
+                $this->data['advertise_suggestion_page_path_name'] = 'all/hot_deal_list_suggestion';
+                $this->data['advertise_suggestion_page_title'] = 'Redemption Suggestion';
             }
             else if ($bottom_part == 'picture')
             {
                 $this->data['album_list'] = $this->m_custom->getAlbumUserMerchant(NULL, $user_id);
                 $this->data['title'] = "User's Pictures";
                 $this->data['bottom_path_name'] = 'all/album_user_merchant';
-            }
-            else if ($bottom_part == 'promotion')
-            {
-                $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('pro', NULL, $user_id);
-                $this->data['title'] = "Candie Promotion";
-                $this->data['bottom_path_name'] = 'all/advertise_list';
             }
             if ($this->ion_auth->logged_in())
             {

@@ -48,16 +48,8 @@ $user_id = $this->uri->segment(3);
         
         <?php        
         if(empty($album_list))
-        {
-            if ($this->router->fetch_method() == 'album_user')
-            {
-                $empty_data_message = "No user picture";
-            }
-            if ($this->router->fetch_method() == 'user_dashboard')
-            {
-                $empty_data_message = "No user picture";
-            }            
-            ?><div id='empty-message'><?php echo $empty_data_message ?></div><?php
+        {            
+            ?><div id='empty-message'>No Picture</div><?php
         }
         else
         {
