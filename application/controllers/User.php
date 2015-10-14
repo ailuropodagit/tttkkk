@@ -135,7 +135,12 @@ class User extends CI_Controller
                 $remember = 0;
                 if ($this->ion_auth->login($username, $password, $remember, $this->main_group_id))
                 {
-                    ?><div id="login-fb-id-success">1</div><?php
+                    ?>
+                    <!--LOGIN USER ID-->
+                    <div id="login-user-id"><?php echo $this->session->userdata('user_id') ?></div>
+                    <!--LOGIN SUCCESS-->
+                    <div id="login-fb-id-success">1</div>
+                    <?php
                 }
             }
             else
@@ -227,13 +232,26 @@ class User extends CI_Controller
                 //READ USERS
                 $where_read_user = array('email'=>$fb_email);
                 $query_read_user = $this->albert_model->read_user($where_read_user);
+                $password_visible = $this->albert_model->read_user($where_read_user)->row()->password_visible;
                 $num_rows_read_user = $query_read_user->num_rows();
                 if($num_rows_read_user)
-                {
+                {                    
                     //UPDATE USER
                     $where_update_user = array('email'=>$fb_email);
                     $data_update_user = array('us_fb_id'=>$fb_id);
-                    $this->albert_model->update_user($where_update_user, $data_update_user);
+                    $this->albert_model->update_user($where_update_user, $data_update_user);     
+                    //LOG USER IN
+                    $email = $fb_email;
+                    $remember = 0;                        
+                    if ($this->ion_auth->login($email, $password_visible, $remember, $this->main_group_id))
+                    {
+                        $user_id = $this->session->userdata('user_id');
+                        redirect("all/user_dashboard/$user_id", 'refresh');
+                    }
+                    else
+                    {
+                        $data['message'] = $this->ion_auth->errors();
+                    }
                 }
                 else
                 {
@@ -269,11 +287,12 @@ class User extends CI_Controller
                         $remember = 0;                        
                         if ($this->ion_auth->login($email, $password_visible, $remember, $this->main_group_id))
                         {
-                            redirect('user/profile', 'refresh');
+                            $user_id = $this->session->userdata('user_id');
+                            redirect("user/all/user_dashboard/$user_id", 'refresh');
                         }
                         else
                         {
-                            echo $this->ion_auth->errors();
+                            $data['message'] = $this->ion_auth->errors();
                         }
                     }
                 }                

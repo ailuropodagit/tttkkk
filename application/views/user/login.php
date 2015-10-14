@@ -54,7 +54,8 @@ if ($this->ion_auth->logged_in())
                                             window.location.replace("<?php echo base_url() ?>user/login_facebook_first_time");
                                         }
                                         if (login_fb_id_success) {
-                                            window.location.replace("<?php echo base_url() ?>user/profile");
+                                            var login_user_id = $response.filter('#login-user-id').text();
+                                            window.location.replace("<?php echo base_url() ?>all/user_dashboard/"+login_user_id);
                                         }
                                     }
                                 });
