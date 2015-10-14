@@ -201,7 +201,7 @@ $this->album_admin = $this->config->item('album_admin');
         ?>
             
         <?php
-        if ($fetch_method != 'album_merchant')
+        if ($fetch_method != 'album_merchant' && $fetch_method != 'album_redemption')
         {
             //CONFIG DATA
             $album_merchant_path = $this->config->item('album_merchant');

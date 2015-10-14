@@ -670,11 +670,9 @@ class All extends CI_Controller
         $this->pagination->initialize($config);
         $this->data["paging_links"] = $this->pagination->create_links();
         $start_index = $page == 1 ? $page : (($page - 1) * $config["per_page"]);  //For calculate page number to start index
-
         $this->data['message'] = $this->session->flashdata('message');
-
         $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('hot', NULL, $merchant_id, 1, $config["per_page"], $start_index);   //To get the limited result only for that current page
-        $this->data['title'] = "Merchant Album";
+        $this->data['title'] = "Hot Deal Advertise's Album";
         $this->data['page_path_name'] = 'all/advertise_list';
 
         if ($this->ion_auth->logged_in())
@@ -726,11 +724,9 @@ class All extends CI_Controller
         $this->pagination->initialize($config);
         $this->data["paging_links"] = $this->pagination->create_links();
         $start_index = $page == 1 ? $page : (($page - 1) * $config["per_page"]);  //For calculate page number to start index
-
         $this->data['message'] = $this->session->flashdata('message');
-
         $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('pro', NULL, $merchant_id, 1, $config["per_page"], $start_index);   //To get the limited result only for that current page
-        $this->data['title'] = "Merchant Album";
+        $this->data['title'] = "Candie Voucher's Album";
         $this->data['page_path_name'] = 'all/advertise_list';
 
         if ($this->ion_auth->logged_in())

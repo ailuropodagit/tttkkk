@@ -1855,10 +1855,8 @@ class Merchant extends CI_Controller
             'cols' => 90,
             'placeholder' => 'Add extra T&C seperate by Enter, one line one T&C',
         );
-
         $this->data['candie_term'] = $candie_term;
         $this->data['candie_branch'] = $candie_branch;
-
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'merchant/candie_promotion';
         $this->load->view('template/layout_right_menu', $this->data);
@@ -2568,12 +2566,10 @@ class Merchant extends CI_Controller
                 'id' => 'the_new_user',
             );
             $this->data['the_new_user_selected'] = empty($search_new_user) ? "" : $search_new_user;
-
             $first_day = displayDate(getFirstLastTime($selected_year, $selected_month));
             $last_day = displayDate(getFirstLastTime($selected_year, $selected_month, 1));
             $this->data['first_day'] = $first_day;
             $this->data['last_day'] = $last_day;
-            
             $this->data['message'] = $this->session->flashdata('message');
             $this->data['page_path_name'] = 'merchant/analysis_report';
             $this->load->view('template/layout_right_menu', $this->data);

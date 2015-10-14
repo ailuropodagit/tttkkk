@@ -2250,6 +2250,31 @@ a:hover {
     color: lightgray;
 }
 
+/* ANALYSIS REPORT
+******************************/
+
+#analysis-report-content {
+    margin: 20px 0px 0px 0px;
+}
+
+#analysis-report-form-go {
+    margin: 0px 0px 25px 0px;
+}
+
+#candie-promotion-form-go-each select {
+    height: 28px;
+}
+
+#analysis-report-print {
+    margin: 0px 0px 20px 0px;
+}
+
+#analysis-report-period {
+    font-size: 20px;
+    margin: 0px 0px 20px 0px;
+    font-weight: bold;
+}
+
 /* PAYMENT
 ******************************/
 

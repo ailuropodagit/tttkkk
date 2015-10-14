@@ -143,34 +143,42 @@
                 //alert(errorThrown);
             }
         });
-        
+
     });
 </script>
 
-<script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script> <!-- Dunno why cannot put on top, if put on top then the chart is not working -->
-   <div id='payment-print' style="float:right">
+<!-- Dunno why cannot put on top, if put on top then the chart is not working -->
+<script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script> 
+
+<div id="analysis-report">
+    <h1>Insights</h1>
+    <div id="analysis-report-content">
+        
+        <div id="analysis-report-form-go">
+            <?php echo form_open(uri_string()) ?>
+            <span id="candie-promotion-form-go-each">Filter :</span>
+            <span id="candie-promotion-form-go-each"><?php echo form_dropdown($the_year, $year_list, $the_year_selected); ?></span>
+            <span id="candie-promotion-form-go-each"><?php echo form_dropdown($the_month, $month_list, $the_month_selected); ?></span>
+            <span id="candie-promotion-form-go-each"><?php echo form_dropdown($the_adv_type, $adv_type_list, $the_adv_type_selected); ?></span>
+            <span id="candie-promotion-form-go-each"><?php echo form_dropdown($the_new_user, $new_user_list, $the_new_user_selected); ?></span>
+            <span id="candie-promotion-form-go-each"><button name="button_action" type="submit" value="search_history">Go</button></span>
+            <?php echo form_close() ?>
+        </div>
+        
+        <div id='analysis-report-print'>
             <a href="#" onclick="printDiv('print-area')"><i class="fa fa-print"></i> Print Report</a>
         </div>
-<div id="print-area">
-<h1>Analysis Report</h1>
-<?php echo form_open(uri_string()); ?>
-<div id="candie-promotion-form-go" style="float:left">
-    <span id="candie-promotion-form-go-label"><?php echo "Filter "; ?></span>
-    <span id="candie-promotion-form-go-year"><?php echo form_dropdown($the_year, $year_list, $the_year_selected); ?></span>
-    <span id="candie-promotion-form-go-month"><?php echo form_dropdown($the_month, $month_list, $the_month_selected); ?></span>
-    <span id="candie-promotion-form-go-month"><?php echo form_dropdown($the_adv_type, $adv_type_list, $the_adv_type_selected); ?></span>
-    <span id="candie-promotion-form-go-month"><?php echo form_dropdown($the_new_user, $new_user_list, $the_new_user_selected); ?></span>
-    <span id="candie-promotion-form-go-button"><button name="button_action" type="submit" value="search_history">Go</button></span>
-</div>
-<?php echo form_close(); ?>
-
-<div style="float:right"><?php echo 'Report Period : ' . $first_day . " to " . $last_day; ?></div>
-   <div id='float-fix'></div>
-<div id="container_gender" style="min-width: 400px; height: 400px; margin: 0 auto"></div><br/><br/><br/>
-
-<div id="container_race" style="min-width: 400px; height: 400px; margin: 0 auto"></div><br/><br/><br/>
-
-<div id="container_age" style="min-width: 400px; height: 400px; margin: 0 auto"></div><br/><br/><br/>
-
-<div id="container_redeem" style="min-width: 400px; height: 400px; margin: 0 auto"></div><br/><br/><br/>
+        <div id="analysis-report-period">
+            Report Period : <?php echo $first_day ?> to <?php echo $last_day ?>
+        </div>
+        <div id='float-fix'></div>
+        
+        <div id="print-area">
+            <div id="container_gender" style="min-width: 400px; height: 400px; margin: 0 auto"></div><br/><br/><br/>
+            <div id="container_race" style="min-width: 400px; height: 400px; margin: 0 auto"></div><br/><br/><br/>
+            <div id="container_age" style="min-width: 400px; height: 400px; margin: 0 auto"></div><br/><br/><br/>
+            <div id="container_redeem" style="min-width: 400px; height: 400px; margin: 0 auto"></div><br/><br/><br/>
+        </div>
+        
+    </div>
 </div>

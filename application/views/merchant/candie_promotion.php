@@ -40,7 +40,7 @@ if(isset($message))
 ?>
 
 <div id="candie-promotion">
-    <h1>Candie Promotion</h1>
+    <h1>Candie Voucher</h1>
     <div id="candie-promotion-content">
         <div id='candie-promotion-form'>
             <?php echo form_open_multipart(uri_string()); ?>
