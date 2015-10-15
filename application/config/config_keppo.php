@@ -46,6 +46,7 @@ $config['keppo_format_date_time_db'] = 'Y-m-d H:i:s';
 $config['keppo_format_year_month_db'] = 'Y-m';
 
 $config['hotdeal_per_day'] = 5;
+$config['user_upload_box_per_page'] = 5;
 $config['user_max_picture_per_day'] = 15;
 $config['user_max_invitation_get_candie_per_month'] = 5;
 

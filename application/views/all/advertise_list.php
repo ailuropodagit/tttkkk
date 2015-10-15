@@ -71,6 +71,7 @@ $fetch_method = $this->router->fetch_method();
         ?>
 
         <?php 
+                    $bottom_empty_message = '';
         if (empty($hotdeal_list)) 
         {
             //SHARE PAGE

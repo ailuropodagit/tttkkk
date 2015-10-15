@@ -19,6 +19,7 @@ class All extends CI_Controller
         $this->group_id_admin = $this->config->item('group_id_admin');
         $this->group_id_worker = $this->config->item('group_id_worker');
         $this->login_type = 0;
+        $this->temp_folder = $this->config->item('folder_image_temp');     
         if ($this->ion_auth->logged_in())
         {
             $this->login_type = $this->session->userdata('user_group_id');
@@ -906,6 +907,7 @@ class All extends CI_Controller
                 //FOLLOWER or FOLLOWING COUNT
                 $data['follower_count'] = $this->albert_model->follower_count($user_id);
                 $data['following_count'] = $this->albert_model->following_count($user_id);
+                $data['temp_folder'] = $this->temp_folder; 
                 if (!$page)
                 {
                     //USER ALBUM
@@ -1089,6 +1091,8 @@ class All extends CI_Controller
             //FOLLOWER or FOLLOWING COUNT
             $this->data['follower_count'] = $this->albert_model->follower_count($user_id);
             $this->data['following_count'] = $this->albert_model->following_count($user_id);
+            $this->data['temp_folder'] = $this->temp_folder; 
+            
             if ($bottom_part == NULL)
             {
                 $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('hot', NULL, $user_id);
@@ -1230,7 +1234,7 @@ class All extends CI_Controller
 
     public function upload_image_temp()
     {
-        $temp_folder = $this->config->item('folder_image_temp');
+        $temp_folder = $this->temp_folder;
         $upload_rule = array(
             'upload_path' => $temp_folder,
             'allowed_types' => $this->config->item('allowed_types_image'),

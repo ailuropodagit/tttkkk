@@ -1,3 +1,28 @@
+<script type="text/javascript" src="<?php echo base_url() ?>js/jquery.ajaxfileupload.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+             var temp_folder = '<?php echo $temp_folder ?>';
+            $('#hotdeal-file').ajaxfileupload({
+      'action': 'http://' + $(location).attr('hostname') + '/keppo/all/upload_image_temp',
+      'params': {
+        'file_name': 'hotdeal-file',
+        'image_box_id': 'hotdeal-img'
+      },
+      'onComplete': function(response) {
+        //alert(JSON.stringify(response));
+        var post_url = 'http://' + $(location).attr('hostname') + '/keppo/' + temp_folder
+        //var post_image = "<img src='" + post_url + response + "'>";
+        var post_image = post_url + response[0];
+        //$( '#upload-for-merchant-form-photo-box' ).html(post_image);
+        $('img#'+ response[1]).attr('src', post_image);
+      }
+    });
+
+    
+    });
+</script>
+
 <?php
 //MESSAGE
 if(isset($message))
@@ -24,7 +49,7 @@ if(isset($message))
                     <?php echo "<img src='".base_url($hotdeal_image)."' id='hotdeal-img'>"; ?>
                 </div>
                 <div id='hot-deal-advertise-form-input-file'>
-                    <?php echo "<input type='file' accept='image/*' name='hotdeal-file' />"; ?> 
+                    <?php echo "<input type='file' accept='image/*' name='hotdeal-file' id='hotdeal-file'/>"; ?> 
                 </div>
                 <div id='hot-deal-advertise-form-each'>
                     <div id='hot-deal-advertise-form-each-label'><?php echo lang('hotdeal_title_label'); ?></div>

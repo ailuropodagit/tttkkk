@@ -1,3 +1,28 @@
+<script type="text/javascript" src="<?php echo base_url() ?>js/jquery.ajaxfileupload.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+             var temp_folder = '<?php echo $temp_folder ?>';
+            $('#userfile').ajaxfileupload({
+      'action': 'http://' + $(location).attr('hostname') + '/keppo/all/upload_image_temp',
+      'params': {
+        'file_name': 'userfile',
+        'image_box_id': 'userimage'
+      },
+      'onComplete': function(response) {
+        //alert(JSON.stringify(response));
+        var post_url = 'http://' + $(location).attr('hostname') + '/keppo/' + temp_folder
+        //var post_image = "<img src='" + post_url + response + "'>";
+        var post_image = post_url + response[0];
+        //$( '#upload-for-merchant-form-photo-box' ).html(post_image);
+        $('img#'+ response[1]).attr('src', post_image);
+      }
+    });
+
+    
+    });
+</script>
+
 <?php
 if($this->session->flashdata('message'))
 {
@@ -69,13 +94,13 @@ if($this->ion_auth->user()->num_rows())
                 if(IsNullOrEmptyString($profile_image))
                 {
                     ?>
-                    <img src="<?php echo base_url() . $empty_image ?>">
+                    <img src="<?php echo base_url() . $empty_image ?>" id="userimage">
                     <?php
                 }
                 else
                 {
                     ?>
-                    <img src="<?php echo base_url() . $album_user_profile . $profile_image ?>">
+                    <img src="<?php echo base_url() . $album_user_profile . $profile_image ?>" id="userimage">
                     <?php
                 }
                 ?>
@@ -86,7 +111,7 @@ if($this->ion_auth->user()->num_rows())
                         <?php echo $this->config->item('upload_guide_image'); ?>
                     </div>
                     <div id="dashboard-photo-input-file">
-                        <input type="file" name="userfile" size="10"/>
+                        <input type="file" name="userfile" id="userfile" size="10"/>
                     </div>
                     <div id="dashboard-photo-button">
                         <button name="button_action" type="submit" value="change_image" >Change Image</button>

@@ -1,5 +1,6 @@
 <script type="text/javascript" src="<?php echo base_url() ?>js/jquery-ui-1.11.4.custom/jquery-ui.js"></script>
 <?php echo link_tag('js/jquery-ui-1.11.4.custom/jquery-ui.css') ?>
+<script type="text/javascript" src="<?php echo base_url() ?>js/jquery.ajaxfileupload.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -28,6 +29,25 @@
                 dateFormat: "dd-mm-yy",
             });
         });
+        
+       var temp_folder = '<?php echo $temp_folder ?>';
+            $('#candie-file').ajaxfileupload({
+      'action': 'http://' + $(location).attr('hostname') + '/keppo/all/upload_image_temp',
+      'params': {
+        'file_name': 'candie-file',
+        'image_box_id': 'candie-image'
+      },
+      'onComplete': function(response) {
+        //alert(JSON.stringify(response));
+        var post_url = 'http://' + $(location).attr('hostname') + '/keppo/' + temp_folder
+        //var post_image = "<img src='" + post_url + response + "'>";
+        var post_image = post_url + response[0];
+        //$( '#upload-for-merchant-form-photo-box' ).html(post_image);
+        $('img#'+ response[1]).attr('src', post_image);
+      }
+    });
+
+    
     });
 </script>
 
@@ -59,13 +79,13 @@ if(isset($message))
 
             <div id="candie-promotion-form-photo">
                 <div id="candie-promotion-form-photo-box">
-                    <img src="<?php echo base_url($candie_image) ?>">
+                    <img src="<?php echo base_url($candie_image) ?>" id="candie-image" >
                 </div>
                 <div id='candie-promotion-form-photo-note'>
                     <?php echo $this->config->item('upload_guide_image') ?>
                 </div>
                 <div id='candie-promotion-form-input-file'>
-                    <input type='file' accept='image/*' name='candie-file'/>
+                    <input type='file' accept='image/*' name='candie-file' id='candie-file'/>
                 </div>
             </div>
 

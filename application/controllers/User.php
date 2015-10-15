@@ -16,7 +16,8 @@ class User extends CI_Controller
         $this->album_user = $this->config->item('album_user');
         $this->album_user_merchant = $this->config->item('album_user_merchant');
         $this->folder_image = $this->config->item('folder_image');
-        $this->box_number = 5;
+        $this->box_number = $this->config->item('user_upload_box_per_page');
+        $this->temp_folder = $this->config->item('folder_image_temp');      
     }
 
     // redirect if needed, otherwise display the user list
@@ -1220,6 +1221,8 @@ class User extends CI_Controller
             'type' => 'text',
             'value' => $this->form_validation->set_value('facebook_url', $user->us_facebook_url),
         );
+        
+        $this->data['temp_folder'] = $this->temp_folder;  
         $this->data['page_path_name'] = 'user/profile';
         $this->load->view('template/layout_right_menu', $this->data);
     }
@@ -1413,6 +1416,7 @@ class User extends CI_Controller
             'picture_id' => $mua_id,
         );
 
+        $this->data['temp_folder'] = $this->temp_folder;
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'user/edit_merchant_picture';
         $this->load->view('template/layout_right_menu', $this->data);
@@ -1546,6 +1550,7 @@ class User extends CI_Controller
             'picture_id' => $usa_id,
         );
 
+        $this->data['temp_folder'] = $this->temp_folder;
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'user/edit_user_picture';
         $this->load->view('template/layout_right_menu', $this->data);
@@ -1703,7 +1708,7 @@ class User extends CI_Controller
             );
         }
 
-        $this->data['temp_folder'] = $this->config->item('folder_image_temp');  
+        $this->data['temp_folder'] = $this->temp_folder;  
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'user/upload_for_merchant';
         $this->load->view('template/layout_right_menu', $this->data);
@@ -2021,7 +2026,7 @@ class User extends CI_Controller
             );
         }
         
-        $this->data['temp_folder'] = $this->config->item('folder_image_temp');             
+        $this->data['temp_folder'] = $this->temp_folder;             
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'user/upload_image';
         $this->load->view('template/layout_right_menu', $this->data);
