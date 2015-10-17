@@ -230,15 +230,29 @@ a:hover {
     border: 1px solid lightgray;
 }
 
-#table-all table th {
+#table-all-layout-fixed table {
+    table-layout: fixed;
+    width: 100%;
+    border: 1px solid lightgray;
+}
+
+#table-all table th, #table-all-layout-fixed th {
     background-color: whitesmoke;
     padding: 4px 8px 4px 8px;
     font-size: 16px;
 }
 
-#table-all table td {
+#table-all table td, #table-all-layout-fixed td {
     font-size: 16px;
     padding: 5px 8px 5px 8px;
+}
+
+.table-all-layout-fixed-text-overflow-ellipsis {
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    border: 1px solid red;
 }
 
 /* WRAPPER
@@ -252,6 +266,11 @@ a:hover {
 /* HEADER
 ******************************/
 
+#header-wrapper {
+    width: 85%;
+    margin: 0px auto 0px auto;
+}
+
 #header {
     background-color: black;
     -webkit-box-shadow: 0px 0px 7px 0px rgba(0,0,0,1);
@@ -262,7 +281,7 @@ a:hover {
 
 #header-logo {
     float: left;
-    margin: 3px 0px 0px 15px;
+    margin: 6px 0px 0px 15px;
 }
 
 #header-logo-img {
@@ -271,7 +290,6 @@ a:hover {
 
 #header-menu {
     float: right;
-    margin: 8px 0px 8px 0px;
 }
 
 #header-menu ul {
@@ -283,12 +301,8 @@ a:hover {
 #header-menu li {
     float: left;
     padding: 5px 8px 5px 8px;
-    margin: 0px 0px 0px 0px;
+    margin: 10px 0px 10px 0px;
     border: 1px solid black;
-}
-
-#header-menu li:last-child { 
-    margin: 0px -10px 0px 0px;
 }
 
 #header-menu li a {

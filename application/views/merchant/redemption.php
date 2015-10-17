@@ -85,22 +85,24 @@ if(isset($message))
                                     echo "<input type='hidden' name='advertise_id' id='advertise_id' value='" . $redeem_row['advertise_id'] . "'/>";
                                     echo "<input type='hidden' name='current_url' id='current_url' value='" . get_current_url() . "'/>";
                                     echo "<input type='hidden' name='voucher' id='voucher' value='" . $redeem_row['voucher'] . "'/>";
-
                                     echo "<button name='button_action' type='submit' value='submit_used' id='button-a-href'>Used</button>";
                                     echo " | ";
                                     echo "<button name='button_action' type='submit' value='submit_expired' id='button-a-href'>Expired</button>";
-
                                     echo form_close();
                                     echo "</td>";
                                 }
                                 $user_url = $this->m_custom->generate_user_link($user_info['id']);
-                                echo "<td>" . $user_id . "</td>";
-                                echo "<td>" . $user_url . "</td>";
-                                echo "<td>" . displayDate($user_info['us_birthday']) . "</td>";
-                                echo "<td>" . $user_info['email'] . "</td>";
-                                echo "<td>" . $redeem_row['voucher'] . "</td>";
-                                echo "<td>" . displayDate($redeem_row['expired_date']) . "</td>";
                                 ?>
+                                <td><?php echo $user_id ?></td>
+                                <td><?php echo $user_url ?></td>
+                                <td><?php echo displayDate($user_info['us_birthday']) ?></td>
+                                <td>
+                                    <div class="table-all-text-ellipsis">
+                                        <?php echo $user_info['email'] ?>
+                                    </div>
+                                </td>
+                                <td><?php echo $redeem_row['voucher'] ?></td>
+                                <td><?php echo displayDate($redeem_row['expired_date']) ?></td>
                             </tr>
                             <?php
                         }

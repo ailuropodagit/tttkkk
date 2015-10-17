@@ -16,7 +16,7 @@
         <?php echo link_tag('js/jquery-ui-1.11.4.custom/jquery-ui.css') ?>
         <link rel="stylesheet" href="<?php echo base_url() ?>js/bootstrap-3.3.5-dist/css/bootstrap.css">
         <link rel="stylesheet" href="<?php echo base_url() ?>js/bootstrap-3.3.5-dist/css/bootstrap-theme.min.css">
-        <script src="<?php echo base_url() ?>js/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+        <script src="<?php echo base_url() ?>js/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>       
         <script>
             $(function(){
                 //BROSWER RESIZE
@@ -89,7 +89,7 @@
             });
         </script>
     </head>
-    <body>    
+    <body>            
         
         <?php
         if (!isset($_COOKIE['visit_first_time']))
@@ -141,7 +141,7 @@
             $header_fetch_method = $this->router->fetch_method();
             $header_uri_segment4 = $this->uri->segment(4);
             ?>
-            <div id='wrapper'>
+            <div id='header-wrapper'>
                 <!--LOGO-->
                 <div id='header-logo'>
                     <a href='<?php echo base_url('home') ?>'>
