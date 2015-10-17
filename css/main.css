@@ -262,16 +262,16 @@ a:hover {
 
 #header-logo {
     float: left;
-    margin: 5px 0px 5px 15px;
+    margin: 8px 0px 8px 15px;
 }
 
 #header-logo-img {
-    width: 165px;
+    width: 135px;
 }
 
 #header-menu {
     float: right;
-    margin: 19px 0px 19px 0px;
+    margin: 17px 0px 17px 0px;
 }
 
 #header-menu ul {
@@ -293,7 +293,7 @@ a:hover {
 
 #header-menu li a {
     color: #e0e0e0;
-    font-size: 15px;
+    font-size: 13px;
     text-transform: uppercase;
     letter-spacing: 1px;
     text-decoration: none;
@@ -496,7 +496,7 @@ a:hover {
 }
 
 #layout-category-left-label {
-    font-size: 17px;
+    font-size: 16px;
     margin: 25px 0px 10px 0px;
     font-weight: bold;
     color: #244964;
@@ -514,7 +514,7 @@ a:hover {
 #layout-category-left-nav a {
     color: #959595;
     text-decoration: none;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 #layout-category-left-nav a:hover {
@@ -569,7 +569,7 @@ a:hover {
 #home-navigation-c1-bar a { 
     text-decoration: none;
     color: #295292;
-    font-weight: bold;
+    font-size: 14px;
 }
 
 #home-navigation-c2 {
@@ -598,6 +598,7 @@ a:hover {
 #home-navigation-c2-c1-bar a {
     color: gray;
     text-decoration: none;
+    font-size: 14px;
 }
 
 #home-navigation-c2-c1-bar a:hover {
