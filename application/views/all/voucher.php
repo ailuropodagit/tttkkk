@@ -60,18 +60,17 @@
                                 }
                                 ?>
                             </div>
-                            <div id="redemption-rate-time">
-                                <?php if($advertise_type == "pro"){ ?>
-                                <div id="redemption-category">
-                                    Category: <?php echo $sub_category; ?>
-                                </div>                               
-                                <div id="redemption-time">
-                                    <i class="fa fa-gift header-menu-icon"></i>
-                                    <span id="redemption-time-label">Redeem Period:  <?php echo $start_date ?> to <?php echo $end_date ?></span>
-                                </div>
-                                <?php } ?>
-                                <div id="float-fix"></div>
+                            
+                            <?php if($advertise_type == "pro"){ ?>                      
+                            <div id="redemption-time">
+                                <i class="fa fa-gift header-menu-icon"></i>
+                                <span id="redemption-time-label">Redeem Period:  <?php echo $start_date ?> to <?php echo $end_date ?></span>
                             </div>
+                            <div id="redemption-rate">
+                                Category: <?php echo $sub_category; ?>
+                            </div>         
+                            <?php } ?>
+                            
                             <div id="redemption-description">
                                 <?php echo $description ?>
                             </div>

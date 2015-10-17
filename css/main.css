@@ -117,7 +117,7 @@ input[type='submit'], input[type='button'], button[type='submit'], .a-href-butto
     border-radius: 0px;
     letter-spacing: 0px;
     color: #4a4a4a;
-    background: red;
+    background: linear-gradient(0deg, #dedede, #f6f6f6);
     border: 1px solid #aeaeae;
     -webkit-box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.75);
@@ -445,7 +445,7 @@ a:hover {
 #layout-inner-right-menu li a {
     text-decoration: none;
     color: black;
-    font-size: 16px;
+    font-size: 15px;
 }
 
 /* LAYOUT ADVERTISEMENT
@@ -852,6 +852,7 @@ a:hover {
 }
 
 #dashboard-info {
+    font-size: 17px;
     float: left;
     margin: 0px 0px 0px 30px;
     width: calc(100% - 290px);
@@ -865,6 +866,7 @@ a:hover {
     float: left;
     font-weight: bold;
     font-size: 23px;
+    margin: 0px 15px 0px 0px;
 }
 
 #dashboard-info-edit-link {
@@ -1675,7 +1677,7 @@ a:hover {
 }
 
 #hot-deal-title {
-    font-size: 26px;
+    font-size: 28px;
     color: black;
     font-weight: bold;
     margin: 0px 0px 10px 0px;
@@ -1697,7 +1699,7 @@ a:hover {
 #hot-deal-sub-title {
     margin: 20px 0px 0px 0px;
     font-weight: bold;
-    font-size: 21px;
+    font-size: 23px;
     color: black;
 }
 
@@ -2107,7 +2109,7 @@ a:hover {
 }
 
 #redemption-title {
-    font-size: 26px;
+    font-size: 28px;
     color: black;
     font-weight: bold;
     margin: 0px 0px 10px 0px;
@@ -2128,7 +2130,7 @@ a:hover {
 
 #redemption-sub-title {
     font-weight: bold;
-    font-size: 21px;
+    font-size: 23px;
     color: black;
     margin: 20px 0px 0px 0px;
 }
@@ -2193,7 +2195,7 @@ a:hover {
 
 #redemption-terms-conditions-title {
     font-weight: bold;
-    font-size: 15px;
+    font-size: 18px;
     color: black;
     text-decoration: underline;
     margin: 0px 0px 8px 0px;
@@ -2207,7 +2209,7 @@ a:hover {
 #redemption-terms-conditions li {
     margin: 0px 0px 8px 0px;
     color: black;
-    font-size: 15px;
+    font-size: 18px;
 }
 
 #redemption-available-branch {
@@ -2217,7 +2219,7 @@ a:hover {
 
 #redemption-available-branch-title {
     font-weight: bold;
-    font-size: 15px;
+    font-size: 18px;
     color: black;
     text-decoration: underline;
     margin: 0px 0px 8px 0px;
@@ -2231,12 +2233,12 @@ a:hover {
 #redemption-available-branch li {
     margin: 0px 0px 10px 0px;
     color: black;
-    font-size: 15px;
+    font-size: 18px;
 }
 
 #redemption-available-branch-name {
     font-weight: bold;
-    font-size: 14px;
+    font-size: 17px;
 }
 
 #redemption-available-branch-address {
@@ -2722,6 +2724,14 @@ a:hover {
     margin: 20px 0px 0px 0px;
 }
 
+#candie-how-gain {
+    margin: 40px 0px 0px 0px;
+}
+
+#candie-how-gain-content {
+    margin: 20px 0px 0px 0px;
+}
+    
 /* VOUCHER
 ******************************/
 

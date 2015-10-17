@@ -80,7 +80,9 @@ if (isset($message))
                         <tr>
                             <td><?php echo $the_month_selected_text; ?> Candies Gain</td>
                             <td colspan="5"></td>
-                            <td style="text-align:right"><a href="#" onclick="toggle_visibility('how-candie-gain');">+ <?php echo $this_month_candie_gain ?></a></td>
+                            <td style="text-align:right">
+                                <a href="#" onclick="toggle_visibility('candie-how-gain');">+ <?php echo $this_month_candie_gain ?></a>
+                            </td>
                         </tr>
                         <?php
                         foreach ($this_month_redemption as $row)
@@ -99,47 +101,49 @@ if (isset($message))
                         }
                         echo '<td><b>Month End Candies</b></td><td colspan="5"></td><td style="text-align:right">' . $end_month_balance . '</td>';
                         ?>
-                    </table> 
+                    </table>
                 </div>
             </div>
                 
-            <div id="how-candie-gain" style="display:none;">
-                <h3>How Candie Gain: </h3>
-                <div id='payment-table' style="text-align:right;">                   
-                    <table border='1px' cellspacing='0px' cellpadding='0px'>
-                        <colgroup>
-                            <col>
-                            <col style='width: 150px;'>
-                            <col style='width: 150px;'>
-                            <col style='width: 120px;'>
-                        </colgroup>
-                        <tr>
-                            <th>Action</th>
-                            <th>Candie Per Action</th>
-                            <th>Number Of Times</th>
-                            <th>Candie (Total)</th>
-                        </tr>
-                        <?php
-                        $candie_gain_only = 0;
-                        foreach ($this_month_candie as $row)
-                        {
-                            $conf_row = $this->m_custom->get_one_table_record('transaction_config', 'trans_conf_id', $row['trans_conf_id'], 1);
-                            if ($conf_row['change_type'] == 'inc')
+            <div id="candie-how-gain" style="display:none;">
+                <h1>How Candie Gain:</h1>
+                <div id="candie-how-gain-content">
+                    <div id='table-all'>                   
+                        <table border='1px' cellspacing='0px' cellpadding='0px'>
+                            <colgroup>
+                                <col>
+                                <col style='width: 150px;'>
+                                <col style='width: 150px;'>
+                                <col style='width: 120px;'>
+                            </colgroup>
+                            <tr>
+                                <th>Action</th>
+                                <th>Candie Per Action</th>
+                                <th>Number Of Times</th>
+                                <th>Candie (Total)</th>
+                            </tr>
+                            <?php
+                            $candie_gain_only = 0;
+                            foreach ($this_month_candie as $row)
                             {
-                                $amount_change = $conf_row['change_type'] == 'inc' ? $conf_row['amount_change'] : ($conf_row['amount_change'] * -1);
-                                $candie_sub_total = number_format($row['plus'] - $row['minus'], 0);
-                                $candie_gain_only += $candie_sub_total;
-                                echo '<tr>';
-                                echo "<td>" . $conf_row['conf_name'] . "</td>";
-                                echo "<td>" . number_format($amount_change, 0) . "</td>";
-                                echo "<td>" . $row['quantity'] . "</td>";
-                                echo "<td>" . $candie_sub_total . "</td>";
-                                echo '</tr>';
+                                $conf_row = $this->m_custom->get_one_table_record('transaction_config', 'trans_conf_id', $row['trans_conf_id'], 1);
+                                if ($conf_row['change_type'] == 'inc')
+                                {
+                                    $amount_change = $conf_row['change_type'] == 'inc' ? $conf_row['amount_change'] : ($conf_row['amount_change'] * -1);
+                                    $candie_sub_total = number_format($row['plus'] - $row['minus'], 0);
+                                    $candie_gain_only += $candie_sub_total;
+                                    echo '<tr>';
+                                    echo "<td>" . $conf_row['conf_name'] . "</td>";
+                                    echo "<td>" . number_format($amount_change, 0) . "</td>";
+                                    echo "<td>" . $row['quantity'] . "</td>";
+                                    echo "<td>" . $candie_sub_total . "</td>";
+                                    echo '</tr>';
+                                }
                             }
-                        }
-                        echo '<td><b>' . $the_month_selected_text . ' Candies Gain</b></td><td colspan="2"></td><td>' . $candie_gain_only . '</td>';
-                        ?>
-                    </table> 
+                            echo '<td><b>' . $the_month_selected_text . ' Candies Gain</b></td><td colspan="2"></td><td>' . $candie_gain_only . '</td>';
+                            ?>
+                        </table> 
+                    </div>
                 </div>
             </div>
         </div>
