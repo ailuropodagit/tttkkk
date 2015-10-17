@@ -1,3 +1,28 @@
+<script type="text/javascript" src="<?php echo base_url() ?>js/jquery.ajaxfileupload.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+             var temp_folder = '<?php echo $temp_folder ?>';
+            $('#userfile').ajaxfileupload({
+      'action': 'http://' + $(location).attr('hostname') + '/keppo/all/upload_image_temp',
+      'params': {
+        'file_name': 'userfile',
+        'image_box_id': 'userimage'
+      },
+      'onComplete': function(response) {
+        //alert(JSON.stringify(response));
+        var post_url = 'http://' + $(location).attr('hostname') + '/keppo/' + temp_folder
+        //var post_image = "<img src='" + post_url + response + "'>";
+        var post_image = post_url + response[0];
+        //$( '#upload-for-merchant-form-photo-box' ).html(post_image);
+        $('img#'+ response[1]).attr('src', post_image);
+      }
+    });
+
+    
+    });
+</script>
+
 <?php
 //MESSAGE
 if(isset($message))
@@ -16,13 +41,13 @@ if(isset($message))
                 if(IsNullOrEmptyString($image))
                 {
                     ?>
-                    <img src="<?php echo base_url().$this->config->item('empty_image'); ?>">
+                    <img src="<?php echo base_url().$this->config->item('empty_image'); ?>" id="userimage">
                     <?php
                 }
                 else
                 {
                     ?>
-                    <img src="<?php echo base_url() . $image_path . $image ?>">
+                    <img src="<?php echo base_url() . $image_path . $image ?>" id="userimage">
                     <?php
                 }
                 ?>  
@@ -34,7 +59,7 @@ if(isset($message))
                     <?php echo $this->config->item('upload_guide_image'); ?>
                 </div>
                 <div id="profile-photo-input-file">
-                    <input type="file" name="userfile" size="10"/>
+                    <input type="file" name="userfile" id="userfile" size="10"/>
                 </div>
                 <div id="profile-photo-button">
                     <button name="button_action" type="submit" value="change_image" >Change Logo</button>

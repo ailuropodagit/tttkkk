@@ -1,3 +1,28 @@
+<script type="text/javascript" src="<?php echo base_url() ?>js/jquery.ajaxfileupload.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function(){        
+        var temp_folder = '<?php echo $temp_folder ?>';
+        for (var counter = 0; counter < <?php echo $box_number ?>; counter++) {
+        $('#hotdeal-file-'+counter).ajaxfileupload({
+      'action': 'http://' + $(location).attr('hostname') + '/keppo/all/upload_image_temp',
+      'params': {
+        'file_name': 'hotdeal-file-'+counter,
+        'image_box_id': 'hotdeal-img-'+counter
+      },
+      'onComplete': function(response) {
+        //alert(JSON.stringify(response));
+        var post_url = 'http://' + $(location).attr('hostname') + '/keppo/' + temp_folder
+        //var post_image = "<img src='" + post_url + response + "'>";
+        var post_image = post_url + response[0];
+        //$( '#upload-for-merchant-form-photo-box' ).html(post_image);
+        $('img#'+ response[1]).attr('src', post_image);
+      }
+    });
+    }
+});
+</script>
+
 <?php
 //MESSAGE
 if(isset($message))
@@ -8,11 +33,7 @@ if(isset($message))
 
 <div id='hot-deal-advertise'>
     <h1>Hot Deal Advertise</h1>
-    <div id='hot-deal-advertise-content'>
-        
-        <?php 
-        $hotdeal_per_day = $this->config->item("hotdeal_per_day");
-        ?>
+    <div id='hot-deal-advertise-content'>       
         
         <div id='hot-deal-advertise-today'>
             Today Hot Deal <?php echo $hotdeal_today_count . ' / ' . $hotdeal_per_day ?> per day
@@ -43,7 +64,7 @@ if(isset($message))
                     <?php echo "<img src='" . base_url(${'hotdeal_image' . $i}) . "' id='hotdeal-img-" . $i . "'>"; ?>
                 </div>
                 <div id='hot-deal-advertise-form-input-file'>
-                    <?php echo "<input type='file' accept='image/*' name='hotdeal-file-" . $i . "' />"; ?> 
+                    <?php echo "<input type='file' accept='image/*' name='hotdeal-file-" . $i . "' id='hotdeal-file-" . $i . "' />"; ?> 
                 </div>
                 <div id='hot-deal-advertise-form-each'>
                     <div id='hot-deal-advertise-form-each-label'><?php echo lang('hotdeal_title_label'); ?></div>

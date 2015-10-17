@@ -1291,7 +1291,7 @@ class M_custom extends CI_Model
         if (check_correct_login_type($this->config->item('group_id_user')))
         {
             $user_id = $this->ion_auth->user()->row()->id;
-            $this->activity_check_and_insert('like', $refer_id, $refer_type, $user_id, $this->config->item('group_id_user'));
+            $this->m_custom->activity_check_and_insert('like', $refer_id, $refer_type, $user_id, $this->config->item('group_id_user'));
         }
     }
 

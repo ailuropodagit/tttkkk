@@ -17,6 +17,7 @@ class Merchant extends CI_Controller
         $this->album_merchant = $this->config->item('album_merchant');
         $this->folder_merchant_ssm = $this->config->item('folder_merchant_ssm');
         $this->folder_image = $this->config->item('folder_image');
+        $this->temp_folder = $this->config->item('folder_image_temp');   
     }
 
     // redirect if needed, otherwise display the user list
@@ -1077,6 +1078,8 @@ class Merchant extends CI_Controller
             'readonly ' => 'true',
             'value' => $is_supervisor == 1 ? $supervisor->password_visible : $user->password_visible,
         );
+        
+        $this->data['temp_folder'] = $this->temp_folder; 
         $this->data['page_path_name'] = 'merchant/profile';
         $this->load->view('template/layout_right_menu', $this->data);
     }
@@ -1791,7 +1794,7 @@ class Merchant extends CI_Controller
             'name' => 'candie_category',
             'id' => 'candie_category',
         );
-        $this->data['candie_category_selected'] = empty($this_month_candie) ? '' : $this_month_candie['sub_category_id'];
+        $this->data['candie_category_selected'] = empty($this_month_candie) ? $merchant_data->me_sub_category_id : $this_month_candie['sub_category_id'];
 
         $this->data['candie_title'] = array(
             'name' => 'candie_title',
@@ -1855,6 +1858,8 @@ class Merchant extends CI_Controller
             'cols' => 90,
             'placeholder' => 'Add extra T&C seperate by Enter, one line one T&C',
         );
+        
+        $this->data['temp_folder'] = $this->temp_folder;  
         $this->data['candie_term'] = $candie_term;
         $this->data['candie_branch'] = $candie_branch;
         $this->data['message'] = $this->session->flashdata('message');
@@ -2038,6 +2043,7 @@ class Merchant extends CI_Controller
             'value' => $advertise_id,
         );
 
+        $this->data['temp_folder'] = $this->temp_folder;
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'merchant/edit_hotdeal';
         $this->load->view('template/layout_right_menu', $this->data);
@@ -2261,6 +2267,7 @@ class Merchant extends CI_Controller
                 }
                 direct_go:
                 $this->session->set_flashdata('message', $message_info);
+                $this->m_custom->remove_image_temp();
                 redirect('merchant/upload_hotdeal', 'refresh');
             }
         }
@@ -2331,7 +2338,10 @@ class Merchant extends CI_Controller
                 'value' => $advertise_id,
             );
         }
-
+        
+        $this->data['box_number'] = $this->config->item("hotdeal_per_day");
+        $this->data['hotdeal_per_day'] = $this->config->item("hotdeal_per_day");
+        $this->data['temp_folder'] = $this->temp_folder;  
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'merchant/upload_hotdeal';
         $this->load->view('template/layout_right_menu', $this->data);
