@@ -4,11 +4,10 @@
 <?php echo link_tag('js/jgrowl/jquery.jgrowl.css') ?>
 <script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script>
 
-<div id='hot-deal'>
+<div id='picture-user'>
     <h1><?php echo $page_title; ?></h1>
-    <div id='hot-deal-content'>       
-        
-        <div id="hot-deal-edit-link">
+    <div id='picture-user-content'>
+        <div id="picture-user-edit-link">
             <?php
             if (check_is_login())
             {
@@ -24,11 +23,10 @@
             ?>
         </div>
         <div id="float-fix"></div>
-        
-        <div id='hot-deal-table'>
-            <div id='hot-deal-table-row'>
-                <div id='hot-deal-table-row-cell' class='hot-deal-left-cell'>
-                    <div id='hot-deal-left'>
+        <div id='picture-user-table'>
+            <div id='picture-user-table-row'>
+                <div id='picture-user-table-row-cell' class='picture-user-left-cell'>
+                    <div id='picture-user-left'>
                         <?php
                         if (!empty($previous_url))
                         {
@@ -36,77 +34,69 @@
                         }
                         else 
                         {
-                            ?><div id='hot-deal-left-gray'><i class="fa fa-angle-double-left"></i></div><?php
+                            ?><div id='picture-user-left-gray'><i class="fa fa-angle-double-left"></i></div><?php
                         }
                         ?>
                     </div>
                 </div>
-                <div id='hot-deal-table-row-cell' class='hot-deal-center-cell'>
-                    <div id='hot-deal-center'>
-                        <div id="hot-deal-title">
+                <div id='picture-user-table-row-cell' class='picture-user-center-cell'>
+                    <div id='picture-user-center'>
+                        <div id="picture-user-title">
                             <?php echo $title ?>
                         </div>
-                        <div id='hot-deal-photo-box'>
+                        <div id='picture-user-photo-box'>
                             <img src='<?php echo $image_url ?>'>
                         </div>
-                        <div id="hot-deal-sub-title">
-                            
-                        </div>
-                        <div id="hot-deal-rate-time">
-                            <div id="hot-deal-rate">
-                                <div style="display:inline;">
-                                    <?php
-                                    echo form_input($item_id);
-                                    echo form_input($item_type);
-                                    for ($i = 1; $i <= 5; $i++)
+                        <div id="picture-user-rate-upload-by">
+                            <div id="picture-user-rate">
+                                <?php
+                                echo form_input($item_id);
+                                echo form_input($item_type);
+                                for ($i = 1; $i <= 5; $i++)
+                                {
+                                    if ($i == round($average_rating))
                                     {
-                                        if ($i == round($average_rating))
-                                        {
-                                            echo "<input class='auto-submit-star' type='radio' name='rating' " . $radio_level . " value='" . $i . "' checked='checked'/>";
-                                        }
-                                        else
-                                        {
-                                            echo "<input class='auto-submit-star' type='radio' name='rating' " . $radio_level . " value='" . $i . "'/>";
-                                        }
-                                    } //end of for
-                                    ?>
-                                </div>
+                                        echo "<input class='auto-submit-star' type='radio' name='rating' " . $radio_level . " value='" . $i . "' checked='checked'/>";
+                                    }
+                                    else
+                                    {
+                                        echo "<input class='auto-submit-star' type='radio' name='rating' " . $radio_level . " value='" . $i . "'/>";
+                                    }
+                                }
+                                ?>
                             </div>
-                            <div id="hot-deal-time">
-                                <span id="hot-deal-time-label" >Upload by : <?php echo $user_name_url; ?></span>
+                            <div id="picture-user-upload-by">
+                                Upload by : <?php echo $user_name_url; ?>
                             </div>
                             <div id="float-fix"></div>
                         </div>
-                        <div id="hot-deal-description">
+                        <div id="picture-user-description">
                             <?php echo $description ?>
                         </div>
-                        <div id="hot-deal-like-comment-share">
-                            <div id="hot-deal-like">
+                        <div id="picture-user-like-comment-share">
+                            <div id="picture-user-like">
                                 <?php echo $like_url; ?>
                             </div>
-                            <div id="hot-deal-comment">
+                            <div id="picture-user-comment">
                                 <?php echo $comment_url; ?>
                             </div>
-                            <div id="hot-deal-share">
-                                <?php echo "Share :"; ?>
-                                <span id="hot-deal-share-facebook">
-                                    <a href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook-square"></i></a>
-                                </span>
-                                <span id="hot-deal-share-instagram">
-                                    <a href="https://instagram.com" target="_blank"><i class="fa fa-instagram"></i></a>
+                            <div id="picture-user-share">
+                                Share :
+                                <span id="picture-user-share-facebook">
+                                    <i class="fa fa-facebook-square"></i>
                                 </span>
                             </div>
                             <div id="float-fix"></div>
                         </div>
-                        <div id="hot-deal-comment-list">
+                        <div id="picture-user-comment-list">
                             <?php
                             $this->load->view('all/comment_form');
                             ?>
                         </div>
                     </div>
                 </div>
-                <div id='hot-deal-table-row-cell' class='hot-deal-right-cell'>
-                    <div id='hot-deal-right'>
+                <div id='picture-user-table-row-cell' class='picture-user-right-cell'>
+                    <div id='picture-user-right'>
                         <?php
                         if (!empty($next_url))
                         {
@@ -114,7 +104,7 @@
                         }
                         else 
                         {
-                            ?><div id='hot-deal-right-gray'><i class="fa fa-angle-double-right"></i></div><?php
+                            ?><div id='picture-user-right-gray'><i class="fa fa-angle-double-right"></i></div><?php
                         }
                         ?>
                     </div>

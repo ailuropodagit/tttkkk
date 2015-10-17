@@ -14,6 +14,9 @@
         <script type="text/javascript" src='<?php echo base_url() ?>js/jquery/jquery-2.1.4.min.js'></script>
         <script type="text/javascript" src="<?php echo base_url() ?>js/jquery-ui-1.11.4.custom/jquery-ui.js"></script>
         <?php echo link_tag('js/jquery-ui-1.11.4.custom/jquery-ui.css') ?>
+        <link rel="stylesheet" href="<?php echo base_url() ?>js/bootstrap-3.3.5-dist/css/bootstrap.css">
+        <link rel="stylesheet" href="<?php echo base_url() ?>js/bootstrap-3.3.5-dist/css/bootstrap-theme.min.css">
+        <script src="<?php echo base_url() ?>js/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
         <script>
             $(function(){
                 //BROSWER RESIZE
@@ -27,6 +30,9 @@
                 $('#header-menu-mobile-icon').click(function(){
                     $('#header-menu-mobile').toggle();
                 });
+                
+                //BOOSTRAP MODAL
+                $('#myModal').modal('show');
             });
                         
             //FB LOGOUT
@@ -83,7 +89,50 @@
             });
         </script>
     </head>
-    <body>        
+    <body>    
+        
+        <?php
+        if (!isset($_COOKIE['visit_first_time']))
+        {
+            //COOKIE NO EXPIRE
+            setcookie('visit_first_time', 'no');
+            //BOOSTRAP MODAL
+            ?>
+            <style>
+                .modal {
+                    text-align: center;
+                }
+
+                .modal:before {
+                    display: inline-block;
+                    vertical-align: middle;
+                    content: " ";
+                    height: 100%;
+                }
+
+                .modal-dialog {
+                  display: inline-block;
+                  text-align: left;
+                  vertical-align: middle;
+                }
+            </style>
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <button type="button" class="bootstrap-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <center>
+                                <div style='font-size: 30px; margin: 20px 0px 20px 0px;'>Welcome to keppo.my</div>
+                                <div style='font-size: 20px; margin: 0px 0px 20px 0px;'>Pop up only first time visit</div>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+            <?php
+        }
+        ?>
+              
         <!--HEADER-->
         <div id='header'>
             <?php
@@ -178,16 +227,16 @@
                             }
                         }
                         else
-                        { 
+                        {                            
                             ?>
                             <!--NORMAL MENU USER LOGIN-->
-                            <li>
+                            <li <?php if($header_fetch_method == 'login'){ echo "class='header-menu-active'"; } ?>>
                                 <a href='<?php echo base_url('user/login') ?>'>
                                     <i class="fa fa-user header-menu-icon"></i>Login
                                 </a>
                             </li>
                             <!--NORMAL MENU USER REGISTER-->
-                            <li>
+                            <li <?php if($header_fetch_method == 'create_user'){ echo "class='header-menu-active'"; } ?>>
                                 <a href='<?php echo base_url('user/register') ?>'>
                                     <i class="fa fa-user-plus header-menu-icon"></i>Register
                                 </a>

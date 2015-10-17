@@ -15,7 +15,9 @@
 //            picture: 'http://skymedia.com.my/keppo/folder_upload/album_merchant/KFC13.jpg',
 //            title: 'title here',
 //            description: "description here"
-//        }, function(response){});
+//        }, function(response){
+//        
+//        });
 //    }
     
     $( document ).ready(function() {
@@ -132,9 +134,6 @@
                                 <?php echo "Share :"; ?>
                                 <span id="hot-deal-share-facebook" onclick="fbShare()">
                                     <i class="fa fa-facebook-square"></i>
-                                </span>
-                                <span id="hot-deal-share-instagram">
-                                    <i class="fa fa-instagram"></i>
                                 </span>
                             </div>
                             <div id="float-fix"></div>

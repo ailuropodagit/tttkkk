@@ -120,12 +120,9 @@ if(isset($message))
                                     <?php echo $comment_url; ?>
                                 </div>
                                 <div id="redemption-share">
-                                    <?php echo "Share :"; ?>
+                                    Share :
                                     <span id="redemption-share-facebook">
                                         <i class="fa fa-facebook-square"></i>
-                                    </span>
-                                    <span id="redemption-share-instagram">
-                                        <i class="fa fa-instagram"></i>
                                     </span>
                                 </div>
                                 <div id="float-fix"></div>
