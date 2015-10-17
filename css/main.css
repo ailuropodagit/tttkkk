@@ -82,7 +82,7 @@ input:read-only, textarea:read-only {
 
 input[type='submit'], input[type='button'], button[type='submit'], .a-href-button {
     padding: 5px 14px 5px 14px;
-    background-color: red;
+    background-color: #e91d41;
     color: white;
     border: 0px;
     cursor: pointer;
@@ -245,7 +245,7 @@ a:hover {
 ******************************/
 
 #wrapper {
-    width: 85%;
+    width: 75%;
     margin: 0px auto 0px auto;
 }
 
@@ -262,16 +262,16 @@ a:hover {
 
 #header-logo {
     float: left;
-    margin: 8px 0px 8px 15px;
+    margin: 3px 0px 0px 15px;
 }
 
 #header-logo-img {
-    width: 135px;
+    width: 115px;
 }
 
 #header-menu {
     float: right;
-    margin: 17px 0px 17px 0px;
+    margin: 8px 0px 8px 0px;
 }
 
 #header-menu ul {
@@ -283,12 +283,12 @@ a:hover {
 #header-menu li {
     float: left;
     padding: 5px 8px 5px 8px;
-    margin: 0px 13px 0px 0px;
+    margin: 0px 0px 0px 0px;
     border: 1px solid black;
 }
 
 #header-menu li:last-child { 
-    margin: 0px 15px 0px 0px;
+    margin: 0px -10px 0px 0px;
 }
 
 #header-menu li a {
@@ -304,7 +304,7 @@ a:hover {
     -moz-box-shadow: inset 0 0 1px #34829f;
     -webkit-box-shadow: inset 0 0 1px #34829f;
     box-shadow: inset 0 0 1px #34829f;
-    background-color: red;
+    background-color: #e91d41;
     box-sizing: border-box;
 }
 
@@ -438,7 +438,7 @@ a:hover {
 }
 
 .layout-inner-right-menu-bar-active {
-    background-color: red;
+    background-color: #e91d41;
     color: white !important;
 }
 
@@ -553,9 +553,6 @@ a:hover {
     border-top: 1px solid #e5e5e1;
     border-right: 1px solid #ccccc8;
     border-left: 1px solid white;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .home-navigation-c1-bar-a-active {
