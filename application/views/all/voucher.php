@@ -71,9 +71,6 @@
                             </div>         
                             <?php } ?>
                             
-                            <div id="redemption-description">
-                                <?php echo $description ?>
-                            </div>
                             <div id="redemption-terms-conditions">
                                 <div id="redemption-terms-conditions-title">Terms & Condition:</div>
                                 <ul>

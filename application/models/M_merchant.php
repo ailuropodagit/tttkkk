@@ -633,7 +633,7 @@ class M_merchant extends CI_Model
             if (!empty($search_word))
             {
                 $user_info = $this->m_custom->getUserInfo($row['user_id']);
-                if ((searchWord($user_info['name'], $search_word)) || (searchWord($user_info['email'], $search_word)) || (searchWord($row['voucher'], $search_word)))
+                if ((searchWord($user_info['id'], $search_word)) || (searchWord($user_info['name'], $search_word)) || (searchWord($user_info['email'], $search_word)) || (searchWord($row['voucher'], $search_word)))
                 {
                     $return[] = $row;
                 }

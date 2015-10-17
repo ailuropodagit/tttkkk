@@ -55,7 +55,7 @@ if(isset($message))
             }
             ?>
         </div>
-        <div id="upload-for-merchant-upload-image-note">
+        <div id="upload-for-merchant-upload-image-note" style="display:none">
             Upload Image Rule : <?php echo $this->config->item('upload_guide_image') ?>
         </div>
         
