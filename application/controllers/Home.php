@@ -7,7 +7,7 @@ class Home extends CI_Controller
         parent::__construct();
     }
     
-    public function index($main_category_id = 1)
+    public function index($main_category_id = 0)
     {
         //PAGE PATH NAME
         $data['page_path_name'] = 'home'; 

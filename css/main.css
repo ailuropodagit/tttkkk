@@ -468,7 +468,7 @@ a:hover {
 #layout-advertisement-left {
     float: left;
     width: 100%;
-    width: calc(100% - 260px);
+    width: calc(100% - 200px);
 }
 
 #layout-advertisement-left-content {
@@ -477,18 +477,17 @@ a:hover {
 
 #layout-advertisement-right {
     float: right;
-    width: 240px;
 }
 
 #layout-advertisement-right-banner-box1, #layout-advertisement-right-banner-box2,
 #layout-advertisement-right-banner-box3, #layout-advertisement-right-banner-box4 {
     border: 1px dotted gray;
-    width: 240px; 
-    height: 150px; 
+    width: 180px; 
+    height: 110px; 
     line-height: 23px;
     text-align: center; 
     color: gray; 
-    font-size: 13px; 
+    font-size: 11px; 
     letter-spacing: 1px;
 }
 
@@ -600,10 +599,8 @@ a:hover {
 }
 
 #home-navigation-c2-c1-bar {
-    margin: 0px 0px 13px 0px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    margin: 0px 0px 14px 0px;
+    line-height: 17px;
 }
 
 #home-navigation-c2-c1-bar a {
