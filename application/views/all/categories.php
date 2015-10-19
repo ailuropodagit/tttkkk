@@ -44,81 +44,62 @@ foreach ($main_category_object as $main_category)
 ?>
 
 <div id="category-advertisement">
-    <div id="category-advertisement-box">
-        <table style="width: 100%; height: 100%; vertical-align: middle;">
-            <tr>
-                <td>Advertisement <br/> 160px (W) x 100px (H)</td>
-            </tr>
-        </table>
-    </div>
-    <div id="category-advertisement-box">
-        <table style="width: 100%; height: 100%; vertical-align: middle;">
-            <tr>
-                <td>Advertisement <br/> 160px (W) x 100px (H)</td>
-            </tr>
-        </table>
-    </div>
-    <div id="category-advertisement-box">
-        <table style="width: 100%; height: 100%; vertical-align: middle;">
-            <tr>
-                <td>Advertisement <br/> 160px (W) x 100px (H)</td>
-            </tr>
-        </table>
-    </div>
-    <div id="category-advertisement-box">
-        <table style="width: 100%; height: 100%; vertical-align: middle;">
-            <tr>
-                <td>Advertisement <br/> 160px (W) x 100px (H)</td>
-            </tr>
-        </table>
-    </div>
-    <div id="category-advertisement-box">
-        <table style="width: 100%; height: 100%; vertical-align: middle;">
-            <tr>
-                <td>Advertisement <br/> 160px (W) x 100px (H)</td>
-            </tr>
-        </table>
-    </div>
-    <div id="category-advertisement-box">
-        <table style="width: 100%; height: 100%; vertical-align: middle;">
-            <tr>
-                <td>Advertisement <br/> 160px (W) x 100px (H)</td>
-            </tr>
-        </table>
-    </div>
-    <div id="category-advertisement-box">
-        <table style="width: 100%; height: 100%; vertical-align: middle;">
-            <tr>
-                <td>Advertisement <br/> 160px (W) x 100px (H)</td>
-            </tr>
-        </table>
-    </div>
-    <div id="category-advertisement-box">
-        <table style="width: 100%; height: 100%; vertical-align: middle;">
-            <tr>
-                <td>Advertisement <br/> 160px (W) x 100px (H)</td>
-            </tr>
-        </table>
-    </div>
-    <div id="category-advertisement-box">
-        <table style="width: 100%; height: 100%; vertical-align: middle;">
-            <tr>
-                <td>Advertisement <br/> 160px (W) x 100px (H)</td>
-            </tr>
-        </table>
-    </div>
-    <div id="category-advertisement-box">
-        <table style="width: 100%; height: 100%; vertical-align: middle;">
-            <tr>
-                <td>Advertisement <br/> 160px (W) x 100px (H)</td>
-            </tr>
-        </table>
-    </div>
-    <div id="category-advertisement-box">
-        <table style="width: 100%; height: 100%; vertical-align: middle;">
-            <tr>
-                <td>Advertisement <br/> 160px (W) x 100px (H)</td>
-            </tr>
-        </table>
+    <div id="category-advertisement-table">
+        <div id="category-advertisement-table-row">
+            <div id="category-advertisement-table-row-cell">
+                <div id="category-advertisement-box">
+                    <?php echo img('folder_upload/categories-bottom-advertise-box/empty-categories-bottom-advertise-box.jpg') ?>
+                </div>
+            </div>
+            <div id="category-advertisement-table-row-cell">
+                <div id="category-advertisement-box">
+                    <?php echo img('folder_upload/categories-bottom-advertise-box/empty-categories-bottom-advertise-box.jpg') ?>
+                </div>
+            </div>
+            <div id="category-advertisement-table-row-cell">
+                <div id="category-advertisement-box">
+                    <?php echo img('folder_upload/categories-bottom-advertise-box/empty-categories-bottom-advertise-box.jpg') ?>
+                </div>
+            </div>
+            <div id="category-advertisement-table-row-cell">
+                <div id="category-advertisement-box">
+                    <?php echo img('folder_upload/categories-bottom-advertise-box/empty-categories-bottom-advertise-box.jpg') ?>
+                </div>
+            </div>
+            <div id="category-advertisement-table-row-cell">
+                <div id="category-advertisement-box">
+                    <?php echo img('folder_upload/categories-bottom-advertise-box/empty-categories-bottom-advertise-box.jpg') ?>
+                </div>
+            </div>
+        </div>
+        <div id="category-advertisement-table-row">
+            <div id="category-advertisement-table-row-cell">
+                <div id="category-advertisement-box">
+                    <?php echo img('folder_upload/categories-bottom-advertise-box/empty-categories-bottom-advertise-box.jpg') ?>
+                </div>
+            </div>
+            <div id="category-advertisement-table-row-cell">
+                <div id="category-advertisement-box">
+                    <?php echo img('folder_upload/categories-bottom-advertise-box/empty-categories-bottom-advertise-box.jpg') ?>
+                </div>
+            </div>
+            <div id="category-advertisement-table-row-cell">
+                <div id="category-advertisement-box">
+                    <?php echo img('folder_upload/categories-bottom-advertise-box/empty-categories-bottom-advertise-box.jpg') ?>
+                </div>
+            </div>
+            <div id="category-advertisement-table-row-cell">
+                <div id="category-advertisement-box">
+                    <?php echo img('folder_upload/categories-bottom-advertise-box/empty-categories-bottom-advertise-box.jpg') ?>
+                </div>
+            </div>
+            <div id="category-advertisement-table-row-cell">
+                <div id="category-advertisement-box">
+                    <?php echo img('folder_upload/categories-bottom-advertise-box/empty-categories-bottom-advertise-box.jpg') ?>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+<div id="category-advertisement-bottom-empty-fix"></div>
