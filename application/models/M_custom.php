@@ -2105,6 +2105,7 @@ class M_custom extends CI_Model
                                 '<tr><td>Description</td><td>:</td><td>' . nl2br($refer_row['description']) . '</td></tr>'.                              
                                 '<tr><td>Upload By</td><td>:</td><td>' . $this->m_custom->generate_user_link($refer_row['user_id']) . '</td></tr>'.
                                 '<tr><td>Post Date</td><td>:</td><td>' . displayDate($refer_row['create_date'], 1) . '</td></tr>'.
+                                '<tr><td>Removed Reason</td><td>:</td><td>' . $refer_row['hide_remark'] . '</td></tr>'.
                                 '</table>';
                         $post_image = $this->m_custom->generate_image_link($refer_row['image'], $mon_hide_type);
                         break;

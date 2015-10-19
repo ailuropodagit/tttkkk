@@ -3,6 +3,7 @@
 <script type="text/javascript" src="<?php echo base_url() ?>js/jgrowl/jquery.jgrowl.js"></script>
 <?php echo link_tag('js/jgrowl/jquery.jgrowl.css') ?>
 <script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script>
+<?php echo link_tag('css/bootstrap.min.css') ?>
 
 <div id='picture-user'>
     <h1><?php echo $page_title; ?></h1>
@@ -36,16 +37,53 @@
                     $hide_url = base_url() . "merchant/remove_mua_picture/" . $picture_id;
 
                     if (check_allowed_list($merchant_allowed_list, $picture_id))
-                    {
+                    {                       
+                        ?>
+            <button type="submit" data-toggle = "modal" data-target = "#myModal_Remove" style="float:right">
+                       Remove Picture
+                    </button>
+                        <div class = "modal fade" id = "myModal_Remove" tabindex = "-1" role = "dialog" aria-labelledby = "myModalLabel" aria-hidden="true">
+   
+   <div class = "modal-dialog" >
+      <div class = "modal-content">
+         
+         <div class = "modal-header">
+            <button type = "button" class = "close" data-dismiss = "modal" aria-hidden = "true">
+                  &times;
+            </button>
+            
+            <h4 class = "modal-title" id = "myModalLabel">
+               Why Need To Remove?
+            </h4>
+         </div>
+         
+         <div class = "modal-body"> 
+             <?php
                         $action_url = base_url() . "merchant/remove_mua_picture";
                         $confirm_message = "Confirm that you want to remove this picture that user upload for your company? ";
                         ?>
                         <form action="<?php echo $action_url; ?>" onSubmit="return confirm('<?php echo $confirm_message ?>')" method="post" accept-charset="utf-8">
+                            <div id="contact-us-right-form">
+                                        <div style="color:red;font-weight:bold">Please put in the reason to remove this : </div>
+                                        <div id="contact-us-right-form-each">
+                                            <input type="text" placeholder="Remove Reason" id="hide_remark" name="hide_remark"><br/>
+                                        </div>
+                                     </div>
                         <?php
                         echo "<input type='hidden' name='hid_picture_id' value='".$picture_id."' />";
                         echo "<input type='hidden' name='hid_upload_by_user_id' value='".$upload_by_user_id."' />";
-                        echo "<button name='button_action' type='submit' value='hide_picture'>Remove Picture</button>";
+                        echo "<div class = 'modal-footer'>";
+                        echo "<button name='button_action' type='submit' value='hide_picture'>Confirm Remove</button>";
+                        echo "</div>";
                         echo form_close(); 
+                        ?>
+                          </div>
+         
+      </div><!-- /.modal-content -->
+   </div><!-- /.modal-dialog -->
+  
+</div><!-- /.modal --> 
+    <?php
                     }
                 }
             }
