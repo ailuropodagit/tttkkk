@@ -443,6 +443,7 @@ class All extends CI_Controller
 
             $this->data['picture_id'] = $picture_id;
             $this->data['merchant_name'] = $merchant_row['company'];
+            $this->data['picture_user_id'] = $the_row['user_id'];
             $this->data['user_name_url'] = $this->m_custom->generate_user_link($the_row['user_id']);
             $this->data['upload_by_user_id'] = $the_row['user_id'];
             $this->data['title'] = $the_row['title'];
@@ -527,6 +528,7 @@ class All extends CI_Controller
             $user_row = $this->m_custom->getUser($the_row['user_id']);
 
             $this->data['picture_id'] = $picture_id;
+            $this->data['picture_user_id'] = $the_row['user_id'];
             $this->data['user_name_url'] = $this->m_custom->generate_user_link($the_row['user_id']);
             $this->data['title'] = $the_row['title'];
             $this->data['description'] = $the_row['description'];
@@ -803,7 +805,7 @@ class All extends CI_Controller
     {
         $mail_info = $this->session->flashdata('mail_info');
 
-        $mail_voucher_code = $mail_info['redeem_info']['redeem_voucher_not_need'] == 0 ? 'Voucher Code : ' . $mail_info['redeem_info']['redeem_voucher'] . '<br/>' : NULL;
+        $mail_voucher_code = $mail_info['redeem_info']['redeem_voucher_not_need'] == 0 ? 'Voucher Code : ' . $mail_info['redeem_info']['redeem_voucher'] . ' ("Snap" and show this voucher code)<br/>' : NULL;
         $mail_expire_code = $mail_info['redeem_info']['redeem_expire'] == NULL ? NULL : 'Expire Date : ' . $mail_info['redeem_info']['redeem_expire'];
         $mail_top_up_phone = $mail_info['redeem_info']['redeem_top_up_phone'] == NULL ? NULL : 'Top Up Phone : ' . $mail_info['redeem_info']['redeem_top_up_phone'] . '<br/>';
 
@@ -812,7 +814,8 @@ class All extends CI_Controller
                 . $mail_voucher_code
                 . $mail_top_up_phone
                 . $mail_expire_code . '<br/><br/>'
-                . $mail_info['message'];
+                . $mail_info['message']
+                . '<br/>Congrats : You have earn another ' . $this->m_custom->display_trans_config(9) . ' candies and RM'. $this->m_custom->display_trans_config(24) . '<br/>';
         $get_status = send_mail_simple($mail_info['email'], $mail_info['redeem_info']['redeem_email_subject'], $mail_message, 'keppo_redeem_send_email_success');
         if ($get_status)
         {

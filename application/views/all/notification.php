@@ -50,22 +50,13 @@ $image_path_user_profile = $this->config->item('album_user_profile');
                     }
                     ?>
                     <tr <?php if($noti_read == 0){ echo "class='notification-table-row-unread'"; } ?>>
+                        <td></td>
                         <td>
                             <div id='notification-table-photo'>
-                                <a href="<?php echo $user_dashboard_url ?>">
-                                    <div id='notification-table-photo-box'>
-                                        <?php echo img($user_profile_image) ?>
-                                    </div>
-                                </a>
+                                <?php echo $row['noti_user_url'] ?>
                             </div>
                         </td>
-                        <td>
-                            <div id='notification-table-name'>
-                                <a href="<?php echo $user_dashboard_url ?>">
-                                    <?php echo $user_name ?>
-                                </a>
-                            </div>
-                        </td>
+
                         <td>
                             <div id='notification-table-message'>
                                 <?php 

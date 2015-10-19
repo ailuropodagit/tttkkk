@@ -231,66 +231,56 @@ class M_custom extends CI_Model
             return '';
         }
 
+        $prefix = '';
+        $middle = '';
+        $postfix = '';
+        
         $query = $this->db->get_where('users', array('id' => $user_id));
         if ($query->num_rows() !== 1)
         {
-            return '';
+            if ($with_icon == 1)
+            {
+                $prefix = $this->m_custom->display_user_profile_image($user_id);
+            }
+            $middle = 'User Deleted';
+            goto no_user;
         }
 
         $return = $query->row();
-
-        $prefix = '';
-        $postfix = '';
+       
         if ($with_icon == 1)
         {
             $prefix = $this->m_custom->display_user_profile_image($user_id);
             if ($return->main_group_id == $this->config->item('group_id_merchant'))
             {
-                //$prefix = '<i class="fa fa-user-secret"></i> ';
                 $postfix = ' <i class="fa fa-star"></i> ';
             }
-//            else if ($return->main_group_id == $this->config->item('group_id_supervisor'))
-//            {
-//                $prefix = '<i class="fa fa-user-secret"></i> ';
-//            }
-//            else if ($return->main_group_id == $this->config->item('group_id_user'))
-//            {
-//                if ($return->us_gender_id == $this->config->item('gender_id_male'))
-//                {
-//                    $prefix = '<i class="fa fa-mars"></i> ';
-//                }
-//                else
-//                {
-//                    $prefix = '<i class="fa fa-venus"></i> ';
-//                }
-//            }
-//            else
-//            {
-//                $prefix = '<i class="fa fa-user"></i> ';
-//            }
         }
 
         if ($return->main_group_id == $this->config->item('group_id_merchant'))
         {
-            return $prefix . $return->company . $postfix;
+            $middle = $return->company;
         }
         else if ($return->main_group_id == $this->config->item('group_id_supervisor'))
         {
             if ($want_supervisor == 1)
             {
-                return $prefix . $return->username;
+                $middle = 'Supervisor: '.$return->username;
             }
             else
             {
                 $merchant_query = $this->db->get_where('users', array('id' => $return->su_merchant_id));
                 $merchant_row = $merchant_query->row_array();
-                return $prefix . $merchant_row['company'];
+                $middle = $merchant_row['company'];
             }
         }
         else
         {
-            return $prefix . $return->first_name . ' ' . $return->last_name;
+            $middle = $return->first_name . ' ' . $return->last_name;
         }
+        
+        no_user:
+        return $prefix . $middle . $postfix;
     }
 
     public function display_user_profile_image($user_id)
@@ -318,11 +308,13 @@ class M_custom extends CI_Model
                 $image_path = $this->config->item('album_user_profile');
                 $image = $return['profile_image'];
             }
+        }else{
+            return "<div id='notification-table-photo-box' style='display:inline-block'><img src='#' ></div> ";
         }
-        return "<img src=" . base_url() . $image_path . $image . "  style='max-height:40px;max-width:40px'> ";
+        return "<div id='notification-table-photo-box' style='display:inline-block'><img src=" . base_url() . $image_path . $image . " ></div> ";
     }
 
-    public function display_transaction_config_amount($trans_conf_id = NULL)
+    public function display_trans_config($trans_conf_id = NULL)
     {
         $return_amount = 0;
         if (IsNullOrEmptyString($trans_conf_id))
@@ -1592,7 +1584,7 @@ class M_custom extends CI_Model
             $notification_list[] = array(
                 'noti_id' => $notification['noti_id'],
                 'noti_by_id' => $notification['noti_by_id'],
-                //'noti_user_url' => "<b>" . $this->m_custom->generate_user_link($notification['noti_by_id'], 1, 1) . "</b>",
+                'noti_user_url' => $this->m_custom->generate_user_link($notification['noti_by_id'], 1, 1),
                 'noti_message' => $noti_message,
                 'noti_url' => $notification['noti_url'],
                 'noti_read_already' => $notification['noti_read_already'],
@@ -1737,7 +1729,7 @@ class M_custom extends CI_Model
         $query = $this->db->get_where('users', array('id' => $supervisor_id));
         $user_row = $query->row_array();
         $merchant = $this->m_merchant->getMerchant($user_row['su_merchant_id']);
-        return "<a target='_blank' href='" . base_url() . "all/merchant_dashboard/" . $merchant['slug'] . "'>" . $user_name . "</a>";
+        return "<a target='_blank' href='" . base_url() . "all/merchant_dashboard/" . $merchant['slug'] . "' style='color:black'>" . $user_name . "</a>";
     }
 
     public function generate_merchant_link($merchant_id = NULL, $with_icon = 0)
@@ -1751,7 +1743,7 @@ class M_custom extends CI_Model
         {
             $user_name = $this->m_custom->display_users($merchant_id, $with_icon);
             $merchant = $this->m_merchant->getMerchant($merchant_id);
-            return "<a target='_blank' href='" . base_url() . "all/merchant_dashboard/" . $merchant['slug'] . "'>" . $user_name . "</a>";
+            return "<a target='_blank' href='" . base_url() . "all/merchant_dashboard/" . $merchant['slug'] . "' style='color:black'>" . $user_name . "</a>";
         }
     }
 
@@ -1761,7 +1753,7 @@ class M_custom extends CI_Model
         $query = $this->db->get_where('users', array('id' => $user_id));
         if ($query->num_rows() !== 1)
         {
-            return '';
+            return $user_name;
         }
 
         $user_row = $query->row_array();
@@ -1775,7 +1767,7 @@ class M_custom extends CI_Model
         }
         else if ($user_row['main_group_id'] == $this->config->item('group_id_user'))
         {
-            return "<a target='_blank' href='" . base_url() . "all/user_dashboard/" . $user_id . "'>" . $user_name . "</a>";
+            return "<a target='_blank' href='" . base_url() . "all/user_dashboard/" . $user_id . "' style='color:black'>" . $user_name . "</a>";
         }
     }
 
