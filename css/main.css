@@ -467,7 +467,6 @@ a:hover {
 
 #layout-advertisement-left {
     float: left;
-    width: 100%;
     width: calc(100% - 200px);
 }
 
@@ -664,17 +663,33 @@ a:hover {
     color: black;
 }
 
+#category-advertisement-table {
+    display: table;
+    width: 100%;
+}
+
+#category-advertisement-table-row {
+    display: table-row;
+}
+
+#category-advertisement-table-row-cell {
+    display: table-cell;
+}
+
 #category-advertisement-box {
-    float: left;
-    width: 160px;
-    height: 100px;
-    border: 1px dotted gray;
-    line-height: 23px;
-    text-align: center; 
-    color: gray; 
-    font-size: 11px; 
-    letter-spacing: 1px;
     margin: 0px 20px 20px 0px;
+}
+
+#category-advertisement-box img {
+    border: 1px dotted gray;
+    box-sizing: border-box;
+    width: 100%; 
+    max-width: 160px;
+    display: block;
+}
+
+#category-advertisement-bottom-empty-fix {
+    margin: 0px 0px -20px 0px;
 }
 
 /* LOGIN REGISTER
@@ -1779,22 +1794,16 @@ a:hover {
     margin: 20px 0px 0px 0px;
 }
 
-#hot-deal-advertise-upload-image-note {
-    font-size: smaller;
-    font-style: italic;
-    margin: 15px 0px 20px 0px;
-}
-
 #hot-deal-advertise-form {
     vertical-align: top;
     display: inline-block;
-    width: 250px; 
+    width: 180px; 
     margin: 0px 50px 50px 0px;
 }
 
 #hot-deal-advertise-form-photo-box {
-    width: 250px;
-    height: 250px;
+    width: 180px;
+    height: 180px;
     border: 1px solid lightgray;
     background-color: whitesmoke;
     margin: 0px 0px 20px 0px;
@@ -1814,6 +1823,7 @@ a:hover {
     width: 285px;
     text-align: left;
     margin: 20px auto 0px auto;
+    font-size: 14px;
 }
 
 #hot-deal-advertise-form-each-input input[type='text'] {
@@ -1839,7 +1849,7 @@ a:hover {
 }
 
 #hot-deal-advertise-remove-label {
-    font-size: 15px;
+    font-size: 13px;
 }
 
 #hot-deal-advertise-remove {
