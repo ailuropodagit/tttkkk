@@ -4,38 +4,36 @@
         var ajax_post;
         $(".home-navigation-c1-bar-hover").on({
             mouseenter: function() {
-                var _this = $(this);
+                var _this = $(this); 
                 //prevent duplicated timeout
-                if (ajax_post !== timeout){ clearTimeout(timeout); }
-                //prevent duplicated ajax post
-                if (ajax_post !== undefined){ ajax_post.abort(); }                
-                    //function
-                    timeout = setTimeout(function()
-                    {
-                        //menu active
-                        $(".home-navigation-c1-bar-hover").find('a').removeClass('home-navigation-c1-bar-a-active');
-                        _this.find('a').addClass('home-navigation-c1-bar-a-active');
-                        //data
-                        var category_id = _this.attr("category_id");
-                        //ajax post
-                        ajax_post = $.ajax({
-                            type: 'post',
-                            url: '<?php echo base_url() ?>home/home_banner_ajax',
-                            data: {category_id:category_id},
-                            beforeSend: function() {
-                                $("#home-navigation-c2").html('<table border="0" style="height:400px; width:100%; text-align:center;"><tr><td><img src="<?php echo base_url() ?>image/loading.gif" style="width: 60px;"></td></tr></table>');
-                            },   
-                            success: function(data) {
-                                $("#home-navigation-c2").html(data);
-                            }
-                        });
-                    }, 500);
+                if (timeout !== undefined){ clearTimeout(timeout); }
+                //function
+                timeout = setTimeout(function()
+                {
+                    //prevent duplicated ajax post
+                    if (ajax_post !== undefined){ ajax_post.abort(); }      
+                    //menu active
+                    $(".home-navigation-c1-bar-hover").find('a').removeClass('home-navigation-c1-bar-a-active');
+                    _this.find('a').addClass('home-navigation-c1-bar-a-active');
+                    //data
+                    var category_id = _this.attr("category_id");
+                    //ajax post
+                    ajax_post = $.ajax({
+                        type: 'post',
+                        url: '<?php echo base_url() ?>home/home_banner_ajax',
+                        data: {category_id:category_id},
+                        beforeSend: function() {
+                            $("#home-navigation-c2").html('<table border="0" style="height:400px; width:100%; text-align:center;"><tr><td><img src="<?php echo base_url() ?>image/loading.gif" style="width: 60px;"></td></tr></table>');
+                        },   
+                        success: function(data) {
+                            $("#home-navigation-c2").html(data);
+                        }
+                    });
+                }, 500);
             }, 
             mouseout: function() {
                 //prevent duplicated timeout
                 if (timeout !== undefined){ clearTimeout(timeout); }
-                //prevent duplicated ajax post
-                if (ajax_post !== undefined){ ajax_post.abort(); }
             }
         });
     });
