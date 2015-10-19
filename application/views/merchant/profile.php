@@ -88,6 +88,10 @@ if(isset($message))
                     <div id='profile-info-form-each-input'><?php echo form_input($me_category_id); ?></div>
                 </div>
                 <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><?php echo lang('create_merchant_sub_category_label', 'me_sub_category_id'); ?></div>
+                    <div id='profile-info-form-each-input'><?php echo form_dropdown($me_sub_category_id, $sub_category_list, $sub_category_selected); ?></div>
+                </div>
+                <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_merchant_address_label', 'address'); ?></div>
                     <div id='profile-info-form-each-input'><?php echo form_textarea($address); ?></div>
                 </div>

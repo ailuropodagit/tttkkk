@@ -932,8 +932,10 @@ class Merchant extends CI_Controller
                     $data = array(
                         'description' => $this->input->post('description'),
                         'phone' => $this->input->post('phone'),
-                        //'slug' => generate_slug($this->input->post('company')),
+                        'company' => $this->input->post('company'),
+                        'slug' => generate_slug($this->input->post('company')),
                         //'me_category_id' => $this->input->post('me_category_id'),
+                        'me_sub_category_id' => $this->input->post('me_sub_category_id'),
                         'me_website_url' => $this->input->post('website'),
                         'me_facebook_url' => $this->input->post('facebook_url'),
                     );
@@ -990,7 +992,7 @@ class Merchant extends CI_Controller
             'name' => 'company',
             'id' => 'company',
             'type' => 'text',
-            'readonly ' => 'true',
+            //'readonly ' => 'true',
             'value' => $this->form_validation->set_value('company', $user->company),
         );
         $this->data['me_ssm'] = array(
@@ -1013,6 +1015,12 @@ class Merchant extends CI_Controller
             'type' => 'text',
             'readonly ' => 'true',
             'value' => $this->m_custom->get_one_table_record('category', 'category_id', $user->me_category_id)->category_label,
+        );
+        $this->data['sub_category_selected'] = $user->me_sub_category_id;
+        $this->data['sub_category_list'] = $this->m_custom->getSubCategoryList(NULL, NULL, $user->me_category_id);
+        $this->data['me_sub_category_id'] = array(
+                'name' => 'me_sub_category_id',
+                'id' => 'me_sub_category_id',
         );
         $this->data['address'] = array(
             'name' => 'address',
