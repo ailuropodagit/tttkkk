@@ -181,7 +181,7 @@ if($this->ion_auth->user()->num_rows())
                 ?>
                 <div id="float-fix"></div>
             </div>
-            <div id="user-comment-input" style="padding:10px;border:1px solid blue;">
+            <div id="dashboard-info-company-description">
                 <?php echo nl2br($description); ?>
             </div>
             <div id="dashboard-info-table">

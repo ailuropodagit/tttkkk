@@ -911,6 +911,20 @@ a:hover {
     margin: 18px 0px 0px 0px;
 }
 
+#dashboard-info-company-description {
+    width: 100%;
+    border: 1px solid lightgray;
+    margin: 20px 0px 0px 0px;
+    padding: 7px;
+    text-align: left;
+    border-radius: 4px;
+    height: 150px;
+    overflow-y: auto;
+    line-height: 25px;
+    text-align: justify;
+    box-sizing: border-box;
+}
+
 #dashboard-info-table {
     margin: 18px 0px 0px 0px;
 }

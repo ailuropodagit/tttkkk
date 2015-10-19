@@ -152,7 +152,7 @@ if($this->ion_auth->user()->num_rows())
             <div id="dashboard-info-outlet-address">
                 <a href="<?php echo $show_outlet ?>">Show outlet Address <i class="fa fa-map-o"></i></a>
             </div>
-            <div id="user-comment-input" style="padding:10px;border:1px solid blue;">
+            <div id="dashboard-info-company-description">
                 <?php echo nl2br($description); ?>
             </div>
             <div id="dashboard-info-table">
