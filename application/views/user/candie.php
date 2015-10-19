@@ -39,7 +39,7 @@ if (isset($message))
             <span id="candie-go-button"><button name="button_action" type="submit" value="search_history">Go</button></span>
             <?php echo form_close(); ?>
         </div>
-        <div id="candie-balance">Current Candies : <?php echo $current_balance ?></div>
+        <div id="candie-balance">Current Candies : <span id="candie-balance-number"><?php echo $current_balance ?></span></div>
         <div id='float-fix'></div>
                 
         <div id='candie-subtitle'>

@@ -973,12 +973,12 @@ a:hover {
     vertical-align: top;
     display: inline-block;
     margin: 0px 50px 50px 0px;
-    width: 250px;
+    width: 180px;
 }
 
 #advertise-list-photo-box {
-    width: 250px;
-    height: 250px;
+    width: 180px;
+    height: 180px;
     border: 1px solid #e1e1e1;
     background-color: whitesmoke;
 }
@@ -1012,7 +1012,6 @@ a:hover {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    font-weight: bold;
 }
 
 #advertise-list-title2 a {
@@ -2719,8 +2718,11 @@ a:hover {
 #candie-balance {
     margin: 20px 0px 0px 0px;
     float: right;
+}
+
+#candie-balance-number {
     font-size: 25px;
-    font-weight: bold;
+    font-weight: bold
 }
 
 #candie-subtitle {
@@ -2733,8 +2735,6 @@ a:hover {
 #candie-date-time {
     float: right;
     margin: 20px 0px 0px 0px;
-    font-size: 18px;
-    font-weight: bold;
 }
 
 #candie-table {
