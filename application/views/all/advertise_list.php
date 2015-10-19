@@ -222,9 +222,10 @@ $fetch_method = $this->router->fetch_method();
             ?>
             <!--ADVERTISE LIST SUGGESTION-->
             <div id="advertise-list-suggestion">
-                <h1><?php echo $advertise_suggestion_page_title ?></h1>
+                <h1><?php if(!empty($advertise_suggestion_page_title)){ echo $advertise_suggestion_page_title; } ?></h1>
                 <div id="advertise-list-suggestion-content">
                     <?php
+                    if(!empty($query_advertise_suggestion)){
                     $result_array_advertise_suggestion = $query_advertise_suggestion->result_array();
                     $num_rows_advertise_suggestion = $query_advertise_suggestion->num_rows();
                     if ($num_rows_advertise_suggestion)
@@ -321,6 +322,7 @@ $fetch_method = $this->router->fetch_method();
                     else
                     {
                         ?><div id='empty-message'><?php echo $bottom_empty_message ?></div><?php
+                    }
                     }
                     ?>
                 </div>

@@ -96,6 +96,8 @@ class M_user extends CI_Model
                     $this->db->insert('user_redemption', $the_data);
                     $insert_id = $this->db->insert_id();
                     $this->m_user->candie_history_insert(8, $insert_id, 'user_redemption', 0, $voucher_candie);
+                    $this->m_user->candie_history_insert(9, $insert_id, 'user_redemption');
+                    $this->m_user->user_trans_history_insert($user_id, 24, $insert_id, 'user_redemption');
                     $this->m_merchant->transaction_history_insert($promotion_row['merchant_id'], 18, $insert_id, 'user_redemption');
                     $redeem_message = "Success Redeem This Voucher <br/>" .
                             "Previous Candie : " . $current_balance . " <br/>" .

@@ -99,7 +99,15 @@
                                 ?>
                             </div>
                             <div id="picture-user-upload-by">
-                                Upload by : <?php echo $user_name_url ?>
+                                <?php if(check_is_login()){
+                                    $login_id = $this->ion_auth->user()->row()->id;
+                                    if($picture_user_id != $login_id){
+                                        echo 'Upload by : '.$user_name_url;            
+                                    }                                                     
+                                 }else{
+                                     echo 'Upload by : '.$user_name_url;            
+                                 }
+                                 ?>
                             </div>
                             <div id="float-fix"></div>
                         </div>
