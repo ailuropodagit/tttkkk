@@ -1,4 +1,5 @@
 <script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script>
+<?php echo link_tag('css/bootstrap.min.css') ?>
 
 <?php
 //MESSAGE
@@ -49,7 +50,16 @@ if(isset($message))
             Require <?php echo $voucher_candie ?> Candies
         </div>
         <div id="float-fix"></div>
-        
+                                        <?php
+                                if (check_correct_login_type($this->config->item('group_id_user')))
+                                {  
+                                    ?>
+                                                        <!-- Button trigger modal -->
+                    <button type="submit" data-toggle = "modal" data-target = "#myModal" style="float:right">
+                       Redeem
+                    </button>
+                <div id="float-fix"></div>             
+                                <?php } ?>
         <div id='redemption-table'>
             <div id='redemption-table-row'>
                 <div id='redemption-table-row-cell' class='redemption-left-cell'>
@@ -111,10 +121,51 @@ if(isset($message))
                                 </ul>
                             </div>
                         </div>
-                            <div id='redemption-redempt-submit'>
+    
+                    </div>
+                </div>
+                <div id='redemption-table-row-cell' class='redemption-right-cell'>
+                    <div id='redemption-right'>
+                        <?php
+                        if (!empty($next_url))
+                        {
+                            ?><a href="<?php echo $next_url ?>"><i class="fa fa-angle-double-right"></i></a><?php
+                        }
+                        else 
+                        {
+                            ?><div id='redemption-right-gray'><i class="fa fa-angle-double-right"></i></div><?php
+                        }
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
                                 <?php
                                 if (check_correct_login_type($this->config->item('group_id_user')))
-                                {
+                                {  
+                                    ?>
+                        <!-- Modal -->
+<div class = "modal fade" id = "myModal" tabindex = "-1" role = "dialog" aria-labelledby = "myModalLabel" aria-hidden="true">
+   
+   <div class = "modal-dialog" >
+      <div class = "modal-content">
+         
+         <div class = "modal-header">
+            <button type = "button" class = "close" data-dismiss = "modal" aria-hidden = "true">
+                  &times;
+            </button>
+            
+            <h4 class = "modal-title" id = "myModalLabel">
+               Please Key In The Phone Number
+            </h4>
+         </div>
+         
+         <div class = "modal-body">
+            <div id='redemption-redempt-submit'>
+<?php
                                     //FORM OPEN            
                                     $action_url = base_url() . "all/user_redeem_voucher";
                                     $confirm_message = "Confirm that you want to redeem this voucher? ";
@@ -138,31 +189,20 @@ if(isset($message))
                                     ?>
                                     <input type='hidden' name='phone_required' id='phone_required' value='<?php echo $phone_required ?>'/>        
                                     <input type='hidden' name='current_url' id='current_url' value='<?php echo get_current_url() ?>'/>
+                                    <div class = "modal-footer">
                                     <button name="button_action" type="submit" value="redeem" >Redeem</button>
+                                    </div>
                                     <?php
                                     //FORM CLOSE
                                     echo form_close();
-                                }
+
                                 ?>
                             </div>
-                    </div>
-                </div>
-                <div id='redemption-table-row-cell' class='redemption-right-cell'>
-                    <div id='redemption-right'>
-                        <?php
-                        if (!empty($next_url))
-                        {
-                            ?><a href="<?php echo $next_url ?>"><i class="fa fa-angle-double-right"></i></a><?php
-                        }
-                        else 
-                        {
-                            ?><div id='redemption-right-gray'><i class="fa fa-angle-double-right"></i></div><?php
-                        }
-                        ?>
-                    </div>
-                </div>
-            </div>
-        </div>
+         </div>
+         
+      </div><!-- /.modal-content -->
+   </div><!-- /.modal-dialog -->
+  
+</div><!-- /.modal -->
 
-    </div>
-</div>
+<?php } ?>
