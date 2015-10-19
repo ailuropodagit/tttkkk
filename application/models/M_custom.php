@@ -322,6 +322,33 @@ class M_custom extends CI_Model
         return "<img src=" . base_url() . $image_path . $image . "  style='max-height:40px;max-width:40px'> ";
     }
 
+    public function display_transaction_config_amount($trans_conf_id = NULL)
+    {
+        $return_amount = 0;
+        if (IsNullOrEmptyString($trans_conf_id))
+        {
+            return $return_amount;
+        }
+
+        $query = $this->db->get_where('transaction_config', array('trans_conf_id' => $trans_conf_id));
+        if ($query->num_rows() !== 1)
+        {
+            return $return_amount;
+        }
+        $result = $query->row_array();
+        $amount = $result['amount_change'];
+        switch($result['conf_type']){
+            case 'can':
+                $return_amount = number_format($amount, 0);
+                break;
+            case 'bal':
+            case 'uba':
+                $return_amount = number_format($amount, 2);
+                break;           
+        }
+        return $return_amount;
+    }
+    
     //Get one static option text by it option id
     public function display_static_option($option_id = NULL)
     {

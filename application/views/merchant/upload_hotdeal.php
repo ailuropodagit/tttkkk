@@ -35,7 +35,7 @@ if(isset($message))
     <h1>Hot Deal Advertise</h1>
     <div id='hot-deal-advertise-content'>       
         
-        <div id='hot-deal-advertise-today'>
+        <div id='hot-deal-advertise-today' style="display:none">
             Today Hot Deal <?php echo $hotdeal_today_count . ' / ' . $hotdeal_per_day ?> per day
             <?php
             if($hotdeal_today_count_removed!=0){
@@ -44,7 +44,7 @@ if(isset($message))
             ?>
         </div>
         
-        <div id='hot-deal-advertise-upload-image-note'>
+        <div id='hot-deal-advertise-upload-image-note' style="display:none">
             Upload Image Rule : <?php echo $this->config->item('upload_guide_image') ?>
         </div>
 
@@ -53,7 +53,7 @@ if(isset($message))
         echo form_open_multipart(uri_string());
         
         //LOOP FORM
-        for ($i = 0; $i < $hotdeal_per_day; $i++) 
+        for ($i = 0; $i < $box_number; $i++) 
         {
             //HIDDEN INPUT TEXT
             echo form_hidden(${'hotdeal_id' . $i});
@@ -87,7 +87,7 @@ if(isset($message))
                     <div id='hot-deal-advertise-form-each-input'>
                         <?php
                         //echo form_textarea(${'hotdeal_desc' . $i});
-                        echo "<textarea name='".${'hotdeal_desc' . $i}."' cols='40' rows='10' id='".${'hotdeal_desc' . $i}."' maxlength='500' placeholder='Max 500 words'>"
+                        echo "<textarea name='".${'hotdeal_desc' . $i}."' cols='40' rows='10' id='".${'hotdeal_desc' . $i}."' maxlength='1000' placeholder='Max 1000 words'>"
                                 .${'hotdeal_desc_value' . $i}. "</textarea>";
                         ?>
                     </div>

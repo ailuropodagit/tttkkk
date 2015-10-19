@@ -25,7 +25,7 @@ if(isset($message))
             <a href="<?php echo $user_review_like; ?>" >Like</a> | 
             <a href="<?php echo $user_review_comment; ?>" >Comment</a> | 
             <a href="<?php echo $user_review_rating; ?>" >Rating</a>
-        </div>
+        </div><br/><br/>
         <div id='payment-print'>
             <?php
             foreach ($category_list as $cat_row)
@@ -33,7 +33,7 @@ if(isset($message))
                 echo ' - ' . $cat_row;
             }
             ?> - 
-        </div><br/>
+        </div><br/><br/>
          <?php } ?>
     <?php 
     

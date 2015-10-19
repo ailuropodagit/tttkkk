@@ -39,7 +39,7 @@ if(isset($message))
             Hot Deal Date : <?php echo $hotdeal_date ?>
         </div>
         
-        <div id='hot-deal-advertise-upload-image-note'>
+        <div id='hot-deal-advertise-upload-image-note' style="display:none">
             Upload Image Rule : <?php echo $this->config->item('upload_guide_image') ?>
         </div>
 

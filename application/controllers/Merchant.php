@@ -17,6 +17,7 @@ class Merchant extends CI_Controller
         $this->album_merchant = $this->config->item('album_merchant');
         $this->folder_merchant_ssm = $this->config->item('folder_merchant_ssm');
         $this->folder_image = $this->config->item('folder_image');
+        $this->box_number = $this->config->item('merchant_upload_box_per_page');
         $this->temp_folder = $this->config->item('folder_image_temp');   
     }
 
@@ -2125,7 +2126,7 @@ class Merchant extends CI_Controller
                 $this->load->library('upload', $upload_rule);
 
                 //To loop hotdeal box dynamic
-                for ($i = 0; $i < $hotdeal_per_day; $i++)
+                for ($i = 0; $i < $this->box_number; $i++)
                 {
 
                     $hotdeal_today_count = $this->m_merchant->get_merchant_today_hotdeal($merchant_id, 1, $search_date, 1);
@@ -2280,7 +2281,7 @@ class Merchant extends CI_Controller
         $this->data['sub_category_list'] = $this->ion_auth->get_sub_category_list($merchant_data->me_category_id);
 
         //To dynamic create the hot deal box
-        for ($i = 0; $i < $hotdeal_per_day; $i++)
+        for ($i = 0; $i < $this->box_number; $i++)
         {
             $hotdeal_title = 'hotdeal_title' . $i;
             $this->data[$hotdeal_title] = array(
@@ -2339,7 +2340,7 @@ class Merchant extends CI_Controller
             );
         }
         
-        $this->data['box_number'] = $this->config->item("hotdeal_per_day");
+        $this->data['box_number'] = $this->box_number;
         $this->data['hotdeal_per_day'] = $this->config->item("hotdeal_per_day");
         $this->data['temp_folder'] = $this->temp_folder;  
         $this->data['message'] = $this->session->flashdata('message');
