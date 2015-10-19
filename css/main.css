@@ -1362,7 +1362,7 @@ a:hover {
 }
     
 #notification-table table td:first-child {
-    width: 1px;
+    width: 40px;
 }
 
 #notification-table table td:nth-child(2) {

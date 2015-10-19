@@ -224,7 +224,7 @@ class M_custom extends CI_Model
     }
 
     //Get one static option text by it option id
-    public function display_users($user_id = NULL, $with_icon = 0, $want_supervisor = 0)
+    public function display_users($user_id = NULL, $with_icon = 0, $want_supervisor = 0, $icon_only = 0)
     {
         if (IsNullOrEmptyString($user_id))
         {
@@ -242,7 +242,10 @@ class M_custom extends CI_Model
             {
                 $prefix = $this->m_custom->display_user_profile_image($user_id);
             }
-            $middle = 'User Deleted';
+            if ($icon_only == 0)
+            {
+                $middle = 'User Deleted';
+            }
             goto no_user;
         }
 
@@ -257,28 +260,30 @@ class M_custom extends CI_Model
             }
         }
 
-        if ($return->main_group_id == $this->config->item('group_id_merchant'))
+        if ($icon_only == 0)
         {
-            $middle = $return->company;
-        }
-        else if ($return->main_group_id == $this->config->item('group_id_supervisor'))
-        {
-            if ($want_supervisor == 1)
+            if ($return->main_group_id == $this->config->item('group_id_merchant'))
             {
-                $middle = 'Supervisor: '.$return->username;
+                $middle = $return->company;
+            }
+            else if ($return->main_group_id == $this->config->item('group_id_supervisor'))
+            {
+                if ($want_supervisor == 1)
+                {
+                    $middle = 'Supervisor: ' . $return->username;
+                }
+                else
+                {
+                    $merchant_query = $this->db->get_where('users', array('id' => $return->su_merchant_id));
+                    $merchant_row = $merchant_query->row_array();
+                    $middle = $merchant_row['company'];
+                }
             }
             else
             {
-                $merchant_query = $this->db->get_where('users', array('id' => $return->su_merchant_id));
-                $merchant_row = $merchant_query->row_array();
-                $middle = $merchant_row['company'];
+                $middle = $return->first_name . ' ' . $return->last_name;
             }
         }
-        else
-        {
-            $middle = $return->first_name . ' ' . $return->last_name;
-        }
-        
         no_user:
         return $prefix . $middle . $postfix;
     }
@@ -1584,7 +1589,8 @@ class M_custom extends CI_Model
             $notification_list[] = array(
                 'noti_id' => $notification['noti_id'],
                 'noti_by_id' => $notification['noti_by_id'],
-                'noti_user_url' => $this->m_custom->generate_user_link($notification['noti_by_id'], 1, 1),
+                'noti_user_url' => $this->m_custom->generate_user_link($notification['noti_by_id'], 0, 1),
+                'noti_user_image' => $this->m_custom->generate_user_link($notification['noti_by_id'], 1, 1, 1),
                 'noti_message' => $noti_message,
                 'noti_url' => $notification['noti_url'],
                 'noti_read_already' => $notification['noti_read_already'],
@@ -1723,16 +1729,16 @@ class M_custom extends CI_Model
         }
     }
 
-    public function generate_supervisor_link($supervisor_id = NULL, $with_icon = 0, $want_supervisor = 0)
+    public function generate_supervisor_link($supervisor_id = NULL, $with_icon = 0, $want_supervisor = 0, $icon_only = 0)
     {
-        $user_name = $this->m_custom->display_users($supervisor_id, $with_icon, $want_supervisor);
+        $user_name = $this->m_custom->display_users($supervisor_id, $with_icon, $want_supervisor, $icon_only);
         $query = $this->db->get_where('users', array('id' => $supervisor_id));
         $user_row = $query->row_array();
         $merchant = $this->m_merchant->getMerchant($user_row['su_merchant_id']);
         return "<a target='_blank' href='" . base_url() . "all/merchant_dashboard/" . $merchant['slug'] . "' style='color:black'>" . $user_name . "</a>";
     }
 
-    public function generate_merchant_link($merchant_id = NULL, $with_icon = 0)
+    public function generate_merchant_link($merchant_id = NULL, $with_icon = 0, $want_supervisor = 0, $icon_only = 0)
     {
         //If is post by admin
         if ($merchant_id == $this->config->item('keppo_admin_id'))
@@ -1741,15 +1747,15 @@ class M_custom extends CI_Model
         }
         else
         {
-            $user_name = $this->m_custom->display_users($merchant_id, $with_icon);
+            $user_name = $this->m_custom->display_users($merchant_id, $with_icon, $want_supervisor, $icon_only);
             $merchant = $this->m_merchant->getMerchant($merchant_id);
             return "<a target='_blank' href='" . base_url() . "all/merchant_dashboard/" . $merchant['slug'] . "' style='color:black'>" . $user_name . "</a>";
         }
     }
 
-    public function generate_user_link($user_id = NULL, $with_icon = 0, $want_supervisor = 0)
+    public function generate_user_link($user_id = NULL, $with_icon = 0, $want_supervisor = 0, $icon_only = 0)
     {
-        $user_name = $this->m_custom->display_users($user_id, $with_icon);
+        $user_name = $this->m_custom->display_users($user_id, $with_icon, $want_supervisor, $icon_only);
         $query = $this->db->get_where('users', array('id' => $user_id));
         if ($query->num_rows() !== 1)
         {
@@ -1759,11 +1765,11 @@ class M_custom extends CI_Model
         $user_row = $query->row_array();
         if ($user_row['main_group_id'] == $this->config->item('group_id_merchant'))
         {
-            return $this->m_custom->generate_merchant_link($user_id, 1);
+            return $this->m_custom->generate_merchant_link($user_id, $with_icon, $want_supervisor, $icon_only);
         }
         else if ($user_row['main_group_id'] == $this->config->item('group_id_supervisor'))
         {
-            return $this->m_custom->generate_supervisor_link($user_id, 1, $want_supervisor);
+            return $this->m_custom->generate_supervisor_link($user_id, $with_icon, $want_supervisor, $icon_only);
         }
         else if ($user_row['main_group_id'] == $this->config->item('group_id_user'))
         {
