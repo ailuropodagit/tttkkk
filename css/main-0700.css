@@ -24,13 +24,18 @@
 /* BODY
 ******************************/
 
-#body-right-sidebar {
+#body-content {
+    padding: 15px;
+}
+
+#layout-inner-right-menu {
     width: 100%;
     float: none;
     margin: 0px 0px 20px 0px;
 }
 
 #body-left-main {
+    margin: 20px 0px 0px 0px;
     width: 100%;
     float: none;
 }
@@ -88,4 +93,13 @@
 #contact-us-right {
     width: 100%;
     margin: 30px 0px 0px 0px;
+}
+
+#user-redemption-table {
+    /*Moz-browsers*/ 
+    -moz-transform: scale(0.5, 0.5);
+    /*Other non-webkit browsers*/ 
+    zoom: 0.5;  
+    /*Webkit browsers*/
+    zoom: 50%;  
 }

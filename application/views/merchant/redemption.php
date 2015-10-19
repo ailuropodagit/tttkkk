@@ -36,32 +36,63 @@ if(isset($message))
             ?>
             <div id="user-redemption-table">
                 <div id="table-all">
-                    <table border='1px' cellpadding='0px' cellspacing='0px'>
-                        <colgroup>
+                    <table border='1px' cellpadding='0px' cellspacing='0px' style="table-layout: fixed;">
+                        <!--<colgroup>-->
                             <?php
                             if ($show_used == 0)
                             {
                                 ?>
-                                <col style='width: 120px;'>
+                                <!--<col style='width: 120px;'>-->
                                 <?php
                             }
                             ?>
+                        <!--</colgroup>-->
+                        <colgroup>
+                            <col class="user-redemption-table-column-1">
                         </colgroup>
                         <tr>
                             <?php
                             if ($show_used == 0)
                             {
                                 ?>
-                                <th>Mark As</th>
+                                <th>
+                                    <div class="table-text-overflow-ellipsis">
+                                        Mark As
+                                    </div>
+                                </th>
                                 <?php
                             }
                             ?>                       
-                            <th>User ID</th>
-                            <th>Name</th>
-                            <th>Date of Birth</th>
-                            <th>Email</th>
-                            <th>Voucher</th>
-                            <th>Expire Date</th>
+                            <th>
+                                <div class="table-text-overflow-ellipsis">
+                                    User ID
+                                </div>
+                            </th>
+                            <th>
+                                <div class="table-text-overflow-ellipsis">
+                                    Name
+                                </div>
+                            </th>
+                            <th>
+                                <div class="table-text-overflow-ellipsis">
+                                    Date of Birth
+                                </div>
+                            </th>
+                            <th>
+                                <div class="table-text-overflow-ellipsis">
+                                    Email
+                                </div>
+                            </th>
+                            <th>
+                                <div class="table-text-overflow-ellipsis">
+                                    Voucher
+                                </div>
+                            </th>
+                            <th>
+                                <div class="table-text-overflow-ellipsis">
+                                    Expire Date
+                                </div>    
+                            </th>
                         </tr>
                         <?php
                         foreach ($redeem_list as $redeem_row)
@@ -75,34 +106,57 @@ if(isset($message))
                                 <?php
                                 if ($show_used == 0)
                                 {
-                                    echo "<td align='center'>";
                                     $confirm_message = "Confirm that you want to change " . $user_name . " voucher " . $redeem_row['voucher'] . " status?";
                                     ?>
-                                    <form action="<?php echo $action_url; ?>" onSubmit="return confirm('<?php echo $confirm_message ?>')" method="post" accept-charset="utf-8">
+                                    <td>
+                                        <div class="table-text-overflow-ellipsis">
+                                            <form action="<?php echo $action_url; ?>" onSubmit="return confirm('<?php echo $confirm_message ?>')" method="post" accept-charset="utf-8">
+                                                <input type='hidden' name='redeem_id' id='redeem_id' value='<?php echo $redeem_row['redeem_id'] ?>'/>
+                                                <input type='hidden' name='user_id' id='user_id' value='<?php echo $user_id ?>'/>
+                                                <input type='hidden' name='advertise_id' id='advertise_id' value='<?php echo $redeem_row['advertise_id'] ?>'/>
+                                                <input type='hidden' name='current_url' id='current_url' value='<?php echo get_current_url() ?>'/>
+                                                <input type='hidden' name='voucher' id='voucher' value='<?php echo $redeem_row['voucher'] ?>'/>
+                                                <button name='button_action' type='submit' value='submit_used' id='button-a-href'>Used</button>
+                                                |
+                                                <button name='button_action' type='submit' value='submit_expired' id='button-a-href'>Expired</button>
+                                            </form>
+                                        </div>
+                                    </td>
                                     <?php
-                                    echo "<input type='hidden' name='redeem_id' id='redeem_id' value='" . $redeem_row['redeem_id'] . "'/>";
-                                    echo "<input type='hidden' name='user_id' id='user_id' value='" . $user_id . "'/>";
-                                    echo "<input type='hidden' name='advertise_id' id='advertise_id' value='" . $redeem_row['advertise_id'] . "'/>";
-                                    echo "<input type='hidden' name='current_url' id='current_url' value='" . get_current_url() . "'/>";
-                                    echo "<input type='hidden' name='voucher' id='voucher' value='" . $redeem_row['voucher'] . "'/>";
-                                    echo "<button name='button_action' type='submit' value='submit_used' id='button-a-href'>Used</button>";
-                                    echo " | ";
-                                    echo "<button name='button_action' type='submit' value='submit_expired' id='button-a-href'>Expired</button>";
-                                    echo form_close();
-                                    echo "</td>";
-                                }
-                                $user_url = $this->m_custom->generate_user_link($user_info['id']);
+                                } 
                                 ?>
-                                <td><?php echo $user_id ?></td>
-                                <td><?php echo $user_url ?></td>
-                                <td><?php echo displayDate($user_info['us_birthday']) ?></td>
                                 <td>
-                                    <div class="table-all-text-ellipsis">
+                                    <div class="table-text-overflow-ellipsis">
+                                        <?php echo $user_id ?>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="table-text-overflow-ellipsis">
+                                        <?php 
+                                        echo $this->m_custom->generate_user_link($user_info['id']);
+                                        ?>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="table-text-overflow-ellipsis">
+                                        <?php echo displayDate($user_info['us_birthday']) ?>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="table-text-overflow-ellipsis">
                                         <?php echo $user_info['email'] ?>
                                     </div>
                                 </td>
-                                <td><?php echo $redeem_row['voucher'] ?></td>
-                                <td><?php echo displayDate($redeem_row['expired_date']) ?></td>
+                                <td>
+                                    <div class="table-text-overflow-ellipsis">
+                                        <?php echo $redeem_row['voucher'] ?>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="table-text-overflow-ellipsis">
+                                        <?php echo displayDate($redeem_row['expired_date']) ?>
+                                    </div>    
+                                </td>
                             </tr>
                             <?php
                         }
@@ -113,6 +167,15 @@ if(isset($message))
             <?php
         }
         ?>
+        
+        <style>
+            .table-text-overflow-ellipsis {
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                width: 100%;
+            }
+        </style>
         
         <div id="user-redemption-navigation">
             <div id="user-redemption-navigation-each">

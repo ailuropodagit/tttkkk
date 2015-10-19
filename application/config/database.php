@@ -64,13 +64,13 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => '103.6.198.81',
-	'username' => 'skymediacom',
-	'password' => 'teo1q2w3e4r5t',
+	'hostname' => 'localhost',
+	'username' => 'root',
+	'password' => '',
 //        'hostname' => 'localhost',
 //	'username' => 'root',
 //	'password' => '',
-	'database' => 'skymedia_keppo',
+	'database' => 'keppo',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

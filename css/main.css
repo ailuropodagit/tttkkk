@@ -2389,6 +2389,14 @@ a:hover {
     margin: 0px 0px 20px 0px;
 }
 
+#user-redemption-table table td:nth-child(1) {
+    width: 200px;
+}
+
+.test {
+    width: 200px;
+}
+
 #user-redemption-navigation {
     margin: 30px 0px 0px 0px;
 }
