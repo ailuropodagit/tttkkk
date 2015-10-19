@@ -848,7 +848,7 @@ a:hover {
     width: 250px;
     height: 250px;
     border: 1px solid lightgray;
-    background-color: whitesmoke;
+    background-color: whitesmoke;    
 }
 
 #dashboard-photo-box img {
@@ -1923,12 +1923,12 @@ a:hover {
 #album-user-box {
     float: left;
     margin: 0px 50px 50px 0px;
-    width: 250px;
+    width: 180px;
 }
 
 #album-user-photo-box {
-    width: 250px;
-    height: 250px;
+    width: 180px;
+    height: 180px;
     border: 1px solid #e1e1e1;
     background-color: whitesmoke;
 }
