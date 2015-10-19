@@ -29,14 +29,18 @@ $all_comment = $this->m_custom->activity_comment_count($item_id['value'],$item_t
         <div id="user-comment-list-each">
             <table border='0px' cellpadding='0px' cellspacing='0px' style='width: 100%;'>
                 <colgroup>
-                    <col style='width: 130px;'>
+                    <col style='width: 40px;'>
+                    <col style='width: 120px;'>
                     <col>
                     <col style='width: 20px;'>
                 </colgroup>
                 <tr>
                     <td valign='top'>
-                        <div id="user-comment-list-each-username">
-                                <?php echo $this->m_custom->generate_user_link($row['act_by_id'], 1); ?>
+                                <?php echo $this->m_custom->generate_user_link($row['act_by_id'], 1, 0, 1); ?>
+                    </td>
+                    <td valign='top'>
+                        <div id="user-comment-list-each-username">    
+                            <div id="notification-table-name" style="display:inline"> <?php echo $this->m_custom->generate_user_link($row['act_by_id']); ?> </div> 
                             <div id="user-comment-list-each-comment-time"><?php echo $user_comment_time; ?></div>
                         </div>
                     </td>

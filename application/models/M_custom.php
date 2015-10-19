@@ -1743,7 +1743,7 @@ class M_custom extends CI_Model
         //If is post by admin
         if ($merchant_id == $this->config->item('keppo_admin_id'))
         {
-            return "<a>" . $this->config->item('keppo_company_name') . "</a>";
+            return "<a style='color:black'>" . $this->config->item('keppo_company_name') . "</a>";
         }
         else
         {
