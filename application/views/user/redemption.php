@@ -23,8 +23,9 @@ if(isset($message))
         
         <div id="voucher-go">
             <?php echo form_open(uri_string()) ?>
-            <span id="voucher-go-label"><?php echo "Category "; ?></span>
+            <span id="voucher-go-label"><?php echo "Filter "; ?></span>
             <span id="voucher-go-dropdown"><?php echo form_dropdown($sub_category, $sub_category_list, $sub_category_selected); ?></span>
+            <span id="voucher-go-dropdown"><?php echo form_dropdown($merchant, $merchant_list, $merchant_selected); ?></span>
             <span id="voucher-go-button"><button name="button_action" type="submit" value="search_by_subcategory">Search</button></span>
             <?php echo form_close() ?>
         </div>

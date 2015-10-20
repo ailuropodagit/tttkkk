@@ -1806,7 +1806,7 @@ class User extends CI_Controller
         }
     }
     
-    function redemption($status_id = NULL, $sub_category = NULL)
+    function redemption($status_id = NULL, $sub_category = NULL, $merchant = NULL)
     {
         if (!check_correct_login_type($this->main_group_id))
         {
@@ -1819,10 +1819,11 @@ class User extends CI_Controller
             if ($this->input->post('button_action') == "search_by_subcategory")
             {
                 $sub_category = $this->input->post('sub_category');
+                $merchant = $this->input->post('merchant');
             }
         }
 
-        $this->data['redemption'] = $this->m_user->user_redemption($user_id, $status_id, $sub_category);
+        $this->data['redemption'] = $this->m_user->user_redemption($user_id, $status_id, $sub_category, $merchant);
         if ($status_id != NULL)
         {
             $this->data['title'] = "Redemption : " . $this->m_custom->display_static_option($status_id);
@@ -1840,9 +1841,17 @@ class User extends CI_Controller
         );
         $this->data['sub_category_selected'] = empty($sub_category) ? "" : $sub_category;
 
-        $this->data['voucher_active_count'] = 'Active Voucher ('.count($this->m_user->user_redemption($user_id, $this->config->item('voucher_active'), $sub_category)).')';
-        $this->data['voucher_used_count'] = 'Used Voucher ('.count($this->m_user->user_redemption($user_id, $this->config->item('voucher_used'), $sub_category)).')';
-        $this->data['voucher_expired_count'] = 'Expired Voucher ('.count($this->m_user->user_redemption($user_id, $this->config->item('voucher_expired'), $sub_category)).')';
+        $merchant_list = $this->m_user->user_redemption_merchant_list($user_id, $status_id);       
+        $this->data['merchant_list'] = $merchant_list;
+        $this->data['merchant'] = array(
+            'name' => 'merchant',
+            'id' => 'merchant',
+        );
+        $this->data['merchant_selected'] = empty($merchant) ? "" : $merchant;
+        
+        $this->data['voucher_active_count'] = 'Active Voucher ('.count($this->m_user->user_redemption($user_id, $this->config->item('voucher_active'), $sub_category, $merchant)).')';
+        $this->data['voucher_used_count'] = 'Used Voucher ('.count($this->m_user->user_redemption($user_id, $this->config->item('voucher_used'), $sub_category, $merchant)).')';
+        $this->data['voucher_expired_count'] = 'Expired Voucher ('.count($this->m_user->user_redemption($user_id, $this->config->item('voucher_expired'), $sub_category, $merchant)).')';
         
         $this->data['candie_url'] = base_url() . "user/candie_page";
         $this->data['voucher_active_url'] = base_url() . "user/redemption/" . $this->config->item('voucher_active');
