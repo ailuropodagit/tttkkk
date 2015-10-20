@@ -4,7 +4,7 @@
 html, body {
     margin: 0px;
     padding: 0px;
-    font-family: serif;
+    font-family: verdana;
     background-color: #f5f5f1;
     font-size: 17px;
 }
@@ -87,12 +87,11 @@ input[type='submit'], input[type='button'], button[type='submit'], .a-href-butto
     border: 0px;
     cursor: pointer;
     border-radius: 3px;
-    font-weight: bold;
     letter-spacing: 1px;
     outline: none;
     height: 30px;
-    font-family: serif;
-    font-size: 15px;
+    font-family: verdana;
+    font-size: 13px;
 }
 
 .a-href-button {
@@ -300,7 +299,7 @@ a:hover {
 
 #header-menu li {
     float: left;
-    padding: 5px 8px 5px 8px;
+    padding: 0px 8px 5px 8px;
     margin: 10px 0px 10px 0px;
     border: 1px solid black;
 }
