@@ -119,6 +119,8 @@
         <!--HEADER-->
         <div id='header'>
             <?php
+            //CONFIG DATA
+            $header_user_profile_path = $this->config->item('album_user_profile');
             //URI
             $header_fetch_class = $this->router->fetch_class();
             $header_fetch_method = $this->router->fetch_method();
@@ -175,7 +177,10 @@
                         if (check_is_login())
                         {
                             $login_user_id = $this->session->userdata('user_id');
-                            $login_user_profile = $this->m_custom->display_users($login_user_id, 1, 0, 1);
+                            //$login_user_profile = $this->m_custom->display_users($login_user_id, 1, 0, 1);
+                            //echo $login_user_profile;
+                            $header_where_read_user = array('id'=>$login_user_id);
+                            $header_profile_image = $this->albert_model->read_user($header_where_read_user)->row()->profile_image;
                             $login_user_name = $this->m_custom->display_users($login_user_id);
                             if (check_correct_login_type($this->config->item('group_id_user'))) 
                             {
@@ -183,8 +188,12 @@
                                 <!--NORMAL MENU USER PROFILE-->
                                 <li <?php if($header_fetch_method == 'profile'){ echo "class='header-menu-active'"; } ?>>
                                     <a href='<?php echo base_url('user/profile') ?>'>
-                                        <?php echo $login_user_profile; ?>
-                                        <?php echo $login_user_name; ?>
+                                        <div id="header-menu-profile-photo">
+                                            <?php echo img("$header_user_profile_path/$header_profile_image") ?>
+                                        </div>
+                                        <div id="header-menu-profile-name">
+                                            <?php echo $login_user_name; ?>
+                                        </div>
                                     </a>
                                 </li>
                                 <!--NORMAL MENU USER LOGOUT-->
