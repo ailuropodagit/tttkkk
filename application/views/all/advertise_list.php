@@ -59,7 +59,6 @@ $fetch_method = $this->router->fetch_method();
     <div id='advertise-list-title-bottom-line'></div>
     
     <div id="advertise-list-content">
-                
         <?php
         //CATEGORY BREADCRUMB
         if (!empty($sub_category))
@@ -75,7 +74,7 @@ $fetch_method = $this->router->fetch_method();
         ?>
 
         <?php 
-                    $bottom_empty_message = '';
+        $bottom_empty_message = '';
         if (empty($hotdeal_list)) 
         {
             //SHARE PAGE
@@ -154,11 +153,11 @@ $fetch_method = $this->router->fetch_method();
                         <a href='<?php echo $advertise_detail_url ?>'><?php echo $row['title'] ?></a>
                     </div>
                     <?php if ($advertise_type == 'hot') {    ?>                       
-                            <?php if($row['post_hour']!=0) { ?>
-                                <div id="advertise-list-dynamic-time">
-                                    <i class="fa fa-clock-o"></i><span id="advertise-list-dynamic-time-label" data-countdown='<?php echo $row['end_time'] ?>'></span>
-                                </div>
-                            <?php } ?>                      
+                        <?php if($row['post_hour']!=0) { ?>
+                            <div id="advertise-list-dynamic-time">
+                                <i class="fa fa-clock-o"></i><span id="advertise-list-dynamic-time-label" data-countdown='<?php echo $row['end_time'] ?>'></span>
+                            </div>
+                        <?php } ?>                      
                     <?php } ?>
                     <?php if ($advertise_type == 'pro' || $advertise_type == 'adm') { ?>
                         <div id="advertise-list-dynamic-time">
@@ -268,52 +267,6 @@ $fetch_method = $this->router->fetch_method();
                                     <a href='<?php echo base_url("all/advertise/$advertise_suggestion_advertise_id/$advertise_suggestion_type/$advertise_suggestion_sub_category_id") ?>'>
                                         <?php echo $advertise_suggestion_sub_title ?>
                                     </a>
-                                </div>
-                                <?php if ($advertise_suggestion_type == 'hot') {    ?>                       
-                                    <?php if($advertise_suggestion_post_hour != 0) { ?>
-                                        <div id="advertise-list-dynamic-time">
-                                            <i class="fa fa-clock-o"></i><span id="advertise-list-dynamic-time-label" data-countdown='<?php echo $advertise_suggestion_end_time ?>'></span>
-                                        </div>
-                                    <?php } ?>                      
-                                <?php } ?>
-                                <?php if ($advertise_suggestion_type == 'pro' || $advertise_suggestion_type == 'adm') { ?>
-                                    <div id="advertise-list-dynamic-time">
-                                        <i class="fa fa-bullseye"></i><span id="advertise-list-dynamic-time-label"><?php echo $advertise_suggestion_voucher_candie ?> candies</span>
-                                    </div>
-                                <?php } ?>
-                                <div id="advertise-list-info">
-                                    <table border="0" cellpadding="4px" cellspacing="0px">
-                                        <?php if (($advertise_suggestion_type == 'pro' || $advertise_suggestion_type == 'adm') && !empty($advertise_suggestion_voucher_worth)){ ?>
-                                            <tr>
-                                                <td>Worth</td>
-                                                <td>:</td>
-                                                <td>
-                                                    <div id="advertise-list-voucher-worth"><?php echo "RM " . $advertise_suggestion_voucher_worth; ?></div>
-                                                </td>
-                                            </tr>    
-                                        <?php } ?>
-                                        <tr>
-                                            <td>Category</td>
-                                            <td>:</td>
-                                            <td>
-                                                <div id="advertise-list-info-category"><?php echo $this->m_custom->display_category($advertise_suggestion_sub_category_id) ?></div>
-                                            </td>
-                                        </tr>
-                                        <?php 
-                                        if ($advertise_suggestion_type != 'adm'){
-                                        ?>
-                                        <tr>
-                                            <td>Like</td>
-                                            <td>:</td>
-                                            <td><?php echo $this->m_custom->generate_like_list_link($advertise_suggestion_advertise_id, 'adv'); ?></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Comment</td>
-                                            <td>:</td>
-                                            <td><?php echo $this->m_custom->activity_comment_count($advertise_suggestion_advertise_id, 'adv'); ?></td>
-                                        </tr>
-                                        <?php } ?>
-                                    </table>
                                 </div>
                             </div>
                             <?php

@@ -97,7 +97,7 @@ class Albert_model extends CI_Model
         return $query;
     }
     
-    /* READ MERCHANT BY MAIN CATEGORY ID
+    /* READ MERCHANT
     ***************************************************/
     public function read_merchant($where)
     {
@@ -114,7 +114,7 @@ class Albert_model extends CI_Model
         //RETURN
         return $query;
     }
-    
+        
     /* READ USER
     ***************************************************/
     public function read_user($where)

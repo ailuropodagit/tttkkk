@@ -1,5 +1,4 @@
 <script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script>
-<?php echo link_tag('css/bootstrap.min.css') ?>
 
 <?php
 //MESSAGE
@@ -12,15 +11,10 @@ if(isset($message))
 <div id="redemption">
     <h1>Redemption</h1>
     <div id="redemption-content">
-        
         <div id="redemption-category">
             Category: <?php echo $sub_category; ?>
         </div>
         <div id="float-fix"></div>
-        
-<!--        <div id='redemption-print'>
-            <a href="#" onclick="printDiv('print-area')"><i class="fa fa-print"></i> Print Voucher</a>
-        </div>-->
         <div id="redemption-edit-link">
             <?php
             if (check_is_login())
@@ -37,7 +31,6 @@ if(isset($message))
             ?>
         </div>
         <div id="float-fix"></div>
-        
         <div id='redemption-expired-date'>
             <?php
             if (!empty($expire_date))
@@ -50,16 +43,17 @@ if(isset($message))
             Require <?php echo $voucher_candie ?> Candies
         </div>
         <div id="float-fix"></div>
-                                        <?php
-                                if (check_correct_login_type($this->config->item('group_id_user')))
-                                {  
-                                    ?>
-                                                        <!-- Button trigger modal -->
-                    <button type="submit" data-toggle = "modal" data-target = "#myModal_Redeem" style="float:right">
-                       Redeem
-                    </button>
-                <div id="float-fix"></div>             
-                                <?php } ?>
+        <?php
+        if (check_correct_login_type($this->config->item('group_id_user')))
+        {
+            ?>
+            <div id='redemption-redempt-submit'>
+                <button type="submit" data-toggle="modal" data-target="#myModal_Redeem">Redeem</button>
+            </div>        
+            <br/><br/><br/>
+            <?php
+        } 
+        ?>
         <div id='redemption-table'>
             <div id='redemption-table-row'>
                 <div id='redemption-table-row-cell' class='redemption-left-cell'>
@@ -140,69 +134,58 @@ if(isset($message))
                 </div>
             </div>
         </div>
-
     </div>
 </div>
-                                <?php
-                                if (check_correct_login_type($this->config->item('group_id_user')))
-                                {  
-                                    ?>
-                        <!-- Modal -->
-<div class = "modal fade" id = "myModal_Redeem" tabindex = "-1" role = "dialog" aria-labelledby = "myModalLabel" aria-hidden="true">
-   
-   <div class = "modal-dialog" >
-      <div class = "modal-content">
-         
-         <div class = "modal-header">
-            <button type = "button" class = "close" data-dismiss = "modal" aria-hidden = "true">
-                  &times;
-            </button>
-            
-            <h4 class = "modal-title" id = "myModalLabel">
-               Please Key In The Phone Number
-            </h4>
-         </div>
-         
-         <div class = "modal-body">
-            <div id='redemption-redempt-submit'>
+    
 <?php
-                                    //FORM OPEN            
-                                    $action_url = base_url() . "all/user_redeem_voucher";
-                                    $confirm_message = "Confirm that you want to redeem this voucher? ";
-                                    if($phone_required == 1){                                       
-                                        $confirm_message = "Confirm that this is the correct phone number to top up? ";
-                                    }
-                                    ?>
-                                    <form action="<?php echo $action_url; ?>" onSubmit="return confirm('<?php echo $confirm_message ?>')" method="post" accept-charset="utf-8">
-                                    <?php
-                                    echo form_input($item_id);
-                                    if($phone_required == 1){
-                                    ?>
-                                    <div id="contact-us-right-form">
-                                        <div style="color:red;font-weight:bold">Please Make Sure You Key In The Correct Phone Number To Prevent Wrong Top Up!</div>
-                                        <div id="contact-us-right-form-each">
-                                        <input type="text" placeholder="Top Up Phone Number (Example: 012-345 6789)" id="phone" name="phone"><br/>
-                                        </div>
-                                     </div>
-                                    <?php
-                                    }
-                                    ?>
-                                    <input type='hidden' name='phone_required' id='phone_required' value='<?php echo $phone_required ?>'/>        
-                                    <input type='hidden' name='current_url' id='current_url' value='<?php echo get_current_url() ?>'/>
-                                    <div class = "modal-footer">
-                                    <button name="button_action" type="submit" value="redeem" >Redeem</button>
-                                    </div>
-                                    <?php
-                                    //FORM CLOSE
-                                    echo form_close();
-
-                                ?>
+if (check_correct_login_type($this->config->item('group_id_user')))
+{
+    ?>
+    <div class="modal fade" id="myModal_Redeem" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" >
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="bootstrap-close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        Please Key In The Phone Number
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <?php
+                    //FORM OPEN            
+                    $action_url = base_url() . "all/user_redeem_voucher";
+                    $confirm_message = "Confirm that you want to redeem this voucher? ";
+                    if ($phone_required == 1)
+                    {
+                        $confirm_message = "Confirm that this is the correct phone number to top up? ";
+                    }
+                    ?>
+                    <form action="<?php echo $action_url; ?>" onSubmit="return confirm('<?php echo $confirm_message ?>')" method="post" accept-charset="utf-8">
+                        <?php
+                        echo form_input($item_id);
+                        if ($phone_required == 1)
+                        {
+                            ?>
+                            <div class="bootstrap-form">
+                                <div class="bootstrap-form-label">
+                                    <div style="color:red; font-weight:bold">Please Make Sure You Key In The Correct Phone Number To Prevent Wrong Top Up!</div>
+                                </div>
+                                <div class="bootstrap-form-input">
+                                    <input type="text" placeholder="Top Up Phone Number (Example: 012-345 6789)" id="phone" name="phone"><br/>
+                                </div>
                             </div>
-         </div>
-         
-      </div><!-- /.modal-content -->
-   </div><!-- /.modal-dialog -->
-  
-</div><!-- /.modal -->
-
-<?php } ?>
+                            <?php
+                        }
+                        ?>
+                        <input type='hidden' name='phone_required' id='phone_required' value='<?php echo $phone_required ?>'/>        
+                        <input type='hidden' name='current_url' id='current_url' value='<?php echo get_current_url() ?>'/>
+                        <div class="bootstrap-form-button">
+                            <button name="button_action" type="submit" value="redeem" >Redeem</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
+}

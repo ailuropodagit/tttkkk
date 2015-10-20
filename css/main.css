@@ -1026,18 +1026,15 @@ a:hover {
 }
 
 #advertise-list-title1 a {
-    font-size: 24px;
+    font-size: 20px;
     color: black;
     font-weight: bold;
-}
-
-#advertise-list-title1 a:hover {
     text-decoration: none;
 }
 
 #advertise-list-title2 {
     font-size: 22px;
-    margin: 10px 0px 0px 0px;
+    margin: 5px 0px 0px 0px;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -1554,13 +1551,20 @@ a:hover {
 }
 
 #picture-user-center {
-    width: 500px;
     margin: 0px auto 0px auto;
 }
 
 #picture-user-right, #picture-user-left {
     font-size: 45px;
-    width: 40px;
+    width: 50px;
+}
+
+#picture-user-left {
+    text-align: left;
+}
+
+#picture-user-right {
+    text-align: right;
 }
 
 #picture-user-left-gray, #picture-user-right-gray {
@@ -1576,10 +1580,14 @@ a:hover {
 }
 
 #picture-user-title {
-    font-size: 26px;
+    margin: 0px 0px 20px 0px;
+}
+
+#picture-user-title a {
     color: black;
+    font-size: 28px;
     font-weight: bold;
-    margin: 0px 0px 10px 0px;
+    text-decoration: none;
 }
 
 #picture-user-photo-box {
@@ -1595,6 +1603,13 @@ a:hover {
     object-fit: contain;
 }
 
+#picture-user-sub-title {
+    margin: 20px 0px 0px 0px;
+    font-weight: bold;
+    font-size: 23px;
+    color: black;
+}
+
 #picture-user-rate-upload-by {
     margin: 20px 0px 0px 0px;
 }
@@ -1606,8 +1621,7 @@ a:hover {
 
 #picture-user-upload-by {
     float: right;
-    font-size: 20px;
-    font-weight: bold;
+    font-size: 17px;
 }
 
 #picture-user-description {
@@ -1721,13 +1735,14 @@ a:hover {
 }
 
 #hot-deal-title {
-    font-size: 28px;
-    color: black;
-    font-weight: bold;
+    text-align: left;
     margin: 0px 0px 10px 0px;
 }
 
 #hot-deal-title a {
+    font-size: 25px;
+    color: black;
+    font-weight: bold;
     color: black;
     text-decoration: none;
 }
@@ -1747,7 +1762,6 @@ a:hover {
 
 #hot-deal-sub-title {
     margin: 20px 0px 0px 0px;
-    font-weight: bold;
     font-size: 23px;
     color: black;
 }
@@ -1755,12 +1769,11 @@ a:hover {
 #hot-deal-time {
     margin: 20px 0px 20px 0px;
     font-size: 20px;
-    font-weight: bold;
-    color: green;
+    text-align: right;
 }
 
 #hot-deal-time-label {
-    margin: 0px 0px 0px 10px;
+    margin: 0px 0px 0px 5px;
 }
 
 #hot-deal-rate {
@@ -2131,13 +2144,20 @@ a:hover {
 }
 
 #redemption-center {
-    width: 500px;
     margin: 0px auto 0px auto;
 }
 
 #redemption-right, #redemption-left {
     font-size: 45px;
-    width: 40px;
+    width: 50px;
+}
+
+#redemption-left { 
+    text-align: left;
+}
+
+#redemption-right {
+    text-align: right;
 }
 
 #redemption-left-gray, #redemption-right-gray {
@@ -2153,10 +2173,14 @@ a:hover {
 }
 
 #redemption-title {
-    font-size: 28px;
+    margin: 0px 0px 20px 0px;
+    text-align: left;
+}
+
+#redemption-title a {
+    font-size: 25px;
     color: black;
     font-weight: bold;
-    margin: 0px 0px 10px 0px;
 }
 
 #redemption-photo-box {
@@ -2173,7 +2197,6 @@ a:hover {
 }
 
 #redemption-sub-title {
-    font-weight: bold;
     font-size: 23px;
     color: black;
     margin: 20px 0px 0px 0px;
@@ -2188,12 +2211,10 @@ a:hover {
 #redemption-time {
     margin: 20px 0px 20px 0px;
     font-size: 20px;
-    font-weight: bold;
-    color: green;
 }
 
 #redemption-time-label {
-    margin: 0px 0px 0px 10px;
+    margin: 0px 0px 0px 5px;
 }
 
 #redemption-description {
@@ -2301,7 +2322,7 @@ a:hover {
 
 #redemption-redempt-submit {
     margin: 20px 0px 0px 0px;
-    text-align: left;
+    float: right;
 }
 
 #redemption-line {
