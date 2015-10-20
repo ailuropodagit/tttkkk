@@ -95,7 +95,7 @@
                         <div id="hot-deal-rate-time">
                             <div id="hot-deal-rate">
                                 <div style="display:inline;">
-                                    <?php
+                                    <?php                                    
                                     echo form_input($item_id);
                                     echo form_input($item_type);
                                     for ($i = 1; $i <= 5; $i++)
@@ -120,6 +120,14 @@
                             <?php } ?>
                             <div id="float-fix"></div>
                         </div>
+                        <div style="float:left">
+                            <?php
+                            $rating_count = $this->m_custom->activity_rating_count($advertise_id, 'adv');
+                            echo "Reviews : ". $rating_count;
+                            echo " (Earn : " . $this->m_custom->display_trans_config(3) . " candies)";
+                            ?>
+                        </div>    
+                        <div id="float-fix"></div>
                         <div id="hot-deal-description">
                             <?php echo $description ?>
                         </div>
@@ -138,6 +146,13 @@
                             </div>
                             <div id="float-fix"></div>
                         </div>
+                        <div style="float:left">
+                            <?php echo " (Earn : " . $this->m_custom->display_trans_config(2) . " candies)"; ?>
+                        </div>
+                        <div style="float:right;display:none">
+                            <?php echo " (Earn : " . $this->m_custom->display_trans_config(10) . " candies)"; ?>
+                        </div>
+                        <div id="float-fix"></div>
                         <div id="hot-deal-people-reach">
                             <?php echo "People Reached " . $this->m_custom->activity_view_count($advertise_id) . " users"; ?>
                         </div>

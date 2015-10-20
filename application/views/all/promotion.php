@@ -129,6 +129,14 @@ if(isset($message))
                                 ?>
                                 <div id="float-fix"></div>
                             </div>
+                            <div style="float:left">
+                            <?php
+                            $rating_count = $this->m_custom->activity_rating_count($advertise_id, 'adv');
+                            echo "Reviews : ". $rating_count;
+                            echo " (Earn : " . $this->m_custom->display_trans_config(3) . " candies)";
+                            ?>
+                            </div>    
+                            <div id="float-fix"></div>
                             <div id="redemption-description">
                                 <?php echo $description ?>
                             </div>
@@ -147,6 +155,13 @@ if(isset($message))
                                 </div>
                                 <div id="float-fix"></div>
                             </div>
+                            <div style="float:left">
+                            <?php echo " (Earn : " . $this->m_custom->display_trans_config(2) . " candies)"; ?>
+                            </div>
+                            <div style="float:right;display:none">
+                                <?php echo " (Earn : " . $this->m_custom->display_trans_config(10) . " candies)"; ?>
+                            </div>
+                            <div id="float-fix"></div>
                             <div id="redemption-terms-conditions">
                                 <div id="redemption-terms-conditions-title">Terms & Condition:</div>
                                 <ul>
