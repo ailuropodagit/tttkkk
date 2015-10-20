@@ -1,0 +1,26 @@
+.bootstrap-close {
+    background: none;
+    border: 0px;
+    cursor: pointer;
+    font-size: 22px;
+    font-weight: bold;
+    color: gray;
+    float: right;
+    margin: -11px -11px 0px 0px;
+}
+
+.boostrap-form-label {
+    margin: 10px 0px 0px 0px;
+}
+
+.bootstrap-form-input {
+    margin: 10px 0px 0px 0px;
+}
+
+.bootstrap-form-input input[type='text'] {
+    width: 100%;
+}
+
+.bootstrap-form-button {
+    margin: 20px 0px 5px 0px;
+}

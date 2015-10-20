@@ -67,6 +67,17 @@
         <div id="float-fix"></div>
         <div id='hot-deal-table'>
             <div id='hot-deal-table-row'>
+                <div id='hot-deal-table-row-cell' class='hot-deal-left-cell'></div>
+                <div id='hot-deal-table-row-cell' class='hot-deal-center-cell'>
+                    <div id='hot-deal-center'>
+                        <div id="hot-deal-title">
+                            <a href='<?php echo $merchant_dashboard_url ?>'> <?php echo $merchant_name ?></a>
+                        </div>
+                    </div>
+                </div>
+                <div id='hot-deal-table-row-cell' class='hot-deal-right-cell'></div>
+            </div>
+            <div id='hot-deal-table-row'>
                 <div id='hot-deal-table-row-cell' class='hot-deal-left-cell'>
                     <div id='hot-deal-left'>
                         <?php
@@ -83,12 +94,30 @@
                 </div>
                 <div id='hot-deal-table-row-cell' class='hot-deal-center-cell'>
                     <div id='hot-deal-center'>
-                        <div id="hot-deal-title">
-                            <a href='<?php echo $merchant_dashboard_url ?>'> <?php echo $merchant_name ?></a>
-                        </div>
                         <div id='hot-deal-photo-box'>
                             <img src='<?php echo $image_url ?>'>
                         </div>
+                    </div>
+                </div>
+                <div id='hot-deal-table-row-cell' class='hot-deal-right-cell'>
+                    <div id='hot-deal-right'>
+                        <?php
+                        if (!empty($next_url))
+                        {
+                            ?><a href="<?php echo $next_url ?>"><i class="fa fa-angle-double-right"></i></a><?php
+                        }
+                        else 
+                        {
+                            ?><div id='hot-deal-right-gray'><i class="fa fa-angle-double-right"></i></div><?php
+                        }
+                        ?>
+                    </div>
+                </div>
+            </div>
+            <div id='hot-deal-table-row'>
+                <div id='hot-deal-table-row-cell' class='hot-deal-left-cell'></div>
+                <div id='hot-deal-table-row-cell' class='hot-deal-center-cell'>
+                    <div id='hot-deal-center'>
                         <div id="hot-deal-sub-title">
                             <?php echo $title ?>
                         </div>
@@ -163,20 +192,7 @@
                         </div>
                     </div>
                 </div>
-                <div id='hot-deal-table-row-cell' class='hot-deal-right-cell'>
-                    <div id='hot-deal-right'>
-                        <?php
-                        if (!empty($next_url))
-                        {
-                            ?><a href="<?php echo $next_url ?>"><i class="fa fa-angle-double-right"></i></a><?php
-                        }
-                        else 
-                        {
-                            ?><div id='hot-deal-right-gray'><i class="fa fa-angle-double-right"></i></div><?php
-                        }
-                        ?>
-                    </div>
-                </div>
+                <div id='hot-deal-table-row-cell' class='hot-deal-right-cell'></div>
             </div>
         </div>
     </div>

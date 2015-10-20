@@ -195,7 +195,8 @@ class Merchant extends CI_Controller
     function follower($user_type, $user_id)
     {
         //CONFIG DATA
-        $group_id_user = $this->config->item('group_id_user');
+        $group_id_merchant = $this->config->item('group_id_merchant');
+        $group_id_supervisor = $this->config->item('group_id_supervisor');
         //POST
         if($this->input->post('search'))
         {
@@ -216,12 +217,24 @@ class Merchant extends CI_Controller
         //READ USER
         $where_read_user = array('id'=>$user_id);
         $query_read_user = $this->albert_model->read_user($where_read_user);
-        $user_name = $query_read_user->row()->company;
+        $group_id = $query_read_user->row()->main_group_id;
+        if ($group_id == $group_id_merchant)
+        {
+            $user_name = $query_read_user->row()->company;
+        }
+        if ($group_id == $group_id_supervisor)
+        {
+            $su_merchant_id = $query_read_user->row()->su_merchant_id;
+            $where_read_user2 = array('id'=>$su_merchant_id);
+            $query_read_user2 = $this->albert_model->read_user($where_read_user2);
+            $user_id = $query_read_user2->row()->id;
+            $user_name = $query_read_user2->row()->company;
+        }
         //DATA
         $data['page_title'] = $user_name . ' User Followers';
-        //QUERY USER FOLLOWER
-        $where_user_follower = array('following_id' => $user_id, 'main_group_id' => $group_id_user);
-        $data['query_follow'] = $this->albert_model->read_follower($where_user_follower, $keyword);
+        //QUERY USER FOLLOWER        
+        $where_user_follower = array('following_main_id' => $user_id);
+        $data['query_follow'] = $this->albert_model->read_follower($where_user_follower, $keyword);        
         //COUNT 
         $data['user_follower_count'] = $this->albert_model->user_follower_count($user_id);
         $data['user_following_count'] = $this->albert_model->user_following_count($user_id);
@@ -245,7 +258,8 @@ class Merchant extends CI_Controller
     function following($user_type, $user_id)
     {
         //CONFIG DATA
-        $group_id_user = $this->config->item('group_id_user');
+        $group_id_merchant = $this->config->item('group_id_merchant');
+        $group_id_supervisor = $this->config->item('group_id_supervisor');
         //POST
         if($this->input->post('search'))
         {
@@ -266,11 +280,23 @@ class Merchant extends CI_Controller
         //READ USER
         $where_read_user = array('id'=>$user_id);
         $query_read_user = $this->albert_model->read_user($where_read_user);
-        $user_name = $query_read_user->row()->company;
+        $group_id = $query_read_user->row()->main_group_id;
+        if ($group_id == $group_id_merchant)
+        {
+            $user_name = $query_read_user->row()->company;
+        }
+        if ($group_id == $group_id_supervisor)
+        {
+            $su_merchant_id = $query_read_user->row()->su_merchant_id;
+            $where_read_user2 = array('id'=>$su_merchant_id);
+            $query_read_user2 = $this->albert_model->read_user($where_read_user2);
+            $user_id = $query_read_user2->row()->id;
+            $user_name = $query_read_user2->row()->company;
+        }
         //DATA
         $data['page_title'] = $user_name . ' Merchant Following';
         //QUERY USER FOLLOWING
-        $where_user_following = array('follower_id' => $user_id, 'main_group_id' => $group_id_user);
+        $where_user_following = array('follower_main_id' => $user_id);
         $data['query_follow'] = $this->albert_model->read_following($where_user_following, $keyword);
         //COUNT 
         $data['user_follower_count'] = $this->albert_model->user_follower_count($user_id);

@@ -14,9 +14,10 @@
         <script type="text/javascript" src='<?php echo base_url() ?>js/jquery/jquery-2.1.4.min.js'></script>
         <script type="text/javascript" src="<?php echo base_url() ?>js/jquery-ui-1.11.4.custom/jquery-ui.js"></script>
         <?php echo link_tag('js/jquery-ui-1.11.4.custom/jquery-ui.css') ?>
-        <link rel="stylesheet" href="<?php echo base_url() ?>js/bootstrap-3.3.5-dist/css/bootstrap.css">
-        <link rel="stylesheet" href="<?php echo base_url() ?>js/bootstrap-3.3.5-dist/css/bootstrap-theme.min.css">
-        <script src="<?php echo base_url() ?>js/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>       
+        <link rel="stylesheet" href="<?php echo base_url() ?>js/bootstrap-3.3.5/dist/css/custom-bootstrap.css">
+        <link rel="stylesheet" href="<?php echo base_url() ?>js/bootstrap-3.3.5/dist/css/custom-bootstrap-modal.css">
+        <link rel="stylesheet" href="<?php echo base_url() ?>js/bootstrap-3.3.5/dist/css/custom-bootstrap-modal-center.css">
+        <script src="<?php echo base_url() ?>js/bootstrap-3.3.5/dist/js/bootstrap.min.js"></script>       
         <script>
             $(function(){
                 //BROSWER RESIZE
@@ -32,7 +33,7 @@
                 });
                 
                 //BOOSTRAP MODAL
-                $('#myModal').modal('show');
+                $('#visit-first-time').modal('show');
             });
                         
             //FB LOGOUT
@@ -98,25 +99,7 @@
             setcookie('visit_first_time', 'no');
             //BOOSTRAP MODAL
             ?>
-            <style>
-                .modal {
-                    text-align: center;
-                }
-
-                .modal:before {
-                    display: inline-block;
-                    vertical-align: middle;
-                    content: " ";
-                    height: 100%;
-                }
-
-                .modal-dialog {
-                  display: inline-block;
-                  text-align: left;
-                  vertical-align: middle;
-                }
-            </style>
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal fade" id="visit-first-time" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
@@ -128,7 +111,7 @@
                         </div>
                     </div>
                 </div>
-            </div>  
+            </div>
             <?php
         }
         ?>
