@@ -242,16 +242,18 @@ if(isset($message))
                     }
                     ?>  
                 </div>
+                <div id='candie-promotion-form-submit'>
                 <?php 
                 if ($is_history == 0 && $this->session->userdata('user_group_id') == $this->config->item('group_id_merchant'))
                 { 
-                    ?>
-                    <div id='candie-promotion-form-submit'>
+                    ?>                   
                         <button name="button_action" type="submit" value="submit">Save</button>
-                    </div>
                     <?php
+                    }else{
+                        echo "You don't have permission to upload candie voucher";
                     } 
                 ?>
+                 </div>
             </div>
 
             <?php echo form_close(); ?>

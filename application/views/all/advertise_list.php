@@ -36,22 +36,27 @@ $fetch_method = $this->router->fetch_method();
     //UPLOAD BUTTON
     if ($this->ion_auth->logged_in())
     {
-        $upload_picture_url = '';
-        $second_parameter = $this->uri->segment(4);
-        if ($fetch_method == 'album_redemption' || ($fetch_method == 'merchant_dashboard' && $second_parameter == 'promotion'))
-        {
-            $upload_picture_url = 'merchant/candie_promotion';
-        }
-        elseif ($fetch_method == 'album_merchant' || $fetch_method == 'merchant_dashboard')
-        {
-            $upload_picture_url = 'merchant/upload_hotdeal';
-        }
-        if(!empty($upload_picture_url)){
-        ?>     
-        <div id='advertise-list-title-upload'>
-            <a href='<?php echo base_url($upload_picture_url) ?>'><i class="fa fa-upload advertise-list-title-upload-icon"></i>Upload Picture</a>
-        </div>
-        <?php
+        //To check is supervisor have role to upload hot deal
+        $have_role = $this->m_custom->check_role_su_can_uploadhotdeal();
+        
+        if($have_role == 1){
+            $upload_picture_url = '';
+            $second_parameter = $this->uri->segment(4);
+            if ($fetch_method == 'album_redemption' || ($fetch_method == 'merchant_dashboard' && $second_parameter == 'promotion'))
+            {
+                $upload_picture_url = 'merchant/candie_promotion';
+            }
+            elseif ($fetch_method == 'album_merchant' || $fetch_method == 'merchant_dashboard')
+            {
+                $upload_picture_url = 'merchant/upload_hotdeal';
+            }
+            if(!empty($upload_picture_url)){
+            ?>     
+            <div id='advertise-list-title-upload'>
+                <a href='<?php echo base_url($upload_picture_url) ?>'><i class="fa fa-upload advertise-list-title-upload-icon"></i>Upload Picture</a>
+            </div>
+            <?php
+            }
         }
     }
     ?>

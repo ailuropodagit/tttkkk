@@ -174,13 +174,17 @@
                         <?php
                         if (check_is_login())
                         {
+                            $login_user_id = $this->session->userdata('user_id');
+                            $login_user_profile = $this->m_custom->display_users($login_user_id, 1, 0, 1);
+                            $login_user_name = $this->m_custom->display_users($login_user_id);
                             if (check_correct_login_type($this->config->item('group_id_user'))) 
                             {
                                 ?>
                                 <!--NORMAL MENU USER PROFILE-->
                                 <li <?php if($header_fetch_method == 'profile'){ echo "class='header-menu-active'"; } ?>>
                                     <a href='<?php echo base_url('user/profile') ?>'>
-                                        <i class='fa fa-user header-menu-icon'></i>Profile
+                                        <?php echo $login_user_profile; ?>
+                                        <?php echo $login_user_name; ?>
                                     </a>
                                 </li>
                                 <!--NORMAL MENU USER LOGOUT-->
@@ -197,7 +201,8 @@
                                 <!--NORMAL MENU MERCHANT PROFILE-->
                                 <li <?php if($header_fetch_method == 'profile'){ echo "class='header-menu-active'"; } ?>>
                                     <a href='<?php echo base_url('merchant/profile') ?>'>
-                                        <i class='fa fa-user header-menu-icon'></i>Profile
+                                        <?php echo $login_user_profile; ?>
+                                        <?php echo $login_user_name; ?>
                                     </a>
                                 </li>
                                 <!--NORMAL MENU MERCHANT LOGOUT-->
@@ -272,13 +277,17 @@
                     <?php
                     if(check_is_login())
                     {
+                        $login_user_id = $this->session->userdata('user_id');
+                        $login_user_profile = $this->m_custom->display_users($login_user_id, 1, 0, 1);
+                        $login_user_name = $this->m_custom->display_users($login_user_id);
                         if (check_correct_login_type($this->config->item('group_id_user'))) 
                         {
                             ?>
                             <!--MOBILE MENU USER PROFILE-->
                             <li>
                                 <a href='<?php echo base_url('user/profile') ?>'>
-                                    <i class='fa fa-user header-menu-icon'></i>Profile
+                                    <?php echo $login_user_profile; ?>
+                                    <?php echo $login_user_name; ?>
                                 </a>
                             </li>
                             <!--MOBILE MENU USER LOGOUT-->
@@ -295,7 +304,8 @@
                             <!--MOBILE MENU MERCHANT PROFILE-->
                             <li>
                                 <a href='<?php echo base_url('merchant/profile') ?>'>
-                                    <i class='fa fa-user header-menu-icon'></i>Profile
+                                    <?php echo $login_user_profile; ?>
+                                    <?php echo $login_user_name; ?>
                                 </a>
                             </li>
                             <!--MOBILE MENU MERCHANT LOGOUT-->

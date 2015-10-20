@@ -1435,17 +1435,19 @@ class Merchant extends CI_Controller
 
             $crud->set_table('users');
             $crud->set_subject('Supervisor');
-            $crud->columns('username', 'password_visible', 'su_branch_id');
+            $crud->columns('username', 'password_visible', 'su_branch_id', 'su_can_uploadhotdeal');
             $crud->required_fields('username', 'password_visible', 'su_branch_id');
-            $crud->fields('username', 'password_visible', 'su_branch_id');
+            $crud->fields('username', 'password_visible', 'su_branch_id', 'su_can_uploadhotdeal');
             $crud->display_as('password_visible', 'Password');
             $crud->display_as('su_branch_id', 'Branch');
+            $crud->display_as('su_can_uploadhotdeal', 'Able to upload picture');
             $crud->callback_add_field('su_branch_id', array($this, '_selected_branch_callback'));   //For add page set pre-selected value if got pass in brach id
             $crud->field_type('su_branch_id', 'dropdown', $this->ion_auth->get_merchant_branch_list($id));  //For view show the branch list text
             $crud->callback_insert(array($this, 'supervisor_insert_callback'));
             $crud->callback_update(array($this, 'supervisor_update_callback'));
             $crud->set_rules('username', 'Username', 'trim|required|callback_supervisor_username_check');
-      
+            $crud->field_type('su_can_uploadhotdeal','true_false');
+            
             $controller = 'merchant';
             $function = 'profile';
             $crud->set_lang_string('insert_success_message', 'Your data has been successfully stored into the database.
@@ -1505,13 +1507,14 @@ class Merchant extends CI_Controller
 //        if(!$this->m_custom->check_is_value_unique('users','username',$post_array['username'])){
 //            return FALSE;
 //        }
-
+        $su_can_uploadhotdeal = $post_array['su_can_uploadhotdeal'] == '1'? 1:0;
         $additional_data = array(
             'username' => $post_array['username'],
             'su_merchant_id' => $this->ion_auth->user()->row()->id,
             'su_branch_id' => $post_array['su_branch_id'],
             'main_group_id' => $this->group_id_supervisor,
             'password_visible' => $post_array['password_visible'],
+            'su_can_uploadhotdeal' => $su_can_uploadhotdeal,
         );
 
         return $this->ion_auth->register($post_array['username'], $post_array['password_visible'], $post_array['username'] . $this->config->item('keppo_email_domain'), $additional_data, $this->group_id_supervisor);
@@ -1519,17 +1522,18 @@ class Merchant extends CI_Controller
 
     function supervisor_update_callback($post_array, $primary_key)
     {
-
+    
 //        if(!$this->m_custom->check_is_value_unique('users','username',$post_array['username'],'id',$primary_key)){
 //            return FALSE;
 //        }
-
+        $su_can_uploadhotdeal = $post_array['su_can_uploadhotdeal'] == '1'? 1:0;
         $additional_data = array(
             'username' => $post_array['username'],
             'email' => $post_array['username'] . $this->config->item('keppo_email_domain'),
             'password' => $post_array['password_visible'],
             'password_visible' => $post_array['password_visible'],
             'su_branch_id' => $post_array['su_branch_id'],
+            'su_can_uploadhotdeal' => $su_can_uploadhotdeal,
         );
 
         return $this->ion_auth->update($primary_key, $additional_data);
