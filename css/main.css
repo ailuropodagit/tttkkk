@@ -1692,13 +1692,20 @@ a:hover {
 }
 
 #hot-deal-center {
-    width: 500px;
     margin: 0px auto 0px auto;
 }
 
-#hot-deal-right, #hot-deal-left {
+#hot-deal-left, #hot-deal-right {
     font-size: 45px;
-    width: 40px;
+    width: 50px;
+}
+
+#hot-deal-left {
+    text-align: left;
+}
+
+#hot-deal-right {
+    text-align: right;
 }
 
 #hot-deal-left-gray, #hot-deal-right-gray {
@@ -1718,6 +1725,11 @@ a:hover {
     color: black;
     font-weight: bold;
     margin: 0px 0px 10px 0px;
+}
+
+#hot-deal-title a {
+    color: black;
+    text-decoration: none;
 }
 
 #hot-deal-photo-box {

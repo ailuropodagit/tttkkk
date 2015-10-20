@@ -15,15 +15,10 @@ if(isset($message))
 <div id="redemption">
     <h1>Redemption</h1>
     <div id="redemption-content">
-        
         <div id="redemption-category">
             Category: <?php echo $sub_category; ?>
         </div>
         <div id="float-fix"></div>
-        
-<!--        <div id='redemption-print'>
-            <a href="#" onclick="printDiv('print-area')"><i class="fa fa-print"></i> Print Voucher</a>
-        </div>-->
         <div id="redemption-edit-link">
             <?php
             if (check_is_login())
@@ -49,25 +44,25 @@ if(isset($message))
         </div>
         <div id="float-fix"></div>
         <div id='redemption-redempt-submit'style="float:right">
-                    <?php
-                    if (check_correct_login_type($this->config->item('group_id_user')))
-                    {
-                        //FORM OPEN
-                        $action_url = base_url() . "all/user_redeem_voucher";
-                        $confirm_message = "Confirm that you want to redeem this voucher? ";
-                        ?>
-                        <form action="<?php echo $action_url; ?>" onSubmit="return confirm('<?php echo $confirm_message ?>')" method="post" accept-charset="utf-8">
-                        <?php
-                        echo form_input($item_id);
-                        ?>
-                        <input type='hidden' name='current_url' id='current_url' value='<?php echo get_current_url() ?>'/>
-                        <button name="button_action" type="submit" value="redeem" >Redeem</button>
-                        <?php
-                        //FORM CLOSE
-                        echo form_close();
-                    }
-                    ?>
-                </div>
+            <?php
+            if (check_correct_login_type($this->config->item('group_id_user')))
+            {
+                //FORM OPEN
+                $action_url = base_url() . "all/user_redeem_voucher";
+                $confirm_message = "Confirm that you want to redeem this voucher? ";
+                ?>
+                <form action="<?php echo $action_url; ?>" onSubmit="return confirm('<?php echo $confirm_message ?>')" method="post" accept-charset="utf-8">
+                <?php
+                echo form_input($item_id);
+                ?>
+                <input type='hidden' name='current_url' id='current_url' value='<?php echo get_current_url() ?>'/>
+                <button name="button_action" type="submit" value="redeem" >Redeem</button>
+                <?php
+                //FORM CLOSE
+                echo form_close();
+            }
+            ?>
+        </div>
         <div id="float-fix"></div>
         <div id='redemption-table'>
             <div id='redemption-table-row'>
