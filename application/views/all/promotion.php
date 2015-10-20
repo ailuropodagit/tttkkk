@@ -102,56 +102,76 @@ if(isset($message))
                                 <i class="fa fa-gift header-menu-icon"></i><span id="redemption-time-label">Redeem Period:  <?php echo $start_date ?> to <?php echo $end_date ?></span>
                             </div>
                             <div id="redemption-rate">
-                                <?php
-                                echo form_input($item_id);
-                                echo form_input($item_type);
-                                for ($i = 1; $i <= 5; $i++)
-                                {
-                                    if ($i == round($average_rating))
+                                <div id="redemption-rate-star">
+                                    <?php
+                                    echo form_input($item_id);
+                                    echo form_input($item_type);
+                                    for ($i = 1; $i <= 5; $i++)
                                     {
-                                        echo "<input class='auto-submit-star' type='radio' name='rating' " . $radio_level . " value='" . $i . "' checked='checked'/>";
+                                        if ($i == round($average_rating))
+                                        {
+                                            echo "<input class='auto-submit-star' type='radio' name='rating' " . $radio_level . " value='" . $i . "' checked='checked'/>";
+                                        }
+                                        else
+                                        {
+                                            echo "<input class='auto-submit-star' type='radio' name='rating' " . $radio_level . " value='" . $i . "'/>";
+                                        }
                                     }
-                                    else
-                                    {
-                                        echo "<input class='auto-submit-star' type='radio' name='rating' " . $radio_level . " value='" . $i . "'/>";
-                                    }
-                                }
-                                ?>
-                                <div id="float-fix"></div>
+                                    ?>
+                                    <div id="float-fix"></div>
+                                </div>
+                                <div id="redemption-rate-star-label">
+                                    <?php echo number_format($average_rating, 2) ?>
+                                </div>
+                                <div id="redemption-rate-review">
+                                    <?php
+                                    $rating_count = $this->m_custom->activity_rating_count($advertise_id, 'adv');
+                                    echo "Reviews : ". $rating_count;
+                                    ?>
+                                </div>
+                                <div id="redemption-rate-earn-candie">
+                                    <?php
+                                    $rate_candie_earn = $this->m_custom->display_trans_config(3);
+                                    echo "Earn : " . $rate_candie_earn . " candies";
+                                    ?>
+                                </div>
                             </div>
-                            <div style="float:left">
-                            <?php
-                            $rating_count = $this->m_custom->activity_rating_count($advertise_id, 'adv');
-                            echo "Reviews : ". $rating_count;
-                            echo " (Earn : " . $this->m_custom->display_trans_config(3) . " candies)";
-                            ?>
-                            </div>    
                             <div id="float-fix"></div>
                             <div id="redemption-description">
                                 <?php echo $description ?>
                             </div>
                             <div id="redemption-like-comment-share">
-                                <div id="redemption-like">
-                                    <?php echo $like_url; ?>
-                                </div>
-                                <div id="redemption-comment">
-                                    <?php echo $comment_url; ?>
+                                <div id="redemption-like-comment">
+                                    <div id="redemption-like">
+                                        <?php echo $like_url; ?>
+                                    </div>
+                                    <div id="redemption-comment">
+                                        <?php echo $comment_url; ?>
+                                    </div>
+                                    <div id="redemption-like-comment-earn-candie">
+                                        <?php
+                                        $like_comment_candie_earn = $this->m_custom->display_trans_config(2);
+                                        echo "Earn : " . $like_comment_candie_earn . " candies"; 
+                                        ?>
+                                    </div>
                                 </div>
                                 <div id="redemption-share">
                                     Share :
-                                    <span id="redemption-share-facebook">
+                                    <span id="redemption-share-facebook" onclick="fbShare()">
                                         <i class="fa fa-facebook-square"></i>
                                     </span>
+                                    <div id="redemption-share-earn-candie">
+                                        Earn: 10 candies
+                                    </div>
                                 </div>
                                 <div id="float-fix"></div>
                             </div>
-                            <div style="float:left">
-                            <?php echo " (Earn : " . $this->m_custom->display_trans_config(2) . " candies)"; ?>
-                            </div>
-                            <div style="float:right;display:none">
+                            
+                            <div style="float:right; display:none">
                                 <?php echo " (Earn : " . $this->m_custom->display_trans_config(10) . " candies)"; ?>
                             </div>
                             <div id="float-fix"></div>
+                    
                             <div id="redemption-terms-conditions">
                                 <div id="redemption-terms-conditions-title">Terms & Condition:</div>
                                 <ul>
