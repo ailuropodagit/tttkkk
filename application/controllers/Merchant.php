@@ -2073,6 +2073,7 @@ class Merchant extends CI_Controller
                 }
                 $picture_id = $this->input->post('hid_picture_id');
                 $upload_by_user_id = $this->input->post('hid_upload_by_user_id');
+                $hide_remark = $this->input->post('hide_remark');
                 $group_id_merchant = $this->config->item('group_id_merchant');
                 $group_id_supervisor = $this->config->item('group_id_supervisor');
                 $merchant_allowed_list = $this->m_custom->get_list_of_allow_id('merchant_user_album', 'merchant_id', $merchant_id, 'merchant_user_album_id', 'post_type', 'mer');
@@ -2082,6 +2083,7 @@ class Merchant extends CI_Controller
                     $merchant = $this->m_custom->getMerchantInfo($merchant_id);
                     $data = array(
                         'hide_flag' => 1,
+                        'hide_remark' => $hide_remark,
                     );    
                     if ($this->m_custom->simple_update('merchant_user_album', $data, 'merchant_user_album_id', $picture_id))
                     {

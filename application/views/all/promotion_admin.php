@@ -55,7 +55,7 @@ if(isset($message))
                                 {  
                                     ?>
                                                         <!-- Button trigger modal -->
-                    <button type="submit" data-toggle = "modal" data-target = "#myModal" style="float:right">
+                    <button type="submit" data-toggle = "modal" data-target = "#myModal_Redeem" style="float:right">
                        Redeem
                     </button>
                 <div id="float-fix"></div>             
@@ -148,7 +148,7 @@ if(isset($message))
                                 {  
                                     ?>
                         <!-- Modal -->
-<div class = "modal fade" id = "myModal" tabindex = "-1" role = "dialog" aria-labelledby = "myModalLabel" aria-hidden="true">
+<div class = "modal fade" id = "myModal_Redeem" tabindex = "-1" role = "dialog" aria-labelledby = "myModalLabel" aria-hidden="true">
    
    <div class = "modal-dialog" >
       <div class = "modal-content">
