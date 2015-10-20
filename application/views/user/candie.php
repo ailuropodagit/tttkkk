@@ -1,3 +1,6 @@
+<script type="text/javascript" src="<?php echo base_url() ?>js/datatables/js/jquery.dataTables.min.js"></script>
+<?php echo link_tag('js/datatables/css/jquery.dataTables.min.css') ?>
+
 <script type="text/javascript">
     function toggle_visibility(id) {
         var e = document.getElementById(id);
@@ -7,6 +10,13 @@
             e.style.display = 'block';
         }
     }
+        $(document).ready(function () {
+        $('#myTable').DataTable({
+            "order": [],
+            "paging": false,
+            "ordering": false
+        });
+    });
 </script>
 
 <?php
@@ -53,7 +63,7 @@ if (isset($message))
         <div id="print-area">
             <div id="candie-table">
                 <div id='table-all'>
-                    <table border='1px' cellspacing='0px' cellpadding='0px'>
+                    <table border='1px' cellspacing='0px' cellpadding='0px' id="myTable" class="display">
                         <colgroup>
                             <col style="width: 180px;">
                             <col style='width: 90px;'>
@@ -63,6 +73,7 @@ if (isset($message))
                             <col style='width: 100px;'>
                             <col style='width: 40px;'>
                         </colgroup>
+                        <thead>
                         <tr>
                             <th>Company</th>
                             <th>Voucher Title</th>
@@ -72,18 +83,21 @@ if (isset($message))
                             <th>Expire Date</th>
                             <th>Candies</th>
                         </tr>
+                        </thead>      
+                        <tbody>
                         <tr>
                             <td><?php echo $previous_month_selected_text['month_year_text']; ?> End Candies</td>
-                            <td colspan="5"></td>
+                            <td></td><td></td><td></td><td></td><td></td>  <!--I do like this because datatable not support colspan or rowspan-->
                             <td style="text-align:right"><?php echo $previous_end_month_balance ?></td>
                         </tr>
                         <tr>
                             <td><?php echo $the_month_selected_text; ?> Candies Gain</td>
-                            <td colspan="5"></td>
+                            <td></td><td></td><td></td><td></td><td></td>
                             <td style="text-align:right">
                                 <a href="#" onclick="toggle_visibility('candie-how-gain');">+ <?php echo $this_month_candie_gain ?></a>
                             </td>
                         </tr>
+                        
                         <?php
                         foreach ($this_month_redemption as $row)
                         {
@@ -99,8 +113,12 @@ if (isset($message))
                             echo "<td style='text-align:right'>- " . $can_row['candie_minus'] . "</td>";
                             echo '</tr>';
                         }
-                        echo '<td><b>Month End Candies</b></td><td colspan="5"></td><td style="text-align:right">' . $end_month_balance . '</td>';
                         ?>
+                        
+                        <tr>
+                        <td><b>Month End Candies</b></td><td></td><td></td><td></td><td></td><td></td><td style="text-align:right"><?php echo $end_month_balance; ?></td> 
+                        </tr>   
+                        </tbody>
                     </table>
                 </div>
             </div>

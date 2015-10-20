@@ -140,6 +140,33 @@ class M_custom extends CI_Model
         return $have_access;
     }
 
+    public function check_role($the_table, $the_column, $the_value, $wanted_column)
+    {
+        $have_role = 0;
+        $this->db->select($wanted_column);
+        $this->db->from($the_table);
+        $this->db->where($the_column, $the_value);
+        $query = $this->db->get();
+        //$query = $this->db->get_where($the_table, array($the_column => $the_value));
+        $result = $query->row_array();
+        if ($query->num_rows() > 0)
+        {
+            $have_role = $result[$wanted_column];
+        }
+        return $have_role;
+    }
+    
+    public function check_role_su_can_uploadhotdeal()
+    {
+        $have_role = 1;
+        if (check_correct_login_type($this->config->item('group_id_supervisor')))
+        {
+            $login_id = $this->ion_auth->user()->row()->id;
+            $have_role = $this->m_custom->check_role('users','id',$login_id,'su_can_uploadhotdeal');
+        }
+        return $have_role;
+    }
+    
     //To find many records in DB with one keyword
     public function get_list_of_allow_id($the_table, $the_column, $the_value, $wanted_column, $second_column = NULL, $second_value = NULL)
     {

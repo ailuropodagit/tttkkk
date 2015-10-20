@@ -118,11 +118,18 @@ if(isset($message))
             <?php 
         }
         ?>
-                  
         <div id='hot-deal-advertise-submit'>
-            <button name="button_action" type="submit" value="upload_hotdeal">Save</button>
+        <?php 
+        $have_role = $this->m_custom->check_role_su_can_uploadhotdeal();       
+        if($have_role == 1){
+        ?>           
+                <button name="button_action" type="submit" value="upload_hotdeal">Save</button>
+        <?php    }
+        else {
+           echo "You don't have permission to upload hot deal";
+        }
+        ?>
         </div>
-            
         <?php 
         //FORM CLOSE
         echo form_close();
