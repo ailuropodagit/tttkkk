@@ -121,79 +121,99 @@
                         <div id="hot-deal-sub-title">
                             <?php echo $title ?>
                         </div>
-                        <div id="hot-deal-rate-time">
-                            <div id="hot-deal-rate">
-                                <div style="display:inline;">
-                                    <?php                                    
-                                    echo form_input($item_id);
-                                    echo form_input($item_type);
-                                    for ($i = 1; $i <= 5; $i++)
-                                    {
-                                        if ($i == round($average_rating))
-                                        {
-                                            echo "<input class='auto-submit-star' type='radio' name='rating' " . $radio_level . " value='" . $i . "' checked='checked'/>";
-                                        }
-                                        else
-                                        {
-                                            echo "<input class='auto-submit-star' type='radio' name='rating' " . $radio_level . " value='" . $i . "'/>";
-                                        }
-                                    } //end of for
-                                    ?>
-                                </div>
-                            </div>
-                            <?php if($post_hour!=0) { ?>
+                        <?php 
+                        if ($post_hour != 0)
+                        { 
+                            ?>
                             <div id="hot-deal-time">
                                 <i class="fa fa-clock-o"></i>
                                 <span id="hot-deal-time-label" data-countdown='<?php echo $end_time ?>'></span>
                             </div>
-                            <?php } ?>
-                            <div id="float-fix"></div>
-                        </div>
-                        <div style="float:left">
                             <?php
-                            $rating_count = $this->m_custom->activity_rating_count($advertise_id, 'adv');
-                            echo "Reviews : ". $rating_count;
-                            echo " (Earn : " . $this->m_custom->display_trans_config(3) . " candies)";
-                            ?>
-                        </div>    
-                        <div id="float-fix"></div>
-                        <div id="hot-deal-description">
-                            <?php echo $description ?>
+                        }
+                        ?>
+                        <div id="hot-deal-rate">
+                            <div id="hot-deal-rate-star">
+                                <?php                                    
+                                echo form_input($item_id);
+                                echo form_input($item_type);
+                                for ($i = 1; $i <= 5; $i++)
+                                {
+                                    if ($i == round($average_rating))
+                                    {
+                                        echo "<input class='auto-submit-star' type='radio' name='rating' " . $radio_level . " value='" . $i . "' checked='checked'/>";
+                                    }
+                                    else
+                                    {
+                                        echo "<input class='auto-submit-star' type='radio' name='rating' " . $radio_level . " value='" . $i . "'/>";
+                                    }
+                                }
+                                ?>
+                                <div id="float-fix"></div>
+                            </div>
+                            <div id="hot-deal-rate-star-label">
+                                <?php echo number_format($average_rating, 2) ?>
+                            </div>
+                            <div id="hot-deal-rate-review">
+                                <?php
+                                $rating_count = $this->m_custom->activity_rating_count($advertise_id, 'adv');
+                                echo 'Review : ' . $rating_count;
+                                ?>
+                            </div>
+                            <div id="hot-deal-rate-earn-candie">
+                                <?php
+                                $rate_candie_earn = $this->m_custom->display_trans_config(3);
+                                echo "Earn : " . $rate_candie_earn . " candies";
+                                ?>
+                            </div>    
                         </div>
-                        <div id="hot-deal-like-comment-share">
+                    </div>
+                    <div id="hot-deal-description">
+                        <?php echo $description ?>
+                    </div>
+                    <div id="hot-deal-like-comment-share">
+                        <div id="hot-deal-like-comment">
                             <div id="hot-deal-like">
                                 <?php echo $like_url; ?>
                             </div>
                             <div id="hot-deal-comment">
                                 <?php echo $comment_url; ?>
                             </div>
-                            <div id="hot-deal-share">
-                                <?php echo "Share :"; ?>
-                                <span id="hot-deal-share-facebook" onclick="fbShare()">
-                                    <i class="fa fa-facebook-square"></i>
-                                </span>
+                            <div id="hot-deal-like-comment-earn-candie">
+                                <?php
+                                $like_comment_candie_earn = $this->m_custom->display_trans_config(2);
+                                echo "Earn : " . $like_comment_candie_earn . " candies"; 
+                                ?>
                             </div>
-                            <div id="float-fix"></div>
                         </div>
-                        <div style="float:left">
-                            <?php echo " (Earn : " . $this->m_custom->display_trans_config(2) . " candies)"; ?>
-                        </div>
-                        <div style="float:right;display:none">
-                            <?php echo " (Earn : " . $this->m_custom->display_trans_config(10) . " candies)"; ?>
+                        <div id="hot-deal-share">
+                            Share :
+                            <span id="hot-deal-share-facebook" onclick="fbShare()">
+                                <i class="fa fa-facebook-square"></i>
+                            </span>
+                            <div id="hot-deal-share-earn-candie">
+                                Earn: 10 candies
+                            </div>
                         </div>
                         <div id="float-fix"></div>
-                        <div id="hot-deal-people-reach">
-                            <?php echo "People Reached " . $this->m_custom->activity_view_count($advertise_id) . " users"; ?>
-                        </div>
-                        <div id="hot-deal-comment-list">
-                            <?php
-                            $this->load->view('all/comment_form');
-                            ?>
-                        </div>
+                    </div>
+
+                    <div style="float:right; display:none">
+                        <?php echo " (Earn : " . $this->m_custom->display_trans_config(10) . " candies)"; ?>
+                    </div>
+                    <div id="float-fix"></div>
+                    
+                    <div id="hot-deal-people-reach">
+                        <?php echo "People Reached " . $this->m_custom->activity_view_count($advertise_id) . " users"; ?>
+                    </div>
+                    <div id="hot-deal-comment-list">
+                        <?php
+                        $this->load->view('all/comment_form');
+                        ?>
                     </div>
                 </div>
-                <div id='hot-deal-table-row-cell' class='hot-deal-right-cell'></div>
             </div>
+            <div id='hot-deal-table-row-cell' class='hot-deal-right-cell'></div>
         </div>
     </div>
 </div>
