@@ -210,7 +210,7 @@ class M_user extends CI_Model
         }
     }
     
-    public function user_redemption($user_id, $status_id = NULL, $sub_category = NULL)
+    public function user_redemption($user_id, $status_id = NULL, $sub_category = NULL, $merchant_id = NULL)
     {
         if (!IsNullOrEmptyString($status_id))
         {
@@ -228,15 +228,24 @@ class M_user extends CI_Model
             {
                 $candie = $this->m_user->get_candie_history_from_redemption($row['redeem_id']);
 
+                $valid = 1;
                 if (!IsNullOrEmptyString($sub_category))
                 {
-                    if ($advertise['sub_category_id'] == $sub_category)
+                    if ($advertise['sub_category_id'] != $sub_category)
                     {
-                        $result[] = $advertise + $candie + $row;
+                        $valid = 0;
                     }
                 }
-                else
+                
+                if (!IsNullOrEmptyString($merchant_id))
                 {
+                    if ($advertise['merchant_id'] != $merchant_id)
+                    {
+                        $valid = 0;
+                    }
+                }
+                
+                if($valid == 1){
                     $result[] = $advertise + $candie + $row;
                 }
             }
@@ -256,6 +265,7 @@ class M_user extends CI_Model
         $red_result = $red_query->result_array();
 
         $result = array();
+        $result['0'] = 'All Category'; //Add a default selector
         foreach ($red_result as $row)
         {
             $advertise = $this->m_custom->getOneAdvertise($row['advertise_id']);
@@ -271,6 +281,33 @@ class M_user extends CI_Model
         return $result;
     }
 
+    public function user_redemption_merchant_list($user_id, $status_id = NULL)
+    {
+        if (!IsNullOrEmptyString($status_id))
+        {
+            $this->db->where('status_id', $status_id);
+        }
+        $this->db->order_by('redeem_id', 'desc');
+        $red_query = $this->db->get_where('user_redemption', array('user_id' => $user_id));
+        $red_result = $red_query->result_array();
+
+        $result = array();
+        $result['0'] = 'All Company'; //Add a default selector
+        foreach ($red_result as $row)
+        {
+            $advertise = $this->m_custom->getOneAdvertise($row['advertise_id']);
+            if ($advertise != FALSE)
+            {
+                if (!in_array($advertise['merchant_id'], $result))
+                {
+                    $result[$advertise['merchant_id']] = $this->m_custom->display_users($advertise['merchant_id']);
+                }
+            }
+        }
+
+        return $result;
+    }
+    
     public function user_review_list($act_type, $user_id, $category = NULL)
     {
         $act_type_name = $this->m_custom->display_static_option($act_type);
