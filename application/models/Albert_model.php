@@ -5,7 +5,7 @@ class Albert_model extends CI_Model
     /* READ ADVERTISE HOT DEAL SUGGESTION
     ***************************************************/
     public function read_advertise_hot_deal_suggestion($array_sub_category_id)
-    {      
+    {
         //QUERY        
         $this->db->select('*');
         $this->db->from('advertise');
@@ -114,6 +114,13 @@ class Albert_model extends CI_Model
         //RETURN
         return $query;
     }
+    
+    /*  READ MERCHANT MAIN 
+    ***************************************************/
+//    public function read_merchant_main($where) 
+//    {
+//        
+//    }
         
     /* READ USER
     ***************************************************/
