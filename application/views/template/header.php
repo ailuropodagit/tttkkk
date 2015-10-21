@@ -182,8 +182,8 @@
                                 $header_profile_login_user_name = $header_row_read_user->first_name . ' ' . $header_row_read_user->last_name;
                                 ?>
                                 <!--NORMAL MENU USER PROFILE-->
-                                <li <?php if($header_fetch_method == 'profile'){ echo "class='header-menu-active'"; } ?>>
-                                    <a href='<?php echo base_url('user/profile') ?>'>
+                                <li>
+                                    <a href='<?php echo base_url("all/user_dashboard/$login_user_id") ?>'>
                                         <div id="header-menu-profile-photo">
                                             <?php echo img("$header_album_user_profile_path/$header_profile_login_profile_image") ?>
                                         </div>
@@ -206,12 +206,13 @@
                                 $header_where = array('id'=>$login_user_id);
                                 $header_query_read_merchant_superviosr_as_merchant = $this->albert_model->read_merchant_supervisor_as_merchant($header_where);
                                 $header_row_read_merchant_superviosr_as_merchant = $header_query_read_merchant_superviosr_as_merchant->row();
+                                $header_profile_login_slug = $header_row_read_merchant_superviosr_as_merchant->slug;
                                 $header_profile_login_profile_image = $header_row_read_merchant_superviosr_as_merchant->profile_image;
                                 $header_profile_login_company_name =  $header_row_read_merchant_superviosr_as_merchant->company;
                                 ?>
                                 <!--NORMAL MENU MERCHANT PROFILE-->
-                                <li <?php if($header_fetch_method == 'profile'){ echo "class='header-menu-active'"; } ?>>
-                                    <a href='<?php echo base_url('merchant/profile') ?>'>
+                                <li>
+                                    <a href='<?php echo base_url("all/merchant_dashboard/$header_profile_login_slug") ?>'>
                                         <div id="header-menu-profile-photo">
                                             <?php echo img("$header_album_merchant_profile_path/$header_profile_login_profile_image") ?>
                                         </div>
