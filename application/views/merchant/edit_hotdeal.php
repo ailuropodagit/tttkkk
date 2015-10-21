@@ -85,11 +85,11 @@ if(isset($message))
                     </div>
                 </div>
                 <div id="float-fix"></div>
-                <br/>
                 <div id='hot-deal-advertise-form-each'>
-                    <div id='hot-deal-advertise-form-each-input'>
+                    <div id='hot-deal-advertise-form-each-label'>
                         <?php
-                            echo 'Remove : ' . form_checkbox($hotdeal_hide);
+                            $frozen_status = $hotdeal_frozen == 0? "No" : "Yes";
+                            echo 'Frozen/Hide : ' . $frozen_status;
                         ?>
                     </div>
                 </div>
@@ -97,7 +97,12 @@ if(isset($message))
             <div id="float-fix"></div>
 
             <button name="button_action" type="submit" value="edit_hotdeal" >Save</button>
-
+            <?php if($hotdeal_frozen == 0){ ?>
+            <button name="button_action" type="submit" value="frozen_hotdeal" onclick="return confirm('Are you sure want to temporary frozen this hotdeal? After frozen then it will not show publicly until you unfrozen it.')" >Frozen</button>
+            <?php }else{ ?>
+            <button name="button_action" type="submit" value="unfrozen_hotdeal" >Unfrozen</button>
+            <?php } ?>
+            <button name="button_action" type="submit" value="remove_hotdeal" onclick="return confirm('Are you sure want to remove it?')" >Remove</button>
         <?php echo form_close(); ?>
 
     </div>
