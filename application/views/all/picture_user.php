@@ -25,6 +25,17 @@
         <div id="float-fix"></div>
         <div id='picture-user-table'>
             <div id='picture-user-table-row'>
+                <div id='picture-user-table-row-cell' class='picture-user-left-cell'></div>
+                <div id='picture-user-table-row-cell' class='picture-user-center-cell'>
+                    <div id='picture-user-center'>
+                        <div id="picture-user-title">
+                            <?php echo $title ?>
+                        </div>
+                    </div>
+                </div>
+                <div id='picture-user-table-row-cell' class='picture-user-right-cell'></div>
+            </div>
+            <div id='picture-user-table-row'>
                 <div id='picture-user-table-row-cell' class='picture-user-left-cell'>
                     <div id='picture-user-left'>
                         <?php
@@ -41,12 +52,30 @@
                 </div>
                 <div id='picture-user-table-row-cell' class='picture-user-center-cell'>
                     <div id='picture-user-center'>
-                        <div id="picture-user-title">
-                            <?php echo $title ?>
-                        </div>
                         <div id='picture-user-photo-box'>
                             <img src='<?php echo $image_url ?>'>
                         </div>
+                    </div>
+                </div>
+                <div id='picture-user-table-row-cell' class='picture-user-right-cell'>
+                    <div id='picture-user-right'>
+                        <?php
+                        if (!empty($next_url))
+                        {
+                            ?><a href="<?php echo $next_url ?>"><i class="fa fa-angle-double-right"></i></a><?php
+                        }
+                        else 
+                        {
+                            ?><div id='picture-user-right-gray'><i class="fa fa-angle-double-right"></i></div><?php
+                        }
+                        ?>
+                    </div>
+                </div>
+            </div>
+            <div id='picture-user-table-row'>
+                <div id='picture-user-table-row-cell' class='picture-user-left-cell'></div>
+                <div id='picture-user-table-row-cell' class='picture-user-center-cell'>
+                    <div id='picture-user-center'>
                         <div id="picture-user-rate-upload-by">
                             <div id="picture-user-rate">
                                 <?php
@@ -103,22 +132,8 @@
                         </div>
                     </div>
                 </div>
-                <div id='picture-user-table-row-cell' class='picture-user-right-cell'>
-                    <div id='picture-user-right'>
-                        <?php
-                        if (!empty($next_url))
-                        {
-                            ?><a href="<?php echo $next_url ?>"><i class="fa fa-angle-double-right"></i></a><?php
-                        }
-                        else 
-                        {
-                            ?><div id='picture-user-right-gray'><i class="fa fa-angle-double-right"></i></div><?php
-                        }
-                        ?>
-                    </div>
-                </div>
+                <div id='picture-user-table-row-cell' class='picture-user-right-cell'></div>
             </div>
         </div>
-        
     </div>
 </div>

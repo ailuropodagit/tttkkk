@@ -57,7 +57,6 @@ input[type='text'] {
 input[type='text']::-webkit-input-placeholder {
     font-size: 13px;
     letter-spacing: 1px;
-    font-style: italic;
 }
 
 input[type='password'] {
@@ -150,15 +149,16 @@ textarea {
     border: 1px solid #a9a9a9;
     border-radius: 3px;
     padding: 7px 7px 7px 7px;
-    font-size: 13.5px;
+    font-size: 12.5px;
     outline: none;
-    font-family: serif;
+    font-family: verdana;
+    letter-spacing: -1px;
 }
 
 textarea::-webkit-input-placeholder {
-    font-style: italic;
-    font-family: serif;
-    letter-spacing: 1px;
+    font-size: 13px;
+    font-family: verdana;
+    letter-spacing: 0px;
 }
 
 p {
@@ -238,11 +238,11 @@ a:hover {
 #table-all table th, #table-all-layout-fixed th {
     background-color: whitesmoke;
     padding: 4px 8px 4px 8px;
-    font-size: 16px;
+    font-size: 13px;
 }
 
 #table-all table td, #table-all-layout-fixed td {
-    font-size: 16px;
+    font-size: 13px;
     padding: 5px 8px 5px 8px;
 }
 
@@ -350,10 +350,6 @@ a:hover {
     margin-right: 7px;
 }
 
-.header-menu-icon-home {
-    font-size: 16px !important;
-}
-
 #header-menu-mobile-icon {
     display: none;
 }
@@ -362,6 +358,54 @@ a:hover {
     display: none;
 }
     
+/* HEADER SUB MENU
+******************************/
+
+#header-sub-menu {
+    background-color: white;
+    border-left: 1px solid #ccccc8;
+    border-right: 1px solid #ccccc8;
+}
+
+#header-sub-menu-content {
+    padding: 20px 25px 0px 25px;
+    text-align: right;
+}
+
+#header-sub-menu ul {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+#header-sub-menu ul li {
+    display: inline;
+    padding: 2px 8px 5px 8px;
+}
+
+#header-sub-menu ul li a {
+    color: gray;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none;
+}
+    
+.header-sub-menu-icon {
+    font-size: 14px;
+    margin-right: 7px;
+}
+
+.header-sub-menu-active {
+    border-radius: 5px;
+    background-color: #e91d41;
+    box-sizing: border-box;
+}
+
+.header-sub-menu-active a { 
+    color: white !important;
+}
+
 /* SEARCH
 ******************************/
 
@@ -372,7 +416,7 @@ a:hover {
 }
 
 #search-content {
-    padding: 25px 25px 0px 25px;
+    padding: 20px 25px 0px 25px;
 }
 
 #search-content-box {
@@ -386,7 +430,6 @@ a:hover {
 
 #search-content-box input[type='text'] {
     width: 100%;
-    padding: 0px 0px 0px 30px;
 }
 
 #search-content-box select {
@@ -399,13 +442,6 @@ a:hover {
 #search-content-box button[type='submit'] {
     width: 100%;
     box-sizing: border-box;
-}
-
-#search-icon {
-    position: absolute;
-    left: 23px;
-    top: 23px;
-    color: #7B7B7B;
 }
 
 #search-box-block1, #search-box-block2, #search-box-block3 {
@@ -529,7 +565,7 @@ a:hover {
 #layout-category-left-label {
     font-size: 16px;
     margin: 25px 0px 10px 0px;
-    font-weight: bold;
+    text-transform: uppercase;
     color: #244964;
 }
 
@@ -658,7 +694,7 @@ a:hover {
 }
 
 #category-each-label {
-    font-size: 17px;
+    font-size: 15px;
     margin: 0px 0px 10px 0px;
     text-transform: uppercase;
     color: #244964;
@@ -676,6 +712,7 @@ a:hover {
 #category-each-nav a {
     color: gray;
     text-decoration: none;
+    font-size: 15px;
 }
 
 #category-each-nav a:hover {
@@ -1125,6 +1162,15 @@ a:hover {
 
 #advertise-list-suggestion-content {
     margin: 20px 0px 0px 0px;
+}
+
+#advertise-list-suggestion-page-title {
+    color: #244964;
+    font-size: 25px;
+    border-bottom: 1px solid lightgray;
+    padding: 0px 0px 6px 0px;
+    margin: 0px 0px 10px 0px;
+    letter-spacing: 1px;
 }
 
 /* OUTLET
@@ -1599,12 +1645,16 @@ a:hover {
 }
 
 #picture-user-title {
-    margin: 0px 0px 20px 0px;
+    margin: 0px 0px 10px 0px;
+    color: black;
+    font-size: 28px;
+    font-weight: bold;
+    text-align: left;
 }
 
 #picture-user-title a {
     color: black;
-    font-size: 28px;
+    font-size: 25px;
     font-weight: bold;
     text-decoration: none;
 }
@@ -2034,9 +2084,6 @@ a:hover {
     font-size: 20px;
     color: black;
     font-weight: bold;
-}
-
-#album-user-main-title a:hover {
     text-decoration: none;
 }
 
@@ -2534,7 +2581,7 @@ a:hover {
 }
 
 #user-redemption-search-input input[type='text'] {
-    width: calc(100% - 90px);
+    width: calc(100% - 95px);
 }
 
 #user-redemption-search-submit {

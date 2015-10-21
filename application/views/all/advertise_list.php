@@ -226,7 +226,7 @@ $fetch_method = $this->router->fetch_method();
             ?>
             <!--ADVERTISE LIST SUGGESTION-->
             <div id="advertise-list-suggestion">
-                <h1><?php if(!empty($advertise_suggestion_page_title)){ echo $advertise_suggestion_page_title; } ?></h1>
+                <div id="advertise-list-suggestion-page-title"><?php if(!empty($advertise_suggestion_page_title)){ echo $advertise_suggestion_page_title; } ?></div>
                 <div id="advertise-list-suggestion-content">
                     <?php
                     if(!empty($query_advertise_suggestion)){

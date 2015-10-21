@@ -140,7 +140,7 @@
                         <!--NORMAL MENU HOME-->
                         <li <?php if($header_fetch_class == 'home'){ echo "class='header-menu-active'"; } ?>>
                             <a href='<?php echo base_url('home') ?>'>
-                                <i class="fa fa-home header-menu-icon header-menu-icon-home"></i>Home
+                                <i class="fa fa-home header-menu-icon"></i>Home
                             </a>
                         </li>
                         <?php 
@@ -168,20 +168,10 @@
                                 <i class="fa fa-gift header-menu-icon"></i>Redemption
                             </a>
                         </li>
-                        <!--NORMAL MENU BLOGGER-->
-                        <li <?php if($header_fetch_class == 'blogger'){ echo "class='header-menu-active'"; } ?>>
-                            <a href='<?php echo base_url('blogger') ?>'>
-                                <i class="fa fa-pencil header-menu-icon"></i>Blogger
-                            </a>
-                        </li>
                         <?php
                         if (check_is_login())
                         {
-                            $login_user_id = $this->session->userdata('user_id');
-                                   
-//                            echo "<div style='color: white;'>";
-//                            echo "</div>";
-                            
+                            $login_user_id = $this->session->userdata('user_id');                            
                             if (check_correct_login_type($this->config->item('group_id_user'))) 
                             {
                                 //PROFILE USER
@@ -363,6 +353,29 @@
                 </ul>
             </div>
         </div>
+        
+        <!--HEADER SUB MENU-->
+        <div id="wrapper">
+            <div id="header-sub-menu">
+                <div id="header-sub-menu-content">
+                    <ul>
+                        <!--SUB MENU BLOGGER-->
+                        <li <?php if($header_fetch_class == 'blogger'){ echo "class='header-sub-menu-active'"; } ?>>
+                            <a href='<?php echo base_url('blogger') ?>'>
+                                <i class="fa fa-pencil header-sub-menu-icon"></i>Blogger
+                            </a>
+                        </li>
+                        <!--SUB MENU PHOTOGRAPHER-->
+                        <li>
+                            <a href='#'>
+                                <i class="fa fa-camera header-sub-menu-icon"></i>Photographer
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+            
         <!--SEARCH BAR-->
         <div id="wrapper">
             <div id="search">
@@ -372,7 +385,6 @@
                             <?php echo form_open('all/home_search');?>
                             <div id="search-box-block1">
                                 <input type="text" placeholder="Search: Merchant, Hot Deal, Promotion" name="search_word" id="search_word">
-                                <span id="search-icon"><i class="fa fa-search"></i></span>
                             </div>
                             <div id="search-box-block2">
                                 <?php
