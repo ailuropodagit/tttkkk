@@ -117,10 +117,43 @@ class Albert_model extends CI_Model
     
     /*  READ MERCHANT MAIN 
     ***************************************************/
-//    public function read_merchant_main($where) 
-//    {
-//        
-//    }
+    public function read_merchant_supervisor_as_merchant($where) 
+    {
+        //QUERY 
+        $this->db->select('*');
+        $this->db->from('users');
+        $main_group_id_array = array(3,4);
+        $this->db->where_in('main_group_id', $main_group_id_array);
+        //WHERE
+        if($where)
+        {
+            $this->db->where($where);
+        }
+        $query = $this->db->get();
+        $num_rows = $query->num_rows();
+        if($num_rows != 0)
+        {
+            $main_group_id = $query->row()->main_group_id;
+            if($main_group_id == 3)
+            {
+                $user_id = $query->row()->id;
+                $this->db->select('*');
+                $this->db->from('users');
+                $this->db->where('id', $user_id);
+                $query = $this->db->get();
+            }
+            if($main_group_id == 4)
+            {
+                $su_merchant_id = $query->row()->su_merchant_id;
+                $this->db->select('*');
+                $this->db->from('users');
+                $this->db->where('id', $su_merchant_id);
+                $query = $this->db->get();
+            }
+        }
+        //RETURN
+        RETURN $query;
+    }
         
     /* READ USER
     ***************************************************/
