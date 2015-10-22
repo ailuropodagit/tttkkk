@@ -243,6 +243,55 @@ class Albert_model extends CI_Model
         return $query;
     }
     
+    /* READ PHOTOGRAPHER
+    ***************************************************/
+    public function read_photographer($search, $search_type = NULL)
+    {
+        //QUERY
+        $this->db->select('*');
+        $this->db->from('users');
+        $this->db->where('us_is_photographer =', "1");
+        //SEARCH
+        if($search)
+        {
+            $this->db->where("concat_ws(' ', first_name, last_name) LIKE", '%'.$search.'%');
+            $this->db->or_where('us_photography_url LIKE', '%'.$search.'%');
+        }
+        $this->db->order_by('first_name', 'asc');
+        $query = $this->db->get();   
+        
+        //TO SEARCH IS THERE ANY USER HAVE THIS PHOTOGRAPHER TYPE
+        if($search_type){
+            $query_process = $query->result_array();
+            $user_have_this_type = array();
+            foreach($query_process as $row){
+                $user_id = $row['id'];
+                $photographer_type_list = $this->m_custom->get_list_of_allow_id('many_to_many', 'many_parent_id', $user_id, 'many_child_id', 'many_type', 'photography');
+                if (check_allowed_list($photographer_type_list, $search_type))
+                {
+                    $user_have_this_type[] = $user_id;
+                }
+                if (!empty($user_have_this_type))
+                {
+                    $this->db->where_in('id', $user_have_this_type);
+                }
+                else
+                {
+                    $this->db->where_in('id', '0');  //If don't have any user is belong to this type
+                }
+                
+                //Generate a new query to overwrite previous search result
+                $this->db->select('*');
+                $this->db->from('users');
+                $this->db->order_by('first_name', 'asc');
+                $query = $this->db->get();
+            }
+        }
+        
+        //RETURN
+        return $query;
+    }
+    
     /* READ USER_ALBUM
     *************************************************************/
     public function read_user_album($where)

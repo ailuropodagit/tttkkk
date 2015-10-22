@@ -701,6 +701,20 @@ if (!function_exists('IsNullOrEmptyString'))
 
 }
 
+if (!function_exists('arraylist_to_string'))
+{
+
+    function arraylist_to_string($array_list)
+    {
+        $return_string = '';
+        foreach($array_list as $value){
+            $return_string = $return_string . $value . ' , ';
+        }
+        return RemoveLastComma($return_string);
+    }
+
+}
+
 if (!function_exists('RemoveLastComma'))
 {
 
@@ -709,6 +723,9 @@ if (!function_exists('RemoveLastComma'))
         if (substr($value, -1, 1) == ',')
         {
             $value = substr($value, 0, -1);
+        }else if (substr($value, -2, 1) == ',')
+        {
+            $value = substr($value, 0, -2);
         }
         return $value;
     }

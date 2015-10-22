@@ -15,6 +15,17 @@
         }
     }
     
+    function checkbox_showhide(the_checkbox, the_div)
+    {
+        var checkBox = document.getElementById(the_checkbox);
+        if (checkBox.checked == true)
+        {
+            document.getElementById(the_div).style.display = 'inline';
+        } else {
+            document.getElementById(the_div).style.display = 'none';
+        }
+    }
+    
         $(document).ready(function () {
              var temp_folder = '<?php echo $temp_folder ?>';
             $('#userfile').ajaxfileupload({
@@ -146,6 +157,66 @@ if(isset($message))
                     <div id='profile-info-form-each-label'><label for='facebook_url'>Facebook URL:</label><a href="<?php echo base_url() ?>image/exclamation-facebook-url.jpg" target="_blank"><span id="profile-info-form-each-label-icon"><i class="fa fa-exclamation-circle"></i></span></a></div>
                     <div id='profile-info-form-each-input'><?php echo form_input($facebook_url); ?></div>
                 </div>
+                <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><?php echo lang('create_user_is_photographer_label', 'is_photographer'); ?>
+                        <?php echo form_checkbox($is_photographer); ?></div>
+                </div>
+                <?php 
+                $div_show_hide = "style='display:none'";
+                if($us_is_photographer == 1){ 
+                     $div_show_hide = "style='display:inline'";
+                }
+                ?>
+              
+                <div id='profile-photographer-div' <?php echo $div_show_hide; ?>>
+                <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><?php echo lang('create_user_photography_url_label', 'photography_url'); ?></div>
+                    <div id='profile-info-form-each-input'><?php echo form_input($photography_url); ?></div>
+                </div>
+                <div id="candie-promotion-form-voucher-checkbox">
+                    <div id="candie-promotion-form-voucher-checkbox-title">Select your photography type :</div>
+                    <?php
+                    foreach ($photography_list as $key => $value)
+                    {
+                        if (in_array($key, $photography_current))
+                        {
+                            ?>
+                            <div id="candie-promotion-form-voucher-checkbox-each">
+                                <table border="0" cellpadding="0px" cellspacing="0px">
+                                    <tr>
+                                        <td valign="top"><input type='checkbox' id="photography_list-<?php echo $key ?>" name='photography_list[]' value='<?php echo $key ?>' checked></td>
+                                        <td valign="top">
+                                            <div id="candie-promotion-form-voucher-checkbox-each-label">
+                                                <label for="photography_list-<?php echo $key ?>"><?php echo $value ?></label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <?php
+                        }
+                        else
+                        {
+                            ?>
+                            <div id="candie-promotion-form-voucher-checkbox-each">
+                                <table border="0" cellpadding="0px" cellspacing="0px">
+                                    <tr>
+                                        <td valign="top"><input type='checkbox' id="photography_list-<?php echo $key ?>" name='photography_list[]' value='<?php echo $key ?>'></td>
+                                        <td valign="top">
+                                            <div id="candie-promotion-form-voucher-checkbox-each-label">
+                                                <label for="photography_list-<?php echo $key ?>"><?php echo $value ?></label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <?php
+                        }
+                    }
+                    ?>  
+                </div>
+                    </div>
+
             </div>
             <?php echo form_hidden('id', $user->id); ?>
             <?php echo form_hidden($csrf); ?>
