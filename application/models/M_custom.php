@@ -155,18 +155,44 @@ class M_custom extends CI_Model
         }
         return $have_role;
     }
-    
+
     public function check_role_su_can_uploadhotdeal()
     {
         $have_role = 1;
         if (check_correct_login_type($this->config->item('group_id_supervisor')))
         {
             $login_id = $this->ion_auth->user()->row()->id;
-            $have_role = $this->m_custom->check_role('users','id',$login_id,'su_can_uploadhotdeal');
+            $have_role = $this->m_custom->check_role('users', 'id', $login_id, 'su_can_uploadhotdeal');
         }
         return $have_role;
     }
-    
+
+    public function check_is_superuser($check_merchant_id = 0)
+    {
+        $is_superuser = 0;
+        $group_id_admin = $this->config->item('group_id_admin');
+        $group_id_worker = $this->config->item('group_id_worker');
+        $group_id_merchant = $this->config->item('group_id_merchant');
+        $group_id_supervisor = $this->config->item('group_id_supervisor');
+        if (check_correct_login_type($group_id_admin) || check_correct_login_type($group_id_worker))
+        {
+            $is_superuser = 1;
+        }
+        if (check_correct_login_type($group_id_merchant) || check_correct_login_type($group_id_supervisor))
+        {
+            $merchant_id = $this->ion_auth->user()->row()->id;
+            if (check_correct_login_type($group_id_supervisor))
+            {
+                $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;
+            }
+            if ($merchant_id == $check_merchant_id)
+            {
+                $is_superuser = 1;
+            }
+        }
+        return $is_superuser;
+    }
+
     //To find many records in DB with one keyword
     public function get_list_of_allow_id($the_table, $the_column, $the_value, $wanted_column, $second_column = NULL, $second_value = NULL)
     {
@@ -261,7 +287,7 @@ class M_custom extends CI_Model
         $prefix = '';
         $middle = '';
         $postfix = '';
-        
+
         $query = $this->db->get_where('users', array('id' => $user_id));
         if ($query->num_rows() !== 1)
         {
@@ -277,7 +303,7 @@ class M_custom extends CI_Model
         }
 
         $return = $query->row();
-       
+
         if ($with_icon == 1)
         {
             $prefix = $this->m_custom->display_user_profile_image($user_id);
@@ -340,7 +366,9 @@ class M_custom extends CI_Model
                 $image_path = $this->config->item('album_user_profile');
                 $image = $return['profile_image'];
             }
-        }else{
+        }
+        else
+        {
             return "<div id='notification-table-photo-box' style='display:inline-block'><img src='#' ></div> ";
         }
         return "<div id='notification-table-photo-box' style='display:inline-block'><img src=" . base_url() . $image_path . $image . " ></div> ";
@@ -361,18 +389,19 @@ class M_custom extends CI_Model
         }
         $result = $query->row_array();
         $amount = $result['amount_change'];
-        switch($result['conf_type']){
+        switch ($result['conf_type'])
+        {
             case 'can':
                 $return_amount = number_format($amount, 0);
                 break;
             case 'bal':
             case 'uba':
                 $return_amount = number_format($amount, 2);
-                break;           
+                break;
         }
         return $return_amount;
     }
-    
+
     //Get one static option text by it option id
     public function display_static_option($option_id = NULL)
     {
@@ -591,7 +620,15 @@ class M_custom extends CI_Model
         $return = $query->row_array();
         if (($this->m_merchant->have_money($return['merchant_id']) && $ignore_have_money == 0) || $ignore_have_money != 0)
         {
-            return $return;
+            $valid_row = $this->m_custom->check_can_show_advertise($return);
+            if ($valid_row == 1)
+            {
+                return $return;
+            }
+            else
+            {
+                return FALSE;
+            }
         }
         else
         {
@@ -667,7 +704,8 @@ class M_custom extends CI_Model
         $return_final = array();
         foreach ($return as $row)
         {
-            if ($this->m_merchant->have_money($row['merchant_id']))
+            $valid_row = $this->m_custom->check_can_show_advertise($row);
+            if ($valid_row == 1)
             {
                 $return_final[] = $row;
             }
@@ -1830,7 +1868,7 @@ class M_custom extends CI_Model
         }
         return $refer_link;
     }
-    
+
     public function generate_act_refer_type_link($id, $act_refer_type)
     {
         $refer_link = '';
@@ -1908,6 +1946,33 @@ class M_custom extends CI_Model
         }
     }
 
+    public function check_can_show_advertise($row)
+    {
+        $valid_row = 0;
+
+        if ($this->m_merchant->have_money($row['merchant_id']))
+        {
+            $valid_row = 1;
+        }
+        else
+        {
+            $valid_row = 0;
+        }
+
+        if ($row['frozen_flag'] == 1)
+        {
+            if ($this->m_custom->check_is_superuser($row['merchant_id']))
+            {
+                $valid_row = 1;
+            }
+            else
+            {
+                $valid_row = 0;
+            }
+        }
+        return $valid_row;
+    }
+
     public function home_search_merchant($search_value = NULL, $state_id = 0)
     {
         if ($state_id != 0)
@@ -1967,14 +2032,23 @@ class M_custom extends CI_Model
         foreach ($result as $row)
         {
             $merchant_info = $this->m_custom->getMerchantInfo($row['merchant_id']);
+
+            $valid_row = 0;
             if ($state_id != 0)
             {
                 if ($merchant_info['me_state_id'] == $state_id)
                 {
-                    $return[] = $row;
+                    $valid_row = 1;
                 }
             }
             else
+            {
+                $valid_row = 1;
+            }
+            
+            $valid_row = $this->m_custom->check_can_show_advertise($row);
+            
+            if ($valid_row == 1)
             {
                 $return[] = $row;
             }
@@ -2083,17 +2157,18 @@ class M_custom extends CI_Model
     {
         //$temp_folder = $this->config->item('folder_image_temp_phy');  //For security purpose i don't use the config temp folder name, but hard code again in code, for prevent hacking
         $temp_folder = realpath(APPPATH . '..\folder_upload\temp_image');
-        $files = glob($temp_folder.'\*');
+        $files = glob($temp_folder . '\*');
         //var_dump($files);
         $this->load->helper('file');
         foreach ($files as $file)
-        { 
-            if (is_file($file)){
+        {
+            if (is_file($file))
+            {
                 unlink($file); // delete file
             }
         }
     }
-    
+
     public function display_row_monitor($want_count = 0)
     {
         if ($this->ion_auth->logged_in())
@@ -2104,11 +2179,12 @@ class M_custom extends CI_Model
             $condition = "(mon_is_public = true or (mon_is_public = false and mon_for_id = " . $login_id . "))";
             $this->db->where($condition);
             $mon_query = $this->db->get_where('monitoring', array('mon_for_type' => $login_type, 'mon_status' => 0));
-            
-            if($want_count == 1){
+
+            if ($want_count == 1)
+            {
                 return $mon_query->num_rows();
             }
-            
+
             $mon_result = $mon_query->result_array();
             $result = array();
             foreach ($mon_result as $row)
@@ -2125,7 +2201,7 @@ class M_custom extends CI_Model
                         $hide_item_desc = '<table style="border:none">' .
                                 '<tr><td>Content</td><td>:</td><td>' . nl2br($refer_row['comment']) . '</td></tr>' .
                                 '<tr><td>Comment At</td><td>:</td><td>' . $this->m_custom->generate_act_refer_type_link($refer_row['act_refer_id'], $refer_row['act_refer_type']) . '</td></tr>' .
-                                '<tr><td>Comment By</td><td>:</td><td>' . $this->m_custom->generate_user_link($refer_row['act_by_id']) . ' (' . $this->m_custom->display_users_groups($refer_row['act_by_type'], 'description') . ')' . '</td></tr>' .                                
+                                '<tr><td>Comment By</td><td>:</td><td>' . $this->m_custom->generate_user_link($refer_row['act_by_id']) . ' (' . $this->m_custom->display_users_groups($refer_row['act_by_type'], 'description') . ')' . '</td></tr>' .
                                 '<tr><td>Time</td><td>:</td><td>' . displayDate($refer_row['act_time'], 1) . '</td></tr>' .
                                 '</table>';
 
@@ -2133,22 +2209,22 @@ class M_custom extends CI_Model
                     case 'mua':
                         $refer_row = $this->m_custom->get_one_table_record('merchant_user_album', 'merchant_user_album_id', $row['mon_table_id'], 1);
                         $hide_item_type = "Picture Upload For Merchant";
-                        $hide_item_desc = '<table style="border:none">'.
+                        $hide_item_desc = '<table style="border:none">' .
                                 '<tr><td>Title</td><td>:</td><td>' . $refer_row['title'] . '</td></tr>' .
-                                '<tr><td>Description</td><td>:</td><td>' . nl2br($refer_row['description']) . '</td></tr>'.                              
-                                '<tr><td>Upload By</td><td>:</td><td>' . $this->m_custom->generate_user_link($refer_row['user_id']) . '</td></tr>'.
-                                '<tr><td>Post Date</td><td>:</td><td>' . displayDate($refer_row['create_date'], 1) . '</td></tr>'.
-                                '<tr><td>Removed Reason</td><td>:</td><td>' . $refer_row['hide_remark'] . '</td></tr>'.
+                                '<tr><td>Description</td><td>:</td><td>' . nl2br($refer_row['description']) . '</td></tr>' .
+                                '<tr><td>Upload By</td><td>:</td><td>' . $this->m_custom->generate_user_link($refer_row['user_id']) . '</td></tr>' .
+                                '<tr><td>Post Date</td><td>:</td><td>' . displayDate($refer_row['create_date'], 1) . '</td></tr>' .
+                                '<tr><td>Removed Reason</td><td>:</td><td>' . $refer_row['hide_remark'] . '</td></tr>' .
                                 '</table>';
                         $post_image = $this->m_custom->generate_image_link($refer_row['image'], $mon_hide_type);
                         break;
                     case 'adv':
                         $refer_row = $this->m_custom->getOneAdvertise($row['mon_table_id'], 1, 1);
                         $hide_item_type = "Merchant Picture";
-                        $hide_item_desc = '<table style="border:none">'.
+                        $hide_item_desc = '<table style="border:none">' .
                                 '<tr><td>Title</td><td>:</td><td>' . $refer_row['title'] . '</td></tr>' .
-                                '<tr><td>Description</td><td>:</td><td>' . nl2br($refer_row['description']) . '</td></tr>'.
-                                '<tr><td>Post Date</td><td>:</td><td>' . displayDate($refer_row['create_date'], 1) . '</td></tr>'.
+                                '<tr><td>Description</td><td>:</td><td>' . nl2br($refer_row['description']) . '</td></tr>' .
+                                '<tr><td>Post Date</td><td>:</td><td>' . displayDate($refer_row['create_date'], 1) . '</td></tr>' .
                                 '</table>';
                         $post_image = $this->m_custom->generate_image_link($refer_row['image'], $mon_hide_type);
                         break;
@@ -2213,29 +2289,31 @@ class M_custom extends CI_Model
     }
 
     public function approve_row_monitor($mon_id)
-    {      
+    {
         $main_row = $this->db->get_where('monitoring', array('mon_id' => $mon_id))->row_array();
         $mon_table_id = $main_row['mon_table_id'];
         $mon_table = $main_row['mon_table'];
         $mon_is_public = $main_row['mon_is_public'];
         $all_row = $this->db->get_where('monitoring', array('mon_table_id' => $mon_table_id, 'mon_table' => $mon_table, 'mon_is_public' => $mon_is_public))->result_array();
-        foreach($all_row as $row){
+        foreach ($all_row as $row)
+        {
             $this->m_custom->update_row_monitor($row['mon_id'], 1);
         }
     }
-    
+
     public function recover_row_monitor($mon_id)
-    {        
+    {
         $main_row = $this->db->get_where('monitoring', array('mon_id' => $mon_id))->row_array();
         $mon_table_id = $main_row['mon_table_id'];
         $mon_table = $main_row['mon_table'];
         $this->m_custom->update_hide_flag(0, $mon_table, $mon_table_id);
         $all_row = $this->db->get_where('monitoring', array('mon_table_id' => $mon_table_id, 'mon_table' => $mon_table))->result_array();
-        foreach($all_row as $row){
+        foreach ($all_row as $row)
+        {
             $this->m_custom->update_row_monitor($row['mon_id'], 2);
         }
     }
-    
+
     public function update_row_monitor($mon_id, $mon_status, $mon_remark = NULL)
     {
         if ($this->ion_auth->logged_in())
@@ -2266,6 +2344,20 @@ class M_custom extends CI_Model
         }
         $the_data = array(
             'hide_flag' => $hide_flag,
+        );
+        $this->db->where($field_name[0], $table_id);
+        $this->db->update($table, $the_data);
+    }
+
+    public function update_frozen_flag($frozen_flag, $table, $table_id)
+    {
+        $fields = $this->db->list_fields($table);
+        foreach ($fields as $field)
+        {
+            $field_name[] = $field;
+        }
+        $the_data = array(
+            'frozen_flag' => $frozen_flag,
         );
         $this->db->where($field_name[0], $table_id);
         $this->db->update($table, $the_data);

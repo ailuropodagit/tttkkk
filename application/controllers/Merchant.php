@@ -1,7 +1,10 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php
+
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Merchant extends CI_Controller
 {
+
     function __construct()
     {
         parent::__construct();
@@ -18,7 +21,7 @@ class Merchant extends CI_Controller
         $this->folder_merchant_ssm = $this->config->item('folder_merchant_ssm');
         $this->folder_image = $this->config->item('folder_image');
         $this->box_number = $this->config->item('merchant_upload_box_per_page');
-        $this->temp_folder = $this->config->item('folder_image_temp');   
+        $this->temp_folder = $this->config->item('folder_image_temp');
     }
 
     // redirect if needed, otherwise display the user list
@@ -181,7 +184,7 @@ class Merchant extends CI_Controller
                 //if the password was successfully changed
                 $this->session->set_flashdata('message', $this->ion_auth->messages());
                 //$this->logout();
-                set_simple_message('Thank you!', 'Your Password has been saved!', '', 'all/merchant_dashboard/'.$this->session->userdata('company_slug') , 'Back to Dashboard', 'all/simple_message', 1, 3);
+                set_simple_message('Thank you!', 'Your Password has been saved!', '', 'all/merchant_dashboard/' . $this->session->userdata('company_slug'), 'Back to Dashboard', 'all/simple_message', 1, 3);
             }
             else
             {
@@ -190,7 +193,7 @@ class Merchant extends CI_Controller
             }
         }
     }
-    
+
     //FOLLOWER
     function follower($user_type, $user_id)
     {
@@ -198,7 +201,7 @@ class Merchant extends CI_Controller
         $group_id_merchant = $this->config->item('group_id_merchant');
         $group_id_supervisor = $this->config->item('group_id_supervisor');
         //POST
-        if($this->input->post('search'))
+        if ($this->input->post('search'))
         {
             //POST VALUE
             $keyword = $this->input->post('keyword');
@@ -210,12 +213,12 @@ class Merchant extends CI_Controller
         }
         //FORM DATA
         $data['keyword'] = array(
-            'name'=>'keyword',
-            'placeholder'=>'Search',
-            'value'=>$keyword
+            'name' => 'keyword',
+            'placeholder' => 'Search',
+            'value' => $keyword
         );
         //READ USER
-        $where_read_user = array('id'=>$user_id);
+        $where_read_user = array('id' => $user_id);
         $query_read_user = $this->albert_model->read_user($where_read_user);
         $group_id = $query_read_user->row()->main_group_id;
         if ($group_id == $group_id_merchant)
@@ -225,7 +228,7 @@ class Merchant extends CI_Controller
         if ($group_id == $group_id_supervisor)
         {
             $su_merchant_id = $query_read_user->row()->su_merchant_id;
-            $where_read_user2 = array('id'=>$su_merchant_id);
+            $where_read_user2 = array('id' => $su_merchant_id);
             $query_read_user2 = $this->albert_model->read_user($where_read_user2);
             $user_id = $query_read_user2->row()->id;
             $user_name = $query_read_user2->row()->company;
@@ -234,7 +237,7 @@ class Merchant extends CI_Controller
         $data['page_title'] = $user_name . ' User Followers';
         //QUERY USER FOLLOWER        
         $where_user_follower = array('following_main_id' => $user_id);
-        $data['query_follow'] = $this->albert_model->read_follower($where_user_follower, $keyword);        
+        $data['query_follow'] = $this->albert_model->read_follower($where_user_follower, $keyword);
         //COUNT 
         $data['user_follower_count'] = $this->albert_model->user_follower_count($user_id);
         $data['user_following_count'] = $this->albert_model->user_following_count($user_id);
@@ -253,7 +256,7 @@ class Merchant extends CI_Controller
             $this->load->view('template/layout', $data);
         }
     }
-    
+
     //FOLLOWING
     function following($user_type, $user_id)
     {
@@ -261,7 +264,7 @@ class Merchant extends CI_Controller
         $group_id_merchant = $this->config->item('group_id_merchant');
         $group_id_supervisor = $this->config->item('group_id_supervisor');
         //POST
-        if($this->input->post('search'))
+        if ($this->input->post('search'))
         {
             //POST VALUE
             $keyword = $this->input->post('keyword');
@@ -273,12 +276,12 @@ class Merchant extends CI_Controller
         }
         //FORM DATA
         $data['keyword'] = array(
-            'name'=>'keyword',
-            'placeholder'=>'Search',
-            'value'=>$keyword
+            'name' => 'keyword',
+            'placeholder' => 'Search',
+            'value' => $keyword
         );
         //READ USER
-        $where_read_user = array('id'=>$user_id);
+        $where_read_user = array('id' => $user_id);
         $query_read_user = $this->albert_model->read_user($where_read_user);
         $group_id = $query_read_user->row()->main_group_id;
         if ($group_id == $group_id_merchant)
@@ -288,7 +291,7 @@ class Merchant extends CI_Controller
         if ($group_id == $group_id_supervisor)
         {
             $su_merchant_id = $query_read_user->row()->su_merchant_id;
-            $where_read_user2 = array('id'=>$su_merchant_id);
+            $where_read_user2 = array('id' => $su_merchant_id);
             $query_read_user2 = $this->albert_model->read_user($where_read_user2);
             $user_id = $query_read_user2->row()->id;
             $user_name = $query_read_user2->row()->company;
@@ -340,8 +343,8 @@ class Merchant extends CI_Controller
                     $search_month = $this->input->post('the_month');
                 }
             }
-            
-            $month_list = limited_month_select(5,1);
+
+            $month_list = limited_month_select(5, 1);
             $this->data['month_list'] = $month_list;
             $this->data['the_month'] = array(
                 'name' => 'the_month',
@@ -376,7 +379,7 @@ class Merchant extends CI_Controller
         if (check_correct_login_type($this->main_group_id))
         {
             $merchant_id = $this->ion_auth->user()->row()->id;
-            
+
             if (isset($_POST) && !empty($_POST))
             {
                 if ($this->input->post('button_action') == "search_history")
@@ -384,7 +387,7 @@ class Merchant extends CI_Controller
                     $search_type = $this->input->post('the_adv_type');
                 }
             }
-            
+
             $adv_type_list = array(
                 '' => 'All Type',
                 'hot' => 'Hot Deal Advertise',
@@ -397,7 +400,7 @@ class Merchant extends CI_Controller
                 'id' => 'the_adv_type',
             );
             $this->data['the_adv_type_selected'] = empty($search_type) ? "" : $search_type;
-            
+
             $the_result = $this->m_merchant->money_spend_on_list($merchant_id, $search_type);
             usort($the_result, function($a, $b)
             {
@@ -422,7 +425,7 @@ class Merchant extends CI_Controller
             redirect('/', 'refresh');
         }
     }
-        
+
     function retrieve_password()
     {
         $this->form_validation->set_rules('username_email', $this->lang->line('forgot_password_username_email_label'), 'required');
@@ -754,7 +757,7 @@ class Merchant extends CI_Controller
             $company = $this->input->post('company');
             $me_ssm = $this->input->post('me_ssm');
             $address = $this->input->post('address');
-            $phone = '+60'.$this->input->post('phone');
+            $phone = '+60' . $this->input->post('phone');
             $additional_data = array(
                 'username' => $username,
                 'company_main' => $company_main,
@@ -830,8 +833,8 @@ class Merchant extends CI_Controller
                 'id' => 'address',
                 'value' => $this->form_validation->set_value('address'),
             );
-            $me_category_id = $this->form_validation->set_value('me_category_id') == ''? '': $this->form_validation->set_value('me_category_id');
-            $this->data['category_list'] = $this->m_custom->getCategoryList('0','');
+            $me_category_id = $this->form_validation->set_value('me_category_id') == '' ? '' : $this->form_validation->set_value('me_category_id');
+            $this->data['category_list'] = $this->m_custom->getCategoryList('0', '');
             $this->data['me_category_id'] = array(
                 'name' => 'me_category_id',
                 'id' => 'me_category_id',
@@ -888,7 +891,7 @@ class Merchant extends CI_Controller
         }
         return TRUE;
     }
-    
+
     function check_sub_category($dropdown_selection)
     {
         if ($dropdown_selection == 0)
@@ -919,10 +922,10 @@ class Merchant extends CI_Controller
         $output = form_dropdown($me_sub_category_id, $sub_category_list);
         echo $output;
     }
-    
+
     //merchant profile view and edit page
     function profile()
-    {    
+    {
         if (!check_correct_login_type($this->main_group_id) && !check_correct_login_type($this->group_id_supervisor))
         {
             redirect('/', 'refresh');
@@ -972,7 +975,7 @@ class Merchant extends CI_Controller
                         // redirect them back to the admin page if admin, or to the base url if non admin
                         $this->session->set_flashdata('message', $this->ion_auth->messages());
                         $user = $this->ion_auth->user($merchant_id)->row();
-                        redirect('all/merchant_dashboard/'.$user->slug, 'refresh');
+                        redirect('all/merchant_dashboard/' . $user->slug, 'refresh');
                     }
                     else
                     {
@@ -1045,8 +1048,8 @@ class Merchant extends CI_Controller
         $this->data['sub_category_selected'] = $user->me_sub_category_id;
         $this->data['sub_category_list'] = $this->m_custom->getSubCategoryList(NULL, NULL, $user->me_category_id);
         $this->data['me_sub_category_id'] = array(
-                'name' => 'me_sub_category_id',
-                'id' => 'me_sub_category_id',
+            'name' => 'me_sub_category_id',
+            'id' => 'me_sub_category_id',
         );
         $this->data['address'] = array(
             'name' => 'address',
@@ -1113,8 +1116,8 @@ class Merchant extends CI_Controller
             'readonly ' => 'true',
             'value' => $is_supervisor == 1 ? $supervisor->password_visible : $user->password_visible,
         );
-        
-        $this->data['temp_folder'] = $this->temp_folder; 
+
+        $this->data['temp_folder'] = $this->temp_folder;
         $this->data['page_path_name'] = 'merchant/profile';
         $this->load->view('template/layout_right_menu', $this->data);
     }
@@ -1163,7 +1166,7 @@ class Merchant extends CI_Controller
                         $this->session->set_flashdata('message', $this->ion_auth->errors());
                     }
                 }
-                redirect('all/merchant_dashboard/'.$this->session->userdata('company_slug'), 'refresh');
+                redirect('all/merchant_dashboard/' . $this->session->userdata('company_slug'), 'refresh');
             }
         }
     }
@@ -1193,7 +1196,7 @@ class Merchant extends CI_Controller
                 }
             }
             $this->data['search_word'] = $search_word;
-                    
+
             $this->data['title'] = "User Redemption";
             if ($show_used == 1)
             {
@@ -1307,7 +1310,7 @@ class Merchant extends CI_Controller
             $crud->callback_column('name', array($this, '_branch_map'));
             $crud->callback_column('address', array($this, '_full_text'));
             $crud->callback_column('supervisor', array($this, '_branch_supervisor'));
-            
+
             $controller = 'merchant';
             $function = 'profile';
             $crud->set_lang_string('insert_success_message', 'Your data has been successfully stored into the database.
@@ -1315,7 +1318,7 @@ class Merchant extends CI_Controller
                  var originallocation = window.location.pathname;
                  if(originallocation.indexOf("/branch/add") > -1)
                 {
-		  window.location = "'.site_url($controller . '/' . $function).'";
+		  window.location = "' . site_url($controller . '/' . $function) . '";
                 }
 		 </script>
 		 <div style="display:none">
@@ -1332,10 +1335,10 @@ class Merchant extends CI_Controller
 		 <div style="display:none">
 		 '
             );
-            
-            $crud->set_lang_string('form_save_and_go_back','Save and View Branch');
-            $crud->set_lang_string('form_update_and_go_back','Update and View Branch');          
-            
+
+            $crud->set_lang_string('form_save_and_go_back', 'Save and View Branch');
+            $crud->set_lang_string('form_update_and_go_back', 'Update and View Branch');
+
             $crud->unset_export();
             $crud->unset_print();
 
@@ -1446,8 +1449,8 @@ class Merchant extends CI_Controller
             $crud->callback_insert(array($this, 'supervisor_insert_callback'));
             $crud->callback_update(array($this, 'supervisor_update_callback'));
             $crud->set_rules('username', 'Username', 'trim|required|callback_supervisor_username_check');
-            $crud->field_type('su_can_uploadhotdeal','true_false');
-            
+            $crud->field_type('su_can_uploadhotdeal', 'true_false');
+
             $controller = 'merchant';
             $function = 'profile';
             $crud->set_lang_string('insert_success_message', 'Your data has been successfully stored into the database.
@@ -1455,7 +1458,7 @@ class Merchant extends CI_Controller
                  var originallocation = window.location.pathname;
                  if(originallocation.indexOf("/supervisor/add") > -1)
                 {
-		  window.location = "'.site_url($controller . '/' . $function).'";
+		  window.location = "' . site_url($controller . '/' . $function) . '";
                 }
 		 </script>
 		 <div style="display:none">
@@ -1472,10 +1475,10 @@ class Merchant extends CI_Controller
 		 <div style="display:none">
 		 '
             );
-            
-            $crud->set_lang_string('form_save_and_go_back','Save and View Supervisor');
-            $crud->set_lang_string('form_update_and_go_back','Update and View Supervisor');        
-            
+
+            $crud->set_lang_string('form_save_and_go_back', 'Save and View Supervisor');
+            $crud->set_lang_string('form_update_and_go_back', 'Update and View Supervisor');
+
             $crud->unset_export();
             $crud->unset_print();
             $crud->unset_read();
@@ -1507,7 +1510,7 @@ class Merchant extends CI_Controller
 //        if(!$this->m_custom->check_is_value_unique('users','username',$post_array['username'])){
 //            return FALSE;
 //        }
-        $su_can_uploadhotdeal = $post_array['su_can_uploadhotdeal'] == '1'? 1:0;
+        $su_can_uploadhotdeal = $post_array['su_can_uploadhotdeal'] == '1' ? 1 : 0;
         $additional_data = array(
             'username' => $post_array['username'],
             'su_merchant_id' => $this->ion_auth->user()->row()->id,
@@ -1522,11 +1525,11 @@ class Merchant extends CI_Controller
 
     function supervisor_update_callback($post_array, $primary_key)
     {
-    
+
 //        if(!$this->m_custom->check_is_value_unique('users','username',$post_array['username'],'id',$primary_key)){
 //            return FALSE;
 //        }
-        $su_can_uploadhotdeal = $post_array['su_can_uploadhotdeal'] == '1'? 1:0;
+        $su_can_uploadhotdeal = $post_array['su_can_uploadhotdeal'] == '1' ? 1 : 0;
         $additional_data = array(
             'username' => $post_array['username'],
             'email' => $post_array['username'] . $this->config->item('keppo_email_domain'),
@@ -1568,7 +1571,7 @@ class Merchant extends CI_Controller
         }
         $merchant_id = $this->ion_auth->user()->row()->id;
         $me_ssm_file = $this->ion_auth->user()->row()->me_ssm_file;
-        $this->data['me_ssm_url'] = base_url(). $this->folder_merchant_ssm .$me_ssm_file;
+        $this->data['me_ssm_url'] = base_url() . $this->folder_merchant_ssm . $me_ssm_file;
         $this->data['me_ssm_file'] = $me_ssm_file;
         if (isset($_POST) && !empty($_POST))
         {
@@ -1897,8 +1900,8 @@ class Merchant extends CI_Controller
             'cols' => 90,
             'placeholder' => 'Add extra T&C seperate by Enter, one line one T&C',
         );
-        
-        $this->data['temp_folder'] = $this->temp_folder;  
+
+        $this->data['temp_folder'] = $this->temp_folder;
         $this->data['candie_term'] = $candie_term;
         $this->data['candie_branch'] = $candie_branch;
         $this->data['message'] = $this->session->flashdata('message');
@@ -1937,30 +1940,30 @@ class Merchant extends CI_Controller
 
         if (isset($_POST) && !empty($_POST))
         {
+            if (IsNullOrEmptyString($hotdeal_id))
+            {
+                redirect('merchant/upload_hotdeal', 'refresh');
+            }
+            $upload_rule = array(
+                'upload_path' => $this->album_merchant,
+                'allowed_types' => $this->config->item('allowed_types_image'),
+                'max_size' => $this->config->item('max_size'),
+                'max_width' => $this->config->item('max_width'),
+                'max_height' => $this->config->item('max_height'),
+            );
+
+            $this->load->library('upload', $upload_rule);
+
+            $hotdeal_id = $this->input->post('hotdeal_id');
+            $hotdeal_file = "hotdeal-file";
+
+            $sub_category_id = $this->input->post('category');
+            $title = $this->input->post('title');
+            $description = $this->input->post('desc');
+            $hotdeal_hour = check_is_positive_numeric($this->input->post('hour'));
+            
             if ($this->input->post('button_action') == "edit_hotdeal")
             {
-                if (IsNullOrEmptyString($hotdeal_id))
-                {
-                    redirect('merchant/upload_hotdeal', 'refresh');
-                }
-                $upload_rule = array(
-                    'upload_path' => $this->album_merchant,
-                    'allowed_types' => $this->config->item('allowed_types_image'),
-                    'max_size' => $this->config->item('max_size'),
-                    'max_width' => $this->config->item('max_width'),
-                    'max_height' => $this->config->item('max_height'),
-                );
-
-                $this->load->library('upload', $upload_rule);
-
-                $hotdeal_id = $this->input->post('hotdeal_id');
-                $hotdeal_file = "hotdeal-file";
-
-                $sub_category_id = $this->input->post('category');
-                $title = $this->input->post('title');
-                $description = $this->input->post('desc');
-                $hotdeal_hour = check_is_positive_numeric($this->input->post('hour'));
-
                 if ($hotdeal_hour > 720)
                 {
                     $message_info = add_message_info($message_info, 'Hot Deal please put in a valid hour between 1 to 720(Max 30 days only).', $title);
@@ -1998,43 +2001,49 @@ class Merchant extends CI_Controller
                     'description' => $description,
                     'image' => empty($image_data) ? $previous_image_name : $image_data['upload_data']['file_name'],
                     'post_hour' => $hotdeal_hour,
-                    'end_time' => $hotdeal_hour == 0? add_hour_to_date(99999, $previous_start_time): add_hour_to_date($hotdeal_hour, $previous_start_time),
+                    'end_time' => $hotdeal_hour == 0 ? add_hour_to_date(99999, $previous_start_time) : add_hour_to_date($hotdeal_hour, $previous_start_time),
                 );
 
-                $hotdeal_hide = $this->input->post('hotdeal_hide');
-
-                if ($hotdeal_hide == null)
+                if ($this->m_custom->simple_update('advertise', $data, 'advertise_id', $hotdeal_id))
                 {
-                    if ($this->m_custom->simple_update('advertise', $data, 'advertise_id', $hotdeal_id))
-                    {
-                        $this->m_custom->update_row_log('advertise', $hotdeal_id, $do_by_id, $do_by_type);
-                        $message_info = add_message_info($message_info, 'Hot Deal success update.', $title);
-                    }
-                    else
-                    {
-                        $message_info = add_message_info($message_info, $this->ion_auth->errors(), $title);
-                    }
+                    $this->m_custom->update_row_log('advertise', $hotdeal_id, $do_by_id, $do_by_type);
+                    $message_info = add_message_info($message_info, 'Hot Deal success update.', $title);
                 }
                 else
                 {
-                    //If this hot deal is being remove by tick the remove check box
-                    $data = array(
-                        'hide_flag' => 1,
-                    );
-                    if ($this->m_custom->simple_update('advertise', $data, 'advertise_id', $hotdeal_id))
-                    {
-                        $this->m_custom->remove_row_log('advertise', $hotdeal_id, $do_by_id, $do_by_type);
-                        $message_info = add_message_info($message_info, 'Hot Deal success remove.', $title);
-                        redirect('merchant/upload_hotdeal', 'refresh');
-                    }
-                    else
-                    {
-                        $message_info = add_message_info($message_info, $this->ion_auth->errors(), $title);
-                    }
+                    $message_info = add_message_info($message_info, $this->ion_auth->errors(), $title);
                 }
                 $this->session->set_flashdata('message', $message_info);
                 redirect('all/advertise/' . $hotdeal_id, 'refresh');
             }
+            if ($this->input->post('button_action') == "remove_hotdeal")
+            {
+                $data = array(
+                    'hide_flag' => 1,
+                );
+                if ($this->m_custom->simple_update('advertise', $data, 'advertise_id', $hotdeal_id))
+                {
+                    $this->m_custom->remove_row_log('advertise', $hotdeal_id, $do_by_id, $do_by_type);
+                    $message_info = add_message_info($message_info, 'Hot Deal success remove.', $title);
+                    $this->session->set_flashdata('message', $message_info);
+                    redirect('merchant/upload_hotdeal', 'refresh');
+                }
+                else
+                {
+                    $message_info = add_message_info($message_info, $this->ion_auth->errors(), $title);
+                }
+            }
+            if ($this->input->post('button_action') == "frozen_hotdeal")
+            {
+                $this->m_custom->update_frozen_flag(1, 'advertise', $hotdeal_id);
+                $message_info = add_message_info($message_info, 'Hot Deal success frozen.', $title);
+            }
+            if ($this->input->post('button_action') == "unfrozen_hotdeal")
+            {
+                $this->m_custom->update_frozen_flag(0, 'advertise', $hotdeal_id);
+                $message_info = add_message_info($message_info, 'Hot Deal success unfrozen.', $title);
+            }
+            $this->session->set_flashdata('message', $message_info);
         }
 
         $hotdeal_result = $this->m_custom->getOneAdvertise($hotdeal_id);
@@ -2076,11 +2085,13 @@ class Merchant extends CI_Controller
             'hotdeal_id' => $advertise_id,
         );
 
-        $this->data['hotdeal_hide'] = array(
-            'name' => 'hotdeal_hide',
-            'id' => 'hotdeal_hide',
-            'value' => $advertise_id,
-        );
+//        $this->data['hotdeal_hide'] = array(
+//            'name' => 'hotdeal_hide',
+//            'id' => 'hotdeal_hide',
+//            'value' => $advertise_id,
+//        );
+
+        $this->data['hotdeal_frozen'] = empty($hotdeal_result) ? '' : $hotdeal_result['frozen_flag'];
 
         $this->data['temp_folder'] = $this->temp_folder;
         $this->data['message'] = $this->session->flashdata('message');
@@ -2098,7 +2109,7 @@ class Merchant extends CI_Controller
                 $login_type = $this->session->userdata('user_group_id');
                 $merchant_id = $login_id;
                 if (check_correct_login_type($this->group_id_supervisor))
-                {                   
+                {
                     $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;
                 }
                 $picture_id = $this->input->post('hid_picture_id');
@@ -2114,14 +2125,14 @@ class Merchant extends CI_Controller
                     $data = array(
                         'hide_flag' => 1,
                         'hide_remark' => $hide_remark,
-                    );    
+                    );
                     if ($this->m_custom->simple_update('merchant_user_album', $data, 'merchant_user_album_id', $picture_id))
                     {
                         $this->m_custom->remove_row_log('merchant_user_album', $picture_id, $login_id, $login_type);
                         $this->m_merchant->mua_hide($picture_id);
                         $this->m_user->user_trans_history_insert($upload_by_user_id, 22, $picture_id);
                     }
-                    redirect('all/merchant_dashboard/' . $merchant['slug'] . "/picture", 'refresh');                    
+                    redirect('all/merchant_dashboard/' . $merchant['slug'] . "/picture", 'refresh');
                 }
             }
         }
@@ -2205,7 +2216,7 @@ class Merchant extends CI_Controller
                                 $message_info = add_message_info($message_info, $this->upload->display_errors(), $title);
                             }
                             else
-                            {                                                              
+                            {
                                 $image_data = array('upload_data' => $this->upload->data());
                                 $data = array(
                                     'advertise_type' => 'hot',
@@ -2216,7 +2227,7 @@ class Merchant extends CI_Controller
                                     'image' => $image_data['upload_data']['file_name'],
                                     'post_hour' => $hotdeal_hour,
                                     'start_time' => get_part_of_date('all'),
-                                    'end_time' => $hotdeal_hour == 0? add_hour_to_date(99999): add_hour_to_date($hotdeal_hour),
+                                    'end_time' => $hotdeal_hour == 0 ? add_hour_to_date(99999) : add_hour_to_date($hotdeal_hour),
                                     'month_id' => get_part_of_date('month'),
                                     'year' => get_part_of_date('year'),
                                 );
@@ -2225,8 +2236,9 @@ class Merchant extends CI_Controller
                                 if ($new_id)
                                 {
                                     $this->m_custom->insert_row_log('advertise', $new_id, $do_by_id, $do_by_type);
-                                    if($do_by_type == $this->group_id_supervisor){
-                                        $this->m_custom->notification_process('advertise',$new_id);
+                                    if ($do_by_type == $this->group_id_supervisor)
+                                    {
+                                        $this->m_custom->notification_process('advertise', $new_id);
                                     }
                                     $message_info = add_message_info($message_info, 'Hot Deal success create.', $title);
                                 }
@@ -2270,7 +2282,7 @@ class Merchant extends CI_Controller
                             'description' => $description,
                             'image' => empty($image_data) ? $previous_image_name : $image_data['upload_data']['file_name'],
                             'post_hour' => $hotdeal_hour,
-                            'end_time' => $hotdeal_hour == 0? add_hour_to_date(99999, $previous_start_time): add_hour_to_date($hotdeal_hour, $previous_start_time),
+                            'end_time' => $hotdeal_hour == 0 ? add_hour_to_date(99999, $previous_start_time) : add_hour_to_date($hotdeal_hour, $previous_start_time),
                         );
 
                         $hotdeal_hide = $this->input->post('hotdeal_hide-' . $i);
@@ -2379,10 +2391,10 @@ class Merchant extends CI_Controller
                 'value' => $advertise_id,
             );
         }
-        
+
         $this->data['box_number'] = $this->box_number;
         $this->data['hotdeal_per_day'] = $this->config->item("hotdeal_per_day");
-        $this->data['temp_folder'] = $this->temp_folder;  
+        $this->data['temp_folder'] = $this->temp_folder;
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'merchant/upload_hotdeal';
         $this->load->view('template/layout_right_menu', $this->data);
@@ -3213,12 +3225,12 @@ class Merchant extends CI_Controller
                     }
                 }
             }
-           
+
             $active_array = array();
             $active_array['name'] = 'Non-Redeem';
             $active_array['data'][] = $active_male_count;
             $active_array['data'][] = $active_female_count;
-            
+
             $used_array = array();
             $used_array['name'] = 'Redeem';
             $used_array['data'][] = $used_male_count;
@@ -3228,17 +3240,16 @@ class Merchant extends CI_Controller
             $expired_array['name'] = 'Expired';
             $expired_array['data'][] = $expired_male_count;
             $expired_array['data'][] = $expired_female_count;
-            
+
             $result = array();
-            array_push($result, $expired_array);         
+            array_push($result, $expired_array);
             array_push($result, $used_array);
             array_push($result, $active_array);
-            
+
             echo json_encode($result);
         }
-
     }
-    
+
     function _get_csrf_nonce()
     {
         $this->load->helper('string');
