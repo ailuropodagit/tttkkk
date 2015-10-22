@@ -146,6 +146,7 @@ input[type='submit'], input[type='button'], button[type='submit'], .a-href-butto
 }
 
 textarea {
+    box-sizing: border-box;
     border: 1px solid #a9a9a9;
     border-radius: 3px;
     padding: 7px 7px 7px 7px;
@@ -172,10 +173,6 @@ p {
 
 a:active {
     color: #178497;
-}
-
-.checkbox-text{
-    font-size:15px;
 }
 
 a {
@@ -819,6 +816,11 @@ a:hover {
     border-bottom: 1px solid lightgray;
 }
 
+#login-form, #register-form {
+    width: 300px;
+    margin: 0px auto 0px auto;
+}
+
 #login-form-each-label, #register-form-each-label {
     width: 285px;
     text-align: left;
@@ -826,29 +828,29 @@ a:hover {
 }
 
 #login-form-each-input input[type='text'], #register-form-each-input input[type='text'] {
-    width: 290px;
+    width: 100%;
     margin: 10px 0px 0px 0px;
 }
 
 #login-form-each-input input[type='password'], #register-form-each-input input[type='password'] {
-    width: 290px;
+    width: 100%;
     margin: 10px 0px 0px 0px;
 }
 
 #login-form-each-input-contact-number input[type='text'] , #register-form-each-input-contact-number input[type='text'] {
-    width: 238px;
+    width: calc(100% - 45px);
     margin: 10px 0px 0px 0px;
 }
 
 #register-form-each-input textarea {
     margin: 10px 0px 0px 0px;
-    width: 270px;
+    width: 100%;
     height: 100px;
     resize: none;
 }
 
 #register-form-each-input select {
-    width: 285px;
+    width: 100%;
     height: 30px;
     margin: 10px 0px 0px 0px;
 }
@@ -858,7 +860,7 @@ a:hover {
 }
 
 #register-form-each-input-dob {
-    width: 290px;
+    width: 100%;
     margin: 0px auto 0px auto;
 }
 
@@ -873,21 +875,19 @@ a:hover {
     margin: 10px 0px 0px 0px;
 }
 
-#login-form-remember-me-forgot-password {
-    width: 290px;
-    margin: 0px auto 0px auto;
+#login-form-show-password {
+    text-align: right;
+    margin: 15px 0px 0px 0px;
 }
 
 #login-form-remember-me {
-    float: left;
-    margin: 20px 0px 0px 0px;
-    font-size: 15px;
+    text-align: left;
+    margin: 15px 0px 0px 0px;
 }
 
 #login-form-forgot-password {
-    float: right;
-    margin: 20px 0px 0px 0px;
-    font-size: 15px;
+    text-align: left;
+    margin: 15px 0px 0px 0px;
 }
 
 #login-form-submit, #register-form-submit {
@@ -1315,14 +1315,11 @@ a:hover {
     height: 25px;
     width: 100%;
     margin: 0px 0px 10px 0px;
-    box-sizing: border-box;
 }
 
 #profile-info-form-each-input-contact-number input[type='text'] {
     height: 25px;
-    width: calc(100% - 32px);
     margin: 0px 0px 10px 0px;
-    box-sizing: border-box;
 }
 
 #profile-info-form-each-input textarea {
@@ -1330,7 +1327,6 @@ a:hover {
     width: 290px;
     height: 100px;
     resize: none;
-    box-sizing: border-box;
 }
 
 #profile-info-form-each-input-dob {

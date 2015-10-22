@@ -1,5 +1,23 @@
+/* LAYOUT CATEGORY
+******************************/
+
+#layout-category-left {
+    float: none;
+    width: 100%;
+    margin: 0px 0px 20px 0px;
+}
+
+#layout-category-right {
+    float: none;
+    width: 100%;
+}
+
 /* LOGIN REGISTER
 ******************************/
+
+#login-form, #register-form {
+    width: 100%;
+}
 
 #login-link, #register-link {
     margin: 0px 0px 20px 0px;
@@ -11,33 +29,6 @@
 
 #login-form-each-label, #register-form-each-label {
     width: 100%;
-}
-
-#login-form-each-input input[type='text'], #register-form-each-input input[type='text'] {
-    width: 100%;
-    box-sizing: border-box;
-}
-
-#login-form-each-input input[type='password'], #register-form-each-input input[type='password'] {
-    width: 100%;
-    box-sizing: border-box;
-}
-
-#register-form-each-input textarea {
-    width: 100%;
-    box-sizing: border-box;
-}
-
-#register-form-each-input select {
-    width: 100%;
-}
-
-#register-form-each-input-dob {
-    width: auto;
-}
-
-#login-form-remember-me-forgot-password {
-    width: auto;
 }
 
 #login-tnc, #register-tnc {

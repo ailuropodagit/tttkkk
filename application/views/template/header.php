@@ -293,13 +293,13 @@
                     <!--MOBILE MENU BLOGGER-->
                     <li>
                         <a href='<?php echo base_url('blogger') ?>'>
-                            <i class="fa fa-pencil header-sub-menu-icon"></i>Blogger
+                            <i class="fa fa-pencil header-menu-icon"></i>Blogger
                         </a>
                     </li>
                     <!--MOBILE MENU PHOTOGRAPHER-->
                     <li>
                         <a href='#'>
-                            <i class="fa fa-camera header-sub-menu-icon"></i>Photographer
+                            <i class="fa fa-camera header-menu-icon"></i>Photographer
                         </a>
                     </li>
                     <?php
