@@ -66,7 +66,7 @@
                                 <td>Category</td>
                                 <td>:</td>
                                 <td>
-                                    <div id="advertise-list-info-category"><?php echo $row['me_category_name'] ?></div>
+                                    <?php echo $row['me_category_name'] ?>
                                 </td>
                             </tr>
                             <tr>
@@ -155,7 +155,7 @@
                                 <td>Category</td>
                                 <td>:</td>
                                 <td>
-                                    <div id="advertise-list-info-category"><?php echo $this->m_custom->display_category($row['sub_category_id']) ?></div>
+                                    <?php echo $this->m_custom->display_category($row['sub_category_id']) ?>
                                 </td>
                             </tr>
                             <tr>
@@ -211,7 +211,7 @@
                                 <td>Category</td>
                                 <td>:</td>
                                 <td>
-                                    <div id="advertise-list-info-category"><?php echo $this->m_custom->display_category($row['sub_category_id']) ?></div>
+                                    <?php echo $this->m_custom->display_category($row['sub_category_id']) ?>
                                 </td>
                             </tr>
                             <tr>

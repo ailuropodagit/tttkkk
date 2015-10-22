@@ -1906,13 +1906,11 @@ class User extends CI_Controller
         $data['page_path_name'] = 'all/review_merchant';
         $data['message'] = $this->session->flashdata('message');
         $data['title'] = "Review (" . $this->m_custom->display_static_option($act_type) . ") ";
-
         $data['user_review_like'] = base_url() . "user/review_merchant/" . $this->config->item('user_activity_like');
         $data['user_review_rating'] = base_url() . "user/review_merchant/" . $this->config->item('user_activity_rating');
         $data['user_review_comment'] = base_url() . "user/review_merchant/" . $this->config->item('user_activity_comment');
         $review_list = $this->m_user->user_review_merchant_list($act_type, $user_id, $category);
         $data['review_list'] = $review_list;
-
         $review_list_for_know_category = $this->m_user->user_review_merchant_list($act_type, $user_id);
         $category_list = array();
         $category_array = array();
@@ -1926,7 +1924,6 @@ class User extends CI_Controller
             }
         }
         $data['category_list'] = $category_list;
-
         $this->load->view('template/layout_right_menu', $data);
     }
     
@@ -1936,13 +1933,10 @@ class User extends CI_Controller
         {
             redirect('/', 'refresh');
         }
-
         $message_info = '';
         $user_id = $this->ion_auth->user()->row()->id;
         $user_data = $this->m_custom->getUser($user_id);
-
         $this->data['box_number'] = $this->box_number;
-
         if (isset($_POST) && !empty($_POST))
         {
             if ($this->input->post('button_action') == "upload_image")
@@ -1955,26 +1949,21 @@ class User extends CI_Controller
                     'max_width' => $this->config->item('max_width'),
                     'max_height' => $this->config->item('max_height'),
                 );
-
                 $this->load->library('upload', $upload_rule);
-
                 $validate_fail = 0;
                 for ($i = 0; $i < $this->box_number; $i++)
                 {
                     $user_today_upload_count = $this->m_user->get_user_today_upload_count($user_id);
                     $user_max_picture_per_day = $this->config->item('user_max_picture_per_day');
-
                     if ($user_today_upload_count >= $user_max_picture_per_day)
                     {
                         $message_info = add_message_info($message_info, 'You already reach max ' . $user_max_picture_per_day . ' picture upload per day. Please upload again after today.');
                         $this->session->set_flashdata('message', $message_info);
                         redirect('user/upload_image', 'refresh');
                     }
-
                     $post_file = "image-file-" . $i;
                     $post_title = $this->input->post('image-title-' . $i);
                     $post_desc = $this->input->post('image-desc-' . $i);
-
                     if (!empty($_FILES[$post_file]['name']))
                     {
                         if (!$this->upload->do_upload($post_file))
@@ -2011,10 +2000,8 @@ class User extends CI_Controller
                     $this->m_custom->remove_image_temp();
                     redirect('all/album_user/' . $user_id, 'refresh');
                 }
-                
             }
         }
-
         for ($i = 0; $i < $this->box_number; $i++)
         {
             $image_title = 'image_title' . $i;
@@ -2023,10 +2010,8 @@ class User extends CI_Controller
                 'id' => 'image-title-' . $i,
                 'value' => $this->form_validation->set_value('image-title-' . $i),
             );
-
             $image_url = 'image_url' . $i;
             $this->data[$image_url] = $this->config->item('empty_image');
-
             $image_desc = 'image_desc' . $i;
             $this->data[$image_desc] = array(
                 'name' => 'image-desc-' . $i,
@@ -2034,7 +2019,6 @@ class User extends CI_Controller
                 'value' => $this->form_validation->set_value('image-desc-' . $i),
             );
         }
-        
         $this->data['temp_folder'] = $this->temp_folder;             
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'user/upload_image';

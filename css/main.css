@@ -90,7 +90,7 @@ input[type='submit'], input[type='button'], button[type='submit'], .a-href-butto
     outline: none;
     height: 30px;
     font-family: verdana;
-    font-size: 13px;
+    font-size: 12px;
 }
 
 .a-href-button {
@@ -107,7 +107,7 @@ input[type='submit'], input[type='button'], button[type='submit'], .a-href-butto
 }
 
 .a-href-button { 
-    font-size: 15px;
+    font-size: 12px;
     display: inline-block;
 }
 
@@ -120,7 +120,7 @@ input[type='submit'], input[type='button'], button[type='submit'], .a-href-butto
     -webkit-box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.75);
     box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.75);
-    font-size: 15px;
+    font-size: 12px;
 }
 
 #submit-simple:active {
@@ -652,19 +652,35 @@ a:hover {
     padding: 15px 20px 15px 20px;
 }
 
-#home-navigation-c2-c1-bar {
-    margin: 0px 0px 14px 0px;
-    line-height: 17px;
+#home-navigation-c2-c1-company-label:first-child {
+    margin-top: 0px;
 }
 
-#home-navigation-c2-c1-bar a {
+#home-navigation-c2-c1-company-label {
+    font-size: 15px;
+    margin: 20px 0px 6px 0px;
+    text-transform: uppercase;
+    color: #244964;
+}
+
+.home-navigation-c2-c1-company-title-icon {
+    margin: 0px 5px 0px 0px;
+}
+
+#home-navigation-c2-c1-company-title {
+    margin: 0px 0px 5px 10px;
+    line-height: 17px;
+    font-size: 13px;
+}
+
+#home-navigation-c2-c1-company-title a {
     color: gray;
     text-decoration: none;
     font-size: 14px;
 }
 
-#home-navigation-c2-c1-bar a:hover {
-    color: black;
+#home-navigation-c2-c1-company-title a:hover {
+    color: #d50000;
 }
 
 #home-navigation-c2-c2 {
@@ -959,7 +975,6 @@ a:hover {
 }
 
 #dashboard-info-address {
-    font-size: 18px;
     margin: 18px 0px 18px 0px;
 }
 
@@ -999,6 +1014,7 @@ a:hover {
 }
 
 #dashboard-navigation {
+    font-size: 15px;
     margin: 15px 0px 0px 0px;
 }
 
@@ -1007,7 +1023,6 @@ a:hover {
 }
 
 .dashboard-navigation-each-icon {
-    font-size: 14px;
     margin-right: 7px;
 }
 
@@ -1113,13 +1128,6 @@ a:hover {
 #advertise-list-voucher-worth {
     font-weight: bold;
     font-size: 14px;
-}
-
-#advertise-list-info-category {
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    width: 110px;
 }
 
 #advertise-list-dynamic-time {
@@ -1518,6 +1526,7 @@ a:hover {
 }
 
 #follow-navigation {
+    font-size: 15px;
     margin: 0px 0px 20px 0px;
 }
 
@@ -1582,6 +1591,45 @@ a:hover {
 
 #follow-bottom-empty-fix {
     margin: 0px 0px -50px 0px;
+}
+
+/* USER REVIEW
+******************************/
+
+#user-review-content {
+    margin: 20px 0px 0px 0px;
+}
+
+#user-review-navigation {
+    font-size: 15px;
+    margin: 0px 0px 20px 0px;
+}
+
+#user-review-navigation-each {
+    float: left;
+}
+
+#user-review-navigation-separater {
+    float: left;
+    margin: 0px 13px 0px 13px;
+    color: lightgray;
+}
+
+#user-review-share-facebook {
+    margin: 0px 0px 0px 3px;
+    color: #4a5e91;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+#user-review-category-list {
+    margin: 0px 0px 20px 0px;
+}
+
+#user-review-category-list a {
+    color: black;
+    font-size: 20px;
+    text-decoration: none;
 }
 
 /* PICTURE USER
@@ -2021,6 +2069,7 @@ a:hover {
 }
 
 #album-user-title-upload {
+    font-size: 15px;
     float: left;
     margin: 6px 0px 0px 20px;
 }
@@ -2037,6 +2086,7 @@ a:hover {
 }
 
 #album-user-navigation {
+    font-size: 15px;
     margin: 0px 0px 20px 0px;
 }
 
@@ -2133,13 +2183,13 @@ a:hover {
 #upload-for-merchant-form {
     vertical-align: top;
     display: inline-block;
-    width: 250px; 
+    width: 180px; 
     margin: 0px 50px 50px 0px;
 }
 
 #upload-for-merchant-form-photo-box {
-    width: 250px;
-    height: 250px;
+    width: 180px;
+    height: 180px;
     border: 1px solid lightgray;
     background-color: whitesmoke;
     margin: 0px 0px 20px 0px;
@@ -2156,9 +2206,9 @@ a:hover {
 }
 
 #upload-for-merchant-form-each-label {
-    width: 285px;
     text-align: left;
     margin: 20px auto 0px auto;
+    font-size: 14px;
 }
 
 #upload-for-merchant-form-each-input input[type='text'] {
@@ -2598,6 +2648,7 @@ a:hover {
 }
 
 #user-redemption-navigation {
+    font-size: 15px;
     margin: 30px 0px 0px 0px;
 }
 
@@ -2883,6 +2934,7 @@ a:hover {
 }
 
 #candie-navigation {
+    font-size: 15px;
     margin: 0px 0px 20px 0px;
 }
 
@@ -2961,6 +3013,7 @@ a:hover {
 }
 
 #voucher-navigation {
+    font-size: 15px;
     margin: 0px 0px 20px 0px;
 }
 

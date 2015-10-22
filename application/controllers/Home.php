@@ -14,8 +14,8 @@ class Home extends CI_Controller
         //QUERY CATEGORY  
         $data['query_category'] = $this->albert_model->read_main_category();
         //QUERY MERCHANT 
-        $merchant_where = array('me_category_id'=>$main_category_id);
-        $data['query_merchant'] = $this->albert_model->read_merchant($merchant_where);
+        $where_read_merchant = array('me_category_id'=>$main_category_id);
+        $data['query_merchant'] = $this->albert_model->read_merchant($where_read_merchant);
         //QUERY BANNER
         $banner_where_position_1 = array('category_id'=>$main_category_id, 'banner_position'=>1);
         $data['query_banner_position_1'] = $this->albert_model->read_banner($banner_where_position_1);
@@ -44,9 +44,11 @@ class Home extends CI_Controller
         $main_category_id = $_POST['category_id'];
         //PAGE PATH NAME
         $data['page_path_name'] = 'home_banner_ajax'; 
-        //QUERY MERCHANT 
-        $merchant_where = array('me_category_id'=>$main_category_id);
-        $data['query_merchant'] = $this->albert_model->read_merchant($merchant_where);
+        //READ SUB CATEGORY WITH MERCHANT
+        $where_read_sub_category_with_merchant = array('main_category_id'=>$main_category_id);
+        $query_read_sub_category_with_merchant = $this->albert_model->read_sub_category_with_merchant($where_read_sub_category_with_merchant);
+        $data['query_read_sub_category_with_merchant'] = $query_read_sub_category_with_merchant;
+
         //QUERY BANNER
         $banner_where_position_1 = array('category_id'=>$main_category_id, 'banner_position'=>1);
         $data['query_banner_position_1'] = $this->albert_model->read_banner($banner_where_position_1);

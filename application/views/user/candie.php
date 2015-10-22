@@ -64,60 +64,50 @@ if (isset($message))
             <div id="candie-table">
                 <div id='table-all'>
                     <table border='1px' cellspacing='0px' cellpadding='0px' id="myTable" class="display">
-                        <colgroup>
-                            <col style="width: 180px;">
-                            <col style='width: 90px;'>
-                            <col style='width: 80px;'>
-                            <col style='width: 60px;'>
-                            <col style='width: 100px;'>
-                            <col style='width: 100px;'>
-                            <col style='width: 40px;'>
-                        </colgroup>
                         <thead>
-                        <tr>
-                            <th>Company</th>
-                            <th>Voucher Title</th>
-                            <th>Voucher</th> 
-                            <th>Status</th>
-                            <th>Redeem Time</th>
-                            <th>Expire Date</th>
-                            <th>Candies</th>
-                        </tr>
+                            <tr>
+                                <th>Company</th>
+                                <th>Voucher Title</th>
+                                <th>Voucher</th> 
+                                <th>Status</th>
+                                <th>Redeem Time</th>
+                                <th>Expire Date</th>
+                                <th>Candies</th>
+                            </tr>
                         </thead>      
                         <tbody>
-                        <tr>
-                            <td><?php echo $previous_month_selected_text['month_year_text']; ?> End Candies</td>
-                            <td></td><td></td><td></td><td></td><td></td>  <!--I do like this because datatable not support colspan or rowspan-->
-                            <td style="text-align:right"><?php echo $previous_end_month_balance ?></td>
-                        </tr>
-                        <tr>
-                            <td><?php echo $the_month_selected_text; ?> Candies Gain</td>
-                            <td></td><td></td><td></td><td></td><td></td>
-                            <td style="text-align:right">
-                                <a href="#" onclick="toggle_visibility('candie-how-gain');">+ <?php echo $this_month_candie_gain ?></a>
-                            </td>
-                        </tr>
-                        
-                        <?php
-                        foreach ($this_month_redemption as $row)
-                        {
-                            //$adv_row = $this->m_custom->get_one_table_record('advertise','advertise_id',$row['advertise_id'],1);
-                            $can_row = $this->m_user->get_candie_history_from_redemption($row['redeem_id']);
-                            echo '<tr>';
-                            echo "<td>" . $this->m_merchant->get_merchant_link_from_advertise($row['advertise_id']) . "</td>";
-                            echo "<td>" . $this->m_custom->generate_advertise_link($row['advertise_id']) . "</td>";
-                            echo "<td>" . $row['voucher'] . "</td>";
-                            echo "<td>" . $this->m_custom->display_static_option($row['status_id']) . "</td>";
-                            echo "<td>" . displayDate($row['redeem_time'], 1) . "</td>";
-                            echo "<td>" . displayDate($row['expired_date']) . "</td>";
-                            echo "<td style='text-align:right'>- " . $can_row['candie_minus'] . "</td>";
-                            echo '</tr>';
-                        }
-                        ?>
-                        
-                        <tr>
-                        <td><b>Month End Candies</b></td><td></td><td></td><td></td><td></td><td></td><td style="text-align:right"><?php echo $end_month_balance; ?></td> 
-                        </tr>   
+                            <tr>
+                                <td><?php echo $previous_month_selected_text['month_year_text']; ?> End Candies</td>
+                                <td></td><td></td><td></td><td></td><td></td>  <!--I do like this because datatable not support colspan or rowspan-->
+                                <td style="text-align:right"><?php echo $previous_end_month_balance ?></td>
+                            </tr>
+                            <tr>
+                                <td><?php echo $the_month_selected_text; ?> Candies Gain</td>
+                                <td></td><td></td><td></td><td></td><td></td>
+                                <td style="text-align:right">
+                                    <a href="#" onclick="toggle_visibility('candie-how-gain');">+ <?php echo $this_month_candie_gain ?></a>
+                                </td>
+                            </tr>
+                            <?php
+                            foreach ($this_month_redemption as $row)
+                            {
+                                //$adv_row = $this->m_custom->get_one_table_record('advertise','advertise_id',$row['advertise_id'],1);
+                                $can_row = $this->m_user->get_candie_history_from_redemption($row['redeem_id']);
+                                echo '<tr>';
+                                echo "<td>" . $this->m_merchant->get_merchant_link_from_advertise($row['advertise_id']) . "</td>";
+                                echo "<td>" . $this->m_custom->generate_advertise_link($row['advertise_id']) . "</td>";
+                                echo "<td>" . $row['voucher'] . "</td>";
+                                echo "<td>" . $this->m_custom->display_static_option($row['status_id']) . "</td>";
+                                echo "<td>" . displayDate($row['redeem_time'], 1) . "</td>";
+                                echo "<td>" . displayDate($row['expired_date']) . "</td>";
+                                echo "<td style='text-align:right'>- " . $can_row['candie_minus'] . "</td>";
+                                echo '</tr>';
+                            }
+                            ?>
+
+                            <tr>
+                            <td><b>Month End Candies</b></td><td></td><td></td><td></td><td></td><td></td><td style="text-align:right"><?php echo $end_month_balance; ?></td> 
+                            </tr>   
                         </tbody>
                     </table>
                 </div>
@@ -128,12 +118,6 @@ if (isset($message))
                 <div id="candie-how-gain-content">
                     <div id='table-all'>                   
                         <table border='1px' cellspacing='0px' cellpadding='0px'>
-                            <colgroup>
-                                <col>
-                                <col style='width: 150px;'>
-                                <col style='width: 150px;'>
-                                <col style='width: 120px;'>
-                            </colgroup>
                             <tr>
                                 <th>Action</th>
                                 <th>Candie Per Action</th>

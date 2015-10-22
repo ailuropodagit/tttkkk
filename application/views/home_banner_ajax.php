@@ -22,17 +22,52 @@ else
     <div id="home-navigation-c2-c1">
         <div id="home-navigation-c2-c1-content">
             <?php     
-            //MERCHANT ROW
-            $row_merchant = $query_merchant->result_array();
-            foreach ($row_merchant as $merchant)
+//            //MERCHANT ROW
+//            $row_merchant = $query_merchant->result_array();
+//            foreach ($row_merchant as $merchant)
+//            {
+//                $merchant_company = $merchant['company'];
+//                $merchant_slug = $merchant['slug'];
+//                ?>
+<!--                <div id="home-navigation-c2-c1-bar">
+                    <a href='//<?php echo base_url() ?>all/merchant_dashboard/<?php // echo $merchant_slug ?>'><?php // echo $merchant_company ?></a>
+                </div>-->
+            <?php
+//            }
+                
+            $result_array_read_sub_category_with_merchant = $query_read_sub_category_with_merchant->result_array();
+            foreach($result_array_read_sub_category_with_merchant as $result_array_read_sub_category_with_merchant)
             {
-                $merchant_company = $merchant['company'];
-                $merchant_slug = $merchant['slug'];
+                $category_id = $result_array_read_sub_category_with_merchant['category_id'];
+                $category_label = $result_array_read_sub_category_with_merchant['category_label'];
                 ?>
-                <div id="home-navigation-c2-c1-bar">
-                    <a href='<?php echo base_url() ?>all/merchant_dashboard/<?php echo $merchant_slug ?>'><?php echo $merchant_company ?></a>
-                </div>
+                <div id="home-navigation-c2-c1-company-label"><?php echo $category_label ?></div>
                 <?php
+                //READ MERCHANT
+                $where_read_merchant = array('me_sub_category_id'=>$category_id);
+                $query_read_merchant = $this->albert_model->read_merchant($where_read_merchant);
+                $result_array_read_merchant = $query_read_merchant->result_array();
+                foreach($result_array_read_merchant as $read_merchant)
+                {
+                    $merchant_slug = $read_merchant['slug'];
+                    $merchant_company = $read_merchant['company'];
+                    ?>
+                    <div id="home-navigation-c2-c1-company-title">
+                        <a href="<?php echo base_url("all/merchant_dashboard/$merchant_slug") ?>">
+                            <table border='0' cellpadding='0' cellspacing='0'>
+                                <tr>
+                                    <td valign='top'>
+                                        <i class="fa fa-caret-right home-navigation-c2-c1-company-title-icon"></i>
+                                    </td>
+                                    <td>
+                                        <?php echo $merchant_company ?>
+                                    </td>
+                                </tr>
+                            </table>
+                        </a>
+                    </div>
+                    <?php
+                }
             }
             ?>
         </div>

@@ -250,9 +250,9 @@
                         ?>                            
                     </ul>
                 </div>
-                <div id='float-fix'></div>
                 <!--MOBILE MENU ICON-->
                 <div id="header-menu-mobile-icon"><i class="fa fa-bars"></i></div>
+                <div id='float-fix'></div>
             </div>
         </div>
         <!-- MENU MOBILE-->
@@ -290,20 +290,41 @@
                             <i class="fa fa-diamond header-menu-icon"></i>Redemption
                         </a>
                     </li>
+                    <!--MOBILE MENU BLOGGER-->
+                    <li>
+                        <a href='<?php echo base_url('blogger') ?>'>
+                            <i class="fa fa-pencil header-sub-menu-icon"></i>Blogger
+                        </a>
+                    </li>
+                    <!--MOBILE MENU PHOTOGRAPHER-->
+                    <li>
+                        <a href='#'>
+                            <i class="fa fa-camera header-sub-menu-icon"></i>Photographer
+                        </a>
+                    </li>
                     <?php
                     if(check_is_login())
                     {
                         $login_user_id = $this->session->userdata('user_id');
-                        $login_user_profile = $this->m_custom->display_users($login_user_id, 1, 0, 1);
-                        $login_user_name = $this->m_custom->display_users($login_user_id);
                         if (check_correct_login_type($this->config->item('group_id_user'))) 
                         {
+                            //PROFILE USER
+                            $header_where_read_user = array('id'=>$login_user_id);
+                            $header_query_read_user = $this->albert_model->read_user($header_where_read_user);
+                            $header_row_read_user = $header_query_read_user->row();
+                            $header_profile_login_profile_image = $header_row_read_user->profile_image;
+                            $header_profile_login_user_name = $header_row_read_user->first_name . ' ' . $header_row_read_user->last_name;
                             ?>
                             <!--MOBILE MENU USER PROFILE-->
                             <li>
                                 <a href='<?php echo base_url('user/profile') ?>'>
-                                    <?php echo $login_user_profile; ?>
-                                    <?php echo $login_user_name; ?>
+                                    <div id="header-menu-profile-photo">
+                                        <?php echo img("$header_album_user_profile_path/$header_profile_login_profile_image") ?>
+                                    </div>
+                                    <div id="header-menu-profile-name">
+                                        <?php echo $header_profile_login_user_name ?>
+                                    </div>
+                                    <div id='float-fix'></div>
                                 </a>
                             </li>
                             <!--MOBILE MENU USER LOGOUT-->
@@ -316,12 +337,24 @@
                         } 
                         else 
                         {
+                            //PROFILE MERCHANT
+                            $header_where = array('id'=>$login_user_id);
+                            $header_query_read_merchant_superviosr_as_merchant = $this->albert_model->read_merchant_supervisor_as_merchant($header_where);
+                            $header_row_read_merchant_superviosr_as_merchant = $header_query_read_merchant_superviosr_as_merchant->row();
+                            $header_profile_login_slug = $header_row_read_merchant_superviosr_as_merchant->slug;
+                            $header_profile_login_profile_image = $header_row_read_merchant_superviosr_as_merchant->profile_image;
+                            $header_profile_login_company_name =  $header_row_read_merchant_superviosr_as_merchant->company;
                             ?>
                             <!--MOBILE MENU MERCHANT PROFILE-->
                             <li>
                                 <a href='<?php echo base_url('merchant/profile') ?>'>
-                                    <?php echo $login_user_profile; ?>
-                                    <?php echo $login_user_name; ?>
+                                    <div id="header-menu-profile-photo">
+                                        <?php echo img("$header_album_merchant_profile_path/$header_profile_login_profile_image") ?>
+                                    </div>
+                                    <div id="header-menu-profile-name">
+                                        <?php echo $header_profile_login_company_name ?>
+                                    </div>
+                                    <div id='float-fix'></div>
                                 </a>
                             </li>
                             <!--MOBILE MENU MERCHANT LOGOUT-->

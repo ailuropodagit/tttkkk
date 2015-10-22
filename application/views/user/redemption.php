@@ -10,7 +10,7 @@ if(isset($message))
     <h1><?php echo $title; ?></h1>
     <div id='voucher-content'>
 
-        <div id='voucher-navigator'>
+        <div id='voucher-navigation'>
             <div id='voucher-navigation-each'><a href="<?php echo $candie_url; ?>" >Candies Balance</a></div>
             <div id='voucher-navigation-each-separator'>|</div> 
             <div id='voucher-navigation-each'><a href="<?php echo $voucher_active_url; ?>" ><?php echo $voucher_active_count; ?></a></div>
@@ -80,14 +80,14 @@ if(isset($message))
                                 <td>Category</td>
                                 <td>:</td>
                                 <td>
-                                    <div id="advertise-list-info-category"><?php echo $this->m_custom->display_category($row['sub_category_id']) ?></div>
+                                    <?php echo $this->m_custom->display_category($row['sub_category_id']) ?>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Expire Date</td>
                                 <td>:</td>
                                 <td>
-                                    <div id="advertise-list-info-category"><?php echo displayDate($row['expired_date']) ?></div>
+                                    <?php echo displayDate($row['expired_date']) ?>
                                 </td>
                             </tr>
                             <?php 

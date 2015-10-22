@@ -34,7 +34,6 @@ if(isset($message))
 <div id="upload-for-merchant">
     <h1>Upload Picture for My Album</h1>
     <div id="upload-for-merchant-content">
-        
         <div id="upload-for-merchant-merchant-album">
             <?php
             if (check_correct_login_type($this->config->item('group_id_user')))

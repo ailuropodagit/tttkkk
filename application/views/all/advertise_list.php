@@ -172,7 +172,7 @@ $fetch_method = $this->router->fetch_method();
                     <div id="advertise-list-info">
                         <table border="0" cellpadding="4px" cellspacing="0px">
                             <?php if (($advertise_type == 'pro' || $advertise_type == 'adm') && !empty($row['voucher_worth'])) { ?>
-                            <tr>
+                            <tr valign='top'>
                                 <td>Worth</td>
                                 <td>:</td>
                                 <td>
@@ -180,27 +180,30 @@ $fetch_method = $this->router->fetch_method();
                                 </td>
                             </tr>    
                             <?php } ?>
-                            <tr>
+                            <tr valign='top'>
                                 <td>Category</td>
                                 <td>:</td>
                                 <td>
-                                    <div id="advertise-list-info-category"><?php echo $this->m_custom->display_category($row['sub_category_id']) ?></div>
+                                    <?php echo $this->m_custom->display_category($row['sub_category_id']) ?>
                                 </td>
                             </tr>
                             <?php 
-                            if ($advertise_type != 'adm'){
+                            if ($advertise_type != 'adm')
+                            {
+                                ?>
+                                <tr valign='top'>
+                                    <td>Like</td>
+                                    <td>:</td>
+                                    <td><?php echo $this->m_custom->generate_like_list_link($row['advertise_id'], 'adv'); ?></td>
+                                </tr>
+                                <tr valign='top'>
+                                    <td>Comment</td>
+                                    <td>:</td>
+                                    <td><?php echo $this->m_custom->activity_comment_count($row['advertise_id'], 'adv'); ?></td>
+                                </tr>
+                                <?php
+                            } 
                             ?>
-                            <tr>
-                                <td>Like</td>
-                                <td>:</td>
-                                <td><?php echo $this->m_custom->generate_like_list_link($row['advertise_id'], 'adv'); ?></td>
-                            </tr>
-                            <tr>
-                                <td>Comment</td>
-                                <td>:</td>
-                                <td><?php echo $this->m_custom->activity_comment_count($row['advertise_id'], 'adv'); ?></td>
-                            </tr>
-                            <?php } ?>
                         </table>
                     </div>
                 </div>

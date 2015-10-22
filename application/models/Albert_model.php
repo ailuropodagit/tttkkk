@@ -69,12 +69,17 @@ class Albert_model extends CI_Model
     
     /* READ SUB CATEGORY
     ***************************************************/
-    public function read_sub_category()
+    public function read_sub_category($where)
     {
         //QUERY
         $this->db->select('category_id, category_label');
         $this->db->from('category');
         $this->db->where('main_category_id', !NULL);
+        //WHERE
+        if(!empty($where))
+        {
+            $this->db->where($where);
+        }
         $query = $this->db->get();
         //RETURN
         return $query;
@@ -102,13 +107,36 @@ class Albert_model extends CI_Model
     public function read_merchant($where)
     {
         //QUERY
-        $this->db->select('company, slug');
+        $this->db->select('*');
         $this->db->from('users');
         $this->db->where('main_group_id', 3);
         //WHERE
         if($where)
         {
             $this->db->where($where);
+        }
+        $query = $this->db->get();
+        //RETURN
+        return $query;
+    }
+    
+    /* READ MERCHANT GROUP SUB CATEGORY
+    ***************************************************/
+    public function read_merchant_in($where, $where_in)
+    {
+        //QUERY
+        $this->db->select('*');
+        $this->db->from('users');
+        $this->db->where('main_group_id', 3);
+        //WHERE
+        if($where)
+        {
+            $this->db->where($where);
+        }
+        //WHERE IN
+        if($where_in)
+        {
+            $this->db->where_in('me_sub_category_id', $where_in);
         }
         $query = $this->db->get();
         //RETURN
@@ -527,6 +555,26 @@ class Albert_model extends CI_Model
         }
         $this->db->group_by("advertise_id"); 
         $query = $this->db->get();
+        return $query;
+    }
+    
+    /* READ SUB CATEGORY WITH MERCHANT
+    ***************************************************/
+    public function read_sub_category_with_merchant($where)
+    {
+        //QUERY 1
+        $this->db->select("*");
+        $this->db->from('users');
+        $this->db->join('category', 'users.me_sub_category_id = category.category_id', 'inner');
+        $this->db->where('users.main_group_id', 3);
+        //WHERE
+        if($where)
+        {
+            $this->db->where($where);
+        }
+        $this->db->group_by('users.me_sub_category_id');
+        $query = $this->db->get();
+        //RETURN
         return $query;
     }
     

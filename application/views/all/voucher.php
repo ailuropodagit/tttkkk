@@ -122,7 +122,7 @@
                                 <td>User ID</td>
                                 <td>:</td>
                                 <td>
-                                    <div id="advertise-list-info-category"><?php //echo $user_id; ?></div>
+                                    <?php //echo $user_id; ?>
                                 </td>
                             </tr>
                             <tr>
