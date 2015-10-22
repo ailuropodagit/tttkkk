@@ -739,14 +739,15 @@ class Merchant extends CI_Controller
         $this->form_validation->set_rules('slug', $this->lang->line('create_merchant_validation_company_label'), 'trim|is_unique[' . $tables['users'] . '.slug]');
         $this->form_validation->set_rules('me_ssm', $this->lang->line('create_merchant_validation_companyssm_label'), 'required');
         $this->form_validation->set_rules('address', $this->lang->line('create_merchant_validation_address_label'), 'required');
+        $this->form_validation->set_rules('postcode', 'Postcode', 'required|numeric');
+        $this->form_validation->set_rules('me_country', 'Country', 'required');
         $this->form_validation->set_rules('me_category_id', $this->lang->line('create_merchant_category_label'), 'callback_check_main_category');
         $this->form_validation->set_rules('me_sub_category_id', $this->lang->line('create_merchant_sub_category_label'), 'callback_check_sub_category');
         $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required|valid_contact_number');
         $this->form_validation->set_rules('username', $this->lang->line('create_merchant_validation_username_label'), 'trim|required|is_unique[' . $tables['users'] . '.username]');
         $this->form_validation->set_rules('email', $this->lang->line('create_merchant_validation_email_label'), 'trim|required|valid_email|is_unique[' . $tables['users'] . '.email]');
         $this->form_validation->set_rules('password', $this->lang->line('create_merchant_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
-        $this->form_validation->set_rules('password_confirm', $this->lang->line('create_merchant_validation_password_confirm_label'), 'required');
-
+        $this->form_validation->set_rules('password_confirm', $this->lang->line('create_merchant_validation_password_confirm_label'), 'required');        
         if ($this->form_validation->run() == true)
         {
             //$username = strtolower($this->input->post('first_name')) . ' ' . strtolower($this->input->post('last_name'));
@@ -757,16 +758,20 @@ class Merchant extends CI_Controller
             $company = $this->input->post('company');
             $me_ssm = $this->input->post('me_ssm');
             $address = $this->input->post('address');
-            $phone = '+60' . $this->input->post('phone');
+            $postcode = $this->input->post('postcode');
+            $country = $this->input->post('me_country');
+            $phone = '+60' . $this->input->post('phone');    
             $additional_data = array(
                 'username' => $username,
                 'company_main' => $company_main,
                 'company' => $company,
                 'slug' => $slug,
                 'address' => $address,
+                'postcode' => $postcode,
+                'country' => $country,
+                'me_state_id' => $this->input->post('me_state_id'),
                 'me_category_id' => $this->input->post('me_category_id'),
                 'me_sub_category_id' => $this->input->post('me_sub_category_id'),
-                'me_state_id' => $this->input->post('me_state_id'),
                 'phone' => $phone,
                 'me_ssm' => $me_ssm,
                 //'profile_image' => $this->config->item(''),
@@ -833,6 +838,24 @@ class Merchant extends CI_Controller
                 'id' => 'address',
                 'value' => $this->form_validation->set_value('address'),
             );
+            $this->data['postcode'] = array(
+                'name' => 'postcode',
+                'id' => 'postcode',
+                'type' => 'text',
+                'value' => $this->form_validation->set_value('postcode'),
+            );
+            $this->data['state_list'] = $this->ion_auth->get_static_option_list('state');
+            $this->data['me_state_id'] = array(
+                'name' => 'me_state_id',
+                'id' => 'me_state_id',
+                'value' => $this->form_validation->set_value('me_state_id'),
+            );
+            $this->data['country_list'] = array('Malaysia'=>'Malaysia');
+            $this->data['me_country'] = array(
+                'name' => 'me_country',
+                'id' => 'me_country',
+                'value' => $this->form_validation->set_value('me_country'),
+            );
             $me_category_id = $this->form_validation->set_value('me_category_id') == '' ? '' : $this->form_validation->set_value('me_category_id');
             $this->data['category_list'] = $this->m_custom->getCategoryList('0', '');
             $this->data['me_category_id'] = array(
@@ -846,12 +869,6 @@ class Merchant extends CI_Controller
                 'name' => 'me_sub_category_id',
                 'id' => 'me_sub_category_id',
                 'value' => $this->form_validation->set_value('me_sub_category_id'),
-            );
-            $this->data['state_list'] = $this->ion_auth->get_static_option_list('state');
-            $this->data['me_state_id'] = array(
-                'name' => 'me_state_id',
-                'id' => 'me_state_id',
-                'value' => $this->form_validation->set_value('me_state_id'),
             );
             $this->data['phone'] = array(
                 'name' => 'phone',
