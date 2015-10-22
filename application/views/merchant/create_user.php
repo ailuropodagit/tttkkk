@@ -78,16 +78,24 @@ if(isset($message))
             <div id='register-form-each-input'><?php echo form_textarea($address); ?></div>
         </div>
         <div id='register-form-each'>
+            <div id='register-form-each-label'>Postcode:</div>
+            <div id='register-form-each-input'><?php echo form_input($postcode); ?></div>
+        </div>
+        <div id='register-form-each'>
+            <div id='register-form-each-label'>State:</div>
+            <div id='register-form-each-input'><?php echo form_dropdown($me_state_id, $state_list); ?></div>
+        </div>
+        <div id='register-form-each'>
+            <div id='register-form-each-label'>Country:</div>
+            <div id='register-form-each-input'><?php echo form_dropdown($me_country, $country_list); ?></div>
+        </div>
+        <div id='register-form-each'>
             <div id='register-form-each-label'><?php echo lang('create_merchant_category_label', 'me_category_id'); ?></div>
             <div id='register-form-each-input'><?php echo form_dropdown($me_category_id, $category_list); ?></div>
         </div>
         <div id='register-form-each'>
             <div id='register-form-each-label'><?php echo lang('create_merchant_sub_category_label', 'me_sub_category_id'); ?></div>
             <div id='register-form-each-input'><?php echo form_dropdown($me_sub_category_id, $sub_category_list); ?></div>
-        </div>
-        <div id='register-form-each'>
-            <div id='register-form-each-label'><?php echo lang('create_merchant_state_label', 'me_state_id'); ?></div>
-            <div id='register-form-each-input'><?php echo form_dropdown($me_state_id, $state_list); ?></div>
         </div>
         <div id='register-form-each'>
             <div id='register-form-each-label'>Contact Number</div>
