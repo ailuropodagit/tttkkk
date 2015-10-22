@@ -96,6 +96,8 @@ if($this->ion_auth->user()->num_rows())
         $blog_url = $row_users['us_blog_url'];
         $instagram_url = $row_users['us_instagram_url'];
         $facebook_url = $row_users['us_facebook_url'];
+        $us_is_photographer = $row_users['us_is_photographer'];
+        $us_photography_url = $row_users['us_photography_url'];
         ?>
         <div id='dashboard-photo'>
             <div id="dashboard-photo-box">
@@ -140,6 +142,40 @@ if($this->ion_auth->user()->num_rows())
                     }
                     ?>
                 </div>
+                 <?php 
+                if($us_is_photographer == 1){ 
+                    $photography_list = $this->m_custom->many_get_childlist_detail('photography',$dashboard_users_id,'dynamic_option','option_desc', 1);
+                    ?>        
+                <div id="float-fix"></div>
+                <div id="dashboard-info-table">
+                <table border="0px" cellspacing="0px" cellpadding="5px" style="width: 100%; table-layout: fixed;">
+                    <colgroup style="width:170px;"></colgroup>
+                    <colgroup style="width:15px;"></colgroup>
+                    <tr>
+                        <td>Photography URL</td>
+                        <td>:</td>
+                        <td>
+                            <div class="text-ellipsis">
+                                <a href='<?php echo $us_photography_url; ?>' target='_blank'><?php echo $us_photography_url; ?></a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Photography Type</td>
+                        <td>:</td>
+                        <td>
+                            <div class="text-ellipsis">
+                                <?php echo $photography_list ?>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+                <div id="float-fix"></div>
+                <?php 
+                }
+                ?>
+
                 <?php
                 //LOGGED IN
                 if($this->ion_auth->user()->num_rows())

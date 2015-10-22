@@ -298,8 +298,8 @@
                     </li>
                     <!--MOBILE MENU PHOTOGRAPHER-->
                     <li>
-                        <a href='#'>
-                            <i class="fa fa-camera header-menu-icon"></i>Photographer
+                        <a href='<?php echo base_url('photographer') ?>'>
+                            <i class="fa fa-camera header-sub-menu-icon"></i>Photographer
                         </a>
                     </li>
                     <?php
@@ -400,8 +400,8 @@
                             </a>
                         </li>
                         <!--SUB MENU PHOTOGRAPHER-->
-                        <li>
-                            <a href='#'>
+                         <li <?php if($header_fetch_class == 'photographer'){ echo "class='header-sub-menu-active'"; } ?>>
+                            <a href='<?php echo base_url('photographer') ?>'>
                                 <i class="fa fa-camera header-sub-menu-icon"></i>Photographer
                             </a>
                         </li>

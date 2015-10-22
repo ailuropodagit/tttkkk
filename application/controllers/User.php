@@ -1059,7 +1059,8 @@ class User extends CI_Controller
         $this->form_validation->set_rules('blog_url', $this->lang->line('create_user_validation_blog_label'));
         $this->form_validation->set_rules('instagram_url', $this->lang->line('create_user_validation_instagram_label'));
         $this->form_validation->set_rules('facebook_url', $this->lang->line('create_user_validation_facebook_label'));
-
+        $this->form_validation->set_rules('photography_url', $this->lang->line('create_user_validation_photography_url_label'));
+        
         if (isset($_POST) && !empty($_POST))
         {
             if ($this->input->post('button_action') == "confirm")
@@ -1079,6 +1080,19 @@ class User extends CI_Controller
                     $blog_url = $this->input->post('blog_url');
                     $instagram_url = $this->input->post('instagram_url');
                     $facebook_url = $this->input->post('facebook_url');
+                    $is_photographer = $this->input->post('is_photographer');
+                    $photography_url = $this->input->post('photography_url');
+                    
+                    $photography_list_selected = array();
+                    $post_photography_list = $this->input->post('photography_list');
+                    if (!empty($post_photography_list))
+                    {
+                        foreach ($post_photography_list as $key => $value)
+                        {
+                            $photography_list_selected[] = $value;
+                        }
+                    }
+
                     $data = array(
                         'first_name' => $first_name,
                         'last_name' => $last_name,
@@ -1094,12 +1108,15 @@ class User extends CI_Controller
                         'us_blog_url' => $blog_url,
                         'us_instagram_url' => $instagram_url,
                         'us_facebook_url' => $facebook_url,
+                        'us_is_photographer' => $is_photographer,
+                        'us_photography_url' => $photography_url,
                     );
 
                     // check to see if we are updating the user
                     if ($this->ion_auth->update($user->id, $data))
                     {
                         // redirect them back to the admin page if admin, or to the base url if non admin
+                        $this->m_custom->many_insert_or_remove('photography', $user_id, $photography_list_selected);
                         $this->session->set_flashdata('message', $this->ion_auth->messages());
                         $user = $this->ion_auth->user($user_id)->row();
                         redirect('all/user_dashboard/'.$user_id, 'refresh');
@@ -1221,6 +1238,26 @@ class User extends CI_Controller
             'type' => 'text',
             'value' => $this->form_validation->set_value('facebook_url', $user->us_facebook_url),
         );
+        
+        $us_is_photographer = $user->us_is_photographer;
+        $this->data['us_is_photographer'] = $us_is_photographer;
+        $this->data['is_photographer'] = array(
+            'name' => 'is_photographer',
+            'id' => 'is_photographer',
+            'checked' => $us_is_photographer == "1"? TRUE : FALSE,
+            'onclick' => "checkbox_showhide('is_photographer','profile-photographer-div')",
+            'value' => $this->form_validation->set_value('is_photographer', $us_is_photographer),           
+        );
+        
+        $this->data['photography_url'] = array(
+            'name' => 'photography_url',
+            'id' => 'photography_url',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('photography_url', $user->us_photography_url),
+        );
+        
+        $this->data['photography_list'] = $this->m_custom->get_dynamic_option_array('photography');
+        $this->data['photography_current'] = empty($user) ? array() : $this->m_custom->many_get_childlist('photography', $user->id);
         
         $this->data['temp_folder'] = $this->temp_folder;  
         $this->data['page_path_name'] = 'user/profile';

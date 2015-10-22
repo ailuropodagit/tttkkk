@@ -1029,21 +1029,31 @@ class M_custom extends CI_Model
 
     //Not Yet Full Test // To Do  //ToDo
     //To get the childlist id from many table by the type and parent id
-    public function many_get_childlist_detail($the_type, $parent_id, $child_table, $child_id_column)
+    public function many_get_childlist_detail($the_type, $parent_id, $child_table, $child_wanted_column = NULL, $want_string = 0)
     {
         $query = $this->db->get_where('many_to_many', array('many_type' => $the_type, 'many_parent_id' => $parent_id));
-
+        
         $return = array();
         if ($query->num_rows() > 0)
         {
+            $child_id_column = $this->m_custom->table_id_column($child_table);
             foreach ($query->result_array() as $row)
             {
-                $child = $this->db->get_where($child_table, array($child_id_column => $row['many_child_id']), 1);
+                $many_child_id = $row['many_child_id'];
+                $child = $this->db->get_where($child_table, array($child_id_column => $many_child_id), 1);
                 if ($child->num_rows() == 1)
                 {
-                    $return[] = $child->row_array();
+                    if($child_wanted_column == NULL){
+                        $return[$many_child_id] = $child->row_array();
+                    }else{
+                        $result = $child->row_array();
+                        $return[$many_child_id] = $result[$child_wanted_column];
+                    }
                 }
             }
+        }
+        if($want_string == 1 && $child_wanted_column != NULL){
+            $return = arraylist_to_string($return);
         }
         return $return;
     }
@@ -2335,6 +2345,15 @@ class M_custom extends CI_Model
         }
     }
 
+    public function table_id_column($table){
+        $fields = $this->db->list_fields($table);
+        foreach ($fields as $field)
+        {
+            $field_name[] = $field;
+        }
+        return $field_name[0];
+    }
+    
     public function update_hide_flag($hide_flag, $table, $table_id)
     {
         $fields = $this->db->list_fields($table);

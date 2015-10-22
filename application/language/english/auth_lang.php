@@ -83,6 +83,8 @@ $lang['create_user_submit_btn']                        = 'Create User';
 $lang['create_user_validation_blog_label']             = 'Blog URL:';
 $lang['create_user_validation_instagram_label']        = 'Instagram URL:';
 $lang['create_user_validation_facebook_label']         = 'Facebook URL:';
+$lang['create_user_is_photographer_label']             = 'Are you photographer:';
+$lang['create_user_photography_url_label']             = 'Photography URL:';
 
 $lang['create_user_validation_username_label']         = 'Username';
 $lang['create_user_validation_fname_label']            = 'First Name';
@@ -101,6 +103,7 @@ $lang['create_user_validation_website_label']          = 'Website';
 $lang['create_user_validation_password_label']         = 'Password';
 $lang['create_user_validation_password_confirm_label'] = 'Password Confirmation';
 $lang['create_user_send_email_success']                = 'Success register account.';
+$lang['create_user_validation_photography_url_label']             = 'Photography URL:';
 
 // Edit User
 $lang['edit_user_heading']                           = 'Edit User';
