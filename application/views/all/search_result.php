@@ -258,3 +258,5 @@ $profile_image_empty = $this->config->item('empty_image');
         
     </div>
 </div>
+
+<div id="search-result-bottom-empty-fix"></div>

@@ -466,14 +466,14 @@ a:hover {
     margin: 20px 0px 0px 0px;
 }
 
-#search-merchant {
-    margin: 0px 0px 10px 0px;
-}
-
 #search-result-merchant-title, #search-result-hot-deal-title, #search-result-promotion-title {
     font-size: 22px;
     font-weight: bold;
     margin: 0px 0px 20px 0px;
+}
+
+#search-result-bottom-empty-fix {
+    margin: 0px 0px -40px 0px;
 }
     
 /* BODY
@@ -941,9 +941,10 @@ a:hover {
 }
 
 #dashboard-photo-box img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+    width: 250px;
+    height: 250px;
+    object-fit: cover; 
+    object-position: center;
 }
 
 #dashboard-photo-note {
@@ -1243,9 +1244,10 @@ a:hover {
 }
 
 #blogger-box-each-photo-box img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+    width: 70px;
+    height: 70px;
+    object-fit: cover; 
+    object-position: center;
 }
 
 #blogger-box-each-info {
@@ -1605,9 +1607,10 @@ a:hover {
 }
 
 #notification-table-photo-box img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+    width: 30px;
+    height: 30px;
+    object-fit: cover; 
+    object-position: center;
 }
 
 #notification-table-name {
@@ -1847,7 +1850,6 @@ a:hover {
 }
 
 #picture-user-photo-box {
-    width: 100%;
     border: 1px solid lightgray;
     background-color: whitesmoke;
     margin: 10px auto 10px auto;
@@ -2010,7 +2012,6 @@ a:hover {
 
 #hot-deal-photo-box img {
     max-width: 100%;
-    object-fit: contain;
 }
 
 #hot-deal-sub-title {
@@ -2255,9 +2256,10 @@ a:hover {
 }
 
 #album-user-photo-box img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+    width: 180px;
+    height: 180px;
+    object-fit: cover; 
+    object-position: center;
 }
 
 #album-user-main-title {
@@ -2484,9 +2486,7 @@ a:hover {
 }
 
 #redemption-photo-box img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+    max-width: 100%;
 }
 
 #redemption-sub-title {
@@ -3300,6 +3300,7 @@ a:hover {
 
 #footer-menu {
     float: left;
+    margin: 0px 0px 0px 15px;
 }
 
 #footer-menu a {
@@ -3324,18 +3325,11 @@ a:hover {
     margin: 0px 6px 0px 6px;
 }
 
-#footer-server-time {
-    float: right;
-    margin: 0px 15px 0px 0px;
-    font-size: 14px;
-    color: #767676;
-}
-
 #footer-copyright {
     font-size: 14px;
     float: right;
     color: #767676;
-    margin: 0px 6px 0px 6px;
+    margin: 0px 15px 0px 6px;
 }
 
 /* SUCCESS MESSAGE 
