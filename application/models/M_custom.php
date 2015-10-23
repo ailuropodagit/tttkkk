@@ -1030,13 +1030,12 @@ class M_custom extends CI_Model
     //Not Yet Full Test // To Do  //ToDo
     //To get the childlist id from many table by the type and parent id
     public function many_get_childlist_detail($the_type, $parent_id, $child_table, $child_wanted_column = NULL, $want_string = 0)
-    {
-        $query = $this->db->get_where('many_to_many', array('many_type' => $the_type, 'many_parent_id' => $parent_id));
-        
+    {        
+        $query = $this->db->get_where('many_to_many', array('many_type' => $the_type, 'many_parent_id' => $parent_id));        
         $return = array();
         if ($query->num_rows() > 0)
         {
-            $child_id_column = $this->m_custom->table_id_column($child_table);
+            $child_id_column = $this->m_custom->table_id_column($child_table);            
             foreach ($query->result_array() as $row)
             {
                 $many_child_id = $row['many_child_id'];

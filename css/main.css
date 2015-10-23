@@ -1101,9 +1101,10 @@ a:hover {
 }
 
 #advertise-list-photo-box img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+    width: 180px;
+    height: 180px;
+    object-fit: cover; 
+    object-position: center;
 }
 
 #advertise-list-title1 {
@@ -1414,15 +1415,17 @@ a:hover {
 }
 
 #profile-photo-box img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+    width: 250px;
+    height: 250px;
+    object-fit: cover; 
+    object-position: center;
 }
 
 #profile-photo-note {
     font-size: smaller;
     font-style: italic;
     margin: 5px 0px 15px 0px;
+    width: 250px
 }
 
 #profile-photo-input-file {
@@ -1430,7 +1433,7 @@ a:hover {
 }
 
 #profile-photo-input-file input[type='file'] {
-    width: 200px;
+    width: 250px;
 }
 
 #profile-photo-button {
@@ -1701,6 +1704,7 @@ a:hover {
 }
 
 #follow-box {
+    width: 100px;
     float: left;
     margin: 0px 25px 25px 0px;
 }
@@ -1713,18 +1717,15 @@ a:hover {
 }
 
 #follow-box-photo-box img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+    width: 100px;
+    height: 100px;
+    object-fit: cover; 
+    object-position: center;
 }
 
 #follow-box-name {
     margin: 7px 0px 0px 0px;
     font-size: 14px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    width: 100px;
 }
 
 #follow-bottom-empty-fix {
@@ -1853,9 +1854,7 @@ a:hover {
 }
 
 #picture-user-photo-box img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+    max-width: 100%;
 }
 
 #picture-user-sub-title {
@@ -2010,8 +2009,7 @@ a:hover {
 }
 
 #hot-deal-photo-box img {
-    width: 100%;
-    height: 100%;
+    max-width: 100%;
     object-fit: contain;
 }
 
@@ -2144,9 +2142,10 @@ a:hover {
 }
 
 #hot-deal-advertise-form-photo-box img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+    width: 180px;
+    height: 180px;
+    object-fit: cover; 
+    object-position: center;
 }
 
 #hot-deal-advertise-form-input-file {
