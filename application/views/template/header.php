@@ -122,6 +122,7 @@
             //CONFIG DATA
             $header_album_user_profile_path = $this->config->item('album_user_profile');
             $header_album_merchant_profile_path = $this->config->item('album_merchant_profile');
+            $header_empty_image = $this->config->item('empty_image');
             //URI
             $header_fetch_class = $this->router->fetch_class();
             $header_fetch_method = $this->router->fetch_method();
@@ -185,7 +186,16 @@
                                 <li>
                                     <a href='<?php echo base_url("all/user_dashboard/$login_user_id") ?>'>
                                         <div id="header-menu-profile-photo">
-                                            <?php echo img("$header_album_user_profile_path/$header_profile_login_profile_image") ?>
+                                            <?php 
+                                            if($header_profile_login_profile_image)
+                                            {
+                                                echo img("$header_album_user_profile_path/$header_profile_login_profile_image");
+                                            }
+                                            else
+                                            {
+                                                echo img($header_empty_image);
+                                            }
+                                            ?>
                                         </div>
                                         <div id="header-menu-profile-name">
                                             <?php echo $header_profile_login_user_name; ?>
@@ -214,7 +224,16 @@
                                 <li>
                                     <a href='<?php echo base_url("all/merchant_dashboard/$header_profile_login_slug") ?>'>
                                         <div id="header-menu-profile-photo">
-                                            <?php echo img("$header_album_merchant_profile_path/$header_profile_login_profile_image") ?>
+                                            <?php
+                                            if($header_profile_login_profile_image)
+                                            {
+                                                echo img("$header_album_merchant_profile_path/$header_profile_login_profile_image");
+                                            }
+                                            else
+                                            {
+                                                echo img($header_empty_image);
+                                            }
+                                            ?>
                                         </div>
                                         <div id="header-menu-profile-name">
                                             <?php echo $header_profile_login_company_name; ?>
@@ -319,7 +338,16 @@
                             <li>
                                 <a href='<?php echo base_url('user/profile') ?>'>
                                     <div id="header-menu-profile-photo">
-                                        <?php echo img("$header_album_user_profile_path/$header_profile_login_profile_image") ?>
+                                        <?php 
+                                        if($header_profile_login_profile_image)
+                                        {
+                                            echo img("$header_album_user_profile_path/$header_profile_login_profile_image");
+                                        }
+                                        else
+                                        {
+                                            echo img($header_empty_image);
+                                        }
+                                        ?>
                                     </div>
                                     <div id="header-menu-profile-name">
                                         <?php echo $header_profile_login_user_name ?>
@@ -349,7 +377,16 @@
                             <li>
                                 <a href='<?php echo base_url('merchant/profile') ?>'>
                                     <div id="header-menu-profile-photo">
-                                        <?php echo img("$header_album_merchant_profile_path/$header_profile_login_profile_image") ?>
+                                        <?php 
+                                        if($header_profile_login_profile_image)
+                                        {
+                                            echo img("$header_album_merchant_profile_path/$header_profile_login_profile_image");
+                                        }
+                                        else
+                                        {
+                                            echo img($header_empty_image);
+                                        }
+                                        ?>
                                     </div>
                                     <div id="header-menu-profile-name">
                                         <?php echo $header_profile_login_company_name ?>

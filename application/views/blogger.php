@@ -12,7 +12,7 @@ $empty_image = $this->config->item('empty_image');
             <?php echo form_open() ?>
             <div id="blogger-search-input"><?php echo form_input($keyword) ?></div>
             <div id="blogger-search-submit"><input type="submit" name="search" value="Search"></div>
-            <div id="blogger-search-clear"><a href='<?php echo base_url('blogger') ?>' class="a-href-button">Clear</a></div>
+            <div id="blogger-search-clear"><a href='<?php echo current_url() ?>' class="a-href-button">Clear</a></div>
             <?php echo form_close() ?>
         </div>
         <!--BLOGGER-->

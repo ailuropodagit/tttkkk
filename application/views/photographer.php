@@ -4,18 +4,19 @@ $user_profile_path = $this->config->item('album_user_profile');
 $empty_image = $this->config->item('empty_image');
 ?>
 
-<div id="blogger">
+<div id="photographer">
     <h1>Photographer</h1>
-    <div id="blogger-content">
+    <div id="photographer-content">
         <!--SEARCH-->
-        <div id="blogger-search">
+        <div id="photographer-search">
             <?php echo form_open() ?>
-            <div id="blogger-search-input"><?php echo form_input($keyword) ?><?php echo form_dropdown($the_type, $photography_list, $the_type_selected); ?></div>
-            <div id="blogger-search-submit"><input type="submit" name="search" value="Search"></div>
-            <div id="blogger-search-clear"><a href='<?php echo base_url('photographer') ?>' class="a-href-button">Clear</a></div>
+            <div id="photographer-search-input"><?php echo form_input($keyword) ?></div>
+            <div id="photographer-search-dropdown"><?php echo form_dropdown($the_type, $photography_list, $the_type_selected); ?></div>
+            <div id="photographer-search-submit"><input type="submit" name="search" value="Search"></div>
+            <div id="photographer-search-clear"><a href='<?php echo current_url() ?>' class="a-href-button">Clear</a></div>
             <?php echo form_close() ?>
         </div>
-        <!--BLOGGER-->
+        <!--PHOTOGRAPHER-->
         <div id="blogger-box">
             <?php
             //QUERY USER

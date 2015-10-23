@@ -62,12 +62,16 @@ if(isset($message))
 <div id="outlet">
     <h1>Outlet</h1>
     <div id="outlet-content">
-        <?php echo form_open(uri_string()); ?>
+        
+        <!--SEARCH-->
         <div id="outlet-search">
-            <input type="text" placeholder="Search Outlet" name="search_word" id="outlet-search-text">
-            <button name="button_action" type="submit" value="search_branch" id="outlet-search-button">Search</button>
+            <?php echo form_open(uri_string()) ?>
+            <div id="outlet-search-input"><input type="text" placeholder="Search Outlet" name="search_word"></div>
+            <div id="outlet-search-submit"><button name="button_action" type="submit" value="search_branch">Search</button></div>
+            <div id="outlet-search-clear"><a href='<?php echo current_url() ?>' class="a-href-button">Clear</a></div>
+            <?php echo form_close() ?>
         </div>
-        <?php echo form_close(); ?>
+        
         <?php
         foreach ($branch_list as $one_row)
         {

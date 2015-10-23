@@ -13,10 +13,10 @@
                 }
                 $this.html(event.strftime(format));
             })
-            .on('finish.countdown', function (event) {
-                $this.html('Expired!');
-                $this.parent().css({color: 'red'});
-            });
+                    .on('finish.countdown', function (event) {
+                        $this.html('Expired!');
+                        $this.parent().css({color: 'red'});
+                    });
         });
     });
 </script>
@@ -38,8 +38,8 @@ $fetch_method = $this->router->fetch_method();
     {
         //To check is supervisor have role to upload hot deal
         $have_role = $this->m_custom->check_role_su_can_uploadhotdeal();
-        
-        if($have_role == 1){
+        if ($have_role == 1)
+        {
             $upload_picture_url = '';
             $second_parameter = $this->uri->segment(4);
             if ($fetch_method == 'album_redemption' || ($fetch_method == 'merchant_dashboard' && $second_parameter == 'promotion'))
@@ -50,37 +50,38 @@ $fetch_method = $this->router->fetch_method();
             {
                 $upload_picture_url = 'merchant/upload_hotdeal';
             }
-            if(!empty($upload_picture_url)){
-            ?>     
-            <div id='advertise-list-title-upload'>
-                <a href='<?php echo base_url($upload_picture_url) ?>'><i class="fa fa-upload advertise-list-title-upload-icon"></i>Upload Picture</a>
-            </div>
-            <?php
+            if (!empty($upload_picture_url))
+            {
+                ?>     
+                <div id='advertise-list-title-upload'>
+                    <a href='<?php echo base_url($upload_picture_url) ?>'><i class="fa fa-upload advertise-list-title-upload-icon"></i>Upload Picture</a>
+                </div>
+                <?php
             }
         }
     }
     ?>
     <div id="float-fix"></div>
     <div id='advertise-list-title-bottom-line'></div>
-    
+
     <div id="advertise-list-content">
         <?php
         //CATEGORY BREADCRUMB
         if (!empty($sub_category))
-        { 
+        {
             ?>
             <div id='advertise-list-category-breadcrumb'>
                 <?php echo $main_category; ?>
                 &nbsp; > &nbsp;
-                <?php echo $sub_category; ?>
+            <?php echo $sub_category; ?>
             </div>
             <?php
         }
         ?>
-
-        <?php 
+        
+        <?php
         $bottom_empty_message = '';
-        if (empty($hotdeal_list)) 
+        if (empty($hotdeal_list))
         {
             //SHARE PAGE
             $empty_message = 'No Picture';
@@ -112,9 +113,12 @@ $fetch_method = $this->router->fetch_method();
                 $merchant_name = $this->m_custom->display_users($merchant_id);
                 $merchant_dashboard_url = $this->m_custom->generate_merchant_link($merchant_id);
                 $advertise_type = $row['advertise_type'];
-                if ($advertise_type == 'adm') { 
+                if ($advertise_type == 'adm')
+                {
                     $image_url = base_url($this->album_admin . $row['image']);
-                }else{
+                }
+                else
+                {
                     $image_url = base_url($this->album_merchant . $row['image']);
                 }
                 //SHARE PAGE
@@ -144,42 +148,61 @@ $fetch_method = $this->router->fetch_method();
                 }
                 ?>
                 <div id='advertise-list-box'>
-                    <?php if($fetch_method != 'merchant_dashboard') { ?>
-                    <div id="advertise-list-title1">
-                        <?php echo $merchant_dashboard_url ?>
-                    </div>
-                    <?php } ?>
+                    <?php
+                    if ($fetch_method != 'merchant_dashboard')
+                    {
+                        ?>
+                        <div id="advertise-list-title1">
+                            <?php echo $merchant_dashboard_url ?>
+                        </div>
+                        <?php
+                    }
+                    ?>
                     <div id="advertise-list-photo">
                         <div id="advertise-list-photo-box">
                             <a href='<?php echo $advertise_detail_url ?>'><img src='<?php echo $image_url ?>'></a>
                         </div>
                     </div>
                     <div id="advertise-list-title2">
-                        <a href='<?php echo $advertise_detail_url ?>'><?php echo $row['title'] ?></a>
+                        <a href='<?php echo $advertise_detail_url ?>'><?php echo $row['title'] ?>&nbsp;</a>
                     </div>
-                    <?php if ($advertise_type == 'hot') {    ?>                       
-                        <?php if($row['post_hour']!=0) { ?>
+                    <?php
+                    if ($advertise_type == 'hot')
+                    { 
+                        if ($row['post_hour'] != 0)
+                        { 
+                            ?>
                             <div id="advertise-list-dynamic-time">
                                 <i class="fa fa-clock-o"></i><span id="advertise-list-dynamic-time-label" data-countdown='<?php echo $row['end_time'] ?>'></span>
                             </div>
-                        <?php } ?>                      
-                    <?php } ?>
-                    <?php if ($advertise_type == 'pro' || $advertise_type == 'adm') { ?>
+                            <?php
+                        } 
+                    }
+                    if ($advertise_type == 'pro' || $advertise_type == 'adm')
+                    {
+                        ?>
                         <div id="advertise-list-dynamic-time">
                             <i class="fa fa-bullseye"></i><span id="advertise-list-dynamic-time-label"><?php echo $row['voucher_candie'] ?> candies</span>
                         </div>
-                    <?php } ?>
+                        <?php 
+                    } 
+                    ?>
                     <div id="advertise-list-info">
                         <table border="0" cellpadding="4px" cellspacing="0px">
-                            <?php if (($advertise_type == 'pro' || $advertise_type == 'adm') && !empty($row['voucher_worth'])) { ?>
-                            <tr valign='top'>
-                                <td>Worth</td>
-                                <td>:</td>
-                                <td>
-                                    <div id="advertise-list-voucher-worth"><?php echo "RM " . $row['voucher_worth']; ?></div>
-                                </td>
-                            </tr>    
-                            <?php } ?>
+                            <?php
+                            if (($advertise_type == 'pro' || $advertise_type == 'adm') && !empty($row['voucher_worth']))
+                            { 
+                                ?>
+                                <tr valign='top'>
+                                    <td>Worth</td>
+                                    <td>:</td>
+                                    <td>
+                                        <div id="advertise-list-voucher-worth"><?php echo "RM " . $row['voucher_worth']; ?></div>
+                                    </td>
+                                </tr>    
+                                <?php
+                            } 
+                            ?>
                             <tr valign='top'>
                                 <td>Category</td>
                                 <td>:</td>
@@ -187,7 +210,7 @@ $fetch_method = $this->router->fetch_method();
                                     <?php echo $this->m_custom->display_category($row['sub_category_id']) ?>
                                 </td>
                             </tr>
-                            <?php 
+                            <?php
                             if ($advertise_type != 'adm')
                             {
                                 ?>
@@ -202,7 +225,7 @@ $fetch_method = $this->router->fetch_method();
                                     <td><?php echo $this->m_custom->activity_comment_count($row['advertise_id'], 'adv'); ?></td>
                                 </tr>
                                 <?php
-                            } 
+                            }
                             ?>
                         </table>
                     </div>
@@ -214,13 +237,13 @@ $fetch_method = $this->router->fetch_method();
             {
                 ?>
                 <div id='advertise-list-pagination'>
-                    <?php echo $paging_links; ?>
+                <?php echo $paging_links; ?>
                 </div>
                 <?php
             }
         }
         ?>
-            
+
         <?php
         if ($fetch_method != 'album_merchant' && $fetch_method != 'album_redemption')
         {
@@ -229,61 +252,74 @@ $fetch_method = $this->router->fetch_method();
             ?>
             <!--ADVERTISE LIST SUGGESTION-->
             <div id="advertise-list-suggestion">
-                <div id="advertise-list-suggestion-page-title"><?php if(!empty($advertise_suggestion_page_title)){ echo $advertise_suggestion_page_title; } ?></div>
+                <div id="advertise-list-suggestion-page-title">
+                <?php
+                if (!empty($advertise_suggestion_page_title))
+                {
+                    echo $advertise_suggestion_page_title;
+                } 
+                ?>
+                </div>
                 <div id="advertise-list-suggestion-content">
                     <?php
-                    if(!empty($query_advertise_suggestion)){
-                    $result_array_advertise_suggestion = $query_advertise_suggestion->result_array();
-                    $num_rows_advertise_suggestion = $query_advertise_suggestion->num_rows();
-                    if ($num_rows_advertise_suggestion)
+                    if (!empty($query_advertise_suggestion))
                     {
-                        foreach($result_array_advertise_suggestion as $advertise_suggestion)
+                        $result_array_advertise_suggestion = $query_advertise_suggestion->result_array();
+                        $num_rows_advertise_suggestion = $query_advertise_suggestion->num_rows();
+                        if ($num_rows_advertise_suggestion)
                         {
-                            //DATA
-                            $advertise_suggestion_merchant_id = $advertise_suggestion['merchant_id'];
-                            //READ USER
-                            $where_read_user = array('id'=>$advertise_suggestion_merchant_id);
-                            $advertise_suggestion_merchant_slug = $this->albert_model->read_user($where_read_user)->row()->slug;
-                            $advertise_suggestion_merchant_company = $this->albert_model->read_user($where_read_user)->row()->company;
-                            //DATA
-                            $advertise_suggestion_advertise_id = $advertise_suggestion['advertise_id'];
-                            $advertise_suggestion_type = $advertise_suggestion['advertise_type'];
-                            $advertise_suggestion_sub_category_id = $advertise_suggestion['sub_category_id'];
-                            $advertise_suggestion_sub_title = $advertise_suggestion['title'];
-                            $advertise_suggestion_image = $advertise_suggestion['image'];
-                            $advertise_suggestion_post_hour = $advertise_suggestion['post_hour'];
-                            $advertise_suggestion_end_time = $advertise_suggestion['end_time'];
-                            $advertise_suggestion_voucher_candie = $advertise_suggestion['voucher_candie'];
-                            $advertise_suggestion_voucher_worth = $advertise_suggestion['voucher_worth'];
-                            ?>
-                            <div id='advertise-list-box'>
-                                <?php if($fetch_method != 'merchant_dashboard') { ?>
-                                    <div id="advertise-list-title1">
-                                        <a href="<?php echo base_url("all/merchant_dashboard/$advertise_suggestion_merchant_slug") ?>">
-                                            <?php echo $advertise_suggestion_merchant_company ?>
-                                        </a>
+                            foreach ($result_array_advertise_suggestion as $advertise_suggestion)
+                            {
+                                //DATA
+                                $advertise_suggestion_merchant_id = $advertise_suggestion['merchant_id'];
+                                //READ USER
+                                $where_read_user = array('id' => $advertise_suggestion_merchant_id);
+                                $advertise_suggestion_merchant_slug = $this->albert_model->read_user($where_read_user)->row()->slug;
+                                $advertise_suggestion_merchant_company = $this->albert_model->read_user($where_read_user)->row()->company;
+                                //DATA
+                                $advertise_suggestion_advertise_id = $advertise_suggestion['advertise_id'];
+                                $advertise_suggestion_type = $advertise_suggestion['advertise_type'];
+                                $advertise_suggestion_sub_category_id = $advertise_suggestion['sub_category_id'];
+                                $advertise_suggestion_sub_title = $advertise_suggestion['title'];
+                                $advertise_suggestion_image = $advertise_suggestion['image'];
+                                $advertise_suggestion_post_hour = $advertise_suggestion['post_hour'];
+                                $advertise_suggestion_end_time = $advertise_suggestion['end_time'];
+                                $advertise_suggestion_voucher_candie = $advertise_suggestion['voucher_candie'];
+                                $advertise_suggestion_voucher_worth = $advertise_suggestion['voucher_worth'];
+                                ?>
+                                <div id='advertise-list-box'>
+                                    <?php
+                                    if ($fetch_method != 'merchant_dashboard')
+                                    { 
+                                        ?>
+                                        <div id="advertise-list-title1">
+                                            <a href="<?php echo base_url("all/merchant_dashboard/$advertise_suggestion_merchant_slug") ?>">
+                                                <?php echo $advertise_suggestion_merchant_company ?>
+                                            </a>
+                                        </div>
+                                        <?php 
+                                    } 
+                                    ?>
+                                    <div id="advertise-list-photo">
+                                        <div id="advertise-list-photo-box">
+                                            <a href='<?php echo base_url("all/advertise/$advertise_suggestion_advertise_id/$advertise_suggestion_type/$advertise_suggestion_sub_category_id") ?>'>
+                                                <img src='<?php echo base_url("$album_merchant_path/$advertise_suggestion_image") ?>'>
+                                            </a>
+                                        </div>
                                     </div>
-                                <?php } ?>
-                                <div id="advertise-list-photo">
-                                    <div id="advertise-list-photo-box">
+                                    <div id="advertise-list-title2">
                                         <a href='<?php echo base_url("all/advertise/$advertise_suggestion_advertise_id/$advertise_suggestion_type/$advertise_suggestion_sub_category_id") ?>'>
-                                            <img src='<?php echo base_url("$album_merchant_path/$advertise_suggestion_image") ?>'>
+                                            <?php echo $advertise_suggestion_sub_title ?>
                                         </a>
                                     </div>
                                 </div>
-                                <div id="advertise-list-title2">
-                                    <a href='<?php echo base_url("all/advertise/$advertise_suggestion_advertise_id/$advertise_suggestion_type/$advertise_suggestion_sub_category_id") ?>'>
-                                        <?php echo $advertise_suggestion_sub_title ?>
-                                    </a>
-                                </div>
-                            </div>
-                            <?php
+                                <?php
+                            }
                         }
-                    }
-                    else
-                    {
-                        ?><div id='empty-message'><?php echo $bottom_empty_message ?></div><?php
-                    }
+                        else
+                        {
+                            ?><div id='empty-message'><?php echo $bottom_empty_message ?></div><?php
+                        }
                     }
                     ?>
                 </div>
