@@ -23,6 +23,8 @@
 });
 </script>
 
+<script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script> <!-- have to put below the change image ajax -->
+
 <?php
 //MESSAGE
 if(isset($message))
@@ -98,6 +100,22 @@ if(isset($message))
                         <?php
                         //echo form_dropdown(${'hotdeal_hour' . $i}, $hour_list, ${'hotdeal_hour_selected' . $i});
                         echo form_input(${'hotdeal_hour' . $i});
+                        ?>
+                    </div>
+                </div>
+                <div id='hot-deal-advertise-form-each'>
+                    <div id='hot-deal-advertise-form-each-label'><?php echo lang("hotdeal_price_before_label"); ?><?php echo form_checkbox(${'price_before_show' . $i}); ?></div>
+                    <div id='hot-deal-advertise-form-each-input'>
+                        <?php
+                        echo form_input(${'hotdeal_price_before' . $i});
+                        ?>
+                    </div>
+                </div>
+                <div id='hot-deal-advertise-form-each'>
+                    <div id='hot-deal-advertise-form-each-label'><?php echo lang("hotdeal_price_after_label"); ?><?php echo form_checkbox(${'price_after_show' . $i}); ?></div>
+                    <div id='hot-deal-advertise-form-each-input'>
+                        <?php
+                        echo form_input(${'hotdeal_price_after' . $i});
                         ?>
                     </div>
                 </div>

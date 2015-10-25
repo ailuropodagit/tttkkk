@@ -23,6 +23,8 @@
     });
 </script>
 
+<script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script> <!-- have to put below the change image ajax -->
+
 <?php
 //MESSAGE
 if(isset($message))
@@ -81,6 +83,22 @@ if(isset($message))
                     <div id='hot-deal-advertise-form-each-input'>
                         <?php
                         echo form_input($hotdeal_hour);
+                        ?>
+                    </div>
+                </div>
+                <div id='hot-deal-advertise-form-each'>
+                    <div id='hot-deal-advertise-form-each-label'><?php echo lang("hotdeal_price_before_label"); ?><?php echo form_checkbox($price_before_show); ?></div>
+                    <div id='hot-deal-advertise-form-each-input'>
+                        <?php
+                        echo form_input($hotdeal_price_before);
+                        ?>
+                    </div>
+                </div>
+                <div id='hot-deal-advertise-form-each'>
+                    <div id='hot-deal-advertise-form-each-label'><?php echo lang("hotdeal_price_after_label"); ?><?php echo form_checkbox($price_after_show); ?></div>
+                    <div id='hot-deal-advertise-form-each-input'>
+                        <?php
+                        echo form_input($hotdeal_price_after);
                         ?>
                     </div>
                 </div>

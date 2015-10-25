@@ -74,6 +74,23 @@ if (!function_exists('check_is_positive_numeric'))
 
 }
 
+if (!function_exists('check_is_positive_decimal'))
+{
+
+    function check_is_positive_decimal($i)
+    {
+        if (!is_numeric($i) || $i < 0)
+        {
+            return 0;
+        }
+        else
+        {
+            return $i;
+        }
+    }
+
+}
+
 if (!function_exists('check_correct_login_type'))
 {
 

@@ -183,6 +183,8 @@ $lang['hotdeal_description_label']         = 'Description : ';
 $lang['hotdeal_hour_label']                = 'Countdown Hour(1 to 720) : ';
 $lang['hotdeal_title_label']               = 'Title : ';
 $lang['hotdeal_sub_category_label']        = 'Category : ';
+$lang['hotdeal_price_before_label']        = 'Price Before : Show ';
+$lang['hotdeal_price_after_label']         = 'Price After : Show ';
 
 // User Album
 $lang['album_description_label']         = 'Description : ';

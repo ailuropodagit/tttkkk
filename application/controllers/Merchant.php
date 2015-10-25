@@ -1978,6 +1978,10 @@ class Merchant extends CI_Controller
             $title = $this->input->post('title');
             $description = $this->input->post('desc');
             $hotdeal_hour = check_is_positive_numeric($this->input->post('hour'));
+            $hotdeal_price_before = check_is_positive_decimal($this->input->post('price_before'));
+            $hotdeal_price_after = check_is_positive_decimal($this->input->post('price_after'));
+            $price_before_show = $this->input->post('price_before_show');
+            $price_after_show = $this->input->post('price_after_show');
             
             if ($this->input->post('button_action') == "edit_hotdeal")
             {
@@ -2018,6 +2022,10 @@ class Merchant extends CI_Controller
                     'description' => $description,
                     'image' => empty($image_data) ? $previous_image_name : $image_data['upload_data']['file_name'],
                     'post_hour' => $hotdeal_hour,
+                    'price_before' => $hotdeal_price_before,
+                    'price_after' => $hotdeal_price_after,
+                    'price_before_show' => $price_before_show,
+                    'price_after_show' => $price_after_show,
                     'end_time' => $hotdeal_hour == 0 ? add_hour_to_date(99999, $previous_start_time) : add_hour_to_date($hotdeal_hour, $previous_start_time),
                 );
 
@@ -2093,8 +2101,39 @@ class Merchant extends CI_Controller
             'name' => 'hour',
             'id' => 'hour',
             'value' => empty($hotdeal_result) ? '' : $hotdeal_result['post_hour'],
+            'onkeypress' => 'return isNumber(event)',
         );
 
+        $this->data['hotdeal_price_before'] = array(
+            'name' => 'price_before',
+            'id' => 'price_before',
+            'value' => empty($hotdeal_result) ? '' : $hotdeal_result['price_before'],
+            'onkeypress' => 'return isNumber(event)',
+        );
+        
+        $this->data['hotdeal_price_after'] = array(
+            'name' => 'price_after',
+            'id' => 'price_after',
+            'value' => empty($hotdeal_result) ? '' : $hotdeal_result['price_after'],
+            'onkeypress' => 'return isNumber(event)',
+        );
+        
+        $price_before_show = $hotdeal_result['price_before_show'];
+        $this->data['price_before_show'] = array(
+            'name' => 'price_before_show',
+            'id' => 'price_before_show',
+            'checked' => $price_before_show == "1"? TRUE : FALSE,        
+            'value' => empty($hotdeal_result) ? '' : $hotdeal_result['advertise_id'],
+        );
+        
+        $price_after_show = $hotdeal_result['price_after_show'];
+        $this->data['price_after_show'] = array(
+            'name' => 'price_after_show',
+            'id' => 'price_after_show',
+            'checked' => $price_after_show == "1"? TRUE : FALSE,      
+            'value' => empty($hotdeal_result) ? '' : $hotdeal_result['advertise_id'],
+        );
+        
         $advertise_id = empty($hotdeal_result) ? '0' : $hotdeal_result['advertise_id'];
         $this->data['advertise_id_value'] = $advertise_id;
 
@@ -2206,6 +2245,10 @@ class Merchant extends CI_Controller
                     $title = $this->input->post('title-' . $i);
                     $description = $this->input->post('desc-' . $i);
                     $hotdeal_hour = check_is_positive_numeric($this->input->post('hour-' . $i));
+                    $hotdeal_price_before = check_is_positive_decimal($this->input->post('price_before-' . $i));
+                    $hotdeal_price_after = check_is_positive_decimal($this->input->post('price_after-' . $i));
+                    $price_before_show = $this->input->post('price_before_show-' . $i) == null? 0 : $this->input->post('price_before_show-' . $i);
+                    $price_after_show = $this->input->post('price_after_show-' . $i) == null? 0 : $this->input->post('price_after_show-' . $i);
 
                     if ($hotdeal_hour > 720)
                     {
@@ -2243,6 +2286,10 @@ class Merchant extends CI_Controller
                                     'description' => $description,
                                     'image' => $image_data['upload_data']['file_name'],
                                     'post_hour' => $hotdeal_hour,
+                                    'price_before' => $hotdeal_price_before,
+                                    'price_after' => $hotdeal_price_after,
+                                    'price_before_show' => $price_before_show,
+                                    'price_after_show' => $price_after_show,
                                     'start_time' => get_part_of_date('all'),
                                     'end_time' => $hotdeal_hour == 0 ? add_hour_to_date(99999) : add_hour_to_date($hotdeal_hour),
                                     'month_id' => get_part_of_date('month'),
@@ -2299,6 +2346,10 @@ class Merchant extends CI_Controller
                             'description' => $description,
                             'image' => empty($image_data) ? $previous_image_name : $image_data['upload_data']['file_name'],
                             'post_hour' => $hotdeal_hour,
+                            'price_before' => $hotdeal_price_before,
+                            'price_after' => $hotdeal_price_after,
+                            'price_before_show' => $price_before_show,
+                            'price_after_show' => $price_after_show,
                             'end_time' => $hotdeal_hour == 0 ? add_hour_to_date(99999, $previous_start_time) : add_hour_to_date($hotdeal_hour, $previous_start_time),
                         );
 
@@ -2387,10 +2438,45 @@ class Merchant extends CI_Controller
                 'name' => 'hour-' . $i,
                 'id' => 'hour-' . $i,
                 'value' => empty($hotdeal_today_result[$i]) ? '' : $hotdeal_today_result[$i]['post_hour'],
+                'onkeypress' => 'return isNumber(event)',
             );
 
             //$hotdeal_hour_selected = 'hotdeal_hour_selected' . $i;
             //$this->data[$hotdeal_hour_selected] = empty($hotdeal_today_result[$i]) ? '' : $hotdeal_today_result[$i]['post_hour'];
+
+            $hotdeal_price_before = 'hotdeal_price_before' . $i;
+            $this->data[$hotdeal_price_before] = array(
+                'name' => 'price_before-'. $i,
+                'id' => 'price_before-'. $i,
+                'value' => empty($hotdeal_today_result[$i]) ? '' : $hotdeal_today_result[$i]['price_before'],
+                'onkeypress' => 'return isNumber(event)',
+            );
+
+            $hotdeal_price_after = 'hotdeal_price_after' . $i;
+            $this->data[$hotdeal_price_after] = array(
+                'name' => 'price_after-'. $i,
+                'id' => 'price_after-'. $i,
+                'value' => empty($hotdeal_today_result[$i]) ? '' : $hotdeal_today_result[$i]['price_after'],
+                'onkeypress' => 'return isNumber(event)',
+            );
+
+            $price_before_show = 'price_before_show' . $i;
+            $price_before_show_value = empty($hotdeal_today_result[$i]) ? '' : $hotdeal_today_result[$i]['price_before_show'];
+            $this->data[$price_before_show] = array(
+                'name' => 'price_before_show-'. $i,
+                'id' => 'price_before_show-'. $i,
+                'checked' => $price_before_show_value == "1" ? TRUE : FALSE,
+                'value' => empty($hotdeal_today_result[$i]) ? '' : $hotdeal_today_result[$i]['advertise_id'],
+            );
+
+            $price_after_show = 'price_after_show' . $i;
+            $price_after_show_value = empty($hotdeal_today_result[$i]) ? '' : $hotdeal_today_result[$i]['price_after_show'];
+            $this->data[$price_after_show] = array(
+                'name' => 'price_after_show-'. $i,
+                'id' => 'price_after_show-'. $i,
+                'checked' => $price_after_show_value == "1" ? TRUE : FALSE,
+                'value' => empty($hotdeal_today_result[$i]) ? '' : $hotdeal_today_result[$i]['advertise_id'],
+            );
 
             $advertise_id = empty($hotdeal_today_result[$i]) ? '0' : $hotdeal_today_result[$i]['advertise_id'];
             $advertise_id_value = 'advertise_id_value' . $i;

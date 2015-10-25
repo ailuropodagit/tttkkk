@@ -154,6 +154,10 @@ class All extends CI_Controller
             else if ($row_advertise_type == "hot")
             {
                 $this->data['post_hour'] = $the_row['post_hour'];
+                $this->data['price_before'] = $the_row['price_before'];
+                $this->data['price_before_show'] = $the_row['price_before_show'];
+                $this->data['price_after'] = $the_row['price_after'];
+                $this->data['price_after_show'] = $the_row['price_after_show'];
                 $this->data['end_time'] = displayDate($the_row['end_time'], 1, 1);
                 $this->data['page_path_name'] = 'all/hotdeal';
             }

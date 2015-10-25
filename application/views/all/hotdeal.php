@@ -167,6 +167,12 @@
                                 ?>
                             </div>    
                         </div>
+                        <?php
+                            if($price_before_show == 1){
+                            echo "Price Before : RM "  . $price_before . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";}
+                            if($price_after_show == 1){
+                            echo "Price After : RM "  . $price_after;}
+                        ?>
                     </div>
                     <div id="hot-deal-description">
                         <?php echo $description ?>
