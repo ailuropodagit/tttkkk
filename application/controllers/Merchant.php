@@ -2218,6 +2218,14 @@ class Merchant extends CI_Controller
         //$search_date = '31-08-2015';
         //$search_date = toggle_date_format($search_date);
 
+        //If more then 5 active hotdeal for today uploaded already, auto increase 1 more upload box
+        $box_number_update = $this->box_number;
+        $hotdeal_today_count = $this->m_merchant->get_merchant_today_hotdeal($merchant_id, 1, $search_date);
+        echo $hotdeal_today_count;
+        if($hotdeal_today_count >= $box_number_update){
+            $box_number_update = $hotdeal_today_count + 1;
+        }
+        
         if (isset($_POST) && !empty($_POST))
         {
             if ($this->input->post('button_action') == "upload_hotdeal")
@@ -2233,10 +2241,10 @@ class Merchant extends CI_Controller
                 $this->load->library('upload', $upload_rule);
 
                 //To loop hotdeal box dynamic
-                for ($i = 0; $i < $this->box_number; $i++)
+                for ($i = 0; $i < $box_number_update; $i++)
                 {
 
-                    $hotdeal_today_count = $this->m_merchant->get_merchant_today_hotdeal($merchant_id, 1, $search_date, 1);
+                    $hotdeal_today_count_update = $this->m_merchant->get_merchant_today_hotdeal($merchant_id, 1, $search_date, 1);
 
                     $hotdeal_id = $this->input->post('hotdeal_id-' . $i);
                     $hotdeal_file = "hotdeal-file-" . $i;
@@ -2247,8 +2255,8 @@ class Merchant extends CI_Controller
                     $hotdeal_hour = check_is_positive_numeric($this->input->post('hour-' . $i));
                     $hotdeal_price_before = check_is_positive_decimal($this->input->post('price_before-' . $i));
                     $hotdeal_price_after = check_is_positive_decimal($this->input->post('price_after-' . $i));
-                    $price_before_show = $this->input->post('price_before_show-' . $i) == null? 0 : $this->input->post('price_before_show-' . $i);
-                    $price_after_show = $this->input->post('price_after_show-' . $i) == null? 0 : $this->input->post('price_after_show-' . $i);
+                    $price_before_show = $this->input->post('price_before_show-' . $i) == null? 0 : 1;
+                    $price_after_show = $this->input->post('price_after_show-' . $i) == null? 0 : 1;
 
                     if ($hotdeal_hour > 720)
                     {
@@ -2259,7 +2267,7 @@ class Merchant extends CI_Controller
                     //To check is this an old hot deal or new hot deal, if new hot deal is 0
                     if ($hotdeal_id == 0)
                     {
-                        if ($hotdeal_today_count >= $hotdeal_per_day)
+                        if ($hotdeal_today_count_update >= $hotdeal_per_day)
                         {
                             $message_info = add_message_info($message_info, 'Already reach max ' . $hotdeal_per_day . ' hot deal per day.');
                             //redirect('merchant/upload_hotdeal', 'refresh');
@@ -2401,7 +2409,7 @@ class Merchant extends CI_Controller
         $this->data['sub_category_list'] = $this->ion_auth->get_sub_category_list($merchant_data->me_category_id);
 
         //To dynamic create the hot deal box
-        for ($i = 0; $i < $this->box_number; $i++)
+        for ($i = 0; $i < $box_number_update; $i++)
         {
             $hotdeal_title = 'hotdeal_title' . $i;
             $this->data[$hotdeal_title] = array(
@@ -2466,7 +2474,7 @@ class Merchant extends CI_Controller
                 'name' => 'price_before_show-'. $i,
                 'id' => 'price_before_show-'. $i,
                 'checked' => $price_before_show_value == "1" ? TRUE : FALSE,
-                'value' => empty($hotdeal_today_result[$i]) ? '' : $hotdeal_today_result[$i]['advertise_id'],
+                'value' => empty($hotdeal_today_result[$i]) ? '99' : $hotdeal_today_result[$i]['advertise_id'],
             );
 
             $price_after_show = 'price_after_show' . $i;
@@ -2475,7 +2483,7 @@ class Merchant extends CI_Controller
                 'name' => 'price_after_show-'. $i,
                 'id' => 'price_after_show-'. $i,
                 'checked' => $price_after_show_value == "1" ? TRUE : FALSE,
-                'value' => empty($hotdeal_today_result[$i]) ? '' : $hotdeal_today_result[$i]['advertise_id'],
+                'value' => empty($hotdeal_today_result[$i]) ? '99' : $hotdeal_today_result[$i]['advertise_id'],
             );
 
             $advertise_id = empty($hotdeal_today_result[$i]) ? '0' : $hotdeal_today_result[$i]['advertise_id'];
@@ -2495,7 +2503,7 @@ class Merchant extends CI_Controller
             );
         }
 
-        $this->data['box_number'] = $this->box_number;
+        $this->data['box_number'] = $box_number_update;
         $this->data['hotdeal_per_day'] = $this->config->item("hotdeal_per_day");
         $this->data['temp_folder'] = $this->temp_folder;
         $this->data['message'] = $this->session->flashdata('message');
