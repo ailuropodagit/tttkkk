@@ -236,9 +236,16 @@ if (!function_exists('money'))
 if (!function_exists('limited_month_select'))
 {
 
-    function limited_month_select($how_many_month_before, $want_dropdown = 0)
+    function limited_month_select($how_many_month_before, $want_dropdown = 0, $default_value = NULL, $default_text = NULL, $add_month = NULL)
     {
         $currentDate = new DateTime();
+        
+        if ($add_month != NULL)
+        {
+            $add_month_string = '+' . $add_month . ' month';
+            $currentDate->modify($add_month_string);
+        }
+
         $month_list = array();
         for ($i = 0; $i <= $how_many_month_before; $i++)
         {
@@ -246,6 +253,10 @@ if (!function_exists('limited_month_select'))
             $MonthAgo = incrementDate($currentDate, $temp_i);
             if ($want_dropdown == 1)
             {
+                if ($default_value != NULL)
+                {
+                    $month_list[$default_value] = $default_text;
+                }
                 $month_list[$MonthAgo->format('Y') . '-' . $MonthAgo->format('m')] = $MonthAgo->format('F Y');
             }
             else

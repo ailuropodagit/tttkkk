@@ -1857,10 +1857,30 @@ class User extends CI_Controller
             {
                 $sub_category = $this->input->post('sub_category');
                 $merchant = $this->input->post('merchant');
+                $redeem_search_month = $this->input->post('redeem_the_month');
+                $expire_search_month = $this->input->post('expire_the_month');
             }
         }
+        
+        $redeem_month_list = limited_month_select(5, 1, '0', 'All Redemption Month');
+        $this->data['redeem_month_list'] = $redeem_month_list;
+        $this->data['redeem_the_month'] = array(
+            'name' => 'redeem_the_month',
+            'id' => 'redeem_the_month',
+        );
+        $redeem_selected_month = empty($redeem_search_month) ? NULL : $redeem_search_month;
+        $this->data['redeem_the_month_selected'] = $redeem_selected_month;
 
-        $this->data['redemption'] = $this->m_user->user_redemption($user_id, $status_id, $sub_category, $merchant);
+        $expire_month_list = limited_month_select(5, 1, '0', 'All Expire Month', 3);
+        $this->data['expire_month_list'] = $expire_month_list;
+        $this->data['expire_the_month'] = array(
+            'name' => 'expire_the_month',
+            'id' => 'expire_the_month',
+        );
+        $expire_selected_month = empty($expire_search_month) ? NULL : $expire_search_month;
+        $this->data['expire_the_month_selected'] = $expire_selected_month;
+
+        $this->data['redemption'] = $this->m_user->user_redemption($user_id, $status_id, $sub_category, $merchant, $redeem_selected_month, $expire_selected_month);
         if ($status_id != NULL)
         {
             $this->data['title'] = "Redemption : " . $this->m_custom->display_static_option($status_id);
@@ -1886,9 +1906,9 @@ class User extends CI_Controller
         );
         $this->data['merchant_selected'] = empty($merchant) ? "" : $merchant;
         
-        $this->data['voucher_active_count'] = 'Active Voucher ('.count($this->m_user->user_redemption($user_id, $this->config->item('voucher_active'), $sub_category, $merchant)).')';
-        $this->data['voucher_used_count'] = 'Used Voucher ('.count($this->m_user->user_redemption($user_id, $this->config->item('voucher_used'), $sub_category, $merchant)).')';
-        $this->data['voucher_expired_count'] = 'Expired Voucher ('.count($this->m_user->user_redemption($user_id, $this->config->item('voucher_expired'), $sub_category, $merchant)).')';
+        $this->data['voucher_active_count'] = 'Active Voucher ('.count($this->m_user->user_redemption($user_id, $this->config->item('voucher_active'), $sub_category, $merchant, $redeem_selected_month, $expire_selected_month)).')';
+        $this->data['voucher_used_count'] = 'Used Voucher ('.count($this->m_user->user_redemption($user_id, $this->config->item('voucher_used'), $sub_category, $merchant, $redeem_selected_month, $expire_selected_month)).')';
+        $this->data['voucher_expired_count'] = 'Expired Voucher ('.count($this->m_user->user_redemption($user_id, $this->config->item('voucher_expired'), $sub_category, $merchant, $redeem_selected_month, $expire_selected_month)).')';
         
         $this->data['candie_url'] = base_url() . "user/candie_page";
         $this->data['voucher_active_url'] = base_url() . "user/redemption/" . $this->config->item('voucher_active');

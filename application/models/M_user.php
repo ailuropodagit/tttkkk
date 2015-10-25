@@ -210,12 +210,25 @@ class M_user extends CI_Model
         }
     }
     
-    public function user_redemption($user_id, $status_id = NULL, $sub_category = NULL, $merchant_id = NULL)
+    public function user_redemption($user_id, $status_id = NULL, $sub_category = NULL, $merchant_id = NULL, $redeem_search_year_month = NULL, $expire_search_year_month = NULL)
     {
         if (!IsNullOrEmptyString($status_id))
         {
             $this->db->where('status_id', $status_id);
         }
+        
+        if (!IsNullOrEmptyString($redeem_search_year_month))
+        {
+            $condition = "redeem_time like '%" . $redeem_search_year_month . "%'";
+            $this->db->where($condition);
+        }
+        
+        if (!IsNullOrEmptyString($expire_search_year_month))
+        {
+            $condition = "expired_date like '%" . $expire_search_year_month . "%'";
+            $this->db->where($condition);
+        }
+        
         $this->db->order_by('redeem_id', 'desc');
         $red_query = $this->db->get_where('user_redemption', array('user_id' => $user_id));
         $red_result = $red_query->result_array();

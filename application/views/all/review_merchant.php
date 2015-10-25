@@ -42,7 +42,7 @@ if (isset($message))
                 <?php
                 foreach ($category_list as $cat_row)
                 {
-                    echo $cat_row;
+                    echo $cat_row . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
                 }
                 ?>
             </div>
