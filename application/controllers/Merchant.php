@@ -760,7 +760,7 @@ class Merchant extends CI_Controller
             $address = $this->input->post('address');
             $postcode = $this->input->post('postcode');
             $country = $this->input->post('me_country');
-            $phone = '+60' . $this->input->post('phone');    
+            $phone = '+60 ' . $this->input->post('phone');    
             $additional_data = array(
                 'username' => $username,
                 'company_main' => $company_main,
@@ -2221,7 +2221,6 @@ class Merchant extends CI_Controller
         //If more then 5 active hotdeal for today uploaded already, auto increase 1 more upload box
         $box_number_update = $this->box_number;
         $hotdeal_today_count = $this->m_merchant->get_merchant_today_hotdeal($merchant_id, 1, $search_date);
-        echo $hotdeal_today_count;
         if($hotdeal_today_count >= $box_number_update){
             $box_number_update = $hotdeal_today_count + 1;
         }

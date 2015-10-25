@@ -862,7 +862,7 @@ class User extends CI_Controller
         {
             $first_name = $this->input->post('first_name');
             $last_name = $this->input->post('last_name');
-            $phone = '+60'.$this->input->post('phone');
+            $phone = '+60 '.$this->input->post('phone');
             $username = strtolower($this->input->post('username'));
             $email = strtolower($this->input->post('email'));
             $password = $this->input->post('password');
