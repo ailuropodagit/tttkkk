@@ -734,10 +734,10 @@ class Merchant extends CI_Controller
             $slug = $_POST['slug'];
         }
         // validate form input
-        $this->form_validation->set_rules('company', $this->lang->line('create_merchant_validation_company_main_label'), "trim|required|min_length[3]");
-        $this->form_validation->set_rules('company', $this->lang->line('create_merchant_validation_company_label'), "trim|required|min_length[3]");
-        $this->form_validation->set_rules('slug', $this->lang->line('create_merchant_validation_company_label'), 'trim|is_unique[' . $tables['users'] . '.slug]');
+        $this->form_validation->set_rules('company_main', $this->lang->line('create_merchant_validation_company_main_label'), "trim|required|min_length[3]");
         $this->form_validation->set_rules('me_ssm', $this->lang->line('create_merchant_validation_companyssm_label'), 'required');
+        $this->form_validation->set_rules('company', $this->lang->line('create_merchant_validation_company_label'), "trim|required|min_length[3]");
+        $this->form_validation->set_rules('slug', $this->lang->line('create_merchant_validation_company_label'), 'trim|is_unique[' . $tables['users'] . '.slug]');      
         $this->form_validation->set_rules('address', $this->lang->line('create_merchant_validation_address_label'), 'required');
         $this->form_validation->set_rules('postcode', 'Postcode', 'required|numeric');
         $this->form_validation->set_rules('me_country', 'Country', 'required');
@@ -759,6 +759,7 @@ class Merchant extends CI_Controller
             $me_ssm = $this->input->post('me_ssm');
             $address = $this->input->post('address');
             $postcode = $this->input->post('postcode');
+            $state = $this->input->post('me_state_id');
             $country = $this->input->post('me_country');
             $phone = '+60 ' . $this->input->post('phone');    
             $additional_data = array(
@@ -769,7 +770,7 @@ class Merchant extends CI_Controller
                 'address' => $address,
                 'postcode' => $postcode,
                 'country' => $country,
-                'me_state_id' => $this->input->post('me_state_id'),
+                'me_state_id' => $state,
                 'me_category_id' => $this->input->post('me_category_id'),
                 'me_sub_category_id' => $this->input->post('me_sub_category_id'),
                 'phone' => $phone,
@@ -959,6 +960,7 @@ class Merchant extends CI_Controller
             $branch = $this->m_custom->get_one_table_record('merchant_branch', 'branch_id', $supervisor->su_branch_id);
         }
         $user = $this->ion_auth->user($merchant_id)->row();
+        $this->form_validation->set_rules('postcode', 'Postcode', 'required|numeric');
         $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required|valid_contact_number');
         $this->form_validation->set_rules('description', $this->lang->line('create_merchant_validation_description_label'));
         $this->form_validation->set_rules('website', $this->lang->line('create_merchant_validation_website_label'));
@@ -975,7 +977,11 @@ class Merchant extends CI_Controller
                 if ($this->form_validation->run() === TRUE)
                 {
 
-                    $data = array(
+                    $data = array(                      
+                        'address' => $this->input->post('address'),
+                        'postcode' => $this->input->post('postcode'),
+                        'me_state_id' => $this->input->post('me_state_id'),
+                        'country' => $this->input->post('me_country'),                     
                         'description' => $this->input->post('description'),
                         'phone' => $this->input->post('phone'),
                         'company' => $this->input->post('company'),
@@ -1073,6 +1079,27 @@ class Merchant extends CI_Controller
             'id' => 'address',
             'readonly ' => 'true',
             'value' => $this->form_validation->set_value('address', $user->address),
+        );
+        $this->data['postcode'] = array(
+            'name' => 'postcode',
+            'id' => 'postcode',
+            'type' => 'text',
+            'readonly ' => 'true',
+            'value' => $this->form_validation->set_value('postcode', $user->postcode),
+        );
+        $this->data['state_selected'] = $user->me_state_id;
+        $this->data['state_list'] = $this->ion_auth->get_static_option_list('state');
+        $this->data['me_state_id'] = array(
+            'name' => 'me_state_id',
+            'id' => 'me_state_id',
+            'value' => $this->form_validation->set_value('me_state_id'),
+        );
+        $this->data['country_selected'] = $user->country;
+        $this->data['country_list'] = array('Malaysia'=>'Malaysia');
+        $this->data['me_country'] = array(
+            'name' => 'me_country',
+            'id' => 'me_country',
+            'value' => $this->form_validation->set_value('me_country'),
         );
         $this->data['description'] = array(
             'name' => 'description',

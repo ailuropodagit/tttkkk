@@ -147,8 +147,8 @@ class All extends CI_Controller
                 $this->data['voucher_worth'] = $the_row['voucher_worth'];
                 $this->data['voucher_candie'] = $the_row['voucher_candie'];
                 $this->data['expire_date'] = displayDate($the_row['voucher_expire_date']);
-                $this->data['candie_term'] = $this->m_custom->many_get_childlist_detail('candie_term', $advertise_id, 'dynamic_option', NULL, 'option_id');
-                $this->data['candie_branch'] = $this->m_custom->many_get_childlist_detail('candie_branch', $advertise_id, 'merchant_branch', NULL, 'branch_id');
+                $this->data['candie_term'] = $this->m_custom->many_get_childlist_detail('candie_term', $advertise_id, 'dynamic_option');
+                $this->data['candie_branch'] = $this->m_custom->many_get_childlist_detail('candie_branch', $advertise_id, 'merchant_branch');
                 $this->data['page_path_name'] = 'all/promotion';
             }
             else if ($row_advertise_type == "hot")
@@ -169,7 +169,7 @@ class All extends CI_Controller
                 $this->data['voucher_worth'] = $the_row['voucher_worth'];
                 $this->data['voucher_candie'] = $the_row['voucher_candie'];
                 $this->data['expire_date'] = displayDate($the_row['voucher_expire_date']);
-                $this->data['candie_term'] = $this->m_custom->many_get_childlist_detail('candie_term', $advertise_id, 'dynamic_option', 'option_id');
+                $this->data['candie_term'] = $this->m_custom->many_get_childlist_detail('candie_term', $advertise_id, 'dynamic_option');
                 $this->data['page_path_name'] = 'all/promotion_admin';
             }
 
@@ -388,8 +388,8 @@ class All extends CI_Controller
             $this->data['voucher_barcode'] = base_url("barcode/generate/" . $redeem_row['voucher']);
             $this->data['voucher_candie'] = $the_row['voucher_candie'];
             $this->data['expire_date'] = displayDate($the_row['voucher_expire_date']);
-            $this->data['candie_term'] = $this->m_custom->many_get_childlist_detail('candie_term', $advertise_id, 'dynamic_option', 'option_id');
-            $this->data['candie_branch'] = $this->m_custom->many_get_childlist_detail('candie_branch', $advertise_id, 'merchant_branch', 'branch_id');
+            $this->data['candie_term'] = $this->m_custom->many_get_childlist_detail('candie_term', $advertise_id, 'dynamic_option');
+            $this->data['candie_branch'] = $this->m_custom->many_get_childlist_detail('candie_branch', $advertise_id, 'merchant_branch');
             $this->data['page_path_name'] = 'all/voucher';
 
             if ($this->ion_auth->logged_in())

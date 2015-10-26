@@ -96,6 +96,18 @@ if(isset($message))
                     <div id='profile-info-form-each-input'><?php echo form_textarea($address); ?></div>
                 </div>
                 <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><?php echo lang('create_merchant_postcode_label', 'postcode'); ?></div>
+                    <div id='profile-info-form-each-input'><?php echo form_input($postcode); ?></div>
+                </div>
+                <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><?php echo lang('create_merchant_state_label', 'me_state_id'); ?></div>
+                    <div id='profile-info-form-each-input'><?php echo form_dropdown($me_state_id, $state_list, $state_selected); ?></div>
+                </div>
+                <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><?php echo lang('create_merchant_country_label', 'me_country'); ?></div>
+                    <div id='profile-info-form-each-input'><?php echo form_dropdown($me_country, $country_list, $country_selected); ?></div>
+                </div>
+                <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_merchant_description_label', 'description'); ?></div>
                     <div id='profile-info-form-each-input'><?php echo form_textarea($description); ?></div>
                 </div>
