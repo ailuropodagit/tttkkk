@@ -27,7 +27,7 @@ $image_path_user_profile = $this->config->item('album_user_profile');
                     $notification_from_user_id = $row['noti_by_id'];                
                     $noti_read = $row['noti_read_already'];
                     $noti_message = $row['noti_message'];
-                    $noti_url = $row['noti_url'];
+                    $noti_url = base_url() .$row['noti_url'];
 
                     //USER INFO
                     $where_read_user = array('id'=>$notification_from_user_id);

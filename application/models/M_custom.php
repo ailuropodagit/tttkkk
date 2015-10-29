@@ -244,7 +244,7 @@ class M_custom extends CI_Model
     }
 
     //Get one static option text by it option id
-    public function display_notification_message($id, $title = '')
+    public function display_notification_message($id, $title = '', $public_show = 0, $noti_to_id = 0)
     {
         $query = $this->db->get_where('notification_message', array('msg_id' => $id));
         if ($query->num_rows() !== 1)
@@ -252,10 +252,19 @@ class M_custom extends CI_Model
             return '';
         }
         $result = $query->row_array();
-        $prefix = $result['msg_prefix'] == NULL ? "" : $result['msg_prefix'];
-        $text = $result['msg_text'] == NULL ? "" : $result['msg_text'];
-        $postfix = $result['msg_postfix'] == NULL ? "" : $result['msg_postfix'];
-        $message = $prefix . $text . $title . $postfix;
+        $msg_prefix = $result['msg_prefix'] == NULL ? "" : $result['msg_prefix'];
+        $msg_front = $result['msg_front'] == NULL ? "" : $result['msg_front'];
+        $msg_middle = $result['msg_middle'] == NULL ? "" : $result['msg_middle'];
+        $msg_back = $result['msg_back'] == NULL ? "" : $result['msg_back'];
+        $msg_postfix = $result['msg_postfix'] == NULL ? "" : $result['msg_postfix'];
+        $msg_last = $result['msg_last'] == NULL ? "" : $result['msg_last'];
+        
+        if($public_show == 1){
+            $msg_middle = $msg_middle == NULL ? "" : $this->m_custom->display_users($noti_to_id);
+            $msg_last = $msg_last == NULL ? "" : $this->m_custom->display_users($noti_to_id);
+        }
+        
+        $message = $msg_prefix . $msg_front . $msg_middle . $msg_back . $title . $msg_postfix . $msg_last;
         return $message;
     }
 
@@ -307,7 +316,7 @@ class M_custom extends CI_Model
         if ($with_icon == 1)
         {
             $prefix = $this->m_custom->display_user_profile_image($user_id);
-            if ($return->main_group_id == $this->config->item('group_id_merchant'))
+            if ($return->main_group_id == $this->config->item('group_id_merchant') && $icon_only == 0)
             {
                 $postfix = ' <i class="fa fa-star"></i> ';
             }
@@ -1430,17 +1439,17 @@ class M_custom extends CI_Model
                 break;
             case 'merchant_user_album':
                 $result = $this->m_custom->getOneMUA($noti_refer_table_id, 1);
-                $noti_url = base_url() . 'all/merchant_user_picture/' . $noti_refer_table_id;
+                $noti_url = 'all/merchant_user_picture/' . $noti_refer_table_id;
                 $this->m_custom->notification_insert($result['merchant_id'], 10, $noti_url, $noti_refer_table, 'merchant_user_album_id', $noti_refer_table_id);
                 break;
             case 'user_redemption':
                 $result = $this->m_custom->get_one_table_record('user_redemption', 'redeem_id', $noti_refer_table_id, 1);
-                $noti_url = base_url() . 'all/advertise/' . $result['advertise_id'];
+                $noti_url = 'all/advertise/' . $result['advertise_id'];
                 $advertise = $this->m_custom->getOneAdvertise($result['advertise_id']);
                 $this->m_custom->notification_insert($advertise['merchant_id'], 11, $noti_url, 'advertise', 'advertise_id', $result['advertise_id']);
                 break;
             case 'advertise':
-                $noti_url = base_url() . 'all/advertise/' . $noti_refer_table_id;
+                $noti_url = 'all/advertise/' . $noti_refer_table_id;
                 $advertise = $this->m_custom->getOneAdvertise($noti_refer_table_id);
                 $this->m_custom->notification_insert($advertise['merchant_id'], 12, $noti_url, 'advertise', 'advertise_id', $noti_refer_table_id);
                 break;
@@ -1464,19 +1473,19 @@ class M_custom extends CI_Model
                 if ($refer_type == "mua")
                 {
                     $result = $this->m_custom->getOneMUA($refer_id, 1);
-                    $noti_url = base_url() . 'all/merchant_user_picture/' . $result['merchant_user_album_id'];
+                    $noti_url = 'all/merchant_user_picture/' . $result['merchant_user_album_id'];
                     $this->m_custom->notification_insert($result['merchant_id'], 3, $noti_url, 'merchant_user_album', 'merchant_user_album_id', $result['merchant_user_album_id']);
                 }
                 else if ($refer_type == "usa")
                 {
                     $result = $this->m_custom->getOneUserPicture($refer_id);
-                    $noti_url = base_url() . 'all/user_picture/' . $result['user_album_id'];
+                    $noti_url = 'all/user_picture/' . $result['user_album_id'];
                     $this->m_custom->notification_insert($result['user_id'], 3, $noti_url, 'user_album', 'user_album_id', $result['user_album_id']);
                 }
                 else if ($refer_type == "adv")
                 {
                     $result = $this->m_custom->getOneAdvertise($refer_id);
-                    $noti_url = base_url() . 'all/advertise/' . $result['advertise_id'];
+                    $noti_url = 'all/advertise/' . $result['advertise_id'];
                     if ($result['advertise_type'] == "hot")
                     {
                         $this->m_custom->notification_insert($result['merchant_id'], 1, $noti_url, 'advertise', 'advertise_id', $result['advertise_id']);
@@ -1491,19 +1500,19 @@ class M_custom extends CI_Model
                 if ($refer_type == "mua")
                 {
                     $result = $this->m_custom->getOneMUA($refer_id, 1);
-                    $noti_url = base_url() . 'all/merchant_user_picture/' . $result['merchant_user_album_id'];
+                    $noti_url = 'all/merchant_user_picture/' . $result['merchant_user_album_id'];
                     $this->m_custom->notification_insert($result['merchant_id'], 6, $noti_url, 'merchant_user_album', 'merchant_user_album_id', $result['merchant_user_album_id'], $query['rating']);
                 }
                 else if ($refer_type == "usa")
                 {
                     $result = $this->m_custom->getOneUserPicture($refer_id);
-                    $noti_url = base_url() . 'all/user_picture/' . $result['user_album_id'];
+                    $noti_url = 'all/user_picture/' . $result['user_album_id'];
                     $this->m_custom->notification_insert($result['user_id'], 6, $noti_url, 'user_album', 'user_album_id', $result['user_album_id'], $query['rating']);
                 }
                 else if ($refer_type == "adv")
                 {
                     $result = $this->m_custom->getOneAdvertise($refer_id);
-                    $noti_url = base_url() . 'all/advertise/' . $result['advertise_id'];
+                    $noti_url = 'all/advertise/' . $result['advertise_id'];
                     if ($result['advertise_type'] == "hot")
                     {
                         $this->m_custom->notification_insert($result['merchant_id'], 4, $noti_url, 'advertise', 'advertise_id', $result['advertise_id'], $query['rating']);
@@ -1518,19 +1527,19 @@ class M_custom extends CI_Model
                 if ($refer_type == "mua")
                 {
                     $result = $this->m_custom->getOneMUA($refer_id, 1);
-                    $noti_url = base_url() . 'all/merchant_user_picture/' . $result['merchant_user_album_id'];
+                    $noti_url = 'all/merchant_user_picture/' . $result['merchant_user_album_id'];
                     $this->m_custom->notification_insert($result['merchant_id'], 9, $noti_url, 'merchant_user_album', 'merchant_user_album_id', $result['merchant_user_album_id']);
                 }
                 else if ($refer_type == "usa")
                 {
                     $result = $this->m_custom->getOneUserPicture($refer_id);
-                    $noti_url = base_url() . 'all/user_picture/' . $result['user_album_id'];
+                    $noti_url = 'all/user_picture/' . $result['user_album_id'];
                     $this->m_custom->notification_insert($result['user_id'], 9, $noti_url, 'user_album', 'user_album_id', $result['user_album_id']);
                 }
                 else if ($refer_type == "adv")
                 {
                     $result = $this->m_custom->getOneAdvertise($refer_id);
-                    $noti_url = base_url() . 'all/advertise/' . $result['advertise_id'];
+                    $noti_url = 'all/advertise/' . $result['advertise_id'];
                     if ($result['advertise_type'] == "hot")
                     {
                         $this->m_custom->notification_insert($result['merchant_id'], 7, $noti_url, 'advertise', 'advertise_id', $result['advertise_id']);
@@ -1621,19 +1630,47 @@ class M_custom extends CI_Model
         return $query_list;
     }
 
-    public function notification_display($noti_to_id)
+    //Can set $public_show = 1 and $certain_type = 'like' to filter public view and type
+    public function notification_display($noti_to_id, $public_show = 0, $certain_type = NULL)
     {
+        if ($public_show == 1)
+        {
+            if (!IsNullOrEmptyString($certain_type))
+            {
+                switch ($certain_type)
+                {
+                    case 'like':
+                        $this->db->where_in('noti_msg_id', array(1, 2, 3));
+                        break;
+                    case 'rating':
+                        $this->db->where_in('noti_msg_id', array(4, 5, 6));
+                        break;
+                    case 'comment':
+                        $this->db->where_in('noti_msg_id', array(7, 8, 9));
+                        break;
+                    case 'upload_image':
+                        $this->db->where_in('noti_msg_id', array(10));
+                        break;
+                }
+            }
+        }
+        else
+        {
+            $this->db->where('noti_to_id', $noti_to_id);
+        }
+        
         $this->db->order_by("noti_id", "desc");
-        $query_list = $this->db->get_where('notification', array('noti_to_id' => $noti_to_id, 'hide_flag' => 0), 100)->result_array();
+        $query_list = $this->db->get_where('notification', array('hide_flag' => 0), 100)->result_array();
         $notification_list = array();
         foreach ($query_list as $notification)
         {
             $title = '';
+            $noti_to_id = $notification['noti_to_id'];
             $msg_type = $notification['noti_msg_id'];
             $table_name = $notification['noti_refer_table'];
             $table_column = $notification['noti_refer_table_column'];
             $table_id = $notification['noti_refer_table_id'];
-
+            
             if ($table_name == 'user_follow')
             {
                 $record = $this->m_custom->get_one_table_record($table_name, $table_column, $table_id, 1);
@@ -1641,6 +1678,9 @@ class M_custom extends CI_Model
             else
             {
                 $record = $this->m_custom->get_one_table_record($table_name, $table_column, $table_id, 1, 1);
+                if(empty($record)){
+                    continue;
+                }
             }
 
             switch ($table_name)
@@ -1658,7 +1698,7 @@ class M_custom extends CI_Model
                 $title = $title . " as " . $notification['noti_remark'] . " star";
             }
 
-            $noti_message = $this->m_custom->display_notification_message($msg_type, $title);
+            $noti_message = $this->m_custom->display_notification_message($msg_type, $title, $public_show, $noti_to_id);
 
             $notification_list[] = array(
                 'noti_id' => $notification['noti_id'],
