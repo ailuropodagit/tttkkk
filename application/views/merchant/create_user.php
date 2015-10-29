@@ -150,6 +150,7 @@ if(isset($message))
             </div>   
             <div id='float-fix'></div>
         </div>
+        <input type="checkbox" name="accept_terms" value="1" /> I agree to the Terms of Service and Privacy Policy. <br>
         <div id='register-form-submit'>
             <?php echo form_submit('submit', 'Sign Up'); ?>
         </div>
