@@ -674,7 +674,8 @@ class M_custom extends CI_Model
         return $return;
     }
 
-    function getAdvertise($advertise_type, $sub_category_id = NULL, $merchant_id = NULL, $show_expired = 0, $limit = NULL, $start = NULL)
+    //set $hot_popular_only = 1 to get the popular hotdeal or redemption only
+    function getAdvertise($advertise_type, $sub_category_id = NULL, $merchant_id = NULL, $show_expired = 0, $limit = NULL, $start = NULL, $hot_popular_only = 0)
     {
         if (!IsNullOrEmptyString($sub_category_id))
         {
@@ -713,9 +714,45 @@ class M_custom extends CI_Model
         $return_final = array();
         foreach ($return as $row)
         {
-            $valid_row = $this->m_custom->check_can_show_advertise($row);
-            if ($valid_row == 1)
+            $valid_row = 0;
+            $get_row = $this->m_custom->check_can_show_advertise($row);
+            if ($get_row == 1)
             {
+                $valid_row = 1;
+                //For get popular hotdeal or redemption only
+                if ($hot_popular_only == 1)
+                {
+                    $the_advertise_id = $row['advertise_id'];
+                    $the_advertise_type = $row['advertise_type'];
+                    switch ($the_advertise_type)
+                    {
+                        case 'hot':
+                            $like_count = $this->m_custom->activity_like_count($the_advertise_id, 'adv');
+                            if ($like_count >= $this->config->item('popular_hotdeal_number'))
+                            {
+                                $valid_row = 1;
+                            }
+                            else
+                            {
+                                $valid_row = 0;
+                            }
+                            break;
+                        case 'pro':
+                            $redeem_count = $this->m_custom->promotion_redeem_count($the_advertise_id);
+                            if ($redeem_count >= $this->config->item('popular_redemption_number'))
+                            {
+                                $valid_row = 1;
+                            }
+                            else
+                            {
+                                $valid_row = 0;
+                            }
+                            break;
+                    }
+                }
+            }
+
+            if($valid_row == 1){
                 $return_final[] = $row;
             }
         }
@@ -1430,6 +1467,20 @@ class M_custom extends CI_Model
         }
     }
 
+    public function promotion_redeem_count($advertise_id = NULL, $want_array = 0)
+    {
+        $query = $this->db->get_where('user_redemption', array('advertise_id' => $advertise_id));
+
+        if ($want_array == 0)
+        {
+            return $query->num_rows();
+        }
+        else
+        {
+            return $query->result_array();
+        }
+    }
+    
     public function notification_process($noti_refer_table = NULL, $noti_refer_table_id = NULL)
     {
         switch ($noti_refer_table)

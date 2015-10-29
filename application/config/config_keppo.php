@@ -76,3 +76,6 @@ $config['voucher_expired'] = '23';
 $config['user_activity_like'] = '45';
 $config['user_activity_rating'] = '46';
 $config['user_activity_comment'] = '47';
+
+$config['popular_hotdeal_number'] = '3';
+$config['popular_redemption_number'] = '3';
