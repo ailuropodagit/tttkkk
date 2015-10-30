@@ -7,7 +7,6 @@ class User extends CI_Controller
     {
         parent::__construct();
         $this->load->database();
-        $this->load->library(array('ion_auth', 'form_validation'));
         $this->load->helper(array('url', 'language', 'albert'));
         $this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
         $this->lang->load('auth');
@@ -57,7 +56,8 @@ class User extends CI_Controller
         //validate form input
         $this->form_validation->set_rules('identity', 'Identity', 'required');
         $this->form_validation->set_rules('password', 'Password', 'required');
-
+        setcookie('visit_first_time', 'no');
+        
         if ($this->form_validation->run() == true)
         {
             // check to see if the user is logging in
