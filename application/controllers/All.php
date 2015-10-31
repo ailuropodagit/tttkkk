@@ -391,14 +391,14 @@ class All extends CI_Controller
             $this->data['candie_branch'] = $this->m_custom->many_get_childlist_detail('candie_branch', $advertise_id, 'merchant_branch');
             $this->data['page_path_name'] = 'all/voucher';
 
-            if ($this->ion_auth->logged_in())
+            $template_used = 'template/layout_right_menu';
+            $this->load->library('user_agent');
+            if ($this->agent->is_browser('Safari'))
             {
-                $this->load->view('template/layout_right_menu', $this->data);
+                $template_used = 'template/body';
             }
-            else
-            {
-                $this->load->view('template/layout', $this->data);
-            }
+
+            $this->load->view($template_used, $this->data);
         }
         else
         {
