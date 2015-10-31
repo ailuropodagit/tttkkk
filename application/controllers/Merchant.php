@@ -674,7 +674,6 @@ class Merchant extends CI_Controller
 
         $id = (int) $id;
 
-        $this->load->library('form_validation');
         $this->form_validation->set_rules('confirm', $this->lang->line('deactivate_validation_confirm_label'), 'required');
         $this->form_validation->set_rules('id', $this->lang->line('deactivate_validation_user_id_label'), 'required|alpha_numeric');
 
@@ -2558,7 +2557,7 @@ class Merchant extends CI_Controller
         $this->load->view('template/layout_right_menu', $this->data);
     }
 
-    // edit a user
+    // edit a user, no use
     function edit_user($id)
     {
         $this->data['title'] = "Edit User";

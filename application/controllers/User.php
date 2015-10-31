@@ -2092,7 +2092,7 @@ class User extends CI_Controller
         $this->load->view('template/layout_right_menu', $this->data);
     }
 
-    // edit a user
+    // edit a user, no use
     function edit_user($id)
     {
         $this->data['title'] = "Edit user";

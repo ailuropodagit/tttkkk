@@ -183,7 +183,7 @@
                     $header_profile_login_profile_image = $header_row_read_user->profile_image;
                     $header_profile_login_user_name = $header_row_read_user->first_name . ' ' . $header_row_read_user->last_name;
                 }
-                else
+                else if($this->m_custom->check_is_any_merchant())
                 {
                     //PROFILE DSIPLAY MERCHANT
                     $header_where = array('id'=>$login_user_id);
@@ -192,6 +192,13 @@
                     $header_profile_login_slug = $header_row_read_merchant_superviosr_as_merchant->slug;
                     $header_profile_login_profile_image = $header_row_read_merchant_superviosr_as_merchant->profile_image;
                     $header_profile_login_company_name =  $header_row_read_merchant_superviosr_as_merchant->company;
+                }
+                else if($this->m_custom->check_is_any_admin())
+                {
+                    $header_profile_login_user_name = "";
+                    $header_profile_login_profile_image = "";
+                    $header_profile_login_user_name = $this->m_custom->display_users($login_user_id);
+                    $header_profile_login_company_name = "";
                 }
             }
             ?>
@@ -245,11 +252,26 @@
                                             </a>
                                         </li>
                                         <li>
-                                             <a href='<?php echo base_url('merchant/logout') ?>'>
+                                             <a href='<?php echo base_url('user/logout') ?>'>
                                                  <i class='fa fa-sign-out header-top-bar-navigation-icon'></i> Logout
                                              </a>
                                         </li>
                                     </ul>
+                                    <?php
+                                }
+                                else if ($this->m_custom->check_is_any_admin()) 
+                                {
+                                    ?>
+                                    <li <?php if($header_fetch_method == 'admin_dashboard'){ echo "class='header-top-bar-navigation-active'"; } ?>>
+                                        <a href='<?php echo base_url("admin/admin_dashboard") ?>'>
+                                            Dashboard
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href='<?php echo base_url('admin/logout') ?>' onclick="fbLogout()">
+                                            <i class='fa fa-sign-out header-menu-icon'></i>Logout
+                                        </a>
+                                    </li>
                                     <?php
                                 }
                                 else
@@ -261,7 +283,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href='<?php echo base_url('user/logout') ?>' onclick="fbLogout()">
+                                        <a href='<?php echo base_url('merchant/logout') ?>' onclick="fbLogout()">
                                             <i class='fa fa-sign-out header-menu-icon'></i>Logout
                                         </a>
                                     </li>
@@ -309,6 +331,30 @@
                                     </div>
                                 </a>
                                 <?php
+                            }
+                            else if ($this->m_custom->check_is_any_admin()) 
+                            {
+                                ?>
+                                <a href='<?php echo base_url("admin/admin_dashboard/$login_user_id") ?>'>
+                                    <div id="header-logo-bar-profile-display-photo">
+                                        <div id="header-logo-bar-profile-display-photo-box">
+                                            <?php 
+                                            if($header_profile_login_profile_image)
+                                            {
+                                                echo img("$header_album_user_profile_path/$header_profile_login_profile_image");
+                                            }
+                                            else
+                                            {
+                                                echo img($header_empty_image);
+                                            }
+                                            ?>
+                                        </div>
+                                    </div>
+                                    <div id="header-logo-bar-profile-display-name">
+                                        <?php echo $header_profile_login_user_name; ?>
+                                    </div>
+                                </a>
+                        <?php
                             }
                             else 
                             {

@@ -167,6 +167,24 @@ class M_custom extends CI_Model
         return $have_role;
     }
 
+    public function check_is_any_admin()
+    {
+        if (check_correct_login_type($this->config->item('group_id_admin')) || check_correct_login_type($this->config->item('group_id_worker')))
+        {
+            return TRUE;
+        }
+        return FALSE;
+    }
+
+    public function check_is_any_merchant()
+    {
+        if (check_correct_login_type($this->config->item('group_id_merchant')) || check_correct_login_type($this->config->item('group_id_supervisor')))
+        {
+            return TRUE;
+        }
+        return FALSE;
+    }
+    
     public function check_is_superuser($check_merchant_id = 0)
     {
         $is_superuser = 0;
