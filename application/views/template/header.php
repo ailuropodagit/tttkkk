@@ -257,7 +257,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                             <a href='<?php echo base_url('user/logout') ?>'>
+                                             <a href='<?php echo base_url('user/logout') ?>'  onclick="fbLogout()">
                                                  <i class='fa fa-sign-out header-top-bar-navigation-icon'></i> Logout
                                              </a>
                                         </li>
@@ -273,8 +273,8 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href='<?php echo base_url('admin/logout') ?>' onclick="fbLogout()">
-                                            <i class='fa fa-sign-out header-menu-icon'></i>Logout
+                                        <a href='<?php echo base_url('admin/logout') ?>'>
+                                            <i class='fa fa-sign-out header-top-bar-navigation-icon'></i>Logout
                                         </a>
                                     </li>
                                     <?php
@@ -288,7 +288,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href='<?php echo base_url('user/logout') ?>' onclick="fbLogout()">
+                                        <a href='<?php echo base_url('merchant/logout') ?>'>
                                             <i class='fa fa-sign-out header-top-bar-navigation-icon'></i> Logout
                                         </a>
                                     </li>
