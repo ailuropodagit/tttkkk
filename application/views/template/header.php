@@ -5,6 +5,7 @@
         <title>Keppo</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="<?php echo base_url('css/all.css') ?>">
         <link rel="stylesheet" href="<?php echo base_url('css/main.css') ?>">
         <link rel="stylesheet" href="<?php echo base_url('css/main-1100.css') ?>" media="screen and (max-width: 1100px)">
         <link rel="stylesheet" href="<?php echo base_url('css/main-0900.css') ?>" media="screen and (max-width: 0900px)">
@@ -12,8 +13,8 @@
         <link rel="stylesheet" href="<?php echo base_url('css/main-0500.css') ?>" media="screen and (max-width: 0500px)">
         <link rel="stylesheet" href="<?php echo base_url('css/main-0400.css') ?>" media="screen and (max-width: 0400px)">
         <link rel="stylesheet" href="<?php echo base_url('library/font-awesome/font-awesome-4.4.0.css') ?>">
-        <script type="text/javascript" src='<?php echo base_url() ?>js/jquery/jquery-2.1.4.min.js'></script>
-        <script type="text/javascript" src="<?php echo base_url() ?>js/jquery-ui-1.11.4.custom/jquery-ui.js"></script>
+        <script type="text/javascript" src="<?php echo base_url('js/jquery/jquery-2.1.4.min.js') ?>"></script>
+        <script type="text/javascript" src="<?php echo base_url('js/jquery-ui-1.11.4.custom/jquery-ui.js') ?>"></script>
         <link rel="stylesheet" href="<?php echo base_url('js/jquery-ui-1.11.4.custom/jquery-ui.css') ?>">
         <link rel="stylesheet" href="<?php echo base_url('js/bootstrap-3.3.5/dist/css/custom-bootstrap.css') ?>">
         <link rel="stylesheet" href="<?php echo base_url('js/bootstrap-3.3.5/dist/css/custom-bootstrap-modal.css') ?>">
@@ -228,6 +229,36 @@
                         <a href='<?php echo base_url('home') ?>'>
                             <img src='<?php echo base_url('image/header-logo-red.png') ?>'>
                         </a>
+                    </div>
+                    <div id="header-logo-bar-search">
+                        
+                            <?php echo form_open('all/home_search') ?>
+                                <div id="header-logo-bar-search-block1">
+                                    <input type="text" placeholder="Search: Merchant, Hot Deal, Promotion" name="search_word" id="search_word">
+                                </div>
+                                <div id="header-logo-bar-search-block2">
+                                    <?php
+                                    $header_search_state_list = $this->m_custom->get_static_option_array('state', '0', 'All');
+                                    $header_search_me_state_id = array(
+                                        'name' => 'me_state_id',
+                                        'id' => 'me_state_id',
+                                    );
+                                    $header_search_selected_state = $this->uri->segment(4);
+                                    if (!empty($header_search_selected_state) && $this->router->fetch_method() == 'home_search')
+                                    {
+                                        echo form_dropdown($header_search_me_state_id, $header_search_state_list, $header_search_selected_state);
+                                    }
+                                    else
+                                    {
+                                        echo form_dropdown($header_search_me_state_id, $header_search_state_list);
+                                    }
+                                    ?>
+                                </div>
+                                <div id="header-logo-bar-search-block3">
+                                    <button name="button_action" type="submit" value="search">Search</button>
+                                </div>
+                            <?php echo form_close() ?>
+                        
                     </div>
                     <div id="header-logo-bar-profile-display">
                         <?php
