@@ -227,10 +227,14 @@
                             {
                                 ?>
                                 <li <?php if($header_fetch_method == 'login'){ echo "class='header-top-bar-navigation-active'"; } ?>>
-                                    <a href='<?php echo base_url('user/login') ?>'>Login</a>
+                                    <a href='<?php echo base_url('user/login') ?>'>
+                                        <i class="fa fa-user header-top-bar-navigation-icon"></i> Login
+                                    </a>
                                 </li>
                                 <li <?php if($header_fetch_method == 'create_user'){ echo "class='header-top-bar-navigation-active'"; } ?>>
-                                    <a href='<?php echo base_url('user/register') ?>'>Register</a>
+                                    <a href='<?php echo base_url('user/register') ?>'>
+                                        <i class="fa fa-user-plus header-top-bar-navigation-icon"></i> Register
+                                    </a>
                                 </li>
                                 <?php
                             }
@@ -263,7 +267,7 @@
                                     </li>
                                     <li>
                                         <a href='<?php echo base_url('user/logout') ?>' onclick="fbLogout()">
-                                            <i class='fa fa-sign-out header-menu-icon'></i>Logout
+                                            <i class='fa fa-sign-out header-top-bar-navigation-icon'></i> Logout
                                         </a>
                                     </li>
                                     <?php
@@ -377,26 +381,38 @@
                     <div id='header-navigation-bar-left'>
                         <ul>
                             <li <?php if($header_fetch_class == 'home'){ echo "class='header-menu-active'"; } ?>>
-                                <a href='<?php echo base_url('home') ?>'>Home</a>
+                                <a href='<?php echo base_url('home') ?>'>
+                                    <i class="fa fa-home header-navigation-bar-left-icon"></i> Home
+                                </a>
                             </li>
                             <li <?php if($header_fetch_class == 'categories'){ echo "class='header-menu-active'"; } ?>>
-                                <a href='<?php echo base_url('categories') ?>'>Categories</a>
+                                <a href='<?php echo base_url('categories') ?>'>
+                                    <i class="fa fa-th-large header-navigation-bar-left-icon"></i> Categories
+                                </a>
                             </li>
                             <li <?php if($header_fetch_method == 'hotdeal_list' || $header_uri_segment4 == 'hot'){ echo "class='header-menu-active'"; } ?>>
-                                <a href='<?php echo base_url('all/hotdeal-list/26') ?>'>Hot Deal</a>
+                                <a href='<?php echo base_url('all/hotdeal-list/26') ?>'>
+                                    <i class="fa fa-fire header-navigation-bar-left-icon"></i> Hot Deal
+                                </a>
                             </li>
                             <li <?php if($header_fetch_method == 'promotion_list' || $header_uri_segment4 == 'pro'){ echo "class='header-menu-active'"; } ?>>
-                                <a href="<?php echo base_url('all/promotion-list/26') ?>">Redemption</a>
+                                <a href="<?php echo base_url('all/promotion-list/26') ?>">
+                                    <i class="fa fa-gift header-navigation-bar-left-icon"></i> Redemption
+                                </a>
                             </li>
                         </ul>
                     </div>
                     <div id='header-navigation-bar-right'>
                         <ul>
                             <li <?php if($header_fetch_class == 'blogger'){ echo "class='header-menu-active'"; } ?>>
-                                <a href='<?php echo base_url('blogger') ?>'>Blogger</a>
+                                <a href='<?php echo base_url('blogger') ?>'>
+                                    <i class="fa fa-pencil header-navigation-bar-left-icon"></i> Blogger
+                                </a>
                             </li>
                             <li <?php if($header_fetch_class == 'photographer'){ echo "class='header-menu-active'"; } ?>>
-                                <a href='<?php echo base_url('photographer') ?>'>Photographer</a>
+                                <a href='<?php echo base_url('photographer') ?>'>
+                                    <i class="fa fa-camera header-navigation-bar-left-icon"></i> Photographer
+                                </a>
                             </li>
                         </ul>
                     </div>

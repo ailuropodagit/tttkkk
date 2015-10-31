@@ -251,6 +251,10 @@ html, body {
     float: left;
 }
 
+.header-navigation-bar-left-icon {
+    margin: 0px 5px 0px 0px;
+}
+    
 #header-navigation-bar-right {
     float: right;
 }
