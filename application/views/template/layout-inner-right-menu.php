@@ -98,6 +98,9 @@
             <li><a href='<?php echo $dashboard; ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'admin_dashboard'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Dashboard</a></li>
             <li><a href='<?php echo base_url(); ?>admin/profile' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'profile'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Profile</a></li>
             <li><a href='<?php echo base_url(); ?>admin/change_password' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'change_password'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Change Password</a></li>
+            <li><a href='<?php echo base_url(); ?>admin/user_management' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'user_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Manage User</a></li>
+            <li><a href='<?php echo base_url(); ?>admin/list_management' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'list_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Manage List</a></li>
+            <li><a href='<?php echo base_url(); ?>admin/category_management' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'category_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Manage Category</a></li>
             <?php 
         }
         else if ($login_user_group == $this->config->item('group_id_worker'))

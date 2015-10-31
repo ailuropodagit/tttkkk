@@ -1,5 +1,11 @@
 <script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script>
 
+<style type="text/css">
+.modal-backdrop {
+  z-index: -1;
+}
+</style>
+
 <?php
 //MESSAGE
 if(isset($message))
