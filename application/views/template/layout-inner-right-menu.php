@@ -12,7 +12,8 @@
             $album_redemption = base_url() . 'all/album_redemption/' . generate_slug($this->session->userdata('company_name'));
 
             $merchant_balance = $this->m_merchant->merchant_check_balance($login_user_id);
-            if($merchant_balance<$this->config->item('merchant_minimum_balance')){
+            $merchant_minimum_balance = $this->m_custom->web_setting_get('merchant_minimum_balance', 'set_decimal');
+            if($merchant_balance<$merchant_minimum_balance){
                 $merchant_balance_text = '<span style="color:red" >(RM '.$merchant_balance . ')</span>';
             }else{
                 $merchant_balance_text = '<span style="color:green" >(RM '.$merchant_balance . ')</span>';

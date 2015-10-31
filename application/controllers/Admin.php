@@ -11,6 +11,7 @@ class Admin extends CI_Controller
         $this->group_id_admin = $this->config->item('group_id_admin');   
         $this->group_id_worker = $this->config->item('group_id_worker');
         $this->album_admin = $this->config->item('album_admin');
+        $this->album_admin_profile = $this->config->item('album_admin_profile');
         $this->folder_image = $this->config->item('folder_image');
         $this->temp_folder = $this->config->item('folder_image_temp');
         
@@ -749,16 +750,162 @@ class Admin extends CI_Controller
     
     function admin_dashboard()
     {
-        if ($this->m_custom->check_is_any_admin())
-        {
-            $login_id = $this->ion_auth->user()->row()->id;
-
-            $this->data['page_path_name'] = 'admin/admin_dashboard';
-            $this->load->view('template/layout_right_menu', $this->data);
-        }
-        else
+        if (!$this->m_custom->check_is_any_admin())
         {
             redirect('/', 'refresh');
+        }
+
+        $login_id = $this->ion_auth->user()->row()->id;
+
+        $this->data['page_path_name'] = 'admin/admin_dashboard';
+        $this->load->view('template/layout_right_menu', $this->data);
+    }
+    
+    function profile()
+    {
+        if (!$this->m_custom->check_is_any_admin())
+        {
+            redirect('/', 'refresh');
+        }
+        $user_id = $this->ion_auth->user()->row()->id;
+        $user = $this->ion_auth->user($user_id)->row();
+        $tables = $this->config->item('tables', 'ion_auth');
+
+        // validate form input
+        $this->form_validation->set_rules('first_name', $this->lang->line('create_user_fname_label'), 'required');
+        $this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'));
+        $this->form_validation->set_rules('phone', $this->lang->line('create_user_phone_label'), 'required|valid_contact_number'); 
+        $this->form_validation->set_rules('username', $this->lang->line('create_user_validation_username_label'), 'trim|required|is_unique_edit[' . $tables['users'] . '.username.' . $user_id . ']');
+        $this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'trim|required|valid_email|is_unique_edit[' . $tables['users'] . '.email.' . $user_id . ']');
+        
+        if (isset($_POST) && !empty($_POST))
+        {
+            if ($this->input->post('button_action') == "confirm")
+            {
+                if ($this->form_validation->run() === TRUE)
+                {
+                    $first_name = $this->input->post('first_name');
+                    $last_name = $this->input->post('last_name');
+                    $username = strtolower($this->input->post('username'));
+                    $email = strtolower($this->input->post('email'));             
+
+                    $data = array(
+                        'first_name' => $first_name,
+                        'last_name' => $last_name,
+                        'phone' => $this->input->post('phone'),
+                        'username' => $username,
+                        'email' => $email,      
+                    );
+
+                    // check to see if we are updating the user
+                    if ($this->ion_auth->update($user->id, $data))
+                    {
+                        // redirect them back to the admin page if admin, or to the base url if non admin
+                        $this->session->set_flashdata('message', $this->ion_auth->messages());
+                        $user = $this->ion_auth->user($user_id)->row();
+                        redirect('admin/admin_dashboard', 'refresh');
+                    }
+                    else
+                    {
+                        // redirect them back to the admin page if admin, or to the base url if non admin
+                        $this->session->set_flashdata('message', $this->ion_auth->errors());
+                    }
+                }
+            }
+        }
+        $this->data['image_path'] = $this->album_admin_profile;
+        $this->data['image'] = $user->profile_image;
+        // display the edit user form
+        $this->data['csrf'] = $this->_get_csrf_nonce();
+        // set the flash data error message if there is one
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+        // pass the user to the view
+        $this->data['user'] = $user;
+
+        $this->data['username'] = array(
+            'name' => 'username',
+            'id' => 'username',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('username', $user->username),
+        );
+        $this->data['first_name'] = array(
+            'name' => 'first_name',
+            'id' => 'first_name',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('first_name', $user->first_name),
+        );
+        $this->data['last_name'] = array(
+            'name' => 'last_name',
+            'id' => 'last_name',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('last_name', $user->last_name),
+        ); 
+        $this->data['email'] = array(
+            'name' => 'email',
+            'id' => 'email',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('email', $user->email),
+        );
+        $this->data['phone'] = array(
+            'name' => 'phone',
+            'id' => 'phone',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('phone', $user->phone),
+        );       
+        
+        $this->data['temp_folder'] = $this->temp_folder;  
+        $this->data['page_path_name'] = 'admin/profile';
+        $this->load->view('template/layout_right_menu', $this->data);
+    }
+    
+    function update_profile_image()
+    {
+        if (!$this->m_custom->check_is_any_admin())
+        {
+            redirect('/', 'refresh');
+        }
+        $user_id = $this->ion_auth->user()->row()->id;
+        if (isset($_POST) && !empty($_POST))
+        {
+            if ($this->input->post('button_action') == "change_image")
+            {
+                $upload_rule = array(
+                    'upload_path' => $this->album_admin_profile,
+                    'allowed_types' => $this->config->item('allowed_types_image'),
+                    'max_size' => $this->config->item('max_size'),
+                    'max_width' => $this->config->item('max_width'),
+                    'max_height' => $this->config->item('max_height'),
+                );
+
+                $this->load->library('upload', $upload_rule);
+
+                if (!$this->upload->do_upload())
+                {
+                    $error = array('error' => $this->upload->display_errors());
+                    $this->session->set_flashdata('message', $this->upload->display_errors());
+                }
+                else
+                {
+                    $image_data = array('upload_data' => $this->upload->data());
+                    //$this->ion_auth->set_message('image_upload_successful');
+
+                    $data = array(
+                        'profile_image' => $this->upload->data('file_name'),
+                    );
+
+                    if ($this->ion_auth->update($user_id, $data))
+                    {
+                        $this->session->set_flashdata('message', 'User profile image success update.');
+                    }
+                    else
+                    {
+
+                        $this->session->set_flashdata('message', $this->ion_auth->errors());
+                    }
+                }
+
+                redirect('admin/admin_dashboard', 'refresh');
+            }
         }
     }
     

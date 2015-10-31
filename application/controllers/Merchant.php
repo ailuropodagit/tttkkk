@@ -2260,7 +2260,7 @@ class Merchant extends CI_Controller
         }
 
         $merchant_data = $this->m_custom->get_one_table_record('users', 'id', $merchant_id);
-        $hotdeal_per_day = $this->config->item("hotdeal_per_day");
+        $hotdeal_per_day = $this->m_custom->web_setting_get('merchant_max_hotdeal_per_day');
         $search_date = NULL;
         //$search_date = '31-08-2015';
         //$search_date = toggle_date_format($search_date);
@@ -2550,7 +2550,7 @@ class Merchant extends CI_Controller
         }
 
         $this->data['box_number'] = $box_number_update;
-        $this->data['hotdeal_per_day'] = $this->config->item("hotdeal_per_day");
+        $this->data['hotdeal_per_day'] = $this->m_custom->web_setting_get('merchant_max_hotdeal_per_day');
         $this->data['temp_folder'] = $this->temp_folder;
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'merchant/upload_hotdeal';

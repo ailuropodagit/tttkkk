@@ -14,7 +14,7 @@
             document.getElementById('race_other').style.display = 'none';
         }
     }
-    
+
     function checkbox_showhide(the_checkbox, the_div)
     {
         var checkBox = document.getElementById(the_checkbox);
@@ -25,26 +25,26 @@
             document.getElementById(the_div).style.display = 'none';
         }
     }
-    
-        $(document).ready(function () {
-             var temp_folder = '<?php echo $temp_folder ?>';
-            $('#userfile').ajaxfileupload({
-      'action': 'http://' + $(location).attr('hostname') + '/keppo/all/upload_image_temp',
-      'params': {
-        'file_name': 'userfile',
-        'image_box_id': 'userimage'
-      },
-      'onComplete': function(response) {
-        //alert(JSON.stringify(response));
-        var post_url = 'http://' + $(location).attr('hostname') + '/keppo/' + temp_folder
-        //var post_image = "<img src='" + post_url + response + "'>";
-        var post_image = post_url + response[0];
-        //$( '#upload-for-merchant-form-photo-box' ).html(post_image);
-        $('img#'+ response[1]).attr('src', post_image);
-      }
+
+    $(document).ready(function () {
+        var temp_folder = '<?php echo $temp_folder ?>';
+        $('#userfile').ajaxfileupload({
+            'action': 'http://' + $(location).attr('hostname') + '/keppo/all/upload_image_temp',
+            'params': {
+                'file_name': 'userfile',
+                'image_box_id': 'userimage'
+            },
+            'onComplete': function (response) {
+                //alert(JSON.stringify(response));
+                var post_url = 'http://' + $(location).attr('hostname') + '/keppo/' + temp_folder
+                //var post_image = "<img src='" + post_url + response + "'>";
+                var post_image = post_url + response[0];
+                //$( '#upload-for-merchant-form-photo-box' ).html(post_image);
+                $('img#' + response[1]).attr('src', post_image);
+            }
+        });
     });
     
-    });
 </script>
 
 <?php
