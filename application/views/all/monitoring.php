@@ -29,7 +29,11 @@
                         echo "<td>" . $row['hide_item_type'] . "</td>";
                         echo "<td>" . $row['hide_by_text'] . " (" . $row['hide_by_type_text'] . ")" . "</td>";
                         echo "<td>" . $row['hide_time_text'] . "</td>";
-                        echo "<td><img style='max-height:200px;max-width:200px' src='" . $row['post_image'] . "'></td>";
+                        echo "<td>";
+                        if(!empty($row['post_image'])){
+                        echo "<img style='max-height:200px;max-width:200px' src='" . $row['post_image'] . "'>";
+                        }
+                        echo "</td>";
                         echo "<td>";
 
                         echo form_open("all/monitor_process");

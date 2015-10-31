@@ -7,7 +7,6 @@ class User extends CI_Controller
     {
         parent::__construct();
         $this->load->database();
-        $this->load->library(array('ion_auth', 'form_validation'));
         $this->load->helper(array('url', 'language', 'albert'));
         $this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
         $this->lang->load('auth');
@@ -57,7 +56,8 @@ class User extends CI_Controller
         //validate form input
         $this->form_validation->set_rules('identity', 'Identity', 'required');
         $this->form_validation->set_rules('password', 'Password', 'required');
-
+        setcookie('visit_first_time', 'no');
+        
         if ($this->form_validation->run() == true)
         {
             // check to see if the user is logging in
@@ -847,6 +847,7 @@ class User extends CI_Controller
             $_POST['dob'] = $this->d_year . '-' . $this->d_month . '-' . $this->d_day;
         }
         // validate form input
+        $this->form_validation->set_rules('accept_terms', '...', 'callback_accept_terms');
         $this->form_validation->set_rules('first_name', $this->lang->line('create_user_validation_fname_label'), 'required');
         $this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'));
         $this->form_validation->set_rules('phone', $this->lang->line('create_user_validation_phone_label'), 'required|valid_contact_number');
@@ -992,6 +993,15 @@ class User extends CI_Controller
         }
     }
 
+    function accept_terms()
+    {
+        if (isset($_POST['accept_terms'])){
+            return true;
+        }
+        $this->form_validation->set_message('accept_terms', 'Please read and accept our Terms of Service and Privacy Policy.');
+        return false;
+    }
+    
     //validate is the date is correct
     public function date_check()
     {

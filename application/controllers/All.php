@@ -6,7 +6,6 @@ class All extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->library(array('ion_auth'));
         $this->album_merchant_profile = $this->config->item('album_merchant_profile');
         $this->album_admin = $this->config->item('album_admin');
         $this->album_merchant = $this->config->item('album_merchant');

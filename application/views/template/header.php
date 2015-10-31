@@ -23,7 +23,7 @@
         <script>
             $(function(){
                 //BOOSTRAP MODAL
-                //$('#visit-first-time').modal('show');
+                $('#visit-first-time').modal('show');
             });
                         
             //FB LOGOUT
@@ -77,17 +77,25 @@
                         });
                     }
                 });
-            });
+            });       
+            
+            function myfunction(submit_to_where) {
+                document.getElementById("general_form_login").action = submit_to_where;
+                document.getElementById("general_form_login").submit();
+            }
+
         </script>
     </head>
     <body>            
         
         <?php
         if (!isset($_COOKIE['visit_first_time']))
-        {
+        {           
             //COOKIE NO EXPIRE
             setcookie('visit_first_time', 'no');
             //BOOSTRAP MODAL
+            if (!$this->ion_auth->logged_in())
+            {
             ?>
             <div class="modal fade" id="visit-first-time" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog modal-dialog" role="document">
@@ -96,13 +104,58 @@
                             <button type="button" class="bootstrap-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <center>
                                 <div style='font-size: 30px; margin: 20px 0px 20px 0px;'>Welcome to keppo.my</div>
-                                <div style='font-size: 20px; margin: 0px 0px 20px 0px;'>Pop up only first time visit</div>
+                                <div style='font-size: 20px; margin: 0px 0px 20px 0px;'>Get access to restaurants, spas, cloth and much more promotion...</div>
                             </center>
-                        </div>
+                            <hr/>
+                            <div style='font-size: 20px; margin: 0px 0px 20px 0px; '>Explore Keppo Malaysia for <span style="color: #0185c6">FREE!</span></div>
+                            
+                            <form action="<?php echo base_url() . 'user/login'; ?>" method="post" accept-charset="utf-8" id="general_form_login">
+                                <?php
+                                $user_login = base_url() . 'user/login';
+                                $user_register = base_url() . 'user/register';
+                                $user_retrieve_pass = base_url() . 'user/retrieve-password';
+                                $merchant_login = base_url() . 'merchant/login';
+                                $merchant_register = base_url() . 'merchant/register';
+                                $merchant_retrieve_pass = base_url() . 'merchant/retrieve-password';
+                                $identity = array('name' => 'identity',
+                                    'id' => 'identity',
+                                    'type' => 'text',
+                                );
+                                $password = array('name' => 'password',
+                                    'id' => 'password',
+                                    'type' => 'password',
+                                );
+                                ?>
+                                <div id='login-form'>
+                                    <div id='login-form-each'>
+                                        <div id='login-form-each-label'>E-mail / Username</div>
+                                        <div id='login-form-each-input'><?php echo form_input($identity); ?></div>
+                                    </div>
+                                    <div id='login-form-each'>
+                                        <div id='login-form-each-label'>Password</div>
+                                        <div id='login-form-each-input'><?php echo form_input($password); ?></div>
+                                    </div>
+                                    <div id='float-fix'></div>
+                                    <div id='login-form-forgot-password' style="float:left">
+                                        <a href="<?php echo $user_retrieve_pass; ?>">Forget Password?</a><br/><br/>
+                                        <input type="submit" value="User Login" onclick="myfunction('<?php echo $user_login; ?>')"/><br/><br/>
+                                        <a href="<?php echo $user_register; ?>">User Register</a>
+                                    </div>
+                                    <div id='login-form-forgot-password' style="float:right">
+                                        <a href="<?php echo $merchant_retrieve_pass; ?>">Forget Password?</a><br/><br/>
+                                        <input type="submit" value="Merchant Login" onclick="myfunction('<?php echo $merchant_login; ?>')"/><br/><br/>
+                                        <a href="<?php echo $merchant_register; ?>">Merchant Register</a>
+                                    </div>
+                                    <div id='float-fix'></div>                                         
+                                    
+                                </div>
+                                <?php echo form_close(); ?>
+                </div>
                     </div>
                 </div>
             </div>
             <?php
+        }
         }
         ?>
               

@@ -9,7 +9,6 @@ class Merchant extends CI_Controller
     {
         parent::__construct();
         $this->load->database();
-        $this->load->library(array('ion_auth', 'form_validation'));
         $this->load->helper(array('url', 'language'));
         $this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
         $this->lang->load('auth');
@@ -59,6 +58,8 @@ class Merchant extends CI_Controller
         //validate form input
         $this->form_validation->set_rules('identity', 'Identity', 'required');
         $this->form_validation->set_rules('password', 'Password', 'required');
+        setcookie('visit_first_time', 'no');
+        
         //validate success
         if ($this->form_validation->run() == true)
         {
@@ -446,7 +447,6 @@ class Merchant extends CI_Controller
         {
             $the_input = $this->input->post('username_email');
             $the_id = $this->ion_auth->get_id_by_email_or_username($the_input);
-
             $identity = $this->ion_auth->where('id', $the_id)->where('main_group_id', $this->main_group_id)->users()->row();
             if (empty($identity))
             {
@@ -734,12 +734,14 @@ class Merchant extends CI_Controller
             $slug = $_POST['slug'];
         }
         // validate form input
+        $this->form_validation->set_rules('accept_terms', '...', 'callback_accept_terms');
         $this->form_validation->set_rules('company_main', $this->lang->line('create_merchant_validation_company_main_label'), "trim|required|min_length[3]");
         $this->form_validation->set_rules('me_ssm', $this->lang->line('create_merchant_validation_companyssm_label'), 'required');
         $this->form_validation->set_rules('company', $this->lang->line('create_merchant_validation_company_label'), "trim|required|min_length[3]");
         $this->form_validation->set_rules('slug', $this->lang->line('create_merchant_validation_company_label'), 'trim|is_unique[' . $tables['users'] . '.slug]');      
         $this->form_validation->set_rules('address', $this->lang->line('create_merchant_validation_address_label'), 'required');
         $this->form_validation->set_rules('postcode', 'Postcode', 'required|numeric');
+        $this->form_validation->set_rules('me_state_id', $this->lang->line('create_merchant_validation_state_label'), 'callback_check_state_id');
         $this->form_validation->set_rules('me_country', 'Country', 'required');
         $this->form_validation->set_rules('me_category_id', $this->lang->line('create_merchant_category_label'), 'callback_check_main_category');
         $this->form_validation->set_rules('me_sub_category_id', $this->lang->line('create_merchant_sub_category_label'), 'callback_check_sub_category');
@@ -845,7 +847,7 @@ class Merchant extends CI_Controller
                 'type' => 'text',
                 'value' => $this->form_validation->set_value('postcode'),
             );
-            $this->data['state_list'] = $this->ion_auth->get_static_option_list('state');
+            $this->data['state_list'] = $this->m_custom->get_static_option_array('state', '0', 'Please Select');
             $this->data['me_state_id'] = array(
                 'name' => 'me_state_id',
                 'id' => 'me_state_id',
@@ -858,7 +860,7 @@ class Merchant extends CI_Controller
                 'value' => $this->form_validation->set_value('me_country'),
             );
             $me_category_id = $this->form_validation->set_value('me_category_id') == '' ? '' : $this->form_validation->set_value('me_category_id');
-            $this->data['category_list'] = $this->m_custom->getCategoryList('0', '');
+            $this->data['category_list'] = $this->m_custom->getCategoryList('0', 'Please Select');
             $this->data['me_category_id'] = array(
                 'name' => 'me_category_id',
                 'id' => 'me_category_id',
@@ -900,6 +902,25 @@ class Merchant extends CI_Controller
         }
     }
 
+    function accept_terms()
+    {
+        if (isset($_POST['accept_terms'])){
+            return true;
+        }
+        $this->form_validation->set_message('accept_terms', 'Please read and accept our Terms of Service and Privacy Policy.');
+        return false;
+    }
+
+    function check_state_id($dropdown_selection)
+    {
+        if ($dropdown_selection == 0)
+        {
+            $this->form_validation->set_message('check_state_id', 'The State field is required');
+            return FALSE;
+        }
+        return TRUE;
+    }
+    
     function check_main_category($dropdown_selection)
     {
         if ($dropdown_selection == 0)
