@@ -1,18 +1,21 @@
 <div id="about-us">
     <h1>About Us</h1>
     <div id="about-us-logo">
-        <img src="<?php echo base_url(); ?>image/header-logo-red-ori.png" id="about-us-logo-img">
+        <img src="<?php echo base_url(); ?>image/about-us-logo-red.png" id="about-us-logo-img">
     </div>
     <p>
         Keppo.my is publish on 19 July 2015, Founder by Jimmy See. His create this to help's SME Corp to increasing
         sale on advertising. Keppo.my is used hybird technilogy on media social faster way to user's to know more
         product and services.
     </p>
-    <p style="margin: 0px 0px 35px 0px;">
+    <p>
         Keppo.my is B2B2C marketplace on media social to boots up Malaysia economic. This platform is face-to-face
         delivering information to user's. User;s able to collect candy from merchants (example: likes, Rating, view 
         advertisement, share on facebook or instagram). 
-    </p>            
+    </p>    
+    
+    <div id='float-fix'></div>
+    
     <p>
         <b>Fuyoo Advertising & services</b> ( 002422825-U) <br/>
         No. 4, Jalan Industris Mas 5, Taman Mas, 47170, Puchong, Selangor.

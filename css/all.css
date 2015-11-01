@@ -1,3 +1,7 @@
+/*********************************************
+ ** HEADER
+ *********************************************/
+
 h1, h2, h3, h4, h5, h6 {
     margin: 0px;
     padding: 0px;
@@ -17,9 +21,9 @@ h2 {
     letter-spacing: 1px;
 }
 
-table {
-    border-collapse: collapse;
-}
+/*********************************************
+ ** SELECT
+ *********************************************/
 
 select {
     margin: 0px;
@@ -29,6 +33,10 @@ select {
     height: 30px;
     box-sizing: border-box;
 }
+
+/*********************************************
+ ** INPUT TYPE TEXT
+ *********************************************/
 
 input[type='text'] {
     margin: 0px;
@@ -54,6 +62,10 @@ input[type='text']:-ms-input-placeholder {
     color: gray;
 }
 
+/*********************************************
+ ** INPUT TYPE PASSWORD
+ *********************************************/
+
 input[type='password'] {
     margin: 0px;
     padding: 0px 7px 0px 7px;
@@ -64,11 +76,6 @@ input[type='password'] {
 }
 
 input:-moz-read-only, textarea:-moz-read-only {
-    background-color: whitesmoke;
-    color: gray;
-}
-
-input:read-only, textarea:read-only { 
     background-color: whitesmoke;
     color: gray;
 }
@@ -138,6 +145,10 @@ input[type='submit'], input[type='button'], button[type='submit'], .a-href-butto
     text-decoration: underline;
 }
 
+/*********************************************
+ ** TEXTAREA
+ *********************************************/
+
 textarea {
     box-sizing: border-box;
     border: 1px solid #a9a9a9;
@@ -154,32 +165,52 @@ textarea::-webkit-input-placeholder {
     letter-spacing: 0px;
 }
 
+/*********************************************
+ ** READ ONLY
+ *********************************************/
+
+input:read-only, textarea:read-only { 
+    background-color: whitesmoke;
+    color: gray;
+}
+
+/*********************************************
+ ** P
+ *********************************************/
+
 p {
     line-height: 22px;
 }
 
-.last-paragraph {
-    padding: 0px;
-    margin: 0px;
-}
-
-a:active {
-    color: #178497;
-}
+/*********************************************
+ ** A
+ *********************************************/
 
 a {
     color: #4d4dff;
     text-decoration: none;
 }
 
+a:active {
+    color: #178497;
+}
+
 a:hover {
     text-decoration: underline;
 }
 
-#float-fix {
-    clear: both;
-    display: block;
+/*********************************************
+ ** LAST PARAGRAPH
+ *********************************************/
+
+.last-paragraph {
+    padding: 0px;
+    margin: 0px;
 }
+
+/*********************************************
+ ** TEXT ELLIPSIS
+ *********************************************/
 
 .text-ellipsis {
     overflow: hidden; 
@@ -187,28 +218,17 @@ a:hover {
     white-space: nowrap;
 }
 
-#message {
-    width: 100%;
-    border: 1px solid #e09600;
-    border-radius: 3px;
-    border-left: 6px solid #e09600;
-    color: #734c00;
-    background: #fdf8ed;
-    margin: 0px 0px 20px 0px;
-    padding: 8px 14px 8px 14px;
-    font-size: 14px;
-    box-sizing: border-box;
+/*********************************************
+ ** TABLE
+ *********************************************/
+
+table {
+    border-collapse: collapse;
 }
 
-#message p {
-    margin: 0px;
-}
-
-#empty-message {
-    padding: 20px;
-    color: gray;
-    font-style: italic;
-}
+/*********************************************
+ ** TABLE ALL
+ *********************************************/
 
 #table-all table {
     width: 100%;
@@ -238,4 +258,80 @@ a:hover {
     overflow: hidden;
     white-space: nowrap;
     border: 1px solid red;
+}
+
+/*********************************************
+ ** MESSAGE
+ *********************************************/
+
+#message {
+    width: 100%;
+    border: 1px solid #e09600;
+    border-radius: 3px;
+    border-left: 6px solid #e09600;
+    color: #734c00;
+    background: #fdf8ed;
+    margin: 0px 0px 20px 0px;
+    padding: 8px 14px 8px 14px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+#message p {
+    margin: 0px;
+}
+
+/*********************************************
+ ** SUCCESS MESSAGE
+ *********************************************/
+
+#success-message {
+    margin: 30px 0px 30px 0px;
+    text-align: center;
+}
+
+#success-message a {
+    text-decoration: none;
+}
+
+#success-message a:hover {
+    text-decoration: underline;
+}
+
+#success-message-title {
+    font-weight: bold;
+    font-size: 19px;
+    margin: 0px 0px 15px 0px;
+}
+
+#success-message-subtitle {
+    margin: 0px 0px 15px 0px;
+    font-size: 18px;
+}
+
+#success-message-paragraph {
+    margin: 0px 0px 15px 0px;
+}
+
+#success-message-link {
+    margin: 30px 0px 0px 0px;
+}
+
+/*********************************************
+ ** EMPTY MESSAGE
+ *********************************************/
+
+#empty-message {
+    padding: 20px;
+    color: gray;
+    font-style: italic;
+}
+
+/*********************************************
+ ** FLOAT FIX
+ *********************************************/
+
+#float-fix {
+    clear: both;
+    display: block;
 }

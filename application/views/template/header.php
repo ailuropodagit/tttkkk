@@ -306,7 +306,7 @@
                 <div id='wrapper'>
                     <div id='header-logo-bar-logo'>
                         <a href='<?php echo base_url('home') ?>'>
-                            <img src='<?php echo base_url('image/header-logo-red.png') ?>'>
+                            <img src='<?php echo base_url('image/logo-red.png') ?>'>
                         </a>
                     </div>
                     <div id="header-logo-bar-search">
