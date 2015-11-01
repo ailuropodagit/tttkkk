@@ -167,6 +167,24 @@ class M_custom extends CI_Model
         return $have_role;
     }
 
+    public function check_is_any_admin()
+    {
+        if (check_correct_login_type($this->config->item('group_id_admin')) || check_correct_login_type($this->config->item('group_id_worker')))
+        {
+            return TRUE;
+        }
+        return FALSE;
+    }
+
+    public function check_is_any_merchant()
+    {
+        if (check_correct_login_type($this->config->item('group_id_merchant')) || check_correct_login_type($this->config->item('group_id_supervisor')))
+        {
+            return TRUE;
+        }
+        return FALSE;
+    }
+    
     public function check_is_superuser($check_merchant_id = 0)
     {
         $is_superuser = 0;
@@ -483,6 +501,44 @@ class M_custom extends CI_Model
         return $return;
     }
 
+    function web_setting_get($set_type, $field_name = 'set_int', $want_row = 0)
+    {
+        $query = $this->db->get_where('web_setting', array('set_type' => $set_type));
+        $return = "0";
+        if ($query->num_rows() == 1)
+        {
+            $result = $query->row_array();
+            $return = $result[$field_name];
+            if ($want_row == 1)
+            {
+                $return = $result;
+            }
+        }
+        return $return;
+    }
+
+    function web_setting_set($set_type, $update_value = NULL, $field_name = 'set_int')
+    {
+        if (!IsNullOrEmptyString($update_value))
+        {
+            $the_data = array(
+                $field_name => $update_value,
+            );
+
+            if ($this->ion_auth->logged_in())
+            {
+                $login_id = $this->ion_auth->user()->row()->id;
+                $the_data = array(
+                    $field_name => $update_value,
+                    'last_modify_by' => $login_id,
+                );
+            }
+
+            $this->db->where('set_type', $set_type);
+            $this->db->update('web_setting', $the_data);
+        }
+    }
+
     function get_keyarray_list($the_table, $id_column, $id_value, $key_column, $value_column, $default_value = NULL, $default_text = NULL)
     {
         $query = $this->db->get_where($the_table, array($id_column => $id_value));
@@ -728,7 +784,8 @@ class M_custom extends CI_Model
                     {
                         case 'hot':
                             $like_count = $this->m_custom->activity_like_count($the_advertise_id, 'adv');
-                            if ($like_count >= $this->config->item('popular_hotdeal_number'))
+                            $popular_hotdeal_number = $this->m_custom->web_setting_get('popular_hotdeal_number');
+                            if ($like_count >= $popular_hotdeal_number)
                             {
                                 $valid_row = 1;
                             }
@@ -739,7 +796,8 @@ class M_custom extends CI_Model
                             break;
                         case 'pro':
                             $redeem_count = $this->m_custom->promotion_redeem_count($the_advertise_id);
-                            if ($redeem_count >= $this->config->item('popular_redemption_number'))
+                            $popular_redemption_number = $this->m_custom->web_setting_get('popular_redemption_number');
+                            if ($redeem_count >= $popular_redemption_number)
                             {
                                 $valid_row = 1;
                             }
@@ -1908,7 +1966,7 @@ class M_custom extends CI_Model
         //If is post by admin
         if ($merchant_id == $this->config->item('keppo_admin_id'))
         {
-            return "<a style='color:black'>" . $this->config->item('keppo_company_name') . "</a>";
+            return "<a style='color:black'>" . $this->m_custom->web_setting_get('keppo_company_name', 'set_desc') . "</a>";
         }
         else
         {

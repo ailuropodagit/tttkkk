@@ -1,16 +1,19 @@
 <div id="layout-inner-right-menu">
     <ul>
         <?php
-        if ($this->session->userdata('user_group_id') == $this->config->item('group_id_merchant'))
+        $fetch_method = $this->router->fetch_method();
+        $login_user_group = $this->session->userdata('user_group_id');
+        $login_user_id = $this->session->userdata('user_id');
+        if ($login_user_group == $this->config->item('group_id_merchant'))
         {            
             //MERCHANT SIDEBAR MENU
-            $login_user_id = $this->session->userdata('user_id');
             $dashboard = base_url() . 'all/merchant_dashboard/' . generate_slug($this->session->userdata('company_name'));
             $album_merchant = base_url() . 'all/album_merchant/' . generate_slug($this->session->userdata('company_name'));
             $album_redemption = base_url() . 'all/album_redemption/' . generate_slug($this->session->userdata('company_name'));
-            $fetch_method = $this->router->fetch_method();
+
             $merchant_balance = $this->m_merchant->merchant_check_balance($login_user_id);
-            if($merchant_balance<$this->config->item('merchant_minimum_balance')){
+            $merchant_minimum_balance = $this->m_custom->web_setting_get('merchant_minimum_balance', 'set_decimal');
+            if($merchant_balance<$merchant_minimum_balance){
                 $merchant_balance_text = '<span style="color:red" >(RM '.$merchant_balance . ')</span>';
             }else{
                 $merchant_balance_text = '<span style="color:green" >(RM '.$merchant_balance . ')</span>';
@@ -34,16 +37,15 @@
             <li><a href='<?php echo base_url(); ?>merchant/payment_page' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'payment_page' || $fetch_method == 'payment_charge_page'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Payment <?php echo $merchant_balance_text; ?></a></li>
             <?php
         }
-        else if ($this->session->userdata('user_group_id') == $this->config->item('group_id_supervisor'))
+        else if ($login_user_group == $this->config->item('group_id_supervisor'))
         {
             //SUPERVISOR SIDEBAR MENU
-            $login_user_id = $this->session->userdata('user_id');
-            $the_row = $this->m_custom->get_parent_table_record('users', 'id', $this->session->userdata('user_id'), 'su_merchant_id', 'users', 'id');
+            $the_row = $this->m_custom->get_parent_table_record('users', 'id', $login_user_id, 'su_merchant_id', 'users', 'id');
             $dashboard = base_url() . 'all/merchant_dashboard/' . generate_slug($the_row->company);
             $album_merchant = base_url() . 'all/album_merchant/' . generate_slug($the_row->company);
             $album_redemption = base_url() . 'all/album_redemption/' . generate_slug($the_row->company);
             $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;
-            $fetch_method = $this->router->fetch_method();
+
             //FOLLOWER COUNT
             $where_read_user = array('id'=>$login_user_id);
             $login_main_merchant_id = $this->albert_model->read_user($where_read_user)->row()->su_merchant_id;
@@ -62,16 +64,15 @@
             <li><a href='<?php echo base_url(); ?>merchant/merchant_redemption_page' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'merchant_redemption_page'){ echo "layout-inner-right-menu-bar-active"; } ?>'>User's Redemption</a></li>
             <?php
         }
-        else if ($this->session->userdata('user_group_id') == $this->config->item('group_id_user'))
+        else if ($login_user_group == $this->config->item('group_id_user'))
         {
             //USER SIDEBAR MENU
-            $login_user_id = $this->session->userdata('user_id');
             $dashboard = base_url() . 'all/user_dashboard/' . $login_user_id;
             $review_merchant = base_url() . 'user/review_merchant';   
             $user_picture = base_url() . 'all/album_user/' . $login_user_id;  
             $user_candie = base_url() . 'user/candie_page'; 
             $user_redemption = base_url() . 'user/redemption/' . $this->config->item('voucher_active');  
-            $fetch_method = $this->router->fetch_method();
+            
             //FOLLOWER COUNT
             $follower_count = $this->albert_model->follower_count($login_user_id);
             
@@ -83,12 +84,28 @@
             <li><a href='<?php echo base_url(); ?>all/notification' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'notification'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Notification (<?php echo $notification_count; ?> new)</a></li>
             <li><a href='<?php echo base_url(); ?>user/follower/user/<?php echo $login_user_id ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'follower' || $fetch_method == 'following'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Follower (<?php echo $follower_count ?>)</a></li>
             <li><a href='<?php echo $review_merchant; ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'review_merchant'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Reviews</a></li>
-        <li><a href='<?php echo $user_picture; ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'album_user' || $fetch_method == 'upload_image' || $fetch_method == 'upload_for_merchant' || $fetch_method == 'album_user_merchant' || $fetch_method == 'user_picture' || $fetch_method == 'merchant_user_picture'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Album</a></li>
+            <li><a href='<?php echo $user_picture; ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'album_user' || $fetch_method == 'upload_image' || $fetch_method == 'upload_for_merchant' || $fetch_method == 'album_user_merchant' || $fetch_method == 'user_picture' || $fetch_method == 'merchant_user_picture'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Album</a></li>
             <li><a href='<?php echo $user_candie; ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'candie_page'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Candies (<?php echo $this->m_user->candie_check_balance($login_user_id); ?>)</a></li>
             <li><a href='<?php echo $user_redemption; ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'redemption'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Vouchers</a></li>
             <li><a href='<?php echo base_url() ?>user/invite_friend' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'invite_friend'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Invite Friend</a></li>
             <li><a href='<?php echo base_url(); ?>user/balance_page' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'balance_page'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Balance (<?php echo 'RM '.$this->m_user->user_check_balance($login_user_id); ?>)</a></li>
             <?php
+        }
+        else if ($login_user_group == $this->config->item('group_id_admin'))
+        {
+            $dashboard = base_url() . 'admin/admin_dashboard';
+            ?>
+            <li><a href='<?php echo $dashboard; ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'admin_dashboard'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Dashboard</a></li>
+            <li><a href='<?php echo base_url(); ?>admin/profile' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'profile'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Profile</a></li>
+            <li><a href='<?php echo base_url(); ?>admin/change_password' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'change_password'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Change Password</a></li>
+            <li><a href='<?php echo base_url(); ?>admin/user_management' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'user_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Manage User</a></li>
+            <li><a href='<?php echo base_url(); ?>admin/list_management' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'list_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Manage List</a></li>
+            <li><a href='<?php echo base_url(); ?>admin/category_management' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'category_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Manage Category</a></li>
+            <?php 
+        }
+        else if ($login_user_group == $this->config->item('group_id_worker'))
+        {
+            
         }
         ?>
     </ul>

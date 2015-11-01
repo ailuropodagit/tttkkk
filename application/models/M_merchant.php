@@ -572,7 +572,8 @@ class M_merchant extends CI_Model
 
     public function have_money($merchant_id)
     {
-        if ($this->m_merchant->merchant_check_balance($merchant_id) < $this->config->item('merchant_minimum_balance') && $this->config->item('froze_account_activate') == 1)
+        $merchant_minimum_balance = $this->m_custom->web_setting_get('merchant_minimum_balance', 'set_decimal');
+        if ($this->m_merchant->merchant_check_balance($merchant_id) < $merchant_minimum_balance && $this->config->item('froze_account_activate') == 1)
         {
             return FALSE;
         }
@@ -651,8 +652,7 @@ class M_merchant extends CI_Model
     {
         $result = $this->m_custom->get_one_table_record('users', 'id', $id, 1);
         $voucher = '';
-        $web_setting = $this->m_custom->get_one_table_record('web_setting', 'set_type', 'voucher_counter', 1);
-        $counter = $web_setting['set_value'];
+        $counter = $this->m_custom->web_setting_get('voucher_counter', 'set_int');
         if ($result)
         {
             do
@@ -665,11 +665,7 @@ class M_merchant extends CI_Model
             {
                 $counter = '1';
             }
-            $the_data = array(
-                'set_value' => $counter,
-            );
-            $this->db->where('set_id', $web_setting['set_id']);
-            $this->db->update('web_setting', $the_data);
+            $this->m_custom->web_setting_set('voucher_counter', $counter, 'set_int');
         }
         return $voucher;
     }

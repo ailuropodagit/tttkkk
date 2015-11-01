@@ -79,9 +79,9 @@ class M_user extends CI_Model
                 $voucher = $this->m_merchant->generate_voucher($promotion_row['merchant_id'],$user_id);
                 $merchant_name = $this->m_custom->display_users($promotion_row['merchant_id']);
                 
-                //If is admin promotin, overwrite some info
+                //If is admin promotion, overwrite some info
                 if($promotion_row['advertise_type'] == "adm"){
-                    $merchant_name = $this->config->item('keppo_company_name');
+                    $merchant_name = $this->m_custom->web_setting_get('keppo_company_name', 'set_desc');
                 }
                 if ($new_balance >= 0)
                 {

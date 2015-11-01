@@ -4,6 +4,12 @@
 <?php echo link_tag('js/jgrowl/jquery.jgrowl.css') ?>
 <script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script>
 
+<style type="text/css">
+.modal-backdrop {
+  z-index: -1;
+}
+</style>
+
 <div id='picture-user'>
     <h1><?php echo $page_title; ?></h1>
     <div id='picture-user-content'>

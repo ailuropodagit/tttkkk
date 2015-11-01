@@ -1642,7 +1642,7 @@ class User extends CI_Controller
                 for ($i = 0; $i < $this->box_number; $i++)
                 {
                     $user_today_upload_count = $this->m_user->get_user_today_upload_count($user_id);
-                    $user_max_picture_per_day = $this->config->item('user_max_picture_per_day');
+                    $user_max_picture_per_day = $this->m_custom->web_setting_get('user_max_picture_per_day');
 
                     if ($user_today_upload_count >= $user_max_picture_per_day)
                     {
@@ -2021,7 +2021,7 @@ class User extends CI_Controller
                 for ($i = 0; $i < $this->box_number; $i++)
                 {
                     $user_today_upload_count = $this->m_user->get_user_today_upload_count($user_id);
-                    $user_max_picture_per_day = $this->config->item('user_max_picture_per_day');
+                    $user_max_picture_per_day = $this->m_custom->web_setting_get('user_max_picture_per_day');
                     if ($user_today_upload_count >= $user_max_picture_per_day)
                     {
                         $message_info = add_message_info($message_info, 'You already reach max ' . $user_max_picture_per_day . ' picture upload per day. Please upload again after today.');
@@ -2092,7 +2092,7 @@ class User extends CI_Controller
         $this->load->view('template/layout_right_menu', $this->data);
     }
 
-    // edit a user
+    // edit a user, no use
     function edit_user($id)
     {
         $this->data['title'] = "Edit user";
@@ -2329,7 +2329,8 @@ class User extends CI_Controller
                                 
                                 //GIVE USER CANDIE FOR THE FIRST 5 INVITATION MONTHLY
                                 $invitation_send_current_month = $query_candie_balance->row_array();
-                                if($invitation_send_current_month['invite_friend_count'] <= $this->config->item('user_max_invitation_get_candie_per_month')){
+                                $user_max_invitation_get_candie_per_month = $this->m_custom->web_setting_get('user_max_invitation_get_candie_per_month');
+                                if($invitation_send_current_month['invite_friend_count'] <= $user_max_invitation_get_candie_per_month){
                                     $this->m_user->candie_history_insert(6, $invitation_send_current_month['balance_id'], 'candie_balance', 1);
                                 }
                             }

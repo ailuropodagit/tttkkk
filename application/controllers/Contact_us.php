@@ -57,7 +57,8 @@ class Contact_us extends CI_Controller
     {
         $message_info = '';
         $email_data = $this->session->flashdata('mail_info');
-        $get_status = send_mail_simple($this->config->item('keppo_admin_email'), 'Keppo Inquiry : ' . $email_data['subject'], '<br/>Name : ' . $email_data['name'] .
+        $keppo_admin_email = $this->m_custom->web_setting_get('keppo_admin_email', 'set_desc');
+        $get_status = send_mail_simple($keppo_admin_email, 'Keppo Inquiry : ' . $email_data['subject'], '<br/>Name : ' . $email_data['name'] .
                 '<br/>Email : ' . $email_data['email'] .
                 '<br/>Phone : ' . $email_data['phone'] .
                 '<br/>Message : ' . $email_data['message'], 'keppo_contact_us_send_email_success', 0);
@@ -67,7 +68,7 @@ class Contact_us extends CI_Controller
         }
         else
         {
-            $message_info = add_message_info($message_info, 'Some error happen, system send email fail, sorry for this, please call us or manually send to ' . $this->config->item('keppo_admin_email'));
+            $message_info = add_message_info($message_info, 'Some error happen, system send email fail, sorry for this, please call us or manually send to ' . $keppo_admin_email);
         }
         $this->session->set_flashdata('message', $message_info);
         redirect('contact_us', 'refresh');
