@@ -134,7 +134,7 @@ html, body {
     height: 38px;
     width: 300px;
     padding: 0px 30px 0px 30px;
-    background-image: url(../image/search-icon-ok.png);
+    background-image: url(../image/search-icon.png);
     background-position: 14px 14px;
     background-repeat: no-repeat;
 }
@@ -235,10 +235,10 @@ html, body {
 }
 
 #header-navigation-bar a {
-    color: white;
+    color: #ffffff;
     text-transform: uppercase;
     font-size: 14px;
-    font-weight: bold;
+    font-weight: 700;
     text-decoration: none;
     padding: 15px 15px 15px 15px;
 }
@@ -259,6 +259,79 @@ html, body {
     float: right;
 }
     
+/*********************************************
+ ** FOOTER
+ *********************************************/
+
+#footer {
+    color: white;
+}
+
+#footer-background {
+    height: 300px;
+    background-image: url('../image/footer-background.png');
+    background-size: cover;
+    background-position: -300px 0px;
+    background-color: #00bcd4;
+    position: relative;
+} 
+
+#footer-background-text {
+    position: absolute;
+    top: 80px;
+    left: 50%;
+    font-size: 28px;
+    margin: 0px 0px 0px -110px;
+    color: white;
+    font-weight: bold;
+}
+
+#footer-navigation {
+    background-color: #444444;
+    height: 310px;
+}
+
+#footer-navigation-block1, #footer-navigation-block2, 
+#footer-navigation-block3, #footer-navigation-block4 {
+    float: left;
+    width: 25%;
+    height: 310px;
+    vertical-align: top;
+    box-sizing: border-box;
+}
+
+#footer-navigation-block1 {
+    line-height: 18px;
+    padding: 40px 0px 40px 0px;
+}
+
+#footer-navigation-block2 {
+    position: relative;
+}
+
+#footer-navigation-block2-up {
+    background-color: #444444;
+    position: absolute;
+    top: -32px;
+    left: 0px;
+    right: 0px;
+    height: 342px;
+    -moz-box-shadow: inset 7px 0 9px -7px rgba(0,0,0,0.2);
+    -webkit-box-shadow: inset 7px 0 9px -7px rgba(0,0,0,0.2);
+    box-shadow: inset 7px 0 9px -7px rgba(0,0,0,0.2);
+}
+
+#footer-navigation-block3, #footer-navigation-block4 {
+    -moz-box-shadow: inset 7px 0 9px -7px rgba(0,0,0,0.2);
+    -webkit-box-shadow: inset 7px 0 9px -7px rgba(0,0,0,0.2);
+    box-shadow: inset 7px 0 9px -7px rgba(0,0,0,0.2);
+}    
+
+#footer-bar {
+    height: 40px;
+    line-height: 40px;
+    background-color: #333333;
+}
 
 
 
@@ -3041,47 +3114,6 @@ html, body {
     color: #4a4a4a;
     font-weight: normal;
 }    
-
-/* FOOTER
-******************************/
-
-#footer {
-    margin: 16px 0px 35px 0px;
-}
-
-#footer-menu {
-    float: left;
-    margin: 0px 0px 0px 15px;
-}
-
-#footer-menu a {
-    font-size: 14px;
-    color: #2c59a0;
-    text-decoration: none;
-}
-
-#footer-menu a:hover {
-    text-decoration: underline;
-    color: #2e5ba1;
-}
-
-#footer-menu ul {
-    list-style: none;
-    margin: 0px;
-    padding: 0px;
-}
-
-#footer-menu li {
-    display: inline;
-    margin: 0px 6px 0px 6px;
-}
-
-#footer-copyright {
-    font-size: 14px;
-    float: right;
-    color: #767676;
-    margin: 0px 15px 0px 6px;
-}
 
 /* SUCCESS MESSAGE 
 ******************************/

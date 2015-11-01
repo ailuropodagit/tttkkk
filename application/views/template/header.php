@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <title>Keppo</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,700,900' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="<?php echo base_url('css/all.css') ?>">
         <link rel="stylesheet" href="<?php echo base_url('css/main.css') ?>">
         <link rel="stylesheet" href="<?php echo base_url('css/main-1100.css') ?>" media="screen and (max-width: 1100px)">
