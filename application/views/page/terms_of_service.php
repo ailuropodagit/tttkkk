@@ -1,4 +1,4 @@
-<div id='terms-and-conditions'>
+<div id='terms-of-service'>
     <h1>Terms of Service</h1>
     <p>
         <b>Last Updated on November 27, 2012.</b> These terms and conditions are effective immediately for those
