@@ -15,6 +15,14 @@ class Admin extends CI_Controller
         $this->folder_image = $this->config->item('folder_image');
         $this->temp_folder = $this->config->item('folder_image_temp');
         
+        $this->login_id = 0;
+        $this->login_type = 0;            
+        if ($this->ion_auth->logged_in())
+        {
+            $this->login_id = $this->session->userdata('user_id');
+            $this->login_type = $this->session->userdata('user_group_id');
+        }
+        
         $this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
 
         $this->lang->load('auth');
@@ -907,6 +915,161 @@ class Admin extends CI_Controller
                 redirect('admin/admin_dashboard', 'refresh');
             }
         }
+    }
+    
+    function category_management(){
+        if (!$this->m_custom->check_is_any_admin())
+        {
+            redirect('/', 'refresh');
+        }
+        
+        $search_category = 0;
+        if (isset($_POST) && !empty($_POST))
+        {
+            if ($this->input->post('button_action') == "filter_result")
+            {
+                $search_category = $this->input->post('main_category_id');
+            }
+        }
+
+        $this->data['main_category_list'] = $this->m_custom->getCategoryList('0', 'All Category');
+        $this->data['main_category_id'] = array(
+            'name' => 'main_category_id',
+            'id' => 'main_category_id',
+        );
+        $this->data['main_category_selected'] = $search_category;
+        
+        $category_list = $this->m_custom->getCategory(0, 0, 1, 1, $search_category);  //0, 1, 1, 1 will show hide
+        $this->data['the_result'] = $category_list;       
+        
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));      
+        $this->data['page_path_name'] = 'admin/category_management';
+        $this->load->view('template/layout_right_menu', $this->data);
+    }
+    
+    function category_edit($category_id){
+        if (!$this->m_custom->check_is_any_admin())
+        {
+            redirect('/', 'refresh');
+        }
+        
+        $message_info = '';
+        $login_id = $this->login_id;
+        $login_type = $this->login_type;
+        $result = $this->m_custom->get_one_table_record('category', 'category_id', $category_id, 1);
+
+        // validate form input
+        $this->form_validation->set_rules('category_label', 'Category Name', 'required');
+        $this->form_validation->set_rules('main_category_id', 'Under Which Main Category', 'callback_check_main_category_id');
+
+        if (isset($_POST) && !empty($_POST))
+        {
+            $can_redirect_to = 0;
+            $id = $this->input->post('id');
+            $category_label = $this->input->post('category_label');
+            $category_level = $this->input->post('category_level') == NULL ? 0 : 1;   //Check box special handling to know is checked or not
+            $main_category_id = $this->input->post('main_category_id') == 0 ? NULL : $this->input->post('main_category_id');
+            
+            if ($this->input->post('button_action') == "save")
+            {
+                if ($this->form_validation->run() === TRUE)
+                {
+                    $data = array(
+                        'category_label' => $category_label,
+                        'category_level' => $category_level,
+                        'main_category_id' => $main_category_id,      
+                    );
+
+                    if ($this->m_custom->simple_update('category', $data, 'category_id', $id))
+                    {
+                        $this->m_custom->update_row_log('advertise', $id, $login_id, $login_type);
+                        $message_info = add_message_info($message_info, $category_label . ' success update.');
+                        $can_redirect_to = 1;
+                    }
+                    else
+                    {
+                        $message_info = add_message_info($message_info, $this->ion_auth->errors());
+                        $can_redirect_to = 1;
+                    }
+                }
+            }
+            if ($this->input->post('button_action') == "back")
+            {
+                $can_redirect_to = 2;
+            }
+            if ($this->input->post('button_action') == "remove")
+            {
+                $count_check = count($this->m_custom->getSubCategory($category_id));
+                if($count_check > 0){
+                    $message_info = add_message_info($message_info, $category_label . ' cannot remove. Still have sub category under it.');
+                    $can_redirect_to = 1;
+                }else{
+                    $message_info = add_message_info($message_info, $category_label . ' success remove.');
+                    $this->m_custom->update_hide_flag(1, 'category', $category_id);
+                    $can_redirect_to = 2;
+                }
+            }
+            if ($this->input->post('button_action') == "recover")
+            {
+                $message_info = add_message_info($message_info, $category_label . ' success recover.');
+                $this->m_custom->update_hide_flag(0, 'category', $category_id);
+                $can_redirect_to = 2;
+            }
+            if ($message_info != NULL)
+            {
+                $this->session->set_flashdata('message', $message_info);
+            }
+            if ($can_redirect_to == 1)
+            {
+                redirect(uri_string(), 'refresh');
+            }
+            elseif ($can_redirect_to == 2)
+            {
+                redirect('admin/category_management', 'refresh');
+            }
+        }
+
+        // set the flash data error message if there is one
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+
+        $this->data['result'] = $result;
+        
+        $this->data['category_label'] = array(
+            'name' => 'category_label',
+            'id' => 'category_label',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('category_label', $result['category_label']),
+        );
+               
+        $category_level_value = $result['category_level'];
+        $this->data['category_level_value'] = $category_level_value;
+        $this->data['category_level'] = array(
+            'name' => 'category_level',
+            'id' => 'category_level',
+            'checked' => $category_level_value == "1"? TRUE : FALSE,
+            'onclick' => "checkbox_showhide('category_level','category-sub-div')",
+            'value' => $this->form_validation->set_value('category_level', $category_id),           
+        );
+        
+        $this->data['main_category_list'] = $this->m_custom->getCategoryList('0', 'Please Select');
+        $this->data['main_category_id'] = array(
+            'name' => 'main_category_id',
+            'id' => 'main_category_id',
+        );
+        $this->data['main_category_selected'] = $result['main_category_id'] == NULL? '0' :$result['main_category_id'];
+        
+        $this->data['page_path_name'] = 'admin/category_edit';
+        $this->load->view('template/layout_right_menu', $this->data);
+    }
+    
+    function check_main_category_id($dropdown_selection)
+    {
+        if ($dropdown_selection == 0)
+        {
+            $this->form_validation->set_message('check_main_category_id', 'The Main Category field is required if it is a Sub Category');
+            return FALSE;
+        }
+        return TRUE;
     }
     
     function _get_csrf_nonce()
