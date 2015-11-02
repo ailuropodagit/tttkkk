@@ -1,28 +1,31 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php
+
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Admin extends CI_Controller
 {
+
     function __construct()
     {
         parent::__construct();
         $this->load->database();
         $this->load->helper(array('url', 'language'));
         $this->main_group_id = $this->config->item('group_id_admin');
-        $this->group_id_admin = $this->config->item('group_id_admin');   
+        $this->group_id_admin = $this->config->item('group_id_admin');
         $this->group_id_worker = $this->config->item('group_id_worker');
         $this->album_admin = $this->config->item('album_admin');
         $this->album_admin_profile = $this->config->item('album_admin_profile');
         $this->folder_image = $this->config->item('folder_image');
         $this->temp_folder = $this->config->item('folder_image_temp');
-        
+
         $this->login_id = 0;
-        $this->login_type = 0;            
+        $this->login_type = 0;
         if ($this->ion_auth->logged_in())
         {
             $this->login_id = $this->session->userdata('user_id');
             $this->login_type = $this->session->userdata('user_group_id');
         }
-        
+
         $this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
 
         $this->lang->load('auth');
@@ -740,7 +743,7 @@ class Admin extends CI_Controller
             }
         }
     }
-    
+
     function send_mail_process()
     {
         $identity = $this->session->flashdata('mail_info');
@@ -755,7 +758,7 @@ class Admin extends CI_Controller
             redirect("admin/retrieve_password", 'refresh');
         }
     }
-    
+
     function admin_dashboard()
     {
         if (!$this->m_custom->check_is_any_admin())
@@ -768,7 +771,7 @@ class Admin extends CI_Controller
         $this->data['page_path_name'] = 'admin/admin_dashboard';
         $this->load->view('template/layout_right_menu', $this->data);
     }
-    
+
     function profile()
     {
         if (!$this->m_custom->check_is_any_admin())
@@ -782,10 +785,10 @@ class Admin extends CI_Controller
         // validate form input
         $this->form_validation->set_rules('first_name', $this->lang->line('create_user_fname_label'), 'required');
         $this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'));
-        $this->form_validation->set_rules('phone', $this->lang->line('create_user_phone_label'), 'required|valid_contact_number'); 
+        $this->form_validation->set_rules('phone', $this->lang->line('create_user_phone_label'), 'required|valid_contact_number');
         $this->form_validation->set_rules('username', $this->lang->line('create_user_validation_username_label'), 'trim|required|is_unique_edit[' . $tables['users'] . '.username.' . $user_id . ']');
         $this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'trim|required|valid_email|is_unique_edit[' . $tables['users'] . '.email.' . $user_id . ']');
-        
+
         if (isset($_POST) && !empty($_POST))
         {
             if ($this->input->post('button_action') == "confirm")
@@ -795,14 +798,14 @@ class Admin extends CI_Controller
                     $first_name = $this->input->post('first_name');
                     $last_name = $this->input->post('last_name');
                     $username = strtolower($this->input->post('username'));
-                    $email = strtolower($this->input->post('email'));             
+                    $email = strtolower($this->input->post('email'));
 
                     $data = array(
                         'first_name' => $first_name,
                         'last_name' => $last_name,
                         'phone' => $this->input->post('phone'),
                         'username' => $username,
-                        'email' => $email,      
+                        'email' => $email,
                     );
 
                     // check to see if we are updating the user
@@ -847,7 +850,7 @@ class Admin extends CI_Controller
             'id' => 'last_name',
             'type' => 'text',
             'value' => $this->form_validation->set_value('last_name', $user->last_name),
-        ); 
+        );
         $this->data['email'] = array(
             'name' => 'email',
             'id' => 'email',
@@ -859,13 +862,13 @@ class Admin extends CI_Controller
             'id' => 'phone',
             'type' => 'text',
             'value' => $this->form_validation->set_value('phone', $user->phone),
-        );       
-        
-        $this->data['temp_folder'] = $this->temp_folder;  
+        );
+
+        $this->data['temp_folder'] = $this->temp_folder;
         $this->data['page_path_name'] = 'admin/profile';
         $this->load->view('template/layout_right_menu', $this->data);
     }
-    
+
     function update_profile_image()
     {
         if (!$this->m_custom->check_is_any_admin())
@@ -916,13 +919,14 @@ class Admin extends CI_Controller
             }
         }
     }
-    
-    function category_management(){
+
+    function category_management()
+    {
         if (!$this->m_custom->check_is_any_admin())
         {
             redirect('/', 'refresh');
         }
-        
+
         $search_category = 0;
         if (isset($_POST) && !empty($_POST))
         {
@@ -938,29 +942,127 @@ class Admin extends CI_Controller
             'id' => 'main_category_id',
         );
         $this->data['main_category_selected'] = $search_category;
-        
+
         $category_list = $this->m_custom->getCategory(0, 0, 1, 1, $search_category);  //0, 1, 1, 1 will show hide
-        $this->data['the_result'] = $category_list;       
-        
-        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));      
+        $this->data['the_result'] = $category_list;
+
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
         $this->data['page_path_name'] = 'admin/category_management';
         $this->load->view('template/layout_right_menu', $this->data);
     }
-    
-    function category_edit($category_id){
+
+    function category_add()
+    {
         if (!$this->m_custom->check_is_any_admin())
         {
             redirect('/', 'refresh');
         }
-        
+
+        $message_info = '';
+        $login_id = $this->login_id;
+        $login_type = $this->login_type;
+
+        if (isset($_POST) && !empty($_POST))
+        {
+            $can_redirect_to = 0;
+            $category_label = $this->input->post('category_label');
+            $category_level = $this->input->post('category_level') == NULL ? 0 : 1;   //Check box special handling to know is checked or not
+            $main_category_id = $this->input->post('main_category_id') == 0 ? NULL : $this->input->post('main_category_id');
+
+            // validate form input
+            $this->form_validation->set_rules('category_label', 'Category Name', 'required');
+            if ($category_level == 1)
+            {
+                $this->form_validation->set_rules('main_category_id', 'Under Which Main Category', 'callback_check_main_category_id');
+            }
+
+            if ($this->input->post('button_action') == "save")
+            {
+                if ($this->form_validation->run() === TRUE)
+                {
+                    $data = array(
+                        'category_label' => $category_label,
+                        'category_level' => $category_level,
+                        'main_category_id' => $main_category_id,
+                    );
+
+                    $new_id = $this->m_custom->get_id_after_insert('category', $data);
+                    if ($new_id)
+                    {
+                        $this->m_custom->insert_row_log('category', $new_id, $login_id, $login_type);
+                        $message_info = add_message_info($message_info, $category_label . ' success insert.');
+                        $can_redirect_to = 2;
+                    }
+                    else
+                    {
+                        $message_info = add_message_info($message_info, $this->ion_auth->errors());
+                        $can_redirect_to = 1;
+                    }
+                }
+            }
+            if ($this->input->post('button_action') == "back")
+            {
+                $can_redirect_to = 2;
+            }
+
+            direct_go:
+            if ($message_info != NULL)
+            {
+                $this->session->set_flashdata('message', $message_info);
+            }
+            if ($can_redirect_to == 1)
+            {
+                redirect(uri_string(), 'refresh');
+            }
+            elseif ($can_redirect_to == 2)
+            {
+                redirect('admin/category_management', 'refresh');
+            }
+            elseif ($can_redirect_to == 3)
+            {
+                redirect('admin/category_edit/' . $new_id, 'refresh');
+            }
+        }
+
+        // set the flash data error message if there is one
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+
+        $this->data['category_label'] = array(
+            'name' => 'category_label',
+            'id' => 'category_label',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('category_label'),
+        );
+
+        $this->data['category_level'] = array(
+            'name' => 'category_level',
+            'id' => 'category_level',
+            'checked' => TRUE,
+            'onclick' => "checkbox_showhide('category_level','category-sub-div')",
+            'value' => $login_id, //Just to have some value, checkbox have to have value
+        );
+
+        $this->data['main_category_list'] = $this->m_custom->getCategoryList('0', 'Please Select');
+        $this->data['main_category_id'] = array(
+            'name' => 'main_category_id',
+            'id' => 'main_category_id',
+        );
+
+        $this->data['page_path_name'] = 'admin/category_add';
+        $this->load->view('template/layout_right_menu', $this->data);
+    }
+
+    function category_edit($category_id)
+    {
+        if (!$this->m_custom->check_is_any_admin())
+        {
+            redirect('/', 'refresh');
+        }
+
         $message_info = '';
         $login_id = $this->login_id;
         $login_type = $this->login_type;
         $result = $this->m_custom->get_one_table_record('category', 'category_id', $category_id, 1);
-
-        // validate form input
-        $this->form_validation->set_rules('category_label', 'Category Name', 'required');
-        $this->form_validation->set_rules('main_category_id', 'Under Which Main Category', 'callback_check_main_category_id');
 
         if (isset($_POST) && !empty($_POST))
         {
@@ -969,20 +1071,44 @@ class Admin extends CI_Controller
             $category_label = $this->input->post('category_label');
             $category_level = $this->input->post('category_level') == NULL ? 0 : 1;   //Check box special handling to know is checked or not
             $main_category_id = $this->input->post('main_category_id') == 0 ? NULL : $this->input->post('main_category_id');
-            
+
+            // validate form input
+            $this->form_validation->set_rules('category_label', 'Category Name', 'required');
+            if ($category_level == 1)
+            {
+                $this->form_validation->set_rules('main_category_id', 'Under Which Main Category', 'callback_check_main_category_id');
+            }
+
             if ($this->input->post('button_action') == "save")
             {
                 if ($this->form_validation->run() === TRUE)
                 {
+                    //Error checking and prevention
+                    if ($category_level == 1)
+                    {
+                        $count_check = count($this->m_custom->getSubCategory($id));
+                        if ($count_check > 0)
+                        {
+                            $message_info = add_message_info($message_info, $category_label . ' cannot become other Main Category Sub Category, because it still have Sub Category under it.');
+                            $can_redirect_to = 1;
+                            goto direct_go;
+                        }
+                        if($id == $main_category_id){
+                            $message_info = add_message_info($message_info, $category_label . ' cannot become it own Sub Category.');
+                            $can_redirect_to = 1;
+                            goto direct_go;
+                        }
+                    }
+
                     $data = array(
                         'category_label' => $category_label,
                         'category_level' => $category_level,
-                        'main_category_id' => $main_category_id,      
+                        'main_category_id' => $main_category_id,
                     );
 
                     if ($this->m_custom->simple_update('category', $data, 'category_id', $id))
                     {
-                        $this->m_custom->update_row_log('advertise', $id, $login_id, $login_type);
+                        $this->m_custom->update_row_log('category', $id, $login_id, $login_type);
                         $message_info = add_message_info($message_info, $category_label . ' success update.');
                         $can_redirect_to = 1;
                     }
@@ -1000,10 +1126,13 @@ class Admin extends CI_Controller
             if ($this->input->post('button_action') == "remove")
             {
                 $count_check = count($this->m_custom->getSubCategory($category_id));
-                if($count_check > 0){
-                    $message_info = add_message_info($message_info, $category_label . ' cannot remove. Still have sub category under it.');
+                if ($count_check > 0)
+                {
+                    $message_info = add_message_info($message_info, $category_label . ' cannot remove, because it still have Sub Category under it.');
                     $can_redirect_to = 1;
-                }else{
+                }
+                else
+                {
                     $message_info = add_message_info($message_info, $category_label . ' success remove.');
                     $this->m_custom->update_hide_flag(1, 'category', $category_id);
                     $can_redirect_to = 2;
@@ -1015,6 +1144,8 @@ class Admin extends CI_Controller
                 $this->m_custom->update_hide_flag(0, 'category', $category_id);
                 $can_redirect_to = 2;
             }
+
+            direct_go:
             if ($message_info != NULL)
             {
                 $this->session->set_flashdata('message', $message_info);
@@ -1033,35 +1164,35 @@ class Admin extends CI_Controller
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 
         $this->data['result'] = $result;
-        
+
         $this->data['category_label'] = array(
             'name' => 'category_label',
             'id' => 'category_label',
             'type' => 'text',
             'value' => $this->form_validation->set_value('category_label', $result['category_label']),
         );
-               
+
         $category_level_value = $result['category_level'];
         $this->data['category_level_value'] = $category_level_value;
         $this->data['category_level'] = array(
             'name' => 'category_level',
             'id' => 'category_level',
-            'checked' => $category_level_value == "1"? TRUE : FALSE,
+            'checked' => $category_level_value == "1" ? TRUE : FALSE,
             'onclick' => "checkbox_showhide('category_level','category-sub-div')",
-            'value' => $this->form_validation->set_value('category_level', $category_id),           
+            'value' => $this->form_validation->set_value('category_level', $category_id),
         );
-        
+
         $this->data['main_category_list'] = $this->m_custom->getCategoryList('0', 'Please Select');
         $this->data['main_category_id'] = array(
             'name' => 'main_category_id',
             'id' => 'main_category_id',
         );
-        $this->data['main_category_selected'] = $result['main_category_id'] == NULL? '0' :$result['main_category_id'];
-        
+        $this->data['main_category_selected'] = $result['main_category_id'] == NULL ? '0' : $result['main_category_id'];
+
         $this->data['page_path_name'] = 'admin/category_edit';
         $this->load->view('template/layout_right_menu', $this->data);
     }
-    
+
     function check_main_category_id($dropdown_selection)
     {
         if ($dropdown_selection == 0)
@@ -1071,7 +1202,7 @@ class Admin extends CI_Controller
         }
         return TRUE;
     }
-    
+
     function _get_csrf_nonce()
     {
         $this->load->helper('string');
