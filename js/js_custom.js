@@ -57,3 +57,14 @@ function isNumber(evt) {
     }
     return true;
 }
+
+function checkbox_showhide(the_checkbox, the_div)
+{
+    var checkBox = document.getElementById(the_checkbox);
+    if (checkBox.checked == true)
+    {
+        document.getElementById(the_div).style.display = 'inline';
+    } else {
+        document.getElementById(the_div).style.display = 'none';
+    }
+}

@@ -1,4 +1,5 @@
 <script type="text/javascript" src="<?php echo base_url() ?>js/jquery.ajaxfileupload.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script>
 
 <script type="text/javascript">
     function showraceother()
@@ -12,17 +13,6 @@
         } else {
             document.getElementById('race_other_label').style.display = 'none';
             document.getElementById('race_other').style.display = 'none';
-        }
-    }
-
-    function checkbox_showhide(the_checkbox, the_div)
-    {
-        var checkBox = document.getElementById(the_checkbox);
-        if (checkBox.checked == true)
-        {
-            document.getElementById(the_div).style.display = 'inline';
-        } else {
-            document.getElementById(the_div).style.display = 'none';
         }
     }
 

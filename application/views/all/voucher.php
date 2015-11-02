@@ -77,7 +77,7 @@
                                     <?php
                                     foreach ($candie_term as $value)
                                     {
-                                        echo "<li>" . $value['option_desc'] . "</li>";
+                                        echo "<li>" . $this->m_custom->display_dynamic_option($value['option_id'], $merchant_name) . "</li>";
                                     }
                                     ?>  
                                     <?php

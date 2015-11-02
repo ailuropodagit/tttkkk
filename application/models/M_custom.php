@@ -446,7 +446,7 @@ class M_custom extends CI_Model
     }
 
     //Get one static option text by it option id
-    public function display_dynamic_option($option_id = NULL)
+    public function display_dynamic_option($option_id = NULL, $prefix = NULL, $postfix = NULL, $use_option_title = 0)
     {
         if (IsNullOrEmptyString($option_id))
         {
@@ -458,13 +458,47 @@ class M_custom extends CI_Model
         {
             return '';
         }
-        return $query->row()->option_desc;
+
+        $row = $query->row_array();
+        if ($use_option_title == 1)
+        {
+            $the_text = $row['option_title'];
+        }
+        else
+        {
+            $the_text = $row['option_desc'];
+        }
+
+        if (!IsNullOrEmptyString($prefix) && $row['option_special'] == 1)
+        {
+            $the_text = $prefix . ' ' . $the_text;
+        }
+        if (!IsNullOrEmptyString($postfix) && $row['option_special'] == 2)
+        {
+            $the_text = $the_text . ' ' . $postfix;
+        }
+
+        return $the_text;
     }
 
     //Get all the dynamic option of an option type
-    public function get_dynamic_option_array($option_type, $default_value = NULL, $default_text = NULL, $prefix = NULL, $postfix = NULL, $use_option_title = 0)
+    public function get_dynamic_option_array($option_type, $default_value = NULL, $default_text = NULL, $prefix = NULL, $postfix = NULL, $use_option_title = 0, $option_level = 0)
     {
-
+        switch ($option_level)
+        {
+            case '0':
+                $this->db->where_in('option_level', array(0, 1, 2));
+                break;
+            case '1':
+                $this->db->where_in('option_level', array(0, 1));
+                break;
+            case '2':
+                $this->db->where_in('option_level', array(0, 2));
+                break;
+            case '3':
+                $this->db->where_in('option_level', array(0));
+                break;
+        }
         $query = $this->db->get_where('dynamic_option', array('option_type' => $option_type, 'hide_flag' => 0));
 
         $return = array();
@@ -910,14 +944,18 @@ class M_custom extends CI_Model
         return $query->result_array();
     }
 
-    //Get all the static option of an option type
-    public function getCategoryList($default_value = NULL, $default_text = NULL, $get_special = 0)
+    //Get all the main category
+    public function getCategoryList($default_value = NULL, $default_text = NULL, $get_special = 0, $ignore_hide = 0)
     {
         if ($get_special == 0)
         {
             $this->db->where('hide_special', 0);
         }
-        $query = $this->db->get_where('category', array('category_level' => '0', 'hide_flag' => 0));
+        if ($ignore_hide == 0)
+        {
+            $this->db->where('hide_flag', 0);
+        }
+        $query = $this->db->get_where('category', array('category_level' => '0'));
         $return = array();
         if ($default_value != NULL)
         {
@@ -953,14 +991,36 @@ class M_custom extends CI_Model
     }
 
     //To get all main category
-    function getCategory($get_special = 0)
+    function getCategory($get_special = 0, $ignore_hide = 0, $get_all = 0, $want_array = 0, $main_id = 0)
     {
         if ($get_special == 0)
         {
             $this->db->where('hide_special', 0);
         }
-        $query = $this->db->get_where('category', array('category_level' => '0'));
-        return $query->result();
+        if ($ignore_hide == 0)
+        {
+            $this->db->where('hide_flag', 0);
+        }
+        if ($get_all == 0)
+        {
+            $this->db->where('category_level', 0);
+        }
+        if ($main_id != 0)
+        {
+            $this->db->where('main_category_id', $main_id);
+        }
+        
+        $this->db->order_by('category_label');
+        $this->db->from('category');
+        $query = $this->db->get();
+        if ($want_array == 1)
+        {
+            return $query->result_array();
+        }
+        else
+        {
+            return $query->result();
+        }
     }
 
     function getUser($user_id)
@@ -1030,8 +1090,12 @@ class M_custom extends CI_Model
     }
 
     //To get related sub category by pass in the main category id
-    function getSubCategory($id)
+    function getSubCategory($id, $ignore_hide = 0)
     {
+        if ($ignore_hide == 0)
+        {
+            $this->db->where('hide_flag', 0);
+        }
         $query = $this->db->get_where('category', array('main_category_id' => $id, 'category_level' => '1'));
         return $query->result();
     }
@@ -1131,7 +1195,6 @@ class M_custom extends CI_Model
         return $return;
     }
 
-    //Not Yet Full Test // To Do  //ToDo
     //To get the childlist id from many table by the type and parent id
     public function many_get_childlist_detail($the_type, $parent_id, $child_table, $child_wanted_column = NULL, $want_string = 0)
     {        

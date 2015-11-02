@@ -1721,7 +1721,7 @@ class Merchant extends CI_Controller
         $do_by_id = $merchant_id;
         $merchant_data = $this->m_custom->get_one_table_record('users', 'id', $merchant_id);
         $candie_branch = $this->m_custom->get_keyarray_list('merchant_branch', 'merchant_id', $merchant_id, 'branch_id', 'name');
-        $candie_term = $this->m_custom->get_dynamic_option_array('candie_term', NULL, NULL, $merchant_data->company);
+        $candie_term = $this->m_custom->get_dynamic_option_array('candie_term', NULL, NULL, $merchant_data->company, NULL, 0, 3);
         $month_list = $this->ion_auth->get_static_option_list('month');
         $year_list = generate_number_option(get_part_of_date('year', $merchant_data->created_on, 1), get_part_of_date('year'));
         $search_month = NULL;

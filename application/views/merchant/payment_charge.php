@@ -27,9 +27,9 @@ if (isset($message))
         <!--PAYMENT CHARGE GO-->
         <div id="payment-charge-go">
             <?php echo form_open(uri_string()); ?>
-            <span id="payment-charge-go-label"><?php echo "Filter "; ?></span>
-            <span id="payment-charge-go-dropdown"><?php echo form_dropdown($the_adv_type, $adv_type_list, $the_adv_type_selected); ?></span>
-            <span id="payment-charge-go-button"><button name="button_action" type="submit" value="search_history">Go</button></span>
+                <span id="payment-charge-go-label"><?php echo "Filter "; ?></span>
+                <span id="payment-charge-go-dropdown"><?php echo form_dropdown($the_adv_type, $adv_type_list, $the_adv_type_selected); ?></span>
+                <span id="payment-charge-go-button"><button name="button_action" type="submit" value="search_history">Go</button></span>
             <?php echo form_close(); ?>
         </div>
         
