@@ -64,7 +64,7 @@
                 $("#search_word").autocomplete({
                     source: function(request, response) {
                         $.ajax({
-                            url: "/keppo/home/get_merchant_list/",
+                            url: "/keppo/search_suggestion/get_merchant_list/",
                             data: { term: $("#search_word").val()},
                             dataType: "json",
                             type: "POST",

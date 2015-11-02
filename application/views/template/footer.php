@@ -1,12 +1,6 @@
         <div id='footer'>
-            <div id="footer-background">
-                <div id="footer-background-text">
-                    JOIN THE KEPPO
-                </div>
-            </div>
             <div id='footer-navigation'>
                 <div id='wrapper'>
-                    
                     <div id='footer-navigation-block1'>
                         <div id='footer-navigation-block1-logo'><?php echo img('image/logo-red.png') ?></div>
                         <div id='footer-navigation-block-content'>
@@ -92,14 +86,7 @@
                         <div id="footer-navigation-block-title">Popular Tags?</div>
                         <div id="footer-navigation-block-title-bottom-line"></div>
                     </div>
-                    <div id="float-fix"></div>
-                    
-<!--                    <a href='<?php echo base_url(); ?>home'>Home</a>
-                    <a href='<?php echo base_url(); ?>about-us'>About Us</a>
-                    <a href='<?php echo base_url(); ?>faq'>FAQ</a>
-                    <a href='<?php echo base_url(); ?>news'>News</a>
-                    <a href='<?php echo base_url(); ?>contact-us'>Contact Us</a>-->
-                    
+                    <div id="float-fix"></div>                    
                 </div>
             </div>
             <div id="footer-bar">
