@@ -1018,7 +1018,7 @@ class Ion_auth_model extends CI_Model
      * @return bool
      * @author Mathew
      * */
-    public function login($identity, $password, $remember = FALSE, $main_groupid = NULL, $admin_login_as = 0)
+    public function login($identity, $password, $remember = FALSE, $main_groupid = NULL, $admin_login_as = 0, $allow_frozen = 0)
     {
         $this->trigger_events('pre_login');
 
@@ -1039,7 +1039,7 @@ class Ion_auth_model extends CI_Model
                 ->where($this->identity_column, $identity)
                 ->or_where('username =', $identity)
                 ->where("(" . $main_groupid . "=0 OR main_group_id=" . $main_groupid . ")")
-                //->where("(main_group_id=".$main_groupid.")")
+                ->where("((" . $allow_frozen . "=0 AND hide_flag=0) OR ".$allow_frozen."=1)")
                 ->limit(1)
                 ->order_by('id', 'desc')
                 ->get($this->tables['users']);

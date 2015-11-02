@@ -38,7 +38,7 @@ if(isset($message))
             </div>
             <?php 
                 echo form_hidden('id', $result['category_id']); 
-                $remove_or_recover = $result['hide_flag'] == 1? 'recover' : 'remove';
+                $remove_or_recover = $result['hide_flag'] == 1? 'recover' : 'frozen';
                 $remove_or_recover_text = $result['hide_flag'] == 1? 'Recover' : 'Remove';
             ?>
             <div id='profile-info-form-submit'>

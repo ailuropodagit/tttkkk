@@ -37,7 +37,7 @@ if (isset($message))
                         <th>Age</th>
                         <th>Gender</th>
                         <th>Birthday</th>
-                        <th>Removed Already</th>   
+                        <th>Frozen Already</th>   
                         <th>Actions</th>
                         <th>Special Actions</th>
                     </tr>
@@ -49,10 +49,10 @@ if (isset($message))
                         $race_text = $this->m_custom->display_static_option($row['us_race_id']);
                         $gender_text = $this->m_custom->display_static_option($row['us_gender_id']);
                         $birthday_text = displayDate($row['us_birthday']);
-                        $remove_row = $row['hide_flag'] == 1 ? 'Removed' : '';
+                        $remove_row = $row['hide_flag'] == 1 ? 'Frozen' : '';
                         $url_edit = base_url() . "admin/user_edit/" . $row['id'];
                         $url_dashboard = base_url() . "all/user_dashboard/" . $row['id'];
-                        $url_log_in = base_url() . "admin/user_log_in_as";
+                        $url_special_action = base_url() . "admin/user_special_action";
                         echo '<tr>';
                         echo "<td>" . $row['username'] . "</td>";
                         echo "<td>" . $row['email'] . "</td>";
@@ -65,14 +65,17 @@ if (isset($message))
                         echo "<td>" . $birthday_text . "</td>";
                         echo "<td>" . $remove_row . "</td>";
                         echo "<td>";
-                        echo "<a href='" . $url_edit . "' >Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+//                        echo "<a href='" . $url_edit . "' >Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
                         echo "<a href='" . $url_dashboard . "' target='_blank' >Dashboard</a>";
                         echo "</td>";
                         echo "<td>";                       
-                        echo form_open($url_log_in); 
+                        echo form_open($url_special_action); 
                         echo form_hidden('id', $row['id']); 
+                        $remove_or_recover = $row['hide_flag'] == 1 ? 'recover' : 'frozen';
+                        $remove_or_recover_text = $row['hide_flag'] == 1 ? 'Unfrozen' : 'Frozen';
                         ?>
                         <button name="button_action" type="submit" value="log_in_as">Log In As User</button>
+                        <button name="button_action" type="submit" value="<?php echo $remove_or_recover; ?>" onclick="return confirm('Are you sure want to <?php echo $remove_or_recover_text; ?> it?')"><?php echo $remove_or_recover_text; ?></button> 
                         <?php
                         echo form_close(); 
                         echo "</td>";

@@ -1123,7 +1123,7 @@ class Admin extends CI_Controller
             {
                 $can_redirect_to = 2;
             }
-            if ($this->input->post('button_action') == "remove")
+            if ($this->input->post('button_action') == "frozen")
             {
                 $count_check = count($this->m_custom->getSubCategory($category_id));
                 if ($count_check > 0)
@@ -1218,25 +1218,51 @@ class Admin extends CI_Controller
         $this->load->view('template/layout_right_menu', $this->data);
     }
     
-    function user_log_in_as(){
+    function user_special_action(){
         if (!$this->m_custom->check_is_any_admin())
         {
             redirect('/', 'refresh');
         }
+        
+        $message_info = '';
         if (isset($_POST) && !empty($_POST))
         {
+            $login_id = $this->login_id;
+            $id = $this->input->post('id');
+            $user_login_info = $this->m_custom->getUserLoginInfo($id);
+            $user_display_name = $this->m_custom->display_users($id);
             if ($this->input->post('button_action') == "log_in_as")
-            {
-                $login_id = $this->login_id;
-                $id = $this->input->post('id');
-                $user_login_info = $this->m_custom->getUserLoginInfo($id);
+            {               
                 if ($user_login_info)
                 {
-                    if ($this->ion_auth->login($user_login_info['username'], $user_login_info['password_visible'], FALSE, $user_login_info['main_group_id'], $login_id))
+                    if ($this->ion_auth->login($user_login_info['username'], $user_login_info['password_visible'], FALSE, $user_login_info['main_group_id'], $login_id, 1))
                     {
                         redirect('all/user_dashboard/'.$id, 'refresh');
+                    }else{
+                        $can_redirect_to = 1;
                     }
                 }
+            }
+            if ($this->input->post('button_action') == "frozen")
+            {
+                $message_info = add_message_info($message_info, $user_display_name . ' success frozen.');
+                $this->m_custom->update_hide_flag(1, 'users', $id);
+                $can_redirect_to = 1;
+            }
+            if ($this->input->post('button_action') == "recover")
+            {
+                $message_info = add_message_info($message_info, $user_display_name . ' success unfrozen.');
+                $this->m_custom->update_hide_flag(0, 'users', $id);
+                $can_redirect_to = 1;
+            }
+            
+            if ($message_info != NULL)
+            {
+                $this->session->set_flashdata('message', $message_info);
+            }
+            if ($can_redirect_to == 1)
+            {
+                redirect('admin/user_management', 'refresh');
             }
         }
     }

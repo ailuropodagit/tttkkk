@@ -1043,7 +1043,7 @@ class M_custom extends CI_Model
 
     function getUserLoginInfo($user_id)
     {
-        $this->db->select('id, username, email, password_visible, main_group_id, us_register_type, us_fb_id');
+        $this->db->select('id, username, email, password_visible, main_group_id, us_register_type, us_fb_id, hide_flag');
         $query = $this->db->get_where('users', array('id' => $user_id));
         if ($query->num_rows() == 1)
         {
