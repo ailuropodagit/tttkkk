@@ -1,4 +1,5 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php 
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Home extends CI_Controller
 {
@@ -9,8 +10,6 @@ class Home extends CI_Controller
     
     public function index($main_category_id = 0)
     {
-        //PAGE PATH NAME
-        $data['page_path_name'] = 'home'; 
         //QUERY CATEGORY  
         $data['query_category'] = $this->albert_model->read_main_category();
         //QUERY MERCHANT 
@@ -35,7 +34,8 @@ class Home extends CI_Controller
         $data['query_banner_position_8'] = $this->albert_model->read_banner($banner_where_position_8);
         $data['main_category_id'] = $main_category_id;
         //TEMPLATE
-        $this->load->view('template/layout_advertisement', $data);
+        $data['page_path_name'] = 'home'; 
+        $this->load->view('template/index_home', $data);
     }
     
     public function home_banner_ajax() 
@@ -69,14 +69,4 @@ class Home extends CI_Controller
         //TEMPLATE
         $this->load->view('home_banner_ajax', $data);
     }
-    
-    public function get_merchant_list()
-    {
-        if (isset($_POST) && !empty($_POST))
-        {
-            $term = $this->input->post('term', TRUE);
-            $this->m_custom->home_search_get_merchant($term);
-        }
-    }
-
 }
