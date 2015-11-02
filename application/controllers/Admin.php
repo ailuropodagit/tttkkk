@@ -1203,6 +1203,44 @@ class Admin extends CI_Controller
         return TRUE;
     }
 
+    function user_management()
+    {
+        if (!$this->m_custom->check_is_any_admin())
+        {
+            redirect('/', 'refresh');
+        }
+
+        $user_list = $this->m_custom->getAllUser();
+        $this->data['the_result'] = $user_list;
+
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+        $this->data['page_path_name'] = 'admin/user_management';
+        $this->load->view('template/layout_right_menu', $this->data);
+    }
+    
+    function user_log_in_as(){
+        if (!$this->m_custom->check_is_any_admin())
+        {
+            redirect('/', 'refresh');
+        }
+        if (isset($_POST) && !empty($_POST))
+        {
+            if ($this->input->post('button_action') == "log_in_as")
+            {
+                $login_id = $this->login_id;
+                $id = $this->input->post('id');
+                $user_login_info = $this->m_custom->getUserLoginInfo($id);
+                if ($user_login_info)
+                {
+                    if ($this->ion_auth->login($user_login_info['username'], $user_login_info['password_visible'], FALSE, $user_login_info['main_group_id'], $login_id))
+                    {
+                        redirect('all/user_dashboard/'.$id, 'refresh');
+                    }
+                }
+            }
+        }
+    }
+    
     function _get_csrf_nonce()
     {
         $this->load->helper('string');

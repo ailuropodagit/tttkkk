@@ -21,7 +21,6 @@ if (isset($message))
 <div id="payment-charge">
     <h1>Category Management</h1>
     <div id="payment-charge-content">
-        <!--PAYMENT CHARGE GO-->
         <div id="payment-charge-go" style="float:left">
             <?php echo form_open(uri_string()); ?>
                 <span id="payment-charge-go-label"><?php echo "Filter "; ?></span>

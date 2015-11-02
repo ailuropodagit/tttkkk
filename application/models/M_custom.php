@@ -1023,10 +1023,36 @@ class M_custom extends CI_Model
         }
     }
 
+    function getAllUser(){
+        $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_user')));
+        $result = $query->result_array();
+        return $result;
+    }
+    
+    function getAllMerchant(){
+        $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant')));
+        $result = $query->result_array();
+        return $result;
+    }
+    
     function getUser($user_id)
     {
         $query = $this->db->get_where('users', array('id' => $user_id));
         return $query->row_array();
+    }
+
+    function getUserLoginInfo($user_id)
+    {
+        $this->db->select('id, username, email, password_visible, main_group_id, us_register_type, us_fb_id');
+        $query = $this->db->get_where('users', array('id' => $user_id));
+        if ($query->num_rows() == 1)
+        {
+            return $query->row_array();
+        }
+        else
+        {
+            return FALSE;
+        }
     }
 
     function getUserInfo($user_id)

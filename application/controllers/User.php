@@ -326,9 +326,28 @@ class User extends CI_Controller
     // log the user out
     function logout()
     {
+        $admin_login_as = $this->session->userdata('admin_login_as');  //If is admin login as this user
+
         $this->data['title'] = "Logout";
-        // log the user out
-        $logout = $this->ion_auth->logout();
+
+        if ($admin_login_as != 0)
+        {
+            //If is admin login as this user, then redirect back to admin portal
+            $user_login_info = $this->m_custom->getUserLoginInfo($admin_login_as);
+            if ($user_login_info)
+            {
+                if ($this->ion_auth->login($user_login_info['username'], $user_login_info['password_visible'], FALSE, $user_login_info['main_group_id']))
+                {
+                    redirect('admin/user_management', 'refresh');
+                }
+            }
+        }
+        else
+        {
+            // log the user out        
+            $logout = $this->ion_auth->logout();
+        }
+
         // redirect them to the login page
         $this->session->set_flashdata('message', $this->ion_auth->messages());
         redirect('user/login', 'refresh');
