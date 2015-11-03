@@ -1727,8 +1727,6 @@ class Merchant extends CI_Controller
         $search_month = NULL;
         $search_year = NULL;
         $is_history = 0;
-        $candie_term_selected = array();
-        $candie_branch_selected = array();
 
         if (isset($_POST) && !empty($_POST))
         {
@@ -1758,6 +1756,7 @@ class Merchant extends CI_Controller
                 $candie_extra_term = $this->input->post('candie_extra_term');
                 $image_data = NULL;
 
+                $candie_term_selected = array();      
                 $post_candie_term = $this->input->post('candie_term');
                 if (!empty($post_candie_term))
                 {
@@ -1767,6 +1766,7 @@ class Merchant extends CI_Controller
                     }
                 }
 
+                $candie_branch_selected = array();
                 $post_candie_branch = $this->input->post('candie_branch');
                 if (!empty($post_candie_branch))
                 {

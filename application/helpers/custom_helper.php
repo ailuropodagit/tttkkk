@@ -732,11 +732,11 @@ if (!function_exists('IsNullOrEmptyString'))
 if (!function_exists('arraylist_to_string'))
 {
 
-    function arraylist_to_string($array_list)
+    function arraylist_to_string($array_list, $separator = ',')
     {
         $return_string = '';
         foreach($array_list as $value){
-            $return_string = $return_string . $value . ' , ';
+            $return_string = $return_string . $value . ' ' . $separator . ' ';
         }
         return RemoveLastComma($return_string);
     }

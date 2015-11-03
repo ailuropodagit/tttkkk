@@ -168,13 +168,16 @@ if(isset($message))
                     <?php
                     foreach ($photography_list as $key => $value)
                     {
+                        $checked_or_not = '';
                         if (in_array($key, $photography_current))
                         {
+                            $checked_or_not = 'checked';
+                        }
                             ?>
                             <div id="candie-promotion-form-voucher-checkbox-each">
                                 <table border="0" cellpadding="0px" cellspacing="0px">
                                     <tr>
-                                        <td valign="top"><input type='checkbox' id="photography_list-<?php echo $key ?>" name='photography_list[]' value='<?php echo $key ?>' checked></td>
+                                        <td valign="top"><input type='checkbox' id="photography_list-<?php echo $key ?>" name='photography_list[]' value='<?php echo $key ?>' <?php echo $checked_or_not; ?>></td>
                                         <td valign="top">
                                             <div id="candie-promotion-form-voucher-checkbox-each-label">
                                                 <label for="photography_list-<?php echo $key ?>"><?php echo $value ?></label>
@@ -183,25 +186,7 @@ if(isset($message))
                                     </tr>
                                 </table>
                             </div>
-                            <?php
-                        }
-                        else
-                        {
-                            ?>
-                            <div id="candie-promotion-form-voucher-checkbox-each">
-                                <table border="0" cellpadding="0px" cellspacing="0px">
-                                    <tr>
-                                        <td valign="top"><input type='checkbox' id="photography_list-<?php echo $key ?>" name='photography_list[]' value='<?php echo $key ?>'></td>
-                                        <td valign="top">
-                                            <div id="candie-promotion-form-voucher-checkbox-each-label">
-                                                <label for="photography_list-<?php echo $key ?>"><?php echo $value ?></label>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <?php
-                        }
+                            <?php                  
                     }
                     ?>  
                 </div>

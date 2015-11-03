@@ -54,9 +54,9 @@ if(isset($message))
                     <div id='register-form-each-label'><?php echo lang('create_merchant_password_label', 'password'); ?></div>
                     <div id='register-form-each-input'><?php echo form_input($password); ?></div>
                 </div>
-                <div id='register-form-each'>
-                    <div id='register-form-each-label'><?php echo lang('create_merchant_password_confirm_label', 'password_confirm'); ?></div>
-                    <div id='register-form-each-input'><?php echo form_input($password_confirm); ?></div>
+<!--                <div id='register-form-each'>
+                    <div id='register-form-each-label'><?php //echo lang('create_merchant_password_confirm_label', 'password_confirm'); ?></div>
+                    <div id='register-form-each-input'><?php //echo form_input($password_confirm); ?></div>
                 </div>
                 <div id='login-form-remember-me-forgot-password'>
                     <div id='login-form-forgot-password'>
@@ -64,7 +64,7 @@ if(isset($message))
                         <span class="checkbox-text"><label for='show_password'>Show Password</label></span>
                     </div>   
                     <div id='float-fix'></div>
-                </div>
+                </div>-->
             </div>
             <div id='profile-info-form-submit'>                         
                 <button name="button_action" type="submit" value="back">Back</button>

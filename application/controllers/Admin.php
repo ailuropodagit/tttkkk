@@ -1310,9 +1310,10 @@ class Admin extends CI_Controller
             $this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'));
             $this->form_validation->set_rules('phone', $this->lang->line('create_user_validation_phone_label'), 'required|valid_contact_number');
             $this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'trim|required|valid_email|is_unique[' . $tables['users'] . '.email]');
-            $this->form_validation->set_rules('username', $this->lang->line('create_user_validation_username_label'), 'trim|required|is_unique[' . $tables['users'] . '.username]');           
-            $this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
-            $this->form_validation->set_rules('password_confirm', $this->lang->line('create_user_validation_password_confirm_label'), 'required');
+            $this->form_validation->set_rules('username', $this->lang->line('create_user_validation_username_label'), 'trim|required|is_unique[' . $tables['users'] . '.username]'); 
+            $this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']');
+            //$this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
+            //$this->form_validation->set_rules('password_confirm', $this->lang->line('create_user_validation_password_confirm_label'), 'required');
 
             if ($this->input->post('button_action') == "save")
             {
@@ -1403,15 +1404,16 @@ class Admin extends CI_Controller
         $this->data['password'] = array(
             'name' => 'password',
             'id' => 'password',
-            'type' => 'password',
+            //'type' => 'password',
+            'type' => 'text',
             'value' => $this->form_validation->set_value('password'),
         );
-        $this->data['password_confirm'] = array(
-            'name' => 'password_confirm',
-            'id' => 'password_confirm',
-            'type' => 'password',
-            'value' => $this->form_validation->set_value('password_confirm'),
-        );
+//        $this->data['password_confirm'] = array(
+//            'name' => 'password_confirm',
+//            'id' => 'password_confirm',
+//            'type' => 'password',
+//            'value' => $this->form_validation->set_value('password_confirm'),
+//        );
         
         $this->data['page_path_name'] = 'admin/worker_add';
         $this->load->view('template/layout_right_menu', $this->data);
@@ -1463,6 +1465,16 @@ class Admin extends CI_Controller
                         'email' => $email,
                     );
                     
+                    $admin_role_selected = array();
+                    $post_admin_role = $this->input->post('admin_role');
+                    if (!empty($post_admin_role))
+                    {
+                        foreach ($post_admin_role as $key => $value)
+                        {
+                            $admin_role_selected[] = $value;
+                        }
+                    }
+
                     if ($this->ion_auth->update($edit_id, $data))
                     {
                         if ($password_old != $password)
@@ -1476,6 +1488,7 @@ class Admin extends CI_Controller
                                 $message_info = add_message_info($message_info, $this->ion_auth->errors());
                             }
                         }
+                        $this->m_custom->many_insert_or_remove('admin_role', $edit_id, $admin_role_selected);
                         $message_info = add_message_info($message_info, $username . ' success update.');
                         $this->m_custom->update_row_log('users', $edit_id, $login_id, $login_type);
                         $can_redirect_to = 1;
@@ -1561,6 +1574,9 @@ class Admin extends CI_Controller
             'value' => $this->form_validation->set_value('password', $result['password_visible']),
         );
 
+        $this->data['admin_role_current'] = empty($result) ? array() : $this->m_custom->many_get_childlist('admin_role', $result['id']);
+        $this->data['admin_role'] = $this->m_custom->get_static_option_array('admin_role', NULL, NULL);
+        
         $this->data['page_path_name'] = 'admin/worker_edit';
         $this->load->view('template/layout_right_menu', $this->data);
     }

@@ -167,13 +167,36 @@ class M_custom extends CI_Model
         return $have_role;
     }
 
+    public function check_worker_role($check_worker_role = NULL)
+    {
+        $have_role = 0;
+        if (check_correct_login_type($this->config->item('group_id_admin')))
+        {
+            $have_role = 1;
+        }
+        else if (check_correct_login_type($this->config->item('group_id_worker')))
+        {
+            if (!IsNullOrEmptyString($check_worker_role))
+            {
+                $login_id = $this->ion_auth->user()->row()->id;
+                $query = $this->db->get_where('many_to_many', array('many_type' => 'admin_role', 'many_parent_id' => $login_id, 'many_child_id' => $check_worker_role));
+                if ($query->num_rows() > 0)
+                {
+                    $have_role = 1;
+                }
+            }
+        }
+        return $have_role;
+    }
+
     public function check_is_any_admin()
     {
+        $have_role = 0;
         if (check_correct_login_type($this->config->item('group_id_admin')) || check_correct_login_type($this->config->item('group_id_worker')))
         {
-            return TRUE;
+            $have_role = 1;
         }
-        return FALSE;
+        return $have_role;
     }
 
     public function check_is_any_merchant()
@@ -1236,7 +1259,7 @@ class M_custom extends CI_Model
     }
 
     //To get the childlist id from many table by the type and parent id
-    public function many_get_childlist_detail($the_type, $parent_id, $child_table, $child_wanted_column = NULL, $want_string = 0)
+    public function many_get_childlist_detail($the_type, $parent_id, $child_table, $child_wanted_column = NULL, $want_string = 0, $separator = ',')
     {        
         $query = $this->db->get_where('many_to_many', array('many_type' => $the_type, 'many_parent_id' => $parent_id));        
         $return = array();
@@ -1259,7 +1282,7 @@ class M_custom extends CI_Model
             }
         }
         if($want_string == 1 && $child_wanted_column != NULL){
-            $return = arraylist_to_string($return);
+            $return = arraylist_to_string($return, $separator);
         }
         return $return;
     }

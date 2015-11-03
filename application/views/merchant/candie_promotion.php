@@ -147,40 +147,25 @@ if(isset($message))
                     <?php
                     foreach ($candie_term as $key => $value)
                     {
+                        $checked_or_not = '';
                         if (in_array($key, $candie_term_current))
                         {
-                            ?>
-                            <div id="candie-promotion-form-voucher-checkbox-each">
-                                <table border="0" cellpadding="0px" cellspacing="0px">
-                                    <tr>
-                                        <td valign="top"><input type='checkbox' id="candie-term-<?php echo $key ?>" name='candie_term[]' value='<?php echo $key ?>' checked></td>
-                                        <td valign="top">
-                                            <div id="candie-promotion-form-voucher-checkbox-each-label">
-                                                <label for="candie-term-<?php echo $key ?>"><?php echo $value ?></label>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <?php
+                            $checked_or_not = 'checked';
                         }
-                        else
-                        {
-                            ?>
+                        ?>
                             <div id="candie-promotion-form-voucher-checkbox-each">
-                                <table border="0" cellpadding="0px" cellspacing="0px">
-                                    <tr>
-                                        <td valign="top"><input type='checkbox' id="candie-term-<?php echo $key ?>" name='candie_term[]' value='<?php echo $key ?>'></td>
-                                        <td valign="top">
-                                            <div id="candie-promotion-form-voucher-checkbox-each-label">
-                                                <label for="candie-term-<?php echo $key ?>"><?php echo $value ?></label>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
+                                    <table border="0" cellpadding="0px" cellspacing="0px">
+                                        <tr>
+                                            <td valign="top"><input type='checkbox' id="candie-term-<?php echo $key ?>" name='candie_term[]' value='<?php echo $key ?>' <?php echo $checked_or_not; ?>></td>
+                                            <td valign="top">
+                                                <div id="candie-promotion-form-voucher-checkbox-each-label">
+                                                    <label for="candie-term-<?php echo $key ?>"><?php echo $value ?></label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
                             </div>
-                            <?php
-                        }
+                    <?php
                     }
                     ?>  
                 </div>
@@ -205,13 +190,16 @@ if(isset($message))
                     <?php
                     foreach ($candie_branch as $key => $value)
                     {
+                        $checked_or_not = '';
                         if (in_array($key, $candie_branch_current))
                         {
+                            $checked_or_not = 'checked';
+                        }
                             ?>
                             <div id="candie-promotion-form-branch-checkbox-each">
                                 <table border="0" cellpadding="0px" cellspacing="0px">
                                     <tr>
-                                        <td valign="top"><input type='checkbox' id="candie-branch-<?php echo $key ?>" name='candie_branch[]' value='<?php echo $key ?>' checked></td>
+                                        <td valign="top"><input type='checkbox' id="candie-branch-<?php echo $key ?>" name='candie_branch[]' value='<?php echo $key ?>' <?php echo $checked_or_not; ?>></td>
                                         <td valign="top">
                                             <div id="candie-promotion-form-branch-checkbox-each-label">
                                                 <label for="candie-branch-<?php echo $key ?>"><?php echo $value ?></label>
@@ -219,26 +207,8 @@ if(isset($message))
                                         </td>
                                     </tr>
                                 </table>
-                            </div>
-                            <?php
-                        }
-                        else
-                        {
-                            ?>
-                            <div id="candie-promotion-form-branch-checkbox-each">
-                                <table border="0" cellpadding="0px" cellspacing="0px">
-                                    <tr>
-                                        <td valign="top"><input type='checkbox' id="candie-branch-<?php echo $key ?>" name='candie_branch[]' value='<?php echo $key ?>'></td>
-                                        <td valign="top">
-                                            <div id="candie-promotion-form-branch-checkbox-each-label">
-                                                <label for="candie-branch-<?php echo $key ?>"><?php echo $value ?></label>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <?php
-                        }
+                            </div>                    
+                  <?php
                     }
                     ?>  
                 </div>
