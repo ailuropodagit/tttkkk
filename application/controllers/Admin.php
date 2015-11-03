@@ -1268,6 +1268,71 @@ class Admin extends CI_Controller
         }
     }
     
+    function merchant_management()
+    {
+        if (!$this->m_custom->check_is_any_admin(65))
+        {
+            redirect('/', 'refresh');
+        }
+
+        $user_list = $this->m_custom->getAllMerchant();
+        $this->data['the_result'] = $user_list;
+
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+        $this->data['page_path_name'] = 'admin/merchant_management';
+        $this->load->view('template/layout_right_menu', $this->data);
+    }
+    
+    function merchant_special_action(){
+        if (!$this->m_custom->check_is_any_admin(65))
+        {
+            redirect('/', 'refresh');
+        }
+        
+        $message_info = '';
+        if (isset($_POST) && !empty($_POST))
+        {
+            $can_redirect_to = 1;
+            $login_id = $this->login_id;
+            $id = $this->input->post('id');
+            $user_login_info = $this->m_custom->getUserLoginInfo($id);
+            $user_display_name = $this->m_custom->display_users($id);
+            if ($this->input->post('button_action') == "log_in_as" && $this->m_custom->check_worker_role(60))
+            {               
+                if ($user_login_info)
+                {
+                    if ($this->ion_auth->login($user_login_info['username'], $user_login_info['password_visible'], FALSE, $user_login_info['main_group_id'], $login_id, 1))
+                    {
+                        redirect('all/merchant_dashboard/'.$user_login_info['slug'], 'refresh');
+                    }else{
+                        $can_redirect_to = 1;
+                    }
+                }
+            }
+            if ($this->input->post('button_action') == "frozen" && $this->m_custom->check_worker_role(64))
+            {
+                $message_info = add_message_info($message_info, $user_display_name . ' success frozen.');
+                $this->m_custom->update_hide_flag(1, 'users', $id);
+                $can_redirect_to = 1;
+            }
+            if ($this->input->post('button_action') == "recover")
+            {
+                $message_info = add_message_info($message_info, $user_display_name . ' success unfrozen.');
+                $this->m_custom->update_hide_flag(0, 'users', $id);
+                $can_redirect_to = 1;
+            }
+            
+            if ($message_info != NULL)
+            {
+                $this->session->set_flashdata('message', $message_info);
+            }
+            if ($can_redirect_to == 1)
+            {
+                redirect('admin/merchant_management', 'refresh');
+            }
+        }
+    }
+    
     function worker_management()
     {
         if (!$this->m_custom->check_is_any_admin(66))
