@@ -189,12 +189,15 @@ class M_custom extends CI_Model
         return $have_role;
     }
 
-    public function check_is_any_admin()
+    public function check_is_any_admin($check_worker_role = NULL)
     {
         $have_role = 0;
         if (check_correct_login_type($this->config->item('group_id_admin')) || check_correct_login_type($this->config->item('group_id_worker')))
         {
             $have_role = 1;
+        }
+        if(!IsNullOrEmptyString($check_worker_role)){
+            $have_role = $this->m_custom->check_worker_role($check_worker_role);
         }
         return $have_role;
     }

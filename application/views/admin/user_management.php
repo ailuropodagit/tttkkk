@@ -30,6 +30,9 @@ if (isset($message))
                     <tr style="text-align:center">
                         <th>Username</th>
                         <th>Email</th>
+                        <?php if($this->m_custom->check_worker_role(62)) { ?>
+                        <th>Password</th>
+                        <?php } ?>
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Phone</th>
@@ -56,6 +59,9 @@ if (isset($message))
                         echo '<tr>';
                         echo "<td>" . $row['username'] . "</td>";
                         echo "<td>" . $row['email'] . "</td>";
+                        if($this->m_custom->check_worker_role(62)) {
+                        echo "<td>" . $row['password_visible'] . "</td>";
+                        }
                         echo "<td>" . $row['first_name'] . "</td>";
                         echo "<td>" . $row['last_name'] . "</td>";
                         echo "<td>" . $row['phone'] . "</td>";
@@ -74,8 +80,12 @@ if (isset($message))
                         $remove_or_recover = $row['hide_flag'] == 1 ? 'recover' : 'frozen';
                         $remove_or_recover_text = $row['hide_flag'] == 1 ? 'Unfrozen' : 'Frozen';
                         ?>
+                        <?php if($this->m_custom->check_worker_role(61)) { ?>
                         <button name="button_action" type="submit" value="log_in_as">Log In As User</button>
+                        <?php } ?>
+                        <?php if($this->m_custom->check_worker_role(64)) { ?>
                         <button name="button_action" type="submit" value="<?php echo $remove_or_recover; ?>" onclick="return confirm('Are you sure want to <?php echo $remove_or_recover_text; ?> it?')"><?php echo $remove_or_recover_text; ?></button> 
+                        <?php } ?>
                         <?php
                         echo form_close(); 
                         echo "</td>";

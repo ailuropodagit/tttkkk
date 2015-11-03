@@ -106,7 +106,21 @@
         }
         else if ($login_user_group == $this->config->item('group_id_worker'))
         {
-            
+            $dashboard = base_url() . 'admin/admin_dashboard';
+            ?>
+            <li><a href='<?php echo $dashboard; ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'admin_dashboard'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Dashboard</a></li>
+            <li><a href='<?php echo base_url(); ?>admin/profile' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'profile'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Profile</a></li>
+            <?php if($this->m_custom->check_worker_role(65)) { ?>
+            <li><a href='<?php echo base_url(); ?>admin/user_management' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'user_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Manage User</a></li>
+            <li><a href='<?php echo base_url(); ?>admin/merchant_management' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'merchant_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Manage Merchant</a></li>
+            <?php } ?>
+            <?php if($this->m_custom->check_worker_role(66)) { ?>
+            <li><a href='<?php echo base_url(); ?>admin/worker_management' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'worker_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Manage Worker</a></li>
+            <?php } ?>
+            <?php if($this->m_custom->check_worker_role(72)) { ?>
+            <li><a href='<?php echo base_url(); ?>admin/category_management' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'category_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Manage Category</a></li>
+            <?php } ?>
+            <?php
         }
         ?>
     </ul>

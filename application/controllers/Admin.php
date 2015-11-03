@@ -922,7 +922,7 @@ class Admin extends CI_Controller
 
     function category_management()
     {
-        if (!$this->m_custom->check_is_any_admin())
+        if (!$this->m_custom->check_is_any_admin(72))
         {
             redirect('/', 'refresh');
         }
@@ -953,7 +953,7 @@ class Admin extends CI_Controller
 
     function category_add()
     {
-        if (!$this->m_custom->check_is_any_admin())
+        if (!$this->m_custom->check_is_any_admin(72))
         {
             redirect('/', 'refresh');
         }
@@ -1054,7 +1054,7 @@ class Admin extends CI_Controller
 
     function category_edit($edit_id)
     {
-        if (!$this->m_custom->check_is_any_admin())
+        if (!$this->m_custom->check_is_any_admin(72))
         {
             redirect('/', 'refresh');
         }
@@ -1205,7 +1205,7 @@ class Admin extends CI_Controller
 
     function user_management()
     {
-        if (!$this->m_custom->check_is_any_admin())
+        if (!$this->m_custom->check_is_any_admin(65))
         {
             redirect('/', 'refresh');
         }
@@ -1219,7 +1219,7 @@ class Admin extends CI_Controller
     }
     
     function user_special_action(){
-        if (!$this->m_custom->check_is_any_admin())
+        if (!$this->m_custom->check_is_any_admin(65))
         {
             redirect('/', 'refresh');
         }
@@ -1227,11 +1227,12 @@ class Admin extends CI_Controller
         $message_info = '';
         if (isset($_POST) && !empty($_POST))
         {
+            $can_redirect_to = 1;
             $login_id = $this->login_id;
             $id = $this->input->post('id');
             $user_login_info = $this->m_custom->getUserLoginInfo($id);
             $user_display_name = $this->m_custom->display_users($id);
-            if ($this->input->post('button_action') == "log_in_as")
+            if ($this->input->post('button_action') == "log_in_as" && $this->m_custom->check_worker_role(61))
             {               
                 if ($user_login_info)
                 {
@@ -1243,7 +1244,7 @@ class Admin extends CI_Controller
                     }
                 }
             }
-            if ($this->input->post('button_action') == "frozen")
+            if ($this->input->post('button_action') == "frozen" && $this->m_custom->check_worker_role(64))
             {
                 $message_info = add_message_info($message_info, $user_display_name . ' success frozen.');
                 $this->m_custom->update_hide_flag(1, 'users', $id);
@@ -1269,7 +1270,7 @@ class Admin extends CI_Controller
     
     function worker_management()
     {
-        if (!$this->m_custom->check_is_any_admin())
+        if (!$this->m_custom->check_is_any_admin(66))
         {
             redirect('/', 'refresh');
         }
@@ -1284,7 +1285,7 @@ class Admin extends CI_Controller
     
     function worker_add()
     {
-        if (!$this->m_custom->check_is_any_admin())
+        if (!$this->m_custom->check_is_any_admin(66))
         {
             redirect('/', 'refresh');
         }
@@ -1421,7 +1422,7 @@ class Admin extends CI_Controller
     
     function worker_edit($edit_id)
     {
-        if (!$this->m_custom->check_is_any_admin())
+        if (!$this->m_custom->check_is_any_admin(66))
         {
             redirect('/', 'refresh');
         }
