@@ -136,7 +136,7 @@
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
     
-       $(document).ready(function () {  
+    $(document).ready(function () {  
     $('#phone').blur(function ()
             {
                 var value = $(this).val();

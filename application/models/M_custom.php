@@ -1024,19 +1024,33 @@ class M_custom extends CI_Model
     }
 
     function getAllUser(){
+        $this->db->order_by('first_name');
         $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_user')));
         $result = $query->result_array();
         return $result;
     }
     
     function getAllMerchant(){
+        $this->db->order_by('company');
         $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant')));
         $result = $query->result_array();
         return $result;
     }
     
-    function getUser($user_id)
+    function getAllWorker(){
+        $this->db->order_by('first_name');
+        $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_worker')));
+        $result = $query->result_array();
+        return $result;
+    }
+    
+    function getUser($user_id, $main_group_id = NULL)
     {
+        if (!IsNullOrEmptyString($main_group_id))
+        {
+            $this->db->where('main_group_id', $main_group_id);
+        }
+
         $query = $this->db->get_where('users', array('id' => $user_id));
         return $query->row_array();
     }

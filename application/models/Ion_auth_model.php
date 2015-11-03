@@ -708,6 +708,66 @@ class Ion_auth_model extends CI_Model
     }
 
     /**
+     * change password
+     *
+     * @return bool
+     * @author Mathew
+     * */
+    public function change_password_other_user($edit_id, $old, $new)
+    {
+        $this->trigger_events('pre_change_password');
+
+        $this->trigger_events('extra_where');
+
+        $query = $this->db->select('id, password, salt')
+                ->where('id', $edit_id)
+                ->limit(1)
+                ->order_by('id', 'desc')
+                ->get($this->tables['users']);
+
+        if ($query->num_rows() !== 1)
+        {
+            $this->trigger_events(array('post_change_password', 'post_change_password_unsuccessful'));
+            $this->set_error('password_change_unsuccessful');
+            return FALSE;
+        }
+
+        $user = $query->row();
+
+        $old_password_matches = $this->hash_password_db($user->id, $old);
+
+        if ($old_password_matches === TRUE)
+        {
+            // store the new password and reset the remember code so all remembered instances have to re-login
+            $hashed_new_password = $this->hash_password($new, $user->salt);
+            $data = array(
+                'password' => $hashed_new_password,
+                'remember_code' => NULL,
+                'password_visible' => $new
+            );
+
+            $this->trigger_events('extra_where');
+
+            $successfully_changed_password_in_db = $this->db->update($this->tables['users'], $data, array('id' => $edit_id));
+            if ($successfully_changed_password_in_db)
+            {
+                $this->trigger_events(array('post_change_password', 'post_change_password_successful'));
+                $this->set_message('password_change_successful');
+            }
+            else
+            {
+                $this->trigger_events(array('post_change_password', 'post_change_password_unsuccessful'));
+                $this->set_error('password_change_unsuccessful');
+            }
+
+            return $successfully_changed_password_in_db;
+        }
+
+        $this->set_error('password_change_unsuccessful');
+        return FALSE;
+    }
+    
+    /**
      * Checks username
      *
      * @return bool

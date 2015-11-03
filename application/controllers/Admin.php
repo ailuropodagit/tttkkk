@@ -990,7 +990,7 @@ class Admin extends CI_Controller
                     if ($new_id)
                     {
                         $this->m_custom->insert_row_log('category', $new_id, $login_id, $login_type);
-                        $message_info = add_message_info($message_info, $category_label . ' success insert.');
+                        $message_info = add_message_info($message_info, $category_label . ' success create.');
                         $can_redirect_to = 2;
                     }
                     else
@@ -1052,7 +1052,7 @@ class Admin extends CI_Controller
         $this->load->view('template/layout_right_menu', $this->data);
     }
 
-    function category_edit($category_id)
+    function category_edit($edit_id)
     {
         if (!$this->m_custom->check_is_any_admin())
         {
@@ -1062,7 +1062,7 @@ class Admin extends CI_Controller
         $message_info = '';
         $login_id = $this->login_id;
         $login_type = $this->login_type;
-        $result = $this->m_custom->get_one_table_record('category', 'category_id', $category_id, 1);
+        $result = $this->m_custom->get_one_table_record('category', 'category_id', $edit_id, 1);
 
         if (isset($_POST) && !empty($_POST))
         {
@@ -1125,7 +1125,7 @@ class Admin extends CI_Controller
             }
             if ($this->input->post('button_action') == "frozen")
             {
-                $count_check = count($this->m_custom->getSubCategory($category_id));
+                $count_check = count($this->m_custom->getSubCategory($edit_id));
                 if ($count_check > 0)
                 {
                     $message_info = add_message_info($message_info, $category_label . ' cannot remove, because it still have Sub Category under it.');
@@ -1134,14 +1134,14 @@ class Admin extends CI_Controller
                 else
                 {
                     $message_info = add_message_info($message_info, $category_label . ' success remove.');
-                    $this->m_custom->update_hide_flag(1, 'category', $category_id);
+                    $this->m_custom->update_hide_flag(1, 'category', $edit_id);
                     $can_redirect_to = 2;
                 }
             }
             if ($this->input->post('button_action') == "recover")
             {
                 $message_info = add_message_info($message_info, $category_label . ' success recover.');
-                $this->m_custom->update_hide_flag(0, 'category', $category_id);
+                $this->m_custom->update_hide_flag(0, 'category', $edit_id);
                 $can_redirect_to = 2;
             }
 
@@ -1179,7 +1179,7 @@ class Admin extends CI_Controller
             'id' => 'category_level',
             'checked' => $category_level_value == "1" ? TRUE : FALSE,
             'onclick' => "checkbox_showhide('category_level','category-sub-div')",
-            'value' => $this->form_validation->set_value('category_level', $category_id),
+            'value' => $this->form_validation->set_value('category_level', $edit_id),
         );
 
         $this->data['main_category_list'] = $this->m_custom->getCategoryList('0', 'Please Select');
@@ -1265,6 +1265,304 @@ class Admin extends CI_Controller
                 redirect('admin/user_management', 'refresh');
             }
         }
+    }
+    
+    function worker_management()
+    {
+        if (!$this->m_custom->check_is_any_admin())
+        {
+            redirect('/', 'refresh');
+        }
+
+        $user_list = $this->m_custom->getAllWorker();
+        $this->data['the_result'] = $user_list;
+
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+        $this->data['page_path_name'] = 'admin/worker_management';
+        $this->load->view('template/layout_right_menu', $this->data);
+    }
+    
+    function worker_add()
+    {
+        if (!$this->m_custom->check_is_any_admin())
+        {
+            redirect('/', 'refresh');
+        }
+
+        $message_info = '';
+        $login_id = $this->login_id;
+        $login_type = $this->login_type;
+
+        if (isset($_POST) && !empty($_POST))
+        {
+            $can_redirect_to = 0;
+            $first_name = $this->input->post('first_name');
+            $last_name = $this->input->post('last_name');
+            $phone = $this->input->post('phone');
+            $username = strtolower($this->input->post('username'));
+            $email = strtolower($this->input->post('email'));
+            $password = $this->input->post('password');
+
+            // validate form input
+            $tables = $this->config->item('tables', 'ion_auth');
+
+            $this->form_validation->set_rules('first_name', $this->lang->line('create_user_validation_fname_label'), 'required');
+            $this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'));
+            $this->form_validation->set_rules('phone', $this->lang->line('create_user_validation_phone_label'), 'required|valid_contact_number');
+            $this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'trim|required|valid_email|is_unique[' . $tables['users'] . '.email]');
+            $this->form_validation->set_rules('username', $this->lang->line('create_user_validation_username_label'), 'trim|required|is_unique[' . $tables['users'] . '.username]');           
+            $this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
+            $this->form_validation->set_rules('password_confirm', $this->lang->line('create_user_validation_password_confirm_label'), 'required');
+
+            if ($this->input->post('button_action') == "save")
+            {
+                if ($this->form_validation->run() === TRUE)
+                {
+                    $additional_data = array(
+                        'first_name' => $first_name,
+                        'last_name' => $last_name,
+                        'phone' => $phone,
+                        'username' => $username,
+                        'password_visible' => $password,
+                        'main_group_id' => $this->group_id_worker,
+                    );
+                    $group_ids = array(
+                        $this->group_id_worker
+                    );
+                    
+                    $new_id = $this->ion_auth->register($username, $password, $email, $additional_data, $group_ids);
+                    if ($new_id)
+                    {
+                        $message_info = add_message_info($message_info, $username . ' success create.');
+                        $can_redirect_to = 3;
+                    }
+                    else
+                    {
+                        $message_info = add_message_info($message_info, $this->ion_auth->errors());
+                        $can_redirect_to = 1;
+                    }
+                }
+            }
+            if ($this->input->post('button_action') == "back")
+            {
+                $can_redirect_to = 2;
+            }
+
+            direct_go:
+            if ($message_info != NULL)
+            {
+                $this->session->set_flashdata('message', $message_info);
+            }
+            if ($can_redirect_to == 1)
+            {
+                redirect(uri_string(), 'refresh');
+            }
+            elseif ($can_redirect_to == 2)
+            {
+                redirect('admin/worker_management', 'refresh');
+            }
+            elseif ($can_redirect_to == 3)
+            {
+                redirect('admin/worker_edit/' . $new_id, 'refresh');
+            }
+        }
+
+        // set the flash data error message if there is one
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+
+        $this->data['username'] = array(
+            'name' => 'username',
+            'id' => 'username',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('username'),
+        );
+        $this->data['first_name'] = array(
+            'name' => 'first_name',
+            'id' => 'first_name',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('first_name'),
+        );
+        $this->data['last_name'] = array(
+            'name' => 'last_name',
+            'id' => 'last_name',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('last_name'),
+        );
+        $this->data['email'] = array(
+            'name' => 'email',
+            'id' => 'email',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('email'),
+        );
+        $this->data['phone'] = array(
+            'name' => 'phone',
+            'id' => 'phone',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('phone'),
+        );
+        $this->data['password'] = array(
+            'name' => 'password',
+            'id' => 'password',
+            'type' => 'password',
+            'value' => $this->form_validation->set_value('password'),
+        );
+        $this->data['password_confirm'] = array(
+            'name' => 'password_confirm',
+            'id' => 'password_confirm',
+            'type' => 'password',
+            'value' => $this->form_validation->set_value('password_confirm'),
+        );
+        
+        $this->data['page_path_name'] = 'admin/worker_add';
+        $this->load->view('template/layout_right_menu', $this->data);
+    }
+    
+    function worker_edit($edit_id)
+    {
+        if (!$this->m_custom->check_is_any_admin())
+        {
+            redirect('/', 'refresh');
+        }
+
+        $message_info = '';
+        $login_id = $this->login_id;
+        $login_type = $this->login_type;
+        $result = $this->m_custom->getUser($edit_id, $this->group_id_worker);
+
+        if (isset($_POST) && !empty($_POST))
+        {
+            $can_redirect_to = 0;
+            $id = $this->input->post('id');
+            $first_name = $this->input->post('first_name');
+            $last_name = $this->input->post('last_name');
+            $phone = $this->input->post('phone');
+            $username = strtolower($this->input->post('username'));
+            $email = strtolower($this->input->post('email'));
+            $password = $this->input->post('password');
+            //$category_level = $this->input->post('category_level') == NULL ? 0 : 1;   //Check box special handling to know is checked or not
+
+            $tables = $this->config->item('tables', 'ion_auth');
+            // validate form input
+            $this->form_validation->set_rules('first_name', $this->lang->line('create_user_fname_label'), 'required');
+            $this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'));
+            $this->form_validation->set_rules('phone', $this->lang->line('create_user_phone_label'), 'required|valid_contact_number');
+            $this->form_validation->set_rules('username', $this->lang->line('create_user_validation_username_label'), 'trim|required|is_unique_edit[' . $tables['users'] . '.username.' . $edit_id . ']');
+            $this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'trim|required|valid_email|is_unique_edit[' . $tables['users'] . '.email.' . $edit_id . ']');
+            $this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']');
+            
+            if ($this->input->post('button_action') == "save")
+            {
+                if ($this->form_validation->run() === TRUE)
+                {
+                    $password_old = $result['password_visible'];
+                    $data = array(
+                        'first_name' => $first_name,
+                        'last_name' => $last_name,
+                        'phone' => $phone,
+                        'username' => $username,
+                        'email' => $email,
+                    );
+                    
+                    if ($this->ion_auth->update($edit_id, $data))
+                    {
+                        if ($password_old != $password)
+                        {
+                            if ($this->ion_auth->change_password_other_user($edit_id, $password_old, $password))
+                            {   
+                                $message_info = add_message_info($message_info, $username . ' password success update.');
+                            }
+                            else
+                            {
+                                $message_info = add_message_info($message_info, $this->ion_auth->errors());
+                            }
+                        }
+                        $message_info = add_message_info($message_info, $username . ' success update.');
+                        $this->m_custom->update_row_log('users', $edit_id, $login_id, $login_type);
+                        $can_redirect_to = 1;
+                    }
+                    else
+                    {
+                        $message_info = add_message_info($message_info, $this->ion_auth->errors());
+                        $can_redirect_to = 1;
+                    }
+                }
+            }
+            if ($this->input->post('button_action') == "back")
+            {
+                $can_redirect_to = 2;
+            }
+            if ($this->input->post('button_action') == "frozen")
+            {
+                $message_info = add_message_info($message_info, $username . ' success remove.');
+                $this->m_custom->update_hide_flag(1, 'users', $edit_id);
+                $can_redirect_to = 2;
+            }
+            if ($this->input->post('button_action') == "recover")
+            {
+                $message_info = add_message_info($message_info, $username . ' success recover.');
+                $this->m_custom->update_hide_flag(0, 'users', $edit_id);
+                $can_redirect_to = 2;
+            }
+
+            direct_go:
+            if ($message_info != NULL)
+            {
+                $this->session->set_flashdata('message', $message_info);
+            }
+            if ($can_redirect_to == 1)
+            {
+                redirect(uri_string(), 'refresh');
+            }
+            elseif ($can_redirect_to == 2)
+            {
+                redirect('admin/worker_management', 'refresh');
+            }
+        }
+
+        // set the flash data error message if there is one
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+
+        $this->data['result'] = $result;
+
+        $this->data['username'] = array(
+            'name' => 'username',
+            'id' => 'username',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('username', $result['username']),
+        );
+        $this->data['first_name'] = array(
+            'name' => 'first_name',
+            'id' => 'first_name',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('first_name', $result['first_name']),
+        );
+        $this->data['last_name'] = array(
+            'name' => 'last_name',
+            'id' => 'last_name',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('last_name', $result['last_name']),
+        );
+        $this->data['email'] = array(
+            'name' => 'email',
+            'id' => 'email',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('email', $result['email']),
+        );
+        $this->data['phone'] = array(
+            'name' => 'phone',
+            'id' => 'phone',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('phone', $result['phone']),
+        );
+        $this->data['password'] = array(
+            'name' => 'password',
+            'id' => 'password',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('password', $result['password_visible']),
+        );
+
+        $this->data['page_path_name'] = 'admin/worker_edit';
+        $this->load->view('template/layout_right_menu', $this->data);
     }
     
     function _get_csrf_nonce()

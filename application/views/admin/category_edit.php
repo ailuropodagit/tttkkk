@@ -9,7 +9,7 @@ if(isset($message))
 ?>
 
 <div id="profile">
-    <h1>Profile</h1>
+    <h1>Category Edit</h1>
     <div id='profile-content'>              
         <div id='profile-info'> 
             <?php echo form_open(uri_string()); ?>
