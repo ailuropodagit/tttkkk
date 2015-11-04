@@ -240,10 +240,14 @@ html, body {
     font-size: 14px;
     font-weight: 700;
     text-decoration: none;
-    padding: 15px 15px 15px 15px;
+    padding: 15px 15px 14px 15px;
 }
 
 #header-navigation-bar a:hover {
+    border-bottom: 3px solid #f84565;
+}
+
+.header-navigation-bar-active a {
     border-bottom: 3px solid #f84565;
 }
     
@@ -399,6 +403,9 @@ html, body {
     z-index: 99;
     background-color: white;
     margin: 0px 0px 60px 0px;
+-webkit-box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
+-moz-box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
+box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
 }
 
 #body-content {
@@ -423,6 +430,9 @@ html, body {
     width: 24%;
     background-color: white;
     height: 480px;
+    -webkit-box-shadow: 1px 1px 3px 0px rgba(179,179,179,0.80);
+    -moz-box-shadow: 1px 1px 3px 0px rgba(179,179,179,0.80);
+    box-shadow: 1px 1px 3px 0px rgba(179,179,179,0.80);
 }
 
 #home-row1-banner-main {
@@ -521,12 +531,18 @@ html, body {
     margin: 0px 0px 30px 0px;
     box-sizing: border-box;
     background-color: white;
+    -webkit-box-shadow: 1px 1px 3px 0px rgba(179,179,179,0.80);
+    -moz-box-shadow: 1px 1px 3px 0px rgba(179,179,179,0.80);
+    box-shadow: 1px 1px 3px 0px rgba(179,179,179,0.80);
 }
 
 #home-row3-column2-users-pictures {
     height: 613px;
     box-sizing: border-box;
     background-color: white;
+    -webkit-box-shadow: 1px 1px 3px 0px rgba(179,179,179,0.80);
+    -moz-box-shadow: 1px 1px 3px 0px rgba(179,179,179,0.80);
+    box-shadow: 1px 1px 3px 0px rgba(179,179,179,0.80);
 }
 
 #home-bottom-background {
