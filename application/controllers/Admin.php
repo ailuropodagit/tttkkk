@@ -13,6 +13,8 @@ class Admin extends CI_Controller
         $this->main_group_id = $this->config->item('group_id_admin');
         $this->group_id_admin = $this->config->item('group_id_admin');
         $this->group_id_worker = $this->config->item('group_id_worker');
+        $this->group_id_merchant = $this->config->item('group_id_merchant');
+        $this->group_id_user = $this->config->item('group_id_user');
         $this->album_admin = $this->config->item('album_admin');
         $this->album_admin_profile = $this->config->item('album_admin_profile');
         $this->folder_image = $this->config->item('folder_image');
@@ -1064,6 +1066,11 @@ class Admin extends CI_Controller
         $login_type = $this->login_type;
         $result = $this->m_custom->get_one_table_record('category', 'category_id', $edit_id, 1);
 
+        if (empty($result))
+        {
+            redirect('/', 'refresh');
+        }
+
         if (isset($_POST) && !empty($_POST))
         {
             $can_redirect_to = 0;
@@ -1093,7 +1100,8 @@ class Admin extends CI_Controller
                             $can_redirect_to = 1;
                             goto direct_go;
                         }
-                        if($id == $main_category_id){
+                        if ($id == $main_category_id)
+                        {
                             $message_info = add_message_info($message_info, $category_label . ' cannot become it own Sub Category.');
                             $can_redirect_to = 1;
                             goto direct_go;
@@ -1217,13 +1225,14 @@ class Admin extends CI_Controller
         $this->data['page_path_name'] = 'admin/user_management';
         $this->load->view('template/layout_right_menu', $this->data);
     }
-    
-    function user_special_action(){
+
+    function user_special_action()
+    {
         if (!$this->m_custom->check_is_any_admin(65))
         {
             redirect('/', 'refresh');
         }
-        
+
         $message_info = '';
         if (isset($_POST) && !empty($_POST))
         {
@@ -1233,13 +1242,15 @@ class Admin extends CI_Controller
             $user_login_info = $this->m_custom->getUserLoginInfo($id);
             $user_display_name = $this->m_custom->display_users($id);
             if ($this->input->post('button_action') == "log_in_as" && $this->m_custom->check_worker_role(61))
-            {               
+            {
                 if ($user_login_info)
                 {
                     if ($this->ion_auth->login($user_login_info['username'], $user_login_info['password_visible'], FALSE, $user_login_info['main_group_id'], $login_id, 1))
                     {
-                        redirect('all/user_dashboard/'.$id, 'refresh');
-                    }else{
+                        redirect('all/user_dashboard/' . $id, 'refresh');
+                    }
+                    else
+                    {
                         $can_redirect_to = 1;
                     }
                 }
@@ -1256,7 +1267,7 @@ class Admin extends CI_Controller
                 $this->m_custom->update_hide_flag(0, 'users', $id);
                 $can_redirect_to = 1;
             }
-            
+
             if ($message_info != NULL)
             {
                 $this->session->set_flashdata('message', $message_info);
@@ -1267,7 +1278,7 @@ class Admin extends CI_Controller
             }
         }
     }
-    
+
     function merchant_management()
     {
         if (!$this->m_custom->check_is_any_admin(65))
@@ -1282,13 +1293,223 @@ class Admin extends CI_Controller
         $this->data['page_path_name'] = 'admin/merchant_management';
         $this->load->view('template/layout_right_menu', $this->data);
     }
-    
-    function merchant_special_action(){
+
+    function merchant_edit($edit_id)
+    {
         if (!$this->m_custom->check_is_any_admin(65))
         {
             redirect('/', 'refresh');
         }
-        
+
+        $message_info = '';
+        $login_id = $this->login_id;
+        $login_type = $this->login_type;
+        $result = $this->m_custom->getUser($edit_id, $this->group_id_merchant);
+
+        if (empty($result))
+        {
+            redirect('/', 'refresh');
+        }
+
+        if (isset($_POST) && !empty($_POST))
+        {
+            $can_redirect_to = 0;
+            $id = $this->input->post('id');
+            $username = strtolower($this->input->post('username'));
+            $email = strtolower($this->input->post('email'));
+            $company_main = $this->input->post('company_main');
+            $company = $this->input->post('company');
+            $me_ssm = $this->input->post('me_ssm');
+            $me_category_id = $this->input->post('me_category_id');
+            $address = $this->input->post('address');
+            $postcode = $this->input->post('postcode');
+            $me_state_id = $this->input->post('me_state_id');
+            $phone = $this->input->post('phone');
+
+            // to generate company slug for check is it unique
+            $_POST['slug'] = generate_slug($_POST['company']);
+            $slug = $_POST['slug'];
+
+            $tables = $this->config->item('tables', 'ion_auth');
+
+            // validate form input
+            $this->form_validation->set_rules('username', $this->lang->line('create_merchant_validation_username_label'), 'trim|required|is_unique_edit[' . $tables['users'] . '.username.' . $edit_id . ']');
+            $this->form_validation->set_rules('email', $this->lang->line('create_merchant_validation_email_label'), 'trim|required|valid_email|is_unique_edit[' . $tables['users'] . '.email.' . $edit_id . ']');
+            $this->form_validation->set_rules('company_main', $this->lang->line('create_merchant_validation_company_main_label'), "trim|required|min_length[3]");
+            $this->form_validation->set_rules('company', $this->lang->line('create_merchant_validation_company_label'), "trim|required|min_length[3]");
+            $this->form_validation->set_rules('slug', $this->lang->line('create_merchant_validation_company_label'), 'trim|is_unique_edit[' . $tables['users'] . '.slug.' . $edit_id . ']');
+            $this->form_validation->set_rules('me_ssm', $this->lang->line('create_merchant_validation_companyssm_label'), 'required');
+            $this->form_validation->set_rules('me_category_id', $this->lang->line('create_merchant_category_label'), 'callback_check_main_category');
+            $this->form_validation->set_rules('address', $this->lang->line('create_merchant_validation_address_label'), 'required');
+            $this->form_validation->set_rules('postcode', $this->lang->line('create_merchant_validation_postcode_label'), 'required|numeric');
+            $this->form_validation->set_rules('me_state_id', $this->lang->line('create_merchant_validation_state_label'), 'callback_check_state_id');
+            $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required|valid_contact_number');
+
+            if ($this->input->post('button_action') == "save")
+            {
+                if ($this->form_validation->run() === TRUE)
+                {
+                    $data = array(
+                        'username' => $username,
+                        'email' => $email,
+                        'company_main' => $company_main,
+                        'company' => $company,
+                        'slug' => $slug,
+                        'me_ssm' => $me_ssm,
+                        'me_category_id' => $me_category_id,
+                        'address' => $address,
+                        'postcode' => $postcode,
+                        'me_state_id' => $me_state_id,
+                        'phone' => $phone,
+                    );
+
+                    if ($this->ion_auth->update($edit_id, $data))
+                    {
+                        $message_info = add_message_info($message_info, $company . ' success update.');
+                        $this->m_custom->update_row_log('users', $edit_id, $login_id, $login_type);
+                        $can_redirect_to = 1;
+                    }
+                    else
+                    {
+                        $message_info = add_message_info($message_info, $this->ion_auth->errors());
+                        $can_redirect_to = 1;
+                    }
+                }
+            }
+            if ($this->input->post('button_action') == "back")
+            {
+                $can_redirect_to = 2;
+            }
+            if ($this->input->post('button_action') == "frozen")
+            {
+                $message_info = add_message_info($message_info, $company . ' success remove.');
+                $this->m_custom->update_hide_flag(1, 'users', $edit_id);
+                $can_redirect_to = 2;
+            }
+            if ($this->input->post('button_action') == "recover")
+            {
+                $message_info = add_message_info($message_info, $company . ' success recover.');
+                $this->m_custom->update_hide_flag(0, 'users', $edit_id);
+                $can_redirect_to = 2;
+            }
+
+            direct_go:
+            if ($message_info != NULL)
+            {
+                $this->session->set_flashdata('message', $message_info);
+            }
+            if ($can_redirect_to == 1)
+            {
+                redirect(uri_string(), 'refresh');
+            }
+            elseif ($can_redirect_to == 2)
+            {
+                redirect('admin/merchant_management', 'refresh');
+            }
+        }
+
+        // set the flash data error message if there is one
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+
+        $this->data['result'] = $result;
+
+        $this->data['username'] = array(
+            'name' => 'username',
+            'id' => 'username',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('username', $result['username']),
+        );
+        $this->data['email'] = array(
+            'name' => 'email',
+            'id' => 'email',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('email', $result['email']),
+        );
+        $this->data['company_main'] = array(
+            'name' => 'company_main',
+            'id' => 'company_main',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('company_main', $result['company_main']),
+        );
+        $this->data['company'] = array(
+            'name' => 'company',
+            'id' => 'company',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('company', $result['company']),
+        );
+        $this->data['me_ssm'] = array(
+            'name' => 'me_ssm',
+            'id' => 'me_ssm',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('me_ssm', $result['me_ssm']),
+        );
+
+        $this->data['category_selected'] = $result['me_category_id'];
+        $this->data['category_list'] = $this->ion_auth->get_main_category_list();
+        $this->data['me_category_id'] = array(
+            'name' => 'me_category_id',
+            'id' => 'me_category_id',
+            'value' => $this->form_validation->set_value('me_category_id'),
+        );
+        $this->data['address'] = array(
+            'name' => 'address',
+            'id' => 'address',
+            'value' => $this->form_validation->set_value('address', $result['address']),
+        );
+        $this->data['postcode'] = array(
+            'name' => 'postcode',
+            'id' => 'postcode',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('postcode', $result['postcode']),
+        );
+        $this->data['state_selected'] = $result['me_state_id'];
+        $this->data['state_list'] = $this->ion_auth->get_static_option_list('state');
+        $this->data['me_state_id'] = array(
+            'name' => 'me_state_id',
+            'id' => 'me_state_id',
+            'value' => $this->form_validation->set_value('me_state_id'),
+        );
+
+        $this->data['phone'] = array(
+            'name' => 'phone',
+            'id' => 'phone',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('phone', $result['phone']),
+        );
+
+//        $this->data['admin_role'] = $this->m_custom->get_static_option_array('admin_role', NULL, NULL);
+
+        $this->data['page_path_name'] = 'admin/merchant_edit';
+        $this->load->view('template/layout_right_menu', $this->data);
+    }
+
+    function check_state_id($dropdown_selection)
+    {
+        if ($dropdown_selection == 0)
+        {
+            $this->form_validation->set_message('check_state_id', 'The State field is required');
+            return FALSE;
+        }
+        return TRUE;
+    }
+
+    function check_main_category($dropdown_selection)
+    {
+        if ($dropdown_selection == 0)
+        {
+            $this->form_validation->set_message('check_main_category', 'The Company Category field is required');
+            return FALSE;
+        }
+        return TRUE;
+    }
+
+    function merchant_special_action()
+    {
+        if (!$this->m_custom->check_is_any_admin(65))
+        {
+            redirect('/', 'refresh');
+        }
+
         $message_info = '';
         if (isset($_POST) && !empty($_POST))
         {
@@ -1298,13 +1519,15 @@ class Admin extends CI_Controller
             $user_login_info = $this->m_custom->getUserLoginInfo($id);
             $user_display_name = $this->m_custom->display_users($id);
             if ($this->input->post('button_action') == "log_in_as" && $this->m_custom->check_worker_role(60))
-            {               
+            {
                 if ($user_login_info)
                 {
                     if ($this->ion_auth->login($user_login_info['username'], $user_login_info['password_visible'], FALSE, $user_login_info['main_group_id'], $login_id, 1))
                     {
-                        redirect('all/merchant_dashboard/'.$user_login_info['slug'], 'refresh');
-                    }else{
+                        redirect('all/merchant_dashboard/' . $user_login_info['slug'], 'refresh');
+                    }
+                    else
+                    {
                         $can_redirect_to = 1;
                     }
                 }
@@ -1321,7 +1544,7 @@ class Admin extends CI_Controller
                 $this->m_custom->update_hide_flag(0, 'users', $id);
                 $can_redirect_to = 1;
             }
-            
+
             if ($message_info != NULL)
             {
                 $this->session->set_flashdata('message', $message_info);
@@ -1332,7 +1555,30 @@ class Admin extends CI_Controller
             }
         }
     }
-    
+
+    //to do todo
+    function merchant_topup($edit_id)
+    {
+        if (!$this->m_custom->check_is_any_admin(67))
+        {
+            redirect('/', 'refresh');
+        }
+
+        $message_info = '';
+        $login_id = $this->login_id;
+        $login_type = $this->login_type;
+        $result = $this->m_custom->getUser($edit_id, $this->group_id_merchant);
+
+        if (empty($result))
+        {
+            redirect('/', 'refresh');
+        }
+
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+        $this->data['page_path_name'] = 'admin/merchant_topup';
+        $this->load->view('template/layout_right_menu', $this->data);
+    }
+
     function worker_management()
     {
         if (!$this->m_custom->check_is_any_admin(66))
@@ -1347,7 +1593,7 @@ class Admin extends CI_Controller
         $this->data['page_path_name'] = 'admin/worker_management';
         $this->load->view('template/layout_right_menu', $this->data);
     }
-    
+
     function worker_add()
     {
         if (!$this->m_custom->check_is_any_admin(66))
@@ -1376,7 +1622,7 @@ class Admin extends CI_Controller
             $this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'));
             $this->form_validation->set_rules('phone', $this->lang->line('create_user_validation_phone_label'), 'required|valid_contact_number');
             $this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'trim|required|valid_email|is_unique[' . $tables['users'] . '.email]');
-            $this->form_validation->set_rules('username', $this->lang->line('create_user_validation_username_label'), 'trim|required|is_unique[' . $tables['users'] . '.username]'); 
+            $this->form_validation->set_rules('username', $this->lang->line('create_user_validation_username_label'), 'trim|required|is_unique[' . $tables['users'] . '.username]');
             $this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']');
             //$this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
             //$this->form_validation->set_rules('password_confirm', $this->lang->line('create_user_validation_password_confirm_label'), 'required');
@@ -1396,7 +1642,7 @@ class Admin extends CI_Controller
                     $group_ids = array(
                         $this->group_id_worker
                     );
-                    
+
                     $new_id = $this->ion_auth->register($username, $password, $email, $additional_data, $group_ids);
                     if ($new_id)
                     {
@@ -1480,11 +1726,11 @@ class Admin extends CI_Controller
 //            'type' => 'password',
 //            'value' => $this->form_validation->set_value('password_confirm'),
 //        );
-        
+
         $this->data['page_path_name'] = 'admin/worker_add';
         $this->load->view('template/layout_right_menu', $this->data);
     }
-    
+
     function worker_edit($edit_id)
     {
         if (!$this->m_custom->check_is_any_admin(66))
@@ -1496,6 +1742,11 @@ class Admin extends CI_Controller
         $login_id = $this->login_id;
         $login_type = $this->login_type;
         $result = $this->m_custom->getUser($edit_id, $this->group_id_worker);
+
+        if (empty($result))
+        {
+            redirect('/', 'refresh');
+        }
 
         if (isset($_POST) && !empty($_POST))
         {
@@ -1517,7 +1768,7 @@ class Admin extends CI_Controller
             $this->form_validation->set_rules('username', $this->lang->line('create_user_validation_username_label'), 'trim|required|is_unique_edit[' . $tables['users'] . '.username.' . $edit_id . ']');
             $this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'trim|required|valid_email|is_unique_edit[' . $tables['users'] . '.email.' . $edit_id . ']');
             $this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']');
-            
+
             if ($this->input->post('button_action') == "save")
             {
                 if ($this->form_validation->run() === TRUE)
@@ -1530,7 +1781,7 @@ class Admin extends CI_Controller
                         'username' => $username,
                         'email' => $email,
                     );
-                    
+
                     $admin_role_selected = array();
                     $post_admin_role = $this->input->post('admin_role');
                     if (!empty($post_admin_role))
@@ -1546,7 +1797,7 @@ class Admin extends CI_Controller
                         if ($password_old != $password)
                         {
                             if ($this->ion_auth->change_password_other_user($edit_id, $password_old, $password))
-                            {   
+                            {
                                 $message_info = add_message_info($message_info, $username . ' password success update.');
                             }
                             else
@@ -1642,11 +1893,11 @@ class Admin extends CI_Controller
 
         $this->data['admin_role_current'] = empty($result) ? array() : $this->m_custom->many_get_childlist('admin_role', $result['id']);
         $this->data['admin_role'] = $this->m_custom->get_static_option_array('admin_role', NULL, NULL);
-        
+
         $this->data['page_path_name'] = 'admin/worker_edit';
         $this->load->view('template/layout_right_menu', $this->data);
     }
-    
+
     function _get_csrf_nonce()
     {
         $this->load->helper('string');
