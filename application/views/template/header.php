@@ -108,49 +108,47 @@
                             </center>
                             <hr/>
                             <div style='font-size: 20px; margin: 0px 0px 20px 0px; '>Explore Keppo Malaysia for <span style="color: #0185c6">FREE!</span></div>
-                            
                             <form action="<?php echo base_url() . 'user/login'; ?>" method="post" accept-charset="utf-8" id="general_form_login">
-                                <?php
-                                $user_login = base_url() . 'user/login';
-                                $user_register = base_url() . 'user/register';
-                                $user_retrieve_pass = base_url() . 'user/retrieve-password';
-                                $merchant_login = base_url() . 'merchant/login';
-                                $merchant_register = base_url() . 'merchant/register';
-                                $merchant_retrieve_pass = base_url() . 'merchant/retrieve-password';
-                                $identity = array('name' => 'identity',
-                                    'id' => 'identity',
-                                    'type' => 'text',
-                                );
-                                $password = array('name' => 'password',
-                                    'id' => 'password',
-                                    'type' => 'password',
-                                );
-                                ?>
-                                <div id='login-form'>
-                                    <div id='login-form-each'>
-                                        <div id='login-form-each-label'>E-mail / Username</div>
-                                        <div id='login-form-each-input'><?php echo form_input($identity); ?></div>
-                                    </div>
-                                    <div id='login-form-each'>
-                                        <div id='login-form-each-label'>Password</div>
-                                        <div id='login-form-each-input'><?php echo form_input($password); ?></div>
-                                    </div>
-                                    <div id='float-fix'></div>
-                                    <div id='login-form-forgot-password' style="float:left">
-                                        <a href="<?php echo $user_retrieve_pass; ?>">Forget Password?</a><br/><br/>
-                                        <input type="submit" value="User Login" onclick="myfunction('<?php echo $user_login; ?>')"/><br/><br/>
-                                        <a href="<?php echo $user_register; ?>">User Register</a>
-                                    </div>
-                                    <div id='login-form-forgot-password' style="float:right">
-                                        <a href="<?php echo $merchant_retrieve_pass; ?>">Forget Password?</a><br/><br/>
-                                        <input type="submit" value="Merchant Login" onclick="myfunction('<?php echo $merchant_login; ?>')"/><br/><br/>
-                                        <a href="<?php echo $merchant_register; ?>">Merchant Register</a>
-                                    </div>
-                                    <div id='float-fix'></div>                                         
-                                    
+                            <?php
+                            $user_login = base_url() . 'user/login';
+                            $user_register = base_url() . 'user/register';
+                            $user_retrieve_pass = base_url() . 'user/retrieve-password';
+                            $merchant_login = base_url() . 'merchant/login';
+                            $merchant_register = base_url() . 'merchant/register';
+                            $merchant_retrieve_pass = base_url() . 'merchant/retrieve-password';
+                            $identity = array('name' => 'identity',
+                                'id' => 'identity',
+                                'type' => 'text',
+                            );
+                            $password = array('name' => 'password',
+                                'id' => 'password',
+                                'type' => 'password',
+                            );
+                            ?>
+                            <div id='login-form'>
+                                <div id='login-form-each'>
+                                    <div id='login-form-each-label'>E-mail / Username</div>
+                                    <div id='login-form-each-input'><?php echo form_input($identity); ?></div>
                                 </div>
-                                <?php echo form_close(); ?>
-                </div>
+                                <div id='login-form-each'>
+                                    <div id='login-form-each-label'>Password</div>
+                                    <div id='login-form-each-input'><?php echo form_input($password); ?></div>
+                                </div>
+                                <div id='float-fix'></div>
+                                <div id='login-form-forgot-password' style="float:left">
+                                    <a href="<?php echo $user_retrieve_pass; ?>">Forget Password?</a><br/><br/>
+                                    <input type="submit" value="User Login" onclick="myfunction('<?php echo $user_login; ?>')"/><br/><br/>
+                                    <a href="<?php echo $user_register; ?>">User Register</a>
+                                </div>
+                                <div id='login-form-forgot-password' style="float:right">
+                                    <a href="<?php echo $merchant_retrieve_pass; ?>">Forget Password?</a><br/><br/>
+                                    <input type="submit" value="Merchant Login" onclick="myfunction('<?php echo $merchant_login; ?>')"/><br/><br/>
+                                    <a href="<?php echo $merchant_register; ?>">Merchant Register</a>
+                                </div>
+                                <div id='float-fix'></div>
+                            </div>
+                            <?php echo form_close(); ?>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -274,7 +272,7 @@
                                     </li>
                                     <li>
                                         <a href='<?php echo base_url('admin/logout') ?>'>
-                                            <i class='fa fa-sign-out header-top-bar-navigation-icon'></i>Logout
+                                            <i class='fa fa-sign-out header-top-bar-navigation-icon'></i> Logout
                                         </a>
                                     </li>
                                     <?php
@@ -426,22 +424,22 @@
                 <div id='header-navigation-bar'>
                     <div id='header-navigation-bar-left'>
                         <ul>
-                            <li <?php if($header_fetch_class == 'home'){ echo "class='header-menu-active'"; } ?>>
+                            <li <?php if($header_fetch_class == 'home'){ echo "class='header-navigation-bar-active'"; } ?>>
                                 <a href='<?php echo base_url('home') ?>'>
                                     <i class="fa fa-home header-navigation-bar-left-icon"></i> Home
                                 </a>
                             </li>
-                            <li <?php if($header_fetch_class == 'categories'){ echo "class='header-menu-active'"; } ?>>
+                            <li <?php if($header_fetch_class == 'categories'){ echo "class='header-navigation-bar-active'"; } ?>>
                                 <a href='<?php echo base_url('categories') ?>'>
                                     <i class="fa fa-th-large header-navigation-bar-left-icon"></i> Categories
                                 </a>
                             </li>
-                            <li <?php if($header_fetch_method == 'hotdeal_list' || $header_uri_segment4 == 'hot'){ echo "class='header-menu-active'"; } ?>>
+                            <li <?php if($header_fetch_method == 'hotdeal_list' || $header_uri_segment4 == 'hot'){ echo "class='header-navigation-bar-active'"; } ?>>
                                 <a href='<?php echo base_url('all/hotdeal-list/26') ?>'>
                                     <i class="fa fa-fire header-navigation-bar-left-icon"></i> Hot Deal
                                 </a>
                             </li>
-                            <li <?php if($header_fetch_method == 'promotion_list' || $header_uri_segment4 == 'pro'){ echo "class='header-menu-active'"; } ?>>
+                            <li <?php if($header_fetch_method == 'promotion_list' || $header_uri_segment4 == 'pro'){ echo "class='header-navigation-bar-active'"; } ?>>
                                 <a href="<?php echo base_url('all/promotion-list/26') ?>">
                                     <i class="fa fa-gift header-navigation-bar-left-icon"></i> Redemption
                                 </a>
@@ -450,12 +448,12 @@
                     </div>
                     <div id='header-navigation-bar-right'>
                         <ul>
-                            <li <?php if($header_fetch_class == 'blogger'){ echo "class='header-menu-active'"; } ?>>
+                            <li <?php if($header_fetch_class == 'blogger'){ echo "class='header-navigation-bar-active'"; } ?>>
                                 <a href='<?php echo base_url('blogger') ?>'>
                                     <i class="fa fa-pencil header-navigation-bar-left-icon"></i> Blogger
                                 </a>
                             </li>
-                            <li <?php if($header_fetch_class == 'photographer'){ echo "class='header-menu-active'"; } ?>>
+                            <li <?php if($header_fetch_class == 'photographer'){ echo "class='header-navigation-bar-active'"; } ?>>
                                 <a href='<?php echo base_url('photographer') ?>'>
                                     <i class="fa fa-camera header-navigation-bar-left-icon"></i> Photographer
                                 </a>
