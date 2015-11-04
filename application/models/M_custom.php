@@ -167,13 +167,39 @@ class M_custom extends CI_Model
         return $have_role;
     }
 
-    public function check_is_any_admin()
+    public function check_worker_role($check_worker_role = NULL)
     {
+        $have_role = 0;
+        if (check_correct_login_type($this->config->item('group_id_admin')))
+        {
+            $have_role = 1;
+        }
+        else if (check_correct_login_type($this->config->item('group_id_worker')))
+        {
+            if (!IsNullOrEmptyString($check_worker_role))
+            {
+                $login_id = $this->ion_auth->user()->row()->id;
+                $query = $this->db->get_where('many_to_many', array('many_type' => 'admin_role', 'many_parent_id' => $login_id, 'many_child_id' => $check_worker_role));
+                if ($query->num_rows() > 0)
+                {
+                    $have_role = 1;
+                }
+            }
+        }
+        return $have_role;
+    }
+
+    public function check_is_any_admin($check_worker_role = NULL)
+    {
+        $have_role = 0;
         if (check_correct_login_type($this->config->item('group_id_admin')) || check_correct_login_type($this->config->item('group_id_worker')))
         {
-            return TRUE;
+            $have_role = 1;
         }
-        return FALSE;
+        if(!IsNullOrEmptyString($check_worker_role)){
+            $have_role = $this->m_custom->check_worker_role($check_worker_role);
+        }
+        return $have_role;
     }
 
     public function check_is_any_merchant()
@@ -1023,10 +1049,50 @@ class M_custom extends CI_Model
         }
     }
 
-    function getUser($user_id)
+    function getAllUser(){
+        $this->db->order_by('first_name');
+        $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_user')));
+        $result = $query->result_array();
+        return $result;
+    }
+    
+    function getAllMerchant(){
+        $this->db->order_by('company');
+        $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant')));
+        $result = $query->result_array();
+        return $result;
+    }
+    
+    function getAllWorker(){
+        $this->db->order_by('first_name');
+        $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_worker')));
+        $result = $query->result_array();
+        return $result;
+    }
+    
+    function getUser($user_id, $main_group_id = NULL)
     {
+        if (!IsNullOrEmptyString($main_group_id))
+        {
+            $this->db->where('main_group_id', $main_group_id);
+        }
+
         $query = $this->db->get_where('users', array('id' => $user_id));
         return $query->row_array();
+    }
+
+    function getUserLoginInfo($user_id)
+    {
+        $this->db->select('id, username, email, password_visible, main_group_id, us_register_type, us_fb_id, slug, hide_flag');
+        $query = $this->db->get_where('users', array('id' => $user_id));
+        if ($query->num_rows() == 1)
+        {
+            return $query->row_array();
+        }
+        else
+        {
+            return FALSE;
+        }
     }
 
     function getUserInfo($user_id)
@@ -1196,7 +1262,7 @@ class M_custom extends CI_Model
     }
 
     //To get the childlist id from many table by the type and parent id
-    public function many_get_childlist_detail($the_type, $parent_id, $child_table, $child_wanted_column = NULL, $want_string = 0)
+    public function many_get_childlist_detail($the_type, $parent_id, $child_table, $child_wanted_column = NULL, $want_string = 0, $separator = ',')
     {        
         $query = $this->db->get_where('many_to_many', array('many_type' => $the_type, 'many_parent_id' => $parent_id));        
         $return = array();
@@ -1219,7 +1285,7 @@ class M_custom extends CI_Model
             }
         }
         if($want_string == 1 && $child_wanted_column != NULL){
-            $return = arraylist_to_string($return);
+            $return = arraylist_to_string($return, $separator);
         }
         return $return;
     }

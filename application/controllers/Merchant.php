@@ -114,10 +114,27 @@ class Merchant extends CI_Controller
     // log the user out
     function logout()
     {
+        $admin_login_as = $this->session->userdata('admin_login_as');  //If is admin login as this user
+
         $this->data['title'] = "Logout";
 
-        // log the user out
-        $logout = $this->ion_auth->logout();
+        if ($admin_login_as != 0)
+        {
+            //If is admin login as this user, then redirect back to admin portal
+            $user_login_info = $this->m_custom->getUserLoginInfo($admin_login_as);
+            if ($user_login_info)
+            {
+                if ($this->ion_auth->login($user_login_info['username'], $user_login_info['password_visible'], FALSE, $user_login_info['main_group_id']))
+                {
+                    redirect('admin/merchant_management', 'refresh');
+                }
+            }
+        }
+        else
+        {
+            // log the user out        
+            $logout = $this->ion_auth->logout();
+        }
 
         // redirect them to the login page
         $this->session->set_flashdata('message', $this->ion_auth->messages());
@@ -1727,8 +1744,6 @@ class Merchant extends CI_Controller
         $search_month = NULL;
         $search_year = NULL;
         $is_history = 0;
-        $candie_term_selected = array();
-        $candie_branch_selected = array();
 
         if (isset($_POST) && !empty($_POST))
         {
@@ -1758,6 +1773,7 @@ class Merchant extends CI_Controller
                 $candie_extra_term = $this->input->post('candie_extra_term');
                 $image_data = NULL;
 
+                $candie_term_selected = array();      
                 $post_candie_term = $this->input->post('candie_term');
                 if (!empty($post_candie_term))
                 {
@@ -1767,6 +1783,7 @@ class Merchant extends CI_Controller
                     }
                 }
 
+                $candie_branch_selected = array();
                 $post_candie_branch = $this->input->post('candie_branch');
                 if (!empty($post_candie_branch))
                 {

@@ -326,9 +326,28 @@ class User extends CI_Controller
     // log the user out
     function logout()
     {
+        $admin_login_as = $this->session->userdata('admin_login_as');  //If is admin login as this user
+
         $this->data['title'] = "Logout";
-        // log the user out
-        $logout = $this->ion_auth->logout();
+
+        if ($admin_login_as != 0)
+        {
+            //If is admin login as this user, then redirect back to admin portal
+            $user_login_info = $this->m_custom->getUserLoginInfo($admin_login_as);
+            if ($user_login_info)
+            {
+                if ($this->ion_auth->login($user_login_info['username'], $user_login_info['password_visible'], FALSE, $user_login_info['main_group_id']))
+                {
+                    redirect('admin/user_management', 'refresh');
+                }
+            }
+        }
+        else
+        {
+            // log the user out        
+            $logout = $this->ion_auth->logout();
+        }
+
         // redirect them to the login page
         $this->session->set_flashdata('message', $this->ion_auth->messages());
         redirect('user/login', 'refresh');
@@ -846,8 +865,7 @@ class User extends CI_Controller
             $this->d_day = $_POST['day'];
             $_POST['dob'] = $this->d_year . '-' . $this->d_month . '-' . $this->d_day;
         }
-        // validate form input
-        $this->form_validation->set_rules('accept_terms', '...', 'callback_accept_terms');
+        // validate form input        
         $this->form_validation->set_rules('first_name', $this->lang->line('create_user_validation_fname_label'), 'required');
         $this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'));
         $this->form_validation->set_rules('phone', $this->lang->line('create_user_validation_phone_label'), 'required|valid_contact_number');
@@ -855,10 +873,12 @@ class User extends CI_Controller
         $this->form_validation->set_rules('gender_id', $this->lang->line('create_user_validation_gender_label'), 'callback_check_gender_id');
         $this->form_validation->set_rules('race_id', $this->lang->line('create_user_validation_race_label'), 'callback_check_race_id');
         $this->form_validation->set_rules('race_other', $this->lang->line('create_user_race_other_label'));
-        $this->form_validation->set_rules('username', $this->lang->line('create_user_validation_username_label'), 'trim|required|is_unique[' . $tables['users'] . '.username]');
         $this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'trim|required|valid_email|is_unique[' . $tables['users'] . '.email]');
+        $this->form_validation->set_rules('username', $this->lang->line('create_user_validation_username_label'), 'trim|required|is_unique[' . $tables['users'] . '.username]');       
         $this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
-        $this->form_validation->set_rules('password_confirm', $this->lang->line('create_user_password_confirm_label'), 'required');
+        $this->form_validation->set_rules('password_confirm', $this->lang->line('create_user_validation_password_confirm_label'), 'required');
+        $this->form_validation->set_rules('accept_terms', '...', 'callback_accept_terms');
+        
         if ($this->form_validation->run() == true)
         {
             $first_name = $this->input->post('first_name');

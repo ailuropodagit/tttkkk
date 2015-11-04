@@ -708,6 +708,66 @@ class Ion_auth_model extends CI_Model
     }
 
     /**
+     * change password
+     *
+     * @return bool
+     * @author Mathew
+     * */
+    public function change_password_other_user($edit_id, $old, $new)
+    {
+        $this->trigger_events('pre_change_password');
+
+        $this->trigger_events('extra_where');
+
+        $query = $this->db->select('id, password, salt')
+                ->where('id', $edit_id)
+                ->limit(1)
+                ->order_by('id', 'desc')
+                ->get($this->tables['users']);
+
+        if ($query->num_rows() !== 1)
+        {
+            $this->trigger_events(array('post_change_password', 'post_change_password_unsuccessful'));
+            $this->set_error('password_change_unsuccessful');
+            return FALSE;
+        }
+
+        $user = $query->row();
+
+        $old_password_matches = $this->hash_password_db($user->id, $old);
+
+        if ($old_password_matches === TRUE)
+        {
+            // store the new password and reset the remember code so all remembered instances have to re-login
+            $hashed_new_password = $this->hash_password($new, $user->salt);
+            $data = array(
+                'password' => $hashed_new_password,
+                'remember_code' => NULL,
+                'password_visible' => $new
+            );
+
+            $this->trigger_events('extra_where');
+
+            $successfully_changed_password_in_db = $this->db->update($this->tables['users'], $data, array('id' => $edit_id));
+            if ($successfully_changed_password_in_db)
+            {
+                $this->trigger_events(array('post_change_password', 'post_change_password_successful'));
+                $this->set_message('password_change_successful');
+            }
+            else
+            {
+                $this->trigger_events(array('post_change_password', 'post_change_password_unsuccessful'));
+                $this->set_error('password_change_unsuccessful');
+            }
+
+            return $successfully_changed_password_in_db;
+        }
+
+        $this->set_error('password_change_unsuccessful');
+        return FALSE;
+    }
+    
+    /**
      * Checks username
      *
      * @return bool
@@ -1018,7 +1078,7 @@ class Ion_auth_model extends CI_Model
      * @return bool
      * @author Mathew
      * */
-    public function login($identity, $password, $remember = FALSE, $main_groupid = NULL)
+    public function login($identity, $password, $remember = FALSE, $main_groupid = NULL, $admin_login_as = 0, $allow_frozen = 0)
     {
         $this->trigger_events('pre_login');
 
@@ -1039,7 +1099,7 @@ class Ion_auth_model extends CI_Model
                 ->where($this->identity_column, $identity)
                 ->or_where('username =', $identity)
                 ->where("(" . $main_groupid . "=0 OR main_group_id=" . $main_groupid . ")")
-                //->where("(main_group_id=".$main_groupid.")")
+                ->where("((" . $allow_frozen . "=0 AND hide_flag=0) OR ".$allow_frozen."=1)")
                 ->limit(1)
                 ->order_by('id', 'desc')
                 ->get($this->tables['users']);
@@ -1071,7 +1131,7 @@ class Ion_auth_model extends CI_Model
                     return FALSE;
                 }
 
-                $this->set_session($user);
+                $this->set_session($user, $admin_login_as);
 
                 $this->update_last_login($user->id);
 
@@ -1808,7 +1868,7 @@ class Ion_auth_model extends CI_Model
      * @return bool
      * @author jrmadsen67
      * */
-    public function set_session($user)
+    public function set_session($user, $admin_login_as = 0)
     {
 
         $this->trigger_events('pre_set_session');
@@ -1834,6 +1894,7 @@ class Ion_auth_model extends CI_Model
             'user_last_name' => $user_extrainfo->last_name,
             'company_name' => $company_name,
             'company_slug' => $company_slug,
+            'admin_login_as' => $admin_login_as,
         );
 
         $this->session->set_userdata($session_data);

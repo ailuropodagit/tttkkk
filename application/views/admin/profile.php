@@ -91,7 +91,6 @@ if(isset($message))
                     <div id='profile-info-form-each-input'><?php echo form_input($username); ?></div>
                 </div>          
             </div>
-            <?php echo form_hidden('id', $result['category_id']); ?>
             <?php echo form_hidden($csrf); ?>
             <div id='profile-info-form-submit'>
                 <button name="button_action" type="submit" value="confirm">Confirm</button>
