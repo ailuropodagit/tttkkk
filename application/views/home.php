@@ -5,7 +5,7 @@
 <script type='text/javascript' src='<?php echo base_url('js/banner-row1-slider/camera.min.js') ?>'></script> 
 
 <script>
-    $(function(){
+    $(function () {
         $('#camera_wrap_1').camera({
             skins: 'camera_violet_skin',
             loader: 'none',
@@ -27,8 +27,72 @@
 <div id='wrapper'>
     <div id='home'>
         <div id='home-row1'>
-            <div id='home-row1-categories-navigtaion'>
-                123
+            <div id='home-row1-categories-navigation'>
+                <ul>
+                    <?php
+                    $result_array_main_category = $query_main_category->result_array();
+                    foreach($result_array_main_category as $main_category)
+                    {
+                        $main_category_id = $main_category['category_id'];
+                        $main_category_label = $main_category['category_label'];
+                        $where_sub_category = array('main_category_id' => $main_category_id);
+                        $query_sub_category = $this->albert_model->read_sub_category_with_merchant($where_sub_category);
+                        $num_rows_sub_category = $query_sub_category->num_rows();
+                        ?>
+                        <li <?php if($num_rows_sub_category != 0){ echo "class='has-sub'"; } ?>>
+                            <a href="#"><?php echo $main_category_label ?></a>
+                            <?php
+                            if ($num_rows_sub_category) 
+                            {
+                                $result_array_sub_category = $query_sub_category->result_array();
+                                ?>
+                                <ul>
+                                    <li>
+                                        <?php
+                                        foreach($result_array_sub_category as $sub_category)
+                                        {
+                                            $sub_category_id = $sub_category['category_id'];
+                                            $sub_category_label = $sub_category['category_label'];
+                                            ?>
+                                            <div id="home-row1-categories-navigation-box">
+                                                <div id="home-row1-categories-navigation-box-title">
+                                                    <?php echo $sub_category_label ?>
+                                                </div>
+                                                <?php
+                                                $where_user = array('me_sub_category_id' => $sub_category_id);
+                                                $query_user = $this->albert_model->read_user($where_user);
+                                                $result_array_user = $query_user->result_array();
+                                                ?>
+                                                <div id="home-row1-categories-navigation-box-merchant">
+                                                    <?php
+                                                    foreach($result_array_user as $user)
+                                                    {
+                                                        $merchant_company = $user['company'];
+                                                        $merchant_slug = $user['slug'];
+                                                        ?>
+                                                        <div id='home-row1-categories-navigation-box-merchant-each'>
+                                                            <a href='<?php echo base_url() ?>all/merchant_dashboard/<?php echo $merchant_slug ?>'>
+                                                                <?php echo $merchant_company ?>
+                                                            </a>
+                                                        </div>
+                                                        <?php
+                                                    }
+                                                    ?>
+                                                </div>
+                                            </div>
+                                            <?php
+                                        }
+                                        ?>
+                                    </li>
+                                </ul>
+                                <?php
+                            }
+                            ?>
+                        </li>
+                        <?php
+                    }
+                    ?>
+                </ul>
             </div>
             <div id='home-row1-banner-main'>
                 <div class='fluid_container'>

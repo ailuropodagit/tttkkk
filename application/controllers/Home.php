@@ -10,8 +10,8 @@ class Home extends CI_Controller
     
     public function index($main_category_id = 0)
     {
-        //QUERY CATEGORY  
-        $data['query_category'] = $this->albert_model->read_main_category();
+        //QUERY MAIN CATEGORY  
+        $data['query_main_category'] = $this->albert_model->read_main_category();
         //QUERY MERCHANT 
         $where_read_merchant = array('me_category_id'=>$main_category_id);
         $data['query_merchant'] = $this->albert_model->read_merchant($where_read_merchant);
