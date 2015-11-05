@@ -62,6 +62,7 @@ class Albert_model extends CI_Model
         $this->db->from('category');
         $this->db->where('main_category_id', NULL);
         $this->db->where('hide_special !=', '1');
+        $this->db->order_by('category_label');
         $query = $this->db->get();
         //RETURN
         return $query;
@@ -74,12 +75,17 @@ class Albert_model extends CI_Model
         //QUERY
         $this->db->select('category_id, category_label');
         $this->db->from('category');
-        $this->db->where('main_category_id', !NULL);
+        $this->db->where('hide_special !=', '1');
         //WHERE
         if(!empty($where))
         {
             $this->db->where($where);
         }
+        else
+        {
+            $this->db->where('main_category_id', !NULL);
+        }
+        $this->db->order_by('category_label');
         $query = $this->db->get();
         //RETURN
         return $query;
