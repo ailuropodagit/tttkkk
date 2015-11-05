@@ -791,4 +791,28 @@ class M_merchant extends CI_Model
         }
     }
 
+    public function transaction_history_update($get_from_table_id, $update_amount_plus = 0, $update_amount_minus = 0, $get_from_table = 'merchant_topup')
+    {
+        $search_data = array(
+            'get_from_table' => $get_from_table,
+            'get_from_table_id' => $get_from_table_id,
+        );
+        $query = $this->db->get_where('transaction_history', $search_data);
+        if ($query->num_rows() == 1)
+        {
+            $table_result = $query->row_array();
+            $table_id = $table_result['trans_history_id'];
+            $the_data = array(
+                'amount_plus' => $update_amount_plus,
+                'amount_minus' => $update_amount_minus,
+            );
+            $this->db->where('trans_history_id', $table_id);
+            if ($this->db->update('transaction_history', $the_data))
+            {
+                return TRUE;
+            }
+        }
+        return FALSE;
+    }
+
 }

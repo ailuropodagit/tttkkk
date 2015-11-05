@@ -23,7 +23,7 @@ if(isset($message))
 ?>
 
 <div id="profile">
-    <h1>Merchant Top Up Add</h1>
+    <h1><?php echo $title; ?></h1>
     <div id='profile-content'>              
         <div id='profile-info'> 
             <?php echo form_open(uri_string()); ?>
@@ -52,8 +52,11 @@ if(isset($message))
                     <div id='profile-info-form-each-input'><?php echo form_textarea($topup_remark); ?></div>
                 </div>
             </div>
-            <?php 
-                echo form_hidden('id', $merchant_id); 
+            <?php
+            if (isset($edit_id))
+            {
+                echo form_hidden('id', $edit_id);
+            }
             ?>
             <div id='profile-info-form-submit'>              
                 <button name="button_action" type="submit" value="back">Back</button>
