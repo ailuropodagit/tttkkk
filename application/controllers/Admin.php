@@ -1556,29 +1556,160 @@ class Admin extends CI_Controller
         }
     }
 
-    //to do todo
-    function merchant_topup($edit_id)
+    function merchant_topup($merchant_id)
+    {
+        if (!$this->m_custom->check_is_any_admin(67))
+        {
+            redirect('/', 'refresh');
+        }
+        
+        $result = $this->m_custom->getUser($merchant_id, $this->group_id_merchant);
+        if (empty($result))
+        {
+            redirect('/', 'refresh');
+        }
+        
+        $this->data['merchant_id'] = $merchant_id;
+        $topup_list = $this->m_custom->getAllTopup($merchant_id); 
+        $this->data['the_result'] = $topup_list;
+        
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+        $this->data['page_path_name'] = 'admin/merchant_topup';
+        $this->load->view('template/layout_right_menu', $this->data);
+    }
+
+    function merchant_topup_add($merchant_id)
     {
         if (!$this->m_custom->check_is_any_admin(67))
         {
             redirect('/', 'refresh');
         }
 
-        $message_info = '';
-        $login_id = $this->login_id;
-        $login_type = $this->login_type;
-        $result = $this->m_custom->getUser($edit_id, $this->group_id_merchant);
-
+        $result = $this->m_custom->getUser($merchant_id, $this->group_id_merchant);
         if (empty($result))
         {
             redirect('/', 'refresh');
         }
+        
+        $message_info = '';
+        $login_id = $this->login_id;
+        $login_type = $this->login_type;
+        $merchant_name = $this->m_custom->display_users($merchant_id);
+                
+        if (isset($_POST) && !empty($_POST))
+        {
+            $can_redirect_to = 0;
+            $topup_amount = $this->input->post('topup_amount');
+            $topup_bank = $this->input->post('topup_bank');
+            $topup_trans_date = validateDate($this->input->post('topup_trans_date'));
+            $topup_trans_no = $this->input->post('topup_trans_no');
+            $topup_remark = $this->input->post('topup_remark');
 
+            // validate form input
+            $this->form_validation->set_rules('topup_amount', 'Amount (RM)', 'required|numeric');
+            $this->form_validation->set_rules('topup_bank', 'Transaction Bank');
+            $this->form_validation->set_rules('topup_trans_date', 'Transaction Date');
+            $this->form_validation->set_rules('topup_trans_no', 'Transaction No');
+            $this->form_validation->set_rules('topup_remark', 'Transaction Remark');
+            
+            if ($this->input->post('button_action') == "save")
+            {
+                if ($this->form_validation->run() === TRUE)
+                {
+                    $data = array(
+                        'merchant_id' => $merchant_id,
+                        'admin_id' => $login_id,
+                        'topup_amount' => $topup_amount,
+                        'topup_bank' => $topup_bank,
+                        'topup_trans_date' => $topup_trans_date,
+                        'topup_trans_no' => $topup_trans_no,
+                        'topup_remark' => $topup_remark,
+                    );
+
+                    $new_id = $this->m_custom->get_id_after_insert('merchant_topup', $data);
+                    if ($new_id)
+                    {
+                        $this->m_merchant->transaction_history_insert($merchant_id, 19, $new_id, 'merchant_topup', 0, $topup_amount);
+                        $this->m_merchant->merchant_balance_update($merchant_id);
+                        $this->m_custom->insert_row_log('merchant_topup', $new_id, $login_id, $login_type);
+                        $message_info = add_message_info($message_info, $merchant_name . ' success topup.');
+                        $can_redirect_to = 2;
+                    }
+                    else
+                    {
+                        $message_info = add_message_info($message_info, $this->ion_auth->errors());
+                        $can_redirect_to = 1;
+                    }
+                }
+            }
+            if ($this->input->post('button_action') == "back")
+            {
+                $can_redirect_to = 2;
+            }
+
+            direct_go:
+            if ($message_info != NULL)
+            {
+                $this->session->set_flashdata('message', $message_info);
+            }
+            if ($can_redirect_to == 1)
+            {
+                redirect(uri_string(), 'refresh');
+            }
+            elseif ($can_redirect_to == 2)
+            {
+                redirect('admin/merchant_topup/' . $merchant_id, 'refresh');
+            }
+            elseif ($can_redirect_to == 3)
+            {
+                redirect('admin/merchant_management', 'refresh');
+            }
+        }
+
+        // set the flash data error message if there is one
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-        $this->data['page_path_name'] = 'admin/merchant_topup';
+
+        $this->data['topup_amount'] = array(
+            'name' => 'topup_amount',
+            'id' => 'topup_amount',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('topup_amount'),
+        );
+
+        $this->data['topup_bank'] = array(
+            'name' => 'topup_bank',
+            'id' => 'topup_bank',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('topup_bank'),
+        );
+        
+        $this->data['topup_trans_date'] = array(
+            'name' => 'topup_trans_date',
+            'id' => 'topup_trans_date',
+            'type' => 'text',
+            'readonly ' => 'true',
+            'value' => $this->form_validation->set_value('topup_trans_date'),
+        );
+        
+        $this->data['topup_trans_no'] = array(
+            'name' => 'topup_trans_no',
+            'id' => 'topup_trans_no',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('topup_trans_no'),
+        );
+        
+        $this->data['topup_remark'] = array(
+            'name' => 'topup_remark',
+            'id' => 'topup_remark',
+            'value' => $this->form_validation->set_value('topup_remark'),
+        );
+        
+        $this->data['merchant_id'] = $merchant_id;
+        
+        $this->data['page_path_name'] = 'admin/merchant_topup_add';
         $this->load->view('template/layout_right_menu', $this->data);
     }
-
+    
     function worker_management()
     {
         if (!$this->m_custom->check_is_any_admin(66))
