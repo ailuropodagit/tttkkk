@@ -1,11 +1,15 @@
 <script type="text/javascript" src="<?php echo base_url() ?>js/datatables/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>js/datatables/js/formatted-numbers.js"></script>
 <?php echo link_tag('js/datatables/css/jquery.dataTables.min.css') ?>
 
 <script type="text/javascript">
     $(document).ready(function () {
         $('#myTable').DataTable({
             "pageLength": 25,
-            "order": []
+            "order": [],
+            'columnDefs': [
+            { type: 'formatted-num', targets: [10,11] }
+            ]
         });
     });
 </script>
@@ -37,7 +41,8 @@ if (isset($message))
                         <th>Address</th>
                         <th>Postcode</th>
                         <th>State</th>
-                        <th>Phone</th>               
+                        <th>Phone</th>   
+                        <th>Balance</th>
                         <th>Frozen Already</th>   
                         <th>Actions</th>
                         <th>Special Actions</th>
@@ -49,8 +54,10 @@ if (isset($message))
                     {
                         $main_category_text = $this->m_custom->display_category($row['me_category_id']);
                         $state_text = $this->m_custom->display_static_option($row['me_state_id']);
+                        $merchant_balance_text = $this->m_merchant->merchant_balance_color($row['id'], 1);
                         $remove_row = $row['hide_flag'] == 1 ? 'Frozen' : '';
                         $url_edit = base_url() . "admin/merchant_edit/" . $row['id'];
+                        $url_topup = base_url() . "admin/merchant_topup/" . $row['id'];
                         $url_dashboard = base_url() . "all/merchant_dashboard/" . $row['slug'];
                         $url_special_action = base_url() . "admin/merchant_special_action";
                         echo '<tr>';
@@ -67,9 +74,13 @@ if (isset($message))
                         echo "<td>" . $row['postcode'] . "</td>";
                         echo "<td>" . $state_text . "</td>";
                         echo "<td>" . $row['phone'] . "</td>";
+                        echo "<td style='text-align:right'>" . $merchant_balance_text . "</td>";
                         echo "<td>" . $remove_row . "</td>";
                         echo "<td>";
-                        echo "<a href='" . $url_edit . "' >Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";                        
+                        echo "<a href='" . $url_edit . "' >Edit</a>&nbsp;&nbsp;&nbsp;";      
+                        if($this->m_custom->check_worker_role(67)) {
+                        echo "<a href='" . $url_topup . "' >TopUp</a>";    
+                        }
                         echo "</td>";
                         echo "<td>";                       
                         echo form_open($url_special_action); 

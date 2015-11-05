@@ -124,7 +124,7 @@ if(isset($message))
             <div id='register-form-each-input'><?php echo form_dropdown($me_sub_category_id, $sub_category_list); ?></div>
         </div>
         <div id='register-form-each'>
-            <div id='register-form-each-label'>Contact Number</div>
+            <div id='register-form-each-label'><?php echo lang('create_merchant_phone_label', 'phone'); ?></div>
             <div id='register-form-each-input-contact-number'>+60 <?php echo form_input($phone); ?></div>
         </div>
         <div id='register-form-each'>

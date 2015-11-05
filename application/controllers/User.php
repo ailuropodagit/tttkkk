@@ -2324,9 +2324,10 @@ class User extends CI_Controller
                         $where_candie_balance = array('user_id' => $logged_user_id, 'month_id' => $current_month, 'year' => $current_year);
                         $query_candie_balance = $this->albert_model->read_candie_balance($where_candie_balance);
                         $num_rows_candie_balance = $query_candie_balance->num_rows();
-                        if ($num_rows_candie_balance > 0)
+
+                        if ($this->invite_friend_send_email($input_email, $logged_user_email))
                         {
-                            if ($this->invite_friend_send_email($input_email, $logged_user_email))
+                            if ($num_rows_candie_balance > 0)
                             {
                                 //UPDATE CANDIE BALANCE
                                 $where_candie_balance_invite_friend_count_increment = array('user_id' => $logged_user_id, 'month_id' => $current_month, 'year' => $current_year);
@@ -2336,46 +2337,34 @@ class User extends CI_Controller
                                     //INSERT FAIL
                                     $this->session->set_flashdata('message', 'Update fail for candie');
                                 }
-                                //INSERT USER_INVITE_FRIEND
-                                $data_user_invite_friend = array('user_id' => $logged_user_id, 'friend_email' => $input_email);
-                                $this->albert_model->insert_user_invite_friend($data_user_invite_friend);
-                                if ($this->db->affected_rows() == 0)
-                                {
-                                    //INSERT FAIL
-                                    $this->session->set_flashdata('message', 'Insert fail for invite friend');
-                                }
-                                //INSERT SUCCESS
-                                $this->session->set_flashdata('message', 'Invitation email sent');
-                                
-                                //GIVE USER CANDIE FOR THE FIRST 5 INVITATION MONTHLY
-                                $invitation_send_current_month = $query_candie_balance->row_array();
-                                $user_max_invitation_get_candie_per_month = $this->m_custom->web_setting_get('user_max_invitation_get_candie_per_month');
-                                if($invitation_send_current_month['invite_friend_count'] <= $user_max_invitation_get_candie_per_month){
-                                    $this->m_user->candie_history_insert(6, $invitation_send_current_month['balance_id'], 'candie_balance', 1);
-                                }
                             }
-                        }
-                        else
-                        {
-                            if ($this->invite_friend_send_email($input_email, $logged_user_email))
+                            else
                             {
-                                $data_candie_balance = array('user_id' => $logged_user_id, 'month_id' => $current_month, 'year' => $current_year, 'month_last_date' => displayDate(displayLastDay($year,$month_id),0,1));
-                                $this->albert_mode->insert_candie_balance($data_candie_balance);
+                                $data_candie_balance = array('user_id' => $logged_user_id, 'month_id' => $current_month, 'year' => $current_year, 'month_last_date' => displayDate(displayLastDay($current_year, $current_month), 0, 1));
+                                $this->albert_model->insert_candie_balance($data_candie_balance);
                                 if ($this->db->affected_rows() == 0)
                                 {
                                     //INSERT FAIL
                                     $this->session->set_flashdata('message', 'Insert fail for candie');
                                 }
-                                //INSERT USER_INVITE_FRIEND
-                                $data_user_invite_friend = array('user_id' => $logged_user_id, 'friend_email' => $input_email);
-                                $this->albert_model->insert_user_invite_friend($data_user_invite_friend);
-                                if ($this->db->affected_rows() == 0)
-                                {
-                                    //INSERT FAIL
-                                    $this->session->set_flashdata('message', 'Insert fail for invite friend');
-                                }
-                                //INSERT SUCCESS
-                                $this->session->set_flashdata('message', 'Invitation email sent');
+                            }
+                            //INSERT USER_INVITE_FRIEND
+                            $data_user_invite_friend = array('user_id' => $logged_user_id, 'friend_email' => $input_email);
+                            $this->albert_model->insert_user_invite_friend($data_user_invite_friend);
+                            if ($this->db->affected_rows() == 0)
+                            {
+                                //INSERT FAIL
+                                $this->session->set_flashdata('message', 'Insert fail for invite friend');
+                            }
+                            //INSERT SUCCESS
+                            $this->session->set_flashdata('message', 'Invitation email sent');
+
+                            //GIVE USER CANDIE FOR THE FIRST 5 INVITATION MONTHLY
+                            $invitation_send_current_month = $query_candie_balance->row_array();
+                            $user_max_invitation_get_candie_per_month = $this->m_custom->web_setting_get('user_max_invitation_get_candie_per_month');
+                            if ($invitation_send_current_month['invite_friend_count'] <= $user_max_invitation_get_candie_per_month)
+                            {
+                                $this->m_user->candie_history_insert(6, $invitation_send_current_month['balance_id'], 'candie_balance', 1);
                             }
                         }
                     }

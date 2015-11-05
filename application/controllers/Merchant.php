@@ -756,9 +756,9 @@ class Merchant extends CI_Controller
         $this->form_validation->set_rules('company', $this->lang->line('create_merchant_validation_company_label'), "trim|required|min_length[3]");
         $this->form_validation->set_rules('slug', $this->lang->line('create_merchant_validation_company_label'), 'trim|is_unique[' . $tables['users'] . '.slug]');      
         $this->form_validation->set_rules('address', $this->lang->line('create_merchant_validation_address_label'), 'required');
-        $this->form_validation->set_rules('postcode', 'Postcode', 'required|numeric');
+        $this->form_validation->set_rules('postcode', $this->lang->line('create_merchant_validation_postcode_label'), 'required|numeric');
         $this->form_validation->set_rules('me_state_id', $this->lang->line('create_merchant_validation_state_label'), 'callback_check_state_id');
-        $this->form_validation->set_rules('me_country', 'Country', 'required');
+        $this->form_validation->set_rules('me_country', $this->lang->line('create_merchant_validation_country_label'), 'required');
         $this->form_validation->set_rules('me_category_id', $this->lang->line('create_merchant_category_label'), 'callback_check_main_category');
         $this->form_validation->set_rules('me_sub_category_id', $this->lang->line('create_merchant_sub_category_label'), 'callback_check_sub_category');
         $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required|valid_contact_number');

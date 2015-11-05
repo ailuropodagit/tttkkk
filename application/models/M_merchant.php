@@ -410,6 +410,31 @@ class M_merchant extends CI_Model
         return number_format($current_balance, 2);
     }
 
+    public function merchant_balance_color($merchant_id, $hide_bracket = 0)
+    {
+        $merchant_balance = $this->m_merchant->merchant_check_balance($merchant_id);
+        $merchant_minimum_balance = $this->m_custom->web_setting_get('merchant_minimum_balance', 'set_decimal');
+        if ($merchant_balance < $merchant_minimum_balance)
+        {
+            $color = 'red';
+        }
+        else
+        {
+            $color = 'green';
+        }
+        
+        if ($hide_bracket == 1)
+        {
+            $merchant_balance_text = '<span style="color:' . $color . '" >RM ' . $merchant_balance . '</span>';
+        }
+        else
+        {
+            $merchant_balance_text = '<span style="color:' . $color . '" >(RM ' . $merchant_balance . ')</span>';
+        }
+
+        return $merchant_balance_text;
+    }
+
     //to do todo
     public function money_spend_on_list($merchant_id, $filter_type = NULL)
     {

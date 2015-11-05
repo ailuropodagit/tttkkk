@@ -40,6 +40,7 @@ if (isset($message))
                         <th>Age</th>
                         <th>Gender</th>
                         <th>Birthday</th>
+                        <th>Candie</th>
                         <th>Frozen Already</th>   
 <!--                        <th>Actions</th>-->
                         <th>Special Actions</th>
@@ -52,6 +53,7 @@ if (isset($message))
                         $race_text = $this->m_custom->display_static_option($row['us_race_id']);
                         $gender_text = $this->m_custom->display_static_option($row['us_gender_id']);
                         $birthday_text = displayDate($row['us_birthday']);
+                        $user_candie_text = $this->m_user->candie_check_balance($row['id']);
                         $remove_row = $row['hide_flag'] == 1 ? 'Frozen' : '';
                         $url_edit = base_url() . "admin/user_edit/" . $row['id'];
                         $url_dashboard = base_url() . "all/user_dashboard/" . $row['id'];
@@ -69,6 +71,7 @@ if (isset($message))
                         echo "<td>" . $row['us_age'] . "</td>";
                         echo "<td>" . $gender_text . "</td>";
                         echo "<td>" . $birthday_text . "</td>";
+                        echo "<td style='text-align:right'>" . $user_candie_text . "</td>";
                         echo "<td>" . $remove_row . "</td>";
 //                        echo "<td>";
 //                        echo "<a href='" . $url_edit . "' >Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";

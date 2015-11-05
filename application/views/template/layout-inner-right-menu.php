@@ -11,13 +11,7 @@
             $album_merchant = base_url() . 'all/album_merchant/' . generate_slug($this->session->userdata('company_name'));
             $album_redemption = base_url() . 'all/album_redemption/' . generate_slug($this->session->userdata('company_name'));
 
-            $merchant_balance = $this->m_merchant->merchant_check_balance($login_user_id);
-            $merchant_minimum_balance = $this->m_custom->web_setting_get('merchant_minimum_balance', 'set_decimal');
-            if($merchant_balance<$merchant_minimum_balance){
-                $merchant_balance_text = '<span style="color:red" >(RM '.$merchant_balance . ')</span>';
-            }else{
-                $merchant_balance_text = '<span style="color:green" >(RM '.$merchant_balance . ')</span>';
-            }
+            $merchant_balance_text = $this->m_merchant->merchant_balance_color($login_user_id);
             //FOLLOWER COUNT
             $follower_count = $this->albert_model->follower_count($login_user_id);
             
