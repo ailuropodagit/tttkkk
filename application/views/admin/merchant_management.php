@@ -7,9 +7,9 @@
         $('#myTable').DataTable({
             "pageLength": 25,
             "order": [],
-            'columnDefs': [
-            { type: 'formatted-num', targets: [10,11] }
-            ]
+//            'columnDefs': [
+//            { type: 'formatted-num', targets: [10,11] }
+//            ]
         });
     });
 </script>
@@ -42,7 +42,7 @@ if (isset($message))
                         <th>Postcode</th>
                         <th>State</th>
                         <th>Phone</th>   
-                        <th>Balance</th>
+                        <th>Balance (RM)</th>
                         <th>Frozen Already</th>   
                         <th>Actions</th>
                         <th>Special Actions</th>

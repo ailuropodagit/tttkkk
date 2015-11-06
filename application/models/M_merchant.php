@@ -410,7 +410,7 @@ class M_merchant extends CI_Model
         return number_format($current_balance, 2);
     }
 
-    public function merchant_balance_color($merchant_id, $hide_bracket = 0)
+    public function merchant_balance_color($merchant_id, $hide_text = 0)
     {
         $merchant_balance = $this->m_merchant->merchant_check_balance($merchant_id);
         $merchant_minimum_balance = $this->m_custom->web_setting_get('merchant_minimum_balance', 'set_decimal');
@@ -423,7 +423,11 @@ class M_merchant extends CI_Model
             $color = 'green';
         }
         
-        if ($hide_bracket == 1)
+        if ($hide_text == 1)
+        {
+            $merchant_balance_text = '<span style="color:' . $color . '" >' . $merchant_balance . '</span>';
+        }
+        else if($hide_text == 2)
         {
             $merchant_balance_text = '<span style="color:' . $color . '" >RM ' . $merchant_balance . '</span>';
         }
@@ -785,6 +789,30 @@ class M_merchant extends CI_Model
                 $this->db->insert('transaction_history', $the_data);
             }
         }
+    }
+
+    public function transaction_history_update($get_from_table_id, $update_amount_plus = 0, $update_amount_minus = 0, $get_from_table = 'merchant_topup')
+    {
+        $search_data = array(
+            'get_from_table' => $get_from_table,
+            'get_from_table_id' => $get_from_table_id,
+        );
+        $query = $this->db->get_where('transaction_history', $search_data);
+        if ($query->num_rows() == 1)
+        {
+            $table_result = $query->row_array();
+            $table_id = $table_result['trans_history_id'];
+            $the_data = array(
+                'amount_plus' => $update_amount_plus,
+                'amount_minus' => $update_amount_minus,
+            );
+            $this->db->where('trans_history_id', $table_id);
+            if ($this->db->update('transaction_history', $the_data))
+            {
+                return TRUE;
+            }
+        }
+        return FALSE;
     }
 
 }

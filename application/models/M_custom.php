@@ -1049,6 +1049,19 @@ class M_custom extends CI_Model
         }
     }
 
+    function getAllTopup($merchant_id = 0){
+        if ($merchant_id != 0)
+        {
+            $this->db->where('merchant_id', $merchant_id);
+        }
+        
+        $this->db->order_by('topup_time', 'desc');
+        $this->db->from('merchant_topup');
+        $query = $this->db->get();
+        $result = $query->result_array();
+        return $result;
+    }
+    
     function getAllUser(){
         $this->db->order_by('first_name');
         $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_user')));
