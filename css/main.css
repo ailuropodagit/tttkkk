@@ -50,7 +50,7 @@ html, body {
 #header-top-bar {
     background-color: #0097a7;
     position: relative;
-    z-index: 99;
+    z-index: 199;
 }
 
 #header-top-bar-social-media {
@@ -88,7 +88,6 @@ html, body {
 #header-top-bar-navigation ul li {
     display: inline-block;
     margin: 0px -5px 0px 0px;
-    padding: 0px 15px 0px 15px;
     cursor: pointer;
 }
 
@@ -96,10 +95,11 @@ html, body {
     background-color: #00bcd4;
 }
 
-#header-top-bar-navigation a {
+#header-top-bar-navigation ul li a {
     color: white;
     text-decoration: none;
-    line-height: 33px;
+    padding: 13px 15px 13px 15px;
+    display: block;
 }
 
 .header-top-bar-navigation-icon {
@@ -108,6 +108,55 @@ html, body {
 
 .header-top-bar-navigation-active {
     background-color: #00bcd4;
+}
+
+#header-top-bar-navigation ul li:hover > ul { 
+    visibility: visible;
+}
+
+#header-top-bar-navigation ul ul {
+    list-style: none;
+    margin: 0px;
+    padding: 5px 0px 5px 0px;
+    visibility: hidden;
+    margin: 0px 0px 0px 0px; 
+    position: absolute;
+    width: 172px;
+    background-color: white;
+    -webkit-box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
+    -moz-box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
+    box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
+}
+
+#header-top-bar-navigation ul ul li {
+    width: 100%;
+}
+
+#header-top-bar-navigation ul ul li:hover {
+    background-color: white;
+}
+
+#header-top-bar-navigation ul ul li a {
+    padding: 8px 13px 8px 13px;
+    width: 100%;
+    color: black;
+    display: block;
+    box-sizing: border-box;
+}
+
+#header-top-bar-navigation ul ul li a:hover {
+    color: red;
+}
+
+#header-top-bar-navigation ul ul li a:hover > i {
+    color: #ff9696;
+}
+
+#header-top-bar-navigation ul ul li i {
+    float: left;
+    font-size: 7px;
+    color: #e8e8e8;
+    margin: 3px 10px 0px 0px;
 }
 
 #header-logo-bar {
@@ -403,9 +452,9 @@ html, body {
     z-index: 99;
     background-color: white;
     margin: 0px 0px 60px 0px;
--webkit-box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
--moz-box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
-box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
+    -webkit-box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
+    -moz-box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
+    box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
 }
 
 #body-content {
@@ -430,6 +479,8 @@ box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
     width: 24%;
     background-color: white;
     height: 480px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
     -webkit-box-shadow: 1px 1px 3px 0px rgba(179,179,179,0.80);
     -moz-box-shadow: 1px 1px 3px 0px rgba(179,179,179,0.80);
     box-shadow: 1px 1px 3px 0px rgba(179,179,179,0.80);
@@ -461,7 +512,8 @@ box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
     content: '>';
     position: absolute;
     right: 15px;
-    font-size: 18px;
+    font-size: 16px;
+    font-weight: bold;
     line-height: 14px;
     color: lightgray;
     font-family: "Times New Roman";
@@ -484,7 +536,7 @@ box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
 }
 
 #home-row1-categories-navigation ul ul li {
-    padding: 20px 5px 7px 5px;
+    padding: 25px 10px 12px 10px;
 }
 
 #home-row1-categories-navigation > ul > li > a:hover {
@@ -493,6 +545,27 @@ box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
 
 #home-row1-categories-navigation > ul > li:hover { 
     background-color: #eeeeee;
+}
+
+#home-row1-categories-navigation-main-category-title {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #444444;
+    border-bottom: 1px solid #dddddd;
+    padding: 15px 22px 15px 22px;
+}
+
+#home-row1-categories-navigation-main-category-title-label {
+    margin: 0px 0px 0px 7px;
+}
+
+#home-row1-categories-navigation-main-category-icon {
+    font-size: 8px;
+}
+
+#home-row1-categories-navigation-main-category-label {
+    margin: 0px 0px 0px 7px;
 }
 
 #home-row1-categories-navigation-box {
@@ -529,6 +602,7 @@ box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
 
 #home-row1-categories-navigation-box-merchant a {
     padding: 0px 0px 0px 0px;
+    display: inline;
 }
 
 #home-row1-categories-navigation-box-merchant a:hover {
@@ -667,6 +741,163 @@ box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
     color: white;
     font-weight: bold;
 }
+
+/*********************************************
+ ** LOGIN REGISTER
+ *********************************************/
+
+#login-link, #register-link {
+    float: right;
+}
+
+#login-link a, #register-link a {
+    font-size: 15px;
+}
+
+#login-link-icon, #register-link-icon {
+    margin: 0px 8px 0px 0px;
+    color: #6262ff;
+    font-size: 13px;
+}
+
+#login, #register {
+    text-align: center;
+}
+
+#login a, #register a {
+    text-decoration: none;
+}
+
+#login a:hover, #register a:hover {
+    text-decoration: underline;
+}
+
+#login-title, #register-title {
+    font-weight: bold;
+    font-size: 21px;
+    margin: 0px 0px 25px 0px;
+}
+
+#login-subtitle, #register-subtitle {
+    margin: 0px 0px 30px 0px;
+    font-size: 18px;
+}
+
+#login-facebook, #register-facebook {
+    padding: 0px 0px 10px 0px;
+}
+
+#login-facebook-button {
+    height: 35px;
+}
+
+#login-facebook-label {
+    font-size: 14px;
+    margin: 0px 0px 0px 0px;
+}
+
+#login-horizontal-line, #register-horizontal-line {
+    width: 450px;
+    margin: 20px auto 20px auto;
+    border-bottom: 1px solid lightgray;
+}
+
+#login-form, #register-form {
+    width: 300px;
+    margin: 0px auto 0px auto;
+}
+
+#login-form-each-label, #register-form-each-label {
+    width: 285px;
+    text-align: left;
+    margin: 20px auto 0px auto;
+}
+
+#login-form-each-input input[type='text'], #register-form-each-input input[type='text'] {
+    width: 100%;
+    margin: 10px 0px 0px 0px;
+}
+
+#login-form-each-input input[type='password'], #register-form-each-input input[type='password'] {
+    width: 100%;
+    margin: 10px 0px 0px 0px;
+}
+
+#login-form-each-input-contact-number input[type='text'] , #register-form-each-input-contact-number input[type='text'] {
+    width: calc(100% - 25px);
+    margin: 10px 0px 0px 0px;
+}
+
+#register-form-each-input textarea {
+    margin: 10px 0px 0px 0px;
+    width: 100%;
+    height: 100px;
+    resize: none;
+}
+
+#register-form-each-input select {
+    width: 100%;
+    height: 30px;
+    margin: 10px 0px 0px 0px;
+}
+
+#register-form-each-other {
+    display: none;
+}
+
+#register-form-each-input-dob {
+    width: 100%;
+    margin: 0px auto 0px auto;
+}
+
+#register-form-each-input-dob-year select, #register-form-each-input-dob-month select, #register-form-each-input-dob-day select {
+    float: left;
+    width: 30%;
+    height: 30px;
+    margin: 10px 5% 0px 0px;
+}
+
+#register-form-each-input-dob-year select {
+    margin: 10px 0px 0px 0px;
+}
+
+#login-form-show-password, #register-form-forgot-password {
+    text-align: left;
+    margin: 15px 0px 0px 0px;
+}
+
+#login-form-remember-me {
+    text-align: left;
+    margin: 15px 0px 0px 0px;
+}
+
+#login-form-forgot-password {
+    text-align: left;
+    margin: 15px 0px 0px 0px;
+}
+
+#register-form-agree-checkbox {
+    text-align: left;
+    margin: 15px 0px 0px 0px;
+}
+
+#login-form-submit, #register-form-submit {
+    padding: 30px 0px 30px 0px;
+}
+    
+#login-agree-link, #register-agree-link {
+    font-size: 14px;
+    line-height: 20px;
+    margin: 0px 0px 30px 0px;
+    color: gray;
+}
+
+
+
+
+
+
+
 
 
 
@@ -909,146 +1140,6 @@ box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
 
 #category-each-nav a:hover {
     color: black;
-}
-
-/* LOGIN REGISTER
-******************************/
-
-#login-link, #register-link {
-    float: right;
-}
-
-#login-link-icon, #register-link-icon {
-    margin: 0px 8px 0px 0px;
-    color: #6262ff;
-    font-size: 14px;
-}
-
-#login, #register {
-    text-align: center;
-}
-
-#login a, #register a {
-    text-decoration: none;
-}
-
-#login a:hover, #register a:hover {
-    text-decoration: underline;
-}
-
-#login-title, #register-title {
-    font-weight: bold;
-    font-size: 21px;
-    margin: 0px 0px 25px 0px;
-}
-
-#login-subtitle, #register-subtitle {
-    margin: 0px 0px 30px 0px;
-    font-size: 18px;
-}
-
-#login-facebook, #register-facebook {
-    padding: 0px 0px 10px 0px;
-}
-
-#login-facebook-button {
-    height: 35px;
-}
-
-#login-facebook-label {
-    font-size: 14px;
-    margin: 0px 0px 0px 0px;
-}
-
-#login-horizontal-line, #register-horizontal-line {
-    width: 450px;
-    margin: 20px auto 20px auto;
-    border-bottom: 1px solid lightgray;
-}
-
-#login-form, #register-form {
-    width: 300px;
-    margin: 0px auto 0px auto;
-}
-
-#login-form-each-label, #register-form-each-label {
-    width: 285px;
-    text-align: left;
-    margin: 20px auto 0px auto;
-}
-
-#login-form-each-input input[type='text'], #register-form-each-input input[type='text'] {
-    width: 100%;
-    margin: 10px 0px 0px 0px;
-}
-
-#login-form-each-input input[type='password'], #register-form-each-input input[type='password'] {
-    width: 100%;
-    margin: 10px 0px 0px 0px;
-}
-
-#login-form-each-input-contact-number input[type='text'] , #register-form-each-input-contact-number input[type='text'] {
-    width: calc(100% - 45px);
-    margin: 10px 0px 0px 0px;
-}
-
-#register-form-each-input textarea {
-    margin: 10px 0px 0px 0px;
-    width: 100%;
-    height: 100px;
-    resize: none;
-}
-
-#register-form-each-input select {
-    width: 100%;
-    height: 30px;
-    margin: 10px 0px 0px 0px;
-}
-
-#register-form-each-other {
-    display: none;
-}
-
-#register-form-each-input-dob {
-    width: 100%;
-    margin: 0px auto 0px auto;
-}
-
-#register-form-each-input-dob-year select, #register-form-each-input-dob-month select, #register-form-each-input-dob-day select {
-    float: left;
-    width: 30%;
-    height: 30px;
-    margin: 10px 5% 0px 0px;
-}
-
-#register-form-each-input-dob-year select {
-    margin: 10px 0px 0px 0px;
-}
-
-#login-form-show-password {
-    text-align: right;
-    margin: 15px 0px 0px 0px;
-}
-
-#login-form-remember-me {
-    text-align: left;
-    margin: 15px 0px 0px 0px;
-}
-
-#login-form-forgot-password {
-    text-align: left;
-    margin: 15px 0px 0px 0px;
-}
-
-#login-form-submit, #register-form-submit {
-    padding: 30px 0px 30px 0px;
-}
-    
-#login-agree, #register-agree {
-    font-size: 14px;
-    line-height: 20px;
-    margin: 0px 0px 30px 0px;
-    color: gray;
 }
 
 /* DASHBOARD

@@ -14,7 +14,6 @@
             $merchant_balance_text = $this->m_merchant->merchant_balance_color($login_user_id);
             //FOLLOWER COUNT
             $follower_count = $this->albert_model->follower_count($login_user_id);
-            
             $notification_count = $this->m_custom->notification_count($login_user_id) + $this->m_custom->display_row_monitor(1);
             ?>
             <li><a href='<?php echo $dashboard ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'merchant_dashboard' || $fetch_method == 'merchant_outlet' || $fetch_method == 'map'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Dashboard</a></li>
@@ -38,13 +37,11 @@
             $dashboard = base_url() . 'all/merchant_dashboard/' . generate_slug($the_row->company);
             $album_merchant = base_url() . 'all/album_merchant/' . generate_slug($the_row->company);
             $album_redemption = base_url() . 'all/album_redemption/' . generate_slug($the_row->company);
-            $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;
-
-            //FOLLOWER COUNT
+            //COUNT
             $where_read_user = array('id'=>$login_user_id);
             $login_main_merchant_id = $this->albert_model->read_user($where_read_user)->row()->su_merchant_id;
             $follower_count = $this->albert_model->follower_count($login_main_merchant_id);
-            
+            $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;
             $notification_count = $this->m_custom->notification_count($merchant_id); 
             ?>
             <li><a href='<?php echo $dashboard; ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'merchant_dashboard' || $fetch_method == 'merchant_outlet' || $fetch_method == 'map'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Dashboard</a></li>
@@ -66,10 +63,8 @@
             $user_picture = base_url() . 'all/album_user/' . $login_user_id;  
             $user_candie = base_url() . 'user/candie_page'; 
             $user_redemption = base_url() . 'user/redemption/' . $this->config->item('voucher_active');  
-            
             //FOLLOWER COUNT
             $follower_count = $this->albert_model->follower_count($login_user_id);
-            
             $notification_count = $this->m_custom->notification_count($login_user_id);
             ?>
             <li><a href='<?php echo $dashboard; ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'user_dashboard'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Dashboard</a></li>

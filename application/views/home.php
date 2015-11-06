@@ -28,6 +28,14 @@
     <div id='home'>
         <div id='home-row1'>
             <div id='home-row1-categories-navigation'>
+                <div id="home-row1-categories-navigation-main-category-title">
+                    <span id="home-row1-categories-navigation-main-category-title-icon">
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <span id="home-row1-categories-navigation-main-category-title-label">
+                        Categories
+                    </span>
+                </div>
                 <ul>
                     <?php
                     $result_array_main_category = $query_main_category->result_array();
@@ -40,7 +48,14 @@
                         $num_rows_sub_category = $query_sub_category->num_rows();
                         ?>
                         <li <?php if($num_rows_sub_category != 0){ echo "class='has-sub'"; } ?>>
-                            <a href="#"><?php echo $main_category_label ?></a>
+                            <a href="#">
+                                <span id="home-row1-categories-navigation-main-category-icon">
+                                    <i class="fa fa-crosshairs"></i>
+                                </span>
+                                <span id="home-row1-categories-navigation-main-category-label">
+                                    <?php echo $main_category_label ?>
+                                </span>
+                            </a>
                             <?php
                             if ($num_rows_sub_category) 
                             {
