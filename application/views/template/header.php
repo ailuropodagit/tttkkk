@@ -336,13 +336,58 @@
                                     </li>
                                     <?php
                                 }
-                                else if ($this->m_custom->check_is_any_admin()) 
+                                else if (check_correct_login_type($this->config->item('group_id_admin')))
                                 {
                                     ?>
                                     <li>
-                                        <a href='<?php echo base_url("admin/admin_dashboard") ?>'>
-                                            My Account
+                                        <a>My Account</a>
+                                        <ul>
+                                            <li><a href='<?php echo base_url('admin/admin_dashboard') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'admin_dashboard'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Dashboard</a></li>
+                                            <li><a href='<?php echo base_url('admin/profile') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'profile'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Profile</a></li>
+                                            <li><a href='<?php echo base_url('admin/change_password') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'change_password'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Change Password</a></li>
+                                            <li><a href='<?php echo base_url('admin/user_management') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'user_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Manage User</a></li>
+                                            <li><a href='<?php echo base_url('admin/merchant_management') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'merchant_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Manage Merchant</a></li>
+                                            <li><a href='<?php echo base_url('admin/worker_management') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'worker_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Manage Worker</a></li>
+                                            <li><a href='<?php echo base_url('admin/category_management') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'category_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Manage Category</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href='<?php echo base_url('admin/logout') ?>'>
+                                            <i class='fa fa-sign-out header-top-bar-navigation-icon'></i> Logout
                                         </a>
+                                    </li>
+                                    <?php
+                                }
+                                else if (check_correct_login_type($this->config->item('group_id_worker')))
+                                {
+                                    ?>
+                                    <li>
+                                        <a>My Account worker</a>
+                                        <ul>
+                                            <li><a href='<?php echo base_url('admin/admin_dashboard') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'admin_dashboard'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Dashboard</a></li>
+                                            <li><a href='<?php echo base_url('admin/profile') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'profile'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Profile</a></li>
+                                            <?php 
+                                            if($this->m_custom->check_worker_role(65)) 
+                                            {
+                                                ?>
+                                                <li><a href='<?php echo base_url(); ?>admin/user_management' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'user_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Manage User</a></li>
+                                                <li><a href='<?php echo base_url(); ?>admin/merchant_management' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'merchant_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Manage Merchant</a></li>
+                                                <?php
+                                            }
+                                            if($this->m_custom->check_worker_role(66)) 
+                                            {
+                                                ?>
+                                                <li><a href='<?php echo base_url(); ?>admin/worker_management' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'worker_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Manage Worker</a></li>
+                                                <?php
+                                            }
+                                            if($this->m_custom->check_worker_role(72))
+                                            { 
+                                                ?>
+                                                <li><a href='<?php echo base_url(); ?>admin/category_management' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'category_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Manage Category</a></li>
+                                                <?php
+                                            }
+                                            ?>
+                                        </ul>
                                     </li>
                                     <li>
                                         <a href='<?php echo base_url('admin/logout') ?>'>
@@ -371,34 +416,32 @@
                         </a>
                     </div>
                     <div id="header-logo-bar-search">
-                        
-                            <?php echo form_open('all/home_search') ?>
-                                <div id="header-logo-bar-search-block1">
-                                    <input type="text" placeholder="Search: Merchant, Hot Deal, Promotion" name="search_word" id="search_word">
-                                </div>
-                                <div id="header-logo-bar-search-block2">
-                                    <?php
-                                    $header_search_state_list = $this->m_custom->get_static_option_array('state', '0', 'All');
-                                    $header_search_me_state_id = array(
-                                        'name' => 'me_state_id',
-                                        'id' => 'me_state_id',
-                                    );
-                                    $header_search_selected_state = $this->uri->segment(4);
-                                    if (!empty($header_search_selected_state) && $this->router->fetch_method() == 'home_search')
-                                    {
-                                        echo form_dropdown($header_search_me_state_id, $header_search_state_list, $header_search_selected_state);
-                                    }
-                                    else
-                                    {
-                                        echo form_dropdown($header_search_me_state_id, $header_search_state_list);
-                                    }
-                                    ?>
-                                </div>
-                                <div id="header-logo-bar-search-block3">
-                                    <button name="button_action" type="submit" value="search">Search</button>
-                                </div>
-                            <?php echo form_close() ?>
-                        
+                        <?php echo form_open('all/home_search') ?>
+                            <div id="header-logo-bar-search-block1">
+                                <input type="text" placeholder="Search: Merchant, Hot Deal, Promotion" name="search_word" id="search_word">
+                            </div>
+                            <div id="header-logo-bar-search-block2">
+                                <?php
+                                $header_search_state_list = $this->m_custom->get_static_option_array('state', '0', 'All');
+                                $header_search_me_state_id = array(
+                                    'name' => 'me_state_id',
+                                    'id' => 'me_state_id',
+                                );
+                                $header_search_selected_state = $this->uri->segment(4);
+                                if (!empty($header_search_selected_state) && $this->router->fetch_method() == 'home_search')
+                                {
+                                    echo form_dropdown($header_search_me_state_id, $header_search_state_list, $header_search_selected_state);
+                                }
+                                else
+                                {
+                                    echo form_dropdown($header_search_me_state_id, $header_search_state_list);
+                                }
+                                ?>
+                            </div>
+                            <div id="header-logo-bar-search-block3">
+                                <button name="button_action" type="submit" value="search">Search</button>
+                            </div>
+                        <?php echo form_close() ?>
                     </div>
                     <div id="header-logo-bar-profile-display">
                         <?php
@@ -450,7 +493,7 @@
                                         <?php echo $header_profile_login_user_name; ?>
                                     </div>
                                 </a>
-                        <?php
+                                <?php
                             }
                             else 
                             {
