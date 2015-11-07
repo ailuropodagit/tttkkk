@@ -536,9 +536,49 @@
                                 </a>
                             </li>
                             <li <?php if($header_fetch_class == 'categories'){ echo "class='header-navigation-bar-active'"; } ?>>
-                                <a href='<?php echo base_url('categories') ?>'>
+                                <a href="#">
                                     <i class="fa fa-th-large header-navigation-bar-left-icon"></i> Categories
                                 </a>
+                                <ul>
+                                    <li>
+                                        <div id="header-navigation-bar-box">
+                                            <?php
+                                            $main_category_object = $this->m_custom->getCategory();
+                                            foreach ($main_category_object as $main_category) 
+                                            {
+                                                $main_category_id = $main_category->category_id;
+                                                $main_category_label = $main_category->category_label;
+                                                ?>
+                                                <div id="header-navigation-bar-box-each">
+                                                    <div id="header-navigation-bar-box-each-title"><?php echo $main_category_label ?></div>
+                                                    <div id="header-navigation-bar-box-each-merchant">
+                                                        <?php
+                                                        $sub_category_object = $this->m_custom->getSubCategory($main_category_id); 
+                                                        foreach ($sub_category_object as $sub_category)
+                                                        {
+                                                            $sub_category_id = $sub_category->category_id;
+                                                            $sub_category_label = $sub_category->category_label;
+                                                            ?>
+                                                            <div id="header-navigation-bar-box-each-merchant-each">
+                                                                <a href="<?php echo base_url() ?>all/merchant-category/<?php echo $sub_category_id ?>">
+                                                                    <span id="header-navigation-bar-box-each-merchant-each-icon"><i class="fa fa-caret-right"></i></span>
+                                                                    <span id="header-navigation-bar-box-each-merchant-each-label">
+                                                                        <?php echo $sub_category_label ?>
+                                                                        (<?php echo $this->m_merchant->getMerchantCount_by_subcategory($sub_category_id); ?>)
+                                                                    </span>
+                                                                </a> 
+                                                            </div>
+                                                            <?php
+                                                        }
+                                                        ?>
+                                                    </div>
+                                                </div>
+                                                <?php
+                                            }
+                                            ?>
+                                        </div>
+                                    </li>
+                                </ul>
                             </li>
                             <li <?php if($header_fetch_method == 'hotdeal_list' || $header_uri_segment4 == 'hot'){ echo "class='header-navigation-bar-active'"; } ?>>
                                 <a href='<?php echo base_url('all/hotdeal-list/26') ?>'>
