@@ -1,8 +1,11 @@
 <script type="text/javascript" src="<?php echo base_url() ?>js/datatables/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>js/datatables/js/moment.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>js/datatables/js/datetime-moment.js"></script>
 <?php echo link_tag('js/datatables/css/jquery.dataTables.min.css') ?>
 
 <script type="text/javascript">
     $(document).ready(function () {
+        $.fn.dataTable.moment('DD-MM-YYYY');
         $('#myTable').DataTable({
             "pageLength": 25,
             "order": []

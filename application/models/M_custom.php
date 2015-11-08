@@ -732,13 +732,16 @@ class M_custom extends CI_Model
     }
 
     //To find one advertise record in DB
-    public function getOneAdvertise($advertise_id, $ignore_have_money = 0, $ignore_hide = 0)
+    public function getOneAdvertise($advertise_id, $ignore_have_money = 0, $ignore_hide = 0, $ignore_startend = 0)
     {
         if ($ignore_hide == 0)
         {
             $this->db->where('hide_flag', 0);
         }
-        $this->db->where('start_time is not null AND end_time is not null');
+        if ($ignore_startend == 0)
+        {
+            $this->db->where('start_time is not null AND end_time is not null');
+        }
         $query = $this->db->get_where('advertise', array('advertise_id' => $advertise_id), 1);
         if ($query->num_rows() !== 1)
         {
@@ -794,7 +797,7 @@ class M_custom extends CI_Model
     }
 
     //set $hot_popular_only = 1 to get the popular hotdeal or redemption only
-    function getAdvertise($advertise_type, $sub_category_id = NULL, $merchant_id = NULL, $show_expired = 0, $limit = NULL, $start = NULL, $hot_popular_only = 0)
+    function getAdvertise($advertise_type, $sub_category_id = NULL, $merchant_id = NULL, $show_expired = 0, $limit = NULL, $start = NULL, $hot_popular_only = 0, $ignore_startend = 0, $ignore_hide = 0)
     {
         if (!IsNullOrEmptyString($sub_category_id))
         {
@@ -807,10 +810,16 @@ class M_custom extends CI_Model
         if ($show_expired == 0)
         {
             $this->db->where('end_time >=', get_part_of_date('all'));
+        }               
+        if($ignore_startend == 0){
+            $this->db->where('start_time is not null AND end_time is not null');
+        }
+        if ($ignore_hide == 0)
+        {
+            $this->db->where('hide_flag', 0);
         }
         $this->db->order_by("advertise_id", "desc");
-        $this->db->where('start_time is not null AND end_time is not null');
-
+        
         if (!IsNullOrEmptyString($limit) && !IsNullOrEmptyString($start))
         {
             if ($start == 1)
@@ -822,11 +831,11 @@ class M_custom extends CI_Model
 
         if ($advertise_type == 'all')
         {
-            $query = $this->db->get_where('advertise', array('hide_flag' => 0));
+            $query = $this->db->get_where('advertise', array());
         }
         else
         {
-            $query = $this->db->get_where('advertise', array('advertise_type' => $advertise_type, 'hide_flag' => 0));
+            $query = $this->db->get_where('advertise', array('advertise_type' => $advertise_type));
         }
         //var_dump($query->result_array());
         $return = $query->result_array();

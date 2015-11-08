@@ -2202,7 +2202,7 @@ class Admin extends CI_Controller
         );
         $this->data['sub_category_selected'] = $search_category;
 
-        $advertise_list = $this->m_custom->getAdvertise('adm', $search_category);  //0, 1, 1, 1 will show hide
+        $advertise_list = $this->m_custom->getAdvertise('adm', $search_category, NULL, 1, NULL, NULL, 0, 1, 1);
         $this->data['the_result'] = $advertise_list;
 
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
@@ -2210,8 +2210,7 @@ class Admin extends CI_Controller
         $this->load->view('template/layout_right_menu', $this->data);
     }
     
-    //to do todo
-    function keppo_voucher_add()
+    function keppo_voucher_change($candie_id = NULL)
     {
         if (!$this->m_custom->check_is_any_admin(70))
         {
@@ -2221,42 +2220,178 @@ class Admin extends CI_Controller
         $message_info = '';
         $login_id = $this->login_id;
         $login_type = $this->login_type;
+        $is_edit = 0;
+
+        if ($candie_id != NULL)
+        {
+            $allowed_list = $this->m_custom->get_list_of_allow_id('advertise', 'advertise_type', 'adm', 'advertise_id');
+            if (!check_allowed_list($allowed_list, $candie_id))
+            {
+                redirect('/', 'refresh');
+            }
+            $is_edit = 1;
+        }
+
+        $keppo_company_name = $this->m_custom->web_setting_get('keppo_company_name', 'set_desc');
+        $candie_term = $this->m_custom->get_dynamic_option_array('candie_term', NULL, NULL, $keppo_company_name);
 
         if (isset($_POST) && !empty($_POST))
         {
             $can_redirect_to = 0;
-            $category_label = $this->input->post('category_label');
-            $category_level = $this->input->post('category_level') == NULL ? 0 : 1;   //Check box special handling to know is checked or not
-            $main_category_id = $this->input->post('main_category_id') == 0 ? NULL : $this->input->post('main_category_id');
+
+            $upload_rule = array(
+                'upload_path' => $this->album_admin,
+                'allowed_types' => $this->config->item('allowed_types_image'),
+                'max_size' => $this->config->item('max_size'),
+                'max_width' => $this->config->item('max_width'),
+                'max_height' => $this->config->item('max_height'),
+            );
+
+            $this->load->library('upload', $upload_rule);
+
+            $candie_id = $this->input->post('candie_id');
+            $title = $this->input->post('candie_title');
+            $description = $this->input->post('candie_desc');
+            $upload_file = "candie-file";
+            $start_date = validateDate($this->input->post('start_date'));
+            $end_date = validateDate($this->input->post('end_date'));
+            $search_month = get_part_of_date('month');
+            $search_year = get_part_of_date('year');
+            $candie_point = check_is_positive_numeric($this->input->post('candie_point'));
+            $candie_worth = check_is_positive_numeric($this->input->post('candie_worth'));
+            $expire_date = validateDate($this->input->post('expire_date'));
+            $candie_extra_term = $this->input->post('candie_extra_term');
+            $image_data = NULL;
+            $candie_term_selected = array();
+
+            $post_candie_term = $this->input->post('candie_term');
+            if (!empty($post_candie_term))
+            {
+                foreach ($post_candie_term as $key => $value)
+                {
+                    $candie_term_selected[] = $value;
+                }
+            }
 
             // validate form input
-            $this->form_validation->set_rules('category_label', 'Category Name', 'required');
-            if ($category_level == 1)
+            $this->form_validation->set_rules('candie_title', $this->lang->line('candie_validation_title_label'), 'required');
+            if ($is_edit == 0)
             {
-                $this->form_validation->set_rules('main_category_id', 'Under Which Main Category', 'callback_check_main_category_id');
+                $this->form_validation->set_rules('candie_category', $this->lang->line('candie_validation_sub_category_label'), 'callback_check_keppo_voucher_category');
+            }
+            $this->form_validation->set_rules('candie_desc', $this->lang->line('candie_validation_description_label'));
+            $this->form_validation->set_rules('candie_point', $this->lang->line('candie_validation_point_label'), 'required|integer');
+            $this->form_validation->set_rules('candie_worth', $this->lang->line('candie_validation_worth_label'), 'required|numeric');
+            $this->form_validation->set_rules('candie_extra_term', $this->lang->line('candie_validation_extra_term_label'));
+                        
+            if ($candie_id == 0)
+            {
+                $is_edit = 0;
+            }
+            else
+            {
+                $is_edit = 1;
             }
 
             if ($this->input->post('button_action') == "save")
             {
                 if ($this->form_validation->run() === TRUE)
                 {
-                    $data = array(
-                        'category_label' => $category_label,
-                        'category_level' => $category_level,
-                        'main_category_id' => $main_category_id,
-                    );
-
-                    $new_id = $this->m_custom->get_id_after_insert('category', $data);
-                    if ($new_id)
+                    if ($is_edit == 0)
                     {
-                        $this->m_custom->insert_row_log('category', $new_id, $login_id, $login_type);
-                        $message_info = add_message_info($message_info, $category_label . ' success create.');
-                        $can_redirect_to = 2;
+                        $sub_category_id = $this->input->post('candie_category');
+                        
+                        if (!empty($_FILES[$upload_file]['name']))
+                        {
+                            if (!$this->upload->do_upload($upload_file))
+                            {
+                                $message_info = add_message_info($message_info, $this->upload->display_errors(), $title);
+                            }
+                            else
+                            {
+                                $image_data = array('upload_data' => $this->upload->data());
+                            }
+                        }
+                        $data = array(
+                            'advertise_type' => 'adm',
+                            'merchant_id' => $login_id,
+                            'sub_category_id' => $sub_category_id,
+                            'title' => $title,
+                            'description' => $description,
+                            'image' => empty($image_data) ? '' : $image_data['upload_data']['file_name'],
+                            'start_time' => $start_date,
+                            'end_time' => $end_date,
+                            'month_id' => $search_month,
+                            'year' => $search_year,
+                            'voucher_candie' => $candie_point,
+                            'voucher_worth' => $candie_worth,
+                            'voucher_expire_date' => $expire_date,
+                            'extra_term' => $candie_extra_term,
+                            'voucher_not_need' => $sub_category_id == $this->config->item('category_epay') ? 1 : 0,
+                            'phone_required' => $sub_category_id == $this->config->item('category_epay') ? 1 : 0,
+                        );
+
+                        $new_id = $this->m_custom->get_id_after_insert('advertise', $data);
+                        if ($new_id)
+                        {
+                            $this->m_custom->insert_row_log('advertise', $new_id, $login_id, $login_type);
+                            $this->m_custom->many_insert_or_remove('candie_term', $new_id, $candie_term_selected);
+                            $message_info = add_message_info($message_info, $title . ' success create.');
+                            $candie_id = $new_id;
+                            $can_redirect_to = 3;
+                        }
+                        else
+                        {
+                            $message_info = add_message_info($message_info, $this->ion_auth->errors());
+                            $can_redirect_to = 1;
+                        }
                     }
                     else
                     {
-                        $message_info = add_message_info($message_info, $this->ion_auth->errors());
-                        $can_redirect_to = 1;
+                        $previous_image_name = $this->m_custom->get_one_table_record('advertise', 'advertise_id', $candie_id)->image;
+
+                        //To check old deal got change image or not, if got then upload the new one and delete previous image
+                        if (!empty($_FILES[$upload_file]['name']))
+                        {
+                            if (!$this->upload->do_upload($upload_file))
+                            {
+                                $message_info = add_message_info($message_info, $this->upload->display_errors());
+                            }
+                            else
+                            {
+                                $image_data = array('upload_data' => $this->upload->data());
+                                if (!IsNullOrEmptyString($previous_image_name))
+                                {
+                                    delete_file($this->album_admin . $previous_image_name);
+                                }
+                            }
+                        }
+
+                        //To update previous hot deal
+                        $data = array(
+                            'title' => $title,
+                            'description' => $description,
+                            'image' => empty($image_data) ? $previous_image_name : $image_data['upload_data']['file_name'],
+                            'start_time' => $start_date,
+                            'end_time' => $end_date,
+                            'voucher_candie' => $candie_point,
+                            'voucher_worth' => $candie_worth,
+                            'voucher_expire_date' => $expire_date,
+                            'extra_term' => $candie_extra_term,
+                        );
+
+                        if ($this->m_custom->simple_update('advertise', $data, 'advertise_id', $candie_id))
+                        {
+                            $this->m_custom->update_row_log('advertise', $candie_id, $login_id, $login_type);
+                            $this->m_custom->many_insert_or_remove('candie_term', $candie_id, $candie_term_selected);
+                            $message_info = add_message_info($message_info, $title . ' success update.');
+                            $can_redirect_to = 3;
+                        }
+                        else
+                        {
+                            $message_info = add_message_info($message_info, $this->ion_auth->errors());
+                            $can_redirect_to = 3;
+                        }
                     }
                 }
             }
@@ -2264,7 +2399,19 @@ class Admin extends CI_Controller
             {
                 $can_redirect_to = 2;
             }
-
+            if ($this->input->post('button_action') == "frozen")
+            {
+                $message_info = add_message_info($message_info, $title . ' success frozen.');
+                $this->m_custom->update_hide_flag(1, 'advertise', $candie_id);
+                $can_redirect_to = 2;
+            }
+            if ($this->input->post('button_action') == "recover")
+            {
+                $message_info = add_message_info($message_info, $title . ' success recover.');
+                $this->m_custom->update_hide_flag(0, 'advertise', $candie_id);
+                $can_redirect_to = 2;
+            }
+            
             direct_go:
             if ($message_info != NULL)
             {
@@ -2276,40 +2423,116 @@ class Admin extends CI_Controller
             }
             elseif ($can_redirect_to == 2)
             {
-                redirect('admin/category_management', 'refresh');
+                redirect('admin/keppo_voucher_management', 'refresh');
             }
             elseif ($can_redirect_to == 3)
             {
-                redirect('admin/category_edit/' . $new_id, 'refresh');
+                redirect('admin/keppo_voucher_change/' . $candie_id, 'refresh');
             }
         }
 
         // set the flash data error message if there is one
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 
-        $this->data['category_label'] = array(
-            'name' => 'category_label',
-            'id' => 'category_label',
-            'type' => 'text',
-            'value' => $this->form_validation->set_value('category_label'),
+        $result = $this->m_custom->getOneAdvertise($candie_id, 0, 1, 1);
+        $this->data['candie_term_current'] = empty($result) ? array() : $this->m_custom->many_get_childlist('candie_term', $result['advertise_id']);
+        $this->data['candie_term'] = $candie_term;
+        $this->data['result'] = $result;
+        
+        $this->data['candie_id'] = array(
+            'candie_id' => empty($result) ? '0' : $result['advertise_id'],
+            'is_edit' => $is_edit,
+        );
+        
+        $this->data['is_edit'] = $is_edit;
+        
+        if ($is_edit == 0)
+        {
+            $this->data['sub_category_list'] = $this->m_custom->getSubCategoryList('0', 'Select Category', $this->config->item('category_keppo_voucher'));
+            $this->data['candie_category'] = array(
+                'name' => 'candie_category',
+                'id' => 'candie_category',
+            );
+            $this->data['candie_category_selected'] = empty($result) ? '0' : $result['sub_category_id'];
+        }
+        else
+        {
+            $this->data['candie_category'] = array(
+                'name' => 'candie_category',
+                'id' => 'candie_category',
+                'readonly ' => 'true',
+                'value' => empty($result) ? '' : $this->m_custom->display_category($result['sub_category_id']),
+            );
+        }
+
+        $this->data['candie_title'] = array(
+            'name' => 'candie_title',
+            'id' => 'candie_title',
+            'value' => empty($result) ?  $this->form_validation->set_value('candie_title') :  $this->form_validation->set_value('candie_title', $result['title']),
         );
 
-        $this->data['category_level'] = array(
-            'name' => 'category_level',
-            'id' => 'category_level',
-            'checked' => TRUE,
-            'onclick' => "checkbox_showhide('category_level','category-sub-div')",
-            'value' => $login_id, //Just to have some value, checkbox have to have value
+        $this->data['candie_desc'] = array(
+            'name' => 'candie_desc',
+            'id' => 'candie_desc',
+            'value' => empty($result) ? $this->form_validation->set_value('candie_desc') :  $this->form_validation->set_value('candie_desc', $result['description']),
         );
 
-        $this->data['main_category_list'] = $this->m_custom->getCategoryList('0', 'Please Select');
-        $this->data['main_category_id'] = array(
-            'name' => 'main_category_id',
-            'id' => 'main_category_id',
+        $this->data['candie_image'] = empty($result) ? $this->config->item('empty_image') : $this->album_admin . $result['image'];
+
+        $this->data['start_date'] = array(
+            'name' => 'start_date',
+            'id' => 'start_date',
+            'readonly ' => 'true',
+            'value' => empty($result) ? '' : displayDate($result['start_time']),
         );
 
-        $this->data['page_path_name'] = 'admin/category_add';
+        $this->data['end_date'] = array(
+            'name' => 'end_date',
+            'id' => 'end_date',
+            'readonly ' => 'true',
+            'value' => empty($result) ? '' : displayDate($result['end_time']),
+        );
+
+        $this->data['candie_point'] = array(
+            'name' => 'candie_point',
+            'id' => 'candie_point',
+            'value' => empty($result) ? $this->form_validation->set_value('candie_point') :  $this->form_validation->set_value('candie_point', $result['voucher_candie']),
+        );
+
+        $this->data['candie_worth'] = array(
+            'name' => 'candie_worth',
+            'id' => 'candie_worth',
+            'value' => empty($result) ? $this->form_validation->set_value('candie_worth') :  $this->form_validation->set_value('candie_worth', $result['voucher_worth']),
+        );
+        
+        $this->data['expire_date'] = array(
+            'name' => 'expire_date',
+            'id' => 'expire_date',
+            'readonly ' => 'true',
+            'value' => empty($result) ? '' : displayDate($result['voucher_expire_date']),
+        );
+
+        $this->data['extra_term'] = array(
+            'name' => 'candie_extra_term',
+            'id' => 'candie_extra_term',
+            'value' => empty($result) ? $this->form_validation->set_value('candie_extra_term') :  $this->form_validation->set_value('candie_extra_term', $result['extra_term']),
+            'cols' => 90,
+            'placeholder' => 'Add extra T&C seperate by Enter, one line one T&C',
+        );
+        
+        $this->data['temp_folder'] = $this->temp_folder;
+        $this->data['page_path_name'] = 'admin/keppo_voucher_change';
         $this->load->view('template/layout_right_menu', $this->data);
+    }
+    
+    function check_keppo_voucher_category($dropdown_selection)
+    {
+        if ($dropdown_selection == 0)
+        {
+            $this->form_validation->set_message('check_keppo_voucher_category', 'The Keppo Voucher Category field is required');
+            return FALSE;
+        }
+        return TRUE;
     }
     
     function web_setting_edit()

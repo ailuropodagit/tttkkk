@@ -1,8 +1,11 @@
 <script type="text/javascript" src="<?php echo base_url() ?>js/datatables/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>js/datatables/js/moment.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>js/datatables/js/datetime-moment.js"></script>
 <?php echo link_tag('js/datatables/css/jquery.dataTables.min.css') ?>
 
 <script type="text/javascript">
     $(document).ready(function () {
+        $.fn.dataTable.moment('DD-MM-YYYY');
         $('#myTable').DataTable({
             "pageLength": 25,
             "order": []
@@ -29,7 +32,7 @@ if (isset($message))
             <?php echo form_close(); ?>
         </div>
         <div style="float:right">
-            <?php $add_new_url = base_url() . 'admin/keppo_voucher_add'; ?>           
+            <?php $add_new_url = base_url() . 'admin/keppo_voucher_change'; ?>           
             <div><a href='<?php echo $add_new_url; ?>' class="a-href-button">Add New</a></div>
         </div>
         <div id="float-fix"></div>
@@ -57,7 +60,7 @@ if (isset($message))
                         $end_date_text = displayDate($row['end_time']);
                         $expire_date_text = displayDate($row['voucher_expire_date']);
                         $remove_row = $row['hide_flag'] == 1 ? 'Frozen' : '';
-                        $url_edit = base_url() . "admin/keppo_voucher_edit/" . $row['advertise_id'];
+                        $url_edit = base_url() . "admin/keppo_voucher_change/" . $row['advertise_id'];
                         echo '<tr>';
                         echo "<td>" . $row['title'] . "</td>";
                         echo "<td>" . $sub_category_text . "</td>";

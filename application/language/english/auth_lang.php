@@ -208,6 +208,14 @@ $lang['candie_vender_label']              = 'Code Voucher Vender : ';
 $lang['candie_year_label']                = 'Code Voucher Year : ';
 $lang['candie_year_month_label']          = 'Voucher of Year & Month : ';
 $lang['candie_extra_term_label']          = 'Extra Terms & Conditions : ';
+$lang['candie_worth_label']               = 'Voucher Worth (RM) : ';
+
+$lang['candie_validation_description_label']         = 'Description';
+$lang['candie_validation_title_label']               = 'Title';
+$lang['candie_validation_sub_category_label']        = 'Category';
+$lang['candie_validation_point_label']               = 'Set Point';
+$lang['candie_validation_extra_term_label']          = 'Extra Terms & Conditions';
+$lang['candie_validation_worth_label']               = 'Voucher Worth';
 
 // Create Group
 $lang['create_group_title']                  = 'Create Group';
