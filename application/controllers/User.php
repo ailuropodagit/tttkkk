@@ -71,6 +71,7 @@ class User extends CI_Controller
                 //$this->session->set_flashdata('message', $this->ion_auth->messages());
                 $this->update_whole_year_balance();
                 $user_id = $this->session->userdata('user_id');
+                $this->m_user->check_birthday_candie();
                 redirect('all/user_dashboard/'.$user_id, 'refresh');
             }
             else
@@ -2347,6 +2348,7 @@ class User extends CI_Controller
                                     //INSERT FAIL
                                     $this->session->set_flashdata('message', 'Insert fail for candie');
                                 }
+                                $query_candie_balance = $this->albert_model->read_candie_balance($where_candie_balance);
                             }
                             //INSERT USER_INVITE_FRIEND
                             $data_user_invite_friend = array('user_id' => $logged_user_id, 'friend_email' => $input_email);

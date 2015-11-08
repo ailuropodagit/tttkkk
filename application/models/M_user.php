@@ -585,6 +585,48 @@ class M_user extends CI_Model
         return number_format($current_balance, 2);
     }
     
+    //todo to do
+    public function check_birthday_candie()
+    {
+        if (check_correct_login_type($this->config->item('group_id_user')))
+        {
+            $user_id = $this->ion_auth->user()->row()->id;
+            $user_info = $this->m_custom->getUserInfo($user_id);
+            $dob = $user_info['us_birthday'];
+            $birthday_date = strtotime(get_part_of_date('year') . substr($dob, 4));
+            $today_date = time();
+
+            if ($today_date > $birthday_date)
+            {
+                $this->db->where('year', get_part_of_date('year'));
+                $this->db->select("SUM(birthday_candie) AS birthday_candie");
+                $this->db->group_by('year');
+                $query_sum = $this->db->get_where('candie_balance', array('user_id' => $user_id))->row_array();
+                $give_already = $query_sum['birthday_candie'];
+                if ($give_already == 0)
+                {
+                    $data = array(
+                        'user_id' => $user_id, 
+                        'month_id' => get_part_of_date('month'), 
+                        'year' => get_part_of_date('year'),
+                    );                      
+
+                    $this_month_record = $this->db->get_where('candie_balance', $data)->row_array();
+                    $balance_id = $this_month_record['balance_id'];
+                    //At least must have one row of candie history, only can get birthday candie
+                    if ($balance_id != NULL)
+                    {
+                        $this->m_user->candie_history_insert(7, $balance_id, 'candie_balance');
+
+                        $this->db->where('balance_id', $balance_id);
+                        $this->db->update('candie_balance', array('birthday_candie' => 1));
+                        $this->m_user->candie_balance_update($user_id);
+                    }
+                }
+            }
+        }
+    }
+
     public function user_this_month_transaction($user_id)
     {
         $search_date = date_for_db_search();
