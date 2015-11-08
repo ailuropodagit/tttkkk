@@ -73,20 +73,20 @@ $config['user_activity_like'] = '45';
 $config['user_activity_rating'] = '46';
 $config['user_activity_comment'] = '47';
 
-//Can remove later, because already move this setting to DB web_setting table
-$config['keppo_company_name'] = 'Fuyoo Advertising & Services';
-$config['keppo_admin_email'] = 'wilkinwilly999@gmail.com,weechiat.teo@hotmail.com';
-
-$config['merchant_minimum_balance'] = 50;
-$config['merchant_max_hotdeal_per_day'] = 25;
-
-$config['user_max_picture_per_day'] = 15;
-$config['user_max_invitation_get_candie_per_month'] = 5;
-
-$config['popular_hotdeal_number'] = '3';
-$config['popular_redemption_number'] = '3';
-
 $config['category_keppo_voucher'] = '27';
 $config['category_epay'] = '28';
 $config['category_mytaxsi'] = '29';
 $config['category_uber'] = '30';
+
+//Can remove later, because already move this setting to DB web_setting table
+//$config['keppo_company_name'] = 'Fuyoo Advertising & Services';
+//$config['keppo_admin_email'] = 'wilkinwilly999@gmail.com,weechiat.teo@hotmail.com';
+//
+//$config['merchant_minimum_balance'] = 50;
+//$config['merchant_max_hotdeal_per_day'] = 25;
+//
+//$config['user_max_picture_per_day'] = 15;
+//$config['user_max_invitation_get_candie_per_month'] = 5;
+//
+//$config['popular_hotdeal_number'] = '3';
+//$config['popular_redemption_number'] = '3';

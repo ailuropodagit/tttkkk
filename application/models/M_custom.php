@@ -797,6 +797,10 @@ class M_custom extends CI_Model
     }
 
     //set $hot_popular_only = 1 to get the popular hotdeal or redemption only
+    //Get popular hotdeal that have at least 3 like, can change number in database web setting table
+    //$popular_hotdeal_list = $this->m_custom->getAdvertise('hot', NULL, NULL, 0, NULL, NULL, 1)
+    //Get popular redemption that have at least 3 user's redemption, can change number in database web setting table
+    //$popular_redemption_list = $this->m_custom->getAdvertise('pro', NULL, NULL, 0, NULL, NULL, 1)
     function getAdvertise($advertise_type, $sub_category_id = NULL, $merchant_id = NULL, $show_expired = 0, $limit = NULL, $start = NULL, $hot_popular_only = 0, $ignore_startend = 0, $ignore_hide = 0)
     {
         if (!IsNullOrEmptyString($sub_category_id))
@@ -1893,7 +1897,13 @@ class M_custom extends CI_Model
         return $query_list;
     }
 
-    //Can set $public_show = 1 and $certain_type = 'like' to filter public view and type
+    //Set $public_show = 1 and $certain_type = 'like' to filter public view and type
+    //Get all notification about which user like which merchant image
+    //$notification_list_like = $this->m_custom->notification_display(0, 1, 'like')
+    //Get all notification about which user rating which merchant image
+    //$notification_list_rating = $this->m_custom->notification_display(0, 1, 'rating');
+    //Get all notification about which user upload image for which merchant image
+    //$notification_list_upload = $this->m_custom->notification_display(0, 1, 'upload_image');
     public function notification_display($noti_to_id, $public_show = 0, $certain_type = NULL)
     {
         if ($public_show == 1)
