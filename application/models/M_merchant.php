@@ -601,6 +601,10 @@ class M_merchant extends CI_Model
 
     public function have_money($merchant_id)
     {
+        if($this->m_custom->check_is_superuser($merchant_id, 1)){
+            return TRUE;
+        }
+        
         $merchant_minimum_balance = $this->m_custom->web_setting_get('merchant_minimum_balance', 'set_decimal');
         if ($this->m_merchant->merchant_check_balance($merchant_id) < $merchant_minimum_balance && $this->config->item('froze_account_activate') == 1)
         {

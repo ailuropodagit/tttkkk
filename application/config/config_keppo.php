@@ -85,3 +85,8 @@ $config['user_max_invitation_get_candie_per_month'] = 5;
 
 $config['popular_hotdeal_number'] = '3';
 $config['popular_redemption_number'] = '3';
+
+$config['category_keppo_voucher'] = '27';
+$config['category_epay'] = '28';
+$config['category_mytaxsi'] = '29';
+$config['category_uber'] = '30';

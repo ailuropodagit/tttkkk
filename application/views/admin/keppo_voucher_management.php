@@ -1,0 +1,80 @@
+<script type="text/javascript" src="<?php echo base_url() ?>js/datatables/js/jquery.dataTables.min.js"></script>
+<?php echo link_tag('js/datatables/css/jquery.dataTables.min.css') ?>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#myTable').DataTable({
+            "pageLength": 25,
+            "order": []
+        });
+    });
+</script>
+
+<?php
+//MESSAGE
+if (isset($message))
+{
+    ?><div id="message"><?php echo $message; ?></div><?php
+}
+?>
+
+<div id="payment-charge">
+    <h1>Keppo Voucher Management</h1>
+    <div id="payment-charge-content">
+        <div id="payment-charge-go" style="float:left">
+            <?php echo form_open(uri_string()); ?>
+                <span id="payment-charge-go-label"><?php echo "Filter "; ?></span>
+                <span id="payment-charge-go-dropdown"><?php echo form_dropdown($sub_category_id, $sub_category_list, $sub_category_selected); ?></span>
+                <span id="payment-charge-go-button"><button name="button_action" type="submit" value="filter_result">Go</button></span>
+            <?php echo form_close(); ?>
+        </div>
+        <div style="float:right">
+            <?php $add_new_url = base_url() . 'admin/keppo_voucher_add'; ?>           
+            <div><a href='<?php echo $add_new_url; ?>' class="a-href-button">Add New</a></div>
+        </div>
+        <div id="float-fix"></div>
+        <div id='payment-charge-table'>
+            <table border='1px' cellspacing='0px' cellpadding='0px' id="myTable" class="display">
+                <thead>
+                    <tr style="text-align:center">
+                        <th>Title</th>
+                        <th>Category Type</th>
+                        <th>Voucher Worth (RM)</th>
+                        <th>Candie Require</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Expired Date</th>        
+                        <th>Frozen Already</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    foreach ($the_result as $row)
+                    {
+                        $sub_category_text = $this->m_custom->display_category($row['sub_category_id']);
+                        $start_date_text = displayDate($row['start_time']);
+                        $end_date_text = displayDate($row['end_time']);
+                        $expire_date_text = displayDate($row['voucher_expire_date']);
+                        $remove_row = $row['hide_flag'] == 1 ? 'Frozen' : '';
+                        $url_edit = base_url() . "admin/keppo_voucher_edit/" . $row['advertise_id'];
+                        echo '<tr>';
+                        echo "<td>" . $row['title'] . "</td>";
+                        echo "<td>" . $sub_category_text . "</td>";
+                        echo "<td style='text-align:right'>" . $row['voucher_worth'] . "</td>";
+                        echo "<td style='text-align:right'>" . $row['voucher_candie'] . "</td>";
+                        echo "<td>" . $start_date_text . "</td>";
+                        echo "<td>" . $end_date_text . "</td>";
+                        echo "<td>" . $expire_date_text . "</td>";
+                        echo "<td>" . $remove_row . "</td>";
+                        echo "<td>";
+                        echo "<a href='" . $url_edit . "' >Edit</a>";
+                        echo "</td>";
+                        echo '</tr>';
+                    }
+                    ?>
+                </tbody>    
+            </table>
+        </div>
+    </div>
+</div>

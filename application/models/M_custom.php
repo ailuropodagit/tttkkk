@@ -211,7 +211,7 @@ class M_custom extends CI_Model
         return FALSE;
     }
     
-    public function check_is_superuser($check_merchant_id = 0)
+    public function check_is_superuser($check_merchant_id = 0, $check_admin_only = 0)
     {
         $is_superuser = 0;
         $group_id_admin = $this->config->item('group_id_admin');
@@ -221,6 +221,9 @@ class M_custom extends CI_Model
         if (check_correct_login_type($group_id_admin) || check_correct_login_type($group_id_worker))
         {
             $is_superuser = 1;
+            if($check_admin_only == 1){
+                return $is_superuser;
+            }
         }
         if (check_correct_login_type($group_id_merchant) || check_correct_login_type($group_id_supervisor))
         {
