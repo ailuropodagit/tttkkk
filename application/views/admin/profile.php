@@ -95,6 +95,7 @@ if(isset($message))
             <div id='profile-info-form-submit'>
                 <button name="button_action" type="submit" value="confirm">Confirm</button>
             </div>
+            <?php echo form_close(); ?>
         </div>
         
     </div>

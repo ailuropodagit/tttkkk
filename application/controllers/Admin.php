@@ -1646,7 +1646,11 @@ class Admin extends CI_Controller
             {
                 $can_redirect_to = 2;
             }
-
+            if ($this->input->post('button_action') == "back_list")
+            {
+                $can_redirect_to = 3;
+            }
+            
             direct_go:
             if ($message_info != NULL)
             {
@@ -1783,6 +1787,10 @@ class Admin extends CI_Controller
             if ($this->input->post('button_action') == "back")
             {
                 $can_redirect_to = 2;
+            }
+            if ($this->input->post('button_action') == "back_list")
+            {
+                $can_redirect_to = 3;
             }
 
             direct_go:
@@ -2171,6 +2179,97 @@ class Admin extends CI_Controller
         $this->load->view('template/layout_right_menu', $this->data);
     }
 
+    function web_setting_edit()
+    {
+        if (!$this->m_custom->check_is_any_admin(73))
+        {
+            redirect('/', 'refresh');
+        }
+
+        $message_info = '';
+        $login_id = $this->login_id;
+        $login_type = $this->login_type;
+
+        if (isset($_POST) && !empty($_POST))
+        {
+            $can_redirect_to = 0;
+            $keppo_company_name = $this->input->post('keppo_company_name');
+            $keppo_admin_email = strtolower($this->input->post('keppo_admin_email'));
+            $merchant_minimum_balance = check_is_positive_decimal($this->input->post('merchant_minimum_balance'));
+            $merchant_max_hotdeal_per_day = check_is_positive_numeric($this->input->post('merchant_max_hotdeal_per_day'));
+            $user_max_picture_per_day = check_is_positive_numeric($this->input->post('user_max_picture_per_day'));
+
+            // validate form input
+            $this->form_validation->set_rules('keppo_company_name', $this->lang->line('web_setting_keppo_company_name'), 'trim|required');
+            $this->form_validation->set_rules('keppo_admin_email', $this->lang->line('web_setting_keppo_admin_email'), 'trim|required|valid_emails');
+            $this->form_validation->set_rules('merchant_minimum_balance', $this->lang->line('web_setting_merchant_minimum_balance'), 'trim|required|numeric');
+            $this->form_validation->set_rules('merchant_max_hotdeal_per_day', $this->lang->line('web_setting_merchant_max_hotdeal_per_day'), 'trim|required|integer');
+            $this->form_validation->set_rules('user_max_picture_per_day', $this->lang->line('web_setting_user_max_picture_per_day'), 'trim|required|integer');
+
+            if ($this->input->post('button_action') == "save")
+            {
+                if ($this->form_validation->run() === TRUE)
+                {
+                    $this->m_custom->web_setting_set('keppo_company_name', $keppo_company_name, 'set_desc');
+                    $this->m_custom->web_setting_set('keppo_admin_email', $keppo_admin_email, 'set_desc');
+                    $this->m_custom->web_setting_set('merchant_minimum_balance', $merchant_minimum_balance, 'set_decimal');
+                    $this->m_custom->web_setting_set('merchant_max_hotdeal_per_day', $merchant_max_hotdeal_per_day);
+                    $this->m_custom->web_setting_set('user_max_picture_per_day', $user_max_picture_per_day);
+                    
+                    $message_info = add_message_info($message_info, 'Web Setting success update.');
+                    $can_redirect_to = 1;
+                }
+            }          
+
+            direct_go:
+            if ($message_info != NULL)
+            {
+                $this->session->set_flashdata('message', $message_info);
+            }
+            if ($can_redirect_to == 1)
+            {
+                redirect(uri_string(), 'refresh');
+            }
+        }
+
+        // set the flash data error message if there is one
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+
+        $this->data['keppo_company_name'] = array(
+            'name' => 'keppo_company_name',
+            'id' => 'keppo_company_name',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('keppo_company_name', $this->m_custom->web_setting_get('keppo_company_name', 'set_desc')),
+        );
+        $this->data['keppo_admin_email'] = array(
+            'name' => 'keppo_admin_email',
+            'id' => 'keppo_admin_email',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('keppo_admin_email', $this->m_custom->web_setting_get('keppo_admin_email', 'set_desc')),
+        );
+        $this->data['merchant_minimum_balance'] = array(
+            'name' => 'merchant_minimum_balance',
+            'id' => 'merchant_minimum_balance',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('merchant_minimum_balance', $this->m_custom->web_setting_get('merchant_minimum_balance', 'set_decimal')),
+        );
+        $this->data['merchant_max_hotdeal_per_day'] = array(
+            'name' => 'merchant_max_hotdeal_per_day',
+            'id' => 'merchant_max_hotdeal_per_day',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('merchant_max_hotdeal_per_day', $this->m_custom->web_setting_get('merchant_max_hotdeal_per_day')),
+        );
+        $this->data['user_max_picture_per_day'] = array(
+            'name' => 'user_max_picture_per_day',
+            'id' => 'user_max_picture_per_day',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('user_max_picture_per_day', $this->m_custom->web_setting_get('user_max_picture_per_day')),
+        );
+
+        $this->data['page_path_name'] = 'admin/web_setting_edit';
+        $this->load->view('template/layout_right_menu', $this->data);
+    }
+    
     function _get_csrf_nonce()
     {
         $this->load->helper('string');

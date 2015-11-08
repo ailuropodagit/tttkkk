@@ -65,6 +65,7 @@ if(isset($message))
                 <button name="button_action" type="submit" value="back">Back</button>
                 <button name="button_action" type="submit" value="save" onclick="return confirm('Confirm that information is correct before save it?')">Save</button>
             </div>
+            <?php echo form_close(); ?>
         </div>
         
     </div>

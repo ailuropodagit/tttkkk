@@ -694,7 +694,7 @@ class M_merchant extends CI_Model
             {
                 $counter = '1';
             }
-            $this->m_custom->web_setting_set('voucher_counter', $counter, 'set_int');
+            $this->m_custom->web_setting_set('voucher_counter', $counter);
         }
         return $voucher;
     }
