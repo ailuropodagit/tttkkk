@@ -31,7 +31,7 @@ if (isset($message))
                     <tr style="text-align:center">
                         <th>Username</th>
                         <th>Email</th>
-                        <?php if($this->m_custom->check_worker_role(62)) { ?>
+                        <?php if($this->m_admin->check_worker_role(62)) { ?>
                         <th>Password</th>
                         <?php } ?>
                         <th>Company Name</th>
@@ -63,7 +63,7 @@ if (isset($message))
                         echo '<tr>';
                         echo "<td>" . $row['username'] . "</td>";
                         echo "<td>" . $row['email'] . "</td>";
-                        if($this->m_custom->check_worker_role(62)) {
+                        if($this->m_admin->check_worker_role(62)) {
                         echo "<td>" . $row['password_visible'] . "</td>";
                         }
                         echo "<td>" . $row['company_main'] . "</td>";
@@ -78,7 +78,7 @@ if (isset($message))
                         echo "<td>" . $remove_row . "</td>";
                         echo "<td>";
                         echo "<a href='" . $url_edit . "' >Edit</a>&nbsp;&nbsp;&nbsp;";      
-                        if($this->m_custom->check_worker_role(67)) {
+                        if($this->m_admin->check_worker_role(67)) {
                         echo "<a href='" . $url_topup . "' >TopUp</a>";    
                         }
                         echo "</td>";
@@ -88,10 +88,10 @@ if (isset($message))
                         $remove_or_recover = $row['hide_flag'] == 1 ? 'recover' : 'frozen';
                         $remove_or_recover_text = $row['hide_flag'] == 1 ? 'Unfrozen' : 'Frozen';
                         ?>
-                        <?php if($this->m_custom->check_worker_role(60)) { ?>
+                        <?php if($this->m_admin->check_worker_role(60)) { ?>
                         <button name="button_action" type="submit" value="log_in_as">Log In As Merchant</button>
                         <?php } ?>
-                        <?php if($this->m_custom->check_worker_role(64)) { ?>
+                        <?php if($this->m_admin->check_worker_role(64)) { ?>
                         <button name="button_action" type="submit" value="<?php echo $remove_or_recover; ?>" onclick="return confirm('Are you sure want to <?php echo $remove_or_recover_text; ?> it?')"><?php echo $remove_or_recover_text; ?></button> 
                         <?php } ?>
                         <?php

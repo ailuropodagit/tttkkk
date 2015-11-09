@@ -763,7 +763,7 @@ class Admin extends CI_Controller
 
     function admin_dashboard()
     {
-        if (!$this->m_custom->check_is_any_admin())
+        if (!$this->m_admin->check_is_any_admin())
         {
             redirect('/', 'refresh');
         }
@@ -776,7 +776,7 @@ class Admin extends CI_Controller
 
     function profile()
     {
-        if (!$this->m_custom->check_is_any_admin())
+        if (!$this->m_admin->check_is_any_admin())
         {
             redirect('/', 'refresh');
         }
@@ -873,7 +873,7 @@ class Admin extends CI_Controller
 
     function update_profile_image()
     {
-        if (!$this->m_custom->check_is_any_admin())
+        if (!$this->m_admin->check_is_any_admin())
         {
             redirect('/', 'refresh');
         }
@@ -924,7 +924,7 @@ class Admin extends CI_Controller
 
     function category_management()
     {
-        if (!$this->m_custom->check_is_any_admin(72))
+        if (!$this->m_admin->check_is_any_admin(72))
         {
             redirect('/', 'refresh');
         }
@@ -955,7 +955,7 @@ class Admin extends CI_Controller
 
     function category_add()
     {
-        if (!$this->m_custom->check_is_any_admin(72))
+        if (!$this->m_admin->check_is_any_admin(72))
         {
             redirect('/', 'refresh');
         }
@@ -1056,7 +1056,7 @@ class Admin extends CI_Controller
 
     function category_edit($edit_id)
     {
-        if (!$this->m_custom->check_is_any_admin(72))
+        if (!$this->m_admin->check_is_any_admin(72))
         {
             redirect('/', 'refresh');
         }
@@ -1213,7 +1213,7 @@ class Admin extends CI_Controller
 
     function user_management()
     {
-        if (!$this->m_custom->check_is_any_admin(65))
+        if (!$this->m_admin->check_is_any_admin(65))
         {
             redirect('/', 'refresh');
         }
@@ -1228,7 +1228,7 @@ class Admin extends CI_Controller
 
     function user_special_action()
     {
-        if (!$this->m_custom->check_is_any_admin(65))
+        if (!$this->m_admin->check_is_any_admin(65))
         {
             redirect('/', 'refresh');
         }
@@ -1241,7 +1241,7 @@ class Admin extends CI_Controller
             $id = $this->input->post('id');
             $user_login_info = $this->m_custom->getUserLoginInfo($id);
             $user_display_name = $this->m_custom->display_users($id);
-            if ($this->input->post('button_action') == "log_in_as" && $this->m_custom->check_worker_role(61))
+            if ($this->input->post('button_action') == "log_in_as" && $this->m_admin->check_worker_role(61))
             {
                 if ($user_login_info)
                 {
@@ -1255,7 +1255,7 @@ class Admin extends CI_Controller
                     }
                 }
             }
-            if ($this->input->post('button_action') == "frozen" && $this->m_custom->check_worker_role(64))
+            if ($this->input->post('button_action') == "frozen" && $this->m_admin->check_worker_role(64))
             {
                 $message_info = add_message_info($message_info, $user_display_name . ' success frozen.');
                 $this->m_custom->update_hide_flag(1, 'users', $id);
@@ -1281,7 +1281,7 @@ class Admin extends CI_Controller
 
     function merchant_management()
     {
-        if (!$this->m_custom->check_is_any_admin(65))
+        if (!$this->m_admin->check_is_any_admin(65))
         {
             redirect('/', 'refresh');
         }
@@ -1296,7 +1296,7 @@ class Admin extends CI_Controller
 
     function merchant_edit($edit_id)
     {
-        if (!$this->m_custom->check_is_any_admin(65))
+        if (!$this->m_admin->check_is_any_admin(65))
         {
             redirect('/', 'refresh');
         }
@@ -1505,7 +1505,7 @@ class Admin extends CI_Controller
 
     function merchant_special_action()
     {
-        if (!$this->m_custom->check_is_any_admin(65))
+        if (!$this->m_admin->check_is_any_admin(65))
         {
             redirect('/', 'refresh');
         }
@@ -1518,7 +1518,7 @@ class Admin extends CI_Controller
             $id = $this->input->post('id');
             $user_login_info = $this->m_custom->getUserLoginInfo($id);
             $user_display_name = $this->m_custom->display_users($id);
-            if ($this->input->post('button_action') == "log_in_as" && $this->m_custom->check_worker_role(60))
+            if ($this->input->post('button_action') == "log_in_as" && $this->m_admin->check_worker_role(60))
             {
                 if ($user_login_info)
                 {
@@ -1532,7 +1532,7 @@ class Admin extends CI_Controller
                     }
                 }
             }
-            if ($this->input->post('button_action') == "frozen" && $this->m_custom->check_worker_role(64))
+            if ($this->input->post('button_action') == "frozen" && $this->m_admin->check_worker_role(64))
             {
                 $message_info = add_message_info($message_info, $user_display_name . ' success frozen.');
                 $this->m_custom->update_hide_flag(1, 'users', $id);
@@ -1558,7 +1558,7 @@ class Admin extends CI_Controller
 
     function merchant_topup($merchant_id)
     {
-        if (!$this->m_custom->check_is_any_admin(67))
+        if (!$this->m_admin->check_is_any_admin(67))
         {
             redirect('/', 'refresh');
         }
@@ -1570,7 +1570,7 @@ class Admin extends CI_Controller
         }
         
         $this->data['merchant_id'] = $merchant_id;
-        $topup_list = $this->m_custom->getAllTopup($merchant_id); 
+        $topup_list = $this->m_admin->getAllTopup($merchant_id); 
         $this->data['the_result'] = $topup_list;
         
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
@@ -1580,7 +1580,7 @@ class Admin extends CI_Controller
 
     function merchant_topup_add($merchant_id)
     {
-        if (!$this->m_custom->check_is_any_admin(67))
+        if (!$this->m_admin->check_is_any_admin(67))
         {
             redirect('/', 'refresh');
         }
@@ -1717,7 +1717,7 @@ class Admin extends CI_Controller
     
     function merchant_topup_edit($merchant_id, $edit_id)
     {
-        if (!$this->m_custom->check_is_any_admin(67))
+        if (!$this->m_admin->check_is_any_admin(67))
         {
             redirect('/', 'refresh');
         }
@@ -1862,12 +1862,12 @@ class Admin extends CI_Controller
     
     function worker_management()
     {
-        if (!$this->m_custom->check_is_any_admin(66))
+        if (!$this->m_admin->check_is_any_admin(66))
         {
             redirect('/', 'refresh');
         }
 
-        $user_list = $this->m_custom->getAllWorker();
+        $user_list = $this->m_admin->getAllWorker();
         $this->data['the_result'] = $user_list;
 
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
@@ -1877,7 +1877,7 @@ class Admin extends CI_Controller
 
     function worker_add()
     {
-        if (!$this->m_custom->check_is_any_admin(66))
+        if (!$this->m_admin->check_is_any_admin(66))
         {
             redirect('/', 'refresh');
         }
@@ -2014,7 +2014,7 @@ class Admin extends CI_Controller
 
     function worker_edit($edit_id)
     {
-        if (!$this->m_custom->check_is_any_admin(66))
+        if (!$this->m_admin->check_is_any_admin(66))
         {
             redirect('/', 'refresh');
         }
@@ -2181,7 +2181,7 @@ class Admin extends CI_Controller
 
     function keppo_voucher_management()
     {
-        if (!$this->m_custom->check_is_any_admin(70))
+        if (!$this->m_admin->check_is_any_admin(70))
         {
             redirect('/', 'refresh');
         }
@@ -2212,7 +2212,7 @@ class Admin extends CI_Controller
     
     function keppo_voucher_change($candie_id = NULL)
     {
-        if (!$this->m_custom->check_is_any_admin(70))
+        if (!$this->m_admin->check_is_any_admin(70))
         {
             redirect('/', 'refresh');
         }
@@ -2537,7 +2537,7 @@ class Admin extends CI_Controller
     
     function web_setting_edit()
     {
-        if (!$this->m_custom->check_is_any_admin(73))
+        if (!$this->m_admin->check_is_any_admin(73))
         {
             redirect('/', 'refresh');
         }

@@ -193,7 +193,7 @@
                     $header_profile_login_profile_image = $header_row_read_merchant_superviosr_as_merchant->profile_image;
                     $header_profile_login_company_name =  $header_row_read_merchant_superviosr_as_merchant->company;
                 }
-                else if($this->m_custom->check_is_any_admin())
+                else if($this->m_admin->check_is_any_admin())
                 {
                     $header_profile_login_user_name = "";
                     $header_profile_login_profile_image = "";
@@ -370,38 +370,38 @@
                                             <li><a href='<?php echo base_url('admin/admin_dashboard') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'admin_dashboard'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Dashboard</a></li>
                                             <li><a href='<?php echo base_url('admin/profile') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'profile'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Profile</a></li>
                                             <?php 
-                                            if($this->m_custom->check_worker_role(65)) 
+                                            if($this->m_admin->check_worker_role(65)) 
                                             {
                                                 ?>
                                                 <li><a href='<?php echo base_url(); ?>admin/user_management' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'user_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Manage User</a></li>
                                                 <li><a href='<?php echo base_url(); ?>admin/merchant_management' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'merchant_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Manage Merchant</a></li>
                                                 <?php
                                             }
-                                            if($this->m_custom->check_worker_role(66)) 
+                                            if($this->m_admin->check_worker_role(66)) 
                                             {
                                                 ?>
                                                 <li><a href='<?php echo base_url(); ?>admin/worker_management' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'worker_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Manage Worker</a></li>
                                                 <?php
                                             }
-                                            if($this->m_custom->check_worker_role(72))
+                                            if($this->m_admin->check_worker_role(72))
                                             { 
                                                 ?>
                                                 <li><a href='<?php echo base_url(); ?>admin/category_management' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'category_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Manage Category</a></li>
                                                 <?php
                                             }
-                                            if($this->m_custom->check_worker_role(70))
+                                            if($this->m_admin->check_worker_role(70))
                                             { 
                                                 ?>
                                                 <li><a href='<?php echo base_url(); ?>admin/keppo_voucher_management' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'keppo_voucher_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Manage Keppo Voucher</a></li>
                                                 <?php
                                             }
-                                            if($this->m_custom->check_worker_role(71))
+                                            if($this->m_admin->check_worker_role(71))
                                             { 
                                                 ?>
                                                 <li><a href='<?php echo base_url(); ?>admin/keppo_voucher_redeem' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'keppo_voucher_redeem'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> User's Redeem Keppo Voucher</a></li>
                                                 <?php
                                             }
-                                            if($this->m_custom->check_worker_role(73))
+                                            if($this->m_admin->check_worker_role(73))
                                             { 
                                                 ?>
                                                 <li><a href='<?php echo base_url(); ?>admin/web_setting_edit' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'web_setting_edit'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Web Setting</a></li>
@@ -492,7 +492,7 @@
                                 </a>
                                 <?php
                             }
-                            else if ($this->m_custom->check_is_any_admin()) 
+                            else if ($this->m_admin->check_is_any_admin()) 
                             {
                                 ?>
                                 <a href='<?php echo base_url("admin/admin_dashboard/$login_user_id") ?>'>

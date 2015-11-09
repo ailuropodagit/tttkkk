@@ -167,41 +167,6 @@ class M_custom extends CI_Model
         return $have_role;
     }
 
-    public function check_worker_role($check_worker_role = NULL)
-    {
-        $have_role = 0;
-        if (check_correct_login_type($this->config->item('group_id_admin')))
-        {
-            $have_role = 1;
-        }
-        else if (check_correct_login_type($this->config->item('group_id_worker')))
-        {
-            if (!IsNullOrEmptyString($check_worker_role))
-            {
-                $login_id = $this->ion_auth->user()->row()->id;
-                $query = $this->db->get_where('many_to_many', array('many_type' => 'admin_role', 'many_parent_id' => $login_id, 'many_child_id' => $check_worker_role));
-                if ($query->num_rows() > 0)
-                {
-                    $have_role = 1;
-                }
-            }
-        }
-        return $have_role;
-    }
-
-    public function check_is_any_admin($check_worker_role = NULL)
-    {
-        $have_role = 0;
-        if (check_correct_login_type($this->config->item('group_id_admin')) || check_correct_login_type($this->config->item('group_id_worker')))
-        {
-            $have_role = 1;
-        }
-        if(!IsNullOrEmptyString($check_worker_role)){
-            $have_role = $this->m_custom->check_worker_role($check_worker_role);
-        }
-        return $have_role;
-    }
-
     public function check_is_any_merchant()
     {
         if (check_correct_login_type($this->config->item('group_id_merchant')) || check_correct_login_type($this->config->item('group_id_supervisor')))
@@ -1064,19 +1029,6 @@ class M_custom extends CI_Model
             return $query->result();
         }
     }
-
-    function getAllTopup($merchant_id = 0){
-        if ($merchant_id != 0)
-        {
-            $this->db->where('merchant_id', $merchant_id);
-        }
-        
-        $this->db->order_by('topup_time', 'desc');
-        $this->db->from('merchant_topup');
-        $query = $this->db->get();
-        $result = $query->result_array();
-        return $result;
-    }
     
     function getAllUser(){
         $this->db->order_by('first_name');
@@ -1088,13 +1040,6 @@ class M_custom extends CI_Model
     function getAllMerchant(){
         $this->db->order_by('company');
         $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant')));
-        $result = $query->result_array();
-        return $result;
-    }
-    
-    function getAllWorker(){
-        $this->db->order_by('first_name');
-        $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_worker')));
         $result = $query->result_array();
         return $result;
     }
@@ -1985,6 +1930,51 @@ class M_custom extends CI_Model
             );
         }
         return $notification_list;
+    }
+
+    public function trans_extra_insert($user_id = NULL, $trans_conf_id = NULL, $amount_change = NULL, $admin_id = NULL, $trans_bank = NULL, $trans_date = NULL, $trans_no = NULL, $trans_remark = NULL)
+    {
+        if ($user_id != NULL && $trans_conf_id != NULL && $ $amount_change != NULL && $admin_id != NULL)
+        {
+            $the_data = array(
+                'user_id' => $user_id,
+                'trans_conf_id' => $trans_conf_id,
+                'amount_change' => check_is_positive_decimal($amount_change),
+                'admin_id' => $admin_id,
+                'trans_bank' => $trans_bank,
+                'trans_date' => validateDate($trans_date),
+                'trans_no' => $trans_no,
+                'trans_remark' => $trans_remark,
+            );
+            $this->db->insert('transaction_extra', $the_data);
+            $new_id = $this->db->insert_id();
+            return $new_id;
+        }
+        else
+        {
+            return FALSE;
+        }
+    }
+
+    public function trans_extra_update($extra_id = NULL, $amount_change = NULL, $trans_bank = NULL, $trans_date = NULL, $trans_no = NULL, $trans_remark = NULL)
+    {
+        if ($extra_id != NULL)
+        {
+            $the_data = array(
+                'amount_change' => check_is_positive_decimal($amount_change),
+                'trans_bank' => $trans_bank,
+                'trans_date' => validateDate($trans_date),
+                'trans_no' => $trans_no,
+                'trans_remark' => $trans_remark,
+            );
+            $this->db->where('extra_id', $extra_id);
+            $this->db->update('transaction_extra', $the_data);
+            return TRUE;
+        }
+        else
+        {
+            return FALSE;
+        }
     }
 
     //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album

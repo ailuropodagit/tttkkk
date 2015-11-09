@@ -52,7 +52,7 @@ if(isset($message))
                 }
                 ?>
             </div>
-            <?php if ($this->m_custom->check_is_any_admin()) { ?>
+            <?php if ($this->m_admin->check_is_any_admin()) { ?>
                 <?php echo form_open_multipart('admin/update_profile_image'); ?>
                     <div id="profile-photo-note">
                         <?php echo $this->config->item('upload_guide_image'); ?>
