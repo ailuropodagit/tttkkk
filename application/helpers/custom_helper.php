@@ -91,6 +91,40 @@ if (!function_exists('check_is_positive_decimal'))
 
 }
 
+if (!function_exists('check_is_numeric'))
+{
+
+    function check_is_numeric($i)
+    {
+        if (!is_numeric($i) || $i != round($i))
+        {
+            return 0;
+        }
+        else
+        {
+            return $i;
+        }
+    }
+
+}
+
+if (!function_exists('check_is_decimal'))
+{
+
+    function check_is_decimal($i)
+    {
+        if (!is_numeric($i))
+        {
+            return 0;
+        }
+        else
+        {
+            return $i;
+        }
+    }
+
+}
+
 if (!function_exists('check_correct_login_type'))
 {
 

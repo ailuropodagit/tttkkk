@@ -1279,6 +1279,95 @@ class Admin extends CI_Controller
         }
     }
 
+    function user_bonus_candie($user_id)
+    {
+        if (!$this->m_admin->check_is_any_admin(74))
+        {
+            redirect('/', 'refresh');
+        }
+        
+        $result = $this->m_custom->getUser($user_id, $this->group_id_user);
+
+        if (empty($result))
+        {
+            redirect('/', 'refresh');
+        }
+        
+        $message_info = '';
+        $login_id = $this->login_id;
+        $login_type = $this->login_type;
+        
+        if (isset($_POST) && !empty($_POST))
+        {
+            $can_redirect_to = 0;
+            $user_id = $this->input->post('user_id');
+            $amount_change = $this->input->post('amount_change');
+            $trans_remark = $this->input->post('trans_remark');
+            $user_name = $this->m_custom->display_users($user_id);
+            
+            // validate form input
+            $this->form_validation->set_rules('amount_change', 'Bonus Candie Amount', 'required|integer');
+            $this->form_validation->set_rules('trans_remark', 'Bonus Reason', 'required');          
+
+            if ($this->input->post('button_action') == "save")
+            {
+                if ($this->form_validation->run() === TRUE)
+                {
+                    $new_id = $this->m_admin->trans_extra_bonus_candie($user_id, $amount_change, $trans_remark);
+                    if ($new_id)
+                    {
+                        $message_info = add_message_info($message_info, 'Succes give ' . $user_name . ' ' . $amount_change . ' bonus candie.');
+                        $can_redirect_to = 2;
+                    }
+                    else
+                    {
+                        $message_info = add_message_info($message_info, $this->ion_auth->errors());
+                        $can_redirect_to = 1;
+                    }
+                }
+            }
+            if ($this->input->post('button_action') == "back")
+            {
+                $can_redirect_to = 2;
+            }
+
+            direct_go:
+            if ($message_info != NULL)
+            {
+                $this->session->set_flashdata('message', $message_info);
+            }
+            if ($can_redirect_to == 1)
+            {
+                redirect(uri_string(), 'refresh');
+            }
+            elseif ($can_redirect_to == 2)
+            {
+                redirect('admin/user_management', 'refresh');
+            }
+        }
+
+        // set the flash data error message if there is one
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+
+        $this->data['result'] = $result;
+        
+        $this->data['amount_change'] = array(
+            'name' => 'amount_change',
+            'id' => 'amount_change',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('amount_change'),
+        );
+
+        $this->data['trans_remark'] = array(
+            'name' => 'trans_remark',
+            'id' => 'trans_remark',
+            'value' => $this->form_validation->set_value('trans_remark'),
+        );
+
+        $this->data['page_path_name'] = 'admin/user_bonus_candie_change';
+        $this->load->view('template/layout_right_menu', $this->data);
+    }
+    
     function merchant_management()
     {
         if (!$this->m_admin->check_is_any_admin(65))

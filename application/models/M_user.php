@@ -458,11 +458,18 @@ class M_user extends CI_Model
         return $total_count;
     }
 
-    public function candie_history_insert($trans_conf_id, $get_from_table_id, $get_from_table = 'activity_history', $allow_duplicate = 0, $candie_overwrite = 0)
+    public function candie_history_insert($trans_conf_id, $get_from_table_id, $get_from_table = 'activity_history', $allow_duplicate = 0, $candie_overwrite = 0, $user_id_overwrite = 0)
     {
-        if (check_correct_login_type($this->config->item('group_id_user')))
+        if (check_correct_login_type($this->config->item('group_id_user')) || $this->m_admin->check_is_any_admin())
         {
-            $user_id = $this->ion_auth->user()->row()->id;
+            if ($user_id_overwrite == 0)
+            {
+                $user_id = $this->ion_auth->user()->row()->id;
+            }
+            else
+            {
+                $user_id = $user_id_overwrite;
+            }
             $search_data = array(
                 'user_id' => $user_id,
                 'trans_conf_id' => $trans_conf_id,
@@ -481,6 +488,11 @@ class M_user extends CI_Model
                     if ($config_result['change_type'] == 'inc')
                     {
                         $candie_plus = $config_result['amount_change'];
+                        //If is bonus candie, need to minus candie
+                        if ($trans_conf_id == 31)
+                        {
+                            $candie_plus = $candie_overwrite;
+                        }
                     }
                     else
                     {

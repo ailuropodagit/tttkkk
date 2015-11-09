@@ -132,11 +132,15 @@ if (isset($message))
                                 if ($conf_row['change_type'] == 'inc')
                                 {
                                     $amount_change = $conf_row['change_type'] == 'inc' ? $conf_row['amount_change'] : ($conf_row['amount_change'] * -1);
+                                    $amount_change = number_format($amount_change, 0);
+                                    if($conf_row['amount_change'] == 0){
+                                        $amount_change = 'Depending';
+                                    }
                                     $candie_sub_total = number_format($row['plus'] - $row['minus'], 0);
                                     $candie_gain_only += $candie_sub_total;
                                     echo '<tr>';
                                     echo "<td>" . $conf_row['conf_name'] . "</td>";
-                                    echo "<td>" . number_format($amount_change, 0) . "</td>";
+                                    echo "<td>" . $amount_change . "</td>";
                                     echo "<td>" . $row['quantity'] . "</td>";
                                     echo "<td>" . $candie_sub_total . "</td>";
                                     echo '</tr>';

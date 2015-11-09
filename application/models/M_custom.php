@@ -1934,12 +1934,16 @@ class M_custom extends CI_Model
 
     public function trans_extra_insert($user_id = NULL, $trans_conf_id = NULL, $amount_change = NULL, $admin_id = NULL, $trans_bank = NULL, $trans_date = NULL, $trans_no = NULL, $trans_remark = NULL)
     {
-        if ($user_id != NULL && $trans_conf_id != NULL && $ $amount_change != NULL && $admin_id != NULL)
+        if ($user_id == NULL || $trans_conf_id == NULL || $amount_change == NULL || $admin_id == NULL)
+        {
+            return FALSE;
+        }
+        else
         {
             $the_data = array(
                 'user_id' => $user_id,
                 'trans_conf_id' => $trans_conf_id,
-                'amount_change' => check_is_positive_decimal($amount_change),
+                'amount_change' => check_is_decimal($amount_change),
                 'admin_id' => $admin_id,
                 'trans_bank' => $trans_bank,
                 'trans_date' => validateDate($trans_date),
@@ -1950,10 +1954,6 @@ class M_custom extends CI_Model
             $new_id = $this->db->insert_id();
             return $new_id;
         }
-        else
-        {
-            return FALSE;
-        }
     }
 
     public function trans_extra_update($extra_id = NULL, $amount_change = NULL, $trans_bank = NULL, $trans_date = NULL, $trans_no = NULL, $trans_remark = NULL)
@@ -1961,7 +1961,7 @@ class M_custom extends CI_Model
         if ($extra_id != NULL)
         {
             $the_data = array(
-                'amount_change' => check_is_positive_decimal($amount_change),
+                'amount_change' => check_is_decimal($amount_change),
                 'trans_bank' => $trans_bank,
                 'trans_date' => validateDate($trans_date),
                 'trans_no' => $trans_no,
