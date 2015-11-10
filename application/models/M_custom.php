@@ -1838,7 +1838,10 @@ class M_custom extends CI_Model
 
     public function notification_count($noti_to_id, $noti_read_already = 0)
     {
-        $query_list = $this->db->get_where('notification', array('noti_to_id' => $noti_to_id, 'hide_flag' => 0, 'noti_read_already' => $noti_read_already))->num_rows();
+        if($noti_to_id != 0){
+            $this->db->where('noti_to_id', $noti_to_id);
+        }       
+        $query_list = $this->db->get_where('notification', array('hide_flag' => 0, 'noti_read_already' => $noti_read_already))->num_rows();
         return $query_list;
     }
 

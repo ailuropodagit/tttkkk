@@ -342,7 +342,7 @@
                                     <li>
                                         <a>My Account</a>
                                         <ul>
-                                            <li><a href='<?php echo base_url('admin/admin_dashboard') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'admin_dashboard'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Dashboard</a></li>
+                                            <li><a href='<?php echo base_url('admin/admin_dashboard') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'admin_dashboard'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Dashboard Notification</a></li>
                                             <li><a href='<?php echo base_url('admin/profile') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'profile'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Profile</a></li>
                                             <li><a href='<?php echo base_url('admin/change_password') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'change_password'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Change Password</a></li>
                                             <li><a href='<?php echo base_url('admin/user_management') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'user_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Manage User</a></li>

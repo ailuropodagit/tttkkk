@@ -131,7 +131,7 @@ class Admin extends CI_Controller
         $this->session->set_flashdata('message', $this->ion_auth->messages());
         redirect('admin/login', 'refresh');
     }
-
+    
     // change password
     function change_password()
     {
@@ -770,8 +770,16 @@ class Admin extends CI_Controller
 
         $login_id = $this->ion_auth->user()->row()->id;
 
-        $this->data['page_path_name'] = 'admin/admin_dashboard';
+        $notification_list = $this->m_custom->notification_display(0, 1);
+        $this->data['notification_list'] = $notification_list;
+
+        $this->data['page_path_name'] = 'all/notification';
         $this->load->view('template/layout_right_menu', $this->data);
+        
+        if ($this->config->item('notification_auto_mark_as_read') == 1)
+        {
+            $this->m_custom->notification_read(0);
+        }
     }
 
     function profile()

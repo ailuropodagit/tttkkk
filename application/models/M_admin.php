@@ -64,7 +64,7 @@ class M_admin extends CI_Model
         return $have_role;
     }
 
-    //todo to do
+    //todo to do half
     public function trans_extra_bonus_candie($user_id, $amount_change, $trans_remark = NULL, $is_update = 0, $trans_date = NULL, $edit_id = NULL)
     {
         if ($this->m_admin->check_is_any_admin(74))
@@ -86,4 +86,28 @@ class M_admin extends CI_Model
         }
     }
 
+    public function merchant_low_balance_count(){
+        
+        $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant')));
+        $the_result = $query->result_array();
+
+        $low_balance_count = 0;
+        foreach ($the_result as $row)
+        {
+            $merchant_balance = $this->m_merchant->merchant_check_balance($row['id']);
+            $merchant_minimum_balance = $this->m_custom->web_setting_get('merchant_minimum_balance', 'set_decimal');
+            if ($merchant_balance < $merchant_minimum_balance)
+            {
+                $low_balance_count++;
+            }
+        }
+        return $low_balance_count;
+    }
+    
+    public function banner_expired_count(){
+        $this->db->where('end_time >=', get_part_of_date('all'));
+        $query = $this->db->get_where('banner', array('hide_flag' => 0, 'expired_flag' => 0));
+        return $query->num_rows();
+    }
+    
 }

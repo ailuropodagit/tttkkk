@@ -53,7 +53,7 @@ $config['user_upload_box_per_page'] = 5;
 $config['keppo_admin_id'] = '1';
 $config['keppo_email_domain'] = '@keppo.my';
 $config['froze_account_activate'] = 0;
-$config['notification_auto_mark_as_read'] = 1;
+$config['notification_auto_mark_as_read'] = 0;
 
 $config['custom_per_page'] = '8';
 
