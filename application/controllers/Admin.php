@@ -1376,22 +1376,30 @@ class Admin extends CI_Controller
         $this->load->view('template/layout_right_menu', $this->data);
     }
     
-    function merchant_management()
+    function merchant_management($low_balance_only = 0)
     {
         if (!$this->m_admin->check_is_any_admin(65))
         {
             redirect('/', 'refresh');
         }
 
-        $user_list = $this->m_custom->getAllMerchant();
+        if ($low_balance_only == 1)
+        {
+            $user_list = $this->m_admin->merchant_low_balance_count();
+        }
+        else
+        {
+            $user_list = $this->m_custom->getAllMerchant();
+        }
         $this->data['the_result'] = $user_list;
-
+        $this->data['low_balance_only'] = $low_balance_only;
+        
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
         $this->data['page_path_name'] = 'admin/merchant_management';
         $this->load->view('template/layout_right_menu', $this->data);
     }
 
-    function merchant_edit($edit_id)
+    function merchant_edit($edit_id, $low_balance_only = 0)
     {
         if (!$this->m_admin->check_is_any_admin(65))
         {
@@ -1501,7 +1509,11 @@ class Admin extends CI_Controller
             }
             elseif ($can_redirect_to == 2)
             {
-                redirect('admin/merchant_management', 'refresh');
+                if($low_balance_only == 1){
+                    redirect('admin/merchant_management/1', 'refresh');
+                }else{
+                    redirect('admin/merchant_management', 'refresh');
+                }
             }
         }
 
@@ -1600,7 +1612,7 @@ class Admin extends CI_Controller
         return TRUE;
     }
 
-    function merchant_special_action()
+    function merchant_special_action($low_balance_only = 0)
     {
         if (!$this->m_admin->check_is_any_admin(65))
         {
@@ -1648,12 +1660,16 @@ class Admin extends CI_Controller
             }
             if ($can_redirect_to == 1)
             {
-                redirect('admin/merchant_management', 'refresh');
+                if($low_balance_only == 1){
+                    redirect('admin/merchant_management/1', 'refresh');
+                }else{
+                    redirect('admin/merchant_management', 'refresh');
+                }
             }
         }
     }
 
-    function merchant_topup($merchant_id)
+    function merchant_topup($merchant_id, $low_balance_only = 0)
     {
         if (!$this->m_admin->check_is_any_admin(67))
         {
@@ -1669,13 +1685,14 @@ class Admin extends CI_Controller
         $this->data['merchant_id'] = $merchant_id;
         $topup_list = $this->m_admin->getAllTopup($merchant_id); 
         $this->data['the_result'] = $topup_list;
+        $this->data['low_balance_only'] = $low_balance_only;
         
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
         $this->data['page_path_name'] = 'admin/merchant_topup';
         $this->load->view('template/layout_right_menu', $this->data);
     }
 
-    function merchant_topup_add($merchant_id)
+    function merchant_topup_add($merchant_id, $low_balance_only = 0)
     {
         if (!$this->m_admin->check_is_any_admin(67))
         {
@@ -1759,11 +1776,19 @@ class Admin extends CI_Controller
             }
             elseif ($can_redirect_to == 2)
             {
-                redirect('admin/merchant_topup/' . $merchant_id, 'refresh');
+                if($low_balance_only == 1){
+                    redirect('admin/merchant_topup/' . $merchant_id . '/1', 'refresh');
+                }else{
+                    redirect('admin/merchant_topup/' . $merchant_id, 'refresh');
+                }
             }
             elseif ($can_redirect_to == 3)
             {
-                redirect('admin/merchant_management', 'refresh');
+                if($low_balance_only == 1){
+                    redirect('admin/merchant_management/1', 'refresh');
+                }else{
+                    redirect('admin/merchant_management', 'refresh');
+                }
             }
         }
 
@@ -1812,7 +1837,7 @@ class Admin extends CI_Controller
         $this->load->view('template/layout_right_menu', $this->data);
     }
     
-    function merchant_topup_edit($merchant_id, $edit_id)
+    function merchant_topup_edit($merchant_id, $edit_id, $low_balance_only = 0)
     {
         if (!$this->m_admin->check_is_any_admin(67))
         {
@@ -1900,12 +1925,20 @@ class Admin extends CI_Controller
                 redirect(uri_string(), 'refresh');
             }
             elseif ($can_redirect_to == 2)
-            {
-                redirect('admin/merchant_topup/' . $merchant_id, 'refresh');
+            {               
+                if($low_balance_only == 1){
+                    redirect('admin/merchant_topup/' . $merchant_id . '/1', 'refresh');
+                }else{
+                    redirect('admin/merchant_topup/' . $merchant_id, 'refresh');
+                }
             }
             elseif ($can_redirect_to == 3)
             {
-                redirect('admin/merchant_management', 'refresh');
+                if($low_balance_only == 1){
+                    redirect('admin/merchant_management/1', 'refresh');
+                }else{
+                    redirect('admin/merchant_management', 'refresh');
+                }
             }
         }
 

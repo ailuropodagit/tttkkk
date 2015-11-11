@@ -1,6 +1,9 @@
 <div id="monitoring">
     <h1>Monitoring Remove Action</h1>
     <div id="monitoring-content">
+        <?php
+        $this->load->view('all/notification_sub_menu');
+        ?>
         <div id='table-all'>
             <table border='1px' cellspacing='0px' cellpadding='0px' id="myTable" class="display">
                 <colgroup>

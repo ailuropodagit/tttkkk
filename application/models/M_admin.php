@@ -86,12 +86,13 @@ class M_admin extends CI_Model
         }
     }
 
-    public function merchant_low_balance_count(){
+    public function merchant_low_balance_count($want_count = 0){
         
         $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant')));
         $the_result = $query->result_array();
 
         $low_balance_count = 0;
+        $return_final = array();
         foreach ($the_result as $row)
         {
             $merchant_balance = $this->m_merchant->merchant_check_balance($row['id']);
@@ -99,9 +100,14 @@ class M_admin extends CI_Model
             if ($merchant_balance < $merchant_minimum_balance)
             {
                 $low_balance_count++;
+                $return_final[] = $row;
             }
         }
-        return $low_balance_count;
+        if($want_count == 1){
+            return $low_balance_count;
+        }else{
+            return $return_final;
+        }
     }
     
     public function banner_expired_count(){
