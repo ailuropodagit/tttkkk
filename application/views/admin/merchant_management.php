@@ -60,6 +60,13 @@ if (isset($message))
                         $url_topup = base_url() . "admin/merchant_topup/" . $row['id'];
                         $url_dashboard = base_url() . "all/merchant_dashboard/" . $row['slug'];
                         $url_special_action = base_url() . "admin/merchant_special_action";
+                        
+                        if($low_balance_only == 1){
+                            $url_edit = base_url() . "admin/merchant_edit/" . $row['id'] . "/1";
+                            $url_topup = base_url() . "admin/merchant_topup/" . $row['id']. "/1";
+                            $url_special_action = base_url() . "admin/merchant_special_action/1";
+                        }
+                        
                         echo '<tr>';
                         echo "<td>" . $row['username'] . "</td>";
                         echo "<td>" . $row['email'] . "</td>";

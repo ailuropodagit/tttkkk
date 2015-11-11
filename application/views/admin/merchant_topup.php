@@ -25,11 +25,23 @@ if (isset($message))
     <h1>Merchant Top Up History</h1>
     <div id="payment-charge-content">
         <div style="float:left">
-            <?php $back_url = base_url() . 'admin/merchant_management'; ?>           
+            <?php 
+            $back_url = base_url() . 'admin/merchant_management';
+            if ($low_balance_only == 1)
+            {
+                $back_url = base_url() . 'admin/merchant_management/1';
+            }
+            ?>           
             <div><a href='<?php echo $back_url; ?>' class="a-href-button">Back</a></div>
         </div>
         <div style="float:right">
-            <?php $add_new_url = base_url() . 'admin/merchant_topup_add/' . $merchant_id; ?>           
+            <?php 
+            $add_new_url = base_url() . 'admin/merchant_topup_add/' . $merchant_id; 
+            if ($low_balance_only == 1)
+            {
+                $add_new_url = base_url() . 'admin/merchant_topup_add/' . $merchant_id . "/1"; 
+            }
+            ?>           
             <div><a href='<?php echo $add_new_url; ?>' class="a-href-button">Add New Top Up</a></div>
         </div>
         <div id="float-fix"></div>
@@ -61,6 +73,10 @@ if (isset($message))
                         $topup_trans_date = displayDate($row['topup_trans_date']);
                         $admin_name = $this->m_custom->display_users($row['admin_id']);
                         $url_edit = base_url() . "admin/merchant_topup_edit/" . $row['merchant_id'] . "/" . $row['topup_id'];
+                        if ($low_balance_only == 1)
+                        {
+                            $url_edit = base_url() . "admin/merchant_topup_edit/" . $row['merchant_id'] . "/" . $row['topup_id'] . "/1";
+                        }
                         echo '<tr>';
                         echo "<td>" . $merchant_name . "</td>";
                         echo "<td style='text-align:right'>" . $row['topup_amount'] . "</td>";
