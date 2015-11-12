@@ -19,9 +19,13 @@
         <link rel="stylesheet" href="<?php echo base_url('js/bootstrap-3.3.5/dist/css/custom-bootstrap.css') ?>">
         <link rel="stylesheet" href="<?php echo base_url('js/bootstrap-3.3.5/dist/css/custom-bootstrap-modal.css') ?>">
         <link rel="stylesheet" href="<?php echo base_url('js/bootstrap-3.3.5/dist/css/custom-bootstrap-modal-center.css') ?>">
-        <script type="text/javascript" src="<?php echo base_url('js/bootstrap-3.3.5/dist/js/bootstrap.min.js') ?>"></script>       
+        <script type="text/javascript" src="<?php echo base_url('js/bootstrap-3.3.5/dist/js/bootstrap.min.js') ?>"></script>
+        
+        <link rel="stylesheet" type="text/css" href="<?php echo base_url('js/slick-slider/slick.css') ?>"/>
+        <link rel="stylesheet" type="text/css" href="js/slick-slider/slick-theme.css"/>
+        
         <script>
-            $(function(){
+            $(function(){                
                 //BOOSTRAP MODAL
                 $('#visit-first-time').modal('show');
             });
@@ -86,74 +90,74 @@
 
         </script>
     </head>
-    <body>            
-        
+    <body>
         <?php
         if (!isset($_COOKIE['visit_first_time']))
-        {           
+        {
             //COOKIE NO EXPIRE
             setcookie('visit_first_time', 'no');
             //BOOSTRAP MODAL
             if (!$this->ion_auth->logged_in())
             {
-            ?>
-            <div class="modal fade" id="visit-first-time" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <button type="button" class="bootstrap-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <center>
-                                <div style='font-size: 30px; margin: 20px 0px 20px 0px;'>Welcome to keppo.my</div>
-                                <div style='font-size: 20px; margin: 0px 0px 20px 0px;'>Get access to restaurants, spas, cloth and much more promotion...</div>
-                            </center>
-                            <hr/>
-                            <div style='font-size: 20px; margin: 0px 0px 20px 0px; '>Explore Keppo Malaysia for <span style="color: #0185c6">FREE!</span></div>
-                            <form action="<?php echo base_url() . 'user/login'; ?>" method="post" accept-charset="utf-8" id="general_form_login">
-                            <?php
-                            $user_login = base_url() . 'user/login';
-                            $user_register = base_url() . 'user/register';
-                            $user_retrieve_pass = base_url() . 'user/retrieve-password';
-                            $merchant_login = base_url() . 'merchant/login';
-                            $merchant_register = base_url() . 'merchant/register';
-                            $merchant_retrieve_pass = base_url() . 'merchant/retrieve-password';
-                            $identity = array('name' => 'identity',
-                                'id' => 'identity',
-                                'type' => 'text',
-                            );
-                            $password = array('name' => 'password',
-                                'id' => 'password',
-                                'type' => 'password',
-                            );
-                            ?>
-                            <div id='login-form'>
-                                <div id='login-form-each'>
-                                    <div id='login-form-each-label'>E-mail / Username</div>
-                                    <div id='login-form-each-input'><?php echo form_input($identity); ?></div>
+                ?>
+                <div class="modal fade" id="visit-first-time" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-body">
+
+                                <button type="button" class="bootstrap-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <center>
+                                    <div style='font-size: 30px; margin: 20px 0px 20px 0px;'>Welcome to keppo.my</div>
+                                    <div style='font-size: 20px; margin: 0px 0px 20px 0px;'>Get access to restaurants, spas, cloth and much more promotion...</div>
+                                </center>
+                                <hr/>
+                                <div style='font-size: 20px; margin: 0px 0px 20px 0px; '>Explore Keppo Malaysia for <span style="color: #0185c6">FREE!</span></div>
+                                <form action="<?php echo base_url() . 'user/login'; ?>" method="post" accept-charset="utf-8" id="general_form_login">
+                                <?php
+                                $user_login = base_url() . 'user/login';
+                                $user_register = base_url() . 'user/register';
+                                $user_retrieve_pass = base_url() . 'user/retrieve-password';
+                                $merchant_login = base_url() . 'merchant/login';
+                                $merchant_register = base_url() . 'merchant/register';
+                                $merchant_retrieve_pass = base_url() . 'merchant/retrieve-password';
+                                $identity = array('name' => 'identity',
+                                    'id' => 'identity',
+                                    'type' => 'text',
+                                );
+                                $password = array('name' => 'password',
+                                    'id' => 'password',
+                                    'type' => 'password',
+                                );
+                                ?>
+                                <div id='login-form'>
+                                    <div id='login-form-each'>
+                                        <div id='login-form-each-label'>E-mail / Username</div>
+                                        <div id='login-form-each-input'><?php echo form_input($identity); ?></div>
+                                    </div>
+                                    <div id='login-form-each'>
+                                        <div id='login-form-each-label'>Password</div>
+                                        <div id='login-form-each-input'><?php echo form_input($password); ?></div>
+                                    </div>
+                                    <div id='float-fix'></div>
+                                    <div id='login-form-forgot-password' style="float:left">
+                                        <a href="<?php echo $user_retrieve_pass; ?>">Forget Password?</a><br/><br/>
+                                        <input type="submit" value="User Login" onclick="myfunction('<?php echo $user_login; ?>')"/><br/><br/>
+                                        <a href="<?php echo $user_register; ?>">User Register</a>
+                                    </div>
+                                    <div id='login-form-forgot-password' style="float:right">
+                                        <a href="<?php echo $merchant_retrieve_pass; ?>">Forget Password?</a><br/><br/>
+                                        <input type="submit" value="Merchant Login" onclick="myfunction('<?php echo $merchant_login; ?>')"/><br/><br/>
+                                        <a href="<?php echo $merchant_register; ?>">Merchant Register</a>
+                                    </div>
+                                    <div id='float-fix'></div>
                                 </div>
-                                <div id='login-form-each'>
-                                    <div id='login-form-each-label'>Password</div>
-                                    <div id='login-form-each-input'><?php echo form_input($password); ?></div>
-                                </div>
-                                <div id='float-fix'></div>
-                                <div id='login-form-forgot-password' style="float:left">
-                                    <a href="<?php echo $user_retrieve_pass; ?>">Forget Password?</a><br/><br/>
-                                    <input type="submit" value="User Login" onclick="myfunction('<?php echo $user_login; ?>')"/><br/><br/>
-                                    <a href="<?php echo $user_register; ?>">User Register</a>
-                                </div>
-                                <div id='login-form-forgot-password' style="float:right">
-                                    <a href="<?php echo $merchant_retrieve_pass; ?>">Forget Password?</a><br/><br/>
-                                    <input type="submit" value="Merchant Login" onclick="myfunction('<?php echo $merchant_login; ?>')"/><br/><br/>
-                                    <a href="<?php echo $merchant_register; ?>">Merchant Register</a>
-                                </div>
-                                <div id='float-fix'></div>
+                                <?php echo form_close(); ?>
                             </div>
-                            <?php echo form_close(); ?>
                         </div>
                     </div>
                 </div>
-            </div>
-            <?php
-        }
+                <?php
+            }
         }
         ?>
               
@@ -630,46 +634,5 @@
                     <div id="float-fix"></div>
                 </div>
             </div>
-            
-
             <div  style="display: none"><i class="fa fa-bars"></i></div>
-
-                    
-        <!--SEARCH BAR-->
-<!--        <div id="wrapper">
-            <div id="search">
-                <div id="search-content">
-                    <div id="search-content-box">
-                        <div id="search-content-box-content">
-                            <?php echo form_open('all/home_search');?>
-                            <div id="search-box-block1">
-                                <input type="text" placeholder="Search: Merchant, Hot Deal, Promotion" name="search_word" id="search_word">
-                            </div>
-                            <div id="search-box-block2">
-                                <?php
-                                $state_list = $this->m_custom->get_static_option_array('state', '0', 'All');
-                                $me_state_id = array(
-                                    'name' => 'me_state_id',
-                                    'id' => 'me_state_id',
-                                );
-                                $selected_state = $this->uri->segment(4);
-                                if (!empty($selected_state) && $this->router->fetch_method() == 'home_search')
-                                {
-                                    echo form_dropdown($me_state_id, $state_list, $selected_state);
-                                }
-                                else
-                                {
-                                    echo form_dropdown($me_state_id, $state_list);
-                                }
-                                ?>
-                            </div>
-                            <div id="search-box-block3">
-                                <button name="button_action" type="submit" value="search">Search</button>
-                            </div>
-                            <?php echo form_close(); ?>
-                            <div id="float-fix"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>-->
+        </div>

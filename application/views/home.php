@@ -1,5 +1,4 @@
 <link rel='stylesheet' id='camera-css'  href='<?php echo base_url('js/banner-row1-slider/camera.css') ?>' type='text/css' media='all'> 
-<script type='text/javascript' src='<?php echo base_url('js/banner-row1-slider/jquery.min.js') ?>'></script>
 <script type='text/javascript' src='<?php echo base_url('js/banner-row1-slider/jquery.mobile.customized.min.js') ?>'></script>
 <script type='text/javascript' src='<?php echo base_url('js/banner-row1-slider/jquery.easing.1.3.js') ?>'></script> 
 <script type='text/javascript' src='<?php echo base_url('js/banner-row1-slider/camera.min.js') ?>'></script> 
@@ -166,6 +165,56 @@
             </div>
         </div>
         <div id="float-fix"></div>
+        
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('#home-row4-logo-slider-box').slick({
+                    slidesToShow: 5,
+                    slidesToScroll: 1,
+                    prevArrow: '#home-row4-logo-slider-prev',
+                    nextArrow: '#home-row4-logo-slider-next'
+                });
+            });
+        </script>
+        
+        <div id="home-row4-logo-slider">
+            <div id="home-row4-logo-slider-prev">
+                <div id="home-row4-logo-slider-prev-round">
+                    <?php echo img('image/slider-prev.png') ?>
+                </div>
+            </div>
+            <div id="home-row4-logo-slider-box">
+                <div>
+                    <img src="<?php echo base_url('folder_upload/home_banner_row4/1.png') ?>" style="height: 45px; margin-top: 19px;">
+                </div>
+                <div>
+                    <img src="<?php echo base_url('folder_upload/home_banner_row4/2.png') ?>" style="height: 65px; margin-top: 10px;">
+                </div>
+                <div>
+                    <img src="<?php echo base_url('folder_upload/home_banner_row4/3.png') ?>" style="height: 40px; margin-top: 19px;">
+                </div>
+                <div>
+                    <img src="<?php echo base_url('folder_upload/home_banner_row4/4.png') ?>" style="height: 80px;">
+                </div>
+                <div>
+                    <img src="<?php echo base_url('folder_upload/home_banner_row4/5.png') ?>" style="height: 40px; margin-top: 20px;">
+                </div>
+                <div>
+                    <img src="<?php echo base_url('folder_upload/home_banner_row4/6.png') ?>" style="height: 80px;">
+                </div>
+                <div>
+                    <img src="<?php echo base_url('folder_upload/home_banner_row4/7.png') ?>" style="height: 80px;">
+                </div>
+            </div>
+            <div id="home-row4-logo-slider-next">
+                <div id="home-row4-logo-slider-next-round">
+                    <?php echo img('image/slider-next.png') ?>
+                </div>
+            </div>
+            <div id="float-fix"></div>
+        </div>
+                    
+        
     </div>
 </div>
 
