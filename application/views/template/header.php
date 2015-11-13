@@ -355,6 +355,7 @@
                                             <li><a href='<?php echo base_url('admin/category_management') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'category_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Manage Category</a></li>
                                             <li><a href='<?php echo base_url('admin/keppo_voucher_management') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'keppo_voucher_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Manage Keppo Voucher</a></li>
                                             <li><a href='<?php echo base_url('admin/keppo_voucher_redeem') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'keppo_voucher_redeem'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> User's Redeem Keppo Voucher</a></li>
+                                            <li><a href='<?php echo base_url('admin/analysis_report') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'analysis_report'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Insights</a></li>
                                             <li><a href='<?php echo base_url('admin/web_setting_edit') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'web_setting_edit'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Web Setting</a></li>
                                         </ul>
                                     </li>
@@ -403,6 +404,12 @@
                                             { 
                                                 ?>
                                                 <li><a href='<?php echo base_url(); ?>admin/keppo_voucher_redeem' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'keppo_voucher_redeem'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> User's Redeem Keppo Voucher</a></li>
+                                                <?php
+                                            }
+                                            if($this->m_admin->check_worker_role(63))
+                                            { 
+                                                ?>
+                                                <li><a href='<?php echo base_url(); ?>admin/analysis_report' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'analysis_report'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Insights</a></li>
                                                 <?php
                                             }
                                             if($this->m_admin->check_worker_role(73))

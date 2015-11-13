@@ -58,6 +58,8 @@
                 options.xAxis.categories = ['View', 'Like', 'Rating', 'Redeem'];
                 options.yAxis.title.text = 'Gender';
                 options.chart.renderTo = 'container_gender';
+                //alert(JSON.stringify(data));
+                //alert(JSON.stringify(data[0]));
                 options.series[0] = data[0];
                 options.series[1] = data[1];
 

@@ -2665,6 +2665,85 @@ class Admin extends CI_Controller
         return TRUE;
     }
     
+    function analysis_report($search_month = NULL, $search_year = NULL)
+    {
+        $message_info = '';
+        if (!$this->m_admin->check_is_any_admin(63))
+        {
+            redirect('/', 'refresh');
+        }
+
+        if (isset($_POST) && !empty($_POST))
+        {
+            if ($this->input->post('button_action') == "search_history")
+            {
+                $search_month = $this->input->post('the_month');
+                $search_year = $this->input->post('the_year');
+            }
+        }
+        $year_list = generate_number_option(get_part_of_date('year'), get_part_of_date('year'));
+        $this->data['year_list'] = $year_list;
+        $this->data['the_year'] = array(
+            'name' => 'the_year',
+            'id' => 'the_year',
+        );
+        $selected_year = empty($search_year) ? get_part_of_date('year') : $search_year;
+        $this->data['the_year_selected'] = $selected_year;
+
+        $month_list = $this->m_custom->month_group_list();
+        $this->data['month_list'] = $month_list;
+        $this->data['the_month'] = array(
+            'name' => 'the_month',
+            'id' => 'the_month',
+        );
+        $selected_month = empty($search_month) ? get_part_of_date('month') : $search_month;
+        $this->data['the_month_selected'] = $selected_month;
+
+        $first_day = displayDate(getFirstLastTime($selected_year, $selected_month));
+        $last_day = displayDate(getFirstLastTime($selected_year, $selected_month, 1));
+        $this->data['first_day'] = $first_day;
+        $this->data['last_day'] = $last_day;
+        $this->data['message'] = $this->session->flashdata('message');
+        $this->data['page_path_name'] = 'admin/analysis_report';
+        $this->load->view('template/layout_right_menu', $this->data);
+    }
+
+    function getChart_Merchant()
+    {
+        if (!$this->m_admin->check_is_any_admin(63))
+        {
+            redirect('/', 'refresh');
+        }
+
+        $the_year = $this->input->post("the_year", true);
+        $the_month = $this->input->post("the_month", true);
+
+        $analysis = $this->m_admin->getAdminAnalysisReportMerchant($the_month, $the_year);
+        $new_active_array = array();
+        $new_active_array['name'] = 'New Merchant (Active)';
+        $new_active_array['y'] = $analysis['new_count_active'];
+        
+        $new_frozen_array = array();
+        $new_frozen_array['name'] = 'New Merchant (Frozen)';
+        $new_frozen_array['y'] = $analysis['new_count_hide'];
+        
+        $old_active_array = array();
+        $old_active_array['name'] = 'Old Merchant (Active)';
+        $old_active_array['y'] = $analysis['old_count_active'];
+        
+        $old_frozen_array = array();
+        $old_frozen_array['name'] = 'Old Merchant (Frozen)';
+        $old_frozen_array['y'] = $analysis['old_count_hide'];
+        
+        $result = array();
+        array_push($result, $new_active_array);
+        array_push($result, $new_frozen_array);
+        array_push($result, $old_active_array);
+        array_push($result, $old_frozen_array);
+        
+        echo json_encode($result);
+    }
+
     function web_setting_edit()
     {
         if (!$this->m_admin->check_is_any_admin(73))

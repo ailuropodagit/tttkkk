@@ -279,3 +279,4 @@ $lang['web_setting_keppo_admin_email']    = 'Keppo Admin Email (Separate by comm
 $lang['web_setting_merchant_minimum_balance']    = 'Merchant Minimum Balance (RM)';
 $lang['web_setting_merchant_max_hotdeal_per_day']    = 'Merchant Max Hotdeal per day';
 $lang['web_setting_user_max_picture_per_day']    = 'User Max Picture per day';
+$lang['user_max_share_get_candie_per_day']    = 'User Max Share Get Gandie per day';

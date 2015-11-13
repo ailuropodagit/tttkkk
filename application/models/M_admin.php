@@ -116,4 +116,64 @@ class M_admin extends CI_Model
         return $query->num_rows();
     }
     
+    public function getAdminAnalysisReportMerchant($month_id = NULL, $year = NULL)
+    {          
+        $return = array();
+        $start_time = getFirstLastTime($year, $month_id);
+        $end_time = getFirstLastTime($year, $month_id, 'last');
+        $start_timestamp = strtotime($start_time);
+        $end_timestamp = strtotime($end_time);
+        $group_id_merchant = $this->config->item('group_id_merchant');
+              
+        $condition = "created_on >= '" . $start_timestamp . "' AND created_on <= '" . $end_timestamp . "'";
+        $this->db->where($condition);
+        $this->db->select('*');
+        $this->db->from('users');
+        $this->db->where(array('main_group_id' => $group_id_merchant));
+        $query_new = $this->db->get();
+        $result_new = $query_new->result_array();
+               
+        $new_count_active = 0;
+        $new_count_hide = 0;
+        foreach($result_new as $row){
+            if($row['hide_flag'] == 0){
+                $new_count_active++;
+            }else{
+                $new_count_hide++;
+            }
+        }
+
+        $return['new_count'] = $query_new->num_rows();      
+        $return['new_count_active'] = $new_count_active;
+        $return['new_count_hide'] = $new_count_hide;
+        
+        //var_dump($result_new);
+        
+        $condition = "created_on < '" . $start_timestamp . "'";
+        $this->db->where($condition);
+        $this->db->select('*');
+        $this->db->from('users');
+        $this->db->where(array('main_group_id' => $group_id_merchant));
+        $query_old = $this->db->get();
+        $result_old = $query_old->result_array();       
+        
+        $old_count_active = 0;
+        $old_count_hide = 0;
+        foreach($result_old as $row){
+            if($row['hide_flag'] == 0){
+                $old_count_active++;
+            }else{
+                $old_count_hide++;
+            }
+        }
+        
+        $return['old_count'] = $query_old->num_rows();       
+        $return['old_count_active'] = $old_count_active;
+        $return['old_count_hide'] = $old_count_hide;
+        
+        //var_dump($result_old);      
+        //var_dump($return);
+        return $return;
+    }
+    
 }
