@@ -8,15 +8,10 @@
             type: 'pie'
         },
         title: {
-            text: 'New/Old User Gender Analysis Report'
+            text: 'New/Old User Analysis Report'
         },
         subtitle: {
             text: ''
-        },
-        yAxis: {
-            title: {
-                text: 'Total percent market share'
-            }
         },
         exporting: {
                 enabled: false
@@ -39,7 +34,7 @@
         var the_year = $('#the_year').val();
         var the_month = $('#the_month').val();
 
-        var post_url1 = 'http://' + $(location).attr('hostname') + '/keppo/admin/getChart_gender';
+        var post_url1 = 'http://' + $(location).attr('hostname') + '/keppo/admin/getChart_race';
         $.ajax({
             type: "POST",
             url: post_url1,
@@ -48,30 +43,31 @@
             success: function (return_data) {
                 options.series.length = 0;
                 options.chart.renderTo = 'container_gender';
+                options.title.text = 'New/Old User Gender Analysis Report';
+                options.subtitle.text = return_data[0];
+                //alert(JSON.stringify(return_data));
                 
                 var colors = Highcharts.getOptions().colors,
                 categories = ['Old User', 'New User'],
                       data = [{
-                                y: 14,
+                                y: return_data[1],
                                 color: colors[0],
                                 drilldown: {
-                                    name: 'Old versions',
-                                    categories: ['Chinese', 'Malay', 'India'],
-                                    data: [4, 8, 2],
+                                    categories: return_data[2],
+                                    data: return_data[3],
                                     color: colors[0]
                                 }
                             }, {
-                                y: 6,
+                                y: return_data[4],
                                 color: colors[1],
                                 drilldown: {
-                                    name: 'New versions',
-                                    categories: ['Chinese', 'Malay', 'India'],
-                                    data: [3, 3, 0],
+                                    categories: return_data[5],
+                                    data: return_data[6],
                                     color: colors[1]
                                 }
                             }],
-                browserData = [],
-                versionsData = [],
+                parentData = [],
+                childData = [],
                 i,
                 j,
                 dataLen = data.length,
@@ -82,7 +78,7 @@
                 for (i = 0; i < dataLen; i += 1) {
 
                     // add browser data
-                    browserData.push({
+                    parentData.push({
                         name: categories[i],
                         y: data[i].y,
                         color: data[i].color
@@ -92,7 +88,7 @@
                     drillDataLen = data[i].drilldown.data.length;
                     for (j = 0; j < drillDataLen; j += 1) {
                         brightness = 0.2 - (j / drillDataLen) / 5;
-                        versionsData.push({
+                        childData.push({
                             name: data[i].drilldown.categories[j],
                             y: data[i].drilldown.data[j],
                             color: Highcharts.Color(data[i].color).brighten(brightness).get()
@@ -102,24 +98,23 @@
                 
                 options.series = [{
                         name: 'Old/New',
-                        data: browserData,
+                        data: parentData,
                         size: '60%',
                         dataLabels: {
                             formatter: function () {
-                                return this.y > 5 ? this.point.name + ':</b> ' + this.y : null;
+                                return this.y > 0 ? this.point.name + ':</b> ' + this.y : null;
                             },
                             color: '#ffffff',
                             distance: -30
                         }
                     }, {
                         name: 'Gender',
-                        data: versionsData,
+                        data: childData,
                         size: '80%',
                         innerSize: '60%',
                         dataLabels: {
                             formatter: function () {
-                                // display only if larger than 1
-                                return this.y > 1 ? '<b>' + this.point.name + ':</b> ' + this.y : null;
+                                return this.y > 0 ? '<b>' + this.point.name + ':</b> ' + this.y : null;
                             }
                         }
                     }]

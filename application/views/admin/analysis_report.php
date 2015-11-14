@@ -10,6 +10,9 @@
             title: {
                 text: 'Analysis Report'
             },
+            subtitle: {
+                text: ''
+            },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
             },
@@ -45,8 +48,15 @@
             success: function (return_data) {
                 options.series.length = 0;
                 options.title.text = 'New/Old Merchant Active Analaysis Report';
+                
+                var cutoff_total = 0;
+                for (var i = 0; i < return_data.length; i++) {
+                    cutoff_total += return_data[i]['y'];
+                }
+                options.subtitle.text = 'Total merchent until this period: ' + cutoff_total;
+                
                 options.chart.renderTo = 'container_merchant';
-                //alert(JSON.stringify(data));
+                //alert(JSON.stringify(return_data));
                 options.series = [{name: 'Percentage', data: return_data}]
                 chart = new Highcharts.Chart(options);
             },

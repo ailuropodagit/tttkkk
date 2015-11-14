@@ -2788,7 +2788,7 @@ class Admin extends CI_Controller
     }
     
     //todo to do
-    function getChart_gender()
+    function getChart_gender($var_dump = 0)
     {
         if (!$this->m_admin->check_is_any_admin(63))
         {
@@ -2799,15 +2799,72 @@ class Admin extends CI_Controller
         $the_month = $this->input->post("the_month", true);
 
         $analysis = $this->m_admin->getAdminAnalysisReportUser('gender', $the_month, $the_year);
-        //var_dump($analysis);
 
         $result = array();
 //        array_push($result, $female_array);
 //        array_push($result, $male_array);
-//
-        echo json_encode($result);
+
+        if ($var_dump == 1)
+        {
+            var_dump($analysis);
+        }
+        else
+        {
+            echo json_encode($result);
+        }
     }
 
+    //todo to do
+    function getChart_race($var_dump = 0)
+    {
+        if (!$this->m_admin->check_is_any_admin(63))
+        {
+            redirect('/', 'refresh');
+        }
+
+        $the_year = $this->input->post("the_year", true);
+        $the_month = $this->input->post("the_month", true);
+
+        $analysis = $this->m_admin->getAdminAnalysisReportUser('race', $the_month, $the_year);
+
+        $old_total = 0;
+        $old_category = array();
+        $old_count = array();
+        foreach($analysis['old_list'] as $row){
+            $old_total += $row['option_desc'];
+            $old_category[] = $row['option_text'];
+            $old_count[] = $row['option_desc'];
+        }
+        
+        $new_total = 0;
+        $new_category = array();
+        $new_count = array();
+        foreach($analysis['new_list'] as $row){
+            $new_total += $row['option_desc'];
+            $new_category[] = $row['option_text'];
+            $new_count[] = $row['option_desc'];
+        }
+               
+        $cutoff_total = $old_total + $new_total;
+        $result = array();
+        array_push($result, 'Total user until this period: '.$cutoff_total);
+        array_push($result, $old_total);
+        array_push($result, $old_category);
+        array_push($result, $old_count);
+        array_push($result, $new_total);
+        array_push($result, $new_category);
+        array_push($result, $new_count);
+        
+        if ($var_dump == 1)
+        {
+            var_dump($analysis);
+        }
+        else
+        {
+            echo json_encode($result);
+        }
+    }
+    
     function web_setting_edit()
     {
         if (!$this->m_admin->check_is_any_admin(73))
