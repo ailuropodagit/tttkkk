@@ -75,7 +75,12 @@
 <div id="analysis-report">
     <h1>Insights</h1>
     <div id="analysis-report-content">
-        
+        <div id="candie-navigation">
+            <div id='candie-navigation-each'><a href="<?php echo base_url() . "admin/analysis_report"; ?>" >Merchant Report</a></div>
+            <div id='candie-navigation-each-separator'>|</div>
+            <div id='candie-navigation-each'><a href="<?php echo base_url() . "admin/analysis_report_user";; ?>" >User Report</a></div>
+        </div>
+        <div id="float-fix"></div><br/><br/>
         <div id="analysis-report-go">
             <?php echo form_open(uri_string()) ?>
             <span id="analysis-report-go-each">Filter :</span>
@@ -89,7 +94,7 @@
             <a href="#" onclick="printDiv('print-area')"><i class="fa fa-print"></i> Print Report</a>
         </div>
         <div id="analysis-report-period">
-            Report Period : <?php echo $first_day ?> to <?php echo $last_day ?>
+            Report Period As New Merchant : <?php echo $first_day ?> to <?php echo $last_day ?>
         </div>
         <div id='float-fix'></div>
         
