@@ -284,8 +284,8 @@ class M_admin extends CI_Model
                 
             }
         }
-        //var_dump($type_list_intial_old);
-     
+        //var_dump($type_list_intial_old);    
+
         $return['new_list'] = $type_list_intial_new;
         $return['old_list'] = $type_list_intial_old;
         return $return;

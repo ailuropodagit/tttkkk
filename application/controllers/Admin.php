@@ -2787,7 +2787,7 @@ class Admin extends CI_Controller
         $this->load->view('template/layout_right_menu', $this->data);
     }
 
-    function getChart_user($var_dump = 0)
+    function getChart_user()
     {
         if (!$this->m_admin->check_is_any_admin(63))
         {
@@ -2828,14 +2828,7 @@ class Admin extends CI_Controller
         array_push($result, $new_category);
         array_push($result, $new_count);
         
-        if ($var_dump == 1)
-        {
-            var_dump($analysis);
-        }
-        else
-        {
-            echo json_encode($result);
-        }
+        echo json_encode($result);
     }
     
     function web_setting_edit()
