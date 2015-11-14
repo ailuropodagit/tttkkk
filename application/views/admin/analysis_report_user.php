@@ -26,7 +26,7 @@
         },
         tooltip: {
             valueSuffix: '%',
-            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            pointFormat: 'Percent : <b>{point.percentage:.1f}%</b>'
         },
         series: []
     }
@@ -34,12 +34,12 @@
         var the_year = $('#the_year').val();
         var the_month = $('#the_month').val();
 
-        var post_url1 = 'http://' + $(location).attr('hostname') + '/keppo/admin/getChart_race';
+        var post_url1 = 'http://' + $(location).attr('hostname') + '/keppo/admin/getChart_user';
         $.ajax({
             type: "POST",
             url: post_url1,
             dataType: 'json',
-            data: "&the_year=" + the_year + "&the_month=" + the_month,
+            data: "&the_year=" + the_year + "&the_month=" + the_month + "&the_type=gender",
             success: function (return_data) {
                 options.series.length = 0;
                 options.chart.renderTo = 'container_gender';
@@ -102,19 +102,111 @@
                         size: '60%',
                         dataLabels: {
                             formatter: function () {
-                                return this.y > 0 ? this.point.name + ':</b> ' + this.y : null;
+                                return this.y > 0 ? this.point.name + ' :<i> ' + this.y + '</i>' : null;
                             },
                             color: '#ffffff',
                             distance: -30
                         }
                     }, {
-                        name: 'Gender',
+                        name: '',
                         data: childData,
                         size: '80%',
                         innerSize: '60%',
                         dataLabels: {
                             formatter: function () {
-                                return this.y > 0 ? '<b>' + this.point.name + ':</b> ' + this.y : null;
+                                return this.y > 0 ? this.point.name + ' :<i> ' + this.y + '</i>' : null;
+                            }
+                        }
+                    }]
+
+                chart = new Highcharts.Chart(options);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                //alert(textStatus);
+                //alert(errorThrown);
+            }
+        });
+        
+        $.ajax({
+            type: "POST",
+            url: post_url1,
+            dataType: 'json',
+            data: "&the_year=" + the_year + "&the_month=" + the_month + "&the_type=race",
+            success: function (return_data) {
+                options.series.length = 0;
+                options.chart.renderTo = 'container_race';
+                options.title.text = 'New/Old User Race Analysis Report';
+                options.subtitle.text = return_data[0];
+                //alert(JSON.stringify(return_data));
+                
+                var colors = Highcharts.getOptions().colors,
+                categories = ['Old User', 'New User'],
+                      data = [{
+                                y: return_data[1],
+                                color: colors[0],
+                                drilldown: {
+                                    categories: return_data[2],
+                                    data: return_data[3],
+                                    color: colors[0]
+                                }
+                            }, {
+                                y: return_data[4],
+                                color: colors[1],
+                                drilldown: {
+                                    categories: return_data[5],
+                                    data: return_data[6],
+                                    color: colors[1]
+                                }
+                            }],
+                parentData = [],
+                childData = [],
+                i,
+                j,
+                dataLen = data.length,
+                drillDataLen,
+                brightness;                
+                        
+                // Build the data arrays
+                for (i = 0; i < dataLen; i += 1) {
+
+                    // add browser data
+                    parentData.push({
+                        name: categories[i],
+                        y: data[i].y,
+                        color: data[i].color
+                    });
+
+                    // add version data
+                    drillDataLen = data[i].drilldown.data.length;
+                    for (j = 0; j < drillDataLen; j += 1) {
+                        brightness = 0.2 - (j / drillDataLen) / 5;
+                        childData.push({
+                            name: data[i].drilldown.categories[j],
+                            y: data[i].drilldown.data[j],
+                            color: Highcharts.Color(data[i].color).brighten(brightness).get()
+                        });
+                    }
+                }
+                
+                options.series = [{
+                        name: 'Old/New',
+                        data: parentData,
+                        size: '60%',
+                        dataLabels: {
+                            formatter: function () {
+                                return this.y > 0 ? this.point.name + ' :<i> ' + this.y + '</i>' : null;
+                            },
+                            color: '#ffffff',
+                            distance: -30
+                        }
+                    }, {
+                        name: '',
+                        data: childData,
+                        size: '80%',
+                        innerSize: '60%',
+                        dataLabels: {
+                            formatter: function () {
+                                return this.y > 0 ? this.point.name + ' :<i> ' + this.y + '</i>' : null;
                             }
                         }
                     }]
@@ -127,6 +219,98 @@
             }
         });
 
+$.ajax({
+            type: "POST",
+            url: post_url1,
+            dataType: 'json',
+            data: "&the_year=" + the_year + "&the_month=" + the_month + "&the_type=age_group",
+            success: function (return_data) {
+                options.series.length = 0;
+                options.chart.renderTo = 'container_age';
+                options.title.text = 'New/Old User Age Analysis Report';
+                options.subtitle.text = return_data[0];
+                //alert(JSON.stringify(return_data));
+                
+                var colors = Highcharts.getOptions().colors,
+                categories = ['Old User', 'New User'],
+                      data = [{
+                                y: return_data[1],
+                                color: colors[0],
+                                drilldown: {
+                                    categories: return_data[2],
+                                    data: return_data[3],
+                                    color: colors[0]
+                                }
+                            }, {
+                                y: return_data[4],
+                                color: colors[1],
+                                drilldown: {
+                                    categories: return_data[5],
+                                    data: return_data[6],
+                                    color: colors[1]
+                                }
+                            }],
+                parentData = [],
+                childData = [],
+                i,
+                j,
+                dataLen = data.length,
+                drillDataLen,
+                brightness;                
+                        
+                // Build the data arrays
+                for (i = 0; i < dataLen; i += 1) {
+
+                    // add browser data
+                    parentData.push({
+                        name: categories[i],
+                        y: data[i].y,
+                        color: data[i].color
+                    });
+
+                    // add version data
+                    drillDataLen = data[i].drilldown.data.length;
+                    for (j = 0; j < drillDataLen; j += 1) {
+                        brightness = 0.2 - (j / drillDataLen) / 5;
+                        childData.push({
+                            name: data[i].drilldown.categories[j],
+                            y: data[i].drilldown.data[j],
+                            color: Highcharts.Color(data[i].color).brighten(brightness).get()
+                        });
+                    }
+                }
+                
+                options.series = [{
+                        name: 'Old/New',
+                        data: parentData,
+                        size: '60%',
+                        dataLabels: {
+                            formatter: function () {
+                                return this.y > 0 ? this.point.name + ' :<i> ' + this.y + '</i>' : null;
+                            },
+                            color: '#ffffff',
+                            distance: -30
+                        }
+                    }, {
+                        name: '',
+                        data: childData,
+                        size: '80%',
+                        innerSize: '60%',
+                        dataLabels: {
+                            formatter: function () {
+                                return this.y > 0 ? this.point.name + ' :<i> ' + this.y + '</i>' : null;
+                            }
+                        }
+                    }]
+
+                chart = new Highcharts.Chart(options);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                //alert(textStatus);
+                //alert(errorThrown);
+            }
+        });
+        
     });
 </script>
 
@@ -156,6 +340,8 @@
         
         <div id="print-area">
             <div id="container_gender" style="min-width: 400px; height: 400px; margin: 0 auto"></div><br/><br/><br/>
+            <div id="container_race" style="min-width: 400px; height: 400px; margin: 0 auto"></div><br/><br/><br/>
+            <div id="container_age" style="min-width: 400px; height: 400px; margin: 0 auto"></div><br/><br/><br/>
         </div>
         
     </div>

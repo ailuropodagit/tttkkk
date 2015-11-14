@@ -2786,9 +2786,8 @@ class Admin extends CI_Controller
         $this->data['page_path_name'] = 'admin/analysis_report_user';
         $this->load->view('template/layout_right_menu', $this->data);
     }
-    
-    //todo to do
-    function getChart_gender($var_dump = 0)
+
+    function getChart_user($var_dump = 0)
     {
         if (!$this->m_admin->check_is_any_admin(63))
         {
@@ -2797,35 +2796,9 @@ class Admin extends CI_Controller
 
         $the_year = $this->input->post("the_year", true);
         $the_month = $this->input->post("the_month", true);
-
-        $analysis = $this->m_admin->getAdminAnalysisReportUser('gender', $the_month, $the_year);
-
-        $result = array();
-//        array_push($result, $female_array);
-//        array_push($result, $male_array);
-
-        if ($var_dump == 1)
-        {
-            var_dump($analysis);
-        }
-        else
-        {
-            echo json_encode($result);
-        }
-    }
-
-    //todo to do
-    function getChart_race($var_dump = 0)
-    {
-        if (!$this->m_admin->check_is_any_admin(63))
-        {
-            redirect('/', 'refresh');
-        }
-
-        $the_year = $this->input->post("the_year", true);
-        $the_month = $this->input->post("the_month", true);
-
-        $analysis = $this->m_admin->getAdminAnalysisReportUser('race', $the_month, $the_year);
+        $the_type = $this->input->post("the_type", true);
+        
+        $analysis = $this->m_admin->getAdminAnalysisReportUser($the_type, $the_month, $the_year);
 
         $old_total = 0;
         $old_category = array();
