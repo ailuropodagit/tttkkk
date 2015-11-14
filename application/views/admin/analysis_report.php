@@ -42,12 +42,12 @@
             url: post_url1,
             dataType: 'json',
             data: "&the_year=" + the_year + "&the_month=" + the_month,
-            success: function (data) {
+            success: function (return_data) {
                 options.series.length = 0;
-                options.title.text = 'New vs Old Merchant(Active/Frozen)';
+                options.title.text = 'New/Old Merchant Active Analaysis Report';
                 options.chart.renderTo = 'container_merchant';
                 //alert(JSON.stringify(data));
-                options.series = [{name: 'Percentage', data: data}]
+                options.series = [{name: 'Percentage', data: return_data}]
                 chart = new Highcharts.Chart(options);
             },
             error: function (jqXHR, textStatus, errorThrown) {

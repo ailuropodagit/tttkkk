@@ -1113,6 +1113,7 @@ class User extends CI_Controller
                     $facebook_url = $this->input->post('facebook_url');
                     $is_photographer = $this->input->post('is_photographer');
                     $photography_url = $this->input->post('photography_url');
+                    $age = age_count($this->input->post('dob'));
                     
                     $photography_list_selected = array();
                     $post_photography_list = $this->input->post('photography_list');
@@ -1130,7 +1131,7 @@ class User extends CI_Controller
                         'description' => $this->input->post('description'),
                         'phone' => $this->input->post('phone'),
                         'us_birthday' => $this->input->post('dob'),
-                        'us_age' => $this->input->post('age'),
+                        'us_age' => $age,
                         'us_gender_id' => $this->input->post('gender_id'),
                         'us_race_id' => $this->input->post('race_id'),
                         'us_race_other' => $race_other,

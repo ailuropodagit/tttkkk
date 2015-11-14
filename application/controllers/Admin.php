@@ -2744,6 +2744,70 @@ class Admin extends CI_Controller
         echo json_encode($result);
     }
 
+    function analysis_report_user($search_month = NULL, $search_year = NULL)
+    {
+        $message_info = '';
+        if (!$this->m_admin->check_is_any_admin(63))
+        {
+            redirect('/', 'refresh');
+        }
+
+        if (isset($_POST) && !empty($_POST))
+        {
+            if ($this->input->post('button_action') == "search_history")
+            {
+                $search_month = $this->input->post('the_month');
+                $search_year = $this->input->post('the_year');
+            }
+        }
+        $year_list = generate_number_option(get_part_of_date('year'), get_part_of_date('year'));
+        $this->data['year_list'] = $year_list;
+        $this->data['the_year'] = array(
+            'name' => 'the_year',
+            'id' => 'the_year',
+        );
+        $selected_year = empty($search_year) ? get_part_of_date('year') : $search_year;
+        $this->data['the_year_selected'] = $selected_year;
+
+        $month_list = $this->m_custom->month_group_list();
+        $this->data['month_list'] = $month_list;
+        $this->data['the_month'] = array(
+            'name' => 'the_month',
+            'id' => 'the_month',
+        );
+        $selected_month = empty($search_month) ? get_part_of_date('month') : $search_month;
+        $this->data['the_month_selected'] = $selected_month;
+
+        $first_day = displayDate(getFirstLastTime($selected_year, $selected_month));
+        $last_day = displayDate(getFirstLastTime($selected_year, $selected_month, 1));
+        $this->data['first_day'] = $first_day;
+        $this->data['last_day'] = $last_day;
+        $this->data['message'] = $this->session->flashdata('message');
+        $this->data['page_path_name'] = 'admin/analysis_report_user';
+        $this->load->view('template/layout_right_menu', $this->data);
+    }
+    
+    //todo to do
+    function getChart_gender()
+    {
+        if (!$this->m_admin->check_is_any_admin(63))
+        {
+            redirect('/', 'refresh');
+        }
+
+        $the_year = $this->input->post("the_year", true);
+        $the_month = $this->input->post("the_month", true);
+
+        $analysis = $this->m_admin->getAdminAnalysisReportUser('gender', $the_month, $the_year);
+        //var_dump($analysis);
+
+        $result = array();
+//        array_push($result, $female_array);
+//        array_push($result, $male_array);
+//
+        echo json_encode($result);
+    }
+
     function web_setting_edit()
     {
         if (!$this->m_admin->check_is_any_admin(73))

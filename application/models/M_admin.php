@@ -123,13 +123,13 @@ class M_admin extends CI_Model
         $end_time = getFirstLastTime($year, $month_id, 'last');
         $start_timestamp = strtotime($start_time);
         $end_timestamp = strtotime($end_time);
-        $group_id_merchant = $this->config->item('group_id_merchant');
+        $group_id_user = $this->config->item('group_id_merchant');
               
         $condition = "created_on >= '" . $start_timestamp . "' AND created_on <= '" . $end_timestamp . "'";
         $this->db->where($condition);
         $this->db->select('*');
         $this->db->from('users');
-        $this->db->where(array('main_group_id' => $group_id_merchant));
+        $this->db->where(array('main_group_id' => $group_id_user));
         $query_new = $this->db->get();
         $result_new = $query_new->result_array();
                
@@ -153,7 +153,7 @@ class M_admin extends CI_Model
         $this->db->where($condition);
         $this->db->select('*');
         $this->db->from('users');
-        $this->db->where(array('main_group_id' => $group_id_merchant));
+        $this->db->where(array('main_group_id' => $group_id_user));
         $query_old = $this->db->get();
         $result_old = $query_old->result_array();       
         
@@ -173,6 +173,121 @@ class M_admin extends CI_Model
         
         //var_dump($result_old);      
         //var_dump($return);
+        return $return;
+    }
+    
+    public function getAdminAnalysisReportUser($the_type, $month_id = NULL, $year = NULL)
+    {          
+        $return = array();
+        $start_time = getFirstLastTime($year, $month_id);
+        $end_time = getFirstLastTime($year, $month_id, 'last');
+        $start_timestamp = strtotime($start_time);
+        $end_timestamp = strtotime($end_time);
+        $group_id_user = $this->config->item('group_id_user');
+        
+        $type_list = $this->m_custom->get_static_option_array($the_type, NULL, NULL, 1);
+        $type_list_intial_new = array();
+        $type_list_intial_old = array();
+        foreach ($type_list as $row)
+        {
+            $row['option_desc'] = 0;    //Use option_desc as a counter, set to 0
+            $type_list_intial_new[] = $row;
+            $type_list_intial_old[] = $row;
+        }
+
+        $field_name = '';
+        switch ($the_type)
+        {
+            case 'gender':
+                $field_name = 'us_gender_id';
+                break;
+            case 'race':
+                $field_name = 'us_race_id';
+                break;
+            case 'age_group':
+                $field_name = 'us_age';
+                break;
+        }
+
+        $condition = "created_on >= '" . $start_timestamp . "' AND created_on <= '" . $end_timestamp . "'";
+        $this->db->where($condition);
+        $this->db->select('*');
+        $this->db->from('users');
+        $this->db->where(array('main_group_id' => $group_id_user));
+        $query_new = $this->db->get();         
+        $result_new = $query_new->result_array();
+               
+        foreach ($result_new as $row)
+        {
+            //echo $row['username'] . " : ";
+            $age_group_min = 0;
+            foreach ($type_list_intial_new as &$row_type)
+            {
+                if ($the_type == 'age_group')
+                {
+                    $us_age = $row[$field_name];
+                    
+                    $age_group_max = $row_type['option_value'];
+                    if($us_age >= $age_group_min && $us_age < $age_group_max){
+                        $row_type['option_desc'] ++;      
+                        //echo $us_age . "  , ";
+                    }
+                    $age_group_min = $row_type['option_value'];
+                }
+                else
+                {
+                    if ($row_type['option_id'] == $row[$field_name])
+                    {
+                        $row_type['option_desc'] ++;       
+                        //echo $row_type['option_value'] . "  , ";
+                    }
+                }
+                
+            }
+        }
+
+        //var_dump($type_list_intial_new);
+        
+        $condition = "created_on < '" . $start_timestamp . "'";
+        $this->db->where($condition);
+        $this->db->select('*');
+        $this->db->from('users');
+        $this->db->where(array('main_group_id' => $group_id_user));
+        $query_old = $this->db->get();           
+        $result_old = $query_old->result_array();
+        
+        foreach ($result_old as $row)
+        {
+            //echo $row['username'] . " : ";
+            $age_group_min = 0;
+            foreach ($type_list_intial_old as &$row_type)
+            {
+                if ($the_type == 'age_group')
+                {
+                    $us_age = $row[$field_name];
+                    
+                    $age_group_max = $row_type['option_value'];
+                    if($us_age >= $age_group_min && $us_age < $age_group_max){
+                        $row_type['option_desc'] ++;      
+                        //echo $us_age . "  , ";
+                    }
+                    $age_group_min = $row_type['option_value'];
+                }
+                else
+                {
+                    if ($row_type['option_id'] == $row[$field_name])
+                    {
+                        $row_type['option_desc'] ++;       
+                        //echo $row_type['option_value'] . "  , ";
+                    }
+                }
+                
+            }
+        }
+        //var_dump($type_list_intial_old);
+     
+        $return['new_list'] = $type_list_intial_new;
+        $return['old_list'] = $type_list_intial_old;
         return $return;
     }
     

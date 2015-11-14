@@ -7,7 +7,7 @@ class M_custom extends CI_Model
 {
 
     //Get all the static option of an option type
-    public function get_static_option_array($option_type = NULL, $default_value = NULL, $default_text = NULL)
+    public function get_static_option_array($option_type = NULL, $default_value = NULL, $default_text = NULL, $want_array = 0)
     {
         $query = $this->db->get_where('static_option', array('option_type' => $option_type));
         $return = array();
@@ -22,7 +22,14 @@ class M_custom extends CI_Model
                 $return[$row['option_id']] = $row['option_text'];
             }
         }
-        return $return;
+        if ($want_array == 1)
+        {
+            return $query->result_array();
+        }
+        else
+        {
+            return $return;
+        }
     }
 
     public function explode_year_month($year_month)
