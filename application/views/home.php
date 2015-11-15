@@ -132,8 +132,12 @@
             <div id='float-fix'></div>
         </div>
         <div id='home-row3-column1'>
-            <div id='home-row3-column1-today-deal'>
+            <div id='home-row3-column1-today-deal' style="overflow: scroll;">
                 Today Deal
+                <?php 
+                $data['hotdeal_list'] = $this->m_custom->getAdvertise('hot', NULL, NULL, 0, NULL, NULL, 1);
+                $this->load->view('all/advertise_home', $data);
+                ?>
             </div>
             <div id='home-row3-column1-banner'>
                 <div id='home-row3-column1-banner-block1'>
@@ -152,12 +156,16 @@
                 </div>
                 <div id='float-fix'></div>
             </div>
-            <div id="home-row3-column1-redemption">
+            <div id="home-row3-column1-redemption" style="overflow: scroll;">
                 Redemption
+                <?php 
+                $data['hotdeal_list'] = $this->m_custom->getAdvertise('pro', NULL, NULL, 0, NULL, NULL, 1);
+                $this->load->view('all/advertise_home', $data);
+                ?>
             </div>
         </div>
         <div id='home-row3-column2'>
-            <div id='home-row3-column2-like-rating'>
+            <div id='home-row3-column2-like-rating' style="overflow: scroll;">
                 Like
                 <?php 
                 $data['notification_list'] = $this->m_custom->notification_display(0, 1, 'like');
@@ -169,7 +177,7 @@
                 $this->load->view('all/notification_home', $data);
                 ?>
             </div>
-            <div id='home-row3-column2-users-pictures'>
+            <div id='home-row3-column2-users-pictures' style="overflow: scroll;">
                 Users Pictures
                 <?php 
                 $data['notification_list'] = $this->m_custom->notification_display(0, 1, 'upload_image');
