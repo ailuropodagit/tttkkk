@@ -162,6 +162,10 @@
             </div>
             <div id='home-row3-column2-users-pictures'>
                 Users Pictures
+                <?php 
+                $data['notification_list'] = $this->m_custom->notification_display(0, 1, 'upload_image');
+                $this->load->view('all/notification_home', $data);
+                ?>
             </div>
         </div>
         <div id="float-fix"></div>
