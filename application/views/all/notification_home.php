@@ -28,7 +28,7 @@ $image_path_user_profile = $this->config->item('album_user_profile');
                                 <?php echo $row['noti_user_url'] ?>
                             </div>
                         </td>
-                        <td style='width:65%'>
+                        <td style='width:55%'>
                             <div id='notification-table-message'>
                                 <?php 
                                 if (empty($noti_url)) 
@@ -42,6 +42,11 @@ $image_path_user_profile = $this->config->item('album_user_profile');
                                     <?php
                                 }
                                 ?>
+                            </div>
+                        </td>
+                        <td>
+                            <div id='notification-table-photo-box'>
+                                <a href='<?php echo $noti_url ?>'><img src='<?php echo $row['noti_image_url'] ?>'></a>
                             </div>
                         </td>
                     </tr>

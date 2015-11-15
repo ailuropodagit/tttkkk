@@ -301,7 +301,7 @@ class All extends CI_Controller
         if ($this->db->affected_rows() > 0)
         {
             $new_id = $this->db->insert_id();
-            $this->m_custom->notification_process('user_follow',$new_id);
+            $this->m_custom->notification_process('user_follow', $new_id, $following_main_id);
             $this->session->set_flashdata('message', 'Follow Success');
         }
         redirect($current_url, 'refresh');

@@ -706,6 +706,59 @@ class M_custom extends CI_Model
         }
     }
 
+    public function get_image_url($the_table = NULL, $the_id = NULL)
+    {
+        if (empty($the_table) || empty($the_id))
+        {
+            return FALSE;
+        }
+        $key_column = $this->m_custom->table_id_column($the_table);
+        $query = $this->db->get_where($the_table, array($key_column => $the_id), 1);
+        if ($query->num_rows() == 0)
+        {
+            return FALSE;
+        }
+        else
+        {
+            $result = $query->row_array();           
+            $image_url = '';
+            switch ($the_table)
+            {
+                case 'advertise':
+                    $image_name = $result['image'];
+                    if ($result['advertise_type'] == 'adm')
+                    {
+                        $image_url = base_url($this->config->item('album_admin') . $image_name);
+                    }
+                    else
+                    {
+                        $image_url = base_url($this->config->item('album_merchant') . $image_name);
+                    }
+                    break;
+                case 'merchant_user_album':
+                    $image_name = $result['image'];
+                    $image_url = base_url($this->config->item('album_user_merchant') . $image_name);
+                    break;
+                case 'user_album':
+                    $image_name = $result['image'];
+                    $image_url = base_url($this->config->item('album_user') . $image_name);
+                    break;
+                case 'users':
+                    $image_name = $result['profile_image'];
+                    if ($result['main_group_id'] == $this->config->item('group_id_merchant'))
+                    {
+                        $image_url = base_url($this->config->item('album_merchant_profile') . $image_name);
+                    }
+                    else if ($result['main_group_id'] == $this->config->item('group_id_user'))
+                    {
+                        $image_url = base_url($this->config->item('album_user_profile') . $image_name);
+                    }
+            }
+
+            return $image_url;
+        }
+    }
+
     //To find one advertise record in DB
     public function getOneAdvertise($advertise_id, $ignore_have_money = 0, $ignore_hide = 0, $ignore_startend = 0)
     {
@@ -1652,7 +1705,7 @@ class M_custom extends CI_Model
         }
     }
     
-    public function notification_process($noti_refer_table = NULL, $noti_refer_table_id = NULL)
+    public function notification_process($noti_refer_table = NULL, $noti_refer_table_id = NULL, $user_follow_id = NULL)
     {
         switch ($noti_refer_table)
         {
@@ -1677,7 +1730,18 @@ class M_custom extends CI_Model
                 break;
             case 'user_follow':
                 $result = $this->m_custom->get_one_table_record('user_follow', 'follow_id', $noti_refer_table_id, 1);
-                $this->m_custom->notification_insert($result['following_id'], 13, '', 'user_follow', 'follow_id', $noti_refer_table_id);
+                $query = $this->db->get_where('users', array('id' => $user_follow_id));
+                $user_row = $query->row_array();
+                $noti_url = '';
+                switch ($user_row['main_group_id']){
+                    case $this->config->item('group_id_merchant'):
+                        $noti_url = 'all/merchant_dashboard/' . $user_row['slug'];
+                        break;
+                    case $this->config->item('group_id_user'):
+                        $noti_url = 'all/user_dashboard/' . $user_follow_id;
+                        break;
+                }
+                $this->m_custom->notification_insert($result['following_id'], 13, $noti_url, 'users', 'id', $user_follow_id);
                 break;
         }
     }
@@ -1902,7 +1966,7 @@ class M_custom extends CI_Model
             $table_column = $notification['noti_refer_table_column'];
             $table_id = $notification['noti_refer_table_id'];
             
-            if ($table_name == 'user_follow')
+            if ($table_name == 'users')
             {
                 $record = $this->m_custom->get_one_table_record($table_name, $table_column, $table_id, 1);
             }
@@ -1940,6 +2004,7 @@ class M_custom extends CI_Model
                 'noti_url' => $notification['noti_url'],
                 'noti_read_already' => $notification['noti_read_already'],
                 'noti_time' => displayDate($notification['noti_time'], 1),
+                'noti_image_url' => $this->m_custom->get_image_url($notification['noti_refer_table'], $notification['noti_refer_table_id']),
             );
         }
         return $notification_list;
