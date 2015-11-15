@@ -10,7 +10,10 @@ if(isset($message))
 
 <div id="profile">
     <h1>Web Setting Edit</h1>
-    <div id='profile-content'>              
+    <div id='profile-content'>  
+        <?php
+        $this->load->view('admin/manage_setting_sub_menu');
+        ?>
         <div id='profile-info'> 
             <?php echo form_open(uri_string()); ?>
             <div id='profile-info-form'>

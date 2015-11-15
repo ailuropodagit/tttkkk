@@ -291,4 +291,59 @@ class M_admin extends CI_Model
         return $return;
     }
     
+    public function trans_config_get_all($the_column, $the_value)
+    {
+        $this->db->order_by('trans_conf_id');
+        $query = $this->db->get_where('transaction_config', array($the_column => $the_value));
+
+        return $query->result_array();
+    }
+    
+    function trans_config_get($set_id, $field_name = 'amount_change', $want_row = 0)
+    {
+        $query = $this->db->get_where('transaction_config', array('trans_conf_id' => $set_id));
+        $return = "0";
+        if ($query->num_rows() == 1)
+        {
+            $result = $query->row_array();
+            $return = $result[$field_name];
+            if($field_name == 'amount_change'){
+                if ($result['conf_type'] == 'can')
+                {
+                    $return = round($return);
+                }
+            }
+            if ($want_row == 1)
+            {
+                $return = $result;
+            }
+        }
+        return $return;
+    }
+
+    function trans_config_set($set_id, $update_value = NULL, $field_name = 'amount_change')
+    {
+        if (!IsNullOrEmptyString($update_value))
+        {
+            $the_data = array(
+                $field_name => $update_value,
+            );
+
+            if ($this->m_custom->compare_before_update('transaction_config', $the_data, 'trans_conf_id', $set_id))
+            {
+                if ($this->ion_auth->logged_in())
+                {
+                    $login_id = $this->ion_auth->user()->row()->id;
+                    $the_data = array(
+                        $field_name => $update_value,
+                        'last_modify_by' => $login_id,
+                    );
+                }
+
+                $this->db->where('trans_conf_id', $set_id);
+                $this->db->update('transaction_config', $the_data);
+            }
+        }
+    }
+    
 }

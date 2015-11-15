@@ -284,6 +284,16 @@ if (!function_exists('money'))
 
 }
 
+if (!function_exists('format_decimal'))
+{
+
+    function format_decimal($amount)
+    {
+        return number_format($amount,2);
+    }
+
+}
+
 if (!function_exists('limited_month_select'))
 {
 
@@ -361,6 +371,17 @@ if (!function_exists('generate_options'))
     }
 
 }
+
+if (!function_exists('generate_label_name'))
+{
+
+    function generate_label_name($value = '')
+    {
+        return url_title($value, '_', TRUE);
+    }
+
+}
+
 if (!function_exists('generate_options'))
 {
 

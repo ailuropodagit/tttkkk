@@ -560,17 +560,20 @@ class M_custom extends CI_Model
                 $field_name => $update_value,
             );
 
-            if ($this->ion_auth->logged_in())
+            if ($this->m_custom->compare_before_update('web_setting', $the_data, 'set_type', $set_type))
             {
-                $login_id = $this->ion_auth->user()->row()->id;
-                $the_data = array(
-                    $field_name => $update_value,
-                    'last_modify_by' => $login_id,
-                );
-            }
+                if ($this->ion_auth->logged_in())
+                {
+                    $login_id = $this->ion_auth->user()->row()->id;
+                    $the_data = array(
+                        $field_name => $update_value,
+                        'last_modify_by' => $login_id,
+                    );
+                }
 
-            $this->db->where('set_type', $set_type);
-            $this->db->update('web_setting', $the_data);
+                $this->db->where('set_type', $set_type);
+                $this->db->update('web_setting', $the_data);
+            }
         }
     }
 
@@ -2464,7 +2467,7 @@ class M_custom extends CI_Model
 
     public function simple_update($the_table, $the_data, $id_column, $id_value)
     {
-        if ($this->compare_before_update($the_table, $the_data, $id_column, $id_value))
+        if ($this->m_custom->compare_before_update($the_table, $the_data, $id_column, $id_value))
         {
             $this->db->where($id_column, $id_value);
             if ($this->db->update($the_table, $the_data))
