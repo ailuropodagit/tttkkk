@@ -331,7 +331,7 @@ table {
  ** FLOAT FIX
  *********************************************/
 
-#float-fix {
+#float-fix, .float-fix {
     clear: both;
     display: block;
 }

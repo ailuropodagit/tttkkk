@@ -3,6 +3,10 @@
 <script type='text/javascript' src='<?php echo base_url('js/banner-row1-slider/jquery.easing.1.3.js') ?>'></script> 
 <script type='text/javascript' src='<?php echo base_url('js/banner-row1-slider/camera.min.js') ?>'></script> 
 
+<!--RATING-->
+<script type="text/javascript" src="<?php echo base_url() ?>js/star-rating/jquery.rating.js"></script>
+<?php echo link_tag('js/star-rating/jquery.rating.css') ?>
+
 <script>
     $(function() {
         $('#camera_wrap_1').camera({
@@ -158,8 +162,10 @@
                 <div id='home-row3-today-deal-box'>
                     <?php 
                     //CONFIG DATA
+                    $this->group_id_user = $this->config->item('group_id_user');
                     $this->album_merchant = $this->config->item('album_merchant');
                     $this->album_admin = $this->config->item('album_admin');
+                    
                     $hotdeal_list = $this->m_custom->getAdvertise('hot', NULL, NULL, 0, NULL, NULL, 1);
                     foreach ($hotdeal_list as $hotdeal)
                     {
@@ -169,6 +175,8 @@
                         $merchant_id = $hotdeal['merchant_id'];
                         $image = $hotdeal['image'];
                         $title = $hotdeal['title'];
+                        $price_before = $hotdeal['price_before'];
+                        $price_after = $hotdeal['price_after'];
                         if ($advertise_type == 'adm')
                         {
                             $image_url = $this->album_admim . $image;
@@ -179,12 +187,75 @@
                         }
                         ?>
                         <div class="home-row3-today-deal-box-each">
+                            <div class="home-row3-today-deal-box-each-timer-box1">
+                                <div class="home-row3-today-deal-box-each-timer-box1-time">257</div>
+                                <div class="home-row3-today-deal-box-each-timer-box1-label">Days</div>
+                            </div>
+                            <div class="home-row3-today-deal-box-each-timer-box2">
+                                <div class="home-row3-today-deal-box-each-timer-box1-time">2</div>
+                                <div class="home-row3-today-deal-box-each-timer-box1-label">Hours</div>
+                            </div>
+                            <div class="home-row3-today-deal-box-each-timer-box3">
+                                <div class="home-row3-today-deal-box-each-timer-box1-time">3</div>
+                                <div class="home-row3-today-deal-box-each-timer-box1-label">Mins</div>
+                            </div>
+                            <div class="home-row3-today-deal-box-each-timer-box4">
+                                <div class="home-row3-today-deal-box-each-timer-box1-time">4</div>
+                                <div class="home-row3-today-deal-box-each-timer-box1-label">Secs</div>
+                            </div>
                             <div class="home-row3-today-deal-box-each-image">
                                 <?php echo img($image_url) ?>
                             </div>
                             <div class="home-row3-today-deal-box-each-separator"></div>
-                            <div class="home-row3-today-deal-box-each-title">
-                                <?php echo $title ?>
+                            <div class="home-row3-today-deal-box-each-information">
+                                <div class="home-row3-today-deal-box-each-information-title-rating">
+                                    <div class="home-row3-today-deal-box-each-information-title">
+                                        <?php echo $title ?>
+                                    </div>
+                                    <div class="home-row3-today-deal-box-each-information-rating">
+                                        <?php
+                                        $average_rating = $this->m_custom->activity_rating_average($advertise_id, 'adv');
+                                        if (check_correct_login_type($this->group_id_user)) //Check if user logged in
+                                        {
+                                            $radio_level = " ";
+                                        }
+                                        else
+                                        {
+                                            $radio_level = "disabled";
+                                        }
+                                        for ($i = 1; $i <= 5; $i++)
+                                        {
+                                            if ($i == round($average_rating))
+                                            {
+                                                echo "<input class='auto-submit-star' type='radio' name='rating' " . $radio_level . " value='" . $i . "' checked='checked'/>";
+                                            }
+                                            else
+                                            {
+                                                echo "<input class='auto-submit-star' type='radio' name='rating' " . $radio_level . " value='" . $i . "'/>";
+                                            }
+                                        }
+                                        ?>
+                                    </div>
+                                </div>
+                                <div class="home-row3-today-deal-box-each-information-price">
+                                    <div class="home-row3-today-deal-box-each-information-price-after">
+                                        <?php
+                                        if ($price_after)
+                                        {
+                                            echo 'RM ' . $price_after;
+                                        }
+                                        ?>
+                                    </div>
+                                    <div class="home-row3-today-deal-box-each-information-price-before">
+                                        <?php 
+                                        if ($price_before) 
+                                        {
+                                            echo 'RM ' . $price_before;
+                                        }
+                                        ?>
+                                    </div>
+                                </div>
+                                <div class="float-fix"></div>
                             </div>
                         </div>
                         <?php
