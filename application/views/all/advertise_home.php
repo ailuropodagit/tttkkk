@@ -92,18 +92,14 @@ $fetch_method = $this->router->fetch_method();
                         if ($row['post_hour'] != 0)
                         { 
                             ?>
-                            <div id="advertise-list-dynamic-time">
-                                <i class="fa fa-clock-o"></i><span id="advertise-list-dynamic-time-label" data-countdown='<?php echo $row['end_time'] ?>'></span>
-                            </div>
+                            <span id="advertise-list-dynamic-time-label" data-countdown='<?php echo $row['end_time'] ?>'>
                             <?php
                         } 
                     }
                     if ($advertise_type == 'pro' || $advertise_type == 'adm')
                     {
                         ?>
-                        <div id="advertise-list-dynamic-time">
-                            <i class="fa fa-bullseye"></i><span id="advertise-list-dynamic-time-label"><?php echo $row['voucher_candie'] ?> candies</span>
-                        </div>
+                        <span id="advertise-list-dynamic-time-label"><?php echo $row['voucher_candie'] ?> candies</span>
                         <?php 
                     } 
                     ?>                    

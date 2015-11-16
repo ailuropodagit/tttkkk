@@ -4,7 +4,7 @@
 <script type='text/javascript' src='<?php echo base_url('js/banner-row1-slider/camera.min.js') ?>'></script> 
 
 <script>
-    $(function () {
+    $(function() {
         $('#camera_wrap_1').camera({
             skins: 'camera_violet_skin',
             loader: 'none',
@@ -14,6 +14,20 @@
             thumbnails: false,
             fx: 'scrollLeft',
             height: '480px'
+        });
+        
+        $('#home-row3-today-deal-box').slick({
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            prevArrow: '#home-row3-today-deal-prev',
+            nextArrow: '#home-row3-today-deal-next'
+        });
+        
+        $('#home-row4-logo-slider-box').slick({
+            slidesToShow: 5,
+            slidesToScroll: 1,
+            prevArrow: '#home-row4-logo-slider-prev',
+            nextArrow: '#home-row4-logo-slider-next'
         });
     });
 </script>
@@ -132,12 +146,51 @@
             <div id='float-fix'></div>
         </div>
         <div id='home-row3-column1'>
-            <div id='home-row3-column1-today-deal' style="overflow: scroll;">
-                Today Deal
-                <?php 
-                $data['hotdeal_list'] = $this->m_custom->getAdvertise('hot', NULL, NULL, 0, NULL, NULL, 1);
-                $this->load->view('all/advertise_home', $data);
-                ?>
+            <div id='home-row3-column1-today-deal'>
+                <div id='home-row3-column1-today-deal-title'>Today's Deals</div>
+                <div id='home-row3-column1-today-deal-navigation'>
+                    <div id='home-row3-today-deal-prev'> < </div>
+                    <div id='home-row3-today-deal-prev-next-separator'></div>
+                    <div id='home-row3-today-deal-next'> > </div>
+                </div>
+                <div id='float-fix'></div>
+                <div id='home-row3-column1-today-deal-title-bottom-line'></div>
+                <div id='home-row3-today-deal-box'>
+                    <?php 
+                    //CONFIG DATA
+                    $this->album_merchant = $this->config->item('album_merchant');
+                    $this->album_admin = $this->config->item('album_admin');
+                    $hotdeal_list = $this->m_custom->getAdvertise('hot', NULL, NULL, 0, NULL, NULL, 1);
+                    foreach ($hotdeal_list as $hotdeal)
+                    {
+                        $advertise_type = $hotdeal['advertise_type'];
+                        $advertise_id = $hotdeal['advertise_id'];
+                        $sub_category_id = $hotdeal['sub_category_id'];
+                        $merchant_id = $hotdeal['merchant_id'];
+                        $image = $hotdeal['image'];
+                        $title = $hotdeal['title'];
+                        if ($advertise_type == 'adm')
+                        {
+                            $image_url = $this->album_admim . $image;
+                        }
+                        else 
+                        {
+                            $image_url = $this->album_merchant . $image;
+                        }
+                        ?>
+                        <div class="home-row3-today-deal-box-each">
+                            <div class="home-row3-today-deal-box-each-image">
+                                <?php echo img($image_url) ?>
+                            </div>
+                            <div class="home-row3-today-deal-box-each-separator"></div>
+                            <div class="home-row3-today-deal-box-each-title">
+                                <?php echo $title ?>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                    ?>
+                </div>
             </div>
             <div id='home-row3-column1-banner'>
                 <div id='home-row3-column1-banner-block1'>
@@ -185,19 +238,7 @@
                 ?>
             </div>
         </div>
-        <div id="float-fix"></div>
-        
-        <script type="text/javascript">
-            $(document).ready(function(){
-                $('#home-row4-logo-slider-box').slick({
-                    slidesToShow: 5,
-                    slidesToScroll: 1,
-                    prevArrow: '#home-row4-logo-slider-prev',
-                    nextArrow: '#home-row4-logo-slider-next'
-                });
-            });
-        </script>
-        
+        <div id="float-fix"></div>        
         <div id="home-row4-logo-slider">
             <div id="home-row4-logo-slider-prev">
                 <div id="home-row4-logo-slider-prev-round">
@@ -234,8 +275,6 @@
             </div>
             <div id="float-fix"></div>
         </div>
-                    
-        
     </div>
 </div>
 
