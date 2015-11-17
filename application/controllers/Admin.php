@@ -2942,7 +2942,191 @@ class Admin extends CI_Controller
         $this->load->view('template/layout_right_menu', $this->data);
     }
 
-     function manage_candie_term()
+    function manage_photography()
+    {
+        if (!$this->m_admin->check_is_any_admin(73))
+        {
+            redirect('/', 'refresh');
+        }
+        
+        $message_info = '';
+        //$login_id = $this->login_id;
+        //$login_type = $this->login_type;
+                
+        if (isset($_POST) && !empty($_POST))
+        {
+            $can_redirect_to = 1;
+            $id = $this->input->post('id');
+            $display_name = $this->m_custom->display_dynamic_option($id);
+            if ($this->input->post('button_action') == "frozen")
+            {
+                $message_info = add_message_info($message_info, $display_name . ' success hide.');
+                $this->m_custom->update_hide_flag(1, 'dynamic_option', $id);
+                $can_redirect_to = 1;
+            }
+            if ($this->input->post('button_action') == "recover")
+            {
+                $message_info = add_message_info($message_info, $display_name . ' success unhide.');
+                $this->m_custom->update_hide_flag(0, 'dynamic_option', $id);
+                $can_redirect_to = 1;
+            }
+
+            if ($message_info != NULL)
+            {
+                $this->session->set_flashdata('message', $message_info);
+            }
+            if ($can_redirect_to == 1)
+            {
+                redirect(uri_string(), 'refresh');
+            }
+        }
+        
+        $option_list = $this->m_custom->get_many_table_record('dynamic_option', 'option_type', 'photography', 1); 
+        $this->data['the_result'] = $option_list;
+
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+        $this->data['page_path_name'] = 'admin/manage_photography';
+        $this->load->view('template/layout_right_menu', $this->data);
+    }
+    
+    function manage_photography_change($edit_id = NULL)
+    {
+        if (!$this->m_admin->check_is_any_admin(73))
+        {
+            redirect('/', 'refresh');
+        }
+
+        $message_info = '';
+        $login_id = $this->login_id;
+        $login_type = $this->login_type;
+        $is_edit = 0;
+        $main_table = 'dynamic_option';
+        $main_table_id_column = 'option_id';
+        $main_table_filter_column = 'option_type';
+        $main_table_fiter_value = 'photography';  
+        
+        if ($edit_id != NULL)
+        {
+            $allowed_list = $this->m_custom->get_list_of_allow_id($main_table, $main_table_filter_column, $main_table_fiter_value, $main_table_id_column);
+            if (!check_allowed_list($allowed_list, $edit_id))
+            {
+                redirect('/', 'refresh');
+            }
+            $is_edit = 1;
+        }
+
+        if (isset($_POST) && !empty($_POST))
+        {
+            $can_redirect_to = 0;
+
+            $edit_id = $this->input->post('edit_id');
+            $option_desc = $this->input->post('option_desc');  
+
+            // validate form input
+            $this->form_validation->set_rules('option_desc', 'Photography Type', 'required');  
+
+            if ($edit_id == 0)
+            {
+                $is_edit = 0;
+            }
+            else
+            {
+                $is_edit = 1;
+            }
+
+            if ($this->input->post('button_action') == "save")
+            {
+                if ($this->form_validation->run() === TRUE)
+                {
+                    if ($is_edit == 0)
+                    {                    
+                        $data = array(
+                            'option_desc' => $option_desc,    
+                            'option_type' => $main_table_fiter_value,                                   
+                        );
+
+                        $new_id = $this->m_custom->get_id_after_insert($main_table, $data);
+                        if ($new_id)
+                        {
+                            $this->m_custom->insert_row_log($main_table, $new_id, $login_id, $login_type);
+                            $message_info = add_message_info($message_info, $option_desc . ' success create.');
+                            $edit_id = $new_id;
+                            $can_redirect_to = 2;
+                        }
+                        else
+                        {
+                            $message_info = add_message_info($message_info, $this->ion_auth->errors());
+                            $can_redirect_to = 1;
+                        }
+                    }
+                    else
+                    {                
+                        $data = array(
+                            'option_desc' => $option_desc,    
+                        );
+
+                        if ($this->m_custom->simple_update($main_table, $data, $main_table_id_column, $edit_id))
+                        {
+                            $this->m_custom->update_row_log($main_table, $edit_id, $login_id, $login_type);
+                            $message_info = add_message_info($message_info, $option_desc . ' success update.');
+                            $can_redirect_to = 2;
+                        }
+                        else
+                        {
+                            $message_info = add_message_info($message_info, $this->ion_auth->errors());
+                            $can_redirect_to = 3;
+                        }
+                    }
+                }
+            }
+            if ($this->input->post('button_action') == "back")
+            {
+                $can_redirect_to = 2;
+            }    
+
+            direct_go:
+            if ($message_info != NULL)
+            {
+                $this->session->set_flashdata('message', $message_info);
+            }
+            if ($can_redirect_to == 1)
+            {
+                redirect(uri_string(), 'refresh');
+            }
+            elseif ($can_redirect_to == 2)
+            {
+                redirect('admin/manage_photography', 'refresh');
+            }
+            elseif ($can_redirect_to == 3)
+            {
+                redirect('admin/manage_photography_change/' . $edit_id, 'refresh');
+            }
+        }
+
+        // set the flash data error message if there is one
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+
+        $result = $this->m_custom->get_one_table_record($main_table, $main_table_id_column, $edit_id, 1); 
+        $this->data['result'] = $result;
+
+        $this->data['edit_id'] = array(
+            'edit_id' => empty($result) ? '0' : $result[$main_table_id_column],
+            'is_edit' => $is_edit,
+        );
+
+        $this->data['is_edit'] = $is_edit;
+
+        $this->data['option_desc'] = array(
+            'name' => 'option_desc',
+            'id' => 'option_desc',
+            'value' => empty($result) ? $this->form_validation->set_value('option_desc') : $this->form_validation->set_value('option_desc', $result['option_desc']),
+        );
+    
+        $this->data['page_path_name'] = 'admin/manage_photography_change';
+        $this->load->view('template/layout_right_menu', $this->data);
+    }
+    
+    function manage_candie_term()
     {
         if (!$this->m_admin->check_is_any_admin(73))
         {
