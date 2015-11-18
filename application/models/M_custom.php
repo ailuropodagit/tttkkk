@@ -661,8 +661,13 @@ class M_custom extends CI_Model
     }
 
     //To find many records in DB with one keyword
-    public function get_many_table_record($the_table, $the_column, $the_value, $want_array = 0)
+    public function get_many_table_record($the_table, $the_column, $the_value, $want_array = 0, $second_column = NULL, $second_value = NULL)
     {
+        if (!IsNullOrEmptyString($second_column) && !IsNullOrEmptyString($second_value))
+        {
+            $this->db->where($second_column, $second_value);
+        }
+        
         $query = $this->db->get_where($the_table, array($the_column => $the_value));
 
         if ($want_array == 1)

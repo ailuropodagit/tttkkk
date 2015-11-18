@@ -1314,7 +1314,7 @@ class Admin extends CI_Controller
             $user_name = $this->m_custom->display_users($user_id);
 
             // validate form input
-            $this->form_validation->set_rules('amount_change', 'Bonus Candie Amount', 'required|integer');
+            $this->form_validation->set_rules('amount_change', 'Bonus Candie Amount (RM)', 'required|integer');
             $this->form_validation->set_rules('trans_remark', 'Bonus Reason', 'required');
 
             if ($this->input->post('button_action') == "save")
@@ -1325,7 +1325,7 @@ class Admin extends CI_Controller
                     if ($new_id)
                     {
                         $message_info = add_message_info($message_info, 'Succes give ' . $user_name . ' ' . $amount_change . ' bonus candie.');
-                        $can_redirect_to = 2;
+                        $can_redirect_to = 1;
                     }
                     else
                     {
@@ -1372,6 +1372,8 @@ class Admin extends CI_Controller
             'value' => $this->form_validation->set_value('trans_remark'),
         );
 
+        $option_list = $this->m_custom->get_many_table_record('transaction_extra', 'trans_conf_id', '31', 1, 'user_id', $user_id); 
+        $this->data['the_result'] = $option_list;
         $this->data['page_path_name'] = 'admin/user_bonus_candie_change';
         $this->load->view('template/layout_right_menu', $this->data);
     }
