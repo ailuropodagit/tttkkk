@@ -1875,6 +1875,18 @@ class M_custom extends CI_Model
         }
     }
 
+    public function notification_admin_read()
+    {
+        if ($this->ion_auth->logged_in())
+        {
+            $the_data = array(
+                'admin_read_already' => 1,
+            );
+            $this->db->where('admin_read_already', 0);
+            $this->db->update('notification', $the_data);
+        }
+    }
+    
     public function notification_read($noti_to_id)
     {
         if ($this->ion_auth->logged_in())
@@ -1893,17 +1905,35 @@ class M_custom extends CI_Model
         if ($this->ion_auth->logged_in())
         {
             $query = $this->db->get_where('notification', array('noti_id' => $noti_id))->row_array();
-            if ($query['noti_read_already'] == 0)
+            if ($this->m_admin->check_is_any_admin())
             {
-                $the_data = array(
-                    'noti_read_already' => 1,
-                );
+                if ($query['admin_read_already'] == 0)
+                {
+                    $the_data = array(
+                        'admin_read_already' => 1,
+                    );
+                }
+                else
+                {
+                    $the_data = array(
+                        'admin_read_already' => 0,
+                    );
+                }
             }
             else
             {
-                $the_data = array(
-                    'noti_read_already' => 0,
-                );
+                if ($query['noti_read_already'] == 0)
+                {
+                    $the_data = array(
+                        'noti_read_already' => 1,
+                    );
+                }
+                else
+                {
+                    $the_data = array(
+                        'noti_read_already' => 0,
+                    );
+                }
             }
             $this->db->where('noti_id', $noti_id);
             $this->db->update('notification', $the_data);
@@ -1912,10 +1942,18 @@ class M_custom extends CI_Model
 
     public function notification_count($noti_to_id, $noti_read_already = 0)
     {
-        if($noti_to_id != 0){
-            $this->db->where('noti_to_id', $noti_to_id);
-        }       
-        $query_list = $this->db->get_where('notification', array('hide_flag' => 0, 'noti_read_already' => $noti_read_already))->num_rows();
+        if ($this->m_admin->check_is_any_admin())
+        {
+            $query_list = $this->db->get_where('notification', array('hide_flag' => 0, 'admin_read_already' => $noti_read_already))->num_rows();
+        }
+        else
+        {
+            if ($noti_to_id != 0)
+            {
+                $this->db->where('noti_to_id', $noti_to_id);
+            }
+            $query_list = $this->db->get_where('notification', array('hide_flag' => 0, 'noti_read_already' => $noti_read_already))->num_rows();
+        }
         return $query_list;
     }
 
@@ -2003,6 +2041,7 @@ class M_custom extends CI_Model
                 'noti_message' => $noti_message,
                 'noti_url' => $notification['noti_url'],
                 'noti_read_already' => $notification['noti_read_already'],
+                'admin_read_already' => $notification['admin_read_already'],
                 'noti_time' => displayDate($notification['noti_time'], 1),
                 'noti_image_url' => $this->m_custom->get_image_url($notification['noti_refer_table'], $notification['noti_refer_table_id']),
             );
