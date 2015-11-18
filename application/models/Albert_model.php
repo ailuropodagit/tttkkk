@@ -62,6 +62,7 @@ class Albert_model extends CI_Model
         $this->db->from('category');
         $this->db->where('main_category_id', NULL);
         $this->db->where('hide_special !=', '1');
+        $this->db->where('hide_flag !=', '1');
         $this->db->order_by('category_label');
         $query = $this->db->get();
         //RETURN
@@ -622,6 +623,7 @@ class Albert_model extends CI_Model
         $this->db->from('users');
         $this->db->join('category', 'users.me_sub_category_id = category.category_id', 'inner');
         $this->db->where('users.main_group_id', 3);
+        $this->db->where('category.hide_flag', 0);
         //WHERE
         if($where)
         {
