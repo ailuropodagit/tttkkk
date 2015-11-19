@@ -24,7 +24,21 @@
             slidesToShow: 3,
             slidesToScroll: 1,
             prevArrow: '#home-row3-today-deal-prev',
-            nextArrow: '#home-row3-today-deal-next'
+            nextArrow: '#home-row3-today-deal-next',
+            responsive: [
+                {
+                    breakpoint: 1200,
+                    settings: {
+                        slidesToShow: 2
+                    }
+                },
+                {
+                    breakpoint: 500,
+                    settings: {
+                        slidesToShow: 1
+                    }
+                }
+            ]
         });
         
         $('#home-row4-logo-slider-box').slick({
@@ -139,13 +153,13 @@
         </div>
         <div id='home-row2'>
             <div id='home-row2-block1'>
-                <?php echo img('folder_upload/home_banner_row2/home-banner-row2-banner1.png') ?>
+                <?php echo img('folder_upload/home_banner_row2/home-banner-row2-banner1.jpg') ?>
             </div>
             <div id='home-row2-block2'>
-                <?php echo img('folder_upload/home_banner_row2/home-banner-row2-banner2.png') ?>
+                <?php echo img('folder_upload/home_banner_row2/home-banner-row2-banner2.jpg') ?>
             </div>
             <div id='home-row2-block3'>
-                <?php echo img('folder_upload/home_banner_row2/home-banner-row2-banner3.png') ?>
+                <?php echo img('folder_upload/home_banner_row2/home-banner-row2-banner3.jpg') ?>
             </div>
             <div id='float-fix'></div>
         </div>
@@ -187,22 +201,24 @@
                         }
                         ?>
                         <div class="home-row3-today-deal-box-each">
-                            <div class="home-row3-today-deal-box-each-timer-box1">
-                                <div class="home-row3-today-deal-box-each-timer-box1-time">257</div>
-                                <div class="home-row3-today-deal-box-each-timer-box1-label">Days</div>
-                            </div>
-                            <div class="home-row3-today-deal-box-each-timer-box2">
-                                <div class="home-row3-today-deal-box-each-timer-box1-time">2</div>
-                                <div class="home-row3-today-deal-box-each-timer-box1-label">Hours</div>
-                            </div>
-                            <div class="home-row3-today-deal-box-each-timer-box3">
-                                <div class="home-row3-today-deal-box-each-timer-box1-time">3</div>
-                                <div class="home-row3-today-deal-box-each-timer-box1-label">Mins</div>
-                            </div>
-                            <div class="home-row3-today-deal-box-each-timer-box4">
-                                <div class="home-row3-today-deal-box-each-timer-box1-time">4</div>
-                                <div class="home-row3-today-deal-box-each-timer-box1-label">Secs</div>
-                            </div>
+                            <!--<div class="home-row3-today-deal-box-each-timer-box">-->
+                                <div class="home-row3-today-deal-box-each-timer-box1">
+                                    <div class="home-row3-today-deal-box-each-timer-box1-time">257</div>
+                                    <div class="home-row3-today-deal-box-each-timer-box1-label">Days</div>
+                                </div>
+                                <div class="home-row3-today-deal-box-each-timer-box2">
+                                    <div class="home-row3-today-deal-box-each-timer-box1-time">2</div>
+                                    <div class="home-row3-today-deal-box-each-timer-box1-label">Hours</div>
+                                </div>
+                                <div class="home-row3-today-deal-box-each-timer-box3">
+                                    <div class="home-row3-today-deal-box-each-timer-box1-time">3</div>
+                                    <div class="home-row3-today-deal-box-each-timer-box1-label">Mins</div>
+                                </div>
+                                <div class="home-row3-today-deal-box-each-timer-box4">
+                                    <div class="home-row3-today-deal-box-each-timer-box1-time">4</div>
+                                    <div class="home-row3-today-deal-box-each-timer-box1-label">Secs</div>
+                                </div>
+                            <!--</div>-->
                             <div class="home-row3-today-deal-box-each-image">
                                 <?php echo img($image_url) ?>
                             </div>
@@ -265,18 +281,18 @@
             </div>
             <div id='home-row3-column1-banner'>
                 <div id='home-row3-column1-banner-block1'>
-                    <?php echo img('folder_upload/home_banner_row3/home-banner-row3-banner1.png') ?>
+                    <?php echo img('folder_upload/home_banner_row3/home-banner-row3-banner1.jpg') ?>
                 </div>
                 <div id='home-row3-column1-banner-block2'>
                     <div id='home-row3-column1-banner-block2-row1'>
-                        <?php echo img('folder_upload/home_banner_row3/home-banner-row3-banner2.png') ?>
+                        <?php echo img('folder_upload/home_banner_row3/home-banner-row3-banner2.jpg') ?>
                     </div>
                     <div id='home-row3-column1-banner-block2-row2'>
-                        <?php echo img('folder_upload/home_banner_row3/home-banner-row3-banner3.png') ?>
+                        <?php echo img('folder_upload/home_banner_row3/home-banner-row3-banner3.jpg') ?>
                     </div>
                 </div>
                 <div id='home-row3-column1-banner-block3'>
-                    <?php echo img('folder_upload/home_banner_row3/home-banner-row3-banner4.png') ?>
+                    <?php echo img('folder_upload/home_banner_row3/home-banner-row3-banner4.jpg') ?>
                 </div>
                 <div id='float-fix'></div>
             </div>

@@ -244,13 +244,13 @@ html, body {
     width: 45px;
     height: 45px;
     border: 1px solid lightgray;
+    background-color: whitesmoke;
 }
 
 #header-logo-bar-profile-display-photo-box img {
-    width: 45px;
-    height: 45px;
-    object-fit: cover; 
-    object-position: center;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 #header-logo-bar-profile-display-name {
@@ -564,9 +564,10 @@ html, body {
 #home-row1-categories-navigation a {
     display: block;
     color: #444444;
-    padding: 13px 18px 13px 18px;
+    padding: 20px 18px 20px 18px;
     text-decoration: none;
     font-weight: 400;
+    font-size: 15px;
 }
 
 #home-row1-categories-navigation ul {
@@ -586,7 +587,7 @@ html, body {
 #home-row1-categories-navigation ul li.has-sub > a:after {
     content: '>';
     position: absolute;
-    right: 15px;
+    right: 20px;
     font-size: 16px;
     font-weight: bold;
     line-height: 14px;
@@ -632,15 +633,16 @@ html, body {
 }
 
 #home-row1-categories-navigation-main-category-title-label {
-    margin: 0px 0px 0px 7px;
+    margin: 0px 0px 0px 15px;
 }
 
 #home-row1-categories-navigation-main-category-icon {
-    font-size: 8px;
+    font-size: 11px;
+    margin: 0px 0px 0px 5px;
 }
 
 #home-row1-categories-navigation-main-category-label {
-    margin: 0px 0px 0px 7px;
+    margin: 0px 0px 0px 15px;
 }
 
 #home-row1-categories-navigation-box {
@@ -701,6 +703,7 @@ html, body {
 
 #home-row2 img {
     width: 100%;
+    display: block;
 }
     
 #home-row2-block1, #home-row2-block2, #home-row2-block3 {
@@ -793,7 +796,13 @@ html, body {
 }
 
 .home-row3-today-deal-box-each-timer-box {
-    
+    border: 1px solid red;
+    background-color: red;
+    position: absolute;
+    height: 200px;
+    width: 200px;
+    left: 50%;
+    margin: 0px 0px 0px -100px;
 }
 
 .home-row3-today-deal-box-each-timer-box1, .home-row3-today-deal-box-each-timer-box2,
@@ -807,22 +816,22 @@ html, body {
 
 .home-row3-today-deal-box-each-timer-box1 {
     top: 85px;
-    left: 47px;
+    left: 15%;
 }
 
 .home-row3-today-deal-box-each-timer-box2 {
     top: 85px;
-    left: 95px;
+    left: 33%;
 }
 
 .home-row3-today-deal-box-each-timer-box3 {
     top: 85px;
-    left: 143px;
+    left: 51%;
 }
 
 .home-row3-today-deal-box-each-timer-box4 {
     top: 85px;
-    left: 191px;
+    left: 69%
 }
 
 .home-row3-today-deal-box-each-timer-box1-time {
@@ -967,7 +976,7 @@ html, body {
 }
     
 #home-row4-logo-slider-prev, #home-row4-logo-slider-next { 
-    margin: 20px 0px 0px 0px;
+    margin: 25px 0px 0px 0px;
     position: relative;
 }
 
@@ -1017,7 +1026,11 @@ html, body {
     float: left;
     width: calc(100% - 100px);
 }
-    
+
+#home-row4-logo-slider-box div {
+    outline: none;
+}
+
 #home-bottom-background {
     height: 200px;
     background-image: url('../image/footer-background.png');
@@ -1424,10 +1437,9 @@ html, body {
 }
 
 #dashboard-photo-box img {
-    width: 250px;
-    height: 250px;
-    object-fit: cover; 
-    object-position: center;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 #dashboard-photo-note {
@@ -1900,10 +1912,9 @@ html, body {
 }
 
 #profile-photo-box img {
-    width: 250px;
-    height: 250px;
-    object-fit: cover; 
-    object-position: center;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 #profile-photo-note {
