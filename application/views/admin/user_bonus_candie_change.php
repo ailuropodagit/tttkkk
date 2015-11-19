@@ -1,4 +1,14 @@
-<script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>js/datatables/js/jquery.dataTables.min.js"></script>
+<?php echo link_tag('js/datatables/css/jquery.dataTables.min.css') ?>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#myTable').DataTable({
+            "pageLength": 25,
+            "order": []
+        });
+    });
+</script>
 
 <?php
 //MESSAGE
@@ -21,7 +31,7 @@ if(isset($message))
                     <div id='profile-info-form-each-label'><?php echo 'Current Candie : ' . $this->m_user->candie_check_balance($result['id']); ?></div>
                 </div>
                 <div id='profile-info-form-each'>
-                    <div id='profile-info-form-each-label'><?php echo 'Bonus Candie Amount'; ?></div>
+                    <div id='profile-info-form-each-label'><?php echo 'Bonus Candie Amount (RM)'; ?></div>
                     <div id='profile-info-form-each-input'><?php echo form_input($amount_change); ?></div>
                 </div>               
                 <div id='profile-info-form-each'>
@@ -40,4 +50,33 @@ if(isset($message))
         </div>
         
     </div>
+    <div id="float-fix"></div>
+    <br/>
+    <div id='payment-charge-table'>
+            <table border='1px' cellspacing='0px' cellpadding='0px' id="myTable" class="display">
+                <thead>
+                    <tr style="text-align:center">
+                        <th>Bonus Candie Amount (RM)</th> 
+                        <th>Bonus Reason</th> 
+                        <th>Give by Admin/Worker</th> 
+                        <th>Give Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    foreach ($the_result as $row)
+                    {
+                        $admin_name = $this->m_custom->display_users($row['admin_id']);
+                        $trans_time = displayDate($row['trans_time'], 1);
+                        echo '<tr>';
+                        echo "<td style='text-align:right'>" . $row['amount_change'] . "</td>";
+                        echo "<td>" . $row['trans_remark'] . "</td>";
+                        echo "<td>" . $admin_name . "</td>";
+                        echo "<td>" . $trans_time . "</td>";  
+                        echo '</tr>';
+                    }
+                    ?>
+                </tbody>    
+            </table>
+        </div>
 </div>

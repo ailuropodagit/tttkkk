@@ -12,20 +12,20 @@
 
 <?php
 //MESSAGE
-if(isset($message))
+if (isset($message))
 {
     ?><div id="message"><?php echo $message; ?></div><?php
 }
 ?>
 
-<div id="profile">
-    <h1>Manage Redemption Term & Condition</h1>
-    <div id='profile-content'>  
+<div id="payment-charge">
+    <h1>Photography Type Management</h1>
+    <div id="payment-charge-content">
         <?php
         $this->load->view('admin/manage_setting_sub_menu');
         ?>
         <div style="float:right">
-            <?php $add_new_url = base_url() . 'admin/manage_candie_term_change'; ?>           
+            <?php $add_new_url = base_url() . 'admin/manage_photography_change'; ?>           
             <div><a href='<?php echo $add_new_url; ?>' class="a-href-button">Add New</a></div>
         </div>
         <div id="float-fix"></div>
@@ -33,9 +33,7 @@ if(isset($message))
             <table border='1px' cellspacing='0px' cellpadding='0px' id="myTable" class="display">
                 <thead>
                     <tr style="text-align:center">
-                        <th>Term & Condition</th> 
-                        <th>Add Merchant Name In Front</th> 
-                        <th>Keppo Voucher Used Only</th> 
+                        <th>Photography Type</th> 
                         <th>Hide Already</th>
                         <th>Actions</th>
                         <th>Special Actions</th>
@@ -46,14 +44,10 @@ if(isset($message))
                     foreach ($the_result as $row)
                     {
                         $remove_row = $row['hide_flag'] == 1 ? 'Hide' : '';
-                        $option_special = $row['option_special'] == 1 ? 'Yes' : '';
-                        $option_level = $row['option_level'] == 1 ? 'Yes' : '';
-                        $url_edit = base_url() . "admin/manage_candie_term_change/" . $row['option_id'];
-                        $url_special_action = base_url() . "admin/manage_candie_term";
+                        $url_edit = base_url() . "admin/manage_photography_change/" . $row['option_id'];
+                        $url_special_action = base_url() . "admin/manage_photography";
                         echo '<tr>';
                         echo "<td>" . $row['option_desc'] . "</td>";
-                        echo "<td>" . $option_special . "</td>";
-                        echo "<td>" . $option_level . "</td>";
                         echo "<td>" . $remove_row . "</td>";
                         echo "<td>";
                         echo "<a href='" . $url_edit . "' >Edit</a>";

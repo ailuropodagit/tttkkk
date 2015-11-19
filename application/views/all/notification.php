@@ -18,6 +18,10 @@ $image_path_user_profile = $this->config->item('album_user_profile');
                     //DATA
                     $notification_from_user_id = $row['noti_by_id'];                
                     $noti_read = $row['noti_read_already'];
+                    if ($this->m_admin->check_is_any_admin())
+                    {
+                        $noti_read = $row['admin_read_already'];
+                    }
                     $noti_message = $row['noti_message'];
                     $noti_url = base_url() .$row['noti_url'];
 

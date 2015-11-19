@@ -41,7 +41,16 @@ if(isset($message))
 ?>
 
 <div id="candie-promotion">
-    <h1>Keppo Voucher Add</h1>
+    <?php
+    if ($is_edit == 0)
+    {
+        echo '<h1>Keppo Voucher Add</h1>';
+    }
+    else
+    {
+        echo '<h1>Keppo Voucher Edit</h1>';
+    }                       
+    ?>
     <div id="candie-promotion-content">
         <div id='candie-promotion-form'>
             <?php echo form_open_multipart(uri_string()); ?>
