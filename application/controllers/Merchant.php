@@ -1002,6 +1002,9 @@ class Merchant extends CI_Controller
         $this->form_validation->set_rules('description', $this->lang->line('create_merchant_validation_description_label'));
         $this->form_validation->set_rules('website', $this->lang->line('create_merchant_validation_website_label'));
         $this->form_validation->set_rules('facebook_url', $this->lang->line('create_merchant_validation_facebook_url_label'));
+        $this->form_validation->set_rules('person_incharge', $this->lang->line('create_merchant_validation_person_incharge_label'), 'required');
+        $this->form_validation->set_rules('person_contact', $this->lang->line('create_merchant_validation_person_contact_label'), 'required|valid_contact_number');
+        
         if (isset($_POST) && !empty($_POST))
         {
             if ($this->input->post('button_action') == "confirm")
@@ -1025,6 +1028,8 @@ class Merchant extends CI_Controller
                         'slug' => generate_slug($this->input->post('company')),
                         //'me_category_id' => $this->input->post('me_category_id'),
                         'me_sub_category_id' => $this->input->post('me_sub_category_id'),
+                        'me_person_incharge' => $this->input->post('person_incharge'),
+                        'me_person_contact' => $this->input->post('person_contact'),
                         'me_website_url' => $this->input->post('website'),
                         'me_facebook_url' => $this->input->post('facebook_url'),
                     );
@@ -1148,6 +1153,18 @@ class Merchant extends CI_Controller
             'id' => 'phone',
             'type' => 'text',
             'value' => $this->form_validation->set_value('phone', $user->phone),
+        );
+        $this->data['person_incharge'] = array(
+            'name' => 'person_incharge',
+            'id' => 'person_incharge',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('person_incharge', $user->me_person_incharge),
+        );
+        $this->data['person_contact'] = array(
+            'name' => 'person_contact',
+            'id' => 'person_contact',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('person_contact', $user->me_person_contact),
         );
         $this->data['website'] = array(
             'name' => 'website',

@@ -116,6 +116,14 @@ if(isset($message))
                     <div id='profile-info-form-each-input'><?php echo form_input($phone); ?></div>
                 </div>
                 <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><?php echo lang('create_merchant_person_incharge_label', 'person_incharge'); ?></div>
+                    <div id='profile-info-form-each-input'><?php echo form_input($person_incharge); ?></div>
+                </div>
+                <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><?php echo lang('create_merchant_person_contact_label', 'person_contact'); ?></div>
+                    <div id='profile-info-form-each-input'><?php echo form_input($person_contact); ?></div>
+                </div>
+                <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_merchant_website_label', 'website'); ?></div>
                     <div id='profile-info-form-each-input'><?php echo form_input($website); ?></div>
                 </div>

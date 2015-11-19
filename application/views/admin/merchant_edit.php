@@ -31,6 +31,14 @@ if(isset($message))
                     <div id='profile-info-form-each-input'><?php echo form_input($company); ?></div>
                 </div>
                 <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><?php echo lang('create_merchant_person_incharge_label', 'me_person_incharge'); ?></div>
+                    <div id='profile-info-form-each-input'><?php echo form_input($me_person_incharge); ?></div>
+                </div>
+                <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><?php echo lang('create_merchant_person_contact_label', 'me_person_contact'); ?></div>
+                    <div id='profile-info-form-each-input'><?php echo form_input($me_person_contact); ?></div>
+                </div>
+                <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_merchant_companyssm_label', 'me_ssm'); ?></div>
                     <div id='profile-info-form-each-input'><?php echo form_input($me_ssm); ?></div>
                 </div>
@@ -53,7 +61,7 @@ if(isset($message))
                 <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_merchant_phone_label', 'phone'); ?></div>
                     <div id='profile-info-form-each-input'><?php echo form_input($phone); ?></div>
-                </div>
+                </div>               
             </div>
             <?php 
                 echo form_hidden('id', $result['id']); 
