@@ -489,7 +489,7 @@ class M_user extends CI_Model
                     {
                         $candie_plus = $config_result['amount_change'];
                         //If is bonus candie, need to minus candie
-                        if ($trans_conf_id == 31)
+                        if ($config_result['allow_overwrite'] == 1 && $candie_overwrite != 0)
                         {
                             $candie_plus = $candie_overwrite;
                         }
@@ -498,7 +498,7 @@ class M_user extends CI_Model
                     {
                         $candie_minus = $config_result['amount_change'];
                         //If is redeemption, need to minus candie
-                        if ($trans_conf_id == 8)
+                        if ($config_result['allow_overwrite'] == 1 && $candie_overwrite != 0)
                         {
                             $candie_minus = $candie_overwrite;
                         }
@@ -673,7 +673,7 @@ class M_user extends CI_Model
                 {
                     $amount_minus = $config_result['amount_change'];
                     //If is User Use Money, then the amount is key in by user
-                    if ($trans_conf_id == 23)
+                    if ($config_result['allow_overwrite'] == 1 && $amount_overwrite != 0)
                     {
                         $amount_minus = $amount_overwrite;
                     }
@@ -681,6 +681,10 @@ class M_user extends CI_Model
                 else
                 {
                     $amount_plus = $config_result['amount_change'];
+                    if ($config_result['allow_overwrite'] == 1 && $amount_overwrite != 0)
+                    {
+                        $amount_plus = $amount_overwrite;
+                    }
                 }
                 $the_data = array(
                     'user_id' => $user_id,
