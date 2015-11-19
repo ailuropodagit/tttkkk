@@ -33,6 +33,7 @@ class Photographer extends CI_Controller
         $data['the_type_selected'] = empty($search_type) ? "" : $search_type;
 
         if($search_type == 'all') { $search_type = NULL;}
+        
         //QUERY PHOTOGRAPHER             
         $data['query_blogger'] = $this->albert_model->read_photographer($keyword, $search_type);
         //TEMPLATE
