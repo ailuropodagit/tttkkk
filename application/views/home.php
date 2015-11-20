@@ -191,6 +191,8 @@
                         $title = $hotdeal['title'];
                         $price_before = $hotdeal['price_before'];
                         $price_after = $hotdeal['price_after'];
+                        $end_time = $hotdeal['end_time'];
+                        
                         if ($advertise_type == 'adm')
                         {
                             $image_url = $this->album_admim . $image;
@@ -201,24 +203,39 @@
                         }
                         ?>
                         <div class="home-row3-today-deal-box-each">
+                            
+                            <script type="text/javascript" src="<?php echo base_url('js/jquery.countdown.js') ?>"></script>
+                            <script type="text/javascript">
+                                $(document).ready(function () {
+                                    $('.home-row3-today-deal-box-each-timer-box1-time-day').each(function(){
+                                        var _this = $(this);
+                                        var end_date = $(this).attr('end_date');
+                                        _this.countdown(end_date, function(event) {
+                                            $(this).html(event.strftime('%D'));
+                                        });
+                                    });
+                                });
+                            </script>
+                            
                             <!--<div class="home-row3-today-deal-box-each-timer-box">-->
                                 <div class="home-row3-today-deal-box-each-timer-box1">
-                                    <div class="home-row3-today-deal-box-each-timer-box1-time">257</div>
+                                    <div class="home-row3-today-deal-box-each-timer-box1-time-day" end_date="<?php echo $end_time ?>"></div>
                                     <div class="home-row3-today-deal-box-each-timer-box1-label">Days</div>
                                 </div>
                                 <div class="home-row3-today-deal-box-each-timer-box2">
-                                    <div class="home-row3-today-deal-box-each-timer-box1-time">2</div>
+                                    <div class="home-row3-today-deal-box-each-timer-box1-time-hour" end_date="<?php echo $end_time ?>">2</div>
                                     <div class="home-row3-today-deal-box-each-timer-box1-label">Hours</div>
                                 </div>
                                 <div class="home-row3-today-deal-box-each-timer-box3">
-                                    <div class="home-row3-today-deal-box-each-timer-box1-time">3</div>
+                                    <div class="home-row3-today-deal-box-each-timer-box1-time-minute" end_date="<?php echo $end_time ?>">3</div>
                                     <div class="home-row3-today-deal-box-each-timer-box1-label">Mins</div>
                                 </div>
                                 <div class="home-row3-today-deal-box-each-timer-box4">
-                                    <div class="home-row3-today-deal-box-each-timer-box1-time">4</div>
+                                    <div class="home-row3-today-deal-box-each-timer-box1-time-second" end_date="<?php echo $end_time ?>">4</div>
                                     <div class="home-row3-today-deal-box-each-timer-box1-label">Secs</div>
                                 </div>
                             <!--</div>-->
+                            
                             <div class="home-row3-today-deal-box-each-image">
                                 <?php echo img($image_url) ?>
                             </div>
