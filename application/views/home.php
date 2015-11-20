@@ -1,7 +1,12 @@
+<!--CAMERA SLIDER-->
 <link rel='stylesheet' id='camera-css'  href='<?php echo base_url('js/banner-row1-slider/camera.css') ?>' type='text/css' media='all'> 
 <script type='text/javascript' src='<?php echo base_url('js/banner-row1-slider/jquery.mobile.customized.min.js') ?>'></script>
 <script type='text/javascript' src='<?php echo base_url('js/banner-row1-slider/jquery.easing.1.3.js') ?>'></script> 
 <script type='text/javascript' src='<?php echo base_url('js/banner-row1-slider/camera.min.js') ?>'></script> 
+
+<!--SLICK SLIDER-->
+<link rel="stylesheet" type="text/css" href="<?php echo base_url('js/slick-slider/slick.css') ?>"/>
+<link rel="stylesheet" type="text/css" href="js/slick-slider/slick-theme.css"/>
 
 <!--RATING-->
 <script type="text/javascript" src="<?php echo base_url() ?>js/star-rating/jquery.rating.js"></script>

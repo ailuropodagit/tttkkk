@@ -24,10 +24,6 @@
         <link rel="stylesheet" href="<?php echo base_url('js/bootstrap-3.3.5/dist/css/custom-bootstrap-modal.css') ?>">
         <link rel="stylesheet" href="<?php echo base_url('js/bootstrap-3.3.5/dist/css/custom-bootstrap-modal-center.css') ?>">
         <script type="text/javascript" src="<?php echo base_url('js/bootstrap-3.3.5/dist/js/bootstrap.min.js') ?>"></script>
-        
-        <link rel="stylesheet" type="text/css" href="<?php echo base_url('js/slick-slider/slick.css') ?>"/>
-        <link rel="stylesheet" type="text/css" href="js/slick-slider/slick-theme.css"/>
-        
         <script>
             $(function(){                
                 //BOOSTRAP MODAL
