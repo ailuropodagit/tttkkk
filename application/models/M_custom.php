@@ -2769,6 +2769,99 @@ class M_custom extends CI_Model
         }
     }
 
+    public function promo_code_insert_user($code_user_id)
+    {
+        $query = $this->db->get_where('promo_code', array('code_type' => 'user', 'code_user_id' => $code_user_id), 1);
+        if ($query->num_rows() == 0)
+        {
+            $user_info = $this->m_custom->getUserInfo($code_user_id);
+            $code_candie = $this->m_custom->web_setting_get('register_promo_code_get_candie');
+            $code_money = $this->m_custom->web_setting_get('friend_success_register_get_money', 'set_decimal');
+            $name = substr(generate_code($user_info['first_name'] . $user_info['last_name']), 0, 5);
+            $postfix = str_pad($code_user_id, 4, '0', STR_PAD_LEFT);
+            if ($user_info['us_gender_id'] = $this->config->item('gender_id_male'))
+            {
+                $prefix = '2';
+            }
+            else
+            {
+                $prefix = '3';
+            }
+            $code_no = $prefix . $name . $postfix;
+            $new_id = $this->m_custom->promo_code_insert($code_no, 'user', $code_user_id, $code_candie, $code_money);
+            if ($new_id)
+            {
+                return $new_id;
+            }
+        }
+        return FALSE;
+    }
+
+    public function promo_code_insert_merchant($code_user_id)
+    {
+        $query = $this->db->get_where('promo_code', array('code_type' => 'merchant', 'code_user_id' => $code_user_id), 1);
+        if ($query->num_rows() == 0)
+        {
+            $user_info = $this->m_custom->getMerchantInfo($code_user_id);
+            $code_candie = $this->m_custom->web_setting_get('merchant_promo_code_get_candie');
+            $name = substr(generate_code($user_info['slug']), 0, 5);
+            $postfix = str_pad($code_user_id, 4, '0', STR_PAD_LEFT);
+            $code_no = '6' . $name . $postfix;
+            $new_id = $this->m_custom->promo_code_insert($code_no, 'merchant', $code_user_id, $code_candie);
+            if ($new_id)
+            {
+                return $new_id;
+            }
+        }
+        return FALSE;
+    }
+    
+    public function promo_code_insert_event($code_no, $code_candie = NULL, $code_money = NULL, $code_event_name = NULL)
+    {
+        $query = $this->db->get_where('promo_code', array('code_type' => 'event', 'code_no' => $code_no));
+        if ($query->num_rows() == 0)
+        {
+            $new_id = $this->m_custom->promo_code_insert($code_no, 'event', 1, $code_candie, $code_money, 1, 1, $code_event_name);
+            if ($new_id)
+            {
+                return $new_id;
+            }
+        }
+
+        return FALSE;
+    }
+
+    public function promo_code_insert($code_no, $code_type, $code_user_id, $code_candie = NULL, $code_money = NULL, $code_candie_overwrite = 0, $code_money_overwrite = 0, $code_event_name = NULL, $code_remark = NULL)
+    {
+        $login_id = NULL;
+        if ($this->ion_auth->logged_in())
+        {
+            $login_id = $this->ion_auth->user()->row()->id;
+        }
+
+        $the_data = array(
+            'code_no' => $code_no,
+            'code_type' => $code_type,
+            'code_user_id' => $code_user_id,
+            'code_candie' => $code_candie,
+            'code_money' => $code_money,
+            'code_candie_overwrite' => $code_candie_overwrite,
+            'code_money_overwrite' => $code_money_overwrite,
+            'code_event_name' => $code_event_name,
+            'code_remark' => $code_remark,
+            'last_modify_by' => $login_id,
+        );
+        $new_id = $this->m_custom->get_id_after_insert('promo_code', $the_data);
+        if ($new_id)
+        {
+            return $new_id;
+        }
+        else
+        {
+            return FALSE;
+        }
+    }
+
     public function table_id_column($table){
         $fields = $this->db->list_fields($table);
         foreach ($fields as $field)

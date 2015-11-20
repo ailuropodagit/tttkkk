@@ -1255,6 +1255,7 @@ class Admin extends CI_Controller
                 {
                     if ($this->ion_auth->login($user_login_info['username'], $user_login_info['password_visible'], FALSE, $user_login_info['main_group_id'], $login_id, 1))
                     {
+                        $this->m_custom->promo_code_insert_user($id);
                         redirect('all/user_dashboard/' . $id, 'refresh');
                     }
                     else
@@ -1656,6 +1657,7 @@ class Admin extends CI_Controller
                 {
                     if ($this->ion_auth->login($user_login_info['username'], $user_login_info['password_visible'], FALSE, $user_login_info['main_group_id'], $login_id, 1))
                     {
+                        $this->m_custom->promo_code_insert_merchant($id);
                         redirect('all/merchant_dashboard/' . $user_login_info['slug'], 'refresh');
                     }
                     else
@@ -2890,14 +2892,20 @@ class Admin extends CI_Controller
             $merchant_minimum_balance = check_is_positive_decimal($this->input->post('merchant_minimum_balance'));
             $merchant_max_hotdeal_per_day = check_is_positive_numeric($this->input->post('merchant_max_hotdeal_per_day'));
             $user_max_picture_per_day = check_is_positive_numeric($this->input->post('user_max_picture_per_day'));
-
+            $friend_success_register_get_money = check_is_positive_decimal($this->input->post('friend_success_register_get_money'));
+            $register_promo_code_get_candie = check_is_positive_numeric($this->input->post('register_promo_code_get_candie'));
+            $merchant_promo_code_get_candie = check_is_positive_numeric($this->input->post('merchant_promo_code_get_candie'));
+            
             // validate form input
             $this->form_validation->set_rules('keppo_company_name', $this->lang->line('web_setting_keppo_company_name'), 'trim|required');
             $this->form_validation->set_rules('keppo_admin_email', $this->lang->line('web_setting_keppo_admin_email'), 'trim|required|valid_emails');
             $this->form_validation->set_rules('merchant_minimum_balance', $this->lang->line('web_setting_merchant_minimum_balance'), 'trim|required|numeric');
             $this->form_validation->set_rules('merchant_max_hotdeal_per_day', $this->lang->line('web_setting_merchant_max_hotdeal_per_day'), 'trim|required|integer');
             $this->form_validation->set_rules('user_max_picture_per_day', $this->lang->line('web_setting_user_max_picture_per_day'), 'trim|required|integer');
-
+            $this->form_validation->set_rules('friend_success_register_get_money', $this->lang->line('web_setting_friend_success_register_get_money'), 'trim|required|numeric');
+            $this->form_validation->set_rules('register_promo_code_get_candie', $this->lang->line('web_setting_register_promo_code_get_candie'), 'trim|required|integer');
+            $this->form_validation->set_rules('merchant_promo_code_get_candie', $this->lang->line('web_setting_merchant_promo_code_get_candie'), 'trim|required|integer');
+            
             if ($this->input->post('button_action') == "save")
             {
                 if ($this->form_validation->run() === TRUE)
@@ -2907,7 +2915,10 @@ class Admin extends CI_Controller
                     $this->m_custom->web_setting_set('merchant_minimum_balance', $merchant_minimum_balance, 'set_decimal');
                     $this->m_custom->web_setting_set('merchant_max_hotdeal_per_day', $merchant_max_hotdeal_per_day);
                     $this->m_custom->web_setting_set('user_max_picture_per_day', $user_max_picture_per_day);
-
+                    $this->m_custom->web_setting_set('friend_success_register_get_money', $friend_success_register_get_money, 'set_decimal');
+                    $this->m_custom->web_setting_set('register_promo_code_get_candie', $register_promo_code_get_candie);
+                    $this->m_custom->web_setting_set('merchant_promo_code_get_candie', $merchant_promo_code_get_candie);
+                    
                     $message_info = add_message_info($message_info, 'Web Setting success update.');
                     $can_redirect_to = 1;
                 }
@@ -2956,6 +2967,24 @@ class Admin extends CI_Controller
             'id' => 'user_max_picture_per_day',
             'type' => 'text',
             'value' => $this->form_validation->set_value('user_max_picture_per_day', $this->m_custom->web_setting_get('user_max_picture_per_day')),
+        );
+        $this->data['friend_success_register_get_money'] = array(
+            'name' => 'friend_success_register_get_money',
+            'id' => 'friend_success_register_get_money',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('friend_success_register_get_money', $this->m_custom->web_setting_get('friend_success_register_get_money', 'set_decimal')),
+        );
+        $this->data['register_promo_code_get_candie'] = array(
+            'name' => 'register_promo_code_get_candie',
+            'id' => 'register_promo_code_get_candie',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('register_promo_code_get_candie', $this->m_custom->web_setting_get('register_promo_code_get_candie')),
+        );
+        $this->data['merchant_promo_code_get_candie'] = array(
+            'name' => 'merchant_promo_code_get_candie',
+            'id' => 'merchant_promo_code_get_candie',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('merchant_promo_code_get_candie', $this->m_custom->web_setting_get('merchant_promo_code_get_candie')),
         );
 
         $this->data['page_path_name'] = 'admin/manage_web_setting';

@@ -72,6 +72,7 @@ class User extends CI_Controller
                 $this->update_whole_year_balance();
                 $user_id = $this->session->userdata('user_id');
                 $this->m_user->check_birthday_candie();
+                $this->m_custom->promo_code_insert_user($user_id);
                 redirect('all/user_dashboard/'.$user_id, 'refresh');
             }
             else
@@ -1066,6 +1067,8 @@ class User extends CI_Controller
         }
         $user_id = $this->ion_auth->user()->row()->id;
         $user = $this->ion_auth->user($user_id)->row();
+        $this->m_custom->promo_code_insert_user($user_id);
+        
         if (isset($_POST) && !empty($_POST))
         {
             if ($this->input->post('button_action') == "confirm")

@@ -37,6 +37,18 @@ if(isset($message))
                     <div id='profile-info-form-each-label'><?php echo lang('web_setting_user_max_picture_per_day', 'user_max_picture_per_day'); ?></div>
                     <div id='profile-info-form-each-input'><?php echo form_input($user_max_picture_per_day); ?></div>
                 </div>  
+                <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><?php echo lang('web_setting_friend_success_register_get_money', 'friend_success_register_get_money'); ?></div>
+                    <div id='profile-info-form-each-input'><?php echo form_input($friend_success_register_get_money); ?></div>
+                </div>  
+                <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><?php echo lang('web_setting_register_promo_code_get_candie', 'register_promo_code_get_candie'); ?></div>
+                    <div id='profile-info-form-each-input'><?php echo form_input($register_promo_code_get_candie); ?></div>
+                </div>  
+                <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><?php echo lang('web_setting_merchant_promo_code_get_candie', 'merchant_promo_code_get_candie'); ?></div>
+                    <div id='profile-info-form-each-input'><?php echo form_input($merchant_promo_code_get_candie); ?></div>
+                </div>  
             </div>
             <div id='profile-info-form-submit'>
                 <button name="button_action" type="submit" value="save" onclick="return confirm('Confirm that information is correct before save it?')">Save</button>

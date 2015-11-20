@@ -73,11 +73,15 @@ class Merchant extends CI_Controller
                 //redirect them back to the home page
                 //$this->session->set_flashdata('message', $this->ion_auth->messages());
                 $this->update_whole_year_balance();
+                $user_id = $this->session->userdata('user_id');
+                $this->m_custom->promo_code_insert_merchant($user_id);
                 redirect('all/merchant_dashboard/' . $this->session->userdata('company_slug'), 'refresh');
             }
             else if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember, $this->group_id_supervisor))
             {
                 //$this->session->set_flashdata('message', $this->ion_auth->messages());
+                $user_id = $this->ion_auth->user()->row()->su_merchant_id;
+                $this->m_custom->promo_code_insert_merchant($user_id);
                 redirect('all/merchant_dashboard/' . $this->session->userdata('company_slug'), 'refresh');
             }
             else
