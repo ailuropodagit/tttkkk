@@ -80,6 +80,7 @@ $lang['create_user_website_label']                     = 'Website:';
 $lang['create_user_password_label']                    = 'Password:';
 $lang['create_user_password_confirm_label']            = 'Re-Password:';
 $lang['create_user_submit_btn']                        = 'Create User';
+$lang['create_user_is_blogger_label']                  = 'Are you blogger:';
 $lang['create_user_validation_blog_label']             = 'Blog URL:';
 $lang['create_user_validation_instagram_label']        = 'Instagram URL:';
 $lang['create_user_validation_facebook_label']         = 'Facebook URL:';
@@ -103,7 +104,9 @@ $lang['create_user_validation_website_label']          = 'Website';
 $lang['create_user_validation_password_label']         = 'Password';
 $lang['create_user_validation_password_confirm_label'] = 'Re-Password';
 $lang['create_user_send_email_success']                = 'Success register account.';
-$lang['create_user_validation_photography_url_label']             = 'Photography URL:';
+$lang['create_user_validation_blogger_url_label']      = 'Blogger URL';
+$lang['create_user_validation_photography_url_label']  = 'Photography URL';
+
 
 // Edit User
 $lang['edit_user_heading']                           = 'Edit User';
@@ -149,13 +152,15 @@ $lang['create_merchant_state_label']                       = 'State:';
 $lang['create_merchant_country_label']                     = 'Country:';
 $lang['create_merchant_category_label']                    = 'Company Category:';
 $lang['create_merchant_sub_category_label']                = 'Default Sub Category:';
-$lang['create_merchant_phone_label']                       = 'Contact Number:';
+$lang['create_merchant_phone_label']                       = 'Company Contact:';
 $lang['create_merchant_username_label']                    = 'Username:';
 $lang['create_merchant_email_label']                       = 'E-mail address:';
 $lang['create_merchant_password_label']                    = 'Password:';
 $lang['create_merchant_password_confirm_label']            = 'Re-Password:';
 $lang['create_merchant_website_label']                     = 'Website:';
 $lang['create_merchant_facebook_url_label']                = 'Facebook URL:';
+$lang['create_merchant_person_incharge_label']             = 'Person Incharge:';
+$lang['create_merchant_person_contact_label']              = 'Person Contact:';
 
 $lang['create_merchant_validation_company_main_label']                = 'Company Name';
 $lang['create_merchant_validation_company_label']                     = 'Shop Name';
@@ -166,14 +171,15 @@ $lang['create_merchant_validation_postcode_label']                    = 'Postcod
 $lang['create_merchant_validation_country_label']                     = 'Country';
 $lang['create_merchant_validation_description_label']                 = 'Company Description';
 $lang['create_merchant_validation_state_label']                       = 'State';
-$lang['create_merchant_validation_phone_label']                       = 'Contact Number';
+$lang['create_merchant_validation_phone_label']                       = 'Company Contact';
 $lang['create_merchant_validation_username_label']                    = 'Username';
 $lang['create_merchant_validation_email_label']                       = 'E-mail address';
 $lang['create_merchant_validation_password_label']                    = 'Password';
 $lang['create_merchant_validation_password_confirm_label']            = 'Re-Password';
 $lang['create_merchant_validation_website_label']                     = 'Website';
 $lang['create_merchant_validation_facebook_url_label']                = 'Facebook URL';
-
+$lang['create_merchant_validation_person_incharge_label']             = 'Person Incharge';
+$lang['create_merchant_validation_person_contact_label']              = 'Person Contact';
 // Branch
 $lang['branch_name_label']                   = 'Branch Name:';
 $lang['branch_address_label']                = 'Branch Address:';

@@ -134,11 +134,7 @@ if(isset($message))
                 <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_user_username_label', 'username'); ?></div>
                     <div id='profile-info-form-each-input'><?php echo form_input($username); ?></div>
-                </div>
-                <div id='profile-info-form-each'>
-                    <div id='profile-info-form-each-label'><label for='blog_url'>Blog URL:</label><a href="<?php echo base_url() ?>image/exclamation-blogspot-url.jpg" target="_blank"><span id="profile-info-form-each-label-icon"><i class="fa fa-exclamation-circle"></i></span></a></div>
-                    <div id='profile-info-form-each-input'><?php echo form_input($blog_url); ?></div>
-                </div>
+                </div>                
                 <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><label for='instagram_url'>Instagram URL:</label><a href="<?php echo base_url() ?>image/exclamation-instagram-url.jpg" target="_blank"><span id="profile-info-form-each-label-icon"><i class="fa fa-exclamation-circle"></i></span></a></div>
                     <div id='profile-info-form-each-input'><?php echo form_input($instagram_url); ?></div>
@@ -147,6 +143,54 @@ if(isset($message))
                     <div id='profile-info-form-each-label'><label for='facebook_url'>Facebook URL:</label><a href="<?php echo base_url() ?>image/exclamation-facebook-url.jpg" target="_blank"><span id="profile-info-form-each-label-icon"><i class="fa fa-exclamation-circle"></i></span></a></div>
                     <div id='profile-info-form-each-input'><?php echo form_input($facebook_url); ?></div>
                 </div>
+                
+                <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><?php echo lang('create_user_is_blogger_label', 'is_blogger'); ?>
+                        <?php echo form_checkbox($is_blogger); ?></div>
+                </div>
+                <?php 
+                $div_show_hide = "style='display:none'";
+                if($us_is_blogger == 1){ 
+                     $div_show_hide = "style='display:inline'";
+                }
+                ?>
+              
+                <div id='profile-blogger-div' <?php echo $div_show_hide; ?>>
+                    <div id='profile-info-form-each'>
+                        <div id='profile-info-form-each'>
+                            <div id='profile-info-form-each-label'><?php echo lang('create_user_validation_blog_label', 'blogger_url'); ?><a href="<?php echo base_url() ?>image/exclamation-blogspot-url.jpg" target="_blank"><span id="profile-info-form-each-label-icon"><i class="fa fa-exclamation-circle"></i></span></a></div>
+                            <div id='profile-info-form-each-input'><?php echo form_input($blog_url); ?></div>
+                        </div>
+                    </div>
+                    <div id="candie-promotion-form-voucher-checkbox">
+                        <div id="candie-promotion-form-voucher-checkbox-title">Select your blogger type :</div>
+                        <?php
+                        foreach ($blogger_list as $key => $value)
+                        {
+                            $checked_or_not = '';
+                            if (in_array($key, $blogger_current))
+                            {
+                                $checked_or_not = 'checked';
+                            }
+                                ?>
+                                <div id="candie-promotion-form-voucher-checkbox-each">
+                                    <table border="0" cellpadding="0px" cellspacing="0px">
+                                        <tr>
+                                            <td valign="top"><input type='checkbox' id="blogger_list-<?php echo $key ?>" name='blogger_list[]' value='<?php echo $key ?>' <?php echo $checked_or_not; ?>></td>
+                                            <td valign="top">
+                                                <div id="candie-promotion-form-voucher-checkbox-each-label">
+                                                    <label for="blogger_list-<?php echo $key ?>"><?php echo $value ?></label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <?php                  
+                        }
+                        ?>  
+                    </div>
+                </div>
+                               
                 <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_user_is_photographer_label', 'is_photographer'); ?>
                         <?php echo form_checkbox($is_photographer); ?></div>
@@ -159,38 +203,38 @@ if(isset($message))
                 ?>
               
                 <div id='profile-photographer-div' <?php echo $div_show_hide; ?>>
-                <div id='profile-info-form-each'>
-                    <div id='profile-info-form-each-label'><?php echo lang('create_user_photography_url_label', 'photography_url'); ?></div>
-                    <div id='profile-info-form-each-input'><?php echo form_input($photography_url); ?></div>
-                </div>
-                <div id="candie-promotion-form-voucher-checkbox">
-                    <div id="candie-promotion-form-voucher-checkbox-title">Select your photography type :</div>
-                    <?php
-                    foreach ($photography_list as $key => $value)
-                    {
-                        $checked_or_not = '';
-                        if (in_array($key, $photography_current))
-                        {
-                            $checked_or_not = 'checked';
-                        }
-                            ?>
-                            <div id="candie-promotion-form-voucher-checkbox-each">
-                                <table border="0" cellpadding="0px" cellspacing="0px">
-                                    <tr>
-                                        <td valign="top"><input type='checkbox' id="photography_list-<?php echo $key ?>" name='photography_list[]' value='<?php echo $key ?>' <?php echo $checked_or_not; ?>></td>
-                                        <td valign="top">
-                                            <div id="candie-promotion-form-voucher-checkbox-each-label">
-                                                <label for="photography_list-<?php echo $key ?>"><?php echo $value ?></label>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <?php                  
-                    }
-                    ?>  
-                </div>
+                    <div id='profile-info-form-each'>
+                        <div id='profile-info-form-each-label'><?php echo lang('create_user_photography_url_label', 'photography_url'); ?></div>
+                        <div id='profile-info-form-each-input'><?php echo form_input($photography_url); ?></div>
                     </div>
+                    <div id="candie-promotion-form-voucher-checkbox">
+                        <div id="candie-promotion-form-voucher-checkbox-title">Select your photography type :</div>
+                        <?php
+                        foreach ($photography_list as $key => $value)
+                        {
+                            $checked_or_not = '';
+                            if (in_array($key, $photography_current))
+                            {
+                                $checked_or_not = 'checked';
+                            }
+                                ?>
+                                <div id="candie-promotion-form-voucher-checkbox-each">
+                                    <table border="0" cellpadding="0px" cellspacing="0px">
+                                        <tr>
+                                            <td valign="top"><input type='checkbox' id="photography_list-<?php echo $key ?>" name='photography_list[]' value='<?php echo $key ?>' <?php echo $checked_or_not; ?>></td>
+                                            <td valign="top">
+                                                <div id="candie-promotion-form-voucher-checkbox-each-label">
+                                                    <label for="photography_list-<?php echo $key ?>"><?php echo $value ?></label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <?php                  
+                        }
+                        ?>  
+                    </div>
+                </div>
 
             </div>
             <?php echo form_hidden('id', $user->id); ?>

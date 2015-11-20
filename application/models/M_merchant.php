@@ -767,8 +767,8 @@ class M_merchant extends CI_Model
                 if ($config_result['change_type'] == 'dec')
                 {
                     $amount_minus = $config_result['amount_change'];
-                    //If is Banner, then the amount is key in by admin
-                    if ($trans_conf_id == 17)
+                    
+                    if ($config_result['allow_overwrite'] == 1 && $amount_overwrite != 0)
                     {
                         $amount_minus = $amount_overwrite;
                     }
@@ -777,7 +777,7 @@ class M_merchant extends CI_Model
                 {
                     $amount_plus = $config_result['amount_change'];
                     //If is Top up, then the amount is key in by admin
-                    if ($trans_conf_id == 19)
+                    if ($config_result['allow_overwrite'] == 1 && $amount_overwrite != 0)
                     {
                         $amount_plus = $amount_overwrite;
                     }

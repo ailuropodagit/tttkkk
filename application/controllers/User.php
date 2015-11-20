@@ -1087,9 +1087,9 @@ class User extends CI_Controller
         $this->form_validation->set_rules('username', $this->lang->line('create_user_validation_username_label'), 'trim|required|is_unique_edit[' . $tables['users'] . '.username.' . $user_id . ']');
         $this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'trim|required|valid_email|is_unique_edit[' . $tables['users'] . '.email.' . $user_id . ']');
         $this->form_validation->set_rules('race_other', $this->lang->line('create_user_race_other_label'));
-        $this->form_validation->set_rules('blog_url', $this->lang->line('create_user_validation_blog_label'));
         $this->form_validation->set_rules('instagram_url', $this->lang->line('create_user_validation_instagram_label'));
         $this->form_validation->set_rules('facebook_url', $this->lang->line('create_user_validation_facebook_label'));
+        $this->form_validation->set_rules('blog_url', $this->lang->line('create_user_validation_blogger_url_label'));
         $this->form_validation->set_rules('photography_url', $this->lang->line('create_user_validation_photography_url_label'));
         
         if (isset($_POST) && !empty($_POST))
@@ -1108,12 +1108,23 @@ class User extends CI_Controller
                     $username = strtolower($this->input->post('username'));
                     $email = strtolower($this->input->post('email'));
                     $race_other = $this->input->post('race_other');
+                    $is_blogger = $this->input->post('is_blogger');
                     $blog_url = $this->input->post('blog_url');
                     $instagram_url = $this->input->post('instagram_url');
                     $facebook_url = $this->input->post('facebook_url');
                     $is_photographer = $this->input->post('is_photographer');
                     $photography_url = $this->input->post('photography_url');
                     $age = age_count($this->input->post('dob'));
+                    
+                    $blogger_list_selected = array();
+                    $post_blogger_list = $this->input->post('blogger_list');
+                    if (!empty($post_blogger_list))
+                    {
+                        foreach ($post_blogger_list as $key => $value)
+                        {
+                            $blogger_list_selected[] = $value;
+                        }
+                    }
                     
                     $photography_list_selected = array();
                     $post_photography_list = $this->input->post('photography_list');
@@ -1137,6 +1148,7 @@ class User extends CI_Controller
                         'us_race_other' => $race_other,
                         'username' => $username,
                         'email' => $email,
+                        'us_is_blogger' => $is_blogger,
                         'us_blog_url' => $blog_url,
                         'us_instagram_url' => $instagram_url,
                         'us_facebook_url' => $facebook_url,
@@ -1148,6 +1160,7 @@ class User extends CI_Controller
                     if ($this->ion_auth->update($user->id, $data))
                     {
                         // redirect them back to the admin page if admin, or to the base url if non admin
+                        $this->m_custom->many_insert_or_remove('blogger', $user_id, $blogger_list_selected);
                         $this->m_custom->many_insert_or_remove('photography', $user_id, $photography_list_selected);
                         $this->session->set_flashdata('message', $this->ion_auth->messages());
                         $user = $this->ion_auth->user($user_id)->row();
@@ -1251,13 +1264,8 @@ class User extends CI_Controller
             'id' => 'phone',
             'type' => 'text',
             'value' => $this->form_validation->set_value('phone', $user->phone),
-        );
-        $this->data['blog_url'] = array(
-            'name' => 'blog_url',
-            'id' => 'blog_url',
-            'type' => 'text',
-            'value' => $this->form_validation->set_value('blog_url', $user->us_blog_url),
-        );
+        );     
+        
         $this->data['instagram_url'] = array(
             'name' => 'instagram_url',
             'id' => 'instagram_url',
@@ -1271,6 +1279,28 @@ class User extends CI_Controller
             'value' => $this->form_validation->set_value('facebook_url', $user->us_facebook_url),
         );
         
+        //Blogger Function
+        $us_is_blogger = $user->us_is_blogger;
+        $this->data['us_is_blogger'] = $us_is_blogger;
+        $this->data['is_blogger'] = array(
+            'name' => 'is_blogger',
+            'id' => 'is_blogger',
+            'checked' => $us_is_blogger == "1"? TRUE : FALSE,
+            'onclick' => "checkbox_showhide('is_blogger','profile-blogger-div')",
+            'value' => $this->form_validation->set_value('is_blogger', $us_is_blogger),           
+        );
+        
+        $this->data['blog_url'] = array(
+            'name' => 'blog_url',
+            'id' => 'blog_url',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('blog_url', $user->us_blog_url),
+        );
+        
+        $this->data['blogger_list'] = $this->m_custom->get_dynamic_option_array('photography');
+        $this->data['blogger_current'] = empty($user) ? array() : $this->m_custom->many_get_childlist('blogger', $user->id);
+        
+        //Photographer Function
         $us_is_photographer = $user->us_is_photographer;
         $this->data['us_is_photographer'] = $us_is_photographer;
         $this->data['is_photographer'] = array(

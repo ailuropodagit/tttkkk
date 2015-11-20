@@ -10,7 +10,8 @@ $empty_image = $this->config->item('empty_image');
         <!--SEARCH-->
         <div id="blogger-search">
             <?php echo form_open() ?>
-            <div id="blogger-search-input"><?php echo form_input($keyword) ?></div>
+            <div id="photographer-search-input"><?php echo form_input($keyword) ?></div>
+            <div id="photographer-search-dropdown"><?php echo form_dropdown($the_type, $blogger_list, $the_type_selected); ?></div>
             <div id="blogger-search-submit"><input type="submit" name="search" value="Search"></div>
             <div id="blogger-search-clear"><a href='<?php echo current_url() ?>' class="a-href-button">Clear</a></div>
             <?php echo form_close() ?>
@@ -29,6 +30,7 @@ $empty_image = $this->config->item('empty_image');
                     $user_name = $blogger['first_name'] . ' ' . $blogger['last_name'];
                     $user_profile_image = $blogger['profile_image'];
                     $user_blog_url = $blogger['us_blog_url'];
+                    $blogger_list = $this->m_custom->many_get_childlist_detail('blogger',$user_id,'dynamic_option','option_desc', 1);
                     ?>
                     <div id="blogger-box-each">
                         <div id="blogger-box-each-photo-box">
@@ -53,6 +55,9 @@ $empty_image = $this->config->item('empty_image');
                             </div>
                             <div id="blogger-box-each-info-blog-url">
                                 <a href='<?php echo $user_blog_url ?>' target="_blank"><?php echo $user_blog_url ?></a>
+                            </div>
+                            <div id="blogger-box-each-info-blog-url" style='white-space:initial'>
+                                <?php echo $blogger_list ?>
                             </div>
                         </div>
                     </div>

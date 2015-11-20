@@ -1426,13 +1426,15 @@ class Admin extends CI_Controller
             $email = strtolower($this->input->post('email'));
             $company_main = $this->input->post('company_main');
             $company = $this->input->post('company');
+            $me_person_incharge = $this->input->post('me_person_incharge');
+            $me_person_contact = $this->input->post('me_person_contact');
             $me_ssm = $this->input->post('me_ssm');
             $me_category_id = $this->input->post('me_category_id');
             $address = $this->input->post('address');
             $postcode = $this->input->post('postcode');
             $me_state_id = $this->input->post('me_state_id');
-            $phone = $this->input->post('phone');
-
+            $phone = $this->input->post('phone');           
+            
             // to generate company slug for check is it unique
             $_POST['slug'] = generate_slug($_POST['company']);
             $slug = $_POST['slug'];
@@ -1443,15 +1445,17 @@ class Admin extends CI_Controller
             $this->form_validation->set_rules('username', $this->lang->line('create_merchant_validation_username_label'), 'trim|required|is_unique_edit[' . $tables['users'] . '.username.' . $edit_id . ']');
             $this->form_validation->set_rules('email', $this->lang->line('create_merchant_validation_email_label'), 'trim|required|valid_email|is_unique_edit[' . $tables['users'] . '.email.' . $edit_id . ']');
             $this->form_validation->set_rules('company_main', $this->lang->line('create_merchant_validation_company_main_label'), "trim|required|min_length[3]");
-            $this->form_validation->set_rules('company', $this->lang->line('create_merchant_validation_company_label'), "trim|required|min_length[3]");
+            $this->form_validation->set_rules('company', $this->lang->line('create_merchant_validation_company_label'), "trim|required|min_length[3]");           
             $this->form_validation->set_rules('slug', $this->lang->line('create_merchant_validation_company_label'), 'trim|is_unique_edit[' . $tables['users'] . '.slug.' . $edit_id . ']');
+            $this->form_validation->set_rules('me_person_incharge', $this->lang->line('create_merchant_validation_person_incharge_label'), 'required');
+            $this->form_validation->set_rules('me_person_contact', $this->lang->line('create_merchant_validation_person_contact_label'), 'required|valid_contact_number');
             $this->form_validation->set_rules('me_ssm', $this->lang->line('create_merchant_validation_companyssm_label'), 'required');
             $this->form_validation->set_rules('me_category_id', $this->lang->line('create_merchant_category_label'), 'callback_check_main_category');
             $this->form_validation->set_rules('address', $this->lang->line('create_merchant_validation_address_label'), 'required');
             $this->form_validation->set_rules('postcode', $this->lang->line('create_merchant_validation_postcode_label'), 'required|numeric');
             $this->form_validation->set_rules('me_state_id', $this->lang->line('create_merchant_validation_state_label'), 'callback_check_state_id');
-            $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required|valid_contact_number');
-
+            $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required|valid_contact_number');           
+            
             if ($this->input->post('button_action') == "save")
             {
                 if ($this->form_validation->run() === TRUE)
@@ -1462,12 +1466,14 @@ class Admin extends CI_Controller
                         'company_main' => $company_main,
                         'company' => $company,
                         'slug' => $slug,
+                        'me_person_incharge' => $me_person_incharge,
+                        'me_person_contact' => $me_person_contact,
                         'me_ssm' => $me_ssm,
                         'me_category_id' => $me_category_id,
                         'address' => $address,
                         'postcode' => $postcode,
                         'me_state_id' => $me_state_id,
-                        'phone' => $phone,
+                        'phone' => $phone,                    
                     );
 
                     if ($this->ion_auth->update($edit_id, $data))
@@ -1551,6 +1557,20 @@ class Admin extends CI_Controller
             'type' => 'text',
             'value' => $this->form_validation->set_value('company', $result['company']),
         );
+        
+        $this->data['me_person_incharge'] = array(
+            'name' => 'me_person_incharge',
+            'id' => 'me_person_incharge',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('me_person_incharge', $result['me_person_incharge']),
+        );       
+        $this->data['me_person_contact'] = array(
+            'name' => 'me_person_contact',
+            'id' => 'me_person_contact',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('me_person_contact', $result['me_person_contact']),
+        );
+        
         $this->data['me_ssm'] = array(
             'name' => 'me_ssm',
             'id' => 'me_ssm',
@@ -1590,8 +1610,6 @@ class Admin extends CI_Controller
             'type' => 'text',
             'value' => $this->form_validation->set_value('phone', $result['phone']),
         );
-
-//        $this->data['admin_role'] = $this->m_custom->get_static_option_array('admin_role', NULL, NULL);
 
         $this->data['page_path_name'] = 'admin/merchant_edit';
         $this->load->view('template/layout_right_menu', $this->data);
