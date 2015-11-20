@@ -7,6 +7,9 @@
 <script type="text/javascript" src="<?php echo base_url() ?>js/star-rating/jquery.rating.js"></script>
 <?php echo link_tag('js/star-rating/jquery.rating.css') ?>
 
+<!--COUNTDOWN-->
+<script type="text/javascript" src="<?php echo base_url('js/jquery.countdown.js') ?>"></script>
+
 <script>
     $(function() {
         $('#camera_wrap_1').camera({
@@ -20,11 +23,11 @@
             height: '480px'
         });
         
-        $('#home-row3-today-deal-box').slick({
+        $('#home-row3-column1-today-deal-box').slick({
             slidesToShow: 3,
             slidesToScroll: 1,
-            prevArrow: '#home-row3-today-deal-prev',
-            nextArrow: '#home-row3-today-deal-next',
+            prevArrow: '#home-row3-column1-today-deal-prev',
+            nextArrow: '#home-row3-column1-today-deal-next',
             responsive: [
                 {
                     breakpoint: 1200,
@@ -41,6 +44,51 @@
             ]
         });
         
+        $('.home-row3-column1-today-deal-box-each-timer-box-relative').each(function(){
+            var _this = $(this);
+            var end_date = $(this).attr('end_date');
+            _this.countdown(end_date, function(event) {
+                //$(this).html(event.strftime('%D days %H:%M:%S'));
+                $(this).children().find('.home-row3-column1-today-deal-box-each-timer-box1-time-day').html(event.strftime('%D'));
+                $(this).children().find('.home-row3-column1-today-deal-box-each-timer-box2-time-hour').html(event.strftime('%H'));
+                $(this).children().find('.home-row3-column1-today-deal-box-each-timer-box3-time-minute').html(event.strftime('%M'));
+                $(this).children().find('.home-row3-column1-today-deal-box-each-timer-box4-time-second').html(event.strftime('%S'));
+            });
+        });
+        
+        $('#home-row3-column1-redemption-box').slick({
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            prevArrow: '#home-row3-column1-redemption-prev',
+            nextArrow: '#home-row3-column1-redemption-next',
+            responsive: [
+                {
+                    breakpoint: 1200,
+                    settings: {
+                        slidesToShow: 2
+                    }
+                },
+                {
+                    breakpoint: 500,
+                    settings: {
+                        slidesToShow: 1
+                    }
+                }
+            ]
+        });
+        
+        $('.home-row3-column1-redemption-box-each-timer-box-relative').each(function(){
+            var _this = $(this);
+            var end_date = $(this).attr('end_date');
+            _this.countdown(end_date, function(event) {
+                //$(this).html(event.strftime('%D days %H:%M:%S'));
+                $(this).children().find('.home-row3-column1-redemption-box-each-timer-box1-time-day').html(event.strftime('%D'));
+                $(this).children().find('.home-row3-column1-redemption-box-each-timer-box2-time-hour').html(event.strftime('%H'));
+                $(this).children().find('.home-row3-column1-redemption-box-each-timer-box3-time-minute').html(event.strftime('%M'));
+                $(this).children().find('.home-row3-column1-redemption-box-each-timer-box4-time-second').html(event.strftime('%S'));
+            });
+        });
+        
         $('#home-row4-logo-slider-box').slick({
             slidesToShow: 5,
             slidesToScroll: 1,
@@ -49,23 +97,14 @@
         });
     });
 </script>
-<style>
-    .fluid_container {
-        width: 100.1%;
-    }
-</style>
 
 <div id='wrapper'>
     <div id='home'>
         <div id='home-row1'>
             <div id='home-row1-categories-navigation'>
                 <div id="home-row1-categories-navigation-main-category-title">
-                    <span id="home-row1-categories-navigation-main-category-title-icon">
-                        <i class="fa fa-bars"></i>
-                    </span>
-                    <span id="home-row1-categories-navigation-main-category-title-label">
-                        Categories
-                    </span>
+                    <span id="home-row1-categories-navigation-main-category-title-icon"><i class="fa fa-bars"></i></span>
+                    <span id="home-row1-categories-navigation-main-category-title-label">Categories</span>
                 </div>
                 <ul>
                     <?php
@@ -141,7 +180,7 @@
                 </ul>
             </div>
             <div id='home-row1-banner-main'>
-                <div class='fluid_container'>
+                <div class='fluid_container' style="width: 100.1%;">
                     <div class="camera_wrap camera_azure_skin" id="camera_wrap_1">
                         <div data-src="<?php echo base_url('folder_upload/home_banner_row1/slide1.jpg') ?>"></div>
                         <div data-src="<?php echo base_url('folder_upload/home_banner_row1/slide2.jpg') ?>"></div>
@@ -163,23 +202,23 @@
             </div>
             <div id='float-fix'></div>
         </div>
+        
         <div id='home-row3-column1'>
             <div id='home-row3-column1-today-deal'>
                 <div id='home-row3-column1-today-deal-title'>Today's Deals</div>
                 <div id='home-row3-column1-today-deal-navigation'>
-                    <div id='home-row3-today-deal-prev'> < </div>
-                    <div id='home-row3-today-deal-prev-next-separator'></div>
-                    <div id='home-row3-today-deal-next'> > </div>
+                    <div id='home-row3-column1-today-deal-prev'> < </div>
+                    <div id='home-row3-column1-today-deal-prev-next-separator'></div>
+                    <div id='home-row3-column1-today-deal-next'> > </div>
                 </div>
                 <div id='float-fix'></div>
                 <div id='home-row3-column1-today-deal-title-bottom-line'></div>
-                <div id='home-row3-today-deal-box'>
+                <div id='home-row3-column1-today-deal-box'>
                     <?php 
                     //CONFIG DATA
                     $this->group_id_user = $this->config->item('group_id_user');
                     $this->album_merchant = $this->config->item('album_merchant');
                     $this->album_admin = $this->config->item('album_admin');
-                    
                     $hotdeal_list = $this->m_custom->getAdvertise('hot', NULL, NULL, 0, NULL, NULL, 1);
                     foreach ($hotdeal_list as $hotdeal)
                     {
@@ -192,7 +231,6 @@
                         $price_before = $hotdeal['price_before'];
                         $price_after = $hotdeal['price_after'];
                         $end_time = $hotdeal['end_time'];
-                        
                         if ($advertise_type == 'adm')
                         {
                             $image_url = $this->album_admim . $image;
@@ -202,94 +240,83 @@
                             $image_url = $this->album_merchant . $image;
                         }
                         ?>
-                        <div class="home-row3-today-deal-box-each">
-                            
-                            <script type="text/javascript" src="<?php echo base_url('js/jquery.countdown.js') ?>"></script>
-                            <script type="text/javascript">
-                                $(document).ready(function () {
-                                    $('.home-row3-today-deal-box-each-timer-box1-time-day').each(function(){
-                                        var _this = $(this);
-                                        var end_date = $(this).attr('end_date');
-                                        _this.countdown(end_date, function(event) {
-                                            $(this).html(event.strftime('%D'));
-                                        });
-                                    });
-                                });
-                            </script>
-                            
-                            <!--<div class="home-row3-today-deal-box-each-timer-box">-->
-                                <div class="home-row3-today-deal-box-each-timer-box1">
-                                    <div class="home-row3-today-deal-box-each-timer-box1-time-day" end_date="<?php echo $end_time ?>"></div>
-                                    <div class="home-row3-today-deal-box-each-timer-box1-label">Days</div>
-                                </div>
-                                <div class="home-row3-today-deal-box-each-timer-box2">
-                                    <div class="home-row3-today-deal-box-each-timer-box1-time-hour" end_date="<?php echo $end_time ?>">2</div>
-                                    <div class="home-row3-today-deal-box-each-timer-box1-label">Hours</div>
-                                </div>
-                                <div class="home-row3-today-deal-box-each-timer-box3">
-                                    <div class="home-row3-today-deal-box-each-timer-box1-time-minute" end_date="<?php echo $end_time ?>">3</div>
-                                    <div class="home-row3-today-deal-box-each-timer-box1-label">Mins</div>
-                                </div>
-                                <div class="home-row3-today-deal-box-each-timer-box4">
-                                    <div class="home-row3-today-deal-box-each-timer-box1-time-second" end_date="<?php echo $end_time ?>">4</div>
-                                    <div class="home-row3-today-deal-box-each-timer-box1-label">Secs</div>
-                                </div>
-                            <!--</div>-->
-                            
-                            <div class="home-row3-today-deal-box-each-image">
-                                <?php echo img($image_url) ?>
-                            </div>
-                            <div class="home-row3-today-deal-box-each-separator"></div>
-                            <div class="home-row3-today-deal-box-each-information">
-                                <div class="home-row3-today-deal-box-each-information-title-rating">
-                                    <div class="home-row3-today-deal-box-each-information-title">
-                                        <?php echo $title ?>
+                        <div class="home-row3-column1-today-deal-box-each">
+                            <a href='<?php echo base_url("all/advertise/$advertise_id") ?>'>
+                                <div class="home-row3-column1-today-deal-box-each-timer-box-absolute">
+                                    <div class="home-row3-column1-today-deal-box-each-timer-box-relative" end_date="<?php echo $end_time ?>">
+                                        <div class="home-row3-column1-today-deal-box-each-timer-box1">
+                                            <div class="home-row3-column1-today-deal-box-each-timer-box1-time-day">1</div>
+                                            <div class="home-row3-column1-today-deal-box-each-timer-box1-label">Days</div>
+                                        </div>
+                                        <div class="home-row3-column1-today-deal-box-each-timer-box2">
+                                            <div class="home-row3-column1-today-deal-box-each-timer-box2-time-hour">2</div>
+                                            <div class="home-row3-column1-today-deal-box-each-timer-box2-label">Hours</div>
+                                        </div>
+                                        <div class="home-row3-column1-today-deal-box-each-timer-box3">
+                                            <div class="home-row3-column1-today-deal-box-each-timer-box3-time-minute">3</div>
+                                            <div class="home-row3-column1-today-deal-box-each-timer-box3-label">Mins</div>
+                                        </div>
+                                        <div class="home-row3-column1-today-deal-box-each-timer-box4">
+                                            <div class="home-row3-column1-today-deal-box-each-timer-box4-time-second">4</div>
+                                            <div class="home-row3-column1-today-deal-box-each-timer-box4-label">Secs</div>
+                                        </div>
                                     </div>
-                                    <div class="home-row3-today-deal-box-each-information-rating">
-                                        <?php
-                                        $average_rating = $this->m_custom->activity_rating_average($advertise_id, 'adv');
-                                        if (check_correct_login_type($this->group_id_user)) //Check if user logged in
-                                        {
-                                            $radio_level = " ";
-                                        }
-                                        else
-                                        {
-                                            $radio_level = "disabled";
-                                        }
-                                        for ($i = 1; $i <= 5; $i++)
-                                        {
-                                            if ($i == round($average_rating))
+                                </div>
+                                <div class="home-row3-column1-today-deal-box-each-image">
+                                    <?php echo img($image_url) ?>
+                                </div>
+                                <div class="home-row3-column1-today-deal-box-each-separator"></div>
+                                <div class="home-row3-column1-today-deal-box-each-information">
+                                    <div class="home-row3-column1-today-deal-box-each-information-title-rating">
+                                        <div class="home-row3-column1-today-deal-box-each-information-title">
+                                            <?php echo $title ?>
+                                        </div>
+                                        <div class="home-row3-column1-today-deal-box-each-information-rating">
+                                            <?php
+                                            $average_rating = $this->m_custom->activity_rating_average($advertise_id, 'adv');
+                                            if (check_correct_login_type($this->group_id_user)) //Check if user logged in
                                             {
-                                                echo "<input class='auto-submit-star' type='radio' name='rating' " . $radio_level . " value='" . $i . "' checked='checked'/>";
+                                                $radio_level = " ";
                                             }
                                             else
                                             {
-                                                echo "<input class='auto-submit-star' type='radio' name='rating' " . $radio_level . " value='" . $i . "'/>";
+                                                $radio_level = "disabled";
                                             }
-                                        }
-                                        ?>
+                                            for ($i = 1; $i <= 5; $i++)
+                                            {
+                                                if ($i == round($average_rating))
+                                                {
+                                                    echo "<input class='auto-submit-star' type='radio' name='rating' " . $radio_level . " value='" . $i . "' checked='checked'/>";
+                                                }
+                                                else
+                                                {
+                                                    echo "<input class='auto-submit-star' type='radio' name='rating' " . $radio_level . " value='" . $i . "'/>";
+                                                }
+                                            }
+                                            ?>
+                                        </div>
                                     </div>
+                                    <div class="home-row3-column1-today-deal-box-each-information-price">
+                                        <div class="home-row3-column1-today-deal-box-each-information-price-after">
+                                            <?php
+                                            if ($price_after)
+                                            {
+                                                echo 'RM ' . $price_after;
+                                            }
+                                            ?>
+                                        </div>
+                                        <div class="home-row3-column1-today-deal-box-each-information-price-before">
+                                            <?php 
+                                            if ($price_before) 
+                                            {
+                                                echo 'RM ' . $price_before;
+                                            }
+                                            ?>
+                                        </div>
+                                    </div>
+                                    <div class="float-fix"></div>
                                 </div>
-                                <div class="home-row3-today-deal-box-each-information-price">
-                                    <div class="home-row3-today-deal-box-each-information-price-after">
-                                        <?php
-                                        if ($price_after)
-                                        {
-                                            echo 'RM ' . $price_after;
-                                        }
-                                        ?>
-                                    </div>
-                                    <div class="home-row3-today-deal-box-each-information-price-before">
-                                        <?php 
-                                        if ($price_before) 
-                                        {
-                                            echo 'RM ' . $price_before;
-                                        }
-                                        ?>
-                                    </div>
-                                </div>
-                                <div class="float-fix"></div>
-                            </div>
+                            </a>
                         </div>
                         <?php
                     }
@@ -313,23 +340,95 @@
                 </div>
                 <div id='float-fix'></div>
             </div>
-            <div id="home-row3-column1-redemption" style="overflow: scroll;">
-                Redemption
-                <?php 
-                $data['hotdeal_list'] = $this->m_custom->getAdvertise('pro', NULL, NULL, 0, NULL, NULL, 1);
-                $this->load->view('all/advertise_home', $data);
-                ?>
+            <div id="home-row3-column1-redemption">
+                <div id="home-row3-column1-redemption-title">Redemption</div>
+                <div id='home-row3-column1-redemption-navigation'>
+                    <div id='home-row3-column1-redemption-prev'> < </div>
+                    <div id='home-row3-column1-redemption-prev-next-separator'></div>
+                    <div id='home-row3-column1-redemption-next'> > </div>
+                </div>
+                <div id="float-fix"></div>
+                <div id="home-row3-column1-redemption-title-bottom-line"></div>
+                <div id="home-row3-column1-redemption-box">
+                    <?php 
+                    $redemption_list = $this->m_custom->getAdvertise('pro', NULL, NULL, 0, NULL, NULL, 1);
+                    foreach ($redemption_list as $redemption)
+                    {
+                        $advertise_type = $redemption['advertise_type'];
+                        $advertise_id = $redemption['advertise_id'];
+                        $sub_category_id = $redemption['sub_category_id'];
+                        $merchant_id = $redemption['merchant_id'];
+                        $image = $redemption['image'];
+                        $title = $redemption['title'];
+                        $candie = $redemption['voucher_candie'];
+                        $end_time = $redemption['end_time'];
+                        if ($advertise_type == 'adm')
+                        {
+                            $image_url = $this->album_admim . $image;
+                        }
+                        else 
+                        {
+                            $image_url = $this->album_merchant . $image;
+                        }
+                        ?>
+                        <div class="home-row3-column1-redemption-box-each">
+                            <a href='<?php echo base_url("all/advertise/$advertise_id") ?>'>
+                                <div class="home-row3-column1-redemption-box-each-image">
+                                    <?php echo img($image_url) ?>
+                                </div>
+                                <div class="home-row3-column1-redemption-box-each-separator"></div>
+                                <div class="home-row3-column1-redemption-box-each-information">
+                                    <div class="home-row3-column1-redemption-box-each-information-title-rating">
+                                        <div class="home-row3-column1-redemption-box-each-information-title">
+                                            <?php echo $title ?>
+                                        </div>
+                                        <div class="home-row3-column1-redemption-box-each-information-rating">
+                                            <?php
+                                            $average_rating = $this->m_custom->activity_rating_average($advertise_id, 'adv');
+                                            if (check_correct_login_type($this->group_id_user)) //Check if user logged in
+                                            {
+                                                $radio_level = " ";
+                                            }
+                                            else
+                                            {
+                                                $radio_level = "disabled";
+                                            }
+                                            for ($i = 1; $i <= 5; $i++)
+                                            {
+                                                if ($i == round($average_rating))
+                                                {
+                                                    echo "<input class='auto-submit-star' type='radio' name='rating' " . $radio_level . " value='" . $i . "' checked='checked'/>";
+                                                }
+                                                else
+                                                {
+                                                    echo "<input class='auto-submit-star' type='radio' name='rating' " . $radio_level . " value='" . $i . "'/>";
+                                                }
+                                            }
+                                            ?>
+                                        </div>
+                                    </div>
+                                    <div class="home-row3-column1-redemption-box-each-information-candie">
+                                        <?php echo $candie ?> Candies
+                                    </div>
+                                    <div class="float-fix"></div>
+                                </div>
+                            </a>
+                        </div>
+                        <?php
+                    }
+                    ?>
+                </div>
             </div>
         </div>
         <div id='home-row3-column2'>
-            <div id='home-row3-column2-like-rating' style="overflow: scroll;">
-                Like
+            <div id='home-row3-column2-like'>
+                <div id="home-row3-column2-like-title">Like</div>
                 <?php 
                 $data['notification_list'] = $this->m_custom->notification_display(0, 1, 'like');
                 $this->load->view('all/notification_home', $data);
                 ?>
             </div>
-            <div id='home-row3-column2-users-pictures' style="overflow: scroll;">
+            <div id='home-row3-column2-user-picture'>
                 Users Pictures
                 <?php 
                 $data['notification_list'] = $this->m_custom->notification_display(0, 1, 'upload_image');
