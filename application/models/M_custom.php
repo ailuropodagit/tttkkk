@@ -2806,7 +2806,7 @@ class M_custom extends CI_Model
             $code_candie = $this->m_custom->web_setting_get('merchant_promo_code_get_candie');
             $name = substr(generate_code($user_info['slug']), 0, 5);
             $postfix = str_pad($code_user_id, 4, '0', STR_PAD_LEFT);
-            $code_no = '6' . $name . $postfix;
+            $code_no = '5' . $name . $postfix;
             $new_id = $this->m_custom->promo_code_insert($code_no, 'merchant', $code_user_id, $code_candie);
             if ($new_id)
             {
@@ -3008,6 +3008,20 @@ class M_custom extends CI_Model
             {
                 return FALSE;
             }
+        }
+    }
+
+    //For register the promo code that user insert during sign up, then this field will be make null
+    public function promo_code_temp_register($user_id)
+    {
+        $us_promo_code_temp = $this->m_custom->get_one_field_by_key('users', 'id', $user_id, 'us_promo_code_temp');
+        if ($us_promo_code_temp != NULL)
+        {
+            $this->m_custom->promo_code_history_insert($us_promo_code_temp);
+            $data = array(
+                'us_promo_code_temp' => NULL,
+            );
+            $this->m_custom->simple_update('users', $data, 'id', $user_id);
         }
     }
 

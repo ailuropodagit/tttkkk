@@ -233,6 +233,10 @@ if(isset($message))
                 <div id='register-form-each-label'><?php echo lang('create_merchant_password_confirm_label', 'password_confirm'); ?></div>
                 <div id='register-form-each-input'><?php echo form_input($password_confirm); ?></div>
             </div>
+            <div id='register-form-each'>
+                <div id='register-form-each-label'><?php echo lang('create_user_promo_code_label2', 'promo_code'); ?></div>
+                <div id='register-form-each-input'><?php echo form_input($promo_code); ?></div>
+            </div>
             <div id='register-form-forgot-password'>
                 <input type="checkbox" id="show_password" name="show_password" onclick="showpassword();"/>
                 <span class="checkbox-text"><label for='show_password'>Show Password</label></span>
