@@ -284,9 +284,9 @@ $this->album_admin = $this->config->item('album_admin');
                                         <div class="home-row3-column1-today-deal-box-each-information-title">
                                             <?php echo $title ?>
                                         </div>
-                                        <div class="home-row3-column1-today-deal-box-each-information-rating">
+<!--                                        <div class="home-row3-column1-today-deal-box-each-information-rating">
 
-                                        </div>
+                                        </div>-->
                                     </div>
                                     <div class="home-row3-column1-today-deal-box-each-information-price">
                                         <div class="home-row3-column1-today-deal-box-each-information-price-after">
@@ -374,9 +374,9 @@ $this->album_admin = $this->config->item('album_admin');
                                         <div class="home-row3-column1-redemption-box-each-information-title">
                                             <?php echo $title ?>
                                         </div>
-                                        <div class="home-row3-column1-redemption-box-each-information-rating">
+<!--                                        <div class="home-row3-column1-redemption-box-each-information-rating">
                                             
-                                        </div>
+                                        </div>-->
                                     </div>
                                     <div class="home-row3-column1-redemption-box-each-information-candie">
                                         <?php echo $candie ?> Candies
@@ -433,7 +433,9 @@ $this->album_admin = $this->config->item('album_admin');
                                 </td>
                                 <td valign="top">
                                     <div id="home-row3-column2-like-notification-item-image">
-                                        <?php echo img($notification_item_image) ?>
+                                        <a href="<?php echo base_url($notification_url) ?>">
+                                            <?php echo img($notification_item_image) ?>
+                                        </a>
                                     </div>
                                 </td>
                             </tr>
@@ -484,7 +486,9 @@ $this->album_admin = $this->config->item('album_admin');
                             </td>
                             <td valign="top">
                                 <div id="home-row3-column2-like-notification-item-image">
-                                    <?php echo img($notification_item_image) ?>
+                                    <a href="<?php echo base_url($notification_url) ?>">
+                                        <?php echo img($notification_item_image) ?>
+                                    </a>
                                 </div>
                             </td>
                         </tr>

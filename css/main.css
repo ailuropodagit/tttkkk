@@ -884,6 +884,7 @@ html, body {
 
 .home-row3-column1-today-deal-box-each-information {
     padding: 20px 18px 20px 18px;
+    min-height: 40px;
 }
 
 .home-row3-column1-today-deal-box-each-information-title-rating {
@@ -1036,10 +1037,7 @@ html, body {
 
 .home-row3-column1-redemption-box-each-information {
     padding: 20px 18px 20px 18px;
-}
-
-.home-row3-column1-redemption-box-each-information table {
-    width: 100%;
+    min-height: 30px;
 }
 
 .home-row3-column1-redemption-box-each-information-title-rating {
@@ -1051,9 +1049,6 @@ html, body {
     font-size: 14px;
     font-weight: bold;
     color: #444444;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
 }
 
 .home-row3-column1-redemption-box-each-information-rating {
