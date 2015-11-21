@@ -879,6 +879,7 @@ class User extends CI_Controller
         $this->form_validation->set_rules('username', $this->lang->line('create_user_validation_username_label'), 'trim|required|is_unique[' . $tables['users'] . '.username]');       
         $this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
         $this->form_validation->set_rules('password_confirm', $this->lang->line('create_user_validation_password_confirm_label'), 'required');
+        $this->form_validation->set_rules('promo_code', $this->lang->line('create_user_promo_code_label2'));
         $this->form_validation->set_rules('accept_terms', '...', 'callback_accept_terms');
         
         if ($this->form_validation->run() == true)
@@ -902,6 +903,7 @@ class User extends CI_Controller
                 'username' => $username,
                 'password_visible' => $password,
                 'main_group_id' => $this->main_group_id,
+                'us_promo_code_temp' => $this->input->post('promo_code'),
                     //'profile_image' => $this->config->item('user_default_image'),
             );
         }
@@ -1010,6 +1012,12 @@ class User extends CI_Controller
                 'type' => 'password',
                 'value' => $this->form_validation->set_value('password_confirm'),
             );
+            $this->data['promo_code'] = array(
+                'name' => 'promo_code',
+                'id' => 'promo_code',
+                'type' => 'text',
+                'value' => $this->form_validation->set_value('promo_code'),
+            );
             $this->data['page_path_name'] = 'user/create_user';
             $this->load->view('template/layout', $this->data);
         }
@@ -1068,6 +1076,7 @@ class User extends CI_Controller
         $user_id = $this->ion_auth->user()->row()->id;
         $user = $this->ion_auth->user($user_id)->row();
         $this->m_custom->promo_code_insert_user($user_id);
+        $this->m_custom->promo_code_temp_register($user_id);
         
         if (isset($_POST) && !empty($_POST))
         {
@@ -1207,13 +1216,15 @@ class User extends CI_Controller
             'type' => 'text',
             'value' => $this->form_validation->set_value('last_name', $user->last_name),
         );
+        $promo_code = $this->m_custom->promo_code_get('user', $user->id, 1);
         $this->data['promo_code_no'] = array(
             'name' => 'promo_code_no',
             'id' => 'promo_code_no',
             'type' => 'text',
             'readonly' => 'true',
-            'value' => $this->m_custom->promo_code_get('user', $user->id, 1),
+            'value' => $promo_code,
         );
+        $this->data['promo_code_url'] = $this->m_custom->generate_promo_code_list_link($promo_code, 32);
         $this->data['description'] = array(
                 'name' => 'description',
                 'id' => 'description',

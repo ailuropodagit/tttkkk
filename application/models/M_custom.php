@@ -2357,6 +2357,11 @@ class M_custom extends CI_Model
         return "<a target='_blank' href='" . base_url() . "all/like_list/" . $refer_id . "/" . $refer_type . "'>" . $this->activity_like_count($refer_id, $refer_type) . "</a>";
     }
 
+    public function generate_promo_code_list_link($promo_code, $trans_conf_id)
+    {
+        return "<a target='_blank' href='" . base_url() . "all/promo_code_list/" . $promo_code . "/" . $trans_conf_id . "'>" . $this->m_custom->promo_code_history_display($promo_code, $trans_conf_id, 1) . "</a>";
+    }
+    
     //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
     public function generate_comment_link($refer_id, $refer_type)
     {
@@ -2806,7 +2811,7 @@ class M_custom extends CI_Model
             $code_candie = $this->m_custom->web_setting_get('merchant_promo_code_get_candie');
             $name = substr(generate_code($user_info['slug']), 0, 5);
             $postfix = str_pad($code_user_id, 4, '0', STR_PAD_LEFT);
-            $code_no = '6' . $name . $postfix;
+            $code_no = '5' . $name . $postfix;
             $new_id = $this->m_custom->promo_code_insert($code_no, 'merchant', $code_user_id, $code_candie);
             if ($new_id)
             {
@@ -2860,6 +2865,34 @@ class M_custom extends CI_Model
         else
         {
             return FALSE;
+        }
+    }
+
+    public function promo_code_history_display($promo_code, $trans_conf_id = NULL, $count_only = 0)
+    {
+        $code_no = strtolower(trim($promo_code));
+        $code_row = $this->db->get_where('promo_code', array('code_no' => $code_no, 'hide_flag' => 0))->row_array();
+        if ($code_row)
+        {
+            if ($trans_conf_id == NULL)
+            {
+                $this->db->where_in('trans_conf_id', array(25, 32, 33, 34));
+            }
+            else
+            {
+                $this->db->where('trans_conf_id', $trans_conf_id);
+            }
+            $result_query = $this->db->get_where('transaction_extra', array('refer_id' => $code_row['code_id']));
+            $result_list = $result_query->result_array();
+            $result_count = $result_query->num_rows();
+            if ($count_only == 1)
+            {
+                return $result_count;
+            }
+            else
+            {
+                return $result_list;
+            }
         }
     }
 
@@ -3008,6 +3041,20 @@ class M_custom extends CI_Model
             {
                 return FALSE;
             }
+        }
+    }
+
+    //For register the promo code that user insert during sign up, then this field will be make null
+    public function promo_code_temp_register($user_id)
+    {
+        $us_promo_code_temp = $this->m_custom->get_one_field_by_key('users', 'id', $user_id, 'us_promo_code_temp');
+        if ($us_promo_code_temp != NULL)
+        {
+            $this->m_custom->promo_code_history_insert($us_promo_code_temp);
+            $data = array(
+                'us_promo_code_temp' => NULL,
+            );
+            $this->m_custom->simple_update('users', $data, 'id', $user_id);
         }
     }
 

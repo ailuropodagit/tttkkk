@@ -862,6 +862,29 @@ class All extends CI_Controller
         }
     }
 
+    function promo_code_list($promo_code = NULL, $trans_conf_id = NULL)
+    {
+        if ($promo_code != NULL)
+        {
+            $result_list = $this->m_custom->promo_code_history_display($promo_code, $trans_conf_id);
+            $data['result_list'] = $result_list;
+            $data['post_title'] = $promo_code;
+            $data['page_path_name'] = 'all/promo_code_list';
+            if ($this->ion_auth->logged_in())
+            {
+                $this->load->view('template/layout_right_menu', $data);
+            }
+            else
+            {
+                $this->load->view('template/layout', $data);
+            }
+        }
+        else
+        {
+            redirect('/', 'refresh');
+        }
+    }
+    
     //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
     function user_rating($refer_id = NULL, $refer_type = NULL)
     {

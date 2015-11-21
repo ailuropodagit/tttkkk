@@ -63,6 +63,7 @@ $lang['create_user_fname_label']                       = 'First Name:';
 $lang['create_user_first_name_label']                  = 'First Name:';
 $lang['create_user_lname_label']                       = 'Last Name:';
 $lang['create_user_last_name_label']                   = 'Last Name:';
+$lang['create_user_promo_code_label2']                 = 'Promo Code: (Also can key in after register)';
 $lang['create_user_promo_code_label']                  = 'Promo Code: (Copy this for friend register)';
 $lang['create_user_description_label']                 = 'Description:';
 $lang['create_user_company_label']                     = 'Company Name:';

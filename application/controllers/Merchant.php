@@ -1093,13 +1093,15 @@ class Merchant extends CI_Controller
             //'readonly' => 'true',
             'value' => $this->form_validation->set_value('company', $user->company),
         );
+        $promo_code = $this->m_custom->promo_code_get('merchant', $user->id, 1);
         $this->data['promo_code_no'] = array(
             'name' => 'promo_code_no',
             'id' => 'promo_code_no',
             'type' => 'text',
             'readonly' => 'true',
-            'value' => $this->m_custom->promo_code_get('merchant', $user->id, 1),
+            'value' => $promo_code,
         );
+        $this->data['promo_code_url'] = $this->m_custom->generate_promo_code_list_link($promo_code, 33);
         $this->data['me_ssm'] = array(
             'name' => 'me_ssm',
             'id' => 'me_ssm',

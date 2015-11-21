@@ -44,7 +44,7 @@ if (isset($message))
                     <?php
                     foreach ($the_result as $row)
                     {
-                        $redeem_count = '99';
+                        $redeem_count = $this->m_custom->generate_promo_code_list_link($row['code_no'], 34);;
                         $admin_name = $this->m_custom->display_users($row['code_user_id']);
                         $remove_row = $row['hide_flag'] == 1 ? 'Frozen' : '';
                         $url_edit = base_url() . "admin/promo_code_change_event/" . $row['code_id'];
