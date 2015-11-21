@@ -2026,7 +2026,7 @@ class M_custom extends CI_Model
                 case 'advertise':
                 case 'merchant_user_album':
                 case 'user_album':
-                    $title = "<b>" . $record['title'] . "</b>";
+                    $title = $record['title'];
                     break;
             }
 

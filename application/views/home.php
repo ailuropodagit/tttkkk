@@ -394,30 +394,44 @@ $this->album_admin = $this->config->item('album_admin');
         <div id='home-row3-column2'>
             <div id='home-row3-column2-like'>
                 <div id="home-row3-column2-like-title">Like</div>
-                <?php 
-                $notification_list = $this->m_custom->notification_display(0, 1, 'like');
-                ?>
                 <div id="home-row3-column2-like-notification">
                     <table border="0px" cellpading="0px" cellspacing="0px">
                         <?php
+                        $notification_list = $this->m_custom->notification_display(0, 1, 'like');
                         foreach($notification_list as $notification)
                         {
                             $notification_user_image = $notification['noti_user_image'];
+                            $notification_user_name = $notification['noti_user_url'];
                             $notification_message = $notification['noti_message'];
-                            $notification_item_image = $notification['noti_image_url']
+                            $notification_url = $notification['noti_url'];
+                            $notification_item_image = $notification['noti_image_url'];
                             ?>
                             <tr>
-                                <td>
+                                <td valign="top">
                                     <div id="home-row3-column2-like-notification-user-image">
                                         <?php echo $notification_user_image ?>
                                     </div>
                                 </td>
                                 <td style="width: 100%;">
                                     <div id="home-row3-column2-like-notification-description">
-                                        <?php echo $notification_message ?>
+                                        <span id="home-row3-column2-like-notification-description-name">
+                                            <?php echo $notification_user_name ?>
+                                        </span>
+                                        <?php
+                                        if (empty($notification_url)) 
+                                        { 
+                                            echo $notification_message;
+                                        }
+                                        else
+                                        {
+                                            ?>
+                                            <a href="<?php echo base_url($notification_url) ?>"><?php echo $notification_message ?></a>
+                                            <?php
+                                        }
+                                        ?>
                                     </div>
                                 </td>
-                                <td>
+                                <td valign="top">
                                     <div id="home-row3-column2-like-notification-item-image">
                                         <?php echo img($notification_item_image) ?>
                                     </div>
@@ -430,11 +444,55 @@ $this->album_admin = $this->config->item('album_admin');
                 </div>
             </div>
             <div id='home-row3-column2-user-picture'>
-                Users Pictures
-                <?php 
-                $data['notification_list'] = $this->m_custom->notification_display(0, 1, 'upload_image');
-                $this->load->view('all/notification_home', $data);
-                ?>
+                <div id="home-row3-column2-like-title">Users Pictures</div>
+                <div id="home-row3-column2-like-notification">
+                    <table border="0px" cellpading="0px" cellspacing="0px">
+                    <?php 
+                    $notification_list = $this->m_custom->notification_display(0, 1, 'upload_image');
+                    foreach($notification_list as $notification)
+                    {
+                        $notification_user_image = $notification['noti_user_image'];
+                        $notification_user_name = $notification['noti_user_url'];
+                        $notification_message = $notification['noti_message'];
+                        $notification_url = $notification['noti_url'];
+                        $notification_item_image = $notification['noti_image_url'];
+                        ?>
+                        <tr>
+                            <td valign="top">
+                                <div id="home-row3-column2-like-notification-user-image">
+                                    <?php echo $notification_user_image ?>
+                                </div>
+                            </td>
+                            <td style="width: 100%;">
+                                <div id="home-row3-column2-like-notification-description">
+                                    <span id="home-row3-column2-like-notification-description-name">
+                                        <?php echo $notification_user_name ?>
+                                    </span>
+                                    <?php
+                                    if (empty($notification_url)) 
+                                    { 
+                                        echo $notification_message;
+                                    }
+                                    else
+                                    {
+                                        ?>
+                                        <a href="<?php echo base_url($notification_url) ?>"><?php echo $notification_message ?></a>
+                                        <?php
+                                    }
+                                    ?>
+                                </div>
+                            </td>
+                            <td valign="top">
+                                <div id="home-row3-column2-like-notification-item-image">
+                                    <?php echo img($notification_item_image) ?>
+                                </div>
+                            </td>
+                        </tr>
+                        <?php
+                    }
+                    ?>
+                    </table>
+                </div>
             </div>
         </div>
         <div id="float-fix"></div>        
