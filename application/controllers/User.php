@@ -1216,13 +1216,15 @@ class User extends CI_Controller
             'type' => 'text',
             'value' => $this->form_validation->set_value('last_name', $user->last_name),
         );
+        $promo_code = $this->m_custom->promo_code_get('user', $user->id, 1);
         $this->data['promo_code_no'] = array(
             'name' => 'promo_code_no',
             'id' => 'promo_code_no',
             'type' => 'text',
             'readonly' => 'true',
-            'value' => $this->m_custom->promo_code_get('user', $user->id, 1),
+            'value' => $promo_code,
         );
+        $this->data['promo_code_url'] = $this->m_custom->generate_promo_code_list_link($promo_code, 32);
         $this->data['description'] = array(
                 'name' => 'description',
                 'id' => 'description',

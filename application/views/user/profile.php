@@ -97,6 +97,9 @@ if(isset($message))
                     <div id='profile-info-form-each-input'><?php echo form_input($promo_code_no); ?></div>
                 </div>    
                 <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><?php echo 'Promo Code Redeem : ' . $promo_code_url; ?></div>
+                </div>
+                <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_user_description_label', 'description'); ?></div>
                     <div id='profile-info-form-each-input'><?php echo form_textarea($description); ?></div>
                 </div>
