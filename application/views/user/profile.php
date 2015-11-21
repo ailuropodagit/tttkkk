@@ -93,6 +93,10 @@ if(isset($message))
                     <div id='profile-info-form-each-input'><?php echo form_input($last_name); ?></div>
                 </div>
                 <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><?php echo lang('create_user_promo_code_label', 'promo_code_no'); ?></div>
+                    <div id='profile-info-form-each-input'><?php echo form_input($promo_code_no); ?></div>
+                </div>    
+                <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_user_description_label', 'description'); ?></div>
                     <div id='profile-info-form-each-input'><?php echo form_textarea($description); ?></div>
                 </div>

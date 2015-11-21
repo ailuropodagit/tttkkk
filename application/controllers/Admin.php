@@ -3108,7 +3108,9 @@ class Admin extends CI_Controller
         $result = $this->m_custom->promo_code_get($main_table_fiter_value, $user_id); 
         if (!$result)
         {
-            redirect('/', 'refresh');
+            $message_info = add_message_info($message_info, 'Cannot find promo code of this merchant. Maybe merchant never login after register account.');
+            $can_redirect_to = 2;
+            goto direct_go;
         }
         $edit_id = $result[$main_table_id_column];      
         
@@ -3228,7 +3230,9 @@ class Admin extends CI_Controller
         $result = $this->m_custom->promo_code_get($main_table_fiter_value, $user_id); 
         if (!$result)
         {
-            redirect('/', 'refresh');
+            $message_info = add_message_info($message_info, 'Cannot find promo code of this user. Maybe user never login after register account.');
+            $can_redirect_to = 2;
+            goto direct_go;
         }
         $edit_id = $result[$main_table_id_column];      
         

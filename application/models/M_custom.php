@@ -2863,17 +2863,154 @@ class M_custom extends CI_Model
         }
     }
 
-    public function promo_code_get($code_type, $code_user_id)
+    public function promo_code_get($code_type, $code_user_id, $code_only = 0)
     {
         $query = $this->db->get_where('promo_code', array('code_type' => $code_type, 'code_user_id' => $code_user_id));
         if ($query->num_rows() == 1)
         {
-            return $query->row_array();
+            $result = $query->row_array();
+            if ($code_only == 1)
+            {
+                return $result['code_no'];
+            }
+            else
+            {
+                return $result;
+            }
         }
 
         return FALSE;
     }
-    
+
+    public function promo_code_history_insert($promo_code = NULL)
+    {
+        $message_info = '';
+        $code_no = strtolower(trim($promo_code));
+        $query = $this->db->get_where('promo_code', array('code_no' => $code_no, 'hide_flag' => 0));
+        if ($query->num_rows() == 1 && $this->ion_auth->logged_in())
+        {
+            $result = $query->row_array();
+            $login_id = $this->ion_auth->user()->row()->id;
+            $code_id = $result['code_id'];
+            $code_type = $result['code_type'];
+            $code_user_id = $result['code_user_id'];
+            $code_candie = $result['code_candie'];
+            $code_money = $result['code_money'];
+            $code_event_name = $result['code_event_name'];
+            $code_candie_overwrite = $result['code_candie_overwrite'];
+            $code_money_overwrite = $result['code_money_overwrite'];
+            $friend_success_register_get_money = $this->m_custom->web_setting_get('friend_success_register_get_money', 'set_decimal');
+            $register_promo_code_get_candie = $this->m_custom->web_setting_get('register_promo_code_get_candie');
+            $merchant_promo_code_get_candie = $this->m_custom->web_setting_get('merchant_promo_code_get_candie');
+
+            switch ($code_type)
+            {
+                case 'merchant':
+                    if ($code_candie_overwrite == 0)
+                    {
+                        $code_candie = $merchant_promo_code_get_candie;
+                    }
+                    $new_id = $this->m_custom->promo_code_trans_extra_insert($login_id, 33, $code_candie, $code_id);
+                    if ($new_id)
+                    {
+                        $this->m_user->candie_history_insert(33, $new_id, 'transaction_extra', 0, $code_candie);
+                        $message_info = 'Success get ' . $code_candie . ' candie from merchant ' . $this->m_custom->display_users($code_user_id) . ' promo code';
+                    }
+                    else
+                    {
+                        $message_info = 'Cannot get promo code candie again from merchant ' . $this->m_custom->display_users($code_user_id) . ' , only can get 1 time from same merchant';
+                    }
+                    break;
+                case 'user':
+                    $check_get_already = $this->db->get_where('transaction_extra', array('trans_conf_id' => 32, 'user_id' => $login_id));
+                    if ($check_get_already->num_rows() == 0)
+                    {
+                        if ($code_candie_overwrite == 0)
+                        {
+                            $code_candie = $register_promo_code_get_candie;
+                        }
+                        if ($code_money_overwrite == 0)
+                        {
+                            $code_money = $friend_success_register_get_money;
+                        }
+                        $new_id = $this->m_custom->promo_code_trans_extra_insert($login_id, 32, $code_candie, $code_id);
+                        if ($new_id)
+                        {
+                            $this->m_user->candie_history_insert(32, $new_id, 'transaction_extra', 0, $code_candie);
+                            $message_info = 'Success get ' . $code_candie . ' candie from user ' . $this->m_custom->display_users($code_user_id) . ' register promo code';
+
+                            //Insert cash back for this promo code user because his friend success key in refer promo code
+                            $new_id2 = $this->m_custom->promo_code_trans_extra_insert($code_user_id, 25, $code_money, $code_id);
+                            $this->m_user->user_trans_history_insert($code_user_id, 25, $new_id2, 'transaction_extra', 0, $code_money);
+                        }
+                        else
+                        {
+                            $message_info = 'Cannot get promo code candie again from user ' . $this->m_custom->display_users($code_user_id) . ' , only can get 1 time from same user';
+                        }
+                    }
+                    else
+                    {
+                        $get_already = $check_get_already->row_array();
+                        $get_already_row = $this->m_custom->get_one_field_by_key('promo_code', 'code_id', $get_already['refer_id'], 'code_user_id');
+                        $message_info = 'You already get register promo code candie from user ' . $this->m_custom->display_users($get_already_row) . ' before, register promo code candie only can get 1 time';
+                    }
+                    break;
+                case 'event':
+                    $new_id = $this->m_custom->promo_code_trans_extra_insert($login_id, 34, $code_candie, $code_id);
+                    if ($new_id)
+                    {
+                        $this->m_user->candie_history_insert(34, $new_id, 'transaction_extra', 0, $code_candie);
+                        $message_info = 'Success get ' . $code_candie . ' candie from event ' . $code_event_name . ' special promo code';
+                    }
+                    else
+                    {
+                        $message_info = 'Cannot get special promo code candie again from event ' . $code_event_name . ' , only can get 1 time from same event';
+                    }
+                    break;
+            }
+        }
+        else
+        {
+            $message_info = 'Promo code is not valid or no longer active.';
+        }
+
+        return $message_info;
+    }
+
+    public function promo_code_trans_extra_insert($user_id = NULL, $trans_conf_id = NULL, $amount_change = NULL, $refer_id = NULL, $allow_duplicate = 0, $trans_remark = NULL)
+    {
+        if ($user_id == NULL || $trans_conf_id == NULL || $amount_change == NULL || $refer_id == NULL)
+        {
+            return FALSE;
+        }
+        else
+        {
+            $search_data = array(
+                'user_id' => $user_id,
+                'trans_conf_id' => $trans_conf_id,
+                'refer_id' => $refer_id,
+            );
+            $query = $this->db->get_where('transaction_extra', $search_data);
+            if (($query->num_rows() == 0 && $allow_duplicate == 0) || $allow_duplicate != 0)
+            {
+                $the_data = array(
+                    'user_id' => $user_id,
+                    'trans_conf_id' => $trans_conf_id,
+                    'amount_change' => check_is_decimal($amount_change),
+                    'refer_id' => $refer_id,
+                    'trans_remark' => $trans_remark,
+                );
+                $this->db->insert('transaction_extra', $the_data);
+                $new_id = $this->db->insert_id();
+                return $new_id;
+            }
+            else
+            {
+                return FALSE;
+            }
+        }
+    }
+
     public function table_id_column($table){
         $fields = $this->db->list_fields($table);
         foreach ($fields as $field)

@@ -1207,6 +1207,13 @@ class User extends CI_Controller
             'type' => 'text',
             'value' => $this->form_validation->set_value('last_name', $user->last_name),
         );
+        $this->data['promo_code_no'] = array(
+            'name' => 'promo_code_no',
+            'id' => 'promo_code_no',
+            'type' => 'text',
+            'readonly' => 'true',
+            'value' => $this->m_custom->promo_code_get('user', $user->id, 1),
+        );
         $this->data['description'] = array(
                 'name' => 'description',
                 'id' => 'description',
@@ -2437,6 +2444,50 @@ class User extends CI_Controller
             <a href='http://keppo.my/user/register'>Sign Up</a> Now
         ");
         return $this->email->send();
+    }
+
+    function promo_code()
+    {
+        if (!check_correct_login_type($this->main_group_id))
+        {
+            redirect('/', 'refresh');
+        }
+
+        $message_info = '';
+
+        if (isset($_POST) && !empty($_POST))
+        {
+            $can_redirect_to = 0;
+            $promo_code = $this->input->post('promo_code');
+
+            // validate form input
+            $this->form_validation->set_rules('promo_code', 'Promo Code', 'required');
+
+            if ($this->input->post('button_action') == "save")
+            {
+                if ($this->form_validation->run() === TRUE)
+                {
+                    $message_info = $this->m_custom->promo_code_history_insert($promo_code);
+                    $can_redirect_to = 1;
+                }
+            }
+
+            direct_go:
+            if ($message_info != NULL)
+            {
+                $this->session->set_flashdata('message', $message_info);
+            }
+            if ($can_redirect_to == 1)
+            {
+                redirect(uri_string(), 'refresh');
+            }
+        }
+
+        // set the flash data error message if there is one
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+
+        $this->data['page_path_name'] = 'user/promo_code';
+        $this->load->view('template/layout_right_menu', $this->data);
     }
 
     function _get_csrf_nonce()
