@@ -828,7 +828,7 @@ class M_custom extends CI_Model
         $return = $this->m_custom->get_one_table_record('user_redemption', 'redeem_id', $redeem_id, 1);
         return $return;
     }
-
+    
     //set $hot_popular_only = 1 to get the popular hotdeal or redemption only
     //Get popular hotdeal that have at least 3 like, can change number in database web setting table
     //$popular_hotdeal_list = $this->m_custom->getAdvertise('hot', NULL, NULL, 0, NULL, NULL, 1)
@@ -2863,6 +2863,17 @@ class M_custom extends CI_Model
         }
     }
 
+    public function promo_code_get($code_type, $code_user_id)
+    {
+        $query = $this->db->get_where('promo_code', array('code_type' => $code_type, 'code_user_id' => $code_user_id));
+        if ($query->num_rows() == 1)
+        {
+            return $query->row_array();
+        }
+
+        return FALSE;
+    }
+    
     public function table_id_column($table){
         $fields = $this->db->list_fields($table);
         foreach ($fields as $field)

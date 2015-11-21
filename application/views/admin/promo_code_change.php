@@ -1,3 +1,5 @@
+<script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script>
+
 <?php
 //MESSAGE
 if(isset($message))
@@ -51,7 +53,7 @@ if(isset($message))
                 
                 <?php if($code_type == 'user' || $code_type == 'merchant'){ ?>   <!-- if promo code type is user/merchant, can tick this to key in the overwrite candie value -->
                 <div id='profile-info-form-each'>
-                    <div id='profile-info-form-each-label'><?php echo 'Overwrite Candie Give'; ?>
+                    <div id='profile-info-form-each-label'><?php echo 'Overwrite Default Candie Give'; ?>
                         <?php echo form_checkbox($code_candie_overwrite); ?></div>
                 </div>
                 <?php 
@@ -63,7 +65,7 @@ if(isset($message))
                 ?>
                 <div id='code-candie-div' <?php echo $div_show_hide; ?>>
                     <div id='profile-info-form-each'>  <!-- key in the overwrite candie value -->
-                        <div id='profile-info-form-each-label'><?php echo lang('promo_code_candie', 'code_candie'); ?></div>
+                        <div id='profile-info-form-each-label'><?php echo 'New '.lang('promo_code_candie', 'code_candie'); ?></div>
                         <div id='profile-info-form-each-input'><?php echo form_input($code_candie); ?></div>
                     </div> 
                 </div>
@@ -71,10 +73,10 @@ if(isset($message))
                 
                 <?php if($code_type == 'user'){ ?> 
                 <div id='profile-info-form-each'>   <!-- if promo code type is user, show default cash back user can get when friend register using this user promo code -->
-                    <div id='profile-info-form-each-label'><?php echo 'Default Cash Back : ' . $this->m_custom->web_setting_get('friend_success_register_get_money', 'set_decimal'); ?></div>
+                    <div id='profile-info-form-each-label'><?php echo 'Default Cash Back : RM ' . $this->m_custom->web_setting_get('friend_success_register_get_money', 'set_decimal'); ?></div>
                 </div>
                 <div id='profile-info-form-each'>   <!-- if promo code type is user, can tick this to key in the overwrite cash back value -->
-                    <div id='profile-info-form-each-label'><?php echo 'Overwrite Cash Back'; ?>
+                    <div id='profile-info-form-each-label'><?php echo 'Overwrite Default Cash Back'; ?>
                         <?php echo form_checkbox($code_money_overwrite); ?></div>
                 </div>
                 <?php 
@@ -86,7 +88,7 @@ if(isset($message))
                 ?>
                 <div id='code-money-div' <?php echo $div_show_hide; ?>>
                     <div id='profile-info-form-each'>   <!-- key in the overwrite cash back value -->
-                        <div id='profile-info-form-each-label'><?php echo lang('promo_code_money', 'code_money'); ?></div>
+                        <div id='profile-info-form-each-label'><?php echo 'New '.lang('promo_code_money', 'code_money'); ?></div>
                         <div id='profile-info-form-each-input'><?php echo form_input($code_money); ?></div>
                     </div>        
                 </div>

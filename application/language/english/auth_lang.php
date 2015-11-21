@@ -293,7 +293,7 @@ $lang['web_setting_merchant_promo_code_get_candie']    = 'Default Merchant Promo
 // Promo Code
 $lang['promo_code_no']             = 'Promo Code';
 $lang['promo_code_candie']         = 'Candie Give';
-$lang['promo_code_money']          = 'Cash Back Give';
+$lang['promo_code_money']          = 'Cash Back Give (RM)';
 $lang['promo_code_event_name']     = 'Special Event Name';
 $lang['promo_code_remark']         = 'Remark';
 $lang['promo_code_users_user']     = 'User Name';

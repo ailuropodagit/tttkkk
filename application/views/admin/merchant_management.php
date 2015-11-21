@@ -55,7 +55,8 @@ if (isset($message))
                         $merchant_balance_text = $this->m_merchant->merchant_balance_color($row['id'], 1);
                         $remove_row = $row['hide_flag'] == 1 ? 'Frozen' : '';
                         $url_edit = base_url() . "admin/merchant_edit/" . $row['id'];
-                        $url_topup = base_url() . "admin/merchant_topup/" . $row['id'];
+                        $url_topup = base_url() . "admin/merchant_topup/" . $row['id'];                      
+                        $url_promo_code = base_url() . "admin/promo_code_change_merchant/" . $row['id'];                       
                         $url_dashboard = base_url() . "all/merchant_dashboard/" . $row['slug'];
                         $url_special_action = base_url() . "admin/merchant_special_action";
                         
@@ -82,7 +83,10 @@ if (isset($message))
                         echo "<td>";
                         echo "<a href='" . $url_edit . "' >Edit</a>&nbsp;&nbsp;&nbsp;";      
                         if($this->m_admin->check_worker_role(67)) {
-                        echo "<a href='" . $url_topup . "' >TopUp</a>";    
+                        echo "<a href='" . $url_topup . "' >TopUp</a>&nbsp;&nbsp;&nbsp;";    
+                        }
+                        if($this->m_admin->check_worker_role(77)) {
+                        echo "<a href='" . $url_promo_code . "' >Promocode</a>";    
                         }
                         echo "</td>";
                         echo "<td>";                       
