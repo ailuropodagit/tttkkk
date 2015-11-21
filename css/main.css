@@ -1082,8 +1082,8 @@ html, body {
  *********************************************/
 
 #home-row3-column2 {
-    width: 100%;
-    float: none;
+    width: 22%;
+    float: right;
 }
 
 /*********************************************
@@ -1091,8 +1091,6 @@ html, body {
  *********************************************/
 
 #home-row3-column2-like {
-    height: 613px;
-    overflow: scroll;
     margin: 0px 0px 30px 0px;
     box-sizing: border-box;
     background-color: white;
@@ -1106,6 +1104,47 @@ html, body {
     font-weight: bold;
     padding: 15px 15px 15px 15px;
     text-transform: uppercase;
+    border-bottom: 1px solid lightgray;
+}
+
+#home-row3-column2-like table tr {
+    border-bottom: 1px solid lightgray;
+    
+}
+
+#home-row3-column2-like table td {
+    padding: 7px 0px 5px 0px;
+}
+
+#home-row3-column2-like-notification {
+    overflow-y: auto;
+    height: 540px;
+}
+
+#home-row3-column2-like-notification-user-image {
+    padding: 0px 0px 0px 10px;
+}
+
+#home-row3-column2-like-notification-user-image img {
+    display: block;
+}
+    
+#home-row3-column2-like-notification-description {
+    margin: 0px 10px 0px 10px;
+}
+
+#home-row3-column2-like-notification-item-image {
+    width: 30px;
+    height: 30px;
+    border: 1px solid lightgray;
+    margin: 0px 10px 0px 0px;
+}
+
+#home-row3-column2-like-notification-item-image img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    display: block;
 }
 
 /*********************************************
@@ -1113,7 +1152,7 @@ html, body {
  *********************************************/
 
 #home-row3-column2-user-picture {
-    height: 613px;
+    height: 580px;
     box-sizing: border-box;
     background-color: white;
     -webkit-box-shadow: 1px 1px 3px 0px rgba(179,179,179,0.80);
@@ -1128,7 +1167,7 @@ html, body {
 
 #home-row4-logo-slider {
     background-color: #00bcd4;
-    padding: 30px 0px 0px 0px;
+    padding: 20px 0px 20px 0px;
     margin: 0px 0px 30px 0px;
 }
 

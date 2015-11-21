@@ -6,11 +6,17 @@
 
 <!--SLICK SLIDER-->
 <link rel="stylesheet" type="text/css" href="<?php echo base_url('js/slick-slider/slick.css') ?>"/>
-<link rel="stylesheet" type="text/css" href="js/slick-slider/slick-theme.css"/>
+<!--<link rel="stylesheet" type="text/css" href="js/slick-slider/slick-theme.css"/>-->
 
 <!--RATING-->
+<!--<script type="text/javascript" src="<?php echo base_url('js/star-rating/jquery.rating.js') ?>"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo base_url('js/star-rating/jquery.rating.css') ?>">-->
+
 <script type="text/javascript" src="<?php echo base_url() ?>js/star-rating/jquery.rating.js"></script>
 <?php echo link_tag('js/star-rating/jquery.rating.css') ?>
+<!--<script type="text/javascript" src="<?php echo base_url() ?>js/jgrowl/jquery.jgrowl.js"></script>-->
+<?php // echo link_tag('js/jgrowl/jquery.jgrowl.css') ?>
+<script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script>
 
 <!--COUNTDOWN-->
 <script type="text/javascript" src="<?php echo base_url('js/jquery.countdown.js') ?>"></script>
@@ -102,6 +108,13 @@
         });
     });
 </script>
+
+<?php
+//CONFIG DATA
+$this->group_id_user = $this->config->item('group_id_user');
+$this->album_merchant = $this->config->item('album_merchant');
+$this->album_admin = $this->config->item('album_admin');
+?>
 
 <div id='wrapper'>
     <div id='home'>
@@ -206,8 +219,7 @@
                 <?php echo img('folder_upload/home_banner_row2/home-banner-row2-banner3.jpg') ?>
             </div>
             <div id='float-fix'></div>
-        </div>
-        
+        </div>        
         <div id='home-row3-column1'>
             <div id='home-row3-column1-today-deal'>
                 <div id='home-row3-column1-today-deal-title'>Today's Deals</div>
@@ -219,11 +231,7 @@
                 <div id='float-fix'></div>
                 <div id='home-row3-column1-today-deal-title-bottom-line'></div>
                 <div id='home-row3-column1-today-deal-box'>
-                    <?php 
-                    //CONFIG DATA
-                    $this->group_id_user = $this->config->item('group_id_user');
-                    $this->album_merchant = $this->config->item('album_merchant');
-                    $this->album_admin = $this->config->item('album_admin');
+                    <?php
                     $hotdeal_list = $this->m_custom->getAdvertise('hot', NULL, NULL, 0, NULL, NULL, 1);
                     foreach ($hotdeal_list as $hotdeal)
                     {
@@ -277,28 +285,7 @@
                                             <?php echo $title ?>
                                         </div>
                                         <div class="home-row3-column1-today-deal-box-each-information-rating">
-                                            <?php
-                                            $average_rating = $this->m_custom->activity_rating_average($advertise_id, 'adv');
-                                            if (check_correct_login_type($this->group_id_user)) //Check if user logged in
-                                            {
-                                                $radio_level = " ";
-                                            }
-                                            else
-                                            {
-                                                $radio_level = "disabled";
-                                            }
-                                            for ($i = 1; $i <= 5; $i++)
-                                            {
-                                                if ($i == round($average_rating))
-                                                {
-                                                    echo "<input class='auto-submit-star' type='radio' name='rating' " . $radio_level . " value='" . $i . "' checked='checked'/>";
-                                                }
-                                                else
-                                                {
-                                                    echo "<input class='auto-submit-star' type='radio' name='rating' " . $radio_level . " value='" . $i . "'/>";
-                                                }
-                                            }
-                                            ?>
+
                                         </div>
                                     </div>
                                     <div class="home-row3-column1-today-deal-box-each-information-price">
@@ -388,28 +375,7 @@
                                             <?php echo $title ?>
                                         </div>
                                         <div class="home-row3-column1-redemption-box-each-information-rating">
-                                            <?php
-                                            $average_rating = $this->m_custom->activity_rating_average($advertise_id, 'adv');
-                                            if (check_correct_login_type($this->group_id_user)) //Check if user logged in
-                                            {
-                                                $radio_level = " ";
-                                            }
-                                            else
-                                            {
-                                                $radio_level = "disabled";
-                                            }
-                                            for ($i = 1; $i <= 5; $i++)
-                                            {
-                                                if ($i == round($average_rating))
-                                                {
-                                                    echo "<input class='auto-submit-star' type='radio' name='rating' " . $radio_level . " value='" . $i . "' checked='checked'/>";
-                                                }
-                                                else
-                                                {
-                                                    echo "<input class='auto-submit-star' type='radio' name='rating' " . $radio_level . " value='" . $i . "'/>";
-                                                }
-                                            }
-                                            ?>
+                                            
                                         </div>
                                     </div>
                                     <div class="home-row3-column1-redemption-box-each-information-candie">
@@ -429,9 +395,39 @@
             <div id='home-row3-column2-like'>
                 <div id="home-row3-column2-like-title">Like</div>
                 <?php 
-                $data['notification_list'] = $this->m_custom->notification_display(0, 1, 'like');
-                $this->load->view('all/notification_home', $data);
+                $notification_list = $this->m_custom->notification_display(0, 1, 'like');
                 ?>
+                <div id="home-row3-column2-like-notification">
+                    <table border="0px" cellpading="0px" cellspacing="0px">
+                        <?php
+                        foreach($notification_list as $notification)
+                        {
+                            $notification_user_image = $notification['noti_user_image'];
+                            $notification_message = $notification['noti_message'];
+                            $notification_item_image = $notification['noti_image_url']
+                            ?>
+                            <tr>
+                                <td>
+                                    <div id="home-row3-column2-like-notification-user-image">
+                                        <?php echo $notification_user_image ?>
+                                    </div>
+                                </td>
+                                <td style="width: 100%;">
+                                    <div id="home-row3-column2-like-notification-description">
+                                        <?php echo $notification_message ?>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div id="home-row3-column2-like-notification-item-image">
+                                        <?php echo img($notification_item_image) ?>
+                                    </div>
+                                </td>
+                            </tr>
+                            <?php
+                        }
+                        ?>
+                    </table>
+                </div>
             </div>
             <div id='home-row3-column2-user-picture'>
                 Users Pictures

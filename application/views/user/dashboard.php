@@ -19,17 +19,6 @@
             }
         });
     });
-    
-    $(function(){
-        $image = $('#dashboard-photo-box img');
-        width = $image.width();
-        height = $image.height();
-
-        $image.css({
-            left: 0 - (width / 2),
-            top: 0 - (height / 2)
-        });
-    });
 </script>
 
 <?php
@@ -149,7 +138,7 @@ if($this->ion_auth->user()->num_rows())
                 <div id="float-fix"></div>
                 <div id="dashboard-info-table">
                 <table border="0px" cellspacing="0px" cellpadding="5px" style="width: 100%; table-layout: fixed;">
-                    <colgroup style="width:170px;"></colgroup>
+                    <colgroup style="width:180px;"></colgroup>
                     <colgroup style="width:15px;"></colgroup>
                     <tr>
                         <td>Photography URL</td>
@@ -231,7 +220,7 @@ if($this->ion_auth->user()->num_rows())
             </div>
             <div id="dashboard-info-table">
                 <table border="0px" cellspacing="0px" cellpadding="5px" style="width: 100%; table-layout: fixed;">
-                    <colgroup style="width:118px;"></colgroup>
+                    <colgroup style="width:125px;"></colgroup>
                     <colgroup style="width:15px;"></colgroup>
                     <tr>
                         <td>Blog URL</td>
