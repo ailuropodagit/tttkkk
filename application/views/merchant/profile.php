@@ -80,6 +80,10 @@ if(isset($message))
                     <div id='profile-info-form-each-input'><?php echo form_input($company); ?></div>
                 </div>
                 <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><?php echo lang('create_merchant_promo_code_label', 'promo_code_no'); ?></div>
+                    <div id='profile-info-form-each-input'><?php echo form_input($promo_code_no); ?></div>
+                </div>  
+                <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_merchant_companyssm_label', 'me_ssm'); ?></div>
                     <div id='profile-info-form-each-input'><?php echo form_input($me_ssm); ?></div>
                 </div>

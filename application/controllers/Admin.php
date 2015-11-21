@@ -1255,6 +1255,7 @@ class Admin extends CI_Controller
                 {
                     if ($this->ion_auth->login($user_login_info['username'], $user_login_info['password_visible'], FALSE, $user_login_info['main_group_id'], $login_id, 1))
                     {
+                        $this->m_custom->promo_code_insert_user($id);
                         redirect('all/user_dashboard/' . $id, 'refresh');
                     }
                     else
@@ -1656,6 +1657,7 @@ class Admin extends CI_Controller
                 {
                     if ($this->ion_auth->login($user_login_info['username'], $user_login_info['password_visible'], FALSE, $user_login_info['main_group_id'], $login_id, 1))
                     {
+                        $this->m_custom->promo_code_insert_merchant($id);
                         redirect('all/merchant_dashboard/' . $user_login_info['slug'], 'refresh');
                     }
                     else
@@ -2871,6 +2873,487 @@ class Admin extends CI_Controller
         echo json_encode($result);
     }
 
+    function promo_code_management(){
+        if (!$this->m_admin->check_is_any_admin(77))
+        {
+            redirect('/', 'refresh');
+        }
+        
+         $message_info = '';
+        //$login_id = $this->login_id;
+        //$login_type = $this->login_type;
+        $main_table = 'promo_code';
+        $main_table_id_column = 'code_id';
+        $main_table_filter_column = 'code_type';
+        $main_table_fiter_value = 'event';  
+        
+        if (isset($_POST) && !empty($_POST))
+        {
+            $can_redirect_to = 1;
+            $id = $this->input->post('id');
+            $display_name = $this->m_custom->get_one_field_by_key($main_table, $main_table_id_column, $id, 'code_event_name');
+            if ($this->input->post('button_action') == "frozen")
+            {
+                $message_info = add_message_info($message_info, $display_name . ' success frozen.');
+                $this->m_custom->update_hide_flag(1, $main_table, $id);
+                $can_redirect_to = 1;
+            }
+            if ($this->input->post('button_action') == "recover")
+            {
+                $message_info = add_message_info($message_info, $display_name . ' success unfrozen.');
+                $this->m_custom->update_hide_flag(0, $main_table, $id);
+                $can_redirect_to = 1;
+            }
+
+            if ($message_info != NULL)
+            {
+                $this->session->set_flashdata('message', $message_info);
+            }
+            if ($can_redirect_to == 1)
+            {
+                redirect(uri_string(), 'refresh');
+            }
+        }
+        
+        $option_list = $this->m_custom->get_many_table_record($main_table, $main_table_filter_column, $main_table_fiter_value, 1); 
+        $this->data['the_result'] = $option_list;
+
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+        $this->data['page_path_name'] = 'admin/promo_code_management';
+        $this->load->view('template/layout_right_menu', $this->data);
+    }
+    
+    function promo_code_change_event($edit_id = NULL)
+    {
+        if (!$this->m_admin->check_is_any_admin(77))
+        {
+            redirect('/', 'refresh');
+        }
+
+        $message_info = '';
+        $login_id = $this->login_id;
+        $login_type = $this->login_type;
+        $is_edit = 0;
+        $main_table = 'promo_code';
+        $main_table_id_column = 'code_id';      
+        $main_table_filter_column = 'code_type';
+        $main_table_fiter_value = 'event';  
+        
+        if ($edit_id != NULL)
+        {
+            $allowed_list = $this->m_custom->get_list_of_allow_id($main_table, $main_table_filter_column, $main_table_fiter_value, $main_table_id_column);
+            if (!check_allowed_list($allowed_list, $edit_id))
+            {
+                redirect('/', 'refresh');
+            }
+            $is_edit = 1;
+        }
+        
+        if (isset($_POST) && !empty($_POST))
+        {
+            $can_redirect_to = 0;
+
+            $edit_id = $this->input->post('edit_id');
+            $code_no = $this->input->post('code_no');
+            $code_candie = $this->input->post('code_candie');
+            $code_event_name = $this->input->post('code_event_name');
+            
+            if ($edit_id == 0)
+            {
+                $is_edit = 0;
+            }
+            else
+            {
+                $is_edit = 1;
+            }
+
+            if ($this->input->post('button_action') == "save")
+            {
+                // validate form input
+                $this->form_validation->set_rules('code_no', $this->lang->line('promo_code_no'), 'trim|required');
+                $this->form_validation->set_rules('code_candie', $this->lang->line('promo_code_candie'), 'trim|required|integer');
+                $this->form_validation->set_rules('code_event_name', $this->lang->line('promo_code_event_name'), 'trim|required');
+                
+                if ($this->form_validation->run() === TRUE)
+                {
+                    if ($is_edit == 0)
+                    {  
+                        $check_unique = $this->m_custom->check_is_value_unique($main_table, 'code_no', $code_no);
+                        if (!$check_unique)
+                        {
+                            $message_info = add_message_info($message_info, $code_no . ' already used.');
+                            $can_redirect_to = 1;
+                            goto direct_go;
+                        }
+                        
+                        $new_id = $this->m_custom->promo_code_insert_event($code_no, $code_candie, NULL, $code_event_name);
+                        if ($new_id)
+                        {
+                            $message_info = add_message_info($message_info, $code_event_name . ' success create.');
+                            $edit_id = $new_id;
+                            $can_redirect_to = 2;
+                        }
+                        else
+                        {
+                            $message_info = add_message_info($message_info, $this->ion_auth->errors());
+                            $can_redirect_to = 1;
+                        }
+                    }
+                    else
+                    {    
+                        $check_unique = $this->m_custom->check_is_value_unique($main_table, 'code_no', $code_no, $main_table_id_column, $edit_id);
+                        if (!$check_unique)
+                        {
+                            $message_info = add_message_info($message_info, $code_no . ' already used.');
+                            $can_redirect_to = 1;
+                            goto direct_go;
+                        }
+                        
+                        $data = array(  
+                            'code_no' => $code_no,
+                            'code_candie' => $code_candie,  
+                            'code_event_name' => $code_event_name,  
+                            'last_modify_by' => $login_id,
+                        );
+
+                        if ($this->m_custom->simple_update($main_table, $data, $main_table_id_column, $edit_id))
+                        {
+                            $message_info = add_message_info($message_info, $code_event_name . ' success update.');
+                            $can_redirect_to = 2;
+                        }
+                        else
+                        {
+                            $message_info = add_message_info($message_info, $this->ion_auth->errors());
+                            $can_redirect_to = 3;
+                        }
+                    }
+                }
+            }
+            if ($this->input->post('button_action') == "back")
+            {
+                $can_redirect_to = 2;
+            }    
+
+            direct_go:
+            if ($message_info != NULL)
+            {
+                $this->session->set_flashdata('message', $message_info);
+            }
+            if ($can_redirect_to == 1)
+            {
+                redirect(uri_string(), 'refresh');
+            }
+            elseif ($can_redirect_to == 2)
+            {
+                redirect('admin/promo_code_management', 'refresh');
+            }
+            elseif ($can_redirect_to == 3)
+            {
+                redirect('admin/promo_code_change_event/' . $edit_id, 'refresh');
+            }
+        }
+
+        // set the flash data error message if there is one
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+
+        $result = $this->m_custom->get_one_table_record($main_table, $main_table_id_column, $edit_id, 1); 
+        $this->data['result'] = $result;
+
+        $this->data['edit_id'] = array(
+            'edit_id' => empty($result) ? '0' : $result[$main_table_id_column],
+            'is_edit' => $is_edit,
+        );
+
+        $this->data['is_edit'] = $is_edit;
+        $this->data['code_type'] = $main_table_fiter_value;
+        
+        $this->data['code_no'] = array(
+            'name' => 'code_no',
+            'id' => 'code_no',
+            'value' => empty($result) ? $this->form_validation->set_value('code_no') : $this->form_validation->set_value('code_no', $result['code_no']),
+        );
+        
+        $this->data['code_candie'] = array(
+            'name' => 'code_candie',
+            'id' => 'code_candie',
+            'value' => empty($result) ? $this->form_validation->set_value('code_candie') : $this->form_validation->set_value('code_candie', $result['code_candie']),
+        );
+        
+        $this->data['code_event_name'] = array(
+            'name' => 'code_event_name',
+            'id' => 'code_event_name',
+            'value' => empty($result) ? $this->form_validation->set_value('code_event_name') : $this->form_validation->set_value('code_event_name', $result['code_event_name']),
+        );
+    
+        $this->data['page_path_name'] = 'admin/promo_code_change';
+        $this->load->view('template/layout_right_menu', $this->data);
+    }
+    
+    function promo_code_change_merchant($user_id = NULL)
+    {
+        if (!$this->m_admin->check_is_any_admin(77))
+        {
+            redirect('/', 'refresh');
+        }
+
+        $message_info = '';
+        $login_id = $this->login_id;
+        $login_type = $this->login_type;
+        $is_edit = 1;
+        $main_table = 'promo_code';
+        $main_table_id_column = 'code_id';      
+        $main_table_filter_column = 'code_type';
+        $main_table_fiter_value = 'merchant';
+
+        $result = $this->m_custom->promo_code_get($main_table_fiter_value, $user_id); 
+        if (!$result)
+        {
+            $message_info = add_message_info($message_info, 'Cannot find promo code of this merchant. Maybe merchant never login after register account.');
+            $can_redirect_to = 2;
+            goto direct_go;
+        }
+        $edit_id = $result[$main_table_id_column];      
+        
+        if (isset($_POST) && !empty($_POST))
+        {
+            $can_redirect_to = 0;
+
+            $edit_id = $this->input->post('edit_id');
+            $code_candie_overwrite = $this->input->post('code_candie_overwrite') == NULL ? 0 : 1;   //Check box special handling to know is checked or not
+            $code_candie = $this->input->post('code_candie');
+            
+            if ($this->input->post('button_action') == "save")
+            {
+                // validate form input
+                $this->form_validation->set_rules('code_candie', $this->lang->line('promo_code_candie'), 'trim|required|integer');
+                
+                if ($this->form_validation->run() === TRUE)
+                {
+                    $data = array(
+                        'code_candie' => $code_candie,
+                        'code_candie_overwrite' => $code_candie_overwrite,
+                        'last_modify_by' => $login_id,
+                    );
+
+                    if ($this->m_custom->simple_update($main_table, $data, $main_table_id_column, $edit_id))
+                    {
+                        $message_info = add_message_info($message_info, $result['code_no'] . ' success update.');
+                        $can_redirect_to = 3;
+                    }
+                    else
+                    {
+                        $message_info = add_message_info($message_info, $this->ion_auth->errors());
+                        $can_redirect_to = 3;
+                    }
+                }
+            }
+            if ($this->input->post('button_action') == "back")
+            {
+                $can_redirect_to = 2;
+            }    
+
+            direct_go:
+            if ($message_info != NULL)
+            {
+                $this->session->set_flashdata('message', $message_info);
+            }
+            if ($can_redirect_to == 1)
+            {
+                redirect(uri_string(), 'refresh');
+            }
+            elseif ($can_redirect_to == 2)
+            {
+                redirect('admin/merchant_management', 'refresh');
+            }
+            elseif ($can_redirect_to == 3)
+            {
+                redirect('admin/promo_code_change_merchant/' . $user_id, 'refresh');
+            }
+        }
+
+        // set the flash data error message if there is one
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+       
+        $this->data['result'] = $result;
+
+        $this->data['edit_id'] = array(
+            'edit_id' => empty($result) ? '0' : $result[$main_table_id_column],
+            'is_edit' => $is_edit,
+        );
+
+        $this->data['is_edit'] = $is_edit;
+        $this->data['code_type'] = $main_table_fiter_value;
+        
+        $this->data['code_no'] = array(
+            'name' => 'code_no',
+            'id' => 'code_no',
+            'readonly ' => 'true',
+            'value' => empty($result) ? $this->form_validation->set_value('code_no') : $this->form_validation->set_value('code_no', $result['code_no']),
+        );
+        
+        $code_candie_overwrite_value = $result['code_candie_overwrite'];
+        $this->data['code_candie_overwrite_value'] = $code_candie_overwrite_value;
+        $this->data['code_candie_overwrite'] = array(
+            'name' => 'code_candie_overwrite',
+            'id' => 'code_candie_overwrite',
+            'checked' => $code_candie_overwrite_value == "1" ? TRUE : FALSE,
+            'onclick' => "checkbox_showhide('code_candie_overwrite','code-candie-div')",
+            'value' => $this->form_validation->set_value('code_candie_overwrite', $edit_id),
+        );
+        
+        $this->data['code_candie'] = array(
+            'name' => 'code_candie',
+            'id' => 'code_candie',
+            'value' => empty($result) ? $this->form_validation->set_value('code_candie') : $this->form_validation->set_value('code_candie', $result['code_candie']),
+        );      
+    
+        $this->data['page_path_name'] = 'admin/promo_code_change';
+        $this->load->view('template/layout_right_menu', $this->data);
+    }
+    
+    function promo_code_change_user($user_id = NULL)
+    {
+        if (!$this->m_admin->check_is_any_admin(77))
+        {
+            redirect('/', 'refresh');
+        }
+
+        $message_info = '';
+        $login_id = $this->login_id;
+        $login_type = $this->login_type;
+        $is_edit = 1;
+        $main_table = 'promo_code';
+        $main_table_id_column = 'code_id';      
+        $main_table_filter_column = 'code_type';
+        $main_table_fiter_value = 'user';
+
+        $result = $this->m_custom->promo_code_get($main_table_fiter_value, $user_id); 
+        if (!$result)
+        {
+            $message_info = add_message_info($message_info, 'Cannot find promo code of this user. Maybe user never login after register account.');
+            $can_redirect_to = 2;
+            goto direct_go;
+        }
+        $edit_id = $result[$main_table_id_column];      
+        
+        if (isset($_POST) && !empty($_POST))
+        {
+            $can_redirect_to = 0;
+
+            $edit_id = $this->input->post('edit_id');
+            $code_candie_overwrite = $this->input->post('code_candie_overwrite') == NULL ? 0 : 1;   //Check box special handling to know is checked or not
+            $code_candie = $this->input->post('code_candie');
+            $code_money_overwrite = $this->input->post('code_money_overwrite') == NULL ? 0 : 1;   //Check box special handling to know is checked or not
+            $code_money = $this->input->post('code_money');
+            
+            if ($this->input->post('button_action') == "save")
+            {
+                // validate form input
+                $this->form_validation->set_rules('code_candie', $this->lang->line('promo_code_candie'), 'trim|required|integer');
+                $this->form_validation->set_rules('code_money', $this->lang->line('promo_code_money'), 'trim|required|numeric');
+                
+                if ($this->form_validation->run() === TRUE)
+                {
+                    $data = array(
+                        'code_candie' => $code_candie,
+                        'code_candie_overwrite' => $code_candie_overwrite,
+                        'code_money' => $code_money,
+                        'code_money_overwrite' => $code_money_overwrite,
+                        'last_modify_by' => $login_id,
+                    );
+
+                    if ($this->m_custom->simple_update($main_table, $data, $main_table_id_column, $edit_id))
+                    {
+                        $message_info = add_message_info($message_info, $result['code_no'] . ' success update.');
+                        $can_redirect_to = 3;
+                    }
+                    else
+                    {
+                        $message_info = add_message_info($message_info, $this->ion_auth->errors());
+                        $can_redirect_to = 3;
+                    }
+                }
+            }
+            if ($this->input->post('button_action') == "back")
+            {
+                $can_redirect_to = 2;
+            }    
+
+            direct_go:
+            if ($message_info != NULL)
+            {
+                $this->session->set_flashdata('message', $message_info);
+            }
+            if ($can_redirect_to == 1)
+            {
+                redirect(uri_string(), 'refresh');
+            }
+            elseif ($can_redirect_to == 2)
+            {
+                redirect('admin/user_management', 'refresh');
+            }
+            elseif ($can_redirect_to == 3)
+            {
+                redirect('admin/promo_code_change_user/' . $user_id, 'refresh');
+            }
+        }
+
+        // set the flash data error message if there is one
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+       
+        $this->data['result'] = $result;
+
+        $this->data['edit_id'] = array(
+            'edit_id' => empty($result) ? '0' : $result[$main_table_id_column],
+            'is_edit' => $is_edit,
+        );
+
+        $this->data['is_edit'] = $is_edit;
+        $this->data['code_type'] = $main_table_fiter_value;
+        
+        $this->data['code_no'] = array(
+            'name' => 'code_no',
+            'id' => 'code_no',
+            'readonly ' => 'true',
+            'value' => empty($result) ? $this->form_validation->set_value('code_no') : $this->form_validation->set_value('code_no', $result['code_no']),
+        );
+        
+        $code_candie_overwrite_value = $result['code_candie_overwrite'];
+        $this->data['code_candie_overwrite_value'] = $code_candie_overwrite_value;
+        $this->data['code_candie_overwrite'] = array(
+            'name' => 'code_candie_overwrite',
+            'id' => 'code_candie_overwrite',
+            'checked' => $code_candie_overwrite_value == "1" ? TRUE : FALSE,
+            'onclick' => "checkbox_showhide('code_candie_overwrite','code-candie-div')",
+            'value' => $this->form_validation->set_value('code_candie_overwrite', $edit_id),
+        );
+        
+        $this->data['code_candie'] = array(
+            'name' => 'code_candie',
+            'id' => 'code_candie',
+            'value' => empty($result) ? $this->form_validation->set_value('code_candie') : $this->form_validation->set_value('code_candie', $result['code_candie']),
+        );      
+    
+        $code_money_overwrite_value = $result['code_money_overwrite'];
+        $this->data['code_money_overwrite_value'] = $code_money_overwrite_value;
+        $this->data['code_money_overwrite'] = array(
+            'name' => 'code_money_overwrite',
+            'id' => 'code_money_overwrite',
+            'checked' => $code_money_overwrite_value == "1" ? TRUE : FALSE,
+            'onclick' => "checkbox_showhide('code_money_overwrite','code-money-div')",
+            'value' => $this->form_validation->set_value('code_money_overwrite', $edit_id),
+        );
+        
+        $this->data['code_money'] = array(
+            'name' => 'code_money',
+            'id' => 'code_money',
+            'value' => empty($result) ? $this->form_validation->set_value('code_money') : $this->form_validation->set_value('code_money', $result['code_money']),
+        ); 
+        
+        $this->data['page_path_name'] = 'admin/promo_code_change';
+        $this->load->view('template/layout_right_menu', $this->data);
+    }
+    
     function manage_web_setting()
     {
         if (!$this->m_admin->check_is_any_admin(73))
@@ -2890,14 +3373,20 @@ class Admin extends CI_Controller
             $merchant_minimum_balance = check_is_positive_decimal($this->input->post('merchant_minimum_balance'));
             $merchant_max_hotdeal_per_day = check_is_positive_numeric($this->input->post('merchant_max_hotdeal_per_day'));
             $user_max_picture_per_day = check_is_positive_numeric($this->input->post('user_max_picture_per_day'));
-
+            $friend_success_register_get_money = check_is_positive_decimal($this->input->post('friend_success_register_get_money'));
+            $register_promo_code_get_candie = check_is_positive_numeric($this->input->post('register_promo_code_get_candie'));
+            $merchant_promo_code_get_candie = check_is_positive_numeric($this->input->post('merchant_promo_code_get_candie'));
+            
             // validate form input
             $this->form_validation->set_rules('keppo_company_name', $this->lang->line('web_setting_keppo_company_name'), 'trim|required');
             $this->form_validation->set_rules('keppo_admin_email', $this->lang->line('web_setting_keppo_admin_email'), 'trim|required|valid_emails');
             $this->form_validation->set_rules('merchant_minimum_balance', $this->lang->line('web_setting_merchant_minimum_balance'), 'trim|required|numeric');
             $this->form_validation->set_rules('merchant_max_hotdeal_per_day', $this->lang->line('web_setting_merchant_max_hotdeal_per_day'), 'trim|required|integer');
             $this->form_validation->set_rules('user_max_picture_per_day', $this->lang->line('web_setting_user_max_picture_per_day'), 'trim|required|integer');
-
+            $this->form_validation->set_rules('friend_success_register_get_money', $this->lang->line('web_setting_friend_success_register_get_money'), 'trim|required|numeric');
+            $this->form_validation->set_rules('register_promo_code_get_candie', $this->lang->line('web_setting_register_promo_code_get_candie'), 'trim|required|integer');
+            $this->form_validation->set_rules('merchant_promo_code_get_candie', $this->lang->line('web_setting_merchant_promo_code_get_candie'), 'trim|required|integer');
+            
             if ($this->input->post('button_action') == "save")
             {
                 if ($this->form_validation->run() === TRUE)
@@ -2907,7 +3396,10 @@ class Admin extends CI_Controller
                     $this->m_custom->web_setting_set('merchant_minimum_balance', $merchant_minimum_balance, 'set_decimal');
                     $this->m_custom->web_setting_set('merchant_max_hotdeal_per_day', $merchant_max_hotdeal_per_day);
                     $this->m_custom->web_setting_set('user_max_picture_per_day', $user_max_picture_per_day);
-
+                    $this->m_custom->web_setting_set('friend_success_register_get_money', $friend_success_register_get_money, 'set_decimal');
+                    $this->m_custom->web_setting_set('register_promo_code_get_candie', $register_promo_code_get_candie);
+                    $this->m_custom->web_setting_set('merchant_promo_code_get_candie', $merchant_promo_code_get_candie);
+                    
                     $message_info = add_message_info($message_info, 'Web Setting success update.');
                     $can_redirect_to = 1;
                 }
@@ -2957,6 +3449,24 @@ class Admin extends CI_Controller
             'type' => 'text',
             'value' => $this->form_validation->set_value('user_max_picture_per_day', $this->m_custom->web_setting_get('user_max_picture_per_day')),
         );
+        $this->data['friend_success_register_get_money'] = array(
+            'name' => 'friend_success_register_get_money',
+            'id' => 'friend_success_register_get_money',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('friend_success_register_get_money', $this->m_custom->web_setting_get('friend_success_register_get_money', 'set_decimal')),
+        );
+        $this->data['register_promo_code_get_candie'] = array(
+            'name' => 'register_promo_code_get_candie',
+            'id' => 'register_promo_code_get_candie',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('register_promo_code_get_candie', $this->m_custom->web_setting_get('register_promo_code_get_candie')),
+        );
+        $this->data['merchant_promo_code_get_candie'] = array(
+            'name' => 'merchant_promo_code_get_candie',
+            'id' => 'merchant_promo_code_get_candie',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('merchant_promo_code_get_candie', $this->m_custom->web_setting_get('merchant_promo_code_get_candie')),
+        );
 
         $this->data['page_path_name'] = 'admin/manage_web_setting';
         $this->load->view('template/layout_right_menu', $this->data);
@@ -2972,7 +3482,11 @@ class Admin extends CI_Controller
         $message_info = '';
         //$login_id = $this->login_id;
         //$login_type = $this->login_type;
-                
+        $main_table = 'dynamic_option';
+        $main_table_id_column = 'option_id';
+        $main_table_filter_column = 'option_type';
+        $main_table_fiter_value = 'photography';  
+        
         if (isset($_POST) && !empty($_POST))
         {
             $can_redirect_to = 1;
@@ -2981,13 +3495,13 @@ class Admin extends CI_Controller
             if ($this->input->post('button_action') == "frozen")
             {
                 $message_info = add_message_info($message_info, $display_name . ' success hide.');
-                $this->m_custom->update_hide_flag(1, 'dynamic_option', $id);
+                $this->m_custom->update_hide_flag(1, $main_table, $id);
                 $can_redirect_to = 1;
             }
             if ($this->input->post('button_action') == "recover")
             {
                 $message_info = add_message_info($message_info, $display_name . ' success unhide.');
-                $this->m_custom->update_hide_flag(0, 'dynamic_option', $id);
+                $this->m_custom->update_hide_flag(0, $main_table, $id);
                 $can_redirect_to = 1;
             }
 
@@ -3001,7 +3515,7 @@ class Admin extends CI_Controller
             }
         }
         
-        $option_list = $this->m_custom->get_many_table_record('dynamic_option', 'option_type', 'photography', 1); 
+        $option_list = $this->m_custom->get_many_table_record($main_table, $main_table_filter_column, $main_table_fiter_value, 1); 
         $this->data['the_result'] = $option_list;
 
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
@@ -3156,7 +3670,11 @@ class Admin extends CI_Controller
         $message_info = '';
         //$login_id = $this->login_id;
         //$login_type = $this->login_type;
-                
+        $main_table = 'dynamic_option';
+        $main_table_id_column = 'option_id';
+        $main_table_filter_column = 'option_type';
+        $main_table_fiter_value = 'candie_term';        
+        
         if (isset($_POST) && !empty($_POST))
         {
             $can_redirect_to = 1;
@@ -3165,13 +3683,13 @@ class Admin extends CI_Controller
             if ($this->input->post('button_action') == "frozen")
             {
                 $message_info = add_message_info($message_info, $display_name . ' success hide.');
-                $this->m_custom->update_hide_flag(1, 'dynamic_option', $id);
+                $this->m_custom->update_hide_flag(1, $main_table, $id);
                 $can_redirect_to = 1;
             }
             if ($this->input->post('button_action') == "recover")
             {
                 $message_info = add_message_info($message_info, $display_name . ' success unhide.');
-                $this->m_custom->update_hide_flag(0, 'dynamic_option', $id);
+                $this->m_custom->update_hide_flag(0, $main_table, $id);
                 $can_redirect_to = 1;
             }
 
@@ -3185,7 +3703,7 @@ class Admin extends CI_Controller
             }
         }
         
-        $option_list = $this->m_custom->get_many_table_record('dynamic_option', 'option_type', 'candie_term', 1); 
+        $option_list = $this->m_custom->get_many_table_record($main_table, $main_table_filter_column, $main_table_fiter_value, 1); 
         $this->data['the_result'] = $option_list;
 
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));       

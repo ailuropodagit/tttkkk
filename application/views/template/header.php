@@ -267,7 +267,8 @@
                                             <li><a href='<?php echo base_url("all/album_user/$login_user_id") ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'album_user' || $fetch_method == 'upload_image' || $fetch_method == 'upload_for_merchant' || $fetch_method == 'album_user_merchant' || $fetch_method == 'user_picture' || $fetch_method == 'merchant_user_picture'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Album</a></li>
                                             <li><a href='<?php echo base_url('user/candie_page') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'candie_page'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Candies (<?php echo $this->m_user->candie_check_balance($login_user_id); ?>)</a></li>
                                             <li><a href='<?php echo base_url("user/redemption/$header_voucher_active") ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'redemption'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Vouchers</a></li>
-                                            <li><a href='<?php echo base_url('user/invite_friend') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'invite_friend'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Invite Friend</a></li>
+<!--                                            <li><a href='<?php //echo base_url('user/invite_friend') ?>' class='layout-inner-right-menu-bar <?php //if ($fetch_method == 'invite_friend'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Invite Friend</a></li>-->
+                                            <li><a href='<?php echo base_url('user/promo_code') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'promo_code'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Promo Code</a></li>
                                             <li><a href='<?php echo base_url('user/balance_page') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'balance_page'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Balance (<?php echo 'RM '.$this->m_user->user_check_balance($login_user_id); ?>)</a></li>
                                         </ul>
                                     </li>
@@ -353,6 +354,7 @@
                                             <li><a href='<?php echo base_url('admin/merchant_management') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'merchant_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Manage Merchant</a></li>
                                             <li><a href='<?php echo base_url('admin/worker_management') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'worker_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Manage Worker</a></li>
                                             <li><a href='<?php echo base_url('admin/category_management') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'category_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Manage Category</a></li>
+                                            <li><a href='<?php echo base_url('admin/promo_code_management') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'promo_code_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Manage Special Promo Codes</a></li>
                                             <li><a href='<?php echo base_url('admin/keppo_voucher_management') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'keppo_voucher_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Manage Keppo Voucher</a></li>
                                             <li><a href='<?php echo base_url('admin/keppo_voucher_redeem') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'keppo_voucher_redeem'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> User's Redeem Keppo Voucher</a></li>
                                             <li><a href='<?php echo base_url('admin/analysis_report') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'analysis_report'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Insights</a></li>
@@ -392,6 +394,12 @@
                                             { 
                                                 ?>
                                                 <li><a href='<?php echo base_url(); ?>admin/category_management' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'category_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Manage Category</a></li>
+                                                <?php
+                                            }
+                                            if($this->m_admin->check_worker_role(77))
+                                            { 
+                                                ?>
+                                                <li><a href='<?php echo base_url(); ?>admin/promo_code_management' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'promo_code_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Manage Special Promo Code</a></li>
                                                 <?php
                                             }
                                             if($this->m_admin->check_worker_role(70))

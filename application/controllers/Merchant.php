@@ -73,11 +73,15 @@ class Merchant extends CI_Controller
                 //redirect them back to the home page
                 //$this->session->set_flashdata('message', $this->ion_auth->messages());
                 $this->update_whole_year_balance();
+                $user_id = $this->session->userdata('user_id');
+                $this->m_custom->promo_code_insert_merchant($user_id);
                 redirect('all/merchant_dashboard/' . $this->session->userdata('company_slug'), 'refresh');
             }
             else if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember, $this->group_id_supervisor))
             {
                 //$this->session->set_flashdata('message', $this->ion_auth->messages());
+                $user_id = $this->ion_auth->user()->row()->su_merchant_id;
+                $this->m_custom->promo_code_insert_merchant($user_id);
                 redirect('all/merchant_dashboard/' . $this->session->userdata('company_slug'), 'refresh');
             }
             else
@@ -1079,21 +1083,28 @@ class Merchant extends CI_Controller
             'name' => 'company_main',
             'id' => 'company_main',
             'type' => 'text',
-            'readonly ' => 'true',
+            'readonly' => 'true',
             'value' => $this->form_validation->set_value('company_main', $user->company_main),
         );
         $this->data['company'] = array(
             'name' => 'company',
             'id' => 'company',
             'type' => 'text',
-            //'readonly ' => 'true',
+            //'readonly' => 'true',
             'value' => $this->form_validation->set_value('company', $user->company),
+        );
+        $this->data['promo_code_no'] = array(
+            'name' => 'promo_code_no',
+            'id' => 'promo_code_no',
+            'type' => 'text',
+            'readonly' => 'true',
+            'value' => $this->m_custom->promo_code_get('merchant', $user->id, 1),
         );
         $this->data['me_ssm'] = array(
             'name' => 'me_ssm',
             'id' => 'me_ssm',
             'type' => 'text',
-            'readonly ' => 'true',
+            'readonly' => 'true',
             'value' => $this->form_validation->set_value('me_ssm', $user->me_ssm),
         );
         //If is not changeable then change to text box read only
@@ -1107,7 +1118,7 @@ class Merchant extends CI_Controller
             'name' => 'me_category_id',
             'id' => 'me_category_id',
             'type' => 'text',
-            'readonly ' => 'true',
+            'readonly' => 'true',
             'value' => $this->m_custom->get_one_table_record('category', 'category_id', $user->me_category_id)->category_label,
         );
         $this->data['sub_category_selected'] = $user->me_sub_category_id;
@@ -1119,14 +1130,14 @@ class Merchant extends CI_Controller
         $this->data['address'] = array(
             'name' => 'address',
             'id' => 'address',
-            'readonly ' => 'true',
+            'readonly' => 'true',
             'value' => $this->form_validation->set_value('address', $user->address),
         );
         $this->data['postcode'] = array(
             'name' => 'postcode',
             'id' => 'postcode',
             'type' => 'text',
-            'readonly ' => 'true',
+            'readonly' => 'true',
             'value' => $this->form_validation->set_value('postcode', $user->postcode),
         );
         $this->data['state_selected'] = $user->me_state_id;
@@ -1181,37 +1192,37 @@ class Merchant extends CI_Controller
         $this->data['branch_name'] = array(
             'name' => 'branch_name',
             'id' => 'branch_name',
-            'readonly ' => 'true',
+            'readonly' => 'true',
             'value' => ($branch) ? $branch->name : '',
         );
         $this->data['branch_address'] = array(
             'name' => 'branch_address',
             'id' => 'branch_address',
-            'readonly ' => 'true',
+            'readonly' => 'true',
             'value' => ($branch) ? $branch->address : '',
         );
         $this->data['branch_phone'] = array(
             'name' => 'branch_phone',
             'id' => 'branch_phone',
-            'readonly ' => 'true',
+            'readonly' => 'true',
             'value' => ($branch) ? $branch->phone : '',
         );
         $this->data['branch_state'] = array(
             'name' => 'branch_state',
             'id' => 'branch_state',
-            'readonly ' => 'true',
+            'readonly' => 'true',
             'value' => ($branch) ? $this->m_custom->display_static_option($branch->state_id) : '',
         );
         $this->data['supervisor_username'] = array(
             'name' => 'supervisor_username',
             'id' => 'supervisor_username',
-            'readonly ' => 'true',
+            'readonly' => 'true',
             'value' => $is_supervisor == 1 ? $supervisor->username : $user->username,
         );
         $this->data['supervisor_password'] = array(
             'name' => 'supervisor_password',
             'id' => 'supervisor_password',
-            'readonly ' => 'true',
+            'readonly' => 'true',
             'value' => $is_supervisor == 1 ? $supervisor->password_visible : $user->password_visible,
         );
 
@@ -1953,14 +1964,14 @@ class Merchant extends CI_Controller
         $this->data['start_date'] = array(
             'name' => 'start_date',
             'id' => 'start_date',
-            'readonly ' => 'true',
+            'readonly' => 'true',
             'value' => empty($this_month_candie) ? '' : displayDate($this_month_candie['start_time']),
         );
 
         $this->data['end_date'] = array(
             'name' => 'end_date',
             'id' => 'end_date',
-            'readonly ' => 'true',
+            'readonly' => 'true',
             'value' => empty($this_month_candie) ? '' : displayDate($this_month_candie['end_time']),
         );
 
@@ -1987,7 +1998,7 @@ class Merchant extends CI_Controller
         $this->data['expire_date'] = array(
             'name' => 'expire_date',
             'id' => 'expire_date',
-            'readonly ' => 'true',
+            'readonly' => 'true',
             'value' => empty($this_month_candie) ? '' : displayDate($this_month_candie['voucher_expire_date']),
         );
 
