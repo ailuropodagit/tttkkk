@@ -289,3 +289,14 @@ $lang['web_setting_user_max_share_get_candie_per_day']    = 'User Max Share Get 
 $lang['web_setting_friend_success_register_get_money']    = 'Default Friend Success Register get Cash Back';
 $lang['web_setting_register_promo_code_get_candie']    = 'Default Register Promo Code get Candie';
 $lang['web_setting_merchant_promo_code_get_candie']    = 'Default Merchant Promo Code get Candie';
+
+// Promo Code
+$lang['promo_code_no']             = 'Promo Code';
+$lang['promo_code_candie']         = 'Candie Give';
+$lang['promo_code_money']          = 'Cash Back Give';
+$lang['promo_code_event_name']     = 'Special Event Name';
+$lang['promo_code_remark']         = 'Remark';
+$lang['promo_code_users_user']     = 'User Name';
+$lang['promo_code_users_admin']    = 'Created by Admin/Worker';
+$lang['promo_code_users_merchant'] = 'Merchant Name';
+$lang['promo_code_redeem_count']   = 'Redeem Count';

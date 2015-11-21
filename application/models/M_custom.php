@@ -2818,10 +2818,11 @@ class M_custom extends CI_Model
     
     public function promo_code_insert_event($code_no, $code_candie = NULL, $code_money = NULL, $code_event_name = NULL)
     {
+        $login_id = $this->ion_auth->user()->row()->id;
         $query = $this->db->get_where('promo_code', array('code_type' => 'event', 'code_no' => $code_no));
         if ($query->num_rows() == 0)
         {
-            $new_id = $this->m_custom->promo_code_insert($code_no, 'event', 1, $code_candie, $code_money, 1, 1, $code_event_name);
+            $new_id = $this->m_custom->promo_code_insert($code_no, 'event', $login_id, $code_candie, $code_money, 1, 1, $code_event_name);
             if ($new_id)
             {
                 return $new_id;
