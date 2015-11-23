@@ -1,5 +1,70 @@
 /*********************************************
- ** HOME
+ ** HEADER
+ *********************************************/
+
+#header-logo-bar-search-content {
+    display: none;
+}
+
+#header-logo-bar-search2 {
+    display: inline;
+}
+
+#header-logo-bar-search2-content {
+    margin: 20px 0px 0px 0px;
+}
+
+#header-logo-bar-search-block1 {
+    width: calc(100% - 245px);
+}
+
+#header-logo-bar-search-block1 input[type='text'] {
+    width: 100%;
+}
+
+#header-navigation-bar {
+    display: none;
+}
+
+/*********************************************
+ ** FOOTER
+ *********************************************/
+
+#footer-navigation-block1 {
+    width: 50%;
+}
+
+#footer-navigation-block2 {
+    width: 50%;
+}
+
+#footer-navigation-block3 {
+    width: 50%;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none
+}
+
+#footer-navigation-block4 {
+    width: 50%;
+}
+
+/*********************************************
+ ** HOME ROW 1
+ *********************************************/
+
+#home-row1-categories-navigation {
+    display: none;
+}
+
+#home-row1-banner-main {
+    float: none;
+    margin: 0px;
+    width: 100%;
+}
+
+/*********************************************
+ ** HOME ROW 3 COLUMN 1
  *********************************************/
 
 #home-row3-column1 {
@@ -7,7 +72,11 @@
     float: none;
 }
 
-#home-row3-column2 {
-    display: none;
-}
+/*********************************************
+ ** HOME ROW 3 COLUMN 2
+ *********************************************/
 
+#home-row3-column2 {
+    width: 100%;
+    float: none;
+}

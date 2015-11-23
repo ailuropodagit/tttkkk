@@ -30,8 +30,7 @@
             navigationHover: false,
             playPause: false,
             thumbnails: false,
-            fx: 'scrollLeft',
-            height: '480px'
+            fx: 'scrollLeft'
         });
         
         $('#home-row3-column1-today-deal-box').slick({
@@ -104,7 +103,33 @@
             slidesToShow: 5,
             slidesToScroll: 1,
             prevArrow: '#home-row4-logo-slider-prev',
-            nextArrow: '#home-row4-logo-slider-next'
+            nextArrow: '#home-row4-logo-slider-next',
+            responsive: [
+                {
+                    breakpoint: 1200,
+                    settings: {
+                        slidesToShow: 4
+                    }
+                },
+                {
+                    breakpoint: 1000,
+                    settings: {
+                        slidesToShow: 3
+                    }
+                },
+                {
+                    breakpoint: 700,
+                    settings: {
+                        slidesToShow: 2
+                    }
+                },
+                {
+                    breakpoint: 500,
+                    settings: {
+                        slidesToShow: 1
+                    }
+                }
+            ]
         });
     });
 </script>

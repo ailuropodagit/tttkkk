@@ -1,0 +1,65 @@
+/*********************************************
+ ** HEADER
+ *********************************************/
+
+#header-top-bar-social-media {
+    display: none;
+}
+
+#header-logo-bar-search-block1, #header-logo-bar-search-block2, #header-logo-bar-search-block3 {
+    display: block;
+}
+
+#header-logo-bar-search-block1, #header-logo-bar-search-block2 {
+    width: 100%;
+    margin: 0px;
+    border: 1px solid lightgray;
+    box-sizing: border-box;
+}
+
+#header-logo-bar-search-block3 {
+    width: 100%;
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+/*********************************************
+ ** HOME ROW 1
+ *********************************************/
+
+#footer-navigation-block1, #footer-navigation-block2, #footer-navigation-block3, #footer-navigation-block4 {
+    width: 100%;
+}
+
+#footer-navigation-block1 {
+    height: 220px;
+}
+
+#footer-navigation-block2 {
+    height: 260px;
+}
+
+#footer-navigation-block2-up {
+    height: 260px;
+}
+
+#footer-navigation-block3 {
+    height: 240px;
+}
+
+#footer-navigation-block4 {
+    height: auto;
+}
+
+/*********************************************
+ ** HOME ROW 2
+ *********************************************/
+
+#home-row2-block1, #home-row2-block2, #home-row2-block3 {
+    float: none;
+    width: 100%;
+}
+
+#home-row2-block2, #home-row2-block3 {
+    margin: 20px 0px 0px 0px;
+}

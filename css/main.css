@@ -166,7 +166,9 @@ html, body {
 }
 
 #header-logo-bar-logo {
-    float: left;
+    width: 130px;
+    display: inline-block;
+    vertical-align: top;
 }
 
 #header-logo-bar-logo img {
@@ -174,13 +176,15 @@ html, body {
 }
 
 #header-logo-bar-search {
-    float: left;
-    margin: 0px 0px 0px 40px;
+    width: calc(100% - 300px);
+    text-align: center;
+    display: inline-block;
+    vertical-align: top;
 }
-
-#header-logo-bar-search input[type='text'] {
+    
+#header-logo-bar-search input[type='text'], #header-logo-bar-search2 input[type='text'] {
     border: 0px;
-    height: 38px;
+    height: 35px;
     width: 300px;
     padding: 0px 30px 0px 30px;
     background-image: url(../image/search-icon.png);
@@ -188,47 +192,56 @@ html, body {
     background-repeat: no-repeat;
 }
 
-#header-logo-bar-search input[type='text']::-webkit-input-placeholder {
+#header-logo-bar-search input[type='text']::-webkit-input-placeholder, #header-logo-bar-search2 input[type='text']::-webkit-input-placeholder {
     line-height: 17px;
 }
 
-#header-logo-bar-search input[type='text']::-moz-placeholder {
+#header-logo-bar-search input[type='text']::-moz-placeholder, #header-logo-bar-search2 input[type='text']::-moz-placeholder {
     line-height: 17px;
 }
 
-#header-logo-bar-search input[type='text']:-ms-input-placeholder {  
+#header-logo-bar-search input[type='text']:-ms-input-placeholder, #header-logo-bar-search2 input[type='text']:-ms-input-placeholder {  
     line-height: 17px;
 }
 
-#header-logo-bar-search select {
-    height: 38px;
+#header-logo-bar-search button, #header-logo-bar-search2 button {
+    height: 35px;
+    width: 100%;
 }
 
-#header-logo-bar-search button {
-    height: 38px;
-}
-
-#header-logo-bar-search select {
+#header-logo-bar-search select, #header-logo-bar-search2 select {
     border: 0px;
+    height: 35px;
+    width: 100%;
 }
 
 #header-logo-bar-search-block1 {
     display: inline-block;
+    vertical-align: top;
 }
 
-#header-logo-bar-search-block2 {
+#header-logo-bar-search-block2, #header-logo-bar-search2-block2 {
     display: inline-block;
     margin: 0px 0px 0px -3px;
     border-left: 1px solid lightgray;
+    vertical-align: top;
+    width: 120px;
 }
 
-#header-logo-bar-search-block3 {
+#header-logo-bar-search-block3, #header-logo-bar-search2-block3 {
     display: inline-block;
     margin: 0px 0px 0px -3px;
+    vertical-align: top;
+    width: 120px;
+}
+
+#header-logo-bar-search2 {
+    display: none;
 }
 
 #header-logo-bar-profile-display {
-    float: right;
+    display: inline-block;
+    vertical-align: top;
 }
 
 #header-logo-bar-profile-display a {
@@ -397,7 +410,6 @@ html, body {
 
 #footer-navigation {
     background-color: #444444;
-    height: 310px;
 }
 
 #footer-navigation-block1, #footer-navigation-block2, 
@@ -557,7 +569,7 @@ html, body {
     float: left;
     width: 24%;
     background-color: white;
-    height: 480px;
+    height: 450px;
     border-top-left-radius: 2px;
     border-top-right-radius: 2px;
     -webkit-box-shadow: 1px 1px 3px 0px rgba(179,179,179,0.80);
