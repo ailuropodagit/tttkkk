@@ -60,9 +60,13 @@ if(isset($message))
                         {
                             $conf_row = $this->m_custom->get_one_table_record('transaction_config','trans_conf_id',$row['trans_conf_id'],1);
                             $amount_change = $conf_row['change_type'] == 'inc'? $conf_row['amount_change']: ($conf_row['amount_change']*-1);
+                            $amount_change = number_format($amount_change, 2);
+                            if($conf_row['amount_change'] == 0){
+                                $amount_change = 'Depending';
+                            }
                             echo '<tr >';
                             echo "<td>".$conf_row['conf_name']."</td>";
-                            echo "<td>".number_format($amount_change,2)."</td>";
+                            echo "<td>".$amount_change."</td>";
                             echo "<td>".$row['quantity']."</td>";
                             echo "<td>".number_format($row['plus'] - $row['minus'],2)."</td>";
                             echo '</tr>';

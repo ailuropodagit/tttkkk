@@ -1911,11 +1911,35 @@ class User extends CI_Controller
 
     function balance_page(){
         if (check_correct_login_type($this->main_group_id))
-        {
+        {        
+            if (isset($_POST) && !empty($_POST))
+            {
+                if ($this->input->post('button_action') == "search_history")
+                {
+                    $search_month = $this->input->post('the_month');
+                }
+            }
+
+            $month_list = limited_month_select(5, 1);
+            $this->data['month_list'] = $month_list;
+            $this->data['the_month'] = array(
+                'name' => 'the_month',
+                'id' => 'the_month',
+            );
+            $selected_month = empty($search_month) ? date_for_db_search() : $search_month;
+            $this->data['the_month_selected'] = $selected_month;
+            $selected_month_text = $this->m_custom->explode_year_month($selected_month);
+            $this->data['the_month_selected_text'] = $selected_month_text['month_year_text'];
+            $month_last_date = $selected_month_text['month_last_date'];
+            $this->data['previous_month_selected_text'] = $this->m_custom->explode_year_month(month_previous($month_last_date, 1));
+
             $user_id = $this->ion_auth->user()->row()->id;
-            
-            $this->data['this_month_balance'] = $this->m_user->user_check_balance($user_id);
-            
+            $this->m_user->user_balance_update($user_id);
+            $this->data['previous_end_month_balance'] = $this->m_user->user_check_balance($user_id, 1, month_previous($month_last_date));
+            $this->data['end_month_balance'] = $this->m_user->user_check_balance($user_id, 1, $month_last_date);
+            $this->data['current_balance'] = $this->m_user->user_check_balance($user_id, 0, $month_last_date);
+            $this->data['this_month_transaction'] = $this->m_user->user_this_month_transaction($user_id, $selected_month);
+
             $this->data['message'] = $this->session->flashdata('message');
             $this->data['page_path_name'] = 'user/balance_page';
             $this->load->view('template/layout_right_menu', $this->data);

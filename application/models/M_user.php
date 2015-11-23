@@ -558,6 +558,7 @@ class M_user extends CI_Model
                     'balance' => $monthly_balance,
                     'month_id' => $month_id,
                     'year' => $year,
+                    'month_last_date' => displayDate(displayLastDay($year, $month_id), 0, 1),
                 );
                 $this->db->insert('user_balance', $insert_data);
             }
@@ -573,7 +574,7 @@ class M_user extends CI_Model
         }
     }
     
-    public function user_check_balance($user_id, $exclude_this_month = 0)
+    public function user_check_balance($user_id, $exclude_this_month = 0, $search_year_month = NULL)
     {
         $this->m_user->user_balance_update($user_id);
         if ($exclude_this_month == 0)
@@ -582,9 +583,11 @@ class M_user extends CI_Model
         }
         else
         {
-            $current_month = ltrim(get_part_of_date('month'), '0');
-            $current_year = get_part_of_date('year');
-            $condition = "(month_id !=" . $current_month . " or year !=" . $current_year . ")";
+//            $current_month = ltrim(get_part_of_date('month'), '0');
+//            $current_year = get_part_of_date('year');
+//            $condition = "(month_id !=" . $current_month . " or year !=" . $current_year . ")";
+            $search_date = $search_year_month == NULL ? date_for_db_search() : $search_year_month;
+            $condition = "month_last_date <= '" . $search_date . "'";
             $this->db->where($condition);
             $history_query = $this->db->get_where('user_balance', array('user_id' => $user_id));
         }
@@ -639,9 +642,9 @@ class M_user extends CI_Model
         }
     }
 
-    public function user_this_month_transaction($user_id)
+    public function user_this_month_transaction($user_id, $search_year_month = NULL)
     {
-        $search_date = date_for_db_search();
+        $search_date = $search_year_month == NULL ? date_for_db_search() : $search_year_month;
         $condition = "trans_time like '%" . $search_date . "%'";
         $this->db->where($condition);
         $this->db->select("trans_conf_id, SUM(amount_plus) AS plus, SUM(amount_minus) AS minus, COUNT(trans_history_id) As quantity");
