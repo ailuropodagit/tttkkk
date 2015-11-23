@@ -41,6 +41,7 @@ if (isset($message))
                         <th>Gender</th>
                         <th>Birthday</th>
                         <th>Candie</th>
+                        <th>Balance (RM)</th>
                         <th>Frozen Already</th>   
                         <th>Actions</th>
                         <th>Special Actions</th>
@@ -54,6 +55,7 @@ if (isset($message))
                         $gender_text = $this->m_custom->display_static_option($row['us_gender_id']);
                         $birthday_text = displayDate($row['us_birthday']);
                         $user_candie_text = $this->m_user->candie_check_balance($row['id']);
+                        $user_balance_text = $this->m_user->user_check_balance($row['id']);
                         $remove_row = $row['hide_flag'] == 1 ? 'Frozen' : '';
                         //$url_edit = base_url() . "admin/user_edit/" . $row['id'];
                         $url_bonus_candie = base_url() . "admin/user_bonus_candie/" . $row['id'];
@@ -74,6 +76,7 @@ if (isset($message))
                         echo "<td>" . $gender_text . "</td>";
                         echo "<td>" . $birthday_text . "</td>";
                         echo "<td style='text-align:right'>" . $user_candie_text . "</td>";
+                        echo "<td style='text-align:right'>" . $user_balance_text . "</td>";
                         echo "<td>" . $remove_row . "</td>";
                         echo "<td>";
                         if($this->m_admin->check_worker_role(74)) {
