@@ -19,7 +19,7 @@ if (isset($message))
 ?>
 
 <div id="payment-charge">
-    <h1>Photography Type Management</h1>
+    <h1>Photography/Blogger Type Management</h1>
     <div id="payment-charge-content">
         <?php
         $this->load->view('admin/manage_setting_sub_menu');
@@ -33,7 +33,7 @@ if (isset($message))
             <table border='1px' cellspacing='0px' cellpadding='0px' id="myTable" class="display">
                 <thead>
                     <tr style="text-align:center">
-                        <th>Photography Type</th> 
+                        <th>Photography/Blogger Type</th> 
                         <th>Hide Already</th>
                         <th>Actions</th>
                         <th>Special Actions</th>

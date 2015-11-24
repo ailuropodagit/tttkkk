@@ -10,11 +10,11 @@ if(isset($message))
     <?php
     if ($is_edit == 0)
     {
-        echo '<h1>Photography Type Add</h1>';
+        echo '<h1>Photography/Blogger Type Add</h1>';
     }
     else
     {
-        echo '<h1>Photography Type Edit</h1>';
+        echo '<h1>Photography/Blogger Type Edit</h1>';
     }                       
     ?>
     <div id='profile-content'>              
@@ -22,7 +22,7 @@ if(isset($message))
             <?php echo form_open(uri_string()); ?>
             <div id='profile-info-form'>
                 <div id='profile-info-form-each'>
-                    <div id='profile-info-form-each-label'><?php echo 'Photography Type'; ?></div>
+                    <div id='profile-info-form-each-label'><?php echo 'Photography/Blogger Type'; ?></div>
                     <div id='profile-info-form-each-input'><?php echo form_input($option_desc); ?></div>
                 </div>              
             </div>
