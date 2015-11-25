@@ -1766,7 +1766,7 @@ class User extends CI_Controller
                                 $this->m_custom->insert_row_log('merchant_user_album', $new_id, $user_id, $login_type);
                                 $this->m_user->candie_history_insert(4, $new_id, 'merchant_user_album');
                                 $this->m_merchant->transaction_history_insert($post_merchant_id, 14, $new_id, 'merchant_user_album');
-                                $this->m_user->user_trans_history_insert($user_id, 21, $new_id);
+                                //$this->m_user->user_trans_history_insert($user_id, 21, $new_id);   //Temporary comment this because user upload image for merchant cannot get cash back already 
                                 $this->m_custom->notification_process('merchant_user_album', $new_id);
                                 $message_info = add_message_info($message_info, 'Image for merchant ' . $this->m_custom->display_users($post_merchant_id) . ' success create.', $post_title);
                             }

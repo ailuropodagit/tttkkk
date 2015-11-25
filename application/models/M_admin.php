@@ -64,7 +64,7 @@ class M_admin extends CI_Model
         return $have_role;
     }
 
-    //todo to do half
+    //todo to do half, don't have update yet
     public function trans_extra_bonus_candie($user_id, $amount_change, $trans_remark = NULL, $is_update = 0, $trans_date = NULL, $edit_id = NULL)
     {
         if ($this->m_admin->check_is_any_admin(74))
@@ -86,6 +86,28 @@ class M_admin extends CI_Model
         }
     }
 
+    //todo to do half, don't have update yet
+    public function trans_extra_balance_adjust($user_id, $amount_change, $trans_remark = NULL, $is_update = 0, $trans_date = NULL, $edit_id = NULL)
+    {
+        if ($this->m_admin->check_is_any_admin(75))
+        {
+            $login_id = $this->ion_auth->user()->row()->id;
+            if ($is_update == 0)
+            {
+                $new_id = $this->m_custom->trans_extra_insert($user_id, 23, $amount_change, $login_id, NULL, $trans_date, NULL, $trans_remark);
+                $this->m_user->user_trans_history_insert($user_id, 23, $new_id, 'transaction_extra', 0, $amount_change);
+                return $new_id;
+            }
+            else
+            {
+                if (check_is_positive_numeric($edit_id))
+                {
+                    return $this->m_custom->trans_extra_update($edit_id, $amount_change, NULL, $trans_date, NULL, $trans_remark);
+                }
+            }
+        }
+    }
+    
     public function merchant_low_balance_count($want_count = 0){
         
         $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant')));
