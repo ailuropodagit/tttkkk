@@ -1255,7 +1255,7 @@ class User extends CI_Controller
             'name' => 'age',
             'id' => 'age',
             'type' => 'text',
-            'readonly ' => 'true',
+            'readonly' => 'true',
             'value' => age_count($user->us_birthday),
         );
         $this->data['gender_list'] = $this->ion_auth->get_static_option_list('gender');

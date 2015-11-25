@@ -35,6 +35,7 @@ if(isset($message))
                     <div id='profile-info-form-each-label'><?php echo 'Amount (RM)'; ?></div>
                     <div id='profile-info-form-each-input'><?php echo form_input($topup_amount); ?></div>
                 </div>
+                <div id="dashboard-photo-note" >Make sure key in the correct amount, cannot change after save</div>
                 <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo 'Transaction Bank'; ?></div>
                     <div id='profile-info-form-each-input'><?php echo form_input($topup_bank); ?></div>

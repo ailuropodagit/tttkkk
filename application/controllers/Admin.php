@@ -1939,7 +1939,7 @@ class Admin extends CI_Controller
             'name' => 'topup_trans_date',
             'id' => 'topup_trans_date',
             'type' => 'text',
-            'readonly ' => 'true',
+            'readonly' => 'true',
             'value' => $this->form_validation->set_value('topup_trans_date'),
         );
 
@@ -2010,7 +2010,7 @@ class Admin extends CI_Controller
                 {
                     $data = array(
                         'admin_id' => $login_id,
-                        'topup_amount' => $topup_amount,
+                        //'topup_amount' => $topup_amount,
                         'topup_bank' => $topup_bank,
                         'topup_trans_date' => $topup_trans_date,
                         'topup_trans_no' => $topup_trans_no,
@@ -2019,7 +2019,7 @@ class Admin extends CI_Controller
 
                     if ($this->m_custom->simple_update('merchant_topup', $data, 'topup_id', $id))
                     {
-                        $this->m_merchant->transaction_history_update($id, $topup_amount);
+                        //$this->m_merchant->transaction_history_update($id, $topup_amount);
                         $this->m_merchant->merchant_balance_update($merchant_id);
                         $this->m_custom->update_row_log('merchant_topup', $id, $login_id, $login_type);
                         $message_info = add_message_info($message_info, $merchant_name . ' success update this topup record.');
@@ -2083,6 +2083,7 @@ class Admin extends CI_Controller
             'name' => 'topup_amount',
             'id' => 'topup_amount',
             'type' => 'text',
+            'readonly' => 'true',
             'value' => $this->form_validation->set_value('topup_amount', $result['topup_amount']),
         );
 
@@ -2097,7 +2098,7 @@ class Admin extends CI_Controller
             'name' => 'topup_trans_date',
             'id' => 'topup_trans_date',
             'type' => 'text',
-            'readonly ' => 'true',
+            'readonly' => 'true',
             'value' => $this->form_validation->set_value('topup_trans_date', displayDate($result['topup_trans_date'])),
         );
 
@@ -2722,7 +2723,7 @@ class Admin extends CI_Controller
             $this->data['candie_category'] = array(
                 'name' => 'candie_category',
                 'id' => 'candie_category',
-                'readonly ' => 'true',
+                'readonly' => 'true',
                 'value' => empty($result) ? '' : $this->m_custom->display_category($result['sub_category_id']),
             );
         }
@@ -2744,14 +2745,14 @@ class Admin extends CI_Controller
         $this->data['start_date'] = array(
             'name' => 'start_date',
             'id' => 'start_date',
-            'readonly ' => 'true',
+            'readonly' => 'true',
             'value' => empty($result) ? '' : displayDate($result['start_time']),
         );
 
         $this->data['end_date'] = array(
             'name' => 'end_date',
             'id' => 'end_date',
-            'readonly ' => 'true',
+            'readonly' => 'true',
             'value' => empty($result) ? '' : displayDate($result['end_time']),
         );
 
@@ -2770,7 +2771,7 @@ class Admin extends CI_Controller
         $this->data['expire_date'] = array(
             'name' => 'expire_date',
             'id' => 'expire_date',
-            'readonly ' => 'true',
+            'readonly' => 'true',
             'value' => empty($result) ? '' : displayDate($result['voucher_expire_date']),
         );
 
@@ -3279,7 +3280,7 @@ class Admin extends CI_Controller
         $this->data['code_no'] = array(
             'name' => 'code_no',
             'id' => 'code_no',
-            'readonly ' => 'true',
+            'readonly' => 'true',
             'value' => empty($result) ? $this->form_validation->set_value('code_no') : $this->form_validation->set_value('code_no', $result['code_no']),
         );
         
@@ -3406,7 +3407,7 @@ class Admin extends CI_Controller
         $this->data['code_no'] = array(
             'name' => 'code_no',
             'id' => 'code_no',
-            'readonly ' => 'true',
+            'readonly' => 'true',
             'value' => empty($result) ? $this->form_validation->set_value('code_no') : $this->form_validation->set_value('code_no', $result['code_no']),
         );
         
