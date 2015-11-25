@@ -34,6 +34,7 @@ if(isset($message))
                     <div id='profile-info-form-each-label'><?php echo 'Bonus Candie Amount (RM) : '; ?></div>
                     <div id='profile-info-form-each-input'><?php echo form_input($amount_change); ?></div>
                 </div> 
+                <div id="dashboard-photo-note" >Key in negative amount example -50 if want to deduct user bonus</div>
                 <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo 'Bonus Reason : '; ?></div>
                     <div id='profile-info-form-each-input'><?php echo form_textarea($trans_remark); ?></div>

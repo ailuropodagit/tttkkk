@@ -1455,7 +1455,8 @@ class Admin extends CI_Controller
             'name' => 'amount_change',
             'id' => 'amount_change',
             'type' => 'text',
-            'value' => $this->form_validation->set_value('amount_change', '-50'),
+            'value' => $this->form_validation->set_value('amount_change'),
+            'placeholder' => '-50',
         );
 
         $this->data['trans_remark'] = array(
