@@ -42,6 +42,18 @@ class M_admin extends CI_Model
         return $result;
     }
 
+    function banner_select($ignore_hide = 0)
+    {
+        if ($ignore_hide == 0)
+        {
+            $this->db->where('hide_flag', 0);
+        }
+        $this->db->order_by('banner_position');
+        $query = $this->db->get_where('banner');
+        $result = $query->result_array();
+        return $result;
+    }
+    
     public function check_worker_role($check_worker_role = NULL)
     {
         $have_role = 0;
@@ -134,7 +146,7 @@ class M_admin extends CI_Model
     
     public function banner_expired_count(){
         $this->db->where('end_time >=', get_part_of_date('all'));
-        $query = $this->db->get_where('banner', array('hide_flag' => 0, 'expired_flag' => 0));
+        $query = $this->db->get_where('banner', array('hide_flag' => 0));
         return $query->num_rows();
     }
     
@@ -368,4 +380,95 @@ class M_admin extends CI_Model
         }
     }
     
+    public function banner_insert($merchant_id = NULL, $category_id = NULL, $start_time = NULL, $end_time = NULL, $banner_image = NULL, $banner_url = NULL, $banner_position = NULL)
+    {
+        if ($this->m_admin->check_is_any_admin(69))
+        {
+            $login_id = $this->ion_auth->user()->row()->id;
+
+            $search_data = array(
+                'category_id' => $category_id,
+                'banner_position' => $banner_position,
+                'hide_flag' => 0,
+            );
+            $query = $this->db->get_where('banner', $search_data);  //To check is the position already have active banner
+
+            if ($query->num_rows() == 0)
+            {
+                $the_data = array(
+                    'merchant_id' => $merchant_id,
+                    'category_id' => $category_id,
+                    'start_time' => $start_time,
+                    'end_time' => $end_time,
+                    'banner_image' => $banner_image,
+                    'banner_url' => $banner_url,
+                    'banner_position' => $banner_position,
+                    'last_modify_by' => $login_id,
+                );
+                $this->db->insert('banner', $the_data);
+                $new_id = $this->db->insert_id();
+                return $new_id;
+            }
+        }
+        return FALSE;
+    }
+
+    public function banner_update($merchant_id = NULL, $category_id = NULL, $start_time = NULL, $end_time = NULL, $banner_image = NULL, $banner_url = NULL, $banner_position = NULL, $edit_id = NULL)
+    {
+        if ($this->m_admin->check_is_any_admin(69))
+        {
+            $login_id = $this->ion_auth->user()->row()->id;
+
+            $search_data = array(
+                'category_id' => $category_id,
+                'banner_position' => $banner_position,
+                'hide_flag' => 0,
+            );
+            $this->db->where("banner_id !=", $edit_id);   //avoid check back it self row
+            $query = $this->db->get_where('banner', $search_data);  //To check is the position already have active banner
+
+            if ($query->num_rows() == 0)
+            {
+                $the_data = array(
+                    'merchant_id' => $merchant_id,
+                    'category_id' => $category_id,
+                    'start_time' => $start_time,
+                    'end_time' => $end_time,
+                    'banner_image' => $banner_image,
+                    'banner_url' => $banner_url,
+                    'banner_position' => $banner_position,
+                    'last_modify_by' => $login_id,
+                );
+                $this->db->where('banner_id', $edit_id);
+                $this->db->update('banner', $the_data);
+                return TRUE;
+            }
+        }
+        return FALSE;
+    }
+    
+    public function banner_recover($edit_id)
+    {
+        if ($this->m_admin->check_is_any_admin(69))
+        {
+            $login_id = $this->ion_auth->user()->row()->id;
+            $query_row = $this->db->get_where('banner', array('banner_id' => $edit_id))->row_array();   //get the original banner info
+
+            $search_data = array(
+                'category_id' => $query_row['category_id'],
+                'banner_position' => $query_row['banner_position'],
+                'hide_flag' => 0,
+            );
+            $this->db->where("banner_id !=", $edit_id);   //avoid check back it self row
+            $query = $this->db->get_where('banner', $search_data);  //To check is the position already have active banner
+
+            if ($query->num_rows() == 0)
+            {
+                $this->m_custom->update_hide_flag(0, 'banner', $edit_id, $login_id);
+                return TRUE;
+            }
+        }
+        return FALSE;
+    }
+
 }

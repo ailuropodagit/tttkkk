@@ -3447,6 +3447,73 @@ class Admin extends CI_Controller
         $this->load->view('template/layout_right_menu', $this->data);
     }
     
+    function banner_management($ignore_hide = 0){
+        if (!$this->m_admin->check_is_any_admin(69))
+        {
+            redirect('/', 'refresh');
+        }
+        
+        $message_info = '';
+        $login_id = $this->login_id;
+        //$login_type = $this->login_type;
+        $main_table = 'banner';
+        $main_table_id_column = 'banner_id';
+        
+        if (isset($_POST) && !empty($_POST))
+        {
+            $can_redirect_to = 1;
+            $id = $this->input->post('id');           
+            $position_id = $this->input->post('position_id');
+            $ignore_hide = $this->input->post('ignore_hide_id');
+            
+            $display_name = $this->m_custom->display_static_option($position_id);
+            if ($this->input->post('button_action') == "frozen")
+            {
+                $message_info = add_message_info($message_info, $display_name . ' success frozen.');
+                $this->m_custom->update_hide_flag(1, $main_table, $id, $login_id);
+            }
+            if ($this->input->post('button_action') == "recover")
+            {               
+                $status = $this->m_admin->banner_recover($id);
+                if ($status)
+                {
+                    $message_info = add_message_info($message_info, $display_name . ' success unfrozen.');
+                }
+                else
+                {
+                    $message_info = add_message_info($message_info, $display_name . ' fail to unfrozen. Because already have other active banner in the same banner position');
+                }
+            }
+            if ($this->input->post('button_action') == "filter_result")
+            {
+                $ignore_hide = $this->input->post('ignore_hide_id');
+            }
+            
+            if ($message_info != NULL)
+            {
+                $this->session->set_flashdata('message', $message_info);
+            }
+            if ($can_redirect_to == 1)
+            {
+                redirect('admin/banner_management/' . $ignore_hide, 'refresh');
+            }
+        }
+        
+        $this->data['ignore_hide_list'] = array('0' => 'Show Active Only', '1' => 'Show History Also');
+        $this->data['ignore_hide_id'] = array(
+            'name' => 'ignore_hide_id',
+            'id' => 'ignore_hide_id',
+        );
+        $this->data['ignore_hide_selected'] = $ignore_hide;
+        
+        $result_list = $this->m_admin->banner_select($ignore_hide); 
+        $this->data['the_result'] = $result_list;
+
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+        $this->data['page_path_name'] = 'admin/banner_management';
+        $this->load->view('template/layout_right_menu', $this->data);
+    }
+    
     function manage_web_setting()
     {
         if (!$this->m_admin->check_is_any_admin(73))

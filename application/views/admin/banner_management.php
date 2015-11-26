@@ -19,10 +19,17 @@ if (isset($message))
 ?>
 
 <div id="payment-charge">
-    <h1>Special Promo Code Management</h1>
+    <h1>Banner Management</h1>
     <div id="payment-charge-content">
+        <div id="payment-charge-go" style="float:left">
+            <?php echo form_open(uri_string()); ?>
+                <span id="payment-charge-go-label"><?php echo "Filter "; ?></span>
+                <span id="payment-charge-go-dropdown"><?php echo form_dropdown($ignore_hide_id, $ignore_hide_list, $ignore_hide_selected); ?></span>
+                <span id="payment-charge-go-button"><button name="button_action" type="submit" value="filter_result">Go</button></span>
+            <?php echo form_close(); ?>
+        </div>
         <div style="float:right">
-            <?php $add_new_url = base_url() . 'admin/promo_code_change_event'; ?>           
+            <?php $add_new_url = base_url() . 'admin/banner_change'; ?>           
             <div><a href='<?php echo $add_new_url; ?>' class="a-href-button">Add New</a></div>
         </div>
         <div id="float-fix"></div>
@@ -30,11 +37,12 @@ if (isset($message))
             <table border='1px' cellspacing='0px' cellpadding='0px' id="myTable" class="display">
                 <thead>
                     <tr style="text-align:center">
-                        <th>Promo Code</th>
-                        <th>Candies</th>
-                        <th>Event Name</th>
-                        <th>Redeem Count</th>
-                        <th>Created by Admin/Worker</th>
+                        <th>Banner Position</th>
+                        <th>Merchant</th>
+<!--                        <th>Category</th>-->
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Last Modified By</th>
                         <th>Hide Already</th>
                         <th>Actions</th>
                         <th>Special Actions</th>
@@ -44,16 +52,21 @@ if (isset($message))
                     <?php
                     foreach ($the_result as $row)
                     {
-                        $redeem_count = $this->m_custom->generate_promo_code_list_link($row['code_no'], 34);
-                        $admin_name = $this->m_custom->display_users($row['code_user_id']);
+                        $banner_position = $this->m_custom->display_static_option($row['banner_position']);
+                        $merchant_name = $this->m_custom->display_users($row['merchant_id']);
+                        //$category_name = $this->m_custom->display_category($row['category_id']);
+                        $start_time = displayDate($row['start_time'], 1);
+                        $end_time = displayDate($row['end_time'], 1);
+                        $admin_name = $this->m_custom->display_users($row['last_modify_by']);
                         $remove_row = $row['hide_flag'] == 1 ? 'Frozen' : '';
-                        $url_edit = base_url() . "admin/promo_code_change_event/" . $row['code_id'];
-                        $url_special_action = base_url() . "admin/promo_code_management";
+                        $url_edit = base_url() . "admin/banner_change/" . $row['banner_id'];
+                        $url_special_action = base_url() . "admin/banner_management";
                         echo '<tr>';
-                        echo "<td>" . $row['code_no'] . "</td>";
-                        echo "<td>" . $row['code_candie'] . "</td>";       
-                        echo "<td>" . $row['code_event_name'] . "</td>";
-                        echo "<td>" . $redeem_count . "</td>";
+                        echo "<td>" . $banner_position . "</td>";
+                        echo "<td>" . $merchant_name . "</td>";       
+                        //echo "<td>" . $category_name . "</td>";
+                        echo "<td>" . $start_time . "</td>";
+                        echo "<td>" . $end_time . "</td>";
                         echo "<td>" . $admin_name . "</td>";
                         echo "<td>" . $remove_row . "</td>";
                         echo "<td>";
@@ -61,7 +74,9 @@ if (isset($message))
                         echo "</td>";
                         echo "<td>";                       
                         echo form_open($url_special_action); 
-                        echo form_hidden('id', $row['code_id']); 
+                        echo form_hidden('id', $row['banner_id']); 
+                        echo form_hidden('position_id', $row['banner_position']); 
+                        echo form_hidden('ignore_hide_id', $ignore_hide_selected);
                         $remove_or_recover = $row['hide_flag'] == 1 ? 'recover' : 'frozen';
                         $remove_or_recover_text = $row['hide_flag'] == 1 ? 'Unfrozen' : 'Frozen';
                         ?>
