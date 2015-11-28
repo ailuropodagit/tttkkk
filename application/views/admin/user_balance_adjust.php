@@ -19,7 +19,7 @@ if(isset($message))
 ?>
 
 <div id="profile">
-    <h1>User Add Bonus Candie</h1>
+    <h1>User Balance Adjust/Withdraw</h1>
     <div id='profile-content'>              
         <div id='profile-info'> 
             <?php echo form_open(uri_string()); ?>
@@ -28,15 +28,15 @@ if(isset($message))
                     <div id='profile-info-form-each-label'><?php echo 'User Name : ' . $this->m_custom->generate_user_link($result['id']); ?></div>
                 </div>
                 <div id='profile-info-form-each'>
-                    <div id='profile-info-form-each-label'><?php echo 'Current Candie : ' . $this->m_user->candie_check_balance($result['id']); ?></div>
+                    <div id='profile-info-form-each-label'><?php echo 'Current Balance : RM ' . $this->m_user->user_check_balance($result['id']); ?></div>
                 </div>
                 <div id='profile-info-form-each'>
-                    <div id='profile-info-form-each-label'><?php echo 'Bonus Candie Amount (RM) : '; ?></div>
+                    <div id='profile-info-form-each-label'><?php echo 'Balance Adjust Amount (RM) : '; ?></div>
                     <div id='profile-info-form-each-input'><?php echo form_input($amount_change); ?></div>
-                </div> 
-                <div id="dashboard-photo-note" >Key in negative amount example -50 if want to deduct user bonus</div>
+                </div>               
+                <div id="dashboard-photo-note" >Key in negative amount example -50 if user withdraw the cash</div>
                 <div id='profile-info-form-each'>
-                    <div id='profile-info-form-each-label'><?php echo 'Bonus Reason : '; ?></div>
+                    <div id='profile-info-form-each-label'><?php echo 'Adjust Reason : '; ?></div>
                     <div id='profile-info-form-each-input'><?php echo form_textarea($trans_remark); ?></div>
                 </div>              
             </div>
@@ -57,10 +57,10 @@ if(isset($message))
             <table border='1px' cellspacing='0px' cellpadding='0px' id="myTable" class="display">
                 <thead>
                     <tr style="text-align:center">
-                        <th>Bonus Candie Amount (RM)</th> 
-                        <th>Bonus Reason</th> 
-                        <th>Give by Admin/Worker</th> 
-                        <th>Give Time</th>
+                        <th>Balance Adjust Amount (RM)</th> 
+                        <th>Adjust Reason</th> 
+                        <th>Adjust by Admin/Worker</th> 
+                        <th>Adjust Time</th>
                     </tr>
                 </thead>
                 <tbody>

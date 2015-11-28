@@ -59,6 +59,7 @@ if (isset($message))
                         $remove_row = $row['hide_flag'] == 1 ? 'Frozen' : '';
                         //$url_edit = base_url() . "admin/user_edit/" . $row['id'];
                         $url_bonus_candie = base_url() . "admin/user_bonus_candie/" . $row['id'];
+                        $url_balance_adjust = base_url() . "admin/user_balance_adjust/" . $row['id'];
                         $url_promo_code = base_url() . "admin/promo_code_change_user/" . $row['id'];   
                         $url_dashboard = base_url() . "all/user_dashboard/" . $row['id'];
                         $url_special_action = base_url() . "admin/user_special_action";
@@ -80,7 +81,10 @@ if (isset($message))
                         echo "<td>" . $remove_row . "</td>";
                         echo "<td>";
                         if($this->m_admin->check_worker_role(74)) {
-                        echo "<a href='" . $url_bonus_candie . "' >Bonus Candie</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+                        echo "<a href='" . $url_bonus_candie . "' >BonusCandie</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+                        }
+                        if($this->m_admin->check_worker_role(75)) {
+                        echo "<a href='" . $url_balance_adjust . "' >AdjustBalance</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
                         }
                         if($this->m_admin->check_worker_role(77)) {
                         echo "<a href='" . $url_promo_code . "' >Promocode</a>";    

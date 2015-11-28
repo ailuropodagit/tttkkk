@@ -1379,6 +1379,98 @@ class Admin extends CI_Controller
         $this->load->view('template/layout_right_menu', $this->data);
     }
 
+    function user_balance_adjust($user_id)
+    {
+        if (!$this->m_admin->check_is_any_admin(75))
+        {
+            redirect('/', 'refresh');
+        }
+
+        $result = $this->m_custom->getUser($user_id, $this->group_id_user);
+
+        if (empty($result))
+        {
+            redirect('/', 'refresh');
+        }
+
+        $message_info = '';
+        $login_id = $this->login_id;
+        $login_type = $this->login_type;
+
+        if (isset($_POST) && !empty($_POST))
+        {
+            $can_redirect_to = 0;
+            $user_id = $this->input->post('user_id');
+            $amount_change = $this->input->post('amount_change');
+            $trans_remark = $this->input->post('trans_remark');
+            $user_name = $this->m_custom->display_users($user_id);
+
+            // validate form input
+            $this->form_validation->set_rules('amount_change', 'Balance Adjust Amount (RM)', 'required|numeric');
+            $this->form_validation->set_rules('trans_remark', 'Adjust Reason', 'required');
+
+            if ($this->input->post('button_action') == "save")
+            {
+                if ($this->form_validation->run() === TRUE)
+                {
+                    $new_id = $this->m_admin->trans_extra_balance_adjust($user_id, $amount_change, $trans_remark);
+                    if ($new_id)
+                    {
+                        $message_info = add_message_info($message_info, 'Succes adjust ' . $user_name . ' user balance.');
+                        $can_redirect_to = 1;
+                    }
+                    else
+                    {
+                        $message_info = add_message_info($message_info, $this->ion_auth->errors());
+                        $can_redirect_to = 1;
+                    }
+                }
+            }
+            if ($this->input->post('button_action') == "back")
+            {
+                $can_redirect_to = 2;
+            }
+
+            direct_go:
+            if ($message_info != NULL)
+            {
+                $this->session->set_flashdata('message', $message_info);
+            }
+            if ($can_redirect_to == 1)
+            {
+                redirect(uri_string(), 'refresh');
+            }
+            elseif ($can_redirect_to == 2)
+            {
+                redirect('admin/user_management', 'refresh');
+            }
+        }
+
+        // set the flash data error message if there is one
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+
+        $this->data['result'] = $result;
+
+        $this->data['amount_change'] = array(
+            'name' => 'amount_change',
+            'id' => 'amount_change',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('amount_change'),
+            'placeholder' => '-50',
+        );
+
+        $this->data['trans_remark'] = array(
+            'name' => 'trans_remark',
+            'id' => 'trans_remark',
+            'value' => $this->form_validation->set_value('trans_remark'),
+        );
+
+        $option_list = $this->m_custom->get_many_table_record('transaction_extra', 'trans_conf_id', '23', 1, 'user_id', $user_id); 
+        $this->data['the_result'] = $option_list;
+        $this->data['page_path_name'] = 'admin/user_balance_adjust';
+        $this->load->view('template/layout_right_menu', $this->data);
+    }
+    
     function merchant_management($low_balance_only = 0)
     {
         if (!$this->m_admin->check_is_any_admin(65))
@@ -1847,7 +1939,7 @@ class Admin extends CI_Controller
             'name' => 'topup_trans_date',
             'id' => 'topup_trans_date',
             'type' => 'text',
-            'readonly ' => 'true',
+            'readonly' => 'true',
             'value' => $this->form_validation->set_value('topup_trans_date'),
         );
 
@@ -1918,7 +2010,7 @@ class Admin extends CI_Controller
                 {
                     $data = array(
                         'admin_id' => $login_id,
-                        'topup_amount' => $topup_amount,
+                        //'topup_amount' => $topup_amount,
                         'topup_bank' => $topup_bank,
                         'topup_trans_date' => $topup_trans_date,
                         'topup_trans_no' => $topup_trans_no,
@@ -1927,7 +2019,7 @@ class Admin extends CI_Controller
 
                     if ($this->m_custom->simple_update('merchant_topup', $data, 'topup_id', $id))
                     {
-                        $this->m_merchant->transaction_history_update($id, $topup_amount);
+                        //$this->m_merchant->transaction_history_update($id, $topup_amount);
                         $this->m_merchant->merchant_balance_update($merchant_id);
                         $this->m_custom->update_row_log('merchant_topup', $id, $login_id, $login_type);
                         $message_info = add_message_info($message_info, $merchant_name . ' success update this topup record.');
@@ -1991,6 +2083,7 @@ class Admin extends CI_Controller
             'name' => 'topup_amount',
             'id' => 'topup_amount',
             'type' => 'text',
+            'readonly' => 'true',
             'value' => $this->form_validation->set_value('topup_amount', $result['topup_amount']),
         );
 
@@ -2005,7 +2098,7 @@ class Admin extends CI_Controller
             'name' => 'topup_trans_date',
             'id' => 'topup_trans_date',
             'type' => 'text',
-            'readonly ' => 'true',
+            'readonly' => 'true',
             'value' => $this->form_validation->set_value('topup_trans_date', displayDate($result['topup_trans_date'])),
         );
 
@@ -2630,7 +2723,7 @@ class Admin extends CI_Controller
             $this->data['candie_category'] = array(
                 'name' => 'candie_category',
                 'id' => 'candie_category',
-                'readonly ' => 'true',
+                'readonly' => 'true',
                 'value' => empty($result) ? '' : $this->m_custom->display_category($result['sub_category_id']),
             );
         }
@@ -2652,14 +2745,14 @@ class Admin extends CI_Controller
         $this->data['start_date'] = array(
             'name' => 'start_date',
             'id' => 'start_date',
-            'readonly ' => 'true',
+            'readonly' => 'true',
             'value' => empty($result) ? '' : displayDate($result['start_time']),
         );
 
         $this->data['end_date'] = array(
             'name' => 'end_date',
             'id' => 'end_date',
-            'readonly ' => 'true',
+            'readonly' => 'true',
             'value' => empty($result) ? '' : displayDate($result['end_time']),
         );
 
@@ -2678,7 +2771,7 @@ class Admin extends CI_Controller
         $this->data['expire_date'] = array(
             'name' => 'expire_date',
             'id' => 'expire_date',
-            'readonly ' => 'true',
+            'readonly' => 'true',
             'value' => empty($result) ? '' : displayDate($result['voucher_expire_date']),
         );
 
@@ -3187,7 +3280,7 @@ class Admin extends CI_Controller
         $this->data['code_no'] = array(
             'name' => 'code_no',
             'id' => 'code_no',
-            'readonly ' => 'true',
+            'readonly' => 'true',
             'value' => empty($result) ? $this->form_validation->set_value('code_no') : $this->form_validation->set_value('code_no', $result['code_no']),
         );
         
@@ -3314,7 +3407,7 @@ class Admin extends CI_Controller
         $this->data['code_no'] = array(
             'name' => 'code_no',
             'id' => 'code_no',
-            'readonly ' => 'true',
+            'readonly' => 'true',
             'value' => empty($result) ? $this->form_validation->set_value('code_no') : $this->form_validation->set_value('code_no', $result['code_no']),
         );
         
@@ -3351,6 +3444,73 @@ class Admin extends CI_Controller
         ); 
         
         $this->data['page_path_name'] = 'admin/promo_code_change';
+        $this->load->view('template/layout_right_menu', $this->data);
+    }
+    
+    function banner_management($ignore_hide = 0){
+        if (!$this->m_admin->check_is_any_admin(69))
+        {
+            redirect('/', 'refresh');
+        }
+        
+        $message_info = '';
+        $login_id = $this->login_id;
+        //$login_type = $this->login_type;
+        $main_table = 'banner';
+        $main_table_id_column = 'banner_id';
+        
+        if (isset($_POST) && !empty($_POST))
+        {
+            $can_redirect_to = 1;
+            $id = $this->input->post('id');           
+            $position_id = $this->input->post('position_id');
+            $ignore_hide = $this->input->post('ignore_hide_id');
+            
+            $display_name = $this->m_custom->display_static_option($position_id);
+            if ($this->input->post('button_action') == "frozen")
+            {
+                $message_info = add_message_info($message_info, $display_name . ' success frozen.');
+                $this->m_custom->update_hide_flag(1, $main_table, $id, $login_id);
+            }
+            if ($this->input->post('button_action') == "recover")
+            {               
+                $status = $this->m_admin->banner_recover($id);
+                if ($status)
+                {
+                    $message_info = add_message_info($message_info, $display_name . ' success unfrozen.');
+                }
+                else
+                {
+                    $message_info = add_message_info($message_info, $display_name . ' fail to unfrozen. Because already have other active banner in the same banner position');
+                }
+            }
+            if ($this->input->post('button_action') == "filter_result")
+            {
+                $ignore_hide = $this->input->post('ignore_hide_id');
+            }
+            
+            if ($message_info != NULL)
+            {
+                $this->session->set_flashdata('message', $message_info);
+            }
+            if ($can_redirect_to == 1)
+            {
+                redirect('admin/banner_management/' . $ignore_hide, 'refresh');
+            }
+        }
+        
+        $this->data['ignore_hide_list'] = array('0' => 'Show Active Only', '1' => 'Show History Also');
+        $this->data['ignore_hide_id'] = array(
+            'name' => 'ignore_hide_id',
+            'id' => 'ignore_hide_id',
+        );
+        $this->data['ignore_hide_selected'] = $ignore_hide;
+        
+        $result_list = $this->m_admin->banner_select($ignore_hide); 
+        $this->data['the_result'] = $result_list;
+
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+        $this->data['page_path_name'] = 'admin/banner_management';
         $this->load->view('template/layout_right_menu', $this->data);
     }
     

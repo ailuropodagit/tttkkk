@@ -3067,16 +3067,26 @@ class M_custom extends CI_Model
         return $field_name[0];
     }
     
-    public function update_hide_flag($hide_flag, $table, $table_id)
+    public function update_hide_flag($hide_flag, $table, $table_id, $last_modify_by = NULL)
     {
         $fields = $this->db->list_fields($table);
         foreach ($fields as $field)
         {
             $field_name[] = $field;
         }
-        $the_data = array(
-            'hide_flag' => $hide_flag,
-        );
+        if ($last_modify_by == NULL)
+        {
+            $the_data = array(
+                'hide_flag' => $hide_flag,
+            );
+        }
+        else
+        {
+            $the_data = array(
+                'hide_flag' => $hide_flag,
+                'last_modify_by' => $last_modify_by,
+            );
+        }
         $this->db->where($field_name[0], $table_id);
         $this->db->update($table, $the_data);
     }
