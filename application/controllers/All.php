@@ -45,8 +45,8 @@ class All extends CI_Controller
         $this->data['advertise_suggestion_page_path_name'] = 'all/hot_deal_list_suggestion';
         $this->data['advertise_suggestion_page_title'] = 'Hot Deal Suggestion';
         //NORMAL PAGE
-        $this->data['page_path_name'] = 'all/advertise_list';
-        $this->load->view('template/layout_category', $this->data);
+        $this->data['page_path_name'] = 'share/hot_deal_redemption_list';
+        $this->load->view('template/index_left_category', $this->data);
     }
 
     function promotion_list()
@@ -70,8 +70,8 @@ class All extends CI_Controller
         $this->data['advertise_suggestion_page_path_name'] = 'all/hot_deal_list_suggestion';
         $this->data['advertise_suggestion_page_title'] = 'Hot Deal Suggestion';
         //NORMAL PAGE
-        $this->data['page_path_name'] = 'all/advertise_list';
-        $this->load->view('template/layout_category', $this->data);
+        $this->data['page_path_name'] = 'share/hot_deal_redemption_list';
+        $this->load->view('template/index_left_category', $this->data);
     }
 
     function redemption_list()
