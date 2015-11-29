@@ -48,7 +48,12 @@
                 $allowed_list = $this->m_custom->get_list_of_allow_id('advertise', 'merchant_id', $merchant_id, 'advertise_id');
                 if (check_correct_login_type($this->config->item('group_id_merchant'), $allowed_list, $advertise_id) || check_correct_login_type($this->config->item('group_id_supervisor'), $allowed_list, $advertise_id))
                 {
-                    ?><a href='<?php echo base_url() . "merchant/edit_hotdeal/" . $advertise_id ?>' >Edit Hot Deal</a><?php
+                    ?>
+                    <a href='<?php echo base_url() . "merchant/edit_hotdeal/" . $advertise_id ?>' >
+                        <div id="redemption-edit-link-icon"><i class="fa fa-pencil"></i></div>
+                        <div id="redemption-edit-link-label">Edit Hot Deal</div>
+                    </a>
+                    <?php
                 }
             }
             ?>

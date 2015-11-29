@@ -1794,6 +1794,15 @@ html, body {
     font-size: 16px;
 }
 
+#hot-deal-edit-link-icon {
+    display: inline;
+}
+
+#hot-deal-edit-link-label {
+    display: inline;
+    margin: 0px 0px 0px 5px;
+}
+
 #hot-deal-table {
     display: table;
     width: 100%;
@@ -1909,7 +1918,7 @@ html, body {
 }
 
 #hot-deal-information-price {
-    margin: 25px 0px 0px 0px;
+    margin: 20px 0px 0px 0px;
 }
 
 #hot-deal-information-price-after {
@@ -2028,33 +2037,25 @@ html, body {
 
 #redemption-edit-link {
     float: right;
-    margin: 20px 0px 0px 0px;
+    padding: 0px 0px 25px 0px;
 }
 
 #redemption-edit-link a {
     font-size: 16px;
 }
 
-#redemption-expired-date {
-    margin: 25px 0px 0px 20px;
-    float: left;
-    font-size: 22px;
+#redemption-edit-link-icon {
+    display: inline;
 }
 
-#redemption-candies {
-    margin: 25px 20px 0px 0px;
-    float: right;
-    font-size: 23px;
-}
-
-#redemption-voucher-barcode {
-    margin: 5px 0px 15px 0px;
+#redemption-edit-link-label {
+    display: inline;
+    margin: 0px 0px 0px 5px;
 }
 
 #redemption-table {
     display: table;
     width: 100%;
-    margin: 20px 0px 0px 0px;
 }
 
 #redemption-table-row {
@@ -2069,10 +2070,6 @@ html, body {
 
 .redemption-center-cell {
     width: 100%;
-}
-
-#redemption-center {
-    margin: 0px auto 0px auto;
 }
 
 #redemption-right, #redemption-left {
@@ -2100,128 +2097,181 @@ html, body {
     color: #919191;
 }
 
-#redemption-title {
-    margin: 0px 0px 20px 0px;
-    text-align: left;
-}
-
-#redemption-title a {
-    font-size: 25px;
-    color: black;
-    font-weight: bold;
+#redemption-photo {
+    float: left;
+    width: 40%;
 }
 
 #redemption-photo-box {
     width: 100%;
+    padding-top: 100%;
     border: 1px solid lightgray;
-    background-color: whitesmoke;
-    margin: 10px auto 10px auto;
+    position: relative;
 }
 
 #redemption-photo-box img {
-    max-width: 100%;
+    max-height: 100%;  
+    max-width: 100%; 
+    width: auto;
+    height: auto;
+    position: absolute;  
+    top: 0;  
+    bottom: 0;  
+    left: 0;  
+    right: 0;  
+    margin: auto;
 }
 
-#redemption-sub-title {
-    font-size: 23px;
+#redemption-information {
+    float: left;
+    width: calc(58% - 50px);
+    text-align: left;
+    margin: 0px 0px 0px 50px;
+}
+
+#redemption-information-title {
+    margin: 0px 0px 10px 0px;
+}
+
+#redemption-information-title a {
+    color: #00bcd4;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+#redemption-information-sub-title {
+    margin: 10px 0px 0px 0px;
+    font-size: 16px;
     color: black;
+}
+
+#redemption-information-rate {
+    text-align: left;
     margin: 20px 0px 0px 0px;
 }
 
-#redemption-voucher-worth {
-    margin: 10px 0px 5px 0px;
-    font-weight: bold;
-    font-size: 14px;
-}
-
-#redemption-time {
-    margin: 20px 0px 20px 0px;
-    font-size: 20px;
-}
-
-#redemption-time-label {
-    margin: 0px 0px 0px 5px;
-}
-
-#redemption-rate {
-    text-align: left;
-    margin: 20px 0px 10px 0px;
-}
-
-#redemption-rate-star {
+#redemption-information-rate-star {
     display: inline-block;
     width: 85px;
 }
 
-#redemption-rate-star-label {
+#redemption-information-rate-review {
     display: inline-block;
-    margin: 0px 0px 0px 5px;
-    font-size: 18px;
+    margin: 0px 0px 0px 10px;
+    font-size: 12px;
 }
 
-#redemption-rate-review {
-    display: inline-block;
-    margin: 0px 0px 0px 20px;
-    font-size: 18px;
+#redemption-information-rate-earn-candie {
+    font-size: 13px;
+    margin: 3px 0px 0px 0px;
+    color: #939393;
 }
 
-#redemption-rate-earn-candie {
-    font-size: 16px;
-    margin: 8px 0px 0px 0px;
-}
-
-#redemption-description {
+#redemption-information-voucher-worth {
+    color: #d92222;
+    font-size: 20px;
+    font-weight: bold;
     margin: 20px 0px 0px 0px;
-    padding: 7px;
+}
+
+#redemption-information-required-candies {
+    font-size: 18px;
+    margin: 20px 0px 0px 0px;
+}
+
+#redemption-information-description {
+    line-height: 20px;
+    color: #666666;
+    margin: 20px 0px 0px 0px;
+}
+
+#redemption-information-like-comment {
     text-align: left;
-    border-radius: 4px;
-    border: 1px solid #a9a9a9;
-    height: 200px;
-    overflow-y: scroll;
-    line-height: 25px;
-    text-align: justify;
+    margin: 20px 0px 0px 0px;
 }
 
-#redemption-like-comment-share {
-    margin: 10px 0px 0px 0px;
-}
-
-#redemption-like-comment {
-    text-align: left;
-    float: left;
-    margin: 20px 30px 0px 0px;
-}
-
-#redemption-like {
+#redemption-information-like {
     display: inline-block;
     margin: 0px 15px 0px 0px;
+    font-size: 15px;
 }
 
-#redemption-comment {
+#redemption-information-comment {
     display: inline-block;
+    font-size: 15px;
 }
 
-#redemption-like-comment-earn-candie {
+#redemption-information-like-comment-earn-candie {
+    font-size: 13px;
+    margin: 3px 0px 0px 0px;
+    color: #939393;
+}
+
+#redemption-information-redemption-period {
+    margin: 28px 0px 15px 0px;
+}
+
+#redemption-information-redemption-period-icon {
+    display: inline;
+    margin: 0px 10px 0px 0px;
+    font-size: 15px;
+}
+
+#redemption-information-redemption-period-label {
+    display: inline;
     font-size: 16px;
-    margin: 8px 0px 0px 0px;
 }
 
-#redemption-share {
-    margin: 14px 0px 0px 0px;
-    text-align: right;
-    float: right;
+#redemption-information-expired-date {
+    margin: 15px 0px 28px 0px;
+    font-size: 16px;
 }
 
-#redemption-share-facebook {
+#redemption-information-expired-date-icon {
+    display: inline;
+    margin: 0px 10px 0px 0px;
+    font-size: 13px;
+}
+
+#redemption-information-expired-date-label {
+    display: inline;
+    font-size: 16px;
+}
+
+#redemption-information-submit {
+    margin: 20px 0px 20px 0px;
+}
+
+#redemption-information-horizontal-separator {
+    border-bottom: 1px solid #e2e2e2;
+}
+
+#redemption-information-share {
+    margin: 15px 0px 0px 0px;
+}
+
+#redemption-information-share-label {
+    display: inline;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+#redemption-information-share-facebook {
+    display: inline;
     margin: 0px 0px 0px 3px;
     color: #4a5e91;
     font-size: 22px;
     cursor: pointer;
 }
 
-#redemption-share-earn-candie {
-    font-size: 16px;
-    margin: 8px 0px 0px 0px;
+#redemption-information-share-earn-candie {
+    font-size: 13px;
+    margin: 3px 0px 0px 0px;
+    color: #939393;
+}
+
+#redemption-voucher-barcode {
+    margin: 5px 0px 15px 0px;
 }
 
 #redemption-terms-conditions {
@@ -2231,7 +2281,7 @@ html, body {
 
 #redemption-terms-conditions-title {
     font-weight: bold;
-    font-size: 18px;
+    font-size: 14px;
     color: black;
     text-decoration: underline;
     margin: 0px 0px 8px 0px;
@@ -2245,7 +2295,7 @@ html, body {
 #redemption-terms-conditions li {
     margin: 0px 0px 8px 0px;
     color: black;
-    font-size: 18px;
+    font-size: 14px;
 }
 
 #redemption-available-branch {
@@ -2255,7 +2305,7 @@ html, body {
 
 #redemption-available-branch-title {
     font-weight: bold;
-    font-size: 18px;
+    font-size: 14px;
     color: black;
     text-decoration: underline;
     margin: 0px 0px 8px 0px;
@@ -2269,12 +2319,12 @@ html, body {
 #redemption-available-branch li {
     margin: 0px 0px 10px 0px;
     color: black;
-    font-size: 18px;
+    font-size: 14px;
 }
 
 #redemption-available-branch-name {
     font-weight: bold;
-    font-size: 17px;
+    font-size: 13px;
 }
 
 #redemption-available-branch-address {
@@ -2282,28 +2332,16 @@ html, body {
 }
 
 #redemption-available-branch-tel {
-    float: left;
     margin: 5px 0px 0px 0px;
 }
 
 #redemption-available-branch-view-map {
-    float: right;
     margin: 5px 0px 0px 0px;
 }
 
-#redemption-redempt-submit {
-    margin: 20px 0px 0px 0px;
-    float: right;
-}
-
-#redemption-line {
-    margin: 30px 0px 30px 0px;
-    border-bottom: 1px solid lightgray;
-}
-
-#redemption-comment-list {
-    width: 500px;
-    margin: 0px auto 0px auto;
+#redemption-user-comment {
+    margin: 40px auto 10px auto;
+    width: 600px;
     text-align: left;
 }
 

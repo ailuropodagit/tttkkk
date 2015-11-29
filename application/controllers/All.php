@@ -128,7 +128,6 @@ class All extends CI_Controller
                 'id' => 'item_type',
                 'value' => 'adv',
             );
-
             if (check_correct_login_type($this->group_id_user)) //Check if user logged in
             {
                 $this->data['radio_level'] = " ";
@@ -137,7 +136,6 @@ class All extends CI_Controller
             {
                 $this->data['radio_level'] = "disabled";
             }
-
             $row_advertise_type = $the_row['advertise_type'];
             if ($row_advertise_type == "pro")
             {
@@ -169,7 +167,6 @@ class All extends CI_Controller
                 $this->data['candie_term'] = $this->m_custom->many_get_childlist_detail('candie_term', $advertise_id, 'dynamic_option');
                 $this->data['page_path_name'] = 'all/promotion_admin';
             }
-
             if ($advertise_type != NULL)
             {
                 $advertise_current_list = $this->m_custom->getAdvertise($advertise_type, $sub_category_id, $merchant_id, $show_expired);
