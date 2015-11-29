@@ -26,10 +26,10 @@
             //to do todo
             if ($this->m_admin->check_is_any_admin(69))
             {
-                $banner_expire_count = $this->m_admin->banner_expired_count();               
+                $banner_expire_count = $this->m_admin->banner_select(1, 1);               
             ?>
                 <div id='candie-navigation-each-separator'>|</div>
-                <div id='candie-navigation-each'><a href='<?php echo base_url() . "admin/monitor-expire-banner" ?>' >Banner Expired (<?php echo $banner_expire_count; ?>)</a></div>
+                <div id='candie-navigation-each'><a href='<?php echo base_url() . "admin/banner-management/1" ?>' >Banner Expired (<?php echo $banner_expire_count; ?>)</a></div>
             <?php } ?>    
             <?php
             if ($this->m_admin->check_is_any_admin(67))

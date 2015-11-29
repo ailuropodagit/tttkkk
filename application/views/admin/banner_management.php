@@ -1,8 +1,11 @@
 <script type="text/javascript" src="<?php echo base_url() ?>js/datatables/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>js/datatables/js/moment.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>js/datatables/js/datetime-moment.js"></script>
 <?php echo link_tag('js/datatables/css/jquery.dataTables.min.css') ?>
 
 <script type="text/javascript">
     $(document).ready(function () {
+        $.fn.dataTable.moment('DD-MM-YYYY');
         $('#myTable').DataTable({
             "pageLength": 25,
             "order": []
@@ -24,9 +27,9 @@ if (isset($message))
         <div id="payment-charge-go" style="float:left">
             <?php echo form_open(uri_string()); ?>
                 <span id="payment-charge-go-label"><?php echo "Filter "; ?></span>
-                <span id="payment-charge-go-dropdown"><?php echo form_dropdown($ignore_hide_id, $ignore_hide_list, $ignore_hide_selected); ?></span>
+                <span id="payment-charge-go-dropdown"><?php echo form_dropdown($view_status_id, $view_status_list, $view_status_selected); ?></span>
                 <span id="payment-charge-go-button"><button name="button_action" type="submit" value="filter_result">Go</button></span>
-            <?php echo form_close(); ?>
+            <?php echo form_close();  ?>
         </div>
         <div style="float:right">
             <?php $add_new_url = base_url() . 'admin/banner_change'; ?>           
@@ -40,8 +43,9 @@ if (isset($message))
                         <th>Banner Position</th>
                         <th>Merchant</th>
 <!--                        <th>Category</th>-->
-                        <th>Start Time</th>
-                        <th>End Time</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Website Url</th>
                         <th>Last Modified By</th>
                         <th>Hide Already</th>
                         <th>Actions</th>
@@ -55,11 +59,11 @@ if (isset($message))
                         $banner_position = $this->m_custom->display_static_option($row['banner_position']);
                         $merchant_name = $this->m_custom->display_users($row['merchant_id']);
                         //$category_name = $this->m_custom->display_category($row['category_id']);
-                        $start_time = displayDate($row['start_time'], 1);
-                        $end_time = displayDate($row['end_time'], 1);
+                        $start_time = displayDate($row['start_time']);
+                        $end_time = displayDate($row['end_time']);
                         $admin_name = $this->m_custom->display_users($row['last_modify_by']);
-                        $remove_row = $row['hide_flag'] == 1 ? 'Frozen' : '';
-                        $url_edit = base_url() . "admin/banner_change/" . $row['banner_id'];
+                        $remove_row = $row['hide_flag'] == 1 ? 'Hide' : '';
+                        $url_edit = base_url() . "admin/banner_change/" . $row['banner_id'] . "/" . $view_status_selected;
                         $url_special_action = base_url() . "admin/banner_management";
                         echo '<tr>';
                         echo "<td>" . $banner_position . "</td>";
@@ -67,6 +71,7 @@ if (isset($message))
                         //echo "<td>" . $category_name . "</td>";
                         echo "<td>" . $start_time . "</td>";
                         echo "<td>" . $end_time . "</td>";
+                        echo "<td><a href='".$row['banner_url']."' target='_blank'>" . $row['banner_url'] . "</a></td>";
                         echo "<td>" . $admin_name . "</td>";
                         echo "<td>" . $remove_row . "</td>";
                         echo "<td>";
@@ -76,9 +81,9 @@ if (isset($message))
                         echo form_open($url_special_action); 
                         echo form_hidden('id', $row['banner_id']); 
                         echo form_hidden('position_id', $row['banner_position']); 
-                        echo form_hidden('ignore_hide_id', $ignore_hide_selected);
+                        echo form_hidden('view_status_id', $view_status_selected);
                         $remove_or_recover = $row['hide_flag'] == 1 ? 'recover' : 'frozen';
-                        $remove_or_recover_text = $row['hide_flag'] == 1 ? 'Unfrozen' : 'Frozen';
+                        $remove_or_recover_text = $row['hide_flag'] == 1 ? 'Recover' : 'Hide';
                         ?>
                         <button name="button_action" type="submit" value="<?php echo $remove_or_recover; ?>" onclick="return confirm('Are you sure want to <?php echo $remove_or_recover_text; ?> it?')"><?php echo $remove_or_recover_text; ?></button> 
                         <?php

@@ -17,6 +17,7 @@ class Admin extends CI_Controller
         $this->group_id_user = $this->config->item('group_id_user');
         $this->album_admin = $this->config->item('album_admin');
         $this->album_admin_profile = $this->config->item('album_admin_profile');
+        $this->album_banner = $this->config->item('album_banner');
         $this->folder_image = $this->config->item('folder_image');
         $this->temp_folder = $this->config->item('folder_image_temp');
 
@@ -3447,7 +3448,7 @@ class Admin extends CI_Controller
         $this->load->view('template/index', $this->data);
     }
     
-    function banner_management($ignore_hide = 0){
+    function banner_management($view_status = 0){
         if (!$this->m_admin->check_is_any_admin(69))
         {
             redirect('/', 'refresh');
@@ -3464,12 +3465,12 @@ class Admin extends CI_Controller
             $can_redirect_to = 1;
             $id = $this->input->post('id');           
             $position_id = $this->input->post('position_id');
-            $ignore_hide = $this->input->post('ignore_hide_id');
+            $view_status = $this->input->post('view_status_id');
             
             $display_name = $this->m_custom->display_static_option($position_id);
             if ($this->input->post('button_action') == "frozen")
             {
-                $message_info = add_message_info($message_info, $display_name . ' success frozen.');
+                $message_info = add_message_info($message_info, $display_name . ' success hide.');
                 $this->m_custom->update_hide_flag(1, $main_table, $id, $login_id);
             }
             if ($this->input->post('button_action') == "recover")
@@ -3477,16 +3478,16 @@ class Admin extends CI_Controller
                 $status = $this->m_admin->banner_recover($id);
                 if ($status)
                 {
-                    $message_info = add_message_info($message_info, $display_name . ' success unfrozen.');
+                    $message_info = add_message_info($message_info, $display_name . ' success recover.');
                 }
                 else
                 {
-                    $message_info = add_message_info($message_info, $display_name . ' fail to unfrozen. Because already have other active banner in the same banner position');
+                    $message_info = add_message_info($message_info, $display_name . ' fail to recover. Because already have other active banner in the same banner position');
                 }
             }
             if ($this->input->post('button_action') == "filter_result")
             {
-                $ignore_hide = $this->input->post('ignore_hide_id');
+                $view_status = $this->input->post('view_status_id');
             }
             
             if ($message_info != NULL)
@@ -3495,23 +3496,260 @@ class Admin extends CI_Controller
             }
             if ($can_redirect_to == 1)
             {
-                redirect('admin/banner_management/' . $ignore_hide, 'refresh');
+                redirect('admin/banner_management/' . $view_status, 'refresh');
             }
         }
         
-        $this->data['ignore_hide_list'] = array('0' => 'Show Active Only', '1' => 'Show History Also');
-        $this->data['ignore_hide_id'] = array(
-            'name' => 'ignore_hide_id',
-            'id' => 'ignore_hide_id',
+        $this->data['view_status_list'] = array('0' => 'Show Active Only', '1' => 'Show Reach Expire Only', '2' => 'Show Expired Only', '3' => 'Show All');
+        $this->data['view_status_id'] = array(
+            'name' => 'view_status_id',
+            'id' => 'view_status_id',
         );
-        $this->data['ignore_hide_selected'] = $ignore_hide;
+        $this->data['view_status_selected'] = $view_status;
         
-        $result_list = $this->m_admin->banner_select($ignore_hide); 
+        $result_list = $this->m_admin->banner_select($view_status); 
         $this->data['the_result'] = $result_list;
 
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
         $this->data['page_path_name'] = 'admin/banner_management';
         $this->load->view('template/index', $this->data);
+    }
+    
+    function banner_change($edit_id = NULL, $view_status = NULL)
+    {
+        if (!$this->m_admin->check_is_any_admin(69))
+        {
+            redirect('/', 'refresh');
+        }
+
+        $message_info = '';
+        $login_id = $this->login_id;
+        $login_type = $this->login_type;
+        $is_edit = 0;
+        $main_table = 'banner';
+        $main_table_id_column = 'banner_id';       
+        
+        if ($edit_id != NULL)
+        {
+            $is_edit = 1;
+        }
+        
+        if (isset($_POST) && !empty($_POST))
+        {
+            $can_redirect_to = 0;
+
+            //$edit_id = $this->input->post('edit_id');
+            $merchant_id = $this->input->post('merchant_id');
+            $banner_position_id = $this->input->post('banner_position_id');
+            $banner_start_time = validateDate($this->input->post('banner_start_time'));
+            $banner_end_time = validateDate($this->input->post('banner_end_time'));
+            $banner_url = $this->input->post('banner_url');
+            $banner_position = $this->m_custom->display_static_option($banner_position_id);
+            $view_status = $this->input->post('view_status');
+            
+            $upload_rule = array(
+                'upload_path' => $this->album_banner,
+                'allowed_types' => $this->config->item('allowed_types_image'),
+                'max_size' => $this->config->item('max_size'),
+                'max_width' => $this->config->item('max_width'),
+                'max_height' => $this->config->item('max_height'),
+            );
+
+            $this->load->library('upload', $upload_rule);
+            $upload_file = "image-file-name";
+            
+            if ($edit_id == 0)
+            {
+                $is_edit = 0;
+            }
+            else
+            {
+                $is_edit = 1;
+            }
+
+            if ($this->input->post('button_action') == "save")
+            {
+                // validate form input                          
+                $this->form_validation->set_rules('banner_position_id', $this->lang->line('banner_position'), 'callback_check_banner_position_id');
+                $this->form_validation->set_rules('merchant_id', $this->lang->line('banner_merchant'));
+                $this->form_validation->set_rules('banner_start_time', $this->lang->line('banner_start_time'), 'trim|required');
+                $this->form_validation->set_rules('banner_end_time', $this->lang->line('banner_end_time'), 'trim|required');
+                $this->form_validation->set_rules('banner_url', $this->lang->line('banner_url'), 'trim|required');
+                
+                if ($this->form_validation->run() === TRUE)
+                {
+                    if ($is_edit == 0)
+                    {              
+                        if (!empty($_FILES[$upload_file]['name']))
+                        {
+                            if (!$this->upload->do_upload($upload_file))
+                            {
+                                $message_info = add_message_info($message_info, $this->upload->display_errors());
+                            }
+                            else
+                            {
+                                $image_data = array('upload_data' => $this->upload->data());
+                            }
+                        }
+                        $banner_image = empty($image_data) ? '' : $image_data['upload_data']['file_name'];
+                                 
+                        $new_id = $this->m_admin->banner_insert($merchant_id, NULL, $banner_start_time, $banner_end_time, $banner_image, $banner_url, $banner_position_id);
+                        if ($new_id)
+                        {
+                            $message_info = add_message_info($message_info, 'Success create a banner on this banner position ' . $banner_position);
+                            $edit_id = $new_id;
+                            $can_redirect_to = 2;
+                        }
+                        else
+                        {
+                            $message_info = add_message_info($message_info, 'Fail to create banner on this banner position ' . $banner_position . ' because it still have another banner occupy, please select an empty banner position');
+                            $can_redirect_to = 1;
+                        }
+                    }
+                    else
+                    {                        
+                        $result_update = $this->m_custom->get_one_table_record($main_table, $main_table_id_column, $edit_id, 1); 
+                        
+                        $previous_image_name = $result_update['banner_image'];
+                        if (!empty($_FILES[$upload_file]['name']))
+                        {
+                            if (!$this->upload->do_upload($upload_file))
+                            {
+                                $message_info = add_message_info($message_info, $this->upload->display_errors());
+                            }
+                            else
+                            {
+                                $image_data = array('upload_data' => $this->upload->data());
+                                
+                                if (!IsNullOrEmptyString($previous_image_name))
+                                {
+                                    delete_file($this->album_banner . $previous_image_name);
+                                }
+                            }
+                        }
+                        $banner_image = empty($image_data) ? $previous_image_name : $image_data['upload_data']['file_name'];
+                        
+                        if ($this->m_admin->banner_update($merchant_id, NULL, $banner_start_time, $banner_end_time, $banner_image, $banner_url, $banner_position_id, $edit_id, $result_update['hide_flag']))
+                        {
+                            $message_info = add_message_info($message_info, 'Success update the banner on banner position ' . $banner_position);
+                            $can_redirect_to = 2;
+                        }
+                        else
+                        {
+                            $message_info = add_message_info($message_info, 'Fail to update banner on this banner position ' . $banner_position . ' because it still have another banner occupy, please select an empty banner position');
+                            $can_redirect_to = 3;
+                        }
+                    }
+                    $this->m_custom->remove_image_temp();
+                }
+            }
+            if ($this->input->post('button_action') == "back")
+            {
+                $can_redirect_to = 2;
+            }    
+            if ($this->input->post('button_action') == "frozen")
+            {
+                $message_info = add_message_info($message_info, $banner_position . ' success hide.');
+                $this->m_custom->update_hide_flag(1, $main_table, $edit_id, $login_id);
+            }
+            if ($this->input->post('button_action') == "recover")
+            {               
+                $status = $this->m_admin->banner_recover($edit_id);
+                if ($status)
+                {
+                    $message_info = add_message_info($message_info, $banner_position . ' success recover.');
+                }
+                else
+                {
+                    $message_info = add_message_info($message_info, $banner_position . ' fail to recover. Because already have other active banner in the same banner position');
+                }
+            }
+            
+            direct_go:
+            if ($message_info != NULL)
+            {
+                $this->session->set_flashdata('message', $message_info);
+            }
+            if ($can_redirect_to == 1)
+            {
+                redirect(uri_string(), 'refresh');
+            }
+            elseif ($can_redirect_to == 2)
+            {
+                redirect('admin/banner_management/' . $view_status, 'refresh');
+            }
+            elseif ($can_redirect_to == 3)
+            {
+                redirect('admin/banner_change/' . $edit_id . '/' . $view_status, 'refresh');
+            }
+        }
+
+        // set the flash data error message if there is one
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+
+        $result = $this->m_custom->get_one_table_record($main_table, $main_table_id_column, $edit_id, 1); 
+        $this->data['result'] = $result;
+
+        $this->data['edit_id'] = array(
+            'edit_id' => empty($result) ? '0' : $result[$main_table_id_column],
+            'is_edit' => $is_edit,
+            'view_status' => $view_status,
+        );
+
+        $this->data['is_edit'] = $is_edit;
+        
+        $this->data['image_item'] = empty($result) ? $this->config->item('empty_image') : $this->album_banner . $result['banner_image'];
+        
+        $this->data['banner_position_list'] = $this->m_custom->get_static_option_array('banner_position', '0', 'Please Select', 0, 'option_value');
+        $this->data['banner_position_id'] = array(
+            'name' => 'banner_position_id',
+            'id' => 'banner_position_id',
+        );
+        $this->data['banner_position_selected'] = $result['banner_position'] == NULL ? $this->form_validation->set_value('banner_position_id', '0') : $result['banner_position'];
+              
+        $this->data['merchant_list'] = $this->m_merchant->getMerchantList('0', 'Please Select');
+        $this->data['merchant_id'] = array(
+            'name' => 'merchant_id',
+            'id' => 'merchant_id',
+            'class' => 'chosen-select',
+        );
+        $this->data['merchant_selected'] = $result['merchant_id'] == NULL ? $this->form_validation->set_value('merchant_id', '0') : $result['merchant_id'];       
+        
+        $this->data['banner_start_time'] = array(
+            'name' => 'banner_start_time',
+            'id' => 'banner_start_time',
+            'type' => 'text',
+            'readonly' => 'true',
+            'value' => empty($result) ? $this->form_validation->set_value('banner_start_time') : $this->form_validation->set_value('banner_start_time', displayDate($result['start_time'])),
+        );
+        
+        $this->data['banner_end_time'] = array(
+            'name' => 'banner_end_time',
+            'id' => 'banner_end_time',
+            'type' => 'text',
+            'readonly' => 'true',
+            'value' => empty($result) ? $this->form_validation->set_value('banner_end_time') : $this->form_validation->set_value('banner_end_time', displayDate($result['end_time'])),
+        );      
+        
+        $this->data['banner_url'] = array(
+            'name' => 'banner_url',
+            'id' => 'banner_url',
+            'value' => empty($result) ? $this->form_validation->set_value('banner_url') : $this->form_validation->set_value('banner_url', $result['banner_url']),
+        );
+    
+        $this->data['temp_folder'] = $this->temp_folder;
+        $this->data['page_path_name'] = 'admin/banner_change';
+        $this->load->view('template/layout_right_menu', $this->data);
+    }
+    
+    function check_banner_position_id($dropdown_selection)
+    {
+        if ($dropdown_selection == 0)
+        {
+            $this->form_validation->set_message('check_banner_position_id', 'The Banner Position Field is required');
+            return FALSE;
+        }
+        return TRUE;
     }
     
     function manage_web_setting()

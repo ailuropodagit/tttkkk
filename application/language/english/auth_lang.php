@@ -303,3 +303,11 @@ $lang['promo_code_users_user']     = 'User Name';
 $lang['promo_code_users_admin']    = 'Created by Admin/Worker';
 $lang['promo_code_users_merchant'] = 'Merchant Name';
 $lang['promo_code_redeem_count']   = 'Redeem Count';
+
+// Banner
+$lang['banner_merchant']             = 'Merchant Name';
+$lang['banner_start_time']           = 'Start Date';
+$lang['banner_end_time']             = 'End Date';
+$lang['banner_image']                = 'Banner Image';
+$lang['banner_url']                  = 'Banner Web Url';
+$lang['banner_position']             = 'Banner Position';
