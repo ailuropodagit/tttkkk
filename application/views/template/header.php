@@ -3,13 +3,13 @@
     <head>
         <meta charset="UTF-8">
         <title>Keppo</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1">        
         <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,700,900' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="<?php echo base_url('css/all.css') ?>">
         <link rel="stylesheet" href="<?php echo base_url('css/main.css') ?>">
-        <link rel="stylesheet" href="<?php echo base_url('css/main-1200.css') ?>" media="screen and (max-width: 1100px)">
+        <link rel="stylesheet" href="<?php echo base_url('css/main-1200.css') ?>" media="screen and (max-width: 1200px)">
         <link rel="stylesheet" href="<?php echo base_url('css/main-1100.css') ?>" media="screen and (max-width: 1100px)">
-        <link rel="stylesheet" href="<?php echo base_url('css/main-1000.css') ?>" media="screen and (max-width: 1100px)">
+        <link rel="stylesheet" href="<?php echo base_url('css/main-1000.css') ?>" media="screen and (max-width: 1000px)">
         <link rel="stylesheet" href="<?php echo base_url('css/main-0900.css') ?>" media="screen and (max-width: 0900px)">
         <link rel="stylesheet" href="<?php echo base_url('css/main-0800.css') ?>" media="screen and (max-width: 0900px)">
         <link rel="stylesheet" href="<?php echo base_url('css/main-0700.css') ?>" media="screen and (max-width: 0700px)">

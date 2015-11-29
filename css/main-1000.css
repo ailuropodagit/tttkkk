@@ -80,3 +80,37 @@
     width: 100%;
     float: none;
 }
+
+/*********************************************
+ ** HOME ROW 3 COLUMN 2 LIKE
+ *********************************************/
+
+#home-row3-column2-like-notification {
+    height: auto;
+    max-height: 300px;
+}
+
+/*********************************************
+ ** HOME ROW 3 COLUMN 2 USER PICTURE
+ *********************************************/
+
+#home-row3-column2-user-picture-notification {
+    height: auto;
+    max-height: 300px;
+}
+
+/*********************************************
+ ** INDEX LEFT CATEGORY
+ *********************************************/
+
+#index-left-category {
+    float: none;
+    width: 100%;
+    margin: 0px 0px 30px 0px;
+}
+
+#index-left-category-right-content {
+    float: none;
+    width: 100%;
+    margin: 0px;
+}

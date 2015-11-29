@@ -309,9 +309,7 @@ $this->album_admin = $this->config->item('album_admin');
                                         <div class="home-row3-column1-today-deal-box-each-information-title">
                                             <?php echo $title ?>
                                         </div>
-<!--                                        <div class="home-row3-column1-today-deal-box-each-information-rating">
-
-                                        </div>-->
+                                        <!--<div class="home-row3-column1-today-deal-box-each-information-rating"></div>-->
                                     </div>
                                     <div class="home-row3-column1-today-deal-box-each-information-price">
                                         <div class="home-row3-column1-today-deal-box-each-information-price-after">
@@ -471,8 +469,8 @@ $this->album_admin = $this->config->item('album_admin');
                 </div>
             </div>
             <div id='home-row3-column2-user-picture'>
-                <div id="home-row3-column2-like-title">Users Pictures</div>
-                <div id="home-row3-column2-like-notification">
+                <div id="home-row3-column2-user-picture-title">Users Pictures</div>
+                <div id="home-row3-column2-user-picture-notification">
                     <table border="0px" cellpading="0px" cellspacing="0px">
                     <?php 
                     $notification_list = $this->m_custom->notification_display(0, 1, 'upload_image');
@@ -486,13 +484,13 @@ $this->album_admin = $this->config->item('album_admin');
                         ?>
                         <tr>
                             <td valign="top">
-                                <div id="home-row3-column2-like-notification-user-image">
+                                <div id="home-row3-column2-user-picture-notification-user-image">
                                     <?php echo $notification_user_image ?>
                                 </div>
                             </td>
                             <td style="width: 100%;">
-                                <div id="home-row3-column2-like-notification-description">
-                                    <span id="home-row3-column2-like-notification-description-name">
+                                <div id="home-row3-column2-user-picture-notification-description">
+                                    <span id="home-row3-column2-user-picture-notification-description-name">
                                         <?php echo $notification_user_name ?>
                                     </span>
                                     <?php
@@ -510,7 +508,7 @@ $this->album_admin = $this->config->item('album_admin');
                                 </div>
                             </td>
                             <td valign="top">
-                                <div id="home-row3-column2-like-notification-item-image">
+                                <div id="home-row3-column2-user-picture-notification-item-image">
                                     <a href="<?php echo base_url($notification_url) ?>">
                                         <?php echo img($notification_item_image) ?>
                                     </a>

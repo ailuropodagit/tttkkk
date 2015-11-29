@@ -12,11 +12,10 @@
                     format = '%-w week%!w ' + format;
                 }
                 $this.html(event.strftime(format));
-            })
-                    .on('finish.countdown', function (event) {
-                        $this.html('Expired!');
-                        $this.parent().css({color: 'red'});
-                    });
+            }).on('finish.countdown', function (event) {
+                $this.html('Expired!');
+                $this.parent().css({color: 'red'});
+            });
         });
     });
 </script>
@@ -73,7 +72,7 @@ $fetch_method = $this->router->fetch_method();
             <div id='advertise-list-category-breadcrumb'>
                 <?php echo $main_category; ?>
                 &nbsp; > &nbsp;
-            <?php echo $sub_category; ?>
+                <?php echo $sub_category; ?>
             </div>
             <?php
         }
@@ -253,12 +252,12 @@ $fetch_method = $this->router->fetch_method();
             <!--ADVERTISE LIST SUGGESTION-->
             <div id="advertise-list-suggestion">
                 <div id="advertise-list-suggestion-page-title">
-                <?php
-                if (!empty($advertise_suggestion_page_title))
-                {
-                    echo $advertise_suggestion_page_title;
-                } 
-                ?>
+                    <?php
+                    if (!empty($advertise_suggestion_page_title))
+                    {
+                        echo $advertise_suggestion_page_title;
+                    } 
+                    ?>
                 </div>
                 <div id="advertise-list-suggestion-content">
                     <?php
@@ -329,5 +328,3 @@ $fetch_method = $this->router->fetch_method();
         ?>
     </div>
 </div>
-
-<div id="advertise-list-empty-bottom-fix"></div>

@@ -63,3 +63,17 @@
 #home-row2-block2, #home-row2-block3 {
     margin: 20px 0px 0px 0px;
 }
+
+/*********************************************
+ ** SHARE HOT DEAL REDEMPTION LIST TITLE
+ *********************************************/
+
+.share-hot-deal-redemption-list-box-each {
+    width: 100%;
+    display: block;
+    margin: 0px 0px 30px 0px;
+}
+
+.share-hot-deal-redemption-list-box-each-photo-box {
+    height: 300px;
+}

@@ -1,0 +1,16 @@
+/*********************************************
+ ** HOT DEAL
+ *********************************************/
+
+#hot-deal-photo {
+    float: none;
+    width: 100%;
+}
+
+#hot-deal-information {
+    margin: 25px 0px 0px 0px;
+}
+
+#hot-deal-user-comment {
+    display: none;
+}
