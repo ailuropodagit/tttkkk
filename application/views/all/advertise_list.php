@@ -236,7 +236,7 @@ $fetch_method = $this->router->fetch_method();
             {
                 ?>
                 <div id='advertise-list-pagination'>
-                <?php echo $paging_links; ?>
+                    <?php echo $paging_links; ?>
                 </div>
                 <?php
             }

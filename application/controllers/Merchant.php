@@ -193,7 +193,7 @@ class Merchant extends CI_Controller
             $this->data['function_use_for'] = $function_use_for;
 
             $this->data['page_path_name'] = 'all/change_password';
-            $this->load->view('template/layout_right_menu', $this->data);
+            $this->load->view('template/index', $this->data);
         }
         else
         {
@@ -270,7 +270,7 @@ class Merchant extends CI_Controller
         if ($this->ion_auth->logged_in())
         {
             //LOGGED IN
-            $this->load->view('template/layout_right_menu', $data);
+            $this->load->view('template/index', $data);
         }
         else
         {
@@ -333,7 +333,7 @@ class Merchant extends CI_Controller
         if ($this->ion_auth->logged_in())
         {
             //LOGGED IN
-            $this->load->view('template/layout_right_menu', $data);
+            $this->load->view('template/index', $data);
         }
         else
         {
@@ -388,7 +388,7 @@ class Merchant extends CI_Controller
 
             $this->data['message'] = $this->session->flashdata('message');
             $this->data['page_path_name'] = 'merchant/payment';
-            $this->load->view('template/layout_right_menu', $this->data);
+            $this->load->view('template/index', $this->data);
         }
         else
         {
@@ -440,7 +440,7 @@ class Merchant extends CI_Controller
 
             $this->data['message'] = $this->session->flashdata('message');
             $this->data['page_path_name'] = 'merchant/payment_charge';
-            $this->load->view('template/layout_right_menu', $this->data);
+            $this->load->view('template/index', $this->data);
         }
         else
         {
@@ -1230,7 +1230,7 @@ class Merchant extends CI_Controller
 
         $this->data['temp_folder'] = $this->temp_folder;
         $this->data['page_path_name'] = 'merchant/profile';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
 
     public function update_profile_image()
@@ -1323,7 +1323,7 @@ class Merchant extends CI_Controller
 
             $this->data['message'] = $this->session->flashdata('message');
             $this->data['page_path_name'] = 'merchant/redemption';
-            $this->load->view('template/layout_right_menu', $this->data);
+            $this->load->view('template/index', $this->data);
         }
         else
         {
@@ -1733,7 +1733,7 @@ class Merchant extends CI_Controller
             }
         }
         $this->data['page_path_name'] = 'merchant/upload_ssm';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
 
     function candie_promotion($promotion_id = NULL)
@@ -2017,7 +2017,7 @@ class Merchant extends CI_Controller
         $this->data['candie_branch'] = $candie_branch;
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'merchant/candie_promotion';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
 
     function edit_hotdeal($hotdeal_id = NULL)
@@ -2246,7 +2246,7 @@ class Merchant extends CI_Controller
         $this->data['temp_folder'] = $this->temp_folder;
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'merchant/edit_hotdeal';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
 
     function remove_mua_picture()
@@ -2601,7 +2601,7 @@ class Merchant extends CI_Controller
         $this->data['temp_folder'] = $this->temp_folder;
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'merchant/upload_hotdeal';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
 
     // edit a user, no use
@@ -2839,7 +2839,7 @@ class Merchant extends CI_Controller
             $this->data['last_day'] = $last_day;
             $this->data['message'] = $this->session->flashdata('message');
             $this->data['page_path_name'] = 'merchant/analysis_report';
-            $this->load->view('template/layout_right_menu', $this->data);
+            $this->load->view('template/index', $this->data);
         }
         else
         {

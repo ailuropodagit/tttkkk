@@ -1,14 +1,14 @@
-<script type="text/javascript" src="<?php echo base_url() ?>js/jquery.countdown.js"></script>
-
+<!--RATING-->
 <script type="text/javascript" src="<?php echo base_url() ?>js/star-rating/jquery.rating.js"></script>
 <?php echo link_tag('js/star-rating/jquery.rating.css') ?>
-
+<!--JGROWL-->
 <script type="text/javascript" src="<?php echo base_url() ?>js/jgrowl/jquery.jgrowl.js"></script>
 <?php echo link_tag('js/jgrowl/jquery.jgrowl.css') ?>
 <script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script>
-
+<!--COUNTDOWN-->
+<script type="text/javascript" src="<?php echo base_url('js/jquery.countdown.js') ?>"></script>
+<!--SCRIPT-->
 <script type="text/javascript">
-
     //FB SHARE
 //    function fbShare() {
 //        FB.ui({
@@ -22,21 +22,10 @@
 //        });
 //    }
     
-    $( document ).ready(function() {
-        $('[data-countdown]').each(function() {
-            var $this = $(this), finalDate = $(this).data('countdown');
-            $this.countdown(finalDate).on('update.countdown', function(event) {
-                var format = '%H:%M:%S';
-                if (event.offset.days > 0) {
-                    format = '%-d day%!d ' + format;
-                }
-                if (event.offset.weeks > 0) {
-                    format = '%-w week%!w ' + format;
-                }
-                $this.html(event.strftime(format));
-            }).on('finish.countdown', function (event) {
-                $this.html('Expired!');
-            });
+    $(function(){
+        var end_time = $('#hot-deal-information-countdown-time').attr('end_time');
+        $('#hot-deal-information-countdown-time').countdown(end_time, function(event) {
+            $(this).html(event.strftime('%D Days &nbsp; %H Hours &nbsp; %M Minutes &nbsp; %S Seconds'));
         });
     });
 </script>
@@ -65,7 +54,6 @@
             ?>
         </div>
         <div class="float-fix"></div>
-        
         <div id='hot-deal-photo'>
             <div id='hot-deal-table'>
                 <div id='hot-deal-table-row'>
@@ -108,14 +96,20 @@
             </div>
         </div>        
         <div id='hot-deal-information'>
+            
+            <!--TITLE-->
             <div id="hot-deal-information-title">
                 <a href='<?php echo $merchant_dashboard_url ?>'> <?php echo $merchant_name ?></a>
             </div>
+            
+            <!--SUB TITLE-->
             <div id="hot-deal-information-sub-title">
                 <?php echo $title ?>
             </div>
-            <div id="hot-deal-rate">
-                <div id="hot-deal-rate-star">
+            
+            <!--RATE-->
+            <div id="hot-deal-information-rate">
+                <div id="hot-deal-information-rate-star">
                     <?php                                    
                     echo form_input($item_id);
                     echo form_input($item_type);
@@ -132,73 +126,99 @@
                     }
                     ?>
                 </div>
-                <div id="hot-deal-rate-review">
+                <div id="hot-deal-information-rate-review">
                     <?php
                     $rating_count = $this->m_custom->activity_rating_count($advertise_id, 'adv');
                     echo $rating_count . ' Review(s)';
                     ?>
                 </div>
-                <div id="hot-deal-rate-earn-candie">
+                <div id="hot-deal-information-rate-earn-candie">
                     <?php
                     $rate_candie_earn = $this->m_custom->display_trans_config(3);
                     echo "Earn : " . $rate_candie_earn . " candies";
                     ?>
                 </div>    
             </div>
-            <div id='hot-deal-price'>
-                <div id='hot-deal-price-after'>
-                    <?php
-                    if($price_before_show == 1)
-                    {
-                        echo 'RM ' . $price_before;
-                    }
-                    ?>
+            
+            <?php
+            //PRICE
+            if($price_before_show == 1 || $price_after_show == 1)
+            {
+                ?>
+                <div id='hot-deal-information-price'>
+                    <div id='hot-deal-information-price-after'>
+                        <?php
+                        if($price_before_show == 1)
+                        {
+                            echo 'RM ' . $price_before;
+                        }
+                        ?>
+                    </div>
+                    <div id='hot-deal-information-price-before'>
+                        <?php
+                        if($price_after_show == 1)
+                        {
+                            echo 'RM ' . $price_after;
+                        }
+                        ?>
+                    </div>
                 </div>
-                <div id='hot-deal-price-before'>
-                    <?php
-                    if($price_after_show == 1)
-                    {
-                        echo 'RM ' . $price_after;
-                    }
-                    ?>
+                <?php
+            }
+            
+            //DESCRIPTION
+            if ($description)
+            {
+                ?>
+                <div id="hot-deal-information-description">
+                    <?php echo $description ?>
                 </div>
-            </div>
-            <div id="hot-deal-description">
-                <?php echo $description ?>
-            </div>
-            <div id="hot-deal-like-comment">
-                <div id="hot-deal-like">
+                <?php
+            }
+            ?>
+            
+            <!--LIKE COMMENT-->
+            <div id="hot-deal-information-like-comment">
+                <div id="hot-deal-information-like">
                     <?php echo $like_url; ?>
                 </div>
-                <div id="hot-deal-comment">
+                <div id="hot-deal-information-comment">
                     <?php echo $comment_url; ?>
                 </div>
-                <div id="hot-deal-like-comment-earn-candie">
+                <div id="hot-deal-information-like-comment-earn-candie">
                     <?php
                     $like_comment_candie_earn = $this->m_custom->display_trans_config(2);
                     echo "Earn : " . $like_comment_candie_earn . " candies"; 
                     ?>
                 </div>
             </div>
-            <div id="hot-deal-horizontal-separator"></div>
-            <div id="hot-deal-share">
-                <div id="hot-deal-share-label">
+            
+            <!--COUNTDOWN-->
+            <div id="hot-deal-information-countdown">
+                 <div id="hot-deal-information-countdown-icon"><i class="fa fa-clock-o"></i></div>
+                <div id="hot-deal-information-countdown-time" end_time="<?php echo $end_time ?>"></div>
+            </div>
+            
+            <div id="hot-deal-information-horizontal-separator"></div>
+            
+            <!--SHARE-->
+            <div id="hot-deal-information-share">
+                <div id="hot-deal-information-share-label">
                     Share This Deal :
                 </div>
-                <div id="hot-deal-share-facebook" onclick="fbShare()">
+                <div id="hot-deal-information-share-facebook" onclick="fbShare()">
                     <div class="fb-share-button" data-href="http://localhost/keppo/all/advertise/56/hot/26" data-layout="button_count"></div>
                 </div>
-                <div id="hot-deal-share-earn-candie">
-                    Earn: 10 candies
+                <div id="hot-deal-information-share-earn-candie">
+                    <?php echo " (Earn : " . $this->m_custom->display_trans_config(10) . " candies)"; ?>
                 </div>
             </div>
-            <div style="float:right; display:none">
-                <?php echo " (Earn : " . $this->m_custom->display_trans_config(10) . " candies)"; ?>
-            </div>
-            <div id="float-fix"></div>
-            <div id="hot-deal-people-reach">
+            
+            <!--PEOPLE REACH-->
+            <div id="hot-deal-information-people-reach">
                 <?php echo "People Reached " . $this->m_custom->activity_view_count($advertise_id) . " users"; ?>
             </div>
+            
         </div>
         <div class="float-fix"></div>
         <div id="hot-deal-user-comment">

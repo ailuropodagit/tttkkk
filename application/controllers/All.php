@@ -27,7 +27,7 @@ class All extends CI_Controller
 
     function hotdeal_list($sub_category_id)
     {
-        $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('hot', $sub_category_id);
+        $this->data['share_hotdeal_redemption_list'] = $this->m_custom->getAdvertise('hot', $sub_category_id);
         $this->data['title'] = "Hot Deal";
         if (!IsNullOrEmptyString($sub_category_id))
         {
@@ -45,14 +45,14 @@ class All extends CI_Controller
         $this->data['advertise_suggestion_page_path_name'] = 'all/hot_deal_list_suggestion';
         $this->data['advertise_suggestion_page_title'] = 'Hot Deal Suggestion';
         //NORMAL PAGE
-        $this->data['page_path_name'] = 'share/hot_deal_redemption_list';
+        $this->data['page_path_name'] = 'share/hotdeal_redemption_list';
         $this->load->view('template/index_left_category', $this->data);
     }
 
     function promotion_list()
     {
         $sub_category_id = $this->uri->segment(3);
-        $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('pro', $sub_category_id);
+        $this->data['share_hotdeal_redemption_list'] = $this->m_custom->getAdvertise('pro', $sub_category_id);
         $this->data['title'] = "Redemption";
         if (!IsNullOrEmptyString($sub_category_id))
         {
@@ -70,7 +70,7 @@ class All extends CI_Controller
         $this->data['advertise_suggestion_page_path_name'] = 'all/hot_deal_list_suggestion';
         $this->data['advertise_suggestion_page_title'] = 'Hot Deal Suggestion';
         //NORMAL PAGE
-        $this->data['page_path_name'] = 'share/hot_deal_redemption_list';
+        $this->data['page_path_name'] = 'share/hotdeal_redemption_list';
         $this->load->view('template/index_left_category', $this->data);
     }
 
@@ -100,10 +100,8 @@ class All extends CI_Controller
                 $login_data = $this->m_custom->get_one_table_record('users', 'id', $login_id);
                 $this->m_custom->activity_view($advertise_id, 'adv');
             }
-
             $merchant_row = $this->m_merchant->getMerchant($the_row['merchant_id']);
             $this->data['merchant_dashboard_url'] = base_url() . "all/merchant-dashboard/" . $merchant_row['slug'];
-
             $this->data['advertise_id'] = $advertise_id;
             $this->data['merchant_name'] = $merchant_row['company'];
             $this->data['title'] = $the_row['title'];
@@ -189,7 +187,7 @@ class All extends CI_Controller
             }
             if ($this->ion_auth->logged_in())
             {
-                $this->load->view('template/layout_right_menu', $this->data);
+                $this->load->view('template/index', $this->data);
             }
             else
             {
@@ -210,7 +208,7 @@ class All extends CI_Controller
             $notification_list = $this->m_custom->display_row_monitor();
             $this->data['notification_list'] = $notification_list;
             $this->data['page_path_name'] = 'all/monitoring';
-            $this->load->view('template/layout_right_menu', $this->data);
+            $this->load->view('template/index', $this->data);
         }
         else
         {
@@ -249,7 +247,7 @@ class All extends CI_Controller
             $notification_list = $this->m_custom->notification_display($user_id);
             $this->data['notification_list'] = $notification_list;
             $this->data['page_path_name'] = 'all/notification';
-            $this->load->view('template/layout_right_menu', $this->data);
+            $this->load->view('template/index', $this->data);
             if ($this->config->item('notification_auto_mark_as_read') == 1)
             {
                 $this->m_custom->notification_read($user_id);
@@ -389,9 +387,9 @@ class All extends CI_Controller
             $this->data['expire_date'] = displayDate($the_row['voucher_expire_date']);
             $this->data['candie_term'] = $this->m_custom->many_get_childlist_detail('candie_term', $advertise_id, 'dynamic_option');
             $this->data['candie_branch'] = $this->m_custom->many_get_childlist_detail('candie_branch', $advertise_id, 'merchant_branch');
+            
             $this->data['page_path_name'] = 'all/voucher';
-
-            $template_used = 'template/layout_right_menu';
+            $template_used = 'template/index';
             $this->load->library('user_agent');
             if ($this->agent->is_browser('Safari'))
             {
@@ -417,7 +415,7 @@ class All extends CI_Controller
 
         if ($this->ion_auth->logged_in())
         {
-            $this->load->view('template/layout_right_menu', $this->data);
+            $this->load->view('template/index', $this->data);
         }
         else
         {
@@ -499,7 +497,7 @@ class All extends CI_Controller
 
             if ($this->ion_auth->logged_in())
             {
-                $this->load->view('template/layout_right_menu', $this->data);
+                $this->load->view('template/index', $this->data);
             }
             else
             {
@@ -583,7 +581,7 @@ class All extends CI_Controller
 
             if ($this->ion_auth->logged_in())
             {
-                $this->load->view('template/layout_right_menu', $this->data);
+                $this->load->view('template/index', $this->data);
             }
             else
             {
@@ -607,7 +605,7 @@ class All extends CI_Controller
         $this->data['page_path_name'] = 'all/album_user_merchant';
         if ($this->ion_auth->logged_in())
         {
-            $this->load->view('template/layout_right_menu', $this->data);
+            $this->load->view('template/index', $this->data);
         }
         else
         {
@@ -631,7 +629,7 @@ class All extends CI_Controller
         $this->data['page_path_name'] = 'all/album_user';
         if ($this->ion_auth->logged_in())
         {
-            $this->load->view('template/layout_right_menu', $this->data);
+            $this->load->view('template/index', $this->data);
         }
         else
         {
@@ -682,7 +680,7 @@ class All extends CI_Controller
         $this->data['page_path_name'] = 'all/advertise_list';
         if ($this->ion_auth->logged_in())
         {
-            $this->load->view('template/layout_right_menu', $this->data);
+            $this->load->view('template/index', $this->data);
         }
         else
         {
@@ -736,7 +734,7 @@ class All extends CI_Controller
 
         if ($this->ion_auth->logged_in())
         {
-            $this->load->view('template/layout_right_menu', $this->data);
+            $this->load->view('template/index', $this->data);
         }
         else
         {
@@ -849,7 +847,7 @@ class All extends CI_Controller
             $data['page_path_name'] = 'all/like_list';
             if ($this->ion_auth->logged_in())
             {
-                $this->load->view('template/layout_right_menu', $data);
+                $this->load->view('template/index', $data);
             }
             else
             {
@@ -872,7 +870,7 @@ class All extends CI_Controller
             $data['page_path_name'] = 'all/promo_code_list';
             if ($this->ion_auth->logged_in())
             {
-                $this->load->view('template/layout_right_menu', $data);
+                $this->load->view('template/index', $data);
             }
             else
             {
@@ -960,7 +958,7 @@ class All extends CI_Controller
                 if ($this->ion_auth->logged_in())
                 {
                     //LOGGED IN
-                    $this->load->view('template/layout_right_menu', $data);
+                    $this->load->view('template/index', $data);
                 }
                 else
                 {
@@ -1000,7 +998,7 @@ class All extends CI_Controller
         if ($this->ion_auth->logged_in())
         {
             //LOGGED IN
-            $this->load->view('template/layout_right_menu', $data);
+            $this->load->view('template/index', $data);
         }
         else
         {
@@ -1062,7 +1060,7 @@ class All extends CI_Controller
             );
             $data['post_title'] = 'Edit Comment';
             $data['page_path_name'] = 'all/comment_edit';
-            $this->load->view('template/layout_right_menu', $data);
+            $this->load->view('template/index', $data);
         }
         else
         {
@@ -1162,7 +1160,7 @@ class All extends CI_Controller
             }
             if ($this->ion_auth->logged_in())
             {
-                $this->load->view('template/layout_right_menu', $this->data);
+                $this->load->view('template/index', $this->data);
             }
             else
             {
@@ -1201,7 +1199,7 @@ class All extends CI_Controller
             $this->data['page_path_name'] = 'merchant/outlet';
             if ($this->ion_auth->logged_in())
             {
-                $this->load->view('template/layout_right_menu', $this->data);
+                $this->load->view('template/index', $this->data);
             }
             else
             {
@@ -1249,7 +1247,7 @@ class All extends CI_Controller
 
                 if ($this->ion_auth->logged_in())
                 {
-                    $this->load->view('template/layout_right_menu', $this->data);
+                    $this->load->view('template/index', $this->data);
                 }
                 else
                 {
@@ -1317,7 +1315,7 @@ class All extends CI_Controller
 
                 if ($this->ion_auth->logged_in())
                 {
-                    $this->load->view('template/layout_right_menu', $this->data);
+                    $this->load->view('template/index', $this->data);
                 }
                 else
                 {

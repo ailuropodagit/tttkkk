@@ -9,8 +9,9 @@
 
 #hot-deal-information {
     margin: 25px 0px 0px 0px;
+    width: 100%;
 }
 
 #hot-deal-user-comment {
-    display: none;
+    width: auto;
 }

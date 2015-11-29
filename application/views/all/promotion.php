@@ -1,5 +1,7 @@
+<!--RATING-->
 <script type="text/javascript" src="<?php echo base_url() ?>js/star-rating/jquery.rating.js"></script>
 <?php echo link_tag('js/star-rating/jquery.rating.css') ?>
+<!--JGROWL-->
 <script type="text/javascript" src="<?php echo base_url() ?>js/jgrowl/jquery.jgrowl.js"></script>
 <?php echo link_tag('js/jgrowl/jquery.jgrowl.css') ?>
 <script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script>
@@ -8,7 +10,7 @@
 //MESSAGE
 if(isset($message))
 {
-    ?><div id="message"><?php echo $message; ?></div><?php
+    ?><div id="message"><?php echo $message ?></div><?php
 }
 ?>
 

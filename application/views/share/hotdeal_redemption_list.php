@@ -11,7 +11,7 @@ $fetch_method = $this->router->fetch_method();
     <div id="share-hot-deal-redemption-list-title"><?php echo $title ?></div>
     <div id="share-hot-deal-redemption-list-box">
         <?php
-        foreach ($hotdeal_list as $row)
+        foreach ($share_hotdeal_redemption_list as $row)
         {
             $advertise_id = $row['advertise_id'];
             $sub_category_id = $row['sub_category_id'];
@@ -90,6 +90,15 @@ $fetch_method = $this->router->fetch_method();
                         </div>
                     </div>
                 </a>
+            </div>
+            <?php
+        }
+        //PAGINATION
+        if (!empty($paging_links))
+        {
+            ?>
+            <div id='advertise-list-pagination'>
+                <?php echo $paging_links; ?>
             </div>
             <?php
         }

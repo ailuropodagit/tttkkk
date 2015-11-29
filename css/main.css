@@ -1782,12 +1782,12 @@ html, body {
 #hot-deal-category {
     float: left;
     font-size: 16px;
-    padding: 0px 0px 20px 0px;
+    padding: 0px 0px 25px 0px;
 }
 
 #hot-deal-edit-link {
     float: right;
-    padding: 0px 0px 20px 0px;
+    padding: 0px 0px 25px 0px;
 }
 
 #hot-deal-edit-link a {
@@ -1813,10 +1813,6 @@ html, body {
     width: 100%;
 }
 
-#hot-deal-center {
-    margin: 0px auto 0px auto;
-}
-
 #hot-deal-left, #hot-deal-right {
     font-size: 45px;
     width: 50px;
@@ -1840,14 +1836,6 @@ html, body {
 
 #hot-deal-right a:hover, #hot-deal-left a:hover {
     color: #919191;
-}
-
-#hot-deal-title a {
-    font-size: 25px;
-    color: black;
-    font-weight: bold;
-    color: black;
-    text-decoration: none;
 }
 
 #hot-deal-photo {
@@ -1898,87 +1886,103 @@ html, body {
     color: black;
 }
 
-#hot-deal-rate {
+#hot-deal-information-rate {
     text-align: left;
-    margin: 20px 0px 10px 0px;
+    margin: 20px 0px 0px 0px;
 }
 
-#hot-deal-rate-star {
+#hot-deal-information-rate-star {
     display: inline-block;
     width: 85px;
 }
 
-#hot-deal-rate-review {
+#hot-deal-information-rate-review {
     display: inline-block;
     margin: 0px 0px 0px 10px;
     font-size: 12px;
 }
 
-#hot-deal-rate-earn-candie {
+#hot-deal-information-rate-earn-candie {
     font-size: 13px;
     margin: 3px 0px 0px 0px;
     color: #939393;
 }
 
-#hot-deal-price {
+#hot-deal-information-price {
     margin: 25px 0px 0px 0px;
 }
 
-#hot-deal-price-after {
+#hot-deal-information-price-after {
     color: #d92222;
     font-size: 20px;
     font-weight: bold;
 }
 
-#hot-deal-price-before {
+#hot-deal-information-price-before {
     color: #666666;
     text-decoration: line-through;
     margin: 5px 0px 0px 0px;
     font-size: 15px;
 }
 
-#hot-deal-description {
+#hot-deal-information-description {
     line-height: 20px;
     color: #666666;
+    margin: 20px 0px 0px 0px;
 }
 
-#hot-deal-like-comment {
+#hot-deal-information-like-comment {
     text-align: left;
-    margin: 25px 30px 0px 0px;
+    margin: 20px 0px 0px 0px;
 }
 
-#hot-deal-like {
+#hot-deal-information-like {
     display: inline-block;
     margin: 0px 15px 0px 0px;
     font-size: 15px;
 }
 
-#hot-deal-comment {
+#hot-deal-information-comment {
     display: inline-block;
     font-size: 15px;
 }
 
-#hot-deal-like-comment-earn-candie {
+#hot-deal-information-like-comment-earn-candie {
     font-size: 13px;
-    margin: 3px 0px 25px 0px;
+    margin: 3px 0px 0px 0px;
     color: #939393;
 }
 
-#hot-deal-horizontal-separator {
+#hot-deal-information-countdown {
+    margin: 28px 0px 28px 0px;
+}
+
+#hot-deal-information-countdown-icon {
+    display: inline;
+    margin: 0px 10px 0px 0px;
+    font-size: 15px;
+}
+
+#hot-deal-information-countdown-time {
+    display: inline;
+    font-size: 16px;
+}
+
+#hot-deal-information-horizontal-separator {
     border-bottom: 1px solid #e2e2e2;
 }
 
-#hot-deal-share {
+#hot-deal-information-share {
     margin: 15px 0px 0px 0px;
 }
 
-#hot-deal-share-label {
+#hot-deal-information-share-label {
     display: inline;
     font-weight: bold;
     text-transform: uppercase;
 }
 
-#hot-deal-share-facebook {
+#hot-deal-information-share-facebook {
     display: inline;
     margin: 0px 0px 0px 3px;
     color: #4a5e91;
@@ -1986,13 +1990,13 @@ html, body {
     cursor: pointer;
 }
 
-#hot-deal-share-earn-candie {
+#hot-deal-information-share-earn-candie {
     font-size: 13px;
     margin: 3px 0px 0px 0px;
     color: #939393;
 }
 
-#hot-deal-people-reach {
+#hot-deal-information-people-reach {
     margin: 30px 0px 0px 0px;
     text-align: left;
 }
@@ -2002,6 +2006,308 @@ html, body {
     width: 600px;
     text-align: left;
 }
+
+/*********************************************
+ ** REDEMPTION
+ *********************************************/
+
+#redemption-content {
+    margin: 20px 0px 0px 0px;
+}
+
+#redemption-category {
+    float: left;
+    font-size: 16px;
+    padding: 0px 0px 25px 0px;
+}
+
+#redemption-print {
+    float: left;
+    margin: 20px 0px 0px 0px;
+}
+
+#redemption-edit-link {
+    float: right;
+    margin: 20px 0px 0px 0px;
+}
+
+#redemption-edit-link a {
+    font-size: 16px;
+}
+
+#redemption-expired-date {
+    margin: 25px 0px 0px 20px;
+    float: left;
+    font-size: 22px;
+}
+
+#redemption-candies {
+    margin: 25px 20px 0px 0px;
+    float: right;
+    font-size: 23px;
+}
+
+#redemption-voucher-barcode {
+    margin: 5px 0px 15px 0px;
+}
+
+#redemption-table {
+    display: table;
+    width: 100%;
+    margin: 20px 0px 0px 0px;
+}
+
+#redemption-table-row {
+    display: table-row;
+}
+
+#redemption-table-row-cell {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.redemption-center-cell {
+    width: 100%;
+}
+
+#redemption-center {
+    margin: 0px auto 0px auto;
+}
+
+#redemption-right, #redemption-left {
+    font-size: 45px;
+    width: 50px;
+}
+
+#redemption-left { 
+    text-align: left;
+}
+
+#redemption-right {
+    text-align: right;
+}
+
+#redemption-left-gray, #redemption-right-gray {
+    color: #ebebeb;
+}
+
+#redemption-right a, #redemption-left a {
+    color: #b6b6b6;
+}
+
+#redemption-right a:hover, #redemption-left a:hover {
+    color: #919191;
+}
+
+#redemption-title {
+    margin: 0px 0px 20px 0px;
+    text-align: left;
+}
+
+#redemption-title a {
+    font-size: 25px;
+    color: black;
+    font-weight: bold;
+}
+
+#redemption-photo-box {
+    width: 100%;
+    border: 1px solid lightgray;
+    background-color: whitesmoke;
+    margin: 10px auto 10px auto;
+}
+
+#redemption-photo-box img {
+    max-width: 100%;
+}
+
+#redemption-sub-title {
+    font-size: 23px;
+    color: black;
+    margin: 20px 0px 0px 0px;
+}
+
+#redemption-voucher-worth {
+    margin: 10px 0px 5px 0px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#redemption-time {
+    margin: 20px 0px 20px 0px;
+    font-size: 20px;
+}
+
+#redemption-time-label {
+    margin: 0px 0px 0px 5px;
+}
+
+#redemption-rate {
+    text-align: left;
+    margin: 20px 0px 10px 0px;
+}
+
+#redemption-rate-star {
+    display: inline-block;
+    width: 85px;
+}
+
+#redemption-rate-star-label {
+    display: inline-block;
+    margin: 0px 0px 0px 5px;
+    font-size: 18px;
+}
+
+#redemption-rate-review {
+    display: inline-block;
+    margin: 0px 0px 0px 20px;
+    font-size: 18px;
+}
+
+#redemption-rate-earn-candie {
+    font-size: 16px;
+    margin: 8px 0px 0px 0px;
+}
+
+#redemption-description {
+    margin: 20px 0px 0px 0px;
+    padding: 7px;
+    text-align: left;
+    border-radius: 4px;
+    border: 1px solid #a9a9a9;
+    height: 200px;
+    overflow-y: scroll;
+    line-height: 25px;
+    text-align: justify;
+}
+
+#redemption-like-comment-share {
+    margin: 10px 0px 0px 0px;
+}
+
+#redemption-like-comment {
+    text-align: left;
+    float: left;
+    margin: 20px 30px 0px 0px;
+}
+
+#redemption-like {
+    display: inline-block;
+    margin: 0px 15px 0px 0px;
+}
+
+#redemption-comment {
+    display: inline-block;
+}
+
+#redemption-like-comment-earn-candie {
+    font-size: 16px;
+    margin: 8px 0px 0px 0px;
+}
+
+#redemption-share {
+    margin: 14px 0px 0px 0px;
+    text-align: right;
+    float: right;
+}
+
+#redemption-share-facebook {
+    margin: 0px 0px 0px 3px;
+    color: #4a5e91;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+#redemption-share-earn-candie {
+    font-size: 16px;
+    margin: 8px 0px 0px 0px;
+}
+
+#redemption-terms-conditions {
+    margin: 30px 0px 0px 0px;
+    text-align: left;
+}
+
+#redemption-terms-conditions-title {
+    font-weight: bold;
+    font-size: 18px;
+    color: black;
+    text-decoration: underline;
+    margin: 0px 0px 8px 0px;
+}
+
+#redemption-terms-conditions ul {
+    margin: 0px 0px 0px 20px;
+    padding: 0px;
+}
+
+#redemption-terms-conditions li {
+    margin: 0px 0px 8px 0px;
+    color: black;
+    font-size: 18px;
+}
+
+#redemption-available-branch {
+    margin: 20px 0px 0px 0px;
+    text-align: left;
+}
+
+#redemption-available-branch-title {
+    font-weight: bold;
+    font-size: 18px;
+    color: black;
+    text-decoration: underline;
+    margin: 0px 0px 8px 0px;
+}
+
+#redemption-available-branch ul {
+    margin: 0px 0px 0px 20px;
+    padding: 0px;
+}
+
+#redemption-available-branch li {
+    margin: 0px 0px 10px 0px;
+    color: black;
+    font-size: 18px;
+}
+
+#redemption-available-branch-name {
+    font-weight: bold;
+    font-size: 17px;
+}
+
+#redemption-available-branch-address {
+    margin: 5px 0px 0px 0px;
+}
+
+#redemption-available-branch-tel {
+    float: left;
+    margin: 5px 0px 0px 0px;
+}
+
+#redemption-available-branch-view-map {
+    float: right;
+    margin: 5px 0px 0px 0px;
+}
+
+#redemption-redempt-submit {
+    margin: 20px 0px 0px 0px;
+    float: right;
+}
+
+#redemption-line {
+    margin: 30px 0px 30px 0px;
+    border-bottom: 1px solid lightgray;
+}
+
+#redemption-comment-list {
+    width: 500px;
+    margin: 0px auto 0px auto;
+    text-align: left;
+}
+
+
 
 
 
@@ -3296,299 +3602,6 @@ html, body {
 #upload-for-merchant-remove {
     margin: 20px 0px 0px;
     height: 20px;
-}
-
-/* REDEMPTION
-******************************/
-
-#redemption-content {
-    margin: 20px 0px 0px 0px;
-}
-
-#redemption-category {
-    float: left;
-}
-
-#redemption-print {
-    float: left;
-    margin: 20px 0px 0px 0px;
-}
-
-#redemption-edit-link {
-    float: right;
-    margin: 20px 0px 0px 0px;
-}
-
-#redemption-expired-date {
-    margin: 25px 0px 0px 20px;
-    float: left;
-    font-size: 22px;
-}
-
-#redemption-candies {
-    margin: 25px 20px 0px 0px;
-    float: right;
-    font-size: 23px;
-}
-
-#redemption-voucher-barcode {
-    margin: 5px 0px 15px 0px;
-}
-
-#redemption-table {
-    display: table;
-    width: 100%;
-    margin: 20px 0px 0px 0px;
-}
-
-#redemption-table-row {
-    display: table-row;
-}
-
-#redemption-table-row-cell {
-    display: table-cell;
-    text-align: center;
-    vertical-align: middle;
-}
-
-.redemption-center-cell {
-    width: 100%;
-}
-
-#redemption-center {
-    margin: 0px auto 0px auto;
-}
-
-#redemption-right, #redemption-left {
-    font-size: 45px;
-    width: 50px;
-}
-
-#redemption-left { 
-    text-align: left;
-}
-
-#redemption-right {
-    text-align: right;
-}
-
-#redemption-left-gray, #redemption-right-gray {
-    color: #ebebeb;
-}
-
-#redemption-right a, #redemption-left a {
-    color: #b6b6b6;
-}
-
-#redemption-right a:hover, #redemption-left a:hover {
-    color: #919191;
-}
-
-#redemption-title {
-    margin: 0px 0px 20px 0px;
-    text-align: left;
-}
-
-#redemption-title a {
-    font-size: 25px;
-    color: black;
-    font-weight: bold;
-}
-
-#redemption-photo-box {
-    width: 100%;
-    border: 1px solid lightgray;
-    background-color: whitesmoke;
-    margin: 10px auto 10px auto;
-}
-
-#redemption-photo-box img {
-    max-width: 100%;
-}
-
-#redemption-sub-title {
-    font-size: 23px;
-    color: black;
-    margin: 20px 0px 0px 0px;
-}
-
-#redemption-voucher-worth {
-    margin: 10px 0px 5px 0px;
-    font-weight: bold;
-    font-size: 14px;
-}
-
-#redemption-time {
-    margin: 20px 0px 20px 0px;
-    font-size: 20px;
-}
-
-#redemption-time-label {
-    margin: 0px 0px 0px 5px;
-}
-
-#redemption-rate {
-    text-align: left;
-    margin: 20px 0px 10px 0px;
-}
-
-#redemption-rate-star {
-    display: inline-block;
-    width: 85px;
-}
-
-#redemption-rate-star-label {
-    display: inline-block;
-    margin: 0px 0px 0px 5px;
-    font-size: 18px;
-}
-
-#redemption-rate-review {
-    display: inline-block;
-    margin: 0px 0px 0px 20px;
-    font-size: 18px;
-}
-
-#redemption-rate-earn-candie {
-    font-size: 16px;
-    margin: 8px 0px 0px 0px;
-}
-
-#redemption-description {
-    margin: 20px 0px 0px 0px;
-    padding: 7px;
-    text-align: left;
-    border-radius: 4px;
-    border: 1px solid #a9a9a9;
-    height: 200px;
-    overflow-y: scroll;
-    line-height: 25px;
-    text-align: justify;
-}
-
-#redemption-like-comment-share {
-    margin: 10px 0px 0px 0px;
-}
-
-#redemption-like-comment {
-    text-align: left;
-    float: left;
-    margin: 20px 30px 0px 0px;
-}
-
-#redemption-like {
-    display: inline-block;
-    margin: 0px 15px 0px 0px;
-}
-
-#redemption-comment {
-    display: inline-block;
-}
-
-#redemption-like-comment-earn-candie {
-    font-size: 16px;
-    margin: 8px 0px 0px 0px;
-}
-
-#redemption-share {
-    margin: 14px 0px 0px 0px;
-    text-align: right;
-    float: right;
-}
-
-#redemption-share-facebook {
-    margin: 0px 0px 0px 3px;
-    color: #4a5e91;
-    font-size: 22px;
-    cursor: pointer;
-}
-
-#redemption-share-earn-candie {
-    font-size: 16px;
-    margin: 8px 0px 0px 0px;
-}
-
-#redemption-terms-conditions {
-    margin: 30px 0px 0px 0px;
-    text-align: left;
-}
-
-#redemption-terms-conditions-title {
-    font-weight: bold;
-    font-size: 18px;
-    color: black;
-    text-decoration: underline;
-    margin: 0px 0px 8px 0px;
-}
-
-#redemption-terms-conditions ul {
-    margin: 0px 0px 0px 20px;
-    padding: 0px;
-}
-
-#redemption-terms-conditions li {
-    margin: 0px 0px 8px 0px;
-    color: black;
-    font-size: 18px;
-}
-
-#redemption-available-branch {
-    margin: 20px 0px 0px 0px;
-    text-align: left;
-}
-
-#redemption-available-branch-title {
-    font-weight: bold;
-    font-size: 18px;
-    color: black;
-    text-decoration: underline;
-    margin: 0px 0px 8px 0px;
-}
-
-#redemption-available-branch ul {
-    margin: 0px 0px 0px 20px;
-    padding: 0px;
-}
-
-#redemption-available-branch li {
-    margin: 0px 0px 10px 0px;
-    color: black;
-    font-size: 18px;
-}
-
-#redemption-available-branch-name {
-    font-weight: bold;
-    font-size: 17px;
-}
-
-#redemption-available-branch-address {
-    margin: 5px 0px 0px 0px;
-}
-
-#redemption-available-branch-tel {
-    float: left;
-    margin: 5px 0px 0px 0px;
-}
-
-#redemption-available-branch-view-map {
-    float: right;
-    margin: 5px 0px 0px 0px;
-}
-
-#redemption-redempt-submit {
-    margin: 20px 0px 0px 0px;
-    float: right;
-}
-
-#redemption-line {
-    margin: 30px 0px 30px 0px;
-    border-bottom: 1px solid lightgray;
-}
-
-#redemption-comment-list {
-    width: 500px;
-    margin: 0px auto 0px auto;
-    text-align: left;
 }
 
 /* USER REDEMPTION

@@ -266,7 +266,9 @@ $this->album_admin = $this->config->item('album_admin');
                         $merchant_id = $hotdeal['merchant_id'];
                         $image = $hotdeal['image'];
                         $title = $hotdeal['title'];
+                        $price_before_show = $hotdeal['price_before_show'];
                         $price_before = $hotdeal['price_before'];
+                        $price_after_show = $hotdeal['price_after_show'];
                         $price_after = $hotdeal['price_after'];
                         $end_time = $hotdeal['end_time'];
                         if ($advertise_type == 'adm')
@@ -314,7 +316,7 @@ $this->album_admin = $this->config->item('album_admin');
                                     <div class="home-row3-column1-today-deal-box-each-information-price">
                                         <div class="home-row3-column1-today-deal-box-each-information-price-after">
                                             <?php
-                                            if ($price_after)
+                                            if ($price_after_show)
                                             {
                                                 echo 'RM ' . $price_after;
                                             }
@@ -322,7 +324,7 @@ $this->album_admin = $this->config->item('album_admin');
                                         </div>
                                         <div class="home-row3-column1-today-deal-box-each-information-price-before">
                                             <?php 
-                                            if ($price_before) 
+                                            if ($price_before_show) 
                                             {
                                                 echo 'RM ' . $price_before;
                                             }
@@ -397,9 +399,7 @@ $this->album_admin = $this->config->item('album_admin');
                                         <div class="home-row3-column1-redemption-box-each-information-title">
                                             <?php echo $title ?>
                                         </div>
-<!--                                        <div class="home-row3-column1-redemption-box-each-information-rating">
-                                            
-                                        </div>-->
+                                        <!--<div class="home-row3-column1-redemption-box-each-information-rating"></div>-->
                                     </div>
                                     <div class="home-row3-column1-redemption-box-each-information-candie">
                                         <?php echo $candie ?> Candies

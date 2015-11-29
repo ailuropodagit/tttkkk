@@ -403,7 +403,7 @@ class User extends CI_Controller
             $this->data['function_use_for'] = $function_use_for;
 
             $this->data['page_path_name'] = 'all/change_password';
-            $this->load->view('template/layout_right_menu', $this->data);
+            $this->load->view('template/index', $this->data);
         }
         else
         {
@@ -482,7 +482,7 @@ class User extends CI_Controller
         if ($this->ion_auth->logged_in())
         {
             //LOGGED IN
-            $this->load->view('template/layout_right_menu', $data);
+            $this->load->view('template/index', $data);
         }
         else
         {
@@ -547,7 +547,7 @@ class User extends CI_Controller
         if ($this->ion_auth->logged_in())
         {
             //LOGGED IN
-            $this->load->view('template/layout_right_menu', $data);
+            $this->load->view('template/index', $data);
         }
         else
         {
@@ -1344,7 +1344,7 @@ class User extends CI_Controller
         
         $this->data['temp_folder'] = $this->temp_folder;  
         $this->data['page_path_name'] = 'user/profile';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
 
     function update_profile_image()
@@ -1539,7 +1539,7 @@ class User extends CI_Controller
         $this->data['temp_folder'] = $this->temp_folder;
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'user/edit_merchant_picture';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
 
     function edit_user_picture($picture_id = NULL)
@@ -1673,7 +1673,7 @@ class User extends CI_Controller
         $this->data['temp_folder'] = $this->temp_folder;
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'user/edit_user_picture';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
 
     function upload_for_merchant($slug = NULL)
@@ -1831,7 +1831,7 @@ class User extends CI_Controller
         $this->data['temp_folder'] = $this->temp_folder;  
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'user/upload_for_merchant';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
 
     public function get_merchant_by_category($i, $selected_category = NULL)
@@ -1901,7 +1901,7 @@ class User extends CI_Controller
 
             $this->data['message'] = $this->session->flashdata('message');
             $this->data['page_path_name'] = 'user/candie';
-            $this->load->view('template/layout_right_menu', $this->data);
+            $this->load->view('template/index', $this->data);
         }
         else
         {
@@ -1942,7 +1942,7 @@ class User extends CI_Controller
 
             $this->data['message'] = $this->session->flashdata('message');
             $this->data['page_path_name'] = 'user/balance_page';
-            $this->load->view('template/layout_right_menu', $this->data);
+            $this->load->view('template/index', $this->data);
         }
         else
         {
@@ -2024,7 +2024,7 @@ class User extends CI_Controller
 
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'user/redemption';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
 
     function review_adv($act_type = NULL, $users_id = NULL, $category = NULL)
@@ -2048,7 +2048,7 @@ class User extends CI_Controller
         if ($this->ion_auth->logged_in())
         {
             //LOGGED IN
-            $this->load->view('template/layout_right_menu', $data);
+            $this->load->view('template/index', $data);
         }
         else
         {
@@ -2088,7 +2088,7 @@ class User extends CI_Controller
             }
         }
         $data['category_list'] = $category_list;
-        $this->load->view('template/layout_right_menu', $data);
+        $this->load->view('template/index', $data);
     }
     
     function upload_image()
@@ -2186,7 +2186,7 @@ class User extends CI_Controller
         $this->data['temp_folder'] = $this->temp_folder;             
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'user/upload_image';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
 
     // edit a user, no use
@@ -2462,7 +2462,7 @@ class User extends CI_Controller
             redirect('/', 'refresh');
         }
         $data['page_path_name'] = 'user/invite_friend';
-        $this->load->view('template/layout_right_menu', $data);
+        $this->load->view('template/index', $data);
     }
     
     //SEND INVITATION EMAIL 
@@ -2522,7 +2522,7 @@ class User extends CI_Controller
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 
         $this->data['page_path_name'] = 'user/promo_code';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
 
     function _get_csrf_nonce()

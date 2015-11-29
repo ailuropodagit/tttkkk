@@ -180,7 +180,7 @@ class Admin extends CI_Controller
             $this->data['function_use_for'] = $function_use_for;
 
             $this->data['page_path_name'] = 'all/change_password';
-            $this->load->view('template/layout_right_menu', $this->data);
+            $this->load->view('template/index', $this->data);
         }
         else
         {
@@ -774,7 +774,7 @@ class Admin extends CI_Controller
         $this->data['notification_list'] = $notification_list;
 
         $this->data['page_path_name'] = 'all/notification';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
 
         if ($this->config->item('notification_auto_mark_as_read') == 1)
         {
@@ -876,7 +876,7 @@ class Admin extends CI_Controller
 
         $this->data['temp_folder'] = $this->temp_folder;
         $this->data['page_path_name'] = 'admin/profile';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
 
     function update_profile_image()
@@ -958,7 +958,7 @@ class Admin extends CI_Controller
 
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
         $this->data['page_path_name'] = 'admin/category_management';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
 
     function category_add()
@@ -1059,7 +1059,7 @@ class Admin extends CI_Controller
         );
 
         $this->data['page_path_name'] = 'admin/category_add';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
 
     function category_edit($edit_id)
@@ -1206,7 +1206,7 @@ class Admin extends CI_Controller
         $this->data['main_category_selected'] = $result['main_category_id'] == NULL ? '0' : $result['main_category_id'];
 
         $this->data['page_path_name'] = 'admin/category_edit';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
 
     function check_main_category_id($dropdown_selection)
@@ -1231,7 +1231,7 @@ class Admin extends CI_Controller
 
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
         $this->data['page_path_name'] = 'admin/user_management';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
 
     function user_special_action()
@@ -1376,7 +1376,7 @@ class Admin extends CI_Controller
         $option_list = $this->m_custom->get_many_table_record('transaction_extra', 'trans_conf_id', '31', 1, 'user_id', $user_id); 
         $this->data['the_result'] = $option_list;
         $this->data['page_path_name'] = 'admin/user_bonus_candie_change';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
 
     function user_balance_adjust($user_id)
@@ -1468,7 +1468,7 @@ class Admin extends CI_Controller
         $option_list = $this->m_custom->get_many_table_record('transaction_extra', 'trans_conf_id', '23', 1, 'user_id', $user_id); 
         $this->data['the_result'] = $option_list;
         $this->data['page_path_name'] = 'admin/user_balance_adjust';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
     
     function merchant_management($low_balance_only = 0)
@@ -1491,7 +1491,7 @@ class Admin extends CI_Controller
 
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
         $this->data['page_path_name'] = 'admin/merchant_management';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
 
     function merchant_edit($edit_id, $low_balance_only = 0)
@@ -1705,7 +1705,7 @@ class Admin extends CI_Controller
         );
 
         $this->data['page_path_name'] = 'admin/merchant_edit';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
 
     function check_state_id($dropdown_selection)
@@ -1809,7 +1809,7 @@ class Admin extends CI_Controller
 
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
         $this->data['page_path_name'] = 'admin/merchant_topup';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
 
     function merchant_topup_add($merchant_id, $low_balance_only = 0)
@@ -1960,7 +1960,7 @@ class Admin extends CI_Controller
         $this->data['merchant_id'] = $merchant_id;
 
         $this->data['page_path_name'] = 'admin/merchant_topup_change';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
 
     function merchant_topup_edit($merchant_id, $edit_id, $low_balance_only = 0)
@@ -2120,7 +2120,7 @@ class Admin extends CI_Controller
         $this->data['edit_id'] = $edit_id;
 
         $this->data['page_path_name'] = 'admin/merchant_topup_change';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
 
     function worker_management()
@@ -2135,7 +2135,7 @@ class Admin extends CI_Controller
 
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
         $this->data['page_path_name'] = 'admin/worker_management';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
 
     function worker_add()
@@ -2272,7 +2272,7 @@ class Admin extends CI_Controller
 //        );
 
         $this->data['page_path_name'] = 'admin/worker_add';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
 
     function worker_edit($edit_id)
@@ -2439,7 +2439,7 @@ class Admin extends CI_Controller
         $this->data['admin_role'] = $this->m_custom->get_static_option_array('admin_role', NULL, NULL);
 
         $this->data['page_path_name'] = 'admin/worker_edit';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
 
     function keppo_voucher_management()
@@ -2470,7 +2470,7 @@ class Admin extends CI_Controller
 
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
         $this->data['page_path_name'] = 'admin/keppo_voucher_management';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
 
     function keppo_voucher_change($candie_id = NULL)
@@ -2785,7 +2785,7 @@ class Admin extends CI_Controller
 
         $this->data['temp_folder'] = $this->temp_folder;
         $this->data['page_path_name'] = 'admin/keppo_voucher_change';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
 
     function check_keppo_voucher_category($dropdown_selection)
@@ -2838,7 +2838,7 @@ class Admin extends CI_Controller
         $this->data['last_day'] = $last_day;
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'admin/analysis_report';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
 
     function getChart_Merchant()
@@ -2917,7 +2917,7 @@ class Admin extends CI_Controller
         $this->data['last_day'] = $last_day;
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'admin/analysis_report_user';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
 
     function getChart_user()
@@ -3013,7 +3013,7 @@ class Admin extends CI_Controller
 
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
         $this->data['page_path_name'] = 'admin/promo_code_management';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
     
     function promo_code_change_event($edit_id = NULL)
@@ -3179,7 +3179,7 @@ class Admin extends CI_Controller
         );
     
         $this->data['page_path_name'] = 'admin/promo_code_change';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
     
     function promo_code_change_merchant($user_id = NULL)
@@ -3301,7 +3301,7 @@ class Admin extends CI_Controller
         );      
     
         $this->data['page_path_name'] = 'admin/promo_code_change';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
     
     function promo_code_change_user($user_id = NULL)
@@ -3444,7 +3444,7 @@ class Admin extends CI_Controller
         ); 
         
         $this->data['page_path_name'] = 'admin/promo_code_change';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
     
     function banner_management($ignore_hide = 0){
@@ -3511,7 +3511,7 @@ class Admin extends CI_Controller
 
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
         $this->data['page_path_name'] = 'admin/banner_management';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
     
     function manage_web_setting()
@@ -3629,7 +3629,7 @@ class Admin extends CI_Controller
         );
 
         $this->data['page_path_name'] = 'admin/manage_web_setting';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
 
     function manage_photography()
@@ -3680,7 +3680,7 @@ class Admin extends CI_Controller
 
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
         $this->data['page_path_name'] = 'admin/manage_photography';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
     
     function manage_photography_change($edit_id = NULL)
@@ -3817,7 +3817,7 @@ class Admin extends CI_Controller
         );
     
         $this->data['page_path_name'] = 'admin/manage_photography_change';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
     
     function manage_candie_term()
@@ -3868,7 +3868,7 @@ class Admin extends CI_Controller
 
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));       
         $this->data['page_path_name'] = 'admin/manage_candie_term';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
     
     function manage_candie_term_change($edit_id = NULL)
@@ -4030,7 +4030,7 @@ class Admin extends CI_Controller
         );
         
         $this->data['page_path_name'] = 'admin/manage_candie_term_change';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
     
     function manage_trans_config()
@@ -4113,7 +4113,7 @@ class Admin extends CI_Controller
 
         $this->data['editable_list'] = $editable_list;
         $this->data['page_path_name'] = 'admin/manage_trans_config';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
 
     function _get_csrf_nonce()
