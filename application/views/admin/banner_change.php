@@ -2,8 +2,9 @@
 <?php echo link_tag('js/jquery-ui-1.11.4.custom/jquery-ui.css') ?>
 <script type="text/javascript" src="<?php echo base_url() ?>js/chosen/chosen.jquery.min.js"></script>
 <?php echo link_tag('js/chosen/chosen.min.css') ?>
+<script type="text/javascript" src="<?php echo base_url() ?>js/jquery.ajaxfileupload.js"></script>
 
-<script type="text/javascript">
+<script type="text/javascript">   
     $(document).ready(function () {    
         $(function () {
             $("#banner_start_time").datepicker({
@@ -18,6 +19,24 @@
 //                buttonImageOnly: true,
                 dateFormat: "dd-mm-yy",
             });
+            $(".chosen-select").chosen();
+        });
+        
+        var temp_folder = '<?php echo $temp_folder ?>';
+        $('#candie-file').ajaxfileupload({
+            'action': 'http://' + $(location).attr('hostname') + '/keppo/all/upload_image_temp',
+            'params': {
+              'file_name': 'candie-file',
+              'image_box_id': 'candie-image'
+            },
+            'onComplete': function(response) {
+              //alert(JSON.stringify(response));
+              var post_url = 'http://' + $(location).attr('hostname') + '/keppo/' + temp_folder
+              //var post_image = "<img src='" + post_url + response + "'>";
+              var post_image = post_url + response[0];
+              //$( '#upload-for-merchant-form-photo-box' ).html(post_image);
+              $('img#'+ response[1]).attr('src', post_image);
+            }
         });
     });
 </script>
@@ -41,10 +60,20 @@ if(isset($message))
         echo '<h1>Banner Edit</h1>';
     }                       
     ?>
-    <div id='profile-content'>              
+    <div id='profile-content'>       
+        <?php echo form_open_multipart(uri_string()); ?>
+        <div id="candie-promotion-form-photo" style="float:left;">
+                <div id='profile-info-form-each-label'><?php echo lang('banner_image', 'candie-image'); ?></div>
+                <div id="candie-promotion-form-photo-box" style="width:400px;height:400px">
+                    <img src="<?php echo base_url($candie_image) ?>" id="candie-image" >
+                </div>
+                <div id='candie-promotion-form-input-file'>
+                    <input type='file' accept='image/*' name='candie-file' id='candie-file'/>
+                </div>
+        </div>
         <div id='profile-info'> 
-            <?php echo form_open(uri_string()); ?>
-            <div id='profile-info-form'>   
+            
+            <div id='profile-info-form' style="float:left">   
                 
                 <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('banner_position', 'banner_position_id'); ?></div>
@@ -80,8 +109,9 @@ if(isset($message))
                     <button name="button_action" type="submit" value="save" onclick="return confirm('Confirm that information is correct before save it?')">Save</button>
                 </div>
             </div>
-            <?php echo form_close(); ?>
+            
         </div>
-        
+
+            <?php echo form_close(); ?>
     </div>
 </div>

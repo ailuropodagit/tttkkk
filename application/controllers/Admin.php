@@ -17,6 +17,7 @@ class Admin extends CI_Controller
         $this->group_id_user = $this->config->item('group_id_user');
         $this->album_admin = $this->config->item('album_admin');
         $this->album_admin_profile = $this->config->item('album_admin_profile');
+        $this->album_banner = $this->config->item('album_banner');
         $this->folder_image = $this->config->item('folder_image');
         $this->temp_folder = $this->config->item('folder_image_temp');
 
@@ -3547,6 +3548,17 @@ class Admin extends CI_Controller
             $banner_url = $this->input->post('banner_url');
             $banner_position = $this->m_custom->display_static_option($banner_position_id);
             
+            $upload_rule = array(
+                'upload_path' => $this->album_banner,
+                'allowed_types' => $this->config->item('allowed_types_image'),
+                'max_size' => $this->config->item('max_size'),
+                'max_width' => $this->config->item('max_width'),
+                'max_height' => $this->config->item('max_height'),
+            );
+
+            $this->load->library('upload', $upload_rule);
+            $upload_file = "candie-file";
+            
             if ($edit_id == 0)
             {
                 $is_edit = 0;
@@ -3558,8 +3570,9 @@ class Admin extends CI_Controller
 
             if ($this->input->post('button_action') == "save")
             {
-                // validate form input               
+                // validate form input                          
                 $this->form_validation->set_rules('banner_position_id', $this->lang->line('banner_position'), 'callback_check_banner_position_id');
+                $this->form_validation->set_rules('merchant_id', $this->lang->line('banner_merchant'));
                 $this->form_validation->set_rules('banner_start_time', $this->lang->line('banner_start_time'), 'trim|required');
                 $this->form_validation->set_rules('banner_end_time', $this->lang->line('banner_end_time'), 'trim|required');
                 $this->form_validation->set_rules('banner_url', $this->lang->line('banner_url'), 'trim|required');
@@ -3567,8 +3580,21 @@ class Admin extends CI_Controller
                 if ($this->form_validation->run() === TRUE)
                 {
                     if ($is_edit == 0)
-                    {                                              
-                        $new_id = $this->m_admin->banner_insert($merchant_id, NULL, $banner_start_time, $banner_end_time, NULL, $banner_url, $banner_position_id);
+                    {              
+                        if (!empty($_FILES[$upload_file]['name']))
+                        {
+                            if (!$this->upload->do_upload($upload_file))
+                            {
+                                $message_info = add_message_info($message_info, $this->upload->display_errors());
+                            }
+                            else
+                            {
+                                $image_data = array('upload_data' => $this->upload->data());
+                            }
+                        }
+                        $banner_image = empty($image_data) ? '' : $image_data['upload_data']['file_name'];
+                                 
+                        $new_id = $this->m_admin->banner_insert($merchant_id, NULL, $banner_start_time, $banner_end_time, $banner_image, $banner_url, $banner_position_id);
                         if ($new_id)
                         {
                             $message_info = add_message_info($message_info, 'Success create a banner on this banner position ' . $banner_position);
@@ -3582,9 +3608,29 @@ class Admin extends CI_Controller
                         }
                     }
                     else
-                    {                     
-                        //Add frozen not need check banner position
-                        if ($this->m_admin->banner_update($merchant_id, NULL, $banner_start_time, $banner_end_time, NULL, $banner_url, $banner_position_id, $edit_id))
+                    {                        
+                        $result_update = $this->m_custom->get_one_table_record($main_table, $main_table_id_column, $edit_id, 1); 
+                        
+                        $previous_image_name = $result_update['banner_image'];
+                        if (!empty($_FILES[$upload_file]['name']))
+                        {
+                            if (!$this->upload->do_upload($upload_file))
+                            {
+                                $message_info = add_message_info($message_info, $this->upload->display_errors());
+                            }
+                            else
+                            {
+                                $image_data = array('upload_data' => $this->upload->data());
+                                
+                                if (!IsNullOrEmptyString($previous_image_name))
+                                {
+                                    delete_file($this->album_banner . $previous_image_name);
+                                }
+                            }
+                        }
+                        $banner_image = empty($image_data) ? $previous_image_name : $image_data['upload_data']['file_name'];
+                        
+                        if ($this->m_admin->banner_update($merchant_id, NULL, $banner_start_time, $banner_end_time, $banner_image, $banner_url, $banner_position_id, $edit_id, $result_update['hide_flag']))
                         {
                             $message_info = add_message_info($message_info, 'Success update the banner on banner position ' . $banner_position);
                             $can_redirect_to = 2;
@@ -3595,6 +3641,7 @@ class Admin extends CI_Controller
                             $can_redirect_to = 3;
                         }
                     }
+                    $this->m_custom->remove_image_temp();
                 }
             }
             if ($this->input->post('button_action') == "back")
@@ -3634,19 +3681,22 @@ class Admin extends CI_Controller
 
         $this->data['is_edit'] = $is_edit;
         
-        $this->data['banner_position_list'] = $this->m_custom->get_static_option_array('banner_position', '0', 'Please Select', 0, 'option_id');
+        $this->data['candie_image'] = empty($result) ? $this->config->item('empty_image') : $this->album_banner . $result['banner_image'];
+        
+        $this->data['banner_position_list'] = $this->m_custom->get_static_option_array('banner_position', '0', 'Please Select', 0, 'option_value');
         $this->data['banner_position_id'] = array(
             'name' => 'banner_position_id',
             'id' => 'banner_position_id',
         );
-        $this->data['banner_position_selected'] = $result['banner_position'] == NULL ? '0' : $result['banner_position'];
+        $this->data['banner_position_selected'] = $result['banner_position'] == NULL ? $this->form_validation->set_value('banner_position_id', '0') : $result['banner_position'];
               
         $this->data['merchant_list'] = $this->m_merchant->getMerchantList('0', 'Please Select');
         $this->data['merchant_id'] = array(
             'name' => 'merchant_id',
             'id' => 'merchant_id',
+            'class' => 'chosen-select',
         );
-        $this->data['merchant_selected'] = $result['merchant_id'] == NULL ? '0' : $result['merchant_id'];       
+        $this->data['merchant_selected'] = $result['merchant_id'] == NULL ? $this->form_validation->set_value('merchant_id', '0') : $result['merchant_id'];       
         
         $this->data['banner_start_time'] = array(
             'name' => 'banner_start_time',
@@ -3670,6 +3720,7 @@ class Admin extends CI_Controller
             'value' => empty($result) ? $this->form_validation->set_value('banner_url') : $this->form_validation->set_value('banner_url', $result['banner_url']),
         );
     
+        $this->data['temp_folder'] = $this->temp_folder;
         $this->data['page_path_name'] = 'admin/banner_change';
         $this->load->view('template/layout_right_menu', $this->data);
     }

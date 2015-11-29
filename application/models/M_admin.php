@@ -413,21 +413,24 @@ class M_admin extends CI_Model
         return FALSE;
     }
 
-    public function banner_update($merchant_id = NULL, $category_id = NULL, $start_time = NULL, $end_time = NULL, $banner_image = NULL, $banner_url = NULL, $banner_position = NULL, $edit_id = NULL)
+    public function banner_update($merchant_id = NULL, $category_id = NULL, $start_time = NULL, $end_time = NULL, $banner_image = NULL, $banner_url = NULL, $banner_position = NULL, $edit_id = NULL, $hide_flag = 0)
     {
         if ($this->m_admin->check_is_any_admin(69))
         {
             $login_id = $this->ion_auth->user()->row()->id;
 
-            $search_data = array(
-                //'category_id' => $category_id,
-                'banner_position' => $banner_position,
-                'hide_flag' => 0,
-            );
-            $this->db->where("banner_id !=", $edit_id);   //avoid check back it self row
-            $query = $this->db->get_where('banner', $search_data);  //To check is the position already have active banner
-
-            if ($query->num_rows() == 0)
+            if ($hide_flag == 0)  //if already is hide banner, then not need do banner position checking
+            {
+                $search_data = array(
+                    //'category_id' => $category_id,
+                    'banner_position' => $banner_position,
+                    'hide_flag' => 0,
+                );
+                $this->db->where("banner_id !=", $edit_id);   //avoid check back it self row
+                $query = $this->db->get_where('banner', $search_data);  //To check is the position already have active banner
+            }
+            
+            if (($hide_flag == 0 && $query->num_rows() == 0) || $hide_flag == 1)   
             {
                 $the_data = array(
                     'merchant_id' => $merchant_id,

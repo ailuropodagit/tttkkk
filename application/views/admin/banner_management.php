@@ -45,6 +45,7 @@ if (isset($message))
 <!--                        <th>Category</th>-->
                         <th>Start Date</th>
                         <th>End Date</th>
+                        <th>Website Url</th>
                         <th>Last Modified By</th>
                         <th>Hide Already</th>
                         <th>Actions</th>
@@ -70,6 +71,7 @@ if (isset($message))
                         //echo "<td>" . $category_name . "</td>";
                         echo "<td>" . $start_time . "</td>";
                         echo "<td>" . $end_time . "</td>";
+                        echo "<td><a href='".$row['banner_url']."' target='_blank'>" . $row['banner_url'] . "</a></td>";
                         echo "<td>" . $admin_name . "</td>";
                         echo "<td>" . $remove_row . "</td>";
                         echo "<td>";
