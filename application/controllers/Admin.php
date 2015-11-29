@@ -3739,7 +3739,7 @@ class Admin extends CI_Controller
     
         $this->data['temp_folder'] = $this->temp_folder;
         $this->data['page_path_name'] = 'admin/banner_change';
-        $this->load->view('template/layout_right_menu', $this->data);
+        $this->load->view('template/index', $this->data);
     }
     
     function check_banner_position_id($dropdown_selection)
