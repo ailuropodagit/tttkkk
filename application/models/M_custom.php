@@ -435,7 +435,7 @@ class M_custom extends CI_Model
     }
 
     //Get one static option text by it option id
-    public function display_static_option($option_id = NULL)
+    public function display_static_option($option_id = NULL, $display_column = 'option_text')
     {
         if (IsNullOrEmptyString($option_id))
         {
@@ -447,7 +447,8 @@ class M_custom extends CI_Model
         {
             return '';
         }
-        return $query->row()->option_text;
+        $result = $query->row_array();
+        return $result[$display_column];
     }
 
     //Get one static option text by it option id

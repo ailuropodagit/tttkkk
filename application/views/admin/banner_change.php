@@ -23,11 +23,11 @@
         });
         
         var temp_folder = '<?php echo $temp_folder ?>';
-        $('#candie-file').ajaxfileupload({
+        $('#image-file-name').ajaxfileupload({
             'action': 'http://' + $(location).attr('hostname') + '/keppo/all/upload_image_temp',
             'params': {
-              'file_name': 'candie-file',
-              'image_box_id': 'candie-image'
+              'file_name': 'image-file-name',
+              'image_box_id': 'image-item'
             },
             'onComplete': function(response) {
               //alert(JSON.stringify(response));
@@ -63,12 +63,12 @@ if(isset($message))
     <div id='profile-content'>       
         <?php echo form_open_multipart(uri_string()); ?>
         <div id="candie-promotion-form-photo" style="float:left;">
-                <div id='profile-info-form-each-label'><?php echo lang('banner_image', 'candie-image'); ?></div>
+                <div id='profile-info-form-each-label'><?php echo lang('banner_image', 'image-item'); ?></div>
                 <div id="candie-promotion-form-photo-box" style="width:400px;height:400px">
-                    <img src="<?php echo base_url($candie_image) ?>" id="candie-image" >
+                    <img src="<?php echo base_url($image_item) ?>" id="image-item" >
                 </div>
                 <div id='candie-promotion-form-input-file'>
-                    <input type='file' accept='image/*' name='candie-file' id='candie-file'/>
+                    <input type='file' accept='image/*' name='image-file-name' id='image-file-name'/>
                 </div>
         </div>
         <div id='profile-info'> 
@@ -103,8 +103,14 @@ if(isset($message))
                 
                 <?php
                 echo form_hidden($edit_id);
+                $remove_or_recover = $result['hide_flag'] == 1? 'recover' : 'frozen';
+                $remove_or_recover_text = $result['hide_flag'] == 1? 'Recover' : 'Hide';
                 ?>
-                <div id='profile-info-form-submit'>              
+                <div id='profile-info-form-submit'>
+                    <?php 
+                    if($is_edit != 0){ ?>
+                    <button name="button_action" type="submit" value="<?php echo $remove_or_recover; ?>" onclick="return confirm('Are you sure want to <?php echo $remove_or_recover_text; ?> it?')"><?php echo $remove_or_recover_text; ?></button>                
+                    <?php } ?>
                     <button name="button_action" type="submit" value="back">Back</button>
                     <button name="button_action" type="submit" value="save" onclick="return confirm('Confirm that information is correct before save it?')">Save</button>
                 </div>

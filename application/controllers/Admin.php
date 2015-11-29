@@ -3448,7 +3448,7 @@ class Admin extends CI_Controller
         $this->load->view('template/layout_right_menu', $this->data);
     }
     
-    function banner_management($ignore_hide = 0){
+    function banner_management($view_status = 0){
         if (!$this->m_admin->check_is_any_admin(69))
         {
             redirect('/', 'refresh');
@@ -3465,12 +3465,12 @@ class Admin extends CI_Controller
             $can_redirect_to = 1;
             $id = $this->input->post('id');           
             $position_id = $this->input->post('position_id');
-            $ignore_hide = $this->input->post('ignore_hide_id');
+            $view_status = $this->input->post('view_status_id');
             
             $display_name = $this->m_custom->display_static_option($position_id);
             if ($this->input->post('button_action') == "frozen")
             {
-                $message_info = add_message_info($message_info, $display_name . ' success frozen.');
+                $message_info = add_message_info($message_info, $display_name . ' success hide.');
                 $this->m_custom->update_hide_flag(1, $main_table, $id, $login_id);
             }
             if ($this->input->post('button_action') == "recover")
@@ -3478,16 +3478,16 @@ class Admin extends CI_Controller
                 $status = $this->m_admin->banner_recover($id);
                 if ($status)
                 {
-                    $message_info = add_message_info($message_info, $display_name . ' success unfrozen.');
+                    $message_info = add_message_info($message_info, $display_name . ' success recover.');
                 }
                 else
                 {
-                    $message_info = add_message_info($message_info, $display_name . ' fail to unfrozen. Because already have other active banner in the same banner position');
+                    $message_info = add_message_info($message_info, $display_name . ' fail to recover. Because already have other active banner in the same banner position');
                 }
             }
             if ($this->input->post('button_action') == "filter_result")
             {
-                $ignore_hide = $this->input->post('ignore_hide_id');
+                $view_status = $this->input->post('view_status_id');
             }
             
             if ($message_info != NULL)
@@ -3496,18 +3496,18 @@ class Admin extends CI_Controller
             }
             if ($can_redirect_to == 1)
             {
-                redirect('admin/banner_management/' . $ignore_hide, 'refresh');
+                redirect('admin/banner_management/' . $view_status, 'refresh');
             }
         }
         
-        $this->data['ignore_hide_list'] = array('0' => 'Show Active Only', '1' => 'Show History Also');
-        $this->data['ignore_hide_id'] = array(
-            'name' => 'ignore_hide_id',
-            'id' => 'ignore_hide_id',
+        $this->data['view_status_list'] = array('0' => 'Show Active Only', '1' => 'Show Reach Expire Only', '2' => 'Show Expired Only', '3' => 'Show All');
+        $this->data['view_status_id'] = array(
+            'name' => 'view_status_id',
+            'id' => 'view_status_id',
         );
-        $this->data['ignore_hide_selected'] = $ignore_hide;
+        $this->data['view_status_selected'] = $view_status;
         
-        $result_list = $this->m_admin->banner_select($ignore_hide); 
+        $result_list = $this->m_admin->banner_select($view_status); 
         $this->data['the_result'] = $result_list;
 
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
@@ -3515,7 +3515,7 @@ class Admin extends CI_Controller
         $this->load->view('template/layout_right_menu', $this->data);
     }
     
-    function banner_change($edit_id = NULL)
+    function banner_change($edit_id = NULL, $view_status = NULL)
     {
         if (!$this->m_admin->check_is_any_admin(69))
         {
@@ -3527,9 +3527,7 @@ class Admin extends CI_Controller
         $login_type = $this->login_type;
         $is_edit = 0;
         $main_table = 'banner';
-        $main_table_id_column = 'banner_id';      
-//        $main_table_filter_column = 'code_type';
-//        $main_table_fiter_value = 'event';  
+        $main_table_id_column = 'banner_id';       
         
         if ($edit_id != NULL)
         {
@@ -3547,6 +3545,7 @@ class Admin extends CI_Controller
             $banner_end_time = validateDate($this->input->post('banner_end_time'));
             $banner_url = $this->input->post('banner_url');
             $banner_position = $this->m_custom->display_static_option($banner_position_id);
+            $view_status = $this->input->post('view_status');
             
             $upload_rule = array(
                 'upload_path' => $this->album_banner,
@@ -3557,7 +3556,7 @@ class Admin extends CI_Controller
             );
 
             $this->load->library('upload', $upload_rule);
-            $upload_file = "candie-file";
+            $upload_file = "image-file-name";
             
             if ($edit_id == 0)
             {
@@ -3648,7 +3647,24 @@ class Admin extends CI_Controller
             {
                 $can_redirect_to = 2;
             }    
-
+            if ($this->input->post('button_action') == "frozen")
+            {
+                $message_info = add_message_info($message_info, $banner_position . ' success hide.');
+                $this->m_custom->update_hide_flag(1, $main_table, $edit_id, $login_id);
+            }
+            if ($this->input->post('button_action') == "recover")
+            {               
+                $status = $this->m_admin->banner_recover($edit_id);
+                if ($status)
+                {
+                    $message_info = add_message_info($message_info, $banner_position . ' success recover.');
+                }
+                else
+                {
+                    $message_info = add_message_info($message_info, $banner_position . ' fail to recover. Because already have other active banner in the same banner position');
+                }
+            }
+            
             direct_go:
             if ($message_info != NULL)
             {
@@ -3660,11 +3676,11 @@ class Admin extends CI_Controller
             }
             elseif ($can_redirect_to == 2)
             {
-                redirect('admin/banner_management', 'refresh');
+                redirect('admin/banner_management/' . $view_status, 'refresh');
             }
             elseif ($can_redirect_to == 3)
             {
-                redirect('admin/banner_change/' . $edit_id, 'refresh');
+                redirect('admin/banner_change/' . $edit_id . '/' . $view_status, 'refresh');
             }
         }
 
@@ -3677,11 +3693,12 @@ class Admin extends CI_Controller
         $this->data['edit_id'] = array(
             'edit_id' => empty($result) ? '0' : $result[$main_table_id_column],
             'is_edit' => $is_edit,
+            'view_status' => $view_status,
         );
 
         $this->data['is_edit'] = $is_edit;
         
-        $this->data['candie_image'] = empty($result) ? $this->config->item('empty_image') : $this->album_banner . $result['banner_image'];
+        $this->data['image_item'] = empty($result) ? $this->config->item('empty_image') : $this->album_banner . $result['banner_image'];
         
         $this->data['banner_position_list'] = $this->m_custom->get_static_option_array('banner_position', '0', 'Please Select', 0, 'option_value');
         $this->data['banner_position_id'] = array(

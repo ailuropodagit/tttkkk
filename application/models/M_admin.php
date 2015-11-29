@@ -42,18 +42,83 @@ class M_admin extends CI_Model
         return $result;
     }
 
-    function banner_select($ignore_hide = 0)
+    function banner_select($ignore_hide = 0, $want_count = 0)
     {
         if ($ignore_hide == 0)
         {
             $this->db->where('hide_flag', 0);
         }
+        else if ($ignore_hide == 1)  //show expire only
+        {
+            $this->db->where('end_time <=', get_part_of_date('all'));
+            $this->db->where('hide_flag', 0);
+        }
+        else if ($ignore_hide == 2)
+        {
+            $this->db->where('hide_flag', 1);
+        }
         $this->db->order_by('banner_position');
         $query = $this->db->get_where('banner');
         $result = $query->result_array();
-        return $result;
+
+        if ($want_count == 1)
+        {
+            return $query->num_rows();
+        }
+        else
+        {
+            return $result;
+        }
     }
-    
+
+//    $banner_info = $this->m_admin->banner_select_one(101);
+//    $banner_image_url = $banner_info['banner_image_url'];
+//    $banner_website_url = $banner_info['banner_website_url'];
+//    $default_image_url = $banner_info['default_image_url'];
+    function banner_select_one($banner_position, $full_info = 0)
+    {
+        $search_data = array(
+            //'category_id' => $category_id,
+            'banner_position' => $banner_position,
+            'hide_flag' => 0,
+        );
+
+        $query = $this->db->get_where('banner', $search_data, 1);
+        if ($query->num_rows() == 0)
+        {
+            return FALSE;
+        }
+        else
+        {
+            $result = $query->row_array();
+
+            if ($full_info == 0)
+            {
+                $final_result = array(
+                    'banner_id' => $result['banner_id'],
+                    'merchant_id' => $result['merchant_id'],      
+                    'banner_image' => $result['banner_image'],                   
+                    'banner_image_url' => base_url() . $this->config->item('album_banner') . $result['banner_image'],
+                    'banner_website_url' => $result['banner_url'],
+                    'banner_position' => $result['banner_position'],
+                    'banner_position_name' => $this->m_custom->display_static_option($result['banner_position']),     
+                    'default_image_url' => base_url() . $this->config->item('album_banner') . $this->m_custom->display_static_option($result['banner_position'], 'option_desc'),
+                );                  
+            }
+            else
+            {
+                $additional_info = array(
+                    'banner_image_url' => base_url() . $this->config->item('album_banner') . $result['banner_image'],
+                    'banner_website_url' => $result['banner_url'],
+                    'banner_position_name' => $this->m_custom->display_static_option($result['banner_position']),
+                    'default_image_url' => base_url() . $this->config->item('album_banner') . $this->m_custom->display_static_option($result['banner_position'], 'option_desc'),
+                );
+                $final_result = $result + $additional_info;
+            }
+            return $final_result;
+        }
+    }
+
     public function check_worker_role($check_worker_role = NULL)
     {
         $have_role = 0;
@@ -145,7 +210,7 @@ class M_admin extends CI_Model
     }
     
     public function banner_expired_count(){
-        $this->db->where('end_time >=', get_part_of_date('all'));
+        $this->db->where('end_time <=', get_part_of_date('all'));
         $query = $this->db->get_where('banner', array('hide_flag' => 0));
         return $query->num_rows();
     }
