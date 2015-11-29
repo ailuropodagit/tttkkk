@@ -1,8 +1,11 @@
 <script type="text/javascript" src="<?php echo base_url() ?>js/datatables/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>js/datatables/js/moment.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>js/datatables/js/datetime-moment.js"></script>
 <?php echo link_tag('js/datatables/css/jquery.dataTables.min.css') ?>
 
 <script type="text/javascript">
     $(document).ready(function () {
+        $.fn.dataTable.moment('DD-MM-YYYY');
         $('#myTable').DataTable({
             "pageLength": 25,
             "order": []
@@ -40,8 +43,8 @@ if (isset($message))
                         <th>Banner Position</th>
                         <th>Merchant</th>
 <!--                        <th>Category</th>-->
-                        <th>Start Time</th>
-                        <th>End Time</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
                         <th>Last Modified By</th>
                         <th>Hide Already</th>
                         <th>Actions</th>
@@ -55,8 +58,8 @@ if (isset($message))
                         $banner_position = $this->m_custom->display_static_option($row['banner_position']);
                         $merchant_name = $this->m_custom->display_users($row['merchant_id']);
                         //$category_name = $this->m_custom->display_category($row['category_id']);
-                        $start_time = displayDate($row['start_time'], 1);
-                        $end_time = displayDate($row['end_time'], 1);
+                        $start_time = displayDate($row['start_time']);
+                        $end_time = displayDate($row['end_time']);
                         $admin_name = $this->m_custom->display_users($row['last_modify_by']);
                         $remove_row = $row['hide_flag'] == 1 ? 'Frozen' : '';
                         $url_edit = base_url() . "admin/banner_change/" . $row['banner_id'];

@@ -7,8 +7,12 @@ class M_custom extends CI_Model
 {
 
     //Get all the static option of an option type
-    public function get_static_option_array($option_type = NULL, $default_value = NULL, $default_text = NULL, $want_array = 0)
+    public function get_static_option_array($option_type = NULL, $default_value = NULL, $default_text = NULL, $want_array = 0, $order_by = NULL)
     {
+        if ($order_by != NULL)
+        {
+            $this->db->order_by($order_by, "asc");
+        }       
         $query = $this->db->get_where('static_option', array('option_type' => $option_type));
         $return = array();
         if ($default_value != NULL)

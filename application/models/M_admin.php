@@ -387,7 +387,7 @@ class M_admin extends CI_Model
             $login_id = $this->ion_auth->user()->row()->id;
 
             $search_data = array(
-                'category_id' => $category_id,
+                //'category_id' => $category_id,
                 'banner_position' => $banner_position,
                 'hide_flag' => 0,
             );
@@ -420,7 +420,7 @@ class M_admin extends CI_Model
             $login_id = $this->ion_auth->user()->row()->id;
 
             $search_data = array(
-                'category_id' => $category_id,
+                //'category_id' => $category_id,
                 'banner_position' => $banner_position,
                 'hide_flag' => 0,
             );
