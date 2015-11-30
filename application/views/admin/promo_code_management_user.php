@@ -31,11 +31,13 @@ if (isset($message))
             <table border='1px' cellspacing='0px' cellpadding='0px' id="myTable" class="display">
                 <thead>
                     <tr style="text-align:center">
-                        <th>User Name</th>
+                        <th>Name</th>
                         <th>Email</th>
                         <th>Promo Code</th>
-                        <th>Candies</th>        
+                        <th>Candies</th>
+                        <?php if($code_type == 'user'){  ?>
                         <th>Cash Back</th>
+                        <?php } ?>
                         <th>Redeem Count</th>                        
                         <th>Last Modify</th>
                         <th>Actions</th>
@@ -45,15 +47,22 @@ if (isset($message))
                     <?php
                     foreach ($the_result as $row)
                     {
-                        $redeem_count = $this->m_custom->generate_promo_code_list_link($row['code_no'], 32);
+                        if($code_type == 'user'){
+                            $redeem_count = $this->m_custom->generate_promo_code_list_link($row['code_no'], 32);                      
+                            $url_edit = base_url() . "admin/promo_code_change_user/" . $row['code_user_id'] . "/1";
+                        }else{
+                            $redeem_count = $this->m_custom->generate_promo_code_list_link($row['code_no'], 33);                      
+                            $url_edit = base_url() . "admin/promo_code_change_merchant/" . $row['code_user_id'] . "/1";
+                        }
                         $last_modify = $this->m_custom->display_users($row['last_modify_by']);
-                        $url_edit = base_url() . "admin/promo_code_change_user/" . $row['code_user_id'] . "/1";
                         echo '<tr>';
                         echo "<td>" . $row['display_name'] . "</td>";
                         echo "<td>" . $row['email'] . "</td>";
                         echo "<td>" . $row['code_no'] . "</td>";
                         echo "<td>" . $row['code_candie'] . "</td>";  
+                        if($code_type == 'user'){
                         echo "<td>" . $row['code_money'] . "</td>";    
+                        }
                         echo "<td>" . $redeem_count . "</td>";
                         echo "<td>" . $last_modify . "</td>";
                         echo "<td>";

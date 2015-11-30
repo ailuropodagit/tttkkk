@@ -539,13 +539,13 @@ class M_admin extends CI_Model
         return FALSE;
     }
 
-    public function promo_code_user_list()
+    public function promo_code_result_list($code_type)
     {
         $code_candie = $this->m_custom->web_setting_get('register_promo_code_get_candie');
         $code_money = $this->m_custom->web_setting_get('friend_success_register_get_money', 'set_decimal');
 
         $this->db->select('code_id,code_no,code_user_id,code_candie,code_money,code_candie_overwrite,code_money_overwrite,last_modify_by,email');
-        $this->db->where('code_type', 'user');
+        $this->db->where('code_type', $code_type);
         $this->db->where('users.hide_flag', '0');
         $this->db->from('promo_code');
         $this->db->join('users', 'promo_code.code_user_id = users.id', 'inner');

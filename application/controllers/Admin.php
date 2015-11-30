@@ -3026,14 +3026,15 @@ class Admin extends CI_Controller
         }
 
         $message_info = '';
-        //$login_id = $this->login_id;
-        //$login_type = $this->login_type;
-        $main_table = 'promo_code';
-        $main_table_id_column = 'code_id';
-        $main_table_filter_column = 'code_type';
+//        $login_id = $this->login_id;
+//        $login_type = $this->login_type;
+//        $main_table = 'promo_code';
+//        $main_table_id_column = 'code_id';
+//        $main_table_filter_column = 'code_type';
         $main_table_fiter_value = 'user';
 
-        $result_list = $this->m_admin->promo_code_user_list();
+        $result_list = $this->m_admin->promo_code_result_list($main_table_fiter_value);
+        $this->data['code_type'] = $main_table_fiter_value;
         $this->data['the_result'] = $result_list;
 
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
@@ -3041,6 +3042,30 @@ class Admin extends CI_Controller
         $this->load->view('template/index', $this->data);
     }
 
+    function promo_code_management_merchant()
+    {
+        if (!$this->m_admin->check_is_any_admin(77))
+        {
+            redirect('/', 'refresh');
+        }
+
+        $message_info = '';
+//        $login_id = $this->login_id;
+//        $login_type = $this->login_type;
+//        $main_table = 'promo_code';
+//        $main_table_id_column = 'code_id';
+//        $main_table_filter_column = 'code_type';
+        $main_table_fiter_value = 'merchant';
+
+        $result_list = $this->m_admin->promo_code_result_list($main_table_fiter_value);
+        $this->data['code_type'] = $main_table_fiter_value;
+        $this->data['the_result'] = $result_list;
+
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+        $this->data['page_path_name'] = 'admin/promo_code_management_user';
+        $this->load->view('template/index', $this->data);
+    }
+    
     function promo_code_change_event($edit_id = NULL)
     {
         if (!$this->m_admin->check_is_any_admin(77))
@@ -3208,7 +3233,7 @@ class Admin extends CI_Controller
         $this->load->view('template/index', $this->data);
     }
 
-    function promo_code_change_merchant($user_id = NULL)
+    function promo_code_change_merchant($user_id = NULL, $come_from = 0)
     {
         if (!$this->m_admin->check_is_any_admin(77))
         {
@@ -3282,11 +3307,18 @@ class Admin extends CI_Controller
             }
             elseif ($can_redirect_to == 2)
             {
-                redirect('admin/merchant_management', 'refresh');
+                if ($come_from == 1)
+                {
+                    redirect('admin/promo_code_management_merchant', 'refresh');
+                }
+                else
+                {
+                    redirect('admin/merchant_management', 'refresh');
+                }
             }
             elseif ($can_redirect_to == 3)
             {
-                redirect('admin/promo_code_change_merchant/' . $user_id, 'refresh');
+                redirect('admin/promo_code_change_merchant/' . $user_id . '/' . $come_from, 'refresh');
             }
         }
 
