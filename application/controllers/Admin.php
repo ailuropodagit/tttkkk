@@ -1374,8 +1374,8 @@ class Admin extends CI_Controller
             'value' => $this->form_validation->set_value('trans_remark'),
         );
 
-        $option_list = $this->m_custom->get_many_table_record('transaction_extra', 'trans_conf_id', '31', 1, 'user_id', $user_id); 
-        $this->data['the_result'] = $option_list;
+        $result_list = $this->m_custom->get_many_table_record('transaction_extra', 'trans_conf_id', '31', 1, 'user_id', $user_id);
+        $this->data['the_result'] = $result_list;
         $this->data['page_path_name'] = 'admin/user_bonus_candie_change';
         $this->load->view('template/index', $this->data);
     }
@@ -1466,12 +1466,12 @@ class Admin extends CI_Controller
             'value' => $this->form_validation->set_value('trans_remark'),
         );
 
-        $option_list = $this->m_custom->get_many_table_record('transaction_extra', 'trans_conf_id', '23', 1, 'user_id', $user_id); 
-        $this->data['the_result'] = $option_list;
+        $result_list = $this->m_custom->get_many_table_record('transaction_extra', 'trans_conf_id', '23', 1, 'user_id', $user_id);
+        $this->data['the_result'] = $result_list;
         $this->data['page_path_name'] = 'admin/user_balance_adjust';
         $this->load->view('template/index', $this->data);
     }
-    
+
     function merchant_management($low_balance_only = 0)
     {
         if (!$this->m_admin->check_is_any_admin(65))
@@ -1527,8 +1527,8 @@ class Admin extends CI_Controller
             $address = $this->input->post('address');
             $postcode = $this->input->post('postcode');
             $me_state_id = $this->input->post('me_state_id');
-            $phone = $this->input->post('phone');           
-            
+            $phone = $this->input->post('phone');
+
             // to generate company slug for check is it unique
             $_POST['slug'] = generate_slug($_POST['company']);
             $slug = $_POST['slug'];
@@ -1539,7 +1539,7 @@ class Admin extends CI_Controller
             $this->form_validation->set_rules('username', $this->lang->line('create_merchant_validation_username_label'), 'trim|required|is_unique_edit[' . $tables['users'] . '.username.' . $edit_id . ']');
             $this->form_validation->set_rules('email', $this->lang->line('create_merchant_validation_email_label'), 'trim|required|valid_email|is_unique_edit[' . $tables['users'] . '.email.' . $edit_id . ']');
             $this->form_validation->set_rules('company_main', $this->lang->line('create_merchant_validation_company_main_label'), "trim|required|min_length[3]");
-            $this->form_validation->set_rules('company', $this->lang->line('create_merchant_validation_company_label'), "trim|required|min_length[3]");           
+            $this->form_validation->set_rules('company', $this->lang->line('create_merchant_validation_company_label'), "trim|required|min_length[3]");
             $this->form_validation->set_rules('slug', $this->lang->line('create_merchant_validation_company_label'), 'trim|is_unique_edit[' . $tables['users'] . '.slug.' . $edit_id . ']');
             $this->form_validation->set_rules('me_person_incharge', $this->lang->line('create_merchant_validation_person_incharge_label'), 'required');
             $this->form_validation->set_rules('me_person_contact', $this->lang->line('create_merchant_validation_person_contact_label'), 'required|valid_contact_number');
@@ -1548,8 +1548,8 @@ class Admin extends CI_Controller
             $this->form_validation->set_rules('address', $this->lang->line('create_merchant_validation_address_label'), 'required');
             $this->form_validation->set_rules('postcode', $this->lang->line('create_merchant_validation_postcode_label'), 'required|numeric');
             $this->form_validation->set_rules('me_state_id', $this->lang->line('create_merchant_validation_state_label'), 'callback_check_state_id');
-            $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required|valid_contact_number');           
-            
+            $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required|valid_contact_number');
+
             if ($this->input->post('button_action') == "save")
             {
                 if ($this->form_validation->run() === TRUE)
@@ -1567,7 +1567,7 @@ class Admin extends CI_Controller
                         'address' => $address,
                         'postcode' => $postcode,
                         'me_state_id' => $me_state_id,
-                        'phone' => $phone,                    
+                        'phone' => $phone,
                     );
 
                     if ($this->ion_auth->update($edit_id, $data))
@@ -1651,20 +1651,20 @@ class Admin extends CI_Controller
             'type' => 'text',
             'value' => $this->form_validation->set_value('company', $result['company']),
         );
-        
+
         $this->data['me_person_incharge'] = array(
             'name' => 'me_person_incharge',
             'id' => 'me_person_incharge',
             'type' => 'text',
             'value' => $this->form_validation->set_value('me_person_incharge', $result['me_person_incharge']),
-        );       
+        );
         $this->data['me_person_contact'] = array(
             'name' => 'me_person_contact',
             'id' => 'me_person_contact',
             'type' => 'text',
             'value' => $this->form_validation->set_value('me_person_contact', $result['me_person_contact']),
         );
-        
+
         $this->data['me_ssm'] = array(
             'name' => 'me_ssm',
             'id' => 'me_ssm',
@@ -2967,20 +2967,21 @@ class Admin extends CI_Controller
         echo json_encode($result);
     }
 
-    function promo_code_management(){
+    function promo_code_management()
+    {
         if (!$this->m_admin->check_is_any_admin(77))
         {
             redirect('/', 'refresh');
         }
-        
-         $message_info = '';
+
+        $message_info = '';
         //$login_id = $this->login_id;
         //$login_type = $this->login_type;
         $main_table = 'promo_code';
         $main_table_id_column = 'code_id';
         $main_table_filter_column = 'code_type';
-        $main_table_fiter_value = 'event';  
-        
+        $main_table_fiter_value = 'event';
+
         if (isset($_POST) && !empty($_POST))
         {
             $can_redirect_to = 1;
@@ -3008,15 +3009,38 @@ class Admin extends CI_Controller
                 redirect(uri_string(), 'refresh');
             }
         }
-        
-        $option_list = $this->m_custom->get_many_table_record($main_table, $main_table_filter_column, $main_table_fiter_value, 1); 
-        $this->data['the_result'] = $option_list;
+
+        $result_list = $this->m_custom->get_many_table_record($main_table, $main_table_filter_column, $main_table_fiter_value, 1);
+        $this->data['the_result'] = $result_list;
 
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
         $this->data['page_path_name'] = 'admin/promo_code_management';
         $this->load->view('template/index', $this->data);
     }
-    
+
+    function promo_code_management_user()
+    {
+        if (!$this->m_admin->check_is_any_admin(77))
+        {
+            redirect('/', 'refresh');
+        }
+
+        $message_info = '';
+        //$login_id = $this->login_id;
+        //$login_type = $this->login_type;
+        $main_table = 'promo_code';
+        $main_table_id_column = 'code_id';
+        $main_table_filter_column = 'code_type';
+        $main_table_fiter_value = 'user';
+
+        $result_list = $this->m_admin->promo_code_user_list();
+        $this->data['the_result'] = $result_list;
+
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+        $this->data['page_path_name'] = 'admin/promo_code_management_user';
+        $this->load->view('template/index', $this->data);
+    }
+
     function promo_code_change_event($edit_id = NULL)
     {
         if (!$this->m_admin->check_is_any_admin(77))
@@ -3029,10 +3053,10 @@ class Admin extends CI_Controller
         $login_type = $this->login_type;
         $is_edit = 0;
         $main_table = 'promo_code';
-        $main_table_id_column = 'code_id';      
+        $main_table_id_column = 'code_id';
         $main_table_filter_column = 'code_type';
-        $main_table_fiter_value = 'event';  
-        
+        $main_table_fiter_value = 'event';
+
         if ($edit_id != NULL)
         {
             $allowed_list = $this->m_custom->get_list_of_allow_id($main_table, $main_table_filter_column, $main_table_fiter_value, $main_table_id_column);
@@ -3042,7 +3066,7 @@ class Admin extends CI_Controller
             }
             $is_edit = 1;
         }
-        
+
         if (isset($_POST) && !empty($_POST))
         {
             $can_redirect_to = 0;
@@ -3051,7 +3075,7 @@ class Admin extends CI_Controller
             $code_no = $this->input->post('code_no');
             $code_candie = $this->input->post('code_candie');
             $code_event_name = $this->input->post('code_event_name');
-            
+
             if ($edit_id == 0)
             {
                 $is_edit = 0;
@@ -3067,11 +3091,11 @@ class Admin extends CI_Controller
                 $this->form_validation->set_rules('code_no', $this->lang->line('promo_code_no'), 'trim|required');
                 $this->form_validation->set_rules('code_candie', $this->lang->line('promo_code_candie'), 'trim|required|integer');
                 $this->form_validation->set_rules('code_event_name', $this->lang->line('promo_code_event_name'), 'trim|required');
-                
+
                 if ($this->form_validation->run() === TRUE)
                 {
                     if ($is_edit == 0)
-                    {  
+                    {
                         $check_unique = $this->m_custom->check_is_value_unique($main_table, 'code_no', $code_no);
                         if (!$check_unique)
                         {
@@ -3079,7 +3103,7 @@ class Admin extends CI_Controller
                             $can_redirect_to = 1;
                             goto direct_go;
                         }
-                        
+
                         $new_id = $this->m_custom->promo_code_insert_event($code_no, $code_candie, NULL, $code_event_name);
                         if ($new_id)
                         {
@@ -3094,7 +3118,7 @@ class Admin extends CI_Controller
                         }
                     }
                     else
-                    {    
+                    {
                         $check_unique = $this->m_custom->check_is_value_unique($main_table, 'code_no', $code_no, $main_table_id_column, $edit_id);
                         if (!$check_unique)
                         {
@@ -3102,11 +3126,11 @@ class Admin extends CI_Controller
                             $can_redirect_to = 1;
                             goto direct_go;
                         }
-                        
-                        $data = array(  
+
+                        $data = array(
                             'code_no' => $code_no,
-                            'code_candie' => $code_candie,  
-                            'code_event_name' => $code_event_name,  
+                            'code_candie' => $code_candie,
+                            'code_event_name' => $code_event_name,
                             'last_modify_by' => $login_id,
                         );
 
@@ -3126,7 +3150,7 @@ class Admin extends CI_Controller
             if ($this->input->post('button_action') == "back")
             {
                 $can_redirect_to = 2;
-            }    
+            }
 
             direct_go:
             if ($message_info != NULL)
@@ -3150,7 +3174,7 @@ class Admin extends CI_Controller
         // set the flash data error message if there is one
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 
-        $result = $this->m_custom->get_one_table_record($main_table, $main_table_id_column, $edit_id, 1); 
+        $result = $this->m_custom->get_one_table_record($main_table, $main_table_id_column, $edit_id, 1);
         $this->data['result'] = $result;
 
         $this->data['edit_id'] = array(
@@ -3160,30 +3184,30 @@ class Admin extends CI_Controller
 
         $this->data['is_edit'] = $is_edit;
         $this->data['code_type'] = $main_table_fiter_value;
-        
+
         $this->data['code_no'] = array(
             'name' => 'code_no',
             'id' => 'code_no',
             'value' => empty($result) ? $this->form_validation->set_value('code_no') : $this->form_validation->set_value('code_no', $result['code_no']),
         );
         $this->data['promo_code_url'] = $this->m_custom->generate_promo_code_list_link($result['code_no'], 34);
-        
+
         $this->data['code_candie'] = array(
             'name' => 'code_candie',
             'id' => 'code_candie',
             'value' => empty($result) ? $this->form_validation->set_value('code_candie') : $this->form_validation->set_value('code_candie', $result['code_candie']),
         );
-        
+
         $this->data['code_event_name'] = array(
             'name' => 'code_event_name',
             'id' => 'code_event_name',
             'value' => empty($result) ? $this->form_validation->set_value('code_event_name') : $this->form_validation->set_value('code_event_name', $result['code_event_name']),
         );
-    
+
         $this->data['page_path_name'] = 'admin/promo_code_change';
         $this->load->view('template/index', $this->data);
     }
-    
+
     function promo_code_change_merchant($user_id = NULL)
     {
         if (!$this->m_admin->check_is_any_admin(77))
@@ -3196,19 +3220,19 @@ class Admin extends CI_Controller
         $login_type = $this->login_type;
         $is_edit = 1;
         $main_table = 'promo_code';
-        $main_table_id_column = 'code_id';      
+        $main_table_id_column = 'code_id';
         $main_table_filter_column = 'code_type';
         $main_table_fiter_value = 'merchant';
 
-        $result = $this->m_custom->promo_code_get($main_table_fiter_value, $user_id); 
+        $result = $this->m_custom->promo_code_get($main_table_fiter_value, $user_id);
         if (!$result)
         {
             $message_info = add_message_info($message_info, 'Cannot find promo code of this merchant. Maybe merchant never login after register account.');
             $can_redirect_to = 2;
             goto direct_go;
         }
-        $edit_id = $result[$main_table_id_column];      
-        
+        $edit_id = $result[$main_table_id_column];
+
         if (isset($_POST) && !empty($_POST))
         {
             $can_redirect_to = 0;
@@ -3216,12 +3240,12 @@ class Admin extends CI_Controller
             $edit_id = $this->input->post('edit_id');
             $code_candie_overwrite = $this->input->post('code_candie_overwrite') == NULL ? 0 : 1;   //Check box special handling to know is checked or not
             $code_candie = $this->input->post('code_candie');
-            
+
             if ($this->input->post('button_action') == "save")
             {
                 // validate form input
                 $this->form_validation->set_rules('code_candie', $this->lang->line('promo_code_candie'), 'trim|required|integer');
-                
+
                 if ($this->form_validation->run() === TRUE)
                 {
                     $data = array(
@@ -3245,7 +3269,7 @@ class Admin extends CI_Controller
             if ($this->input->post('button_action') == "back")
             {
                 $can_redirect_to = 2;
-            }    
+            }
 
             direct_go:
             if ($message_info != NULL)
@@ -3268,7 +3292,7 @@ class Admin extends CI_Controller
 
         // set the flash data error message if there is one
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-       
+
         $this->data['result'] = $result;
 
         $this->data['edit_id'] = array(
@@ -3278,7 +3302,7 @@ class Admin extends CI_Controller
 
         $this->data['is_edit'] = $is_edit;
         $this->data['code_type'] = $main_table_fiter_value;
-        
+
         $this->data['code_no'] = array(
             'name' => 'code_no',
             'id' => 'code_no',
@@ -3286,7 +3310,7 @@ class Admin extends CI_Controller
             'value' => empty($result) ? $this->form_validation->set_value('code_no') : $this->form_validation->set_value('code_no', $result['code_no']),
         );
         $this->data['promo_code_url'] = $this->m_custom->generate_promo_code_list_link($result['code_no'], 33);
-        
+
         $code_candie_overwrite_value = $result['code_candie_overwrite'];
         $this->data['code_candie_overwrite_value'] = $code_candie_overwrite_value;
         $this->data['code_candie_overwrite'] = array(
@@ -3296,18 +3320,18 @@ class Admin extends CI_Controller
             'onclick' => "checkbox_showhide('code_candie_overwrite','code-candie-div')",
             'value' => $this->form_validation->set_value('code_candie_overwrite', $edit_id),
         );
-        
+
         $this->data['code_candie'] = array(
             'name' => 'code_candie',
             'id' => 'code_candie',
             'value' => empty($result) ? $this->form_validation->set_value('code_candie') : $this->form_validation->set_value('code_candie', $result['code_candie']),
-        );      
-    
+        );
+
         $this->data['page_path_name'] = 'admin/promo_code_change';
         $this->load->view('template/index', $this->data);
     }
-    
-    function promo_code_change_user($user_id = NULL)
+
+    function promo_code_change_user($user_id = NULL, $come_from = 0)
     {
         if (!$this->m_admin->check_is_any_admin(77))
         {
@@ -3319,19 +3343,19 @@ class Admin extends CI_Controller
         $login_type = $this->login_type;
         $is_edit = 1;
         $main_table = 'promo_code';
-        $main_table_id_column = 'code_id';      
+        $main_table_id_column = 'code_id';
         $main_table_filter_column = 'code_type';
         $main_table_fiter_value = 'user';
 
-        $result = $this->m_custom->promo_code_get($main_table_fiter_value, $user_id); 
+        $result = $this->m_custom->promo_code_get($main_table_fiter_value, $user_id);
         if (!$result)
         {
             $message_info = add_message_info($message_info, 'Cannot find promo code of this user. Maybe user never login after register account.');
             $can_redirect_to = 2;
             goto direct_go;
         }
-        $edit_id = $result[$main_table_id_column];      
-        
+        $edit_id = $result[$main_table_id_column];
+
         if (isset($_POST) && !empty($_POST))
         {
             $can_redirect_to = 0;
@@ -3341,13 +3365,13 @@ class Admin extends CI_Controller
             $code_candie = $this->input->post('code_candie');
             $code_money_overwrite = $this->input->post('code_money_overwrite') == NULL ? 0 : 1;   //Check box special handling to know is checked or not
             $code_money = $this->input->post('code_money');
-            
+
             if ($this->input->post('button_action') == "save")
             {
                 // validate form input
                 $this->form_validation->set_rules('code_candie', $this->lang->line('promo_code_candie'), 'trim|required|integer');
                 $this->form_validation->set_rules('code_money', $this->lang->line('promo_code_money'), 'trim|required|numeric');
-                
+
                 if ($this->form_validation->run() === TRUE)
                 {
                     $data = array(
@@ -3373,7 +3397,7 @@ class Admin extends CI_Controller
             if ($this->input->post('button_action') == "back")
             {
                 $can_redirect_to = 2;
-            }    
+            }
 
             direct_go:
             if ($message_info != NULL)
@@ -3386,17 +3410,24 @@ class Admin extends CI_Controller
             }
             elseif ($can_redirect_to == 2)
             {
-                redirect('admin/user_management', 'refresh');
+                if ($come_from == 1)
+                {
+                    redirect('admin/promo_code_management_user', 'refresh');
+                }
+                else
+                {
+                    redirect('admin/user_management', 'refresh');
+                }
             }
             elseif ($can_redirect_to == 3)
             {
-                redirect('admin/promo_code_change_user/' . $user_id, 'refresh');
+                redirect('admin/promo_code_change_user/' . $user_id . '/' . $come_from, 'refresh');
             }
         }
 
         // set the flash data error message if there is one
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-       
+
         $this->data['result'] = $result;
 
         $this->data['edit_id'] = array(
@@ -3406,7 +3437,7 @@ class Admin extends CI_Controller
 
         $this->data['is_edit'] = $is_edit;
         $this->data['code_type'] = $main_table_fiter_value;
-        
+
         $this->data['code_no'] = array(
             'name' => 'code_no',
             'id' => 'code_no',
@@ -3414,7 +3445,7 @@ class Admin extends CI_Controller
             'value' => empty($result) ? $this->form_validation->set_value('code_no') : $this->form_validation->set_value('code_no', $result['code_no']),
         );
         $this->data['promo_code_url'] = $this->m_custom->generate_promo_code_list_link($result['code_no'], 32);
-        
+
         $code_candie_overwrite_value = $result['code_candie_overwrite'];
         $this->data['code_candie_overwrite_value'] = $code_candie_overwrite_value;
         $this->data['code_candie_overwrite'] = array(
@@ -3424,13 +3455,13 @@ class Admin extends CI_Controller
             'onclick' => "checkbox_showhide('code_candie_overwrite','code-candie-div')",
             'value' => $this->form_validation->set_value('code_candie_overwrite', $edit_id),
         );
-        
+
         $this->data['code_candie'] = array(
             'name' => 'code_candie',
             'id' => 'code_candie',
             'value' => empty($result) ? $this->form_validation->set_value('code_candie') : $this->form_validation->set_value('code_candie', $result['code_candie']),
-        );      
-    
+        );
+
         $code_money_overwrite_value = $result['code_money_overwrite'];
         $this->data['code_money_overwrite_value'] = $code_money_overwrite_value;
         $this->data['code_money_overwrite'] = array(
@@ -3440,36 +3471,37 @@ class Admin extends CI_Controller
             'onclick' => "checkbox_showhide('code_money_overwrite','code-money-div')",
             'value' => $this->form_validation->set_value('code_money_overwrite', $edit_id),
         );
-        
+
         $this->data['code_money'] = array(
             'name' => 'code_money',
             'id' => 'code_money',
             'value' => empty($result) ? $this->form_validation->set_value('code_money') : $this->form_validation->set_value('code_money', $result['code_money']),
-        ); 
-        
+        );
+
         $this->data['page_path_name'] = 'admin/promo_code_change';
         $this->load->view('template/index', $this->data);
     }
-    
-    function banner_management($view_status = 0){
+
+    function banner_management($view_status = 0)
+    {
         if (!$this->m_admin->check_is_any_admin(69))
         {
             redirect('/', 'refresh');
         }
-        
+
         $message_info = '';
         $login_id = $this->login_id;
         //$login_type = $this->login_type;
         $main_table = 'banner';
         $main_table_id_column = 'banner_id';
-        
+
         if (isset($_POST) && !empty($_POST))
         {
             $can_redirect_to = 1;
-            $id = $this->input->post('id');           
+            $id = $this->input->post('id');
             $position_id = $this->input->post('position_id');
             $view_status = $this->input->post('view_status_id');
-            
+
             $display_name = $this->m_custom->display_static_option($position_id);
             if ($this->input->post('button_action') == "frozen")
             {
@@ -3477,7 +3509,7 @@ class Admin extends CI_Controller
                 $this->m_custom->update_hide_flag(1, $main_table, $id, $login_id);
             }
             if ($this->input->post('button_action') == "recover")
-            {               
+            {
                 $status = $this->m_admin->banner_recover($id);
                 if ($status)
                 {
@@ -3492,7 +3524,7 @@ class Admin extends CI_Controller
             {
                 $view_status = $this->input->post('view_status_id');
             }
-            
+
             if ($message_info != NULL)
             {
                 $this->session->set_flashdata('message', $message_info);
@@ -3502,22 +3534,22 @@ class Admin extends CI_Controller
                 redirect('admin/banner_management/' . $view_status, 'refresh');
             }
         }
-        
+
         $this->data['view_status_list'] = array('0' => 'Show Active Only', '1' => 'Show Reach Expire Only', '2' => 'Show Expired Only', '3' => 'Show All');
         $this->data['view_status_id'] = array(
             'name' => 'view_status_id',
             'id' => 'view_status_id',
         );
         $this->data['view_status_selected'] = $view_status;
-        
-        $result_list = $this->m_admin->banner_select($view_status); 
+
+        $result_list = $this->m_admin->banner_select($view_status);
         $this->data['the_result'] = $result_list;
 
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
         $this->data['page_path_name'] = 'admin/banner_management';
         $this->load->view('template/index', $this->data);
     }
-    
+
     function banner_change($edit_id = NULL, $view_status = NULL)
     {
         if (!$this->m_admin->check_is_any_admin(69))
@@ -3530,13 +3562,13 @@ class Admin extends CI_Controller
         $login_type = $this->login_type;
         $is_edit = 0;
         $main_table = 'banner';
-        $main_table_id_column = 'banner_id';       
-        
+        $main_table_id_column = 'banner_id';
+
         if ($edit_id != NULL)
         {
             $is_edit = 1;
         }
-        
+
         if (isset($_POST) && !empty($_POST))
         {
             $can_redirect_to = 0;
@@ -3549,7 +3581,7 @@ class Admin extends CI_Controller
             $banner_url = $this->input->post('banner_url');
             $banner_position = $this->m_custom->display_static_option($banner_position_id);
             $view_status = $this->input->post('view_status');
-            
+
             $upload_rule = array(
                 'upload_path' => $this->album_banner,
                 'allowed_types' => $this->config->item('allowed_types_image'),
@@ -3560,7 +3592,7 @@ class Admin extends CI_Controller
 
             $this->load->library('upload', $upload_rule);
             $upload_file = "image-file-name";
-            
+
             if ($edit_id == 0)
             {
                 $is_edit = 0;
@@ -3578,11 +3610,11 @@ class Admin extends CI_Controller
                 $this->form_validation->set_rules('banner_start_time', $this->lang->line('banner_start_time'), 'trim|required');
                 $this->form_validation->set_rules('banner_end_time', $this->lang->line('banner_end_time'), 'trim|required');
                 $this->form_validation->set_rules('banner_url', $this->lang->line('banner_url'), 'trim|required');
-                
+
                 if ($this->form_validation->run() === TRUE)
                 {
                     if ($is_edit == 0)
-                    {              
+                    {
                         if (!empty($_FILES[$upload_file]['name']))
                         {
                             if (!$this->upload->do_upload($upload_file))
@@ -3595,7 +3627,7 @@ class Admin extends CI_Controller
                             }
                         }
                         $banner_image = empty($image_data) ? '' : $image_data['upload_data']['file_name'];
-                                 
+
                         $new_id = $this->m_admin->banner_insert($merchant_id, NULL, $banner_start_time, $banner_end_time, $banner_image, $banner_url, $banner_position_id);
                         if ($new_id)
                         {
@@ -3610,9 +3642,9 @@ class Admin extends CI_Controller
                         }
                     }
                     else
-                    {                        
-                        $result_update = $this->m_custom->get_one_table_record($main_table, $main_table_id_column, $edit_id, 1); 
-                        
+                    {
+                        $result_update = $this->m_custom->get_one_table_record($main_table, $main_table_id_column, $edit_id, 1);
+
                         $previous_image_name = $result_update['banner_image'];
                         if (!empty($_FILES[$upload_file]['name']))
                         {
@@ -3623,7 +3655,7 @@ class Admin extends CI_Controller
                             else
                             {
                                 $image_data = array('upload_data' => $this->upload->data());
-                                
+
                                 if (!IsNullOrEmptyString($previous_image_name))
                                 {
                                     delete_file($this->album_banner . $previous_image_name);
@@ -3631,7 +3663,7 @@ class Admin extends CI_Controller
                             }
                         }
                         $banner_image = empty($image_data) ? $previous_image_name : $image_data['upload_data']['file_name'];
-                        
+
                         if ($this->m_admin->banner_update($merchant_id, NULL, $banner_start_time, $banner_end_time, $banner_image, $banner_url, $banner_position_id, $edit_id, $result_update['hide_flag']))
                         {
                             $message_info = add_message_info($message_info, 'Success update the banner on banner position ' . $banner_position);
@@ -3649,14 +3681,14 @@ class Admin extends CI_Controller
             if ($this->input->post('button_action') == "back")
             {
                 $can_redirect_to = 2;
-            }    
+            }
             if ($this->input->post('button_action') == "frozen")
             {
                 $message_info = add_message_info($message_info, $banner_position . ' success hide.');
                 $this->m_custom->update_hide_flag(1, $main_table, $edit_id, $login_id);
             }
             if ($this->input->post('button_action') == "recover")
-            {               
+            {
                 $status = $this->m_admin->banner_recover($edit_id);
                 if ($status)
                 {
@@ -3667,7 +3699,7 @@ class Admin extends CI_Controller
                     $message_info = add_message_info($message_info, $banner_position . ' fail to recover. Because already have other active banner in the same banner position');
                 }
             }
-            
+
             direct_go:
             if ($message_info != NULL)
             {
@@ -3690,7 +3722,7 @@ class Admin extends CI_Controller
         // set the flash data error message if there is one
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 
-        $result = $this->m_custom->get_one_table_record($main_table, $main_table_id_column, $edit_id, 1); 
+        $result = $this->m_custom->get_one_table_record($main_table, $main_table_id_column, $edit_id, 1);
         $this->data['result'] = $result;
 
         $this->data['edit_id'] = array(
@@ -3700,24 +3732,24 @@ class Admin extends CI_Controller
         );
 
         $this->data['is_edit'] = $is_edit;
-        
+
         $this->data['image_item'] = empty($result) ? $this->config->item('empty_image') : $this->album_banner . $result['banner_image'];
-        
+
         $this->data['banner_position_list'] = $this->m_custom->get_static_option_array('banner_position', '0', 'Please Select', 0, 'option_value');
         $this->data['banner_position_id'] = array(
             'name' => 'banner_position_id',
             'id' => 'banner_position_id',
         );
         $this->data['banner_position_selected'] = $result['banner_position'] == NULL ? $this->form_validation->set_value('banner_position_id', '0') : $result['banner_position'];
-              
+
         $this->data['merchant_list'] = $this->m_merchant->getMerchantList('0', 'Please Select');
         $this->data['merchant_id'] = array(
             'name' => 'merchant_id',
             'id' => 'merchant_id',
             'class' => 'chosen-select',
         );
-        $this->data['merchant_selected'] = $result['merchant_id'] == NULL ? $this->form_validation->set_value('merchant_id', '0') : $result['merchant_id'];       
-        
+        $this->data['merchant_selected'] = $result['merchant_id'] == NULL ? $this->form_validation->set_value('merchant_id', '0') : $result['merchant_id'];
+
         $this->data['banner_start_time'] = array(
             'name' => 'banner_start_time',
             'id' => 'banner_start_time',
@@ -3725,26 +3757,26 @@ class Admin extends CI_Controller
             'readonly' => 'true',
             'value' => empty($result) ? $this->form_validation->set_value('banner_start_time') : $this->form_validation->set_value('banner_start_time', displayDate($result['start_time'])),
         );
-        
+
         $this->data['banner_end_time'] = array(
             'name' => 'banner_end_time',
             'id' => 'banner_end_time',
             'type' => 'text',
             'readonly' => 'true',
             'value' => empty($result) ? $this->form_validation->set_value('banner_end_time') : $this->form_validation->set_value('banner_end_time', displayDate($result['end_time'])),
-        );      
-        
+        );
+
         $this->data['banner_url'] = array(
             'name' => 'banner_url',
             'id' => 'banner_url',
             'value' => empty($result) ? $this->form_validation->set_value('banner_url') : $this->form_validation->set_value('banner_url', $result['banner_url']),
         );
-    
+
         $this->data['temp_folder'] = $this->temp_folder;
         $this->data['page_path_name'] = 'admin/banner_change';
         $this->load->view('template/index', $this->data);
     }
-    
+
     function check_banner_position_id($dropdown_selection)
     {
         if ($dropdown_selection == 0)
@@ -3754,7 +3786,7 @@ class Admin extends CI_Controller
         }
         return TRUE;
     }
-    
+
     function manage_web_setting()
     {
         if (!$this->m_admin->check_is_any_admin(73))
@@ -3777,7 +3809,7 @@ class Admin extends CI_Controller
             $friend_success_register_get_money = check_is_positive_decimal($this->input->post('friend_success_register_get_money'));
             $register_promo_code_get_candie = check_is_positive_numeric($this->input->post('register_promo_code_get_candie'));
             $merchant_promo_code_get_candie = check_is_positive_numeric($this->input->post('merchant_promo_code_get_candie'));
-            
+
             // validate form input
             $this->form_validation->set_rules('keppo_company_name', $this->lang->line('web_setting_keppo_company_name'), 'trim|required');
             $this->form_validation->set_rules('keppo_admin_email', $this->lang->line('web_setting_keppo_admin_email'), 'trim|required|valid_emails');
@@ -3787,7 +3819,7 @@ class Admin extends CI_Controller
             $this->form_validation->set_rules('friend_success_register_get_money', $this->lang->line('web_setting_friend_success_register_get_money'), 'trim|required|numeric');
             $this->form_validation->set_rules('register_promo_code_get_candie', $this->lang->line('web_setting_register_promo_code_get_candie'), 'trim|required|integer');
             $this->form_validation->set_rules('merchant_promo_code_get_candie', $this->lang->line('web_setting_merchant_promo_code_get_candie'), 'trim|required|integer');
-            
+
             if ($this->input->post('button_action') == "save")
             {
                 if ($this->form_validation->run() === TRUE)
@@ -3800,7 +3832,7 @@ class Admin extends CI_Controller
                     $this->m_custom->web_setting_set('friend_success_register_get_money', $friend_success_register_get_money, 'set_decimal');
                     $this->m_custom->web_setting_set('register_promo_code_get_candie', $register_promo_code_get_candie);
                     $this->m_custom->web_setting_set('merchant_promo_code_get_candie', $merchant_promo_code_get_candie);
-                    
+
                     $message_info = add_message_info($message_info, 'Web Setting success update.');
                     $can_redirect_to = 1;
                 }
@@ -3879,15 +3911,15 @@ class Admin extends CI_Controller
         {
             redirect('/', 'refresh');
         }
-        
+
         $message_info = '';
         //$login_id = $this->login_id;
         //$login_type = $this->login_type;
         $main_table = 'dynamic_option';
         $main_table_id_column = 'option_id';
         $main_table_filter_column = 'option_type';
-        $main_table_fiter_value = 'photography';  
-        
+        $main_table_fiter_value = 'photography';
+
         if (isset($_POST) && !empty($_POST))
         {
             $can_redirect_to = 1;
@@ -3915,15 +3947,15 @@ class Admin extends CI_Controller
                 redirect(uri_string(), 'refresh');
             }
         }
-        
-        $option_list = $this->m_custom->get_many_table_record($main_table, $main_table_filter_column, $main_table_fiter_value, 1); 
-        $this->data['the_result'] = $option_list;
+
+        $result_list = $this->m_custom->get_many_table_record($main_table, $main_table_filter_column, $main_table_fiter_value, 1);
+        $this->data['the_result'] = $result_list;
 
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
         $this->data['page_path_name'] = 'admin/manage_photography';
         $this->load->view('template/index', $this->data);
     }
-    
+
     function manage_photography_change($edit_id = NULL)
     {
         if (!$this->m_admin->check_is_any_admin(73))
@@ -3938,8 +3970,8 @@ class Admin extends CI_Controller
         $main_table = 'dynamic_option';
         $main_table_id_column = 'option_id';
         $main_table_filter_column = 'option_type';
-        $main_table_fiter_value = 'photography';  
-        
+        $main_table_fiter_value = 'photography';
+
         if ($edit_id != NULL)
         {
             $allowed_list = $this->m_custom->get_list_of_allow_id($main_table, $main_table_filter_column, $main_table_fiter_value, $main_table_id_column);
@@ -3955,10 +3987,10 @@ class Admin extends CI_Controller
             $can_redirect_to = 0;
 
             $edit_id = $this->input->post('edit_id');
-            $option_desc = $this->input->post('option_desc');  
+            $option_desc = $this->input->post('option_desc');
 
             // validate form input
-            $this->form_validation->set_rules('option_desc', 'Photography Type', 'required');  
+            $this->form_validation->set_rules('option_desc', 'Photography Type', 'required');
 
             if ($edit_id == 0)
             {
@@ -3974,10 +4006,10 @@ class Admin extends CI_Controller
                 if ($this->form_validation->run() === TRUE)
                 {
                     if ($is_edit == 0)
-                    {                    
+                    {
                         $data = array(
-                            'option_desc' => $option_desc,    
-                            'option_type' => $main_table_fiter_value,                                   
+                            'option_desc' => $option_desc,
+                            'option_type' => $main_table_fiter_value,
                         );
 
                         $new_id = $this->m_custom->get_id_after_insert($main_table, $data);
@@ -3995,9 +4027,9 @@ class Admin extends CI_Controller
                         }
                     }
                     else
-                    {                
+                    {
                         $data = array(
-                            'option_desc' => $option_desc,    
+                            'option_desc' => $option_desc,
                         );
 
                         if ($this->m_custom->simple_update($main_table, $data, $main_table_id_column, $edit_id))
@@ -4017,7 +4049,7 @@ class Admin extends CI_Controller
             if ($this->input->post('button_action') == "back")
             {
                 $can_redirect_to = 2;
-            }    
+            }
 
             direct_go:
             if ($message_info != NULL)
@@ -4041,7 +4073,7 @@ class Admin extends CI_Controller
         // set the flash data error message if there is one
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 
-        $result = $this->m_custom->get_one_table_record($main_table, $main_table_id_column, $edit_id, 1); 
+        $result = $this->m_custom->get_one_table_record($main_table, $main_table_id_column, $edit_id, 1);
         $this->data['result'] = $result;
 
         $this->data['edit_id'] = array(
@@ -4056,11 +4088,11 @@ class Admin extends CI_Controller
             'id' => 'option_desc',
             'value' => empty($result) ? $this->form_validation->set_value('option_desc') : $this->form_validation->set_value('option_desc', $result['option_desc']),
         );
-    
+
         $this->data['page_path_name'] = 'admin/manage_photography_change';
         $this->load->view('template/index', $this->data);
     }
-    
+
     function manage_candie_term()
     {
         if (!$this->m_admin->check_is_any_admin(73))
@@ -4074,8 +4106,8 @@ class Admin extends CI_Controller
         $main_table = 'dynamic_option';
         $main_table_id_column = 'option_id';
         $main_table_filter_column = 'option_type';
-        $main_table_fiter_value = 'candie_term';        
-        
+        $main_table_fiter_value = 'candie_term';
+
         if (isset($_POST) && !empty($_POST))
         {
             $can_redirect_to = 1;
@@ -4103,15 +4135,15 @@ class Admin extends CI_Controller
                 redirect(uri_string(), 'refresh');
             }
         }
-        
-        $option_list = $this->m_custom->get_many_table_record($main_table, $main_table_filter_column, $main_table_fiter_value, 1); 
-        $this->data['the_result'] = $option_list;
 
-        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));       
+        $result_list = $this->m_custom->get_many_table_record($main_table, $main_table_filter_column, $main_table_fiter_value, 1);
+        $this->data['the_result'] = $result_list;
+
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
         $this->data['page_path_name'] = 'admin/manage_candie_term';
         $this->load->view('template/index', $this->data);
     }
-    
+
     function manage_candie_term_change($edit_id = NULL)
     {
         if (!$this->m_admin->check_is_any_admin(73))
@@ -4126,8 +4158,8 @@ class Admin extends CI_Controller
         $main_table = 'dynamic_option';
         $main_table_id_column = 'option_id';
         $main_table_filter_column = 'option_type';
-        $main_table_fiter_value = 'candie_term';  
-        
+        $main_table_fiter_value = 'candie_term';
+
         if ($edit_id != NULL)
         {
             $allowed_list = $this->m_custom->get_list_of_allow_id($main_table, $main_table_filter_column, $main_table_fiter_value, $main_table_id_column);
@@ -4143,12 +4175,11 @@ class Admin extends CI_Controller
             $can_redirect_to = 0;
 
             $edit_id = $this->input->post('edit_id');
-            $option_desc = $this->input->post('option_desc');  
+            $option_desc = $this->input->post('option_desc');
             $option_special = $this->input->post('option_special') == NULL ? 0 : 1;   //Check box special handling to know is checked or not
             $option_level = $this->input->post('option_level') == NULL ? 0 : 1;   //Check box special handling to know is checked or not
-            
             // validate form input
-            $this->form_validation->set_rules('option_desc', 'Term & Condition', 'required');  
+            $this->form_validation->set_rules('option_desc', 'Term & Condition', 'required');
 
             if ($edit_id == 0)
             {
@@ -4164,12 +4195,12 @@ class Admin extends CI_Controller
                 if ($this->form_validation->run() === TRUE)
                 {
                     if ($is_edit == 0)
-                    {                    
+                    {
                         $data = array(
-                            'option_desc' => $option_desc,   
+                            'option_desc' => $option_desc,
                             'option_special' => $option_special,
                             'option_level' => $option_level,
-                            'option_type' => $main_table_fiter_value,                                   
+                            'option_type' => $main_table_fiter_value,
                         );
 
                         $new_id = $this->m_custom->get_id_after_insert($main_table, $data);
@@ -4187,9 +4218,9 @@ class Admin extends CI_Controller
                         }
                     }
                     else
-                    {                
+                    {
                         $data = array(
-                            'option_desc' => $option_desc,    
+                            'option_desc' => $option_desc,
                             'option_special' => $option_special,
                             'option_level' => $option_level,
                         );
@@ -4211,7 +4242,7 @@ class Admin extends CI_Controller
             if ($this->input->post('button_action') == "back")
             {
                 $can_redirect_to = 2;
-            }    
+            }
 
             direct_go:
             if ($message_info != NULL)
@@ -4235,7 +4266,7 @@ class Admin extends CI_Controller
         // set the flash data error message if there is one
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 
-        $result = $this->m_custom->get_one_table_record($main_table, $main_table_id_column, $edit_id, 1); 
+        $result = $this->m_custom->get_one_table_record($main_table, $main_table_id_column, $edit_id, 1);
         $this->data['result'] = $result;
 
         $this->data['edit_id'] = array(
@@ -4251,7 +4282,7 @@ class Admin extends CI_Controller
             'style' => 'width:500px',
             'value' => empty($result) ? $this->form_validation->set_value('option_desc') : $this->form_validation->set_value('option_desc', $result['option_desc']),
         );
-    
+
         $option_special_value = $result['option_special'];
         $this->data['option_special_value'] = $option_special_value;
         $this->data['option_special'] = array(
@@ -4260,7 +4291,7 @@ class Admin extends CI_Controller
             'checked' => $option_special_value == "1" ? TRUE : FALSE,
             'value' => $this->form_validation->set_value('option_special', $edit_id),
         );
-        
+
         $option_level_value = $result['option_level'];
         $this->data['option_level_value'] = $option_level_value;
         $this->data['option_level'] = array(
@@ -4269,11 +4300,11 @@ class Admin extends CI_Controller
             'checked' => $option_level_value == "1" ? TRUE : FALSE,
             'value' => $this->form_validation->set_value('option_level', $edit_id),
         );
-        
+
         $this->data['page_path_name'] = 'admin/manage_candie_term_change';
         $this->load->view('template/index', $this->data);
     }
-    
+
     function manage_trans_config()
     {
         if (!$this->m_admin->check_is_any_admin(76))
@@ -4290,7 +4321,7 @@ class Admin extends CI_Controller
         if (isset($_POST) && !empty($_POST))
         {
             $can_redirect_to = 0;
-            
+
             foreach ($editable_list as $row)
             {
                 $conf_type = $row['conf_type'];

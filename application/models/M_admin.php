@@ -539,4 +539,44 @@ class M_admin extends CI_Model
         return FALSE;
     }
 
+    public function promo_code_user_list()
+    {
+        $code_candie = $this->m_custom->web_setting_get('register_promo_code_get_candie');
+        $code_money = $this->m_custom->web_setting_get('friend_success_register_get_money', 'set_decimal');
+
+        $this->db->select('code_id,code_no,code_user_id,code_candie,code_money,code_candie_overwrite,code_money_overwrite,last_modify_by,email');
+        $this->db->where('code_type', 'user');
+        $this->db->where('users.hide_flag', '0');
+        $this->db->from('promo_code');
+        $this->db->join('users', 'promo_code.code_user_id = users.id', 'inner');
+        $result = $this->db->get()->result_array();
+        $final_result = array();
+        foreach ($result as $row)
+        {
+            $code_candie_update = $code_candie;
+            if ($row['code_candie_overwrite'] == 1)
+            {
+                $code_candie_update = "<i>" . $row['code_candie'] . "</i>";
+            }
+            $code_money_update = $code_money;
+            if ($row['code_money_overwrite'] == 1)
+            {
+                $code_money_update = "<i>" . $row['code_money'] . "</i>";
+            }
+            $display_name = $this->m_custom->generate_user_link($row['code_user_id']);
+            $update_data = array(
+                'display_name' => $display_name,
+                'code_id' => $row['code_id'],
+                'code_no' => $row['code_no'],
+                'code_user_id' => $row['code_user_id'],
+                'code_candie' => $code_candie_update,
+                'code_money' => $code_money_update,
+                'last_modify_by' => $row['last_modify_by'],
+                'email' => $row['email'],
+            );
+            $final_result[] = $update_data;
+        }
+        return $final_result;
+    }
+
 }

@@ -40,6 +40,7 @@ if (isset($message))
                         <th>Event Name</th>
                         <th>Redeem Count</th>
                         <th>Created by Admin/Worker</th>
+                        <th>Last Modify</th>
                         <th>Hide Already</th>
                         <th>Actions</th>
                         <th>Special Actions</th>
@@ -51,6 +52,7 @@ if (isset($message))
                     {
                         $redeem_count = $this->m_custom->generate_promo_code_list_link($row['code_no'], 34);
                         $admin_name = $this->m_custom->display_users($row['code_user_id']);
+                        $last_modify = $this->m_custom->display_users($row['last_modify_by']);
                         $remove_row = $row['hide_flag'] == 1 ? 'Frozen' : '';
                         $url_edit = base_url() . "admin/promo_code_change_event/" . $row['code_id'];
                         $url_special_action = base_url() . "admin/promo_code_management";
@@ -60,6 +62,7 @@ if (isset($message))
                         echo "<td>" . $row['code_event_name'] . "</td>";
                         echo "<td>" . $redeem_count . "</td>";
                         echo "<td>" . $admin_name . "</td>";
+                        echo "<td>" . $last_modify . "</td>";
                         echo "<td>" . $remove_row . "</td>";
                         echo "<td>";
                         echo "<a href='" . $url_edit . "' >Edit</a>";
