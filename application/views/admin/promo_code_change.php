@@ -38,7 +38,10 @@ if(isset($message))
                 <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('promo_code_no', 'code_no'); ?></div>
                     <div id='profile-info-form-each-input'><?php echo form_input($code_no); ?></div>
-                </div>          
+                </div>       
+                <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><?php echo lang('promo_code_redeem_count') . $promo_code_url; ?></div>
+                </div>
                 
                 <?php if($code_type == 'user'){ ?>  <!-- if promo code type is user, show default candie that friend will get when register using this user promo code -->
                 <div id='profile-info-form-each'>

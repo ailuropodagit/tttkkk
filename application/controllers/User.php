@@ -2489,7 +2489,8 @@ class User extends CI_Controller
         }
 
         $message_info = '';
-
+        $login_id = $this->ion_auth->user()->row()->id;
+        
         if (isset($_POST) && !empty($_POST))
         {
             $can_redirect_to = 0;
@@ -2518,6 +2519,16 @@ class User extends CI_Controller
             }
         }
 
+        $promo_code = $this->m_custom->promo_code_get('user', $login_id, 1);
+        $this->data['promo_code_no'] = array(
+            'name' => 'promo_code_no',
+            'id' => 'promo_code_no',
+            'type' => 'text',
+            'readonly' => 'true',
+            'value' => $promo_code,
+        );
+        $this->data['promo_code_url'] = $this->m_custom->generate_promo_code_list_link($promo_code, 32);
+        
         // set the flash data error message if there is one
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 

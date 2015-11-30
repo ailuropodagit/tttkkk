@@ -302,7 +302,7 @@ $lang['promo_code_remark']         = 'Remark';
 $lang['promo_code_users_user']     = 'User Name';
 $lang['promo_code_users_admin']    = 'Created by Admin/Worker';
 $lang['promo_code_users_merchant'] = 'Merchant Name';
-$lang['promo_code_redeem_count']   = 'Redeem Count';
+$lang['promo_code_redeem_count']   = 'Promo Code Redeem : ';
 
 // Banner
 $lang['banner_merchant']             = 'Merchant Name';

@@ -3166,6 +3166,7 @@ class Admin extends CI_Controller
             'id' => 'code_no',
             'value' => empty($result) ? $this->form_validation->set_value('code_no') : $this->form_validation->set_value('code_no', $result['code_no']),
         );
+        $this->data['promo_code_url'] = $this->m_custom->generate_promo_code_list_link($result['code_no'], 34);
         
         $this->data['code_candie'] = array(
             'name' => 'code_candie',
@@ -3284,6 +3285,7 @@ class Admin extends CI_Controller
             'readonly' => 'true',
             'value' => empty($result) ? $this->form_validation->set_value('code_no') : $this->form_validation->set_value('code_no', $result['code_no']),
         );
+        $this->data['promo_code_url'] = $this->m_custom->generate_promo_code_list_link($result['code_no'], 33);
         
         $code_candie_overwrite_value = $result['code_candie_overwrite'];
         $this->data['code_candie_overwrite_value'] = $code_candie_overwrite_value;
@@ -3411,6 +3413,7 @@ class Admin extends CI_Controller
             'readonly' => 'true',
             'value' => empty($result) ? $this->form_validation->set_value('code_no') : $this->form_validation->set_value('code_no', $result['code_no']),
         );
+        $this->data['promo_code_url'] = $this->m_custom->generate_promo_code_list_link($result['code_no'], 32);
         
         $code_candie_overwrite_value = $result['code_candie_overwrite'];
         $this->data['code_candie_overwrite_value'] = $code_candie_overwrite_value;

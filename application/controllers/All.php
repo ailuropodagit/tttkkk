@@ -928,6 +928,7 @@ class All extends CI_Controller
             if ($num_rows_users)
             {
                 $data['user_id'] = $user_id;
+                $data['browser_title'] = $this->m_custom->display_users($user_id);
                 $data['page_path_name'] = 'user/dashboard';
                 $data['page_message'] = NULL;
                 //FOLLOWER or FOLLOWING COUNT
@@ -1098,7 +1099,8 @@ class All extends CI_Controller
             $user_id = $the_row->id;
             $this->data['image_path'] = $this->album_merchant_profile;
             $this->data['image'] = $the_row->profile_image;
-            $this->data['company_name'] = $the_row->company;           
+            $this->data['company_name'] = $the_row->company;   
+            $this->data['browser_title'] = $the_row->company;
             $this->data['address'] = $the_row->address;
             $this->data['description'] = $the_row->description;
             $this->data['phone'] = $the_row->phone;

@@ -19,6 +19,7 @@
             }
         });
     });
+    document.title = "<?php echo $browser_title; ?>";
 </script>
 
 <?php

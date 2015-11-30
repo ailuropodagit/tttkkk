@@ -62,7 +62,7 @@ if(isset($message))
                             $amount_change = $conf_row['change_type'] == 'inc'? $conf_row['amount_change']: ($conf_row['amount_change']*-1);
                             $amount_change = number_format($amount_change, 2);
                             if($conf_row['amount_change'] == 0){
-                                $amount_change = 'Depending';
+                                $amount_change = '';
                             }
                             echo '<tr >';
                             echo "<td>".$conf_row['conf_name']."</td>";

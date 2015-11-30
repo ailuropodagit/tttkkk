@@ -21,6 +21,11 @@ if (isset($message))
 <div id="payment-charge">
     <h1>Special Promo Code Management</h1>
     <div id="payment-charge-content">
+        <div style="float:left">
+        <?php
+        $this->load->view('admin/promo_code_sub_menu');
+        ?>
+        </div>
         <div style="float:right">
             <?php $add_new_url = base_url() . 'admin/promo_code_change_event'; ?>           
             <div><a href='<?php echo $add_new_url; ?>' class="a-href-button">Add New</a></div>
