@@ -898,6 +898,7 @@ class Merchant extends CI_Controller
                 'id' => 'phone',
                 'type' => 'text',
                 'value' => $this->form_validation->set_value('phone'),
+                'class' => 'phone_blur',
             );
             $this->data['me_ssm'] = array(
                 'name' => 'me_ssm',

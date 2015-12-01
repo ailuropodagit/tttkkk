@@ -1,38 +1,62 @@
-
 $(document).ready(function () {
-    $('.auto-submit-star').rating({
-        required: true,
-        callback: function (value, link) {
-            var item_id = $('#item_id').val();
-            var item_type = $('#item_type').val();
-            var post_url = 'http://' + $(location).attr('hostname') + '/keppo/all/user_rating';
-            $.ajax({
-                type: "POST",
-                url: post_url,
-                dataType: "json",
-                data: "&refer_id=" + item_id + "&rate_val=" + value + "&refer_type="+ item_type,
-                success: function (e) {
-                    $.jGrowl(e.code + "<br>" + e.msg, {position: 'center'});
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    alert(textStatus);
-                    alert(errorThrown);
-                }
-            });
-        }
-    });   
+    if ($('.phone_blur').length) {
+        $('.phone_blur').blur(function () {
+            var value = $(this).val();
+            var text_length = value.length;
+            if (text_length === 9) {
+                value = value.slice(0, 2) + " " + value.slice(2, 5) + " " + value.slice(5);
+            }
+            else if (text_length === 8) {
+                value = value.slice(0, 1) + " " + value.slice(1, 4) + " " + value.slice(4);
+            }
+            else {
+                value = value.match(/.{1,3}/g).join(" ");
+            }
+            $(this).val(value);
+        }).focus(function () {
+            var value = $(this).val();
+            value = value.replace(/\s/g, '');
+            $(this).val(value);
+        });
+    }
 });
 
-function click_like(user_id) {    
+$(document).ready(function () {
+    if ($('.auto-submit-star').length) {
+        $('.auto-submit-star').rating({
+            required: true,
+            callback: function (value, link) {
+                var item_id = $('#item_id').val();
+                var item_type = $('#item_type').val();
+                var post_url = 'http://' + $(location).attr('hostname') + '/keppo/all/user_rating';
+                $.ajax({
+                    type: "POST",
+                    url: post_url,
+                    dataType: "json",
+                    data: "&refer_id=" + item_id + "&rate_val=" + value + "&refer_type=" + item_type,
+                    success: function (e) {
+                        $.jGrowl(e.code + "<br>" + e.msg, {position: 'center'});
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        //alert(textStatus);
+                        //alert(errorThrown);
+                    }
+                });
+            }
+        });
+    }
+});
+
+function click_like(user_id) {
     var item_type = $('#item_type').val();
-    var post_url = 'http://'+$(location).attr('hostname') + '/keppo/all/user_click_like/' + user_id + '/'+ item_type;
+    var post_url = 'http://' + $(location).attr('hostname') + '/keppo/all/user_click_like/' + user_id + '/' + item_type;
     $.ajax({
         type: 'POST',
         url: post_url,
         dataType: "json",
-        success: function(e) { 
+        success: function (e) {
             $.jGrowl(e.code + "<br>" + e.msg, {position: 'center'});
-            $('.like-it').replaceWith(e.like_url);            
+            $('.like-it').replaceWith(e.like_url);
         },
         error: function (jqXHR, textStatus, errorThrown) {
             alert(textStatus);

@@ -999,12 +999,13 @@ class User extends CI_Controller
                 'id' => 'phone',
                 'type' => 'text',
                 'value' => $this->form_validation->set_value('phone'),
+                'class' => 'phone_blur',
             );
             $this->data['password'] = array(
                 'name' => 'password',
                 'id' => 'password',
                 'type' => 'password',
-                'value' => $this->form_validation->set_value('password'),
+                'value' => $this->form_validation->set_value('password'),               
             );
             $this->data['password_confirm'] = array(
                 'name' => 'password_confirm',

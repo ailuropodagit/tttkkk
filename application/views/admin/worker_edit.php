@@ -23,6 +23,18 @@ if(isset($message))
                     <div id='profile-info-form-each-input'><?php echo form_input($last_name); ?></div>
                 </div>
                 <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><?php echo lang('worker_ic_label', 'us_ic'). ':'; ?></div>
+                    <div id='profile-info-form-each-input'><?php echo form_input($us_ic); ?></div>
+                </div>
+                <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><?php echo lang('worker_id_label', 'wo_worker_id'). ':'; ?></div>
+                    <div id='profile-info-form-each-input'><?php echo form_input($wo_worker_id); ?></div>
+                </div>
+                <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><?php echo lang('worker_department_label', 'wo_department'). ':'; ?></div>
+                    <div id='profile-info-form-each-input'><?php echo form_input($wo_department); ?></div>
+                </div>
+                <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_user_contact_number_label', 'contact number'); ?></div>
                     <div id='profile-info-form-each-input'><?php echo form_input($phone); ?></div>
                 </div>

@@ -1,3 +1,5 @@
+<script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script>
+
 <script type="text/javascript">
     function showpassword()
     {
@@ -34,26 +36,6 @@
         });
     }   
     
-    $(document).ready(function () {  
-        $('#phone').blur(function () {
-            var value = $(this).val();
-            var text_length = value.length;
-            if (text_length == 9) {
-                value = value.slice(0, 2) + " " + value.slice(2, 5) + " " + value.slice(5);
-            }
-            else if (text_length == 8) {
-                value = value.slice(0, 1) + " " + value.slice(1, 4) + " " + value.slice(4);
-            }
-            else {
-                value = value.match(/.{1,3}/g).join(" ");
-            }
-            $(this).val(value);
-        }).focus(function () {
-            var value = $(this).val();
-            value = value.replace(/\s/g, '');
-            $(this).val(value);
-        });
-    });
 </script>
 
 <?php

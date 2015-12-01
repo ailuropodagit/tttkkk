@@ -311,3 +311,8 @@ $lang['banner_end_time']             = 'End Date';
 $lang['banner_image']                = 'Banner Image';
 $lang['banner_url']                  = 'Banner Web Url';
 $lang['banner_position']             = 'Banner Position';
+
+// Worker
+$lang['worker_id_label']         = 'Worker ID';
+$lang['worker_ic_label']         = 'I/C No';
+$lang['worker_department_label'] = 'Department';

@@ -39,10 +39,22 @@ if(isset($message))
                     <div id='register-form-each-input'><?php echo form_input($last_name); ?></div>
                 </div>
                 <div id='register-form-each'>
+                    <div id='register-form-each-label'><?php echo lang('worker_ic_label', 'us_ic'). ':'; ?></div>
+                    <div id='register-form-each-input'><?php echo form_input($us_ic); ?></div>
+                </div>
+                <div id='register-form-each'>
+                    <div id='register-form-each-label'><?php echo lang('worker_id_label', 'wo_worker_id'). ':'; ?></div>
+                    <div id='register-form-each-input'><?php echo form_input($wo_worker_id); ?></div>
+                </div>
+                <div id='register-form-each'>
+                    <div id='register-form-each-label'><?php echo lang('worker_department_label', 'wo_department'). ':'; ?></div>
+                    <div id='register-form-each-input'><?php echo form_input($wo_department); ?></div>
+                </div>
+                <div id='register-form-each'>
                     <div id='register-form-each-label'><?php echo lang('create_user_contact_number_label', 'contact number'); ?></div>
                     <div id='register-form-each-input-contact-number'>+60 <?php echo form_input($phone); ?></div>
                 </div>
-                       <div id='register-form-each'>
+                <div id='register-form-each'>
                     <div id='register-form-each-label'><?php echo lang('create_user_email_label', 'email address'); ?></div>
                     <div id='register-form-each-input'><?php echo form_input($email); ?></div>
                 </div>

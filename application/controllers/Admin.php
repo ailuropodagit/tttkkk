@@ -2155,6 +2155,9 @@ class Admin extends CI_Controller
             $can_redirect_to = 0;
             $first_name = $this->input->post('first_name');
             $last_name = $this->input->post('last_name');
+            $us_ic = $this->input->post('us_ic');
+            $wo_worker_id = $this->input->post('wo_worker_id');
+            $wo_department = $this->input->post('wo_department');
             $phone = '+60'.$this->input->post('phone');
             $username = strtolower($this->input->post('username'));
             $email = strtolower($this->input->post('email'));
@@ -2164,8 +2167,11 @@ class Admin extends CI_Controller
             $tables = $this->config->item('tables', 'ion_auth');
 
             $this->form_validation->set_rules('first_name', $this->lang->line('create_user_validation_fname_label'), 'required');
-            $this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'));
-            $this->form_validation->set_rules('phone', $this->lang->line('create_user_validation_phone_label'), 'required|valid_contact_number_short');
+            $this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'));     
+            $this->form_validation->set_rules('us_ic', $this->lang->line('worker_ic_label'), 'required');
+            $this->form_validation->set_rules('wo_worker_id', $this->lang->line('worker_id_label'), 'required');
+            $this->form_validation->set_rules('wo_department', $this->lang->line('worker_department_label'));
+            $this->form_validation->set_rules('phone', $this->lang->line('create_user_validation_phone_label'), 'required|valid_contact_number_short');           
             $this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'trim|required|valid_email|is_unique[' . $tables['users'] . '.email]');
             $this->form_validation->set_rules('username', $this->lang->line('create_user_validation_username_label'), 'trim|required|is_unique[' . $tables['users'] . '.username]');
             $this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']');
@@ -2179,6 +2185,9 @@ class Admin extends CI_Controller
                     $additional_data = array(
                         'first_name' => $first_name,
                         'last_name' => $last_name,
+                        'us_ic' => $us_ic,
+                        'wo_worker_id' => $wo_worker_id,
+                        'wo_department' => $wo_department,
                         'phone' => $phone,
                         'username' => $username,
                         'password_visible' => $password,
@@ -2252,11 +2261,30 @@ class Admin extends CI_Controller
             'type' => 'text',
             'value' => $this->form_validation->set_value('email'),
         );
+        $this->data['us_ic'] = array(
+            'name' => 'us_ic',
+            'id' => 'us_ic',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('us_ic'),
+        );
+        $this->data['wo_worker_id'] = array(
+            'name' => 'wo_worker_id',
+            'id' => 'wo_worker_id',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('wo_worker_id'),
+        );
+        $this->data['wo_department'] = array(
+            'name' => 'wo_department',
+            'id' => 'wo_department',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('wo_department'),
+        );
         $this->data['phone'] = array(
             'name' => 'phone',
             'id' => 'phone',
             'type' => 'text',
             'value' => $this->form_validation->set_value('phone'),
+            'class' => 'phone_blur',
         );
         $this->data['password'] = array(
             'name' => 'password',
@@ -2299,6 +2327,9 @@ class Admin extends CI_Controller
             $id = $this->input->post('id');
             $first_name = $this->input->post('first_name');
             $last_name = $this->input->post('last_name');
+            $us_ic = $this->input->post('us_ic');
+            $wo_worker_id = $this->input->post('wo_worker_id');
+            $wo_department = $this->input->post('wo_department');
             $phone = $this->input->post('phone');
             $username = strtolower($this->input->post('username'));
             $email = strtolower($this->input->post('email'));
@@ -2309,6 +2340,9 @@ class Admin extends CI_Controller
             // validate form input
             $this->form_validation->set_rules('first_name', $this->lang->line('create_user_fname_label'), 'required');
             $this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'));
+            $this->form_validation->set_rules('us_ic', $this->lang->line('worker_ic_label'), 'required');
+            $this->form_validation->set_rules('wo_worker_id', $this->lang->line('worker_id_label'), 'required');
+            $this->form_validation->set_rules('wo_department', $this->lang->line('worker_department_label'));
             $this->form_validation->set_rules('phone', $this->lang->line('create_user_phone_label'), 'required|valid_contact_number');
             $this->form_validation->set_rules('username', $this->lang->line('create_user_validation_username_label'), 'trim|required|is_unique_edit[' . $tables['users'] . '.username.' . $edit_id . ']');
             $this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'trim|required|valid_email|is_unique_edit[' . $tables['users'] . '.email.' . $edit_id . ']');
@@ -2322,6 +2356,9 @@ class Admin extends CI_Controller
                     $data = array(
                         'first_name' => $first_name,
                         'last_name' => $last_name,
+                        'us_ic' => $us_ic,
+                        'wo_worker_id' => $wo_worker_id,
+                        'wo_department' => $wo_department,
                         'phone' => $phone,
                         'username' => $username,
                         'email' => $email,
@@ -2416,6 +2453,24 @@ class Admin extends CI_Controller
             'id' => 'last_name',
             'type' => 'text',
             'value' => $this->form_validation->set_value('last_name', $result['last_name']),
+        );
+        $this->data['us_ic'] = array(
+            'name' => 'us_ic',
+            'id' => 'us_ic',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('us_ic', $result['us_ic']),
+        );
+        $this->data['wo_worker_id'] = array(
+            'name' => 'wo_worker_id',
+            'id' => 'wo_worker_id',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('wo_worker_id', $result['wo_worker_id']),
+        );
+        $this->data['wo_department'] = array(
+            'name' => 'wo_department',
+            'id' => 'wo_department',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('wo_department', $result['wo_department']),
         );
         $this->data['email'] = array(
             'name' => 'email',
