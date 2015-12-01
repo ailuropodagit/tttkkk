@@ -20,7 +20,7 @@ if(isset($message))
     }                       
     ?>
     <div id='profile-content'>              
-        <div id='profile-info'> 
+        <div id='profile-info'>
             <?php echo form_open(uri_string()); ?>
             <div id='profile-info-form'>
                 
@@ -118,6 +118,8 @@ if(isset($message))
             </div>
             <?php echo form_close(); ?>
         </div>
+        
+        <div id="float-fix"></div>
         
     </div>
 </div>

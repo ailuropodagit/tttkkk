@@ -71,7 +71,7 @@ if(isset($message))
                     <input type='file' accept='image/*' name='image-file-name' id='image-file-name'/>
                 </div>
         </div>
-        <div id='profile-info'> 
+        <div id='profile-info'>
             
             <div id='profile-info-form' style="float:left">   
                 
@@ -117,6 +117,8 @@ if(isset($message))
             </div>
             
         </div>
+        
+        <div id="float-fix"></div>
 
             <?php echo form_close(); ?>
     </div>
