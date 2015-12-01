@@ -672,17 +672,10 @@ class All extends CI_Controller
         $this->data["paging_links"] = $this->pagination->create_links();
         $start_index = $page == 1 ? $page : (($page - 1) * $config["per_page"]);  //For calculate page number to start index
         $this->data['message'] = $this->session->flashdata('message');
-        $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('hot', NULL, $merchant_id, 1, $config["per_page"], $start_index);   //To get the limited result only for that current page
+        $this->data['share_hotdeal_redemption_list'] = $this->m_custom->getAdvertise('hot', NULL, $merchant_id, 1, $config["per_page"], $start_index);   //To get the limited result only for that current page
         $this->data['title'] = "Hot Deal Advertise's Album";
-        $this->data['page_path_name'] = 'all/advertise_list';
-        if ($this->ion_auth->logged_in())
-        {
-            $this->load->view('template/index', $this->data);
-        }
-        else
-        {
-            $this->load->view('template/layout', $this->data);
-        }
+        $this->data['page_path_name'] = 'share/hotdeal_redemption_list';
+        $this->load->view('template/index_background_blank', $this->data);
     }
 
     function album_redemption($slug = NULL, $page = 1)

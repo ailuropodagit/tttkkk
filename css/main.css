@@ -176,7 +176,7 @@ html, body {
 }
 
 #header-logo-bar-search {
-    width: calc(100% - 300px);
+    width: calc(100% - 340px);
     text-align: center;
     display: inline-block;
     vertical-align: top;
@@ -242,6 +242,7 @@ html, body {
 #header-logo-bar-profile-display {
     display: inline-block;
     vertical-align: top;
+    width: 200px;
 }
 
 #header-logo-bar-profile-display a {
@@ -251,6 +252,7 @@ html, body {
 #header-logo-bar-profile-display-photo {
     display: inline-block;
     margin: 0px 10px 0px 0px;
+    vertical-align: middle;
 }
     
 #header-logo-bar-profile-display-photo-box {
@@ -268,11 +270,11 @@ html, body {
 
 #header-logo-bar-profile-display-name {
     display: inline-block;
-    vertical-align: top;
-    line-height: 45px;
     font-size: 14px;
     font-weight: bold;
     color: white;
+    width: calc(100% - 70px);
+    vertical-align: middle;
 }
 
 #header-navigation-bar {
@@ -546,6 +548,15 @@ html, body {
 
 #body-content {
     padding: 20px;
+}
+
+/*********************************************
+ ** HOME
+ *********************************************/
+
+#index-background-blank {
+    position: relative;
+    z-index: 99;
 }
 
 /*********************************************
@@ -1594,12 +1605,15 @@ html, body {
 #advertise-list-photo-box {
     border: 1px solid #e1e1e1;
     background-color: whitesmoke;
+    width: 300px;
+    height: 300px;
 }
 
 #advertise-list-photo-box img {
     object-fit: cover; 
     object-position: center;
     width: 100%;
+    height: 100%;
 }
 
 #advertise-list-title1 {
@@ -1717,13 +1731,22 @@ html, body {
 
 .share-hot-deal-redemption-list-box-each-photo-box {
     width: 100%;
-    height: 250px;
+    padding-top: 100%;
+    position: relative;
 }
 
 .share-hot-deal-redemption-list-box-each-photo-box img {
+    max-height: 100%;  
+    max-width: 100%; 
     width: 100%;
     height: 100%;
-    object-fit: cover; 
+    position: absolute;  
+    top: 0;  
+    bottom: 0;  
+    left: 0;  
+    right: 0;  
+    margin: auto;
+    object-fit: cover;
     object-position: center;
 }
 
