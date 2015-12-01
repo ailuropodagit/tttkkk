@@ -41,8 +41,11 @@ if(isset($message))
                 <div id="candie-promotion-form-voucher-checkbox">
                     <div id="candie-promotion-form-voucher-checkbox-title">Select What Worker Can Do :</div>
                     <?php
-                    foreach ($admin_role as $key => $value)
+                    foreach ($admin_role as $row)
                     {
+                        $key = $row['option_id'];
+                        $value = $row['option_text'];
+                        $image_url = base_url() . 'image/worker_role/' . $row['option_desc'];
                         $checked_or_not = '';
                         if (in_array($key, $admin_role_current))
                         {
@@ -55,7 +58,7 @@ if(isset($message))
                                             <td valign="top"><input type='checkbox' id="admin-role-<?php echo $key ?>" name='admin_role[]' value='<?php echo $key ?>' <?php echo $checked_or_not; ?>></td>
                                             <td valign="top">
                                                 <div id="candie-promotion-form-voucher-checkbox-each-label">
-                                                    <label for="admin-role-<?php echo $key ?>"><?php echo $value ?></label>
+                                                    <label for="admin-role-<?php echo $key ?>"><?php echo $value ?></label><a href="<?php echo $image_url ?>" target="_blank"><span id="profile-info-form-each-label-icon"><i class="fa fa-exclamation-circle"></i></span></a>
                                                 </div>
                                             </td>
                                         </tr>

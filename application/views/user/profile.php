@@ -251,6 +251,6 @@ if(isset($message))
                 <button name="button_action" type="submit" value="confirm">Confirm</button>
             </div>
         </div>
-        
+        <div id="float-fix"></div>
     </div>
 </div>

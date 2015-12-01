@@ -9,9 +9,9 @@ class MY_Form_validation extends CI_Form_validation
     }
 
     //VALID CONTACT NUMBER
-    public function valid_contact_number($str)
+    public function valid_contact_number_short($str)
     {
-        $this->CI->form_validation->set_message('valid_contact_number', 'The %s field is incorrect, please set a real contact number');
+        $this->CI->form_validation->set_message('valid_contact_number_short', 'The %s field is incorrect, please set a real contact number');
         if (preg_match("/^([\.+\s-0-9_-]){9,12}+$/i", $str))
         {
             return TRUE;
@@ -22,6 +22,20 @@ class MY_Form_validation extends CI_Form_validation
         }
     }
    
+    //VALID CONTACT NUMBER
+    public function valid_contact_number($str)
+    {
+        $this->CI->form_validation->set_message('valid_contact_number', 'The %s field is incorrect, please set a real contact number');
+        if (preg_match("/^([\.+\s-0-9_-]){11,14}+$/i", $str))
+        {
+            return TRUE;
+        }
+        else
+        {
+            return FALSE;
+        }
+    }
+    
     public function valid_date($str)
     {
         //date each

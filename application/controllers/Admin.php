@@ -2155,7 +2155,7 @@ class Admin extends CI_Controller
             $can_redirect_to = 0;
             $first_name = $this->input->post('first_name');
             $last_name = $this->input->post('last_name');
-            $phone = $this->input->post('phone');
+            $phone = '+60'.$this->input->post('phone');
             $username = strtolower($this->input->post('username'));
             $email = strtolower($this->input->post('email'));
             $password = $this->input->post('password');
@@ -2165,7 +2165,7 @@ class Admin extends CI_Controller
 
             $this->form_validation->set_rules('first_name', $this->lang->line('create_user_validation_fname_label'), 'required');
             $this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'));
-            $this->form_validation->set_rules('phone', $this->lang->line('create_user_validation_phone_label'), 'required|valid_contact_number');
+            $this->form_validation->set_rules('phone', $this->lang->line('create_user_validation_phone_label'), 'required|valid_contact_number_short');
             $this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'trim|required|valid_email|is_unique[' . $tables['users'] . '.email]');
             $this->form_validation->set_rules('username', $this->lang->line('create_user_validation_username_label'), 'trim|required|is_unique[' . $tables['users'] . '.username]');
             $this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']');
@@ -2437,7 +2437,7 @@ class Admin extends CI_Controller
         );
 
         $this->data['admin_role_current'] = empty($result) ? array() : $this->m_custom->many_get_childlist('admin_role', $result['id']);
-        $this->data['admin_role'] = $this->m_custom->get_static_option_array('admin_role', NULL, NULL);
+        $this->data['admin_role'] = $this->m_custom->get_static_option_array('admin_role', NULL, NULL, 1);
 
         $this->data['page_path_name'] = 'admin/worker_edit';
         $this->load->view('template/index', $this->data);
