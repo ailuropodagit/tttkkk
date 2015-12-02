@@ -54,7 +54,7 @@ $fetch_method = $this->router->fetch_method();
             {
                 $advertise_detail_url = base_url() . "all/advertise/" . $advertise_id;
             }
-            ?>
+            ?>        
             <div class='share-hot-deal-redemption-list-box-each'>
                 <a href='<?php echo $advertise_detail_url ?>'>
                     <div class="share-hot-deal-redemption-list-box-each-photo">
@@ -70,24 +70,33 @@ $fetch_method = $this->router->fetch_method();
                             </div>
                             <!--<div class="share-hot-deal-redemption-list-box-each-information-rating"></div>-->
                         </div>
-                        <div class="share-hot-deal-redemption-list-box-each-information-price">
-                            <div class="share-hot-deal-redemption-list-box-each-information-price-after">
-                                <?php
-                                if ($price_after)
-                                {
-                                    echo 'RM ' . $price_after;
-                                }
-                                ?>
+                        
+                        <?php
+                        if ($advertise_type == 'hot')
+                        {
+                            ?>
+                            <div class="share-hot-deal-redemption-list-box-each-information-price">
+                                <div class="share-hot-deal-redemption-list-box-each-information-price-after">
+                                    <?php
+                                    if ($price_after)
+                                    {
+                                        echo 'RM ' . $price_after;
+                                    }
+                                    ?>
+                                </div>
+                                <div class="share-hot-deal-redemption-list-box-each-information-price-before">
+                                    <?php
+                                    if ($price_before)
+                                    {
+                                        echo 'RM ' . $price_before;
+                                    }
+                                    ?>
+                                </div>
                             </div>
-                            <div class="share-hot-deal-redemption-list-box-each-information-price-before">
-                                <?php
-                                if ($price_before)
-                                {
-                                    echo 'RM ' . $price_before;
-                                }
-                                ?>
-                            </div>
-                        </div>
+                            <?php
+                        }
+                        ?>
+                        
                     </div>
                 </a>
             </div>
