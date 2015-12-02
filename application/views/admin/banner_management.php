@@ -24,6 +24,11 @@ if (isset($message))
 <div id="payment-charge">
     <h1>Banner Management</h1>
     <div id="payment-charge-content">
+        <?php 
+        if($view_status_selected == 1){
+            $this->load->view('all/notification_sub_menu');
+        }
+        ?>
         <div id="payment-charge-go" style="float:left">
             <?php echo form_open(uri_string()); ?>
                 <span id="payment-charge-go-label"><?php echo "Filter "; ?></span>
