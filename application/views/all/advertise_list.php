@@ -99,10 +99,10 @@ $fetch_method = $this->router->fetch_method();
                 $empty_message = 'No Picture';
             }
             //EMPTY
-            ?><div id='empty-message'><?php echo $empty_message ?></div><?php
+            ?><div id='empty-message'><?php echo $empty_message ?></div><?php            
         }
         else
-        {
+        {            
             //NOT EMPTY
             foreach ($hotdeal_list as $row)
             {
