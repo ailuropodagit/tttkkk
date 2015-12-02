@@ -870,7 +870,7 @@ class User extends CI_Controller
         // validate form input        
         $this->form_validation->set_rules('first_name', $this->lang->line('create_user_validation_fname_label'), 'required');
         $this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'));
-        $this->form_validation->set_rules('phone', $this->lang->line('create_user_validation_phone_label'), 'required|valid_contact_number');
+        $this->form_validation->set_rules('phone', $this->lang->line('create_user_validation_phone_label'), 'required|valid_contact_number_short');
         $this->form_validation->set_rules('dob', $this->lang->line('create_user_validation_dob_label'), 'callback_date_check');
         $this->form_validation->set_rules('gender_id', $this->lang->line('create_user_validation_gender_label'), 'callback_check_gender_id');
         $this->form_validation->set_rules('race_id', $this->lang->line('create_user_validation_race_label'), 'callback_check_race_id');
@@ -886,7 +886,7 @@ class User extends CI_Controller
         {
             $first_name = $this->input->post('first_name');
             $last_name = $this->input->post('last_name');
-            $phone = '+60 '.$this->input->post('phone');
+            $phone = '+60'.$this->input->post('phone');
             $username = strtolower($this->input->post('username'));
             $email = strtolower($this->input->post('email'));
             $password = $this->input->post('password');
@@ -999,12 +999,13 @@ class User extends CI_Controller
                 'id' => 'phone',
                 'type' => 'text',
                 'value' => $this->form_validation->set_value('phone'),
+                'class' => 'phone_blur',
             );
             $this->data['password'] = array(
                 'name' => 'password',
                 'id' => 'password',
                 'type' => 'password',
-                'value' => $this->form_validation->set_value('password'),
+                'value' => $this->form_validation->set_value('password'),               
             );
             $this->data['password_confirm'] = array(
                 'name' => 'password_confirm',

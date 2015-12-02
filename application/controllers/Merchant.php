@@ -765,7 +765,7 @@ class Merchant extends CI_Controller
         $this->form_validation->set_rules('me_country', $this->lang->line('create_merchant_validation_country_label'), 'required');
         $this->form_validation->set_rules('me_category_id', $this->lang->line('create_merchant_category_label'), 'callback_check_main_category');
         $this->form_validation->set_rules('me_sub_category_id', $this->lang->line('create_merchant_sub_category_label'), 'callback_check_sub_category');
-        $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required|valid_contact_number');
+        $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required|valid_contact_number_short');
         $this->form_validation->set_rules('username', $this->lang->line('create_merchant_validation_username_label'), 'trim|required|is_unique[' . $tables['users'] . '.username]');
         $this->form_validation->set_rules('email', $this->lang->line('create_merchant_validation_email_label'), 'trim|required|valid_email|is_unique[' . $tables['users'] . '.email]');
         $this->form_validation->set_rules('password', $this->lang->line('create_merchant_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
@@ -783,7 +783,7 @@ class Merchant extends CI_Controller
             $postcode = $this->input->post('postcode');
             $state = $this->input->post('me_state_id');
             $country = $this->input->post('me_country');
-            $phone = '+60 ' . $this->input->post('phone');    
+            $phone = '+60' . $this->input->post('phone');    
             $additional_data = array(
                 'username' => $username,
                 'company_main' => $company_main,
@@ -898,6 +898,7 @@ class Merchant extends CI_Controller
                 'id' => 'phone',
                 'type' => 'text',
                 'value' => $this->form_validation->set_value('phone'),
+                'class' => 'phone_blur',
             );
             $this->data['me_ssm'] = array(
                 'name' => 'me_ssm',

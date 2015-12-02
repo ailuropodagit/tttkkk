@@ -34,6 +34,8 @@ if (isset($message))
                         <th>Email</th>
                         <th>First Name</th>
                         <th>Last Name</th>
+                        <th>Worker ID</th>
+                        <th>Department</th>
                         <th>Phone</th>
                         <th>What Worker Can Do</th>
                         <th>Frozen Already</th>   
@@ -52,6 +54,8 @@ if (isset($message))
                         echo "<td>" . $row['email'] . "</td>";
                         echo "<td>" . $row['first_name'] . "</td>";
                         echo "<td>" . $row['last_name'] . "</td>";
+                        echo "<td>" . $row['wo_worker_id'] . "</td>";
+                        echo "<td>" . $row['wo_department'] . "</td>";
                         echo "<td>" . $row['phone'] . "</td>";
                         echo "<td>" . $role_list . "</td>";
                         echo "<td>" . $remove_row . "</td>";

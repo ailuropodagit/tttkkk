@@ -74,7 +74,6 @@ class M_admin extends CI_Model
 //    $banner_info = $this->m_admin->banner_select_one(101);
 //    $banner_image_url = $banner_info['banner_image_url'];
 //    $banner_website_url = $banner_info['banner_website_url'];
-//    $default_image_url = $banner_info['default_image_url'];
     function banner_select_one($banner_position, $full_info = 0)
     {
         $search_data = array(
@@ -86,7 +85,11 @@ class M_admin extends CI_Model
         $query = $this->db->get_where('banner', $search_data, 1);
         if ($query->num_rows() == 0)
         {
-            return FALSE;
+            $final_result = array(
+                'banner_website_url' => base_url(),
+                'banner_image_url' => base_url() . $this->config->item('album_banner') . $this->m_custom->display_static_option($banner_position, 'option_desc'),
+            );
+            return $final_result;
         }
         else
         {
@@ -96,14 +99,13 @@ class M_admin extends CI_Model
             {
                 $final_result = array(
                     'banner_id' => $result['banner_id'],
-                    'merchant_id' => $result['merchant_id'],      
-                    'banner_image' => $result['banner_image'],                   
+                    'merchant_id' => $result['merchant_id'],
+                    'banner_image' => $result['banner_image'],
                     'banner_image_url' => base_url() . $this->config->item('album_banner') . $result['banner_image'],
                     'banner_website_url' => $result['banner_url'],
                     'banner_position' => $result['banner_position'],
-                    'banner_position_name' => $this->m_custom->display_static_option($result['banner_position']),     
-                    'default_image_url' => base_url() . $this->config->item('album_banner') . $this->m_custom->display_static_option($result['banner_position'], 'option_desc'),
-                );                  
+                    'banner_position_name' => $this->m_custom->display_static_option($result['banner_position']),
+                );
             }
             else
             {
@@ -111,7 +113,6 @@ class M_admin extends CI_Model
                     'banner_image_url' => base_url() . $this->config->item('album_banner') . $result['banner_image'],
                     'banner_website_url' => $result['banner_url'],
                     'banner_position_name' => $this->m_custom->display_static_option($result['banner_position']),
-                    'default_image_url' => base_url() . $this->config->item('album_banner') . $this->m_custom->display_static_option($result['banner_position'], 'option_desc'),
                 );
                 $final_result = $result + $additional_info;
             }

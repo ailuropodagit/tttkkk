@@ -222,12 +222,24 @@ $this->album_admin = $this->config->item('album_admin');
                     ?>
                 </ul>
             </div>
+            <?php 
+                for($i = 101; $i < 104; $i++){
+                    ${'slider_info' . $i} = $this->m_admin->banner_select_one($i);
+                    ${'slider_image_url' . $i} = ${'slider_info' . $i}['banner_image_url'];
+                    ${'slider_website_ur' . $i} = ${'slider_info' . $i}['banner_website_url'];
+                }
+                ?>
             <div id='home-row1-banner-main'>
                 <div class='fluid_container' style="width: 100.1%;">
                     <div class="camera_wrap camera_azure_skin" id="camera_wrap_1">
-                        <div data-src="<?php echo base_url('folder_upload/home_banner_row1/slide1.jpg') ?>"></div>
-                        <div data-src="<?php echo base_url('folder_upload/home_banner_row1/slide2.jpg') ?>"></div>
-                        <div data-src="<?php echo base_url('folder_upload/home_banner_row1/slide3.jpg') ?>"></div>
+                        <?php 
+                        for($i = 101; $i < 104; $i++){
+                        echo "<div data-src=" . ${'slider_image_url' . $i} . " data-link=" . ${'slider_website_ur' . $i} . " data-target='_blank' ></div>";
+                        }
+                        ?>
+<!--                        <div data-src="<?php //echo base_url('folder_upload/home_banner_row1/slide1.jpg') ?>"></div>
+                        <div data-src="<?php //echo base_url('folder_upload/home_banner_row1/slide2.jpg') ?>"></div>
+                        <div data-src="<?php //echo base_url('folder_upload/home_banner_row1/slide3.jpg') ?>"></div>-->
                     </div>
                 </div>
             </div>
@@ -235,13 +247,28 @@ $this->album_admin = $this->config->item('album_admin');
         </div>
         <div id='home-row2'>
             <div id='home-row2-block1'>
-                <?php echo img('folder_upload/home_banner_row2/home-banner-row2-banner1.jpg') ?>
+                <?php 
+                $banner_info = $this->m_admin->banner_select_one(105);
+                $banner_image_url = $banner_info['banner_image_url'];
+                $banner_website_url = $banner_info['banner_website_url'];
+                echo "<a href='" . $banner_website_url . "' target='_blank'>" . img($banner_image_url) . "</a>";
+                ?>
             </div>
             <div id='home-row2-block2'>
-                <?php echo img('folder_upload/home_banner_row2/home-banner-row2-banner2.jpg') ?>
+                <?php 
+                $banner_info = $this->m_admin->banner_select_one(106);
+                $banner_image_url = $banner_info['banner_image_url'];
+                $banner_website_url = $banner_info['banner_website_url'];
+                echo "<a href='" . $banner_website_url . "' target='_blank'>" . img($banner_image_url) . "</a>"; 
+                ?>
             </div>
             <div id='home-row2-block3'>
-                <?php echo img('folder_upload/home_banner_row2/home-banner-row2-banner3.jpg') ?>
+                <?php 
+                $banner_info = $this->m_admin->banner_select_one(107);
+                $banner_image_url = $banner_info['banner_image_url'];
+                $banner_website_url = $banner_info['banner_website_url'];
+                echo "<a href='" . $banner_website_url . "' target='_blank'>" . img($banner_image_url) . "</a>"; 
+                ?>
             </div>
             <div id='float-fix'></div>
         </div>        
@@ -342,18 +369,38 @@ $this->album_admin = $this->config->item('album_admin');
             </div>
             <div id='home-row3-column1-banner'>
                 <div id='home-row3-column1-banner-block1'>
-                    <?php echo img('folder_upload/home_banner_row3/home-banner-row3-banner1.jpg') ?>
+                    <?php 
+                    $banner_info = $this->m_admin->banner_select_one(108);
+                    $banner_image_url = $banner_info['banner_image_url'];
+                    $banner_website_url = $banner_info['banner_website_url'];
+                    echo "<a href='" . $banner_website_url . "' target='_blank'>" . img($banner_image_url) . "</a>"; 
+                     ?>
                 </div>
                 <div id='home-row3-column1-banner-block2'>
                     <div id='home-row3-column1-banner-block2-row1'>
-                        <?php echo img('folder_upload/home_banner_row3/home-banner-row3-banner2.jpg') ?>
+                        <?php 
+                        $banner_info = $this->m_admin->banner_select_one(109);
+                        $banner_image_url = $banner_info['banner_image_url'];
+                        $banner_website_url = $banner_info['banner_website_url'];
+                        echo "<a href='" . $banner_website_url . "' target='_blank'>" . img($banner_image_url) . "</a>"; 
+                    ?>
                     </div>
                     <div id='home-row3-column1-banner-block2-row2'>
-                        <?php echo img('folder_upload/home_banner_row3/home-banner-row3-banner3.jpg') ?>
+                        <?php 
+                        $banner_info = $this->m_admin->banner_select_one(110);
+                        $banner_image_url = $banner_info['banner_image_url'];
+                        $banner_website_url = $banner_info['banner_website_url'];
+                        echo "<a href='" . $banner_website_url . "' target='_blank'>" . img($banner_image_url) . "</a>"; 
+                    ?>
                     </div>
                 </div>
                 <div id='home-row3-column1-banner-block3'>
-                    <?php echo img('folder_upload/home_banner_row3/home-banner-row3-banner4.jpg') ?>
+                    <?php 
+                    $banner_info = $this->m_admin->banner_select_one(111);
+                    $banner_image_url = $banner_info['banner_image_url'];
+                    $banner_website_url = $banner_info['banner_website_url'];
+                    echo "<a href='" . $banner_website_url . "' target='_blank'>" . img($banner_image_url) . "</a>"; 
+                    ?>
                 </div>
                 <div id='float-fix'></div>
             </div>
