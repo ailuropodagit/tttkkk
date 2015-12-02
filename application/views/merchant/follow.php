@@ -109,3 +109,4 @@ if($user_page == 'following' && $user_type == 'user')
         ?>
     </div>    
 </div>
+<div id='float-fix'></div>

@@ -125,5 +125,6 @@ if($user_page == 'following' && $user_type == 'merchant')
         ?>
     </div>
 </div>
+<div id='float-fix'></div>
 
 

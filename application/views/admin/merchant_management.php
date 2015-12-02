@@ -25,6 +25,11 @@ if (isset($message))
 <div id="payment-charge">
     <h1>Merchant Management</h1>
     <div id="payment-charge-content">
+         <?php 
+        if($low_balance_only == 1){
+            $this->load->view('all/notification_sub_menu');
+        }
+        ?>
         <div id='payment-charge-table'>
             <table border='1px' cellspacing='0px' cellpadding='0px' id="myTable" class="display">
                 <thead>
