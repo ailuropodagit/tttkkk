@@ -131,6 +131,10 @@
                 }
             ]
         });
+        
+//        $(function () {
+//            $('.home-row3-column1-today-deal-box-each-information-rating :radio.star').rating();
+//        });
     });
 </script>
 
@@ -297,7 +301,7 @@ $this->album_admin = $this->config->item('album_admin');
                         $price_before = $hotdeal['price_before'];
                         $price_after_show = $hotdeal['price_after_show'];
                         $price_after = $hotdeal['price_after'];
-                        $end_time = $hotdeal['end_time'];
+                        $end_time = $hotdeal['end_time'];  
                         if ($advertise_type == 'adm')
                         {
                             $image_url = $this->album_admim . $image;
@@ -338,7 +342,9 @@ $this->album_admin = $this->config->item('album_admin');
                                         <div class="home-row3-column1-today-deal-box-each-information-title">
                                             <?php echo $title ?>
                                         </div>
-                                        <!--<div class="home-row3-column1-today-deal-box-each-information-rating"></div>-->
+                                        <div class="home-row3-column1-today-deal-box-each-information-rating">
+
+                                        </div>
                                     </div>
                                     <div class="home-row3-column1-today-deal-box-each-information-price">
                                         <div class="home-row3-column1-today-deal-box-each-information-price-after">
