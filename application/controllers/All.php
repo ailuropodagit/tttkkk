@@ -45,7 +45,7 @@ class All extends CI_Controller
         $this->data['advertise_suggestion_page_path_name'] = 'all/hot_deal_list_suggestion';
         $this->data['advertise_suggestion_page_title'] = 'Hot Deal Suggestion';
         //NORMAL PAGE
-        $this->data['page_path_name'] = 'share/hotdeal_redemption_list';
+        $this->data['page_path_name'] = 'share/hotdeal_redemption_list3';
         $this->load->view('template/index_left_category', $this->data);
     }
 
@@ -70,7 +70,7 @@ class All extends CI_Controller
         $this->data['advertise_suggestion_page_path_name'] = 'all/hot_deal_list_suggestion';
         $this->data['advertise_suggestion_page_title'] = 'Hot Deal Suggestion';
         //NORMAL PAGE
-        $this->data['page_path_name'] = 'share/hotdeal_redemption_list';
+        $this->data['page_path_name'] = 'share/hotdeal_redemption_list3';
         $this->load->view('template/index_left_category', $this->data);
     }
 
@@ -407,7 +407,6 @@ class All extends CI_Controller
         $this->data['page_path_name'] = 'all/review_merchant';
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['title'] = "Merchant (" . $this->m_custom->display_category($sub_category_id) . ") ";
-
         $this->data['review_list'] = $this->m_merchant->getMerchantList_by_subcategory($sub_category_id);
 
         if ($this->ion_auth->logged_in())
@@ -674,7 +673,7 @@ class All extends CI_Controller
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['share_hotdeal_redemption_list'] = $this->m_custom->getAdvertise('hot', NULL, $merchant_id, 1, $config["per_page"], $start_index);   //To get the limited result only for that current page
         $this->data['title'] = "Hot Deal Advertise's Album";
-        $this->data['page_path_name'] = 'share/hotdeal_redemption_list';
+        $this->data['page_path_name'] = 'share/hotdeal_redemption_list4';
         $this->load->view('template/index_background_blank', $this->data);
     }
 
@@ -682,7 +681,6 @@ class All extends CI_Controller
     {
         $this->load->library("pagination");
         $config = array();
-
         $merchant_id = 0;
         $base_url = base_url() . "all/album_redemption";
         if ($slug != NULL)
@@ -703,7 +701,6 @@ class All extends CI_Controller
             $the_row = $this->m_custom->get_one_table_record('users', 'id', $merchant_id);
             $base_url = base_url() . "all/album_redemption/" . $the_row->slug;
         }
-
         //For setting the pagination function
         $config["per_page"] = $this->config->item('custom_per_page');
         $config['num_links'] = 5;
@@ -718,18 +715,10 @@ class All extends CI_Controller
         $this->data["paging_links"] = $this->pagination->create_links();
         $start_index = $page == 1 ? $page : (($page - 1) * $config["per_page"]);  //For calculate page number to start index
         $this->data['message'] = $this->session->flashdata('message');
-        $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('pro', NULL, $merchant_id, 1, $config["per_page"], $start_index);   //To get the limited result only for that current page
+        $this->data['share_hotdeal_redemption_list'] = $this->m_custom->getAdvertise('pro', NULL, $merchant_id, 1, $config["per_page"], $start_index);   //To get the limited result only for that current page
         $this->data['title'] = "Candie Voucher's Album";
-        $this->data['page_path_name'] = 'all/advertise_list';
-
-        if ($this->ion_auth->logged_in())
-        {
-            $this->load->view('template/index', $this->data);
-        }
-        else
-        {
-            $this->load->view('template/layout', $this->data);
-        }
+        $this->data['page_path_name'] = 'share/hotdeal_redemption_list4';
+        $this->load->view('template/index_background_blank', $this->data);
     }
 
     //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album

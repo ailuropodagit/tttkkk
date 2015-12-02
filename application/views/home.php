@@ -297,7 +297,8 @@ $this->album_admin = $this->config->item('album_admin');
                         $price_before = $hotdeal['price_before'];
                         $price_after_show = $hotdeal['price_after_show'];
                         $price_after = $hotdeal['price_after'];
-                        $end_time = $hotdeal['end_time'];
+                        $end_time = $hotdeal['end_time']; 
+                        $post_hour = $hotdeal['post_hour'];
                         if ($advertise_type == 'adm')
                         {
                             $image_url = $this->album_admim . $image;
@@ -309,26 +310,33 @@ $this->album_admin = $this->config->item('album_admin');
                         ?>
                         <div class="home-row3-column1-today-deal-box-each">
                             <a href='<?php echo base_url("all/advertise/$advertise_id") ?>'>
-                                <div class="home-row3-column1-today-deal-box-each-timer-box-absolute">
-                                    <div class="home-row3-column1-today-deal-box-each-timer-box-relative" end_date="<?php echo $end_time ?>">
-                                        <div class="home-row3-column1-today-deal-box-each-timer-box1">
-                                            <div class="home-row3-column1-today-deal-box-each-timer-box1-time-day">1</div>
-                                            <div class="home-row3-column1-today-deal-box-each-timer-box1-label">Days</div>
-                                        </div>
-                                        <div class="home-row3-column1-today-deal-box-each-timer-box2">
-                                            <div class="home-row3-column1-today-deal-box-each-timer-box2-time-hour">2</div>
-                                            <div class="home-row3-column1-today-deal-box-each-timer-box2-label">Hours</div>
-                                        </div>
-                                        <div class="home-row3-column1-today-deal-box-each-timer-box3">
-                                            <div class="home-row3-column1-today-deal-box-each-timer-box3-time-minute">3</div>
-                                            <div class="home-row3-column1-today-deal-box-each-timer-box3-label">Mins</div>
-                                        </div>
-                                        <div class="home-row3-column1-today-deal-box-each-timer-box4">
-                                            <div class="home-row3-column1-today-deal-box-each-timer-box4-time-second">4</div>
-                                            <div class="home-row3-column1-today-deal-box-each-timer-box4-label">Secs</div>
+                                <?php
+                                if ($post_hour != 0)
+                                { 
+                                    ?>
+                                    <div class="home-row3-column1-today-deal-box-each-timer-box-absolute">
+                                        <div class="home-row3-column1-today-deal-box-each-timer-box-relative" end_date="<?php echo $end_time ?>">
+                                            <div class="home-row3-column1-today-deal-box-each-timer-box1">
+                                                <div class="home-row3-column1-today-deal-box-each-timer-box1-time-day">1</div>
+                                                <div class="home-row3-column1-today-deal-box-each-timer-box1-label">Days</div>
+                                            </div>
+                                            <div class="home-row3-column1-today-deal-box-each-timer-box2">
+                                                <div class="home-row3-column1-today-deal-box-each-timer-box2-time-hour">2</div>
+                                                <div class="home-row3-column1-today-deal-box-each-timer-box2-label">Hours</div>
+                                            </div>
+                                            <div class="home-row3-column1-today-deal-box-each-timer-box3">
+                                                <div class="home-row3-column1-today-deal-box-each-timer-box3-time-minute">3</div>
+                                                <div class="home-row3-column1-today-deal-box-each-timer-box3-label">Mins</div>
+                                            </div>
+                                            <div class="home-row3-column1-today-deal-box-each-timer-box4">
+                                                <div class="home-row3-column1-today-deal-box-each-timer-box4-time-second">4</div>
+                                                <div class="home-row3-column1-today-deal-box-each-timer-box4-label">Secs</div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                    <?php
+                                }
+                                ?>
                                 <div class="home-row3-column1-today-deal-box-each-image">
                                     <?php echo img($image_url) ?>
                                 </div>
@@ -338,7 +346,9 @@ $this->album_admin = $this->config->item('album_admin');
                                         <div class="home-row3-column1-today-deal-box-each-information-title">
                                             <?php echo $title ?>
                                         </div>
-                                        <!--<div class="home-row3-column1-today-deal-box-each-information-rating"></div>-->
+                                        <div class="home-row3-column1-today-deal-box-each-information-rating">
+
+                                        </div>
                                     </div>
                                     <div class="home-row3-column1-today-deal-box-each-information-price">
                                         <div class="home-row3-column1-today-deal-box-each-information-price-after">

@@ -1562,6 +1562,7 @@ html, body {
 
 #advertise-list-content {
     padding: 10px 0px 0px 0px;
+    display: none;
 }
 
 #advertise-list-category-breadcrumb {
@@ -1598,22 +1599,31 @@ html, body {
 #advertise-list-box {
     vertical-align: top;
     display: inline-block;
-    width: 26%;
-    margin: 0px 3% 0px 0px;
+    width: calc(25% - 40px);
+    margin: 0px 30px 30px 0px;
 }
 
 #advertise-list-photo-box {
-    border: 1px solid #e1e1e1;
     background-color: whitesmoke;
-    width: 300px;
-    height: 300px;
+    width: 100%;
+    padding-top: 100%;
+    position: relative;
+    border: 1px solid lightgray;
 }
 
 #advertise-list-photo-box img {
-    object-fit: cover; 
-    object-position: center;
+    max-height: 100%;  
+    max-width: 100%; 
     width: 100%;
     height: 100%;
+    position: absolute;  
+    top: 0;  
+    bottom: 0;  
+    left: 0;  
+    right: 0;  
+    margin: auto;
+    object-fit: cover;
+    object-position: center;
 }
 
 #advertise-list-title1 {
@@ -1685,14 +1695,14 @@ html, body {
 }
 
 /*********************************************
- ** SHARE HOT DEAL REDEMPTION LIST TITLE
+ ** SHARE HOT DEAL REDEMPTION LIST3
  *********************************************/
 
-#share-hot-deal-redemption-list {
+#share-hot-deal-redemption-list3 {
     margin: 0px 0px 40px 0px;
 }
 
-#share-hot-deal-redemption-list-title {
+#share-hot-deal-redemption-list3-title {
     font-size: 20px;
     font-weight: bold;
     color: #244964;
@@ -1704,11 +1714,11 @@ html, body {
     box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
 }
 
-#share-hot-deal-redemption-list-box {
+#share-hot-deal-redemption-list3-box {
     margin: 30px 0px 0px 0px;
 }
 
-.share-hot-deal-redemption-list-box-each {
+.share-hot-deal-redemption-list3-box-each {
     vertical-align: top;
     display: inline-block;
     width: calc(33.33% - 22px);
@@ -1721,21 +1731,21 @@ html, body {
     box-shadow: 1px 1px 3px 0px rgba(179,179,179,0.80);
 }
 
-.share-hot-deal-redemption-list-box-each a {
+.share-hot-deal-redemption-list3-box-each a {
     text-decoration: none;
 }
 
-.share-hot-deal-redemption-list-box-each:nth-child(3n+0) {
+.share-hot-deal-redemption-list3-box-each:nth-child(3n+0) {
     margin-right: 0px;
 }
 
-.share-hot-deal-redemption-list-box-each-photo-box {
+.share-hot-deal-redemption-list3-box-each-photo-box {
     width: 100%;
     padding-top: 100%;
     position: relative;
 }
 
-.share-hot-deal-redemption-list-box-each-photo-box img {
+.share-hot-deal-redemption-list3-box-each-photo-box img {
     max-height: 100%;  
     max-width: 100%; 
     width: 100%;
@@ -1750,48 +1760,196 @@ html, body {
     object-position: center;
 }
 
-.share-hot-deal-redemption-list-box-each-separator {
+.share-hot-deal-redemption-list3-box-each-separator {
     border-bottom: 1px solid #eeeeee;
 }
 
-.share-hot-deal-redemption-list-box-each-information {
+.share-hot-deal-redemption-list3-box-each-information {
     padding: 20px 18px 20px 18px;
     min-height: 40px;
 }
 
-.share-hot-deal-redemption-list-box-each-information-title-rating {
+.share-hot-deal-redemption-list3-box-each-information-title-rating {
     float: left;
     width: calc(100% - 50%);
 }
 
-.share-hot-deal-redemption-list-box-each-information-title {
+.share-hot-deal-redemption-list3-box-each-information-title {
     font-size: 14px;
     font-weight: bold;
     color: #444444;
 }
 
-.share-hot-deal-redemption-list-box-each-information-rating {
+.share-hot-deal-redemption-list3-box-each-information-rating {
     margin: 10px 0px 0px 0px;
 }
 
-.share-hot-deal-redemption-list-box-each-information-price {
+.share-hot-deal-redemption-list3-box-each-information-price {
     width: 40%;
     white-space: nowrap;
     float: right;
 }
 
-.share-hot-deal-redemption-list-box-each-information-price-after {
+.share-hot-deal-redemption-list3-box-each-information-price-after {
     color: #d92222;
     font-size: 18px;
     font-weight: bold;
     text-align: right;
 }
 
-.share-hot-deal-redemption-list-box-each-information-price-before {
+.share-hot-deal-redemption-list3-box-each-information-price-before {
     color: #666666;
     text-decoration: line-through;
     margin: 3px 0px 0px 0px;
     text-align: right;
+}
+
+#share-hot-deal-redemption-list3-pagination {
+    padding: 20px;
+    margin: 0px 0px 60px 0px;
+    background-color: white;
+    -webkit-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
+    -moz-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
+    box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
+}
+
+#share-hot-deal-redemption-list3-pagination strong {
+    margin: 0px 5px 0px 5px;
+    font-size: 15px;
+}
+
+#share-hot-deal-redemption-list3-pagination a {
+    margin: 0px 5px 0px 5px;
+    font-size: 15px;
+}
+
+/*********************************************
+ ** SHARE HOT DEAL REDEMPTION LIST4
+ *********************************************/
+
+#share-hot-deal-redemption-list4 {
+    margin: 0px 0px 40px 0px;
+}
+
+#share-hot-deal-redemption-list4-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #244964;
+    letter-spacing: 1px;
+    padding: 16px;
+    background-color: white;
+    -webkit-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
+    -moz-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
+    box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
+}
+
+#share-hot-deal-redemption-list4-box {
+    margin: 40px 0px 0px 0px;
+}
+
+.share-hot-deal-redemption-list4-box-each {
+    vertical-align: top;
+    display: inline-block;
+    width: calc(25% - 33px);
+    margin: 0px 40px 40px 0px;
+    background-color: white;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    -webkit-box-shadow: 1px 1px 4px 0px rgba(179,179,179,0.80);
+    -moz-box-shadow: 1px 1px 4px 0px rgba(179,179,179,0.80);
+    box-shadow: 1px 1px 4px 0px rgba(179,179,179,0.80);
+}
+
+.share-hot-deal-redemption-list4-box-each a {
+    text-decoration: none;
+}
+
+.share-hot-deal-redemption-list4-box-each:nth-child(4n+0) {
+    margin-right: 0px;
+}
+
+.share-hot-deal-redemption-list4-box-each-photo-box {
+    width: 100%;
+    padding-top: 100%;
+    position: relative;
+}
+
+.share-hot-deal-redemption-list4-box-each-photo-box img {
+    max-height: 100%;  
+    max-width: 100%; 
+    width: 100%;
+    height: 100%;
+    position: absolute;  
+    top: 0;  
+    bottom: 0;  
+    left: 0;  
+    right: 0;  
+    margin: auto;
+    object-fit: cover;
+    object-position: center;
+}
+
+.share-hot-deal-redemption-list4-box-each-separator {
+    border-bottom: 1px solid #eeeeee;
+}
+
+.share-hot-deal-redemption-list4-box-each-information {
+    padding: 20px 18px 20px 18px;
+    min-height: 40px;
+}
+
+.share-hot-deal-redemption-list4-box-each-information-title-rating {
+    float: left;
+    width: calc(100% - 50%);
+}
+
+.share-hot-deal-redemption-list4-box-each-information-title {
+    font-size: 14px;
+    font-weight: bold;
+    color: #444444;
+}
+
+.share-hot-deal-redemption-list4-box-each-information-rating {
+    margin: 10px 0px 0px 0px;
+}
+
+.share-hot-deal-redemption-list4-box-each-information-price {
+    width: 40%;
+    white-space: nowrap;
+    float: right;
+}
+
+.share-hot-deal-redemption-list4-box-each-information-price-after {
+    color: #d92222;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: right;
+}
+
+.share-hot-deal-redemption-list4-box-each-information-price-before {
+    color: #666666;
+    text-decoration: line-through;
+    margin: 4px 0px 0px 0px;
+    text-align: right;
+}
+
+#share-hot-deal-redemption-list4-pagination {
+    padding: 20px;
+    margin: 0px 0px 60px 0px;
+    background-color: white;
+    -webkit-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
+    -moz-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
+    box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
+}
+
+#share-hot-deal-redemption-list4-pagination strong {
+    margin: 0px 5px 0px 5px;
+    font-size: 15px;
+}
+
+#share-hot-deal-redemption-list4-pagination a {
+    margin: 0px 5px 0px 5px;
+    font-size: 15px;
 }
 
 /*********************************************
@@ -2390,10 +2548,6 @@ html, body {
     font-size: 22px;
     font-weight: bold;
     margin: 0px 0px 20px 0px;
-}
-
-#search-result-bottom-empty-fix {
-    margin: 0px 0px -40px 0px;
 }
 
 /* LAYOUT INNER RIGHT MENU

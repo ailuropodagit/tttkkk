@@ -2,6 +2,7 @@
 <?php echo link_tag('js/star-rating/jquery.rating.css') ?>
 <script type="text/javascript" src="<?php echo base_url() ?>js/jgrowl/jquery.jgrowl.js"></script>
 <?php echo link_tag('js/jgrowl/jquery.jgrowl.css') ?>
+
 <script type="text/javascript" src="<?php echo base_url() ?>js/jquery.countdown.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -258,5 +259,3 @@ $profile_image_empty = $this->config->item('empty_image');
         
     </div>
 </div>
-
-<div id="search-result-bottom-empty-fix"></div>

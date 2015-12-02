@@ -1,3 +1,8 @@
+<script type="text/javascript" src="<?php echo base_url() ?>js/star-rating/jquery.rating.js"></script>
+<?php echo link_tag('js/star-rating/jquery.rating.css') ?>
+<script type="text/javascript" src="<?php echo base_url() ?>js/jgrowl/jquery.jgrowl.js"></script>
+<?php echo link_tag('js/jgrowl/jquery.jgrowl.css') ?>
+
 <?php
 //CONFIG DATA
 $this->album_merchant = $this->config->item('album_merchant');
@@ -7,9 +12,9 @@ $this->album_admin = $this->config->item('album_admin');
 $fetch_method = $this->router->fetch_method();
 ?>
 
-<div id="share-hot-deal-redemption-list">
-    <div id="share-hot-deal-redemption-list-title"><?php echo $title ?></div>
-    <div id="share-hot-deal-redemption-list-box">
+<div id="share-hot-deal-redemption-list3">
+    <div id="share-hot-deal-redemption-list3-title"><?php echo $title ?></div>
+    <div id="share-hot-deal-redemption-list3-box">
         <?php
         foreach ($share_hotdeal_redemption_list as $row)
         {
@@ -53,41 +58,50 @@ $fetch_method = $this->router->fetch_method();
             else
             {
                 $advertise_detail_url = base_url() . "all/advertise/" . $advertise_id;
-            }
+            }   
             ?>
-            <div class='share-hot-deal-redemption-list-box-each'>
+            <div class='share-hot-deal-redemption-list3-box-each'>
                 <a href='<?php echo $advertise_detail_url ?>'>
-                    <div class="share-hot-deal-redemption-list-box-each-photo">
-                        <div class="share-hot-deal-redemption-list-box-each-photo-box">
+                    <div class="share-hot-deal-redemption-list3-box-each-photo">
+                        <div class="share-hot-deal-redemption-list3-box-each-photo-box">
                             <img src='<?php echo $image_url ?>'>
                         </div>
                     </div>
-                    <div class="share-hot-deal-redemption-list-box-each-separator"></div>
-                    <div class="share-hot-deal-redemption-list-box-each-information">
-                        <div class="share-hot-deal-redemption-list-box-each-information-title-rating">
-                            <div class="share-hot-deal-redemption-list-box-each-information-title">
+                    <div class="share-hot-deal-redemption-list3-box-each-separator"></div>
+                    <div class="share-hot-deal-redemption-list3-box-each-information">
+                        <div class="share-hot-deal-redemption-list3-box-each-information-title-rating">
+                            <div class="share-hot-deal-redemption-list3-box-each-information-title">
                                 <?php echo $row['title'] ?>
                             </div>
-                            <!--<div class="share-hot-deal-redemption-list-box-each-information-rating"></div>-->
+                            <!--<div class="share-hot-deal-redemption-list3-box-each-information-rating"></div>-->
                         </div>
-                        <div class="share-hot-deal-redemption-list-box-each-information-price">
-                            <div class="share-hot-deal-redemption-list-box-each-information-price-after">
-                                <?php
-                                if ($price_after)
-                                {
-                                    echo 'RM ' . $price_after;
-                                }
-                                ?>
+                        
+                        <?php
+                        if ($advertise_type == 'hot')
+                        {
+                            ?>
+                            <div class="share-hot-deal-redemption-list3-box-each-information-price">
+                                <div class="share-hot-deal-redemption-list3-box-each-information-price-after">
+                                    <?php
+                                    if ($price_after)
+                                    {
+                                        echo 'RM ' . $price_after;
+                                    }
+                                    ?>
+                                </div>
+                                <div class="share-hot-deal-redemption-list3-box-each-information-price-before">
+                                    <?php
+                                    if ($price_before)
+                                    {
+                                        echo 'RM ' . $price_before;
+                                    }
+                                    ?>
+                                </div>
                             </div>
-                            <div class="share-hot-deal-redemption-list-box-each-information-price-before">
-                                <?php
-                                if ($price_before)
-                                {
-                                    echo 'RM ' . $price_before;
-                                }
-                                ?>
-                            </div>
-                        </div>
+                            <?php
+                        }
+                        ?>
+                        
                     </div>
                 </a>
             </div>
@@ -97,7 +111,7 @@ $fetch_method = $this->router->fetch_method();
         if (!empty($paging_links))
         {
             ?>
-            <div id='advertise-list-pagination'>
+            <div id='share-hot-deal-redemption-list3-pagination'>
                 <?php echo $paging_links; ?>
             </div>
             <?php
