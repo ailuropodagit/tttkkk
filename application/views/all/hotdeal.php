@@ -198,11 +198,18 @@
                 </div>
             </div>
             
-            <!--COUNTDOWN-->
-            <div id="hot-deal-information-countdown">
-                 <div id="hot-deal-information-countdown-icon"><i class="fa fa-clock-o"></i></div>
-                <div id="hot-deal-information-countdown-time" end_time="<?php echo $end_time ?>"></div>
-            </div>
+            <?php
+            //COUNTDOWN
+            if ($post_hour != 0)
+            { 
+                ?>
+                <div id="hot-deal-information-countdown">
+                     <div id="hot-deal-information-countdown-icon"><i class="fa fa-clock-o"></i></div>
+                    <div id="hot-deal-information-countdown-time" end_time="<?php echo $end_time ?>"></div>
+                </div>
+                <?php
+            }
+            ?>
             
             <div id="hot-deal-information-horizontal-separator"></div>
             

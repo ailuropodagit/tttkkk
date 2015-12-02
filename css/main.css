@@ -2144,7 +2144,7 @@ html, body {
 }
 
 #hot-deal-information-countdown {
-    margin: 28px 0px 28px 0px;
+    margin: 25px 0px 0px 0px;
 }
 
 #hot-deal-information-countdown-icon {
@@ -2160,10 +2160,7 @@ html, body {
 
 #hot-deal-information-horizontal-separator {
     border-bottom: 1px solid #e2e2e2;
-}
-
-#hot-deal-information-share {
-    margin: 15px 0px 0px 0px;
+    margin: 25px 0px 15px 0px;
 }
 
 #hot-deal-information-share-label {
