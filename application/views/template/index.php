@@ -6,7 +6,7 @@ $this->load->view('template/header');
     <div id='body'>
         <div id='body-content'>
             <?php
-            $this->load->view($page_path_name) 
+            $this->load->view($page_path_name);           
             ?>
             
             <?php if (!empty($bottom_path_name))
