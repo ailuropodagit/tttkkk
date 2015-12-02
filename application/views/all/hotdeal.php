@@ -101,17 +101,14 @@
             </div>
         </div>        
         <div id='hot-deal-information'>
-            
             <!--TITLE-->
             <div id="hot-deal-information-title">
                 <a href='<?php echo $merchant_dashboard_url ?>'> <?php echo $merchant_name ?></a>
             </div>
-            
             <!--SUB TITLE-->
             <div id="hot-deal-information-sub-title">
                 <?php echo $title ?>
             </div>
-            
             <!--RATE-->
             <div id="hot-deal-information-rate">
                 <div id="hot-deal-information-rate-star">
@@ -144,7 +141,6 @@
                     ?>
                 </div>    
             </div>
-            
             <?php
             //PRICE
             if($price_before_show == 1 || $price_after_show == 1)
@@ -170,7 +166,6 @@
                 </div>
                 <?php
             }
-            
             //DESCRIPTION
             if ($description)
             {
@@ -181,7 +176,6 @@
                 <?php
             }
             ?>
-            
             <!--LIKE COMMENT-->
             <div id="hot-deal-information-like-comment">
                 <div id="hot-deal-information-like">
@@ -197,7 +191,6 @@
                     ?>
                 </div>
             </div>
-            
             <?php
             //COUNTDOWN
             if ($post_hour != 0)
@@ -210,31 +203,31 @@
                 <?php
             }
             ?>
-            
             <div id="hot-deal-information-horizontal-separator"></div>
-            
             <!--SHARE-->
             <div id="hot-deal-information-share">
                 <div id="hot-deal-information-share-label">
-                    Share This Deal :
+                    Share This Deal
                 </div>
                 <div id="hot-deal-information-share-facebook" onclick="fbShare()">
-                    <div class="fb-share-button" data-href="http://localhost/keppo/all/advertise/56/hot/26" data-layout="button_count"></div>
+                    <img src='http://localhost/keppo/image/social-media-facebook-share.png'>
                 </div>
                 <div id="hot-deal-information-share-earn-candie">
                     <?php echo " (Earn : " . $this->m_custom->display_trans_config(10) . " candies)"; ?>
                 </div>
             </div>
-            
             <!--PEOPLE REACH-->
             <div id="hot-deal-information-people-reach">
                 <?php echo "People Reached " . $this->m_custom->activity_view_count($advertise_id) . " users"; ?>
             </div>
-            
         </div>
         <div class="float-fix"></div>
-        <div id="hot-deal-user-comment">
-            <?php $this->load->view('all/comment_form') ?>
+        <!--HOT DEAL TAB BOX-->
+        <div id="hot-deal-tab-box">
+            <div id="hot-deal-tab-box-title">User Comment</div>
+            <div id="hot-deal-tab-box-user-comment">
+                <?php $this->load->view('all/comment_form') ?>
+            </div>
         </div>
     </div>
 </div>

@@ -2036,7 +2036,7 @@ html, body {
 #hot-deal-photo-box {
     width: 100%;
     padding-top: 100%;
-    border: 1px solid lightgray;
+    border: 1px solid #e4e4e4;
     position: relative;
 }
 
@@ -2055,9 +2055,9 @@ html, body {
 
 #hot-deal-information {
     float: left;
-    width: calc(58% - 50px);
+    width: calc(60% - 100px);
     text-align: left;
-    margin: 0px 0px 0px 50px;
+    margin: 0px 50px 0px 50px;
 }
 
 #hot-deal-information-title {
@@ -2170,11 +2170,17 @@ html, body {
 }
 
 #hot-deal-information-share-facebook {
-    display: inline;
-    margin: 0px 0px 0px 3px;
+    display: inline-block;
     color: #4a5e91;
     font-size: 22px;
     cursor: pointer;
+    vertical-align: middle;
+}
+
+#hot-deal-information-share-facebook img {
+    display: inline-block;
+    vertical-align: middle;
+    margin: -5px 0px 0px 10px;
 }
 
 #hot-deal-information-share-earn-candie {
@@ -2188,10 +2194,26 @@ html, body {
     text-align: left;
 }
 
-#hot-deal-user-comment {
-    margin: 40px auto 10px auto;
-    width: 600px;
-    text-align: left;
+#hot-deal-tab-box {
+    border: 1px solid #e4e4e4;
+    margin: 40px 45px 20px 50px;
+}
+
+#hot-deal-tab-box-title {
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 20px;
+    font-size: 14px;
+    color: #5a5a5a;
+    border-bottom: 1px solid #e4e4e4;
+}
+
+#hot-deal-tab-box-user-comment {
+    padding: 20px;
+}
+
+#hot-deal-tab-box-user-comment textarea {
+    border: 1px solid #e4e4e4;
 }
 
 /*********************************************
