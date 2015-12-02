@@ -316,3 +316,4 @@ $lang['banner_position']             = 'Banner Position';
 $lang['worker_id_label']         = 'Worker ID';
 $lang['worker_ic_label']         = 'I/C No';
 $lang['worker_department_label'] = 'Department';
+$lang['worker_joindate_label']   = 'Join Date';

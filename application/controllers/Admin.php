@@ -2161,6 +2161,7 @@ class Admin extends CI_Controller
             $phone = '+60'.$this->input->post('phone');
             $username = strtolower($this->input->post('username'));
             $email = strtolower($this->input->post('email'));
+            $wo_join_date = validateDate($this->input->post('wo_join_date'));
             $password = $this->input->post('password');
 
             // validate form input
@@ -2173,6 +2174,7 @@ class Admin extends CI_Controller
             $this->form_validation->set_rules('wo_department', $this->lang->line('worker_department_label'));
             $this->form_validation->set_rules('phone', $this->lang->line('create_user_validation_phone_label'), 'required|valid_contact_number_short');           
             $this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'trim|required|valid_email|is_unique[' . $tables['users'] . '.email]');
+            $this->form_validation->set_rules('wo_join_date', $this->lang->line('worker_joindate_label'), 'trim|required');
             $this->form_validation->set_rules('username', $this->lang->line('create_user_validation_username_label'), 'trim|required|is_unique[' . $tables['users'] . '.username]');
             $this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']');
             //$this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
@@ -2188,6 +2190,7 @@ class Admin extends CI_Controller
                         'us_ic' => $us_ic,
                         'wo_worker_id' => $wo_worker_id,
                         'wo_department' => $wo_department,
+                        'wo_join_date' => $wo_join_date,
                         'phone' => $phone,
                         'username' => $username,
                         'password_visible' => $password,
@@ -2279,6 +2282,13 @@ class Admin extends CI_Controller
             'type' => 'text',
             'value' => $this->form_validation->set_value('wo_department'),
         );
+        $this->data['wo_join_date'] = array(
+            'name' => 'wo_join_date',
+            'id' => 'wo_join_date',
+            'type' => 'text',
+            'readonly' => 'true',
+            'value' => $this->form_validation->set_value('wo_join_date'),
+        );
         $this->data['phone'] = array(
             'name' => 'phone',
             'id' => 'phone',
@@ -2330,6 +2340,7 @@ class Admin extends CI_Controller
             $us_ic = $this->input->post('us_ic');
             $wo_worker_id = $this->input->post('wo_worker_id');
             $wo_department = $this->input->post('wo_department');
+            $wo_join_date = validateDate($this->input->post('wo_join_date'));
             $phone = $this->input->post('phone');
             $username = strtolower($this->input->post('username'));
             $email = strtolower($this->input->post('email'));
@@ -2344,8 +2355,9 @@ class Admin extends CI_Controller
             $this->form_validation->set_rules('wo_worker_id', $this->lang->line('worker_id_label'), 'required');
             $this->form_validation->set_rules('wo_department', $this->lang->line('worker_department_label'));
             $this->form_validation->set_rules('phone', $this->lang->line('create_user_phone_label'), 'required|valid_contact_number');
-            $this->form_validation->set_rules('username', $this->lang->line('create_user_validation_username_label'), 'trim|required|is_unique_edit[' . $tables['users'] . '.username.' . $edit_id . ']');
             $this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'trim|required|valid_email|is_unique_edit[' . $tables['users'] . '.email.' . $edit_id . ']');
+            $this->form_validation->set_rules('wo_join_date', $this->lang->line('worker_joindate_label'), 'trim|required');
+            $this->form_validation->set_rules('username', $this->lang->line('create_user_validation_username_label'), 'trim|required|is_unique_edit[' . $tables['users'] . '.username.' . $edit_id . ']');         
             $this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']');
 
             if ($this->input->post('button_action') == "save")
@@ -2359,6 +2371,7 @@ class Admin extends CI_Controller
                         'us_ic' => $us_ic,
                         'wo_worker_id' => $wo_worker_id,
                         'wo_department' => $wo_department,
+                        'wo_join_date' => $wo_join_date,
                         'phone' => $phone,
                         'username' => $username,
                         'email' => $email,
@@ -2477,6 +2490,13 @@ class Admin extends CI_Controller
             'id' => 'email',
             'type' => 'text',
             'value' => $this->form_validation->set_value('email', $result['email']),
+        );
+        $this->data['wo_join_date'] = array(
+            'name' => 'wo_join_date',
+            'id' => 'wo_join_date',
+            'type' => 'text',
+            'readonly' => 'true',
+            'value' => $this->form_validation->set_value('wo_join_date', displayDate($result['wo_join_date'])),
         );
         $this->data['phone'] = array(
             'name' => 'phone',

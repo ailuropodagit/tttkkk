@@ -1,4 +1,19 @@
+<script type="text/javascript" src="<?php echo base_url() ?>js/jquery-ui-1.11.4.custom/jquery-ui.js"></script>
+<?php echo link_tag('js/jquery-ui-1.11.4.custom/jquery-ui.css') ?>
 <script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script>
+
+<script type="text/javascript">   
+    $(document).ready(function () {    
+        $(function () {
+            $("#wo_join_date").datepicker({
+//                showOn: "both",
+//                buttonImage: calendar_url,
+//                buttonImageOnly: true,
+                dateFormat: "dd-mm-yy",
+            });
+        });
+    });
+</script>
 
 <?php
 //MESSAGE
@@ -41,6 +56,10 @@ if(isset($message))
                 <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_user_email_label', 'email address'); ?></div>
                     <div id='profile-info-form-each-input'><?php echo form_input($email); ?></div>
+                </div>
+                <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><?php echo lang('worker_joindate_label', 'wo_join_date'); ?></div>
+                    <div id='profile-info-form-each-input' class="candie-promotion-form-each-input-datepicker"><?php echo form_input($wo_join_date); ?></div>
                 </div>
                 <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_user_username_label', 'username'); ?></div>
