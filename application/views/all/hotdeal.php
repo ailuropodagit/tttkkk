@@ -65,13 +65,17 @@
                     <div id='hot-deal-table-row-cell' class='hot-deal-left-cell'>
                         <div id='hot-deal-left'>
                             <?php
-                            if (!empty($previous_url))
+                            $hide_next_previous = $this->uri->segment(8);
+                            if ($hide_next_previous != 1)
                             {
-                                ?><a href="<?php echo $previous_url ?>"><i class="fa fa-angle-double-left"></i></a><?php
-                            }
-                            else 
-                            {
-                                ?><div id='hot-deal-left-gray'><i class="fa fa-angle-double-left"></i></div><?php
+                                if (!empty($previous_url))
+                                {
+                                    ?><a href="<?php echo $previous_url ?>"><i class="fa fa-angle-double-left"></i></a><?php
+                                }
+                                else 
+                                {
+                                    ?><div id='hot-deal-left-gray'><i class="fa fa-angle-double-left"></i></div><?php
+                                }
                             }
                             ?>
                         </div>
@@ -86,13 +90,16 @@
                     <div id='hot-deal-table-row-cell' class='hot-deal-right-cell'>
                         <div id='hot-deal-right'>
                             <?php
-                            if (!empty($next_url))
+                            if ($hide_next_previous != 1)
                             {
-                                ?><a href="<?php echo $next_url ?>"><i class="fa fa-angle-double-right"></i></a><?php
-                            }
-                            else 
-                            {
-                                ?><div id='hot-deal-right-gray'><i class="fa fa-angle-double-right"></i></div><?php
+                                if (!empty($next_url))
+                                {
+                                    ?><a href="<?php echo $next_url ?>"><i class="fa fa-angle-double-right"></i></a><?php
+                                }
+                                else 
+                                {
+                                    ?><div id='hot-deal-right-gray'><i class="fa fa-angle-double-right"></i></div><?php
+                                }
                             }
                             ?>
                         </div>

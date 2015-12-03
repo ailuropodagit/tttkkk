@@ -2491,7 +2491,8 @@ class Merchant extends CI_Controller
                 direct_go:
                 $this->session->set_flashdata('message', $message_info);
                 $this->m_custom->remove_image_temp();
-                redirect('merchant/upload_hotdeal', 'refresh');
+                //redirect('merchant/upload_hotdeal', 'refresh');
+                redirect('all/merchant_dashboard/' . $this->session->userdata('company_slug'), 'refresh');
             }
         }
 

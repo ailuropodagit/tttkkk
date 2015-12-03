@@ -112,6 +112,7 @@ $fetch_method = $this->router->fetch_method();
                 $merchant_name = $this->m_custom->display_users($merchant_id);
                 $merchant_dashboard_url = $this->m_custom->generate_merchant_link($merchant_id);
                 $advertise_type = $row['advertise_type'];
+                $second_parameter = $this->uri->segment(4);
                 if ($advertise_type == 'adm')
                 {
                     $image_url = base_url($this->album_admin . $row['image']);
@@ -131,7 +132,10 @@ $fetch_method = $this->router->fetch_method();
                 }
                 else if ($fetch_method == 'merchant_dashboard')
                 {
-                    $advertise_detail_url = base_url() . "all/advertise/" . $advertise_id . "/all/0/" . $merchant_id;
+                    if($second_parameter == 'promotion'){
+                        $advertise_detail_url = base_url() . "all/advertise/" . $advertise_id . "/pro/0/" . $merchant_id;
+                    }
+                    $advertise_detail_url = base_url() . "all/advertise/" . $advertise_id . "/hot/0/" . $merchant_id;
                 }
                 else if ($fetch_method == 'promotion_list')
                 {
@@ -301,13 +305,13 @@ $fetch_method = $this->router->fetch_method();
                                     ?>
                                     <div id="advertise-list-photo">
                                         <div id="advertise-list-photo-box">
-                                            <a href='<?php echo base_url("all/advertise/$advertise_suggestion_advertise_id/$advertise_suggestion_type/$advertise_suggestion_sub_category_id") ?>'>
+                                            <a href='<?php echo base_url("all/advertise/$advertise_suggestion_advertise_id/$advertise_suggestion_type/$advertise_suggestion_sub_category_id/0/0/1") ?>'>
                                                 <img src='<?php echo base_url("$album_merchant_path/$advertise_suggestion_image") ?>'>
                                             </a>
                                         </div>
                                     </div>
                                     <div id="advertise-list-title2">
-                                        <a href='<?php echo base_url("all/advertise/$advertise_suggestion_advertise_id/$advertise_suggestion_type/$advertise_suggestion_sub_category_id") ?>'>
+                                        <a href='<?php echo base_url("all/advertise/$advertise_suggestion_advertise_id/$advertise_suggestion_type/$advertise_suggestion_sub_category_id/0/0/1") ?>'>
                                             <?php echo $advertise_suggestion_sub_title ?>
                                         </a>
                                     </div>

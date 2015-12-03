@@ -3916,7 +3916,9 @@ class Admin extends CI_Controller
             $friend_success_register_get_money = check_is_positive_decimal($this->input->post('friend_success_register_get_money'));
             $register_promo_code_get_candie = check_is_positive_numeric($this->input->post('register_promo_code_get_candie'));
             $merchant_promo_code_get_candie = check_is_positive_numeric($this->input->post('merchant_promo_code_get_candie'));
-
+            $popular_hotdeal_number = check_is_positive_numeric($this->input->post('popular_hotdeal_number'));
+            $popular_redemption_number = check_is_positive_numeric($this->input->post('popular_redemption_number'));
+            
             // validate form input
             $this->form_validation->set_rules('keppo_company_name', $this->lang->line('web_setting_keppo_company_name'), 'trim|required');
             $this->form_validation->set_rules('keppo_admin_email', $this->lang->line('web_setting_keppo_admin_email'), 'trim|required|valid_emails');
@@ -3926,7 +3928,9 @@ class Admin extends CI_Controller
             $this->form_validation->set_rules('friend_success_register_get_money', $this->lang->line('web_setting_friend_success_register_get_money'), 'trim|required|numeric');
             $this->form_validation->set_rules('register_promo_code_get_candie', $this->lang->line('web_setting_register_promo_code_get_candie'), 'trim|required|integer');
             $this->form_validation->set_rules('merchant_promo_code_get_candie', $this->lang->line('web_setting_merchant_promo_code_get_candie'), 'trim|required|integer');
-
+            $this->form_validation->set_rules('popular_hotdeal_number', $this->lang->line('web_setting_popular_hotdeal_number'), 'trim|required|integer');
+            $this->form_validation->set_rules('popular_redemption_number', $this->lang->line('web_setting_popular_redemption_number'), 'trim|required|integer');
+            
             if ($this->input->post('button_action') == "save")
             {
                 if ($this->form_validation->run() === TRUE)
@@ -3939,7 +3943,9 @@ class Admin extends CI_Controller
                     $this->m_custom->web_setting_set('friend_success_register_get_money', $friend_success_register_get_money, 'set_decimal');
                     $this->m_custom->web_setting_set('register_promo_code_get_candie', $register_promo_code_get_candie);
                     $this->m_custom->web_setting_set('merchant_promo_code_get_candie', $merchant_promo_code_get_candie);
-
+                    $this->m_custom->web_setting_set('popular_hotdeal_number', $popular_hotdeal_number);
+                    $this->m_custom->web_setting_set('popular_redemption_number', $popular_redemption_number);
+                    
                     $message_info = add_message_info($message_info, 'Web Setting success update.');
                     $can_redirect_to = 1;
                 }
@@ -4007,7 +4013,19 @@ class Admin extends CI_Controller
             'type' => 'text',
             'value' => $this->form_validation->set_value('merchant_promo_code_get_candie', $this->m_custom->web_setting_get('merchant_promo_code_get_candie')),
         );
-
+        $this->data['popular_hotdeal_number'] = array(
+            'name' => 'popular_hotdeal_number',
+            'id' => 'popular_hotdeal_number',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('popular_hotdeal_number', $this->m_custom->web_setting_get('popular_hotdeal_number')),
+        );
+        $this->data['popular_redemption_number'] = array(
+            'name' => 'popular_redemption_number',
+            'id' => 'popular_redemption_number',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('popular_redemption_number', $this->m_custom->web_setting_get('popular_redemption_number')),
+        );
+        
         $this->data['page_path_name'] = 'admin/manage_web_setting';
         $this->load->view('template/index', $this->data);
     }

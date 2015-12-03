@@ -10,6 +10,7 @@ class Albert_model extends CI_Model
         $this->db->select('*');
         $this->db->from('advertise');
         $this->db->where('advertise_type', 'hot');
+        $this->db->where('hide_flag', '0');
         $this->db->where('end_time >=', date("Y-m-d H:i:s"));
         $this->db->where_in('sub_category_id', $array_sub_category_id);
         $this->db->limit(3);
@@ -27,6 +28,7 @@ class Albert_model extends CI_Model
         $this->db->select('*');
         $this->db->from('advertise');
         $this->db->where('advertise_type', 'pro');
+        $this->db->where('hide_flag', '0');
         $this->db->where('end_time >=', date("Y-m-d H:i:s"));
         $this->db->where_in('sub_category_id', $array_sub_category_id);
         $this->db->limit(3);

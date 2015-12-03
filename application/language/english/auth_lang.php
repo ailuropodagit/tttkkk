@@ -292,6 +292,8 @@ $lang['web_setting_user_max_share_get_candie_per_day']    = 'User Max Share Get 
 $lang['web_setting_friend_success_register_get_money']    = 'Default Friend Success Register get Cash Back';
 $lang['web_setting_register_promo_code_get_candie']    = 'Default Register Promo Code get Candie';
 $lang['web_setting_merchant_promo_code_get_candie']    = 'Default Merchant Promo Code get Candie';
+$lang['web_setting_popular_hotdeal_number']    = 'Number of Like to become Hot Deal';
+$lang['web_setting_popular_redemption_number']    = 'Number of Redeem to become Hot Redemption';
 
 // Promo Code
 $lang['promo_code_no']             = 'Promo Code';
