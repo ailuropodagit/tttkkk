@@ -9,9 +9,6 @@
 <!--<link rel="stylesheet" type="text/css" href="js/slick-slider/slick-theme.css"/>-->
 
 <!--RATING-->
-<!--<script type="text/javascript" src="<?php echo base_url('js/star-rating/jquery.rating.js') ?>"></script>
-<link rel="stylesheet" type="text/css" href="<?php echo base_url('js/star-rating/jquery.rating.css') ?>">-->
-
 <script type="text/javascript" src="<?php echo base_url() ?>js/star-rating/jquery.rating.js"></script>
 <?php echo link_tag('js/star-rating/jquery.rating.css') ?>
 <!--<script type="text/javascript" src="<?php echo base_url() ?>js/jgrowl/jquery.jgrowl.js"></script>-->
@@ -31,72 +28,6 @@
             playPause: false,
             thumbnails: false,
             fx: 'scrollLeft'
-        });
-        
-        $('#home-row3-column1-today-deal-box').slick({
-            slidesToShow: 3,
-            slidesToScroll: 1,
-            prevArrow: '#home-row3-column1-today-deal-prev',
-            nextArrow: '#home-row3-column1-today-deal-next',
-            responsive: [
-                {
-                    breakpoint: 1200,
-                    settings: {
-                        slidesToShow: 2
-                    }
-                },
-                {
-                    breakpoint: 500,
-                    settings: {
-                        slidesToShow: 1
-                    }
-                }
-            ]
-        });
-        
-        $('.home-row3-column1-today-deal-box-each-timer-box-relative').each(function(){
-            var _this = $(this);
-            var end_date = $(this).attr('end_date');
-            _this.countdown(end_date, function(event) {
-                //$(this).html(event.strftime('%D days %H:%M:%S'));
-                $(this).children().find('.home-row3-column1-today-deal-box-each-timer-box1-time-day').html(event.strftime('%D'));
-                $(this).children().find('.home-row3-column1-today-deal-box-each-timer-box2-time-hour').html(event.strftime('%H'));
-                $(this).children().find('.home-row3-column1-today-deal-box-each-timer-box3-time-minute').html(event.strftime('%M'));
-                $(this).children().find('.home-row3-column1-today-deal-box-each-timer-box4-time-second').html(event.strftime('%S'));
-            });
-        });
-        
-        $('#home-row3-column1-redemption-box').slick({
-            slidesToShow: 3,
-            slidesToScroll: 1,
-            prevArrow: '#home-row3-column1-redemption-prev',
-            nextArrow: '#home-row3-column1-redemption-next',
-            responsive: [
-                {
-                    breakpoint: 1200,
-                    settings: {
-                        slidesToShow: 2
-                    }
-                },
-                {
-                    breakpoint: 500,
-                    settings: {
-                        slidesToShow: 1
-                    }
-                }
-            ]
-        });
-        
-        $('.home-row3-column1-redemption-box-each-timer-box-relative').each(function(){
-            var _this = $(this);
-            var end_date = $(this).attr('end_date');
-            _this.countdown(end_date, function(event) {
-                //$(this).html(event.strftime('%D days %H:%M:%S'));
-                $(this).children().find('.home-row3-column1-redemption-box-each-timer-box1-time-day').html(event.strftime('%D'));
-                $(this).children().find('.home-row3-column1-redemption-box-each-timer-box2-time-hour').html(event.strftime('%H'));
-                $(this).children().find('.home-row3-column1-redemption-box-each-timer-box3-time-minute').html(event.strftime('%M'));
-                $(this).children().find('.home-row3-column1-redemption-box-each-timer-box4-time-second').html(event.strftime('%S'));
-            });
         });
         
         $('#home-row4-logo-slider-box').slick({
@@ -274,108 +205,10 @@ $this->album_admin = $this->config->item('album_admin');
         </div>        
         <div id='home-row3-column1'>
             <div id='home-row3-column1-today-deal'>
-                <div id='home-row3-column1-today-deal-title'>Today's Deals</div>
-                <div id='home-row3-column1-today-deal-navigation'>
-                    <div id='home-row3-column1-today-deal-prev'> < </div>
-                    <div id='home-row3-column1-today-deal-prev-next-separator'></div>
-                    <div id='home-row3-column1-today-deal-next'> > </div>
-                </div>
-                <div id='float-fix'></div>
-                <div id='home-row3-column1-today-deal-title-bottom-line'></div>
-                <div id='home-row3-column1-today-deal-box'>
-                    <?php
-                    $hotdeal_list = $this->m_custom->getAdvertise('hot', NULL, NULL, 0, NULL, NULL, 1);
-                    foreach ($hotdeal_list as $hotdeal)
-                    {
-                        $advertise_type = $hotdeal['advertise_type'];
-                        $advertise_id = $hotdeal['advertise_id'];
-                        $sub_category_id = $hotdeal['sub_category_id'];
-                        $merchant_id = $hotdeal['merchant_id'];
-                        $image = $hotdeal['image'];
-                        $title = $hotdeal['title'];
-                        $price_before_show = $hotdeal['price_before_show'];
-                        $price_before = $hotdeal['price_before'];
-                        $price_after_show = $hotdeal['price_after_show'];
-                        $price_after = $hotdeal['price_after'];
-                        $end_time = $hotdeal['end_time']; 
-                        $post_hour = $hotdeal['post_hour'];
-                        if ($advertise_type == 'adm')
-                        {
-                            $image_url = $this->album_admim . $image;
-                        }
-                        else 
-                        {
-                            $image_url = $this->album_merchant . $image;
-                        }
-                        ?>
-                        <div class="home-row3-column1-today-deal-box-each">
-                            <a href='<?php echo base_url("all/advertise/$advertise_id") ?>'>
-                                <?php
-                                if ($post_hour != 0)
-                                { 
-                                    ?>
-                                    <div class="home-row3-column1-today-deal-box-each-timer-box-absolute">
-                                        <div class="home-row3-column1-today-deal-box-each-timer-box-relative" end_date="<?php echo $end_time ?>">
-                                            <div class="home-row3-column1-today-deal-box-each-timer-box1">
-                                                <div class="home-row3-column1-today-deal-box-each-timer-box1-time-day">1</div>
-                                                <div class="home-row3-column1-today-deal-box-each-timer-box1-label">Days</div>
-                                            </div>
-                                            <div class="home-row3-column1-today-deal-box-each-timer-box2">
-                                                <div class="home-row3-column1-today-deal-box-each-timer-box2-time-hour">2</div>
-                                                <div class="home-row3-column1-today-deal-box-each-timer-box2-label">Hours</div>
-                                            </div>
-                                            <div class="home-row3-column1-today-deal-box-each-timer-box3">
-                                                <div class="home-row3-column1-today-deal-box-each-timer-box3-time-minute">3</div>
-                                                <div class="home-row3-column1-today-deal-box-each-timer-box3-label">Mins</div>
-                                            </div>
-                                            <div class="home-row3-column1-today-deal-box-each-timer-box4">
-                                                <div class="home-row3-column1-today-deal-box-each-timer-box4-time-second">4</div>
-                                                <div class="home-row3-column1-today-deal-box-each-timer-box4-label">Secs</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <?php
-                                }
-                                ?>
-                                <div class="home-row3-column1-today-deal-box-each-image">
-                                    <?php echo img($image_url) ?>
-                                </div>
-                                <div class="home-row3-column1-today-deal-box-each-separator"></div>
-                                <div class="home-row3-column1-today-deal-box-each-information">
-                                    <div class="home-row3-column1-today-deal-box-each-information-title-rating">
-                                        <div class="home-row3-column1-today-deal-box-each-information-title">
-                                            <?php echo $title ?>
-                                        </div>
-                                        <div class="home-row3-column1-today-deal-box-each-information-rating">
-
-                                        </div>
-                                    </div>
-                                    <div class="home-row3-column1-today-deal-box-each-information-price">
-                                        <div class="home-row3-column1-today-deal-box-each-information-price-after">
-                                            <?php
-                                            if ($price_after_show)
-                                            {
-                                                echo 'RM ' . $price_after;
-                                            }
-                                            ?>
-                                        </div>
-                                        <div class="home-row3-column1-today-deal-box-each-information-price-before">
-                                            <?php 
-                                            if ($price_before_show) 
-                                            {
-                                                echo 'RM ' . $price_before;
-                                            }
-                                            ?>
-                                        </div>
-                                    </div>
-                                    <div class="float-fix"></div>
-                                </div>
-                            </a>
-                        </div>
-                        <?php
-                    }
-                    ?>
-                </div>
+                <?php 
+                //TODAY DEAL
+                $this->load->view('share/row_list3_hot_deal') 
+                ?>
             </div>
             <div id='home-row3-column1-banner'>
                 <div id='home-row3-column1-banner-block1'>
@@ -414,61 +247,11 @@ $this->album_admin = $this->config->item('album_admin');
                 </div>
                 <div id='float-fix'></div>
             </div>
-            <div id="home-row3-column1-redemption">
-                <div id="home-row3-column1-redemption-title">Redemption</div>
-                <div id='home-row3-column1-redemption-navigation'>
-                    <div id='home-row3-column1-redemption-prev'> < </div>
-                    <div id='home-row3-column1-redemption-prev-next-separator'></div>
-                    <div id='home-row3-column1-redemption-next'> > </div>
-                </div>
-                <div id="float-fix"></div>
-                <div id="home-row3-column1-redemption-title-bottom-line"></div>
-                <div id="home-row3-column1-redemption-box">
-                    <?php 
-                    $redemption_list = $this->m_custom->getAdvertise('pro', NULL, NULL, 0, NULL, NULL, 1);
-                    foreach ($redemption_list as $redemption)
-                    {
-                        $advertise_type = $redemption['advertise_type'];
-                        $advertise_id = $redemption['advertise_id'];
-                        $sub_category_id = $redemption['sub_category_id'];
-                        $merchant_id = $redemption['merchant_id'];
-                        $image = $redemption['image'];
-                        $title = $redemption['title'];
-                        $candie = $redemption['voucher_candie'];
-                        $end_time = $redemption['end_time'];
-                        if ($advertise_type == 'adm')
-                        {
-                            $image_url = $this->album_admim . $image;
-                        }
-                        else 
-                        {
-                            $image_url = $this->album_merchant . $image;
-                        }
-                        ?>
-                        <div class="home-row3-column1-redemption-box-each">
-                            <a href='<?php echo base_url("all/advertise/$advertise_id") ?>'>
-                                <div class="home-row3-column1-redemption-box-each-image">
-                                    <?php echo img($image_url) ?>
-                                </div>
-                                <div class="home-row3-column1-redemption-box-each-separator"></div>
-                                <div class="home-row3-column1-redemption-box-each-information">
-                                    <div class="home-row3-column1-redemption-box-each-information-title-rating">
-                                        <div class="home-row3-column1-redemption-box-each-information-title">
-                                            <?php echo $title ?>
-                                        </div>
-                                        <!--<div class="home-row3-column1-redemption-box-each-information-rating"></div>-->
-                                    </div>
-                                    <div class="home-row3-column1-redemption-box-each-information-candie">
-                                        <?php echo $candie ?> Candies
-                                    </div>
-                                    <div class="float-fix"></div>
-                                </div>
-                            </a>
-                        </div>
-                        <?php
-                    }
-                    ?>
-                </div>
+            <div id='home-row3-column1-redemption'>
+                <?php
+                //REDEMPTION
+                $this->load->view('share/row_list3_redemption')
+                ?>
             </div>
         </div>
         <div id='home-row3-column2'>

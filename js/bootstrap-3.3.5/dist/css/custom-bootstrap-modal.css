@@ -1,6 +1,7 @@
 .modal-open {
     overflow: hidden;
 }
+
 .modal {
     position: fixed;
     top: 0;
@@ -13,6 +14,7 @@
     -webkit-overflow-scrolling: touch;
     outline: 0;
 }
+
 .modal.fade .modal-dialog {
     -webkit-transition: -webkit-transform .3s ease-out;
     -o-transition:      -o-transform .3s ease-out;
@@ -22,21 +24,24 @@
     -o-transform: translate(0, -25%);
     transform: translate(0, -25%);
 }
+
 .modal.in .modal-dialog {
     -webkit-transform: translate(0, 0);
     -ms-transform: translate(0, 0);
     -o-transform: translate(0, 0);
     transform: translate(0, 0);
 }
+
 .modal-open .modal {
     overflow-x: hidden;
     overflow-y: auto;
 }
+
 .modal-dialog {
     position: relative;
-    width: auto;
-    margin: 10px;
+    width: 90%;
 }
+
 .modal-content {
     position: relative;
     background-color: #fff;
@@ -49,6 +54,7 @@
     -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
     box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
 }
+
 .modal-backdrop {
     position: fixed;
     top: 0;
@@ -58,45 +64,54 @@
     z-index: 1040;
     background-color: #000;
 }
+
 .modal-backdrop.fade {
     filter: alpha(opacity=0);
     opacity: 0;
 }
+
 .modal-backdrop.in {
     filter: alpha(opacity=50);
     opacity: .5;
 }
+
 .modal-header {
     min-height: 16.42857143px;
     padding: 15px;
     border-bottom: 1px solid #e5e5e5;
 }
+
 .modal-header .close {
     margin-top: -2px;
 }
+
 .modal-title {
     margin: 0;
     line-height: 1.42857143;
 }
 .modal-body {
     position: relative;
-    padding: 15px;
+    padding: 20px;
 }
 .modal-footer {
     padding: 15px;
     text-align: right;
     border-top: 1px solid #e5e5e5;
 }
+
 .modal-footer .btn + .btn {
     margin-bottom: 0;
     margin-left: 5px;
 }
+
 .modal-footer .btn-group .btn + .btn {
     margin-left: -1px;
 }
+
 .modal-footer .btn-block + .btn-block {
     margin-left: 0;
 }
+
 .modal-scrollbar-measure {
     position: absolute;
     top: -9999px;
@@ -104,10 +119,10 @@
     height: 50px;
     overflow: scroll;
 }
+
 @media (min-width: 768px) {
     .modal-dialog {
         width: 600px;
-        margin: 30px auto;
     }
     .modal-content {
         -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
@@ -117,6 +132,7 @@
         width: 300px;
     }
 }
+
 @media (min-width: 992px) {
     .modal-lg {
         width: 900px;
@@ -156,6 +172,7 @@
     display: table;
     content: " ";
 }
+
 .clearfix:after,
 .dl-horizontal dd:after,
 .container:after,
