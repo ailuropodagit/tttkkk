@@ -48,13 +48,17 @@ if(isset($message))
                     <div id='redemption-table-row-cell' class='redemption-left-cell'>
                         <div id='redemption-left'>
                             <?php
-                            if (!empty($previous_url))
+                            $hide_next_previous = $this->uri->segment(8);
+                            if ($hide_next_previous != 1)
                             {
-                                ?><a href="<?php echo $previous_url ?>"><i class="fa fa-angle-double-left"></i></a><?php
-                            }
-                            else 
-                            {
-                                ?><div id='redemption-left-gray'><i class="fa fa-angle-double-left"></i></div><?php
+                                if (!empty($previous_url))
+                                {
+                                    ?><a href="<?php echo $previous_url ?>"><i class="fa fa-angle-double-left"></i></a><?php
+                                }
+                                else 
+                                {
+                                    ?><div id='redemption-left-gray'><i class="fa fa-angle-double-left"></i></div><?php
+                                }
                             }
                             ?>
                         </div>
@@ -69,13 +73,16 @@ if(isset($message))
                     <div id='redemption-table-row-cell' class='redemption-right-cell'>
                         <div id='redemption-right'>
                             <?php
-                            if (!empty($next_url))
+                            if ($hide_next_previous != 1)
                             {
-                                ?><a href="<?php echo $next_url ?>"><i class="fa fa-angle-double-right"></i></a><?php
-                            }
-                            else 
-                            {
-                                ?><div id='redemption-right-gray'><i class="fa fa-angle-double-right"></i></div><?php
+                                if (!empty($next_url))
+                                {
+                                    ?><a href="<?php echo $next_url ?>"><i class="fa fa-angle-double-right"></i></a><?php
+                                }
+                                else 
+                                {
+                                    ?><div id='redemption-right-gray'><i class="fa fa-angle-double-right"></i></div><?php
+                                }
                             }
                             ?>
                         </div>
