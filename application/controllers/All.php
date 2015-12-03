@@ -45,7 +45,7 @@ class All extends CI_Controller
         $this->data['advertise_suggestion_page_path_name'] = 'all/hot_deal_list_suggestion';
         $this->data['advertise_suggestion_page_title'] = 'Hot Deal Suggestion';
         //NORMAL PAGE
-        $this->data['page_path_name'] = 'share/hotdeal_redemption_list3';
+        $this->data['page_path_name'] = 'share/list3_hot_deal_redemption';
         $this->load->view('template/index_left_category', $this->data);
     }
 
@@ -70,7 +70,7 @@ class All extends CI_Controller
         $this->data['advertise_suggestion_page_path_name'] = 'all/hot_deal_list_suggestion';
         $this->data['advertise_suggestion_page_title'] = 'Hot Deal Suggestion';
         //NORMAL PAGE
-        $this->data['page_path_name'] = 'share/hotdeal_redemption_list3';
+        $this->data['page_path_name'] = 'share/list3_hot_deal_redemption';
         $this->load->view('template/index_left_category', $this->data);
     }
 
@@ -673,7 +673,7 @@ class All extends CI_Controller
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['share_hotdeal_redemption_list'] = $this->m_custom->getAdvertise('hot', NULL, $merchant_id, 1, $config["per_page"], $start_index);   //To get the limited result only for that current page
         $this->data['title'] = "Hot Deal Advertise's Album";
-        $this->data['page_path_name'] = 'share/hotdeal_redemption_list4';
+        $this->data['page_path_name'] = 'share/list4_hot_deal_redemption';
         $this->load->view('template/index_background_blank', $this->data);
     }
 
@@ -717,7 +717,7 @@ class All extends CI_Controller
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['share_hotdeal_redemption_list'] = $this->m_custom->getAdvertise('pro', NULL, $merchant_id, 1, $config["per_page"], $start_index);   //To get the limited result only for that current page
         $this->data['title'] = "Candie Voucher's Album";
-        $this->data['page_path_name'] = 'share/hotdeal_redemption_list4';
+        $this->data['page_path_name'] = 'share/list4_hot_deal_redemption';
         $this->load->view('template/index_background_blank', $this->data);
     }
 

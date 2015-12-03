@@ -27,7 +27,7 @@
         <script>
             $(function(){                
                 //BOOSTRAP MODAL
-                $('#visit-first-time').modal('show');
+                $('#visit-first-time-modal').modal('show');
             });
                         
             //FB LOGOUT
@@ -100,57 +100,67 @@
             if (!$this->ion_auth->logged_in())
             {
                 ?>
-                <div class="modal fade" id="visit-first-time" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal fade" id="visit-first-time-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                     <div class="modal-dialog modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-body">
-                                <button type="button" class="bootstrap-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <center>
-                                    <div style='font-size: 30px; margin: 20px 0px 20px 0px;'>Welcome to keppo.my</div>
-                                    <div style='font-size: 20px; margin: 0px 0px 20px 0px;'>Get access to restaurants, spas, cloth and much more promotion...</div>
-                                </center>
-                                <hr/>
-                                <div style='font-size: 20px; margin: 0px 0px 20px 0px; '>Explore Keppo Malaysia for <span style="color: #0185c6">FREE!</span></div>
-                                <form action="<?php echo base_url() . 'user/login'; ?>" method="post" accept-charset="utf-8" id="general_form_login">
-                                <?php
-                                $user_login = base_url() . 'user/login';
-                                $user_register = base_url() . 'user/register';
-                                $user_retrieve_pass = base_url() . 'user/retrieve-password';
-                                $merchant_login = base_url() . 'merchant/login';
-                                $merchant_register = base_url() . 'merchant/register';
-                                $merchant_retrieve_pass = base_url() . 'merchant/retrieve-password';
-                                $identity = array('name' => 'identity',
-                                    'id' => 'identity',
-                                    'type' => 'text',
-                                );
-                                $password = array('name' => 'password',
-                                    'id' => 'password',
-                                    'type' => 'password',
-                                );
-                                ?>
-                                <div id='login-form'>
-                                    <div id='login-form-each'>
-                                        <div id='login-form-each-label'>E-mail / Username</div>
-                                        <div id='login-form-each-input'><?php echo form_input($identity); ?></div>
-                                    </div>
-                                    <div id='login-form-each'>
-                                        <div id='login-form-each-label'>Password</div>
-                                        <div id='login-form-each-input'><?php echo form_input($password); ?></div>
-                                    </div>
-                                    <div id='float-fix'></div>
-                                    <div id='login-form-forgot-password' style="float:left">
-                                        <a href="<?php echo $user_retrieve_pass; ?>">Forget Password?</a><br/><br/>
-                                        <input type="submit" value="User Login" onclick="myfunction('<?php echo $user_login; ?>')"/><br/><br/>
-                                        <a href="<?php echo $user_register; ?>">User Register</a>
-                                    </div>
-                                    <div id='login-form-forgot-password' style="float:right">
-                                        <a href="<?php echo $merchant_retrieve_pass; ?>">Forget Password?</a><br/><br/>
-                                        <input type="submit" value="Merchant Login" onclick="myfunction('<?php echo $merchant_login; ?>')"/><br/><br/>
-                                        <a href="<?php echo $merchant_register; ?>">Merchant Register</a>
-                                    </div>
-                                    <div id='float-fix'></div>
+                                <button type="button" class="bootstrap-close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <div id="visit-first-time-modal-title">
+                                    Welcome to keppo.my
                                 </div>
-                                <?php echo form_close(); ?>
+                                <div id='visit-first-time-modal-title-sub'>
+                                    Get access to restaurants, spas, cloth and much more promotion...
+                                </div>
+                                <div id='visit-first-time-modal-horizontal-line'></div>
+                                <div id='visit-first-time-explore'>
+                                    Explore Keppo for <span style="color: #0185c6">FREE!</span>
+                                </div>
+                                <form action="<?php echo base_url() . 'user/login'; ?>" method="post" accept-charset="utf-8" id="general_form_login">
+                                    <?php
+                                    $user_login = base_url() . 'user/login';
+                                    $user_register = base_url() . 'user/register';
+                                    $user_retrieve_pass = base_url() . 'user/retrieve-password';
+                                    $merchant_login = base_url() . 'merchant/login';
+                                    $merchant_register = base_url() . 'merchant/register';
+                                    $merchant_retrieve_pass = base_url() . 'merchant/retrieve-password';
+                                    $identity = array('name' => 'identity',
+                                        'id' => 'identity',
+                                        'type' => 'text',
+                                    );
+                                    $password = array('name' => 'password',
+                                        'id' => 'password',
+                                        'type' => 'password',
+                                    );
+                                    ?>
+                                    <div id='visit-first-time-modal-login-form'>
+                                        <div id='visit-first-time-modal-login-form-email'>
+                                            <div id='visit-first-time-modal-login-form-email-label'>E-mail / Username</div>
+                                            <div id='visit-first-time-modal-login-form-email-input'><?php echo form_input($identity); ?></div>
+                                        </div>
+                                        <div id='visit-first-time-modal-login-form-password'>
+                                            <div id='visit-first-time-modal-login-form-password-label'>Password</div>
+                                            <div id='visit-first-time-modal-login-form-password-input'><?php echo form_input($password); ?></div>
+                                        </div>
+                                        <div id='visit-first-time-modal-login-form-submit'>
+                                            <div id='visit-first-time-modal-login-form-submit-user'>
+                                                <input type="submit" value="User Login" onclick="myfunction('<?php echo $user_login; ?>')"/>
+                                            </div>
+                                            <div id='visit-first-time-modal-login-form-submit-merchant'>
+                                                <input type="submit" value="Merchant Login" onclick="myfunction('<?php echo $merchant_login; ?>')"/>
+                                            </div>
+                                        </div>
+                                        <div id='visit-first-time-modal-login-form-register'>
+                                            <div id='visit-first-time-modal-login-form-register-user'>
+                                                <a href="<?php echo $user_register; ?>">User Register</a>
+                                            </div>
+                                            <div id='visit-first-time-modal-login-form-register-merchant'>
+                                                <a href="<?php echo $merchant_register; ?>">Merchant Register</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
