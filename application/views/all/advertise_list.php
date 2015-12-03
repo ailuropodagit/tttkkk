@@ -62,7 +62,7 @@ $fetch_method = $this->router->fetch_method();
     ?>
     <div id="float-fix"></div>
     <div id='advertise-list-title-bottom-line'></div>
-
+    
     <div id="advertise-list-content">
         <?php
         //CATEGORY BREADCRUMB
@@ -78,10 +78,10 @@ $fetch_method = $this->router->fetch_method();
         }
         ?>
         
-        <?php
+        <?php            
         $bottom_empty_message = '';
         if (empty($hotdeal_list))
-        {
+        {            
             //SHARE PAGE
             $empty_message = 'No Picture';
             if ($fetch_method == 'hotdeal_list' || $fetch_method == 'merchant_dashboard')
@@ -106,7 +106,7 @@ $fetch_method = $this->router->fetch_method();
             //NOT EMPTY
             foreach ($hotdeal_list as $row)
             {
-                $advertise_id = $row['advertise_id'];
+                $advertise_id = $row['advertise_id'];                
                 $sub_category_id = $row['sub_category_id'];
                 $merchant_id = $row['merchant_id'];
                 $merchant_name = $this->m_custom->display_users($merchant_id);
@@ -326,5 +326,6 @@ $fetch_method = $this->router->fetch_method();
             <?php
         }
         ?>
+            
     </div>
 </div>

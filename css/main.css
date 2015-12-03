@@ -1349,7 +1349,6 @@ html, body {
 
 #advertise-list-content {
     padding: 10px 0px 0px 0px;
-    display: none;
 }
 
 #advertise-list-category-breadcrumb {
@@ -1365,6 +1364,7 @@ html, body {
     letter-spacing: 1px;
     font-weight: bold;
     background-color: white;
+    float: left;
 }
 
 #advertise-list-title-upload {

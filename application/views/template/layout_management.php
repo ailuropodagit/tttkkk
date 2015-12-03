@@ -18,8 +18,6 @@ $this->load->view('template/header');
     <div id='body'>
         <div id='body-content' style="min-height:650px">
             
-            <?php $this->load->view('template/layout-inner-right-menu'); ?>
-
             <!--BODY LEFT MAIN-->
             <div id="body-left-main">
                 <div id="body-left-main-content">
