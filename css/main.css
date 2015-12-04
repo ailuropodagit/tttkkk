@@ -2139,25 +2139,37 @@ html, body {
     margin: 0px 50px 0px 50px;
 }
 
-#hot-deal-information-title {
-    margin: 0px 0px 10px 0px;
-}
-
 #hot-deal-information-title a {
     color: #00bcd4;
-    font-size: 17px;
+    font-size: 18px;
     font-weight: bold;
 }
 
+#hot-deal-information-countdown {
+    margin: 25px 0px 0px 0px;
+    color: #00bcd4;
+    font-weight: bold;
+}
+
+#hot-deal-information-countdown-icon {
+    display: inline;
+    margin: 0px 10px 0px 0px;
+    font-size: 17px;
+}
+
+#hot-deal-information-countdown-time {
+    display: inline;
+    font-size: 17px;
+}
+
 #hot-deal-information-sub-title {
-    margin: 10px 0px 0px 0px;
+    margin: 25px 0px 0px 0px;
     font-size: 16px;
     color: black;
 }
 
 #hot-deal-information-rate {
-    text-align: left;
-    margin: 20px 0px 0px 0px;
+    margin: 25px 0px 0px 0px;
 }
 
 #hot-deal-information-rate-star {
@@ -2178,7 +2190,7 @@ html, body {
 }
 
 #hot-deal-information-price {
-    margin: 20px 0px 0px 0px;
+    margin: 25px 0px 0px 0px;
 }
 
 #hot-deal-information-price-after {
@@ -2197,12 +2209,14 @@ html, body {
 #hot-deal-information-description {
     line-height: 20px;
     color: #666666;
-    margin: 20px 0px 0px 0px;
+    margin: 25px 0px 0px 0px;
+    font-size: 18px;
+    color: black;
 }
 
 #hot-deal-information-like-comment {
     text-align: left;
-    margin: 20px 0px 0px 0px;
+    margin: 25px 0px 0px 0px;
 }
 
 #hot-deal-information-like {
@@ -2222,24 +2236,9 @@ html, body {
     color: #939393;
 }
 
-#hot-deal-information-countdown {
-    margin: 25px 0px 0px 0px;
-}
-
-#hot-deal-information-countdown-icon {
-    display: inline;
-    margin: 0px 10px 0px 0px;
-    font-size: 15px;
-}
-
-#hot-deal-information-countdown-time {
-    display: inline;
-    font-size: 16px;
-}
-
 #hot-deal-information-horizontal-separator {
     border-bottom: 1px solid #e2e2e2;
-    margin: 25px 0px 15px 0px;
+    margin: 25px 0px 25px 0px;
 }
 
 #hot-deal-information-share-label {
@@ -2264,7 +2263,6 @@ html, body {
 
 #hot-deal-information-share-earn-candie {
     font-size: 13px;
-    margin: 3px 0px 0px 0px;
     color: #939393;
 }
 
@@ -2408,25 +2406,27 @@ html, body {
     margin: 0px 0px 0px 50px;
 }
 
-#redemption-information-title {
-    margin: 0px 0px 10px 0px;
-}
-
 #redemption-information-title a {
     color: #00bcd4;
-    font-size: 17px;
+    font-size: 18px;
     font-weight: bold;
 }
 
+#redemption-information-required-candies {
+    color: #00bcd4;
+    font-weight: bold;
+    font-size: 18px;
+    margin: 25px 0px 0px 0px;
+}
+
 #redemption-information-sub-title {
-    margin: 10px 0px 0px 0px;
+    margin: 25px 0px 0px 0px;
     font-size: 16px;
     color: black;
 }
 
 #redemption-information-rate {
-    text-align: left;
-    margin: 20px 0px 0px 0px;
+    margin: 25px 0px 0px 0px;
 }
 
 #redemption-information-rate-star {
@@ -2453,20 +2453,17 @@ html, body {
     margin: 20px 0px 0px 0px;
 }
 
-#redemption-information-required-candies {
-    font-size: 18px;
-    margin: 20px 0px 0px 0px;
-}
-
 #redemption-information-description {
     line-height: 20px;
     color: #666666;
-    margin: 20px 0px 0px 0px;
+    margin: 25px 0px 0px 0px;
+    font-size: 18px;
+    color: black;
 }
 
 #redemption-information-like-comment {
     text-align: left;
-    margin: 20px 0px 0px 0px;
+    margin: 25px 0px 0px 0px;
 }
 
 #redemption-information-like {
@@ -2487,34 +2484,31 @@ html, body {
 }
 
 #redemption-information-redemption-period {
-    margin: 28px 0px 15px 0px;
+    margin: 25px 0px 15px 0px;
+    font-size: 16px;
 }
 
 #redemption-information-redemption-period-icon {
     display: inline;
     margin: 0px 10px 0px 0px;
-    font-size: 15px;
 }
 
 #redemption-information-redemption-period-label {
     display: inline;
-    font-size: 16px;
 }
 
 #redemption-information-expired-date {
-    margin: 15px 0px 28px 0px;
+    margin: 15px 0px 0px 0px;
     font-size: 16px;
 }
 
 #redemption-information-expired-date-icon {
     display: inline;
     margin: 0px 10px 0px 0px;
-    font-size: 13px;
 }
 
 #redemption-information-expired-date-label {
     display: inline;
-    font-size: 16px;
 }
 
 #redemption-information-submit {
@@ -2523,10 +2517,7 @@ html, body {
 
 #redemption-information-horizontal-separator {
     border-bottom: 1px solid #e2e2e2;
-}
-
-#redemption-information-share {
-    margin: 15px 0px 0px 0px;
+    margin: 25px 0px 25px 0px;
 }
 
 #redemption-information-share-label {
@@ -2536,16 +2527,21 @@ html, body {
 }
 
 #redemption-information-share-facebook {
-    display: inline;
-    margin: 0px 0px 0px 3px;
+    display: inline-block;
     color: #4a5e91;
     font-size: 22px;
     cursor: pointer;
+    vertical-align: middle;
+}
+
+#redemption-information-share-facebook img {
+    display: inline-block;
+    vertical-align: middle;
+    margin: -5px 0px 0px 10px;
 }
 
 #redemption-information-share-earn-candie {
     font-size: 13px;
-    margin: 3px 0px 0px 0px;
     color: #939393;
 }
 
@@ -2554,8 +2550,7 @@ html, body {
 }
 
 #redemption-terms-conditions {
-    margin: 30px 0px 0px 0px;
-    text-align: left;
+    margin: 30px 45px 0px 50px;
 }
 
 #redemption-terms-conditions-title {
@@ -2578,7 +2573,7 @@ html, body {
 }
 
 #redemption-available-branch {
-    margin: 20px 0px 0px 0px;
+    margin: 20px 45px 0px 50px;
     text-align: left;
 }
 
@@ -2618,13 +2613,27 @@ html, body {
     margin: 5px 0px 0px 0px;
 }
 
-#redemption-user-comment {
-    margin: 40px auto 10px auto;
-    width: 600px;
-    text-align: left;
+#redemption-tab-box {
+    border: 1px solid #e4e4e4;
+    margin: 40px 45px 20px 50px;
 }
 
+#redemption-tab-box-title {
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 20px;
+    font-size: 14px;
+    color: #5a5a5a;
+    border-bottom: 1px solid #e4e4e4;
+}
 
+#redemption-tab-box-user-comment {
+    padding: 20px;
+}
+
+#redemption-tab-box-user-comment textarea {
+    border: 1px solid #e4e4e4;
+}
 
 
 

@@ -112,6 +112,18 @@
             <div id="hot-deal-information-title">
                 <a href='<?php echo $merchant_dashboard_url ?>'> <?php echo $merchant_name ?></a>
             </div>
+            <?php
+            //COUNTDOWN
+            if ($post_hour != 0)
+            { 
+                ?>
+                <div id="hot-deal-information-countdown">
+                     <div id="hot-deal-information-countdown-icon"><i class="fa fa-clock-o"></i></div>
+                    <div id="hot-deal-information-countdown-time" end_time="<?php echo $end_time ?>"></div>
+                </div>
+                <?php
+            }
+            ?>
             <!--SUB TITLE-->
             <div id="hot-deal-information-sub-title">
                 <?php echo $title ?>
@@ -198,18 +210,6 @@
                     ?>
                 </div>
             </div>
-            <?php
-            //COUNTDOWN
-            if ($post_hour != 0)
-            { 
-                ?>
-                <div id="hot-deal-information-countdown">
-                     <div id="hot-deal-information-countdown-icon"><i class="fa fa-clock-o"></i></div>
-                    <div id="hot-deal-information-countdown-time" end_time="<?php echo $end_time ?>"></div>
-                </div>
-                <?php
-            }
-            ?>
             <div id="hot-deal-information-horizontal-separator"></div>
             <!--SHARE-->
             <div id="hot-deal-information-share">
@@ -220,7 +220,7 @@
                     <img src='http://localhost/keppo/image/social-media-facebook-share.png'>
                 </div>
                 <div id="hot-deal-information-share-earn-candie">
-                    <?php echo " (Earn : " . $this->m_custom->display_trans_config(10) . " candies)"; ?>
+                    <?php echo "Earn : " . $this->m_custom->display_trans_config(10) . " candies"; ?>
                 </div>
             </div>
             <!--PEOPLE REACH-->

@@ -156,7 +156,7 @@ textarea {
     font-size: 12.5px;
     outline: none;
     font-family: verdana;
-    letter-spacing: -1px;
+    letter-spacing: 0px;
 }
 
 textarea::-webkit-input-placeholder {

@@ -91,17 +91,18 @@ if(isset($message))
             </div>
         </div>
         <div id="redemption-information">
-            
             <!--TITLE-->
             <div id="redemption-information-title">
                 <a href='<?php echo $merchant_dashboard_url ?>'><?php echo $merchant_name ?></a>
             </div>
-            
+            <!--REQUIRED CANDIES-->
+            <div id="redemption-information-required-candies">
+                Require <?php echo $voucher_candie ?> Candies
+            </div>
             <!--SUB TITLE-->
             <div id="redemption-information-sub-title">
                 <?php echo $title ?>
             </div>
-            
             <!--RATE-->
             <div id="redemption-information-rate">
                 <div id="redemption-information-rate-star">
@@ -133,8 +134,7 @@ if(isset($message))
                     echo "Earn : " . $rate_candie_earn . " candies";
                     ?>
                 </div>
-            </div> 
-                               
+            </div>         
             <?php
             //VOUCHER WORTH
             if (!empty($voucher_worth))
@@ -145,14 +145,6 @@ if(isset($message))
                 </div>
                 <?php
             }
-            ?>
-            
-            <!--REQUIRED CANDIES-->
-            <div id="redemption-information-required-candies">
-                Require <?php echo $voucher_candie ?> Candies
-            </div>
-            
-            <?php
             //DESCRIPTION
             if ($description)
             {
@@ -163,7 +155,6 @@ if(isset($message))
                 <?php
             }
             ?>
-            
             <!--LIKE COMMENT-->
             <div id="redemption-information-like-comment">
                 <div id="redemption-information-like-comment">
@@ -216,18 +207,19 @@ if(isset($message))
             
             <!--SHARE-->
             <div id="redemption-information-share">
-                Share This Redemption :
-                <span id="redemption-information-share-facebook" onclick="fbShare()">
-                    <div class="fb-share-button" data-href="http://localhost/keppo/all/advertise/56/hot/26" data-layout="button_count"></div>
-                </span>
+                <div id="redemption-information-share-label">
+                    Share This Redemption
+                </div>
+                <div id="redemption-information-share-facebook" onclick="fbShare()">
+                    <img src='http://localhost/keppo/image/social-media-facebook-share.png'>
+                </div>
                 <div id="redemption-information-share-earn-candie">
-                    <?php echo " (Earn : " . $this->m_custom->display_trans_config(10) . " candies)" ?>
+                    <?php echo "Earn : " . $this->m_custom->display_trans_config(10) . " candies" ?>
                 </div>
             </div>
                                         
         </div>        
         <div id="float-fix"></div>
-        
         <div id="redemption-terms-conditions">
             <div id="redemption-terms-conditions-title">Terms & Condition:</div>
             <ul>
@@ -249,7 +241,6 @@ if(isset($message))
                 ?>
             </ul>   
         </div>       
-        
         <div id="redemption-available-branch">
             <div id="redemption-available-branch-title">Available Branch:</div>
             <ul>
@@ -267,11 +258,12 @@ if(isset($message))
                 }
                 ?>  
             </ul>
+        </div>         
+        <div id='redemption-tab-box'>
+            <div id='redemption-tab-box-title'>User Comment</div>
+            <div id="redemption-tab-box-user-comment">
+                <?php $this->load->view('all/comment_form') ?>
+            </div>
         </div>
-                            
-        <div id='redemption-user-comment'>
-            <?php $this->load->view('all/comment_form'); ?>
-        </div>
-
     </div>
 </div>
