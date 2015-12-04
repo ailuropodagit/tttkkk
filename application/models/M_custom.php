@@ -2984,7 +2984,7 @@ class M_custom extends CI_Model
                                 $message_info = 'Success get ' . $code_candie . ' candie from user ' . $this->m_custom->display_users($code_user_id) . ' register promo code';
 
                                 //Insert cash back for this promo code user because his friend success key in refer promo code
-                                $new_id2 = $this->m_custom->promo_code_trans_extra_insert($code_user_id, 25, $code_money, $code_id);
+                                $new_id2 = $this->m_custom->promo_code_trans_extra_insert($code_user_id, 25, $code_money, $code_id, 1);
                                 $this->m_user->user_trans_history_insert($code_user_id, 25, $new_id2, 'transaction_extra', 0, $code_money);
                             }
                             else
