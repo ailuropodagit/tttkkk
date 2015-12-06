@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="<?php echo base_url('css/main-0900.css') ?>" media="screen and (max-width: 0900px)">
         <link rel="stylesheet" href="<?php echo base_url('css/main-0800.css') ?>" media="screen and (max-width: 0900px)">
         <link rel="stylesheet" href="<?php echo base_url('css/main-0700.css') ?>" media="screen and (max-width: 0700px)">
-        <link rel="stylesheet" href="<?php echo base_url('css/main-0600.css') ?>" media="screen and (max-width: 0700px)">
+        <link rel="stylesheet" href="<?php echo base_url('css/main-0600.css') ?>" media="screen and (max-width: 0600px)">
         <link rel="stylesheet" href="<?php echo base_url('css/main-0500.css') ?>" media="screen and (max-width: 0500px)">
         <link rel="stylesheet" href="<?php echo base_url('css/main-0400.css') ?>" media="screen and (max-width: 0400px)">
         <link rel="stylesheet" href="<?php echo base_url('library/font-awesome/font-awesome-4.4.0.css') ?>">
@@ -166,16 +166,16 @@
                                 <div id="visit-first-time-modal-right">
                                     <div id="visit-first-time-modal-right-image">
                                         <div id="visit-first-time-modal-right-image-each">
-                                            <?php echo img('folder_upload/first_time_visit/1.jpg') ?>
+                                            <?php echo img('folder_upload/first_time_visit_modal/1.jpg') ?>
                                         </div>
                                         <div id="visit-first-time-modal-right-image-each">
-                                            <?php echo img('folder_upload/first_time_visit/2.jpg') ?>
+                                            <?php echo img('folder_upload/first_time_visit_modal/2.jpg') ?>
                                         </div>
                                         <div id="visit-first-time-modal-right-image-each">
-                                            <?php echo img('folder_upload/first_time_visit/3.jpg') ?>
+                                            <?php echo img('folder_upload/first_time_visit_modal/3.jpg') ?>
                                         </div>
                                         <div id="visit-first-time-modal-right-image-each">
-                                            <?php echo img('folder_upload/first_time_visit/4.jpg') ?>
+                                            <?php echo img('folder_upload/first_time_visit_modal/4.jpg') ?>
                                         </div>
                                     </div>
                                 </div>

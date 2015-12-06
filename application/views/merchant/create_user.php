@@ -128,7 +128,7 @@ if(isset($message))
         </div>
     <?php echo form_close(); ?>
     
-    <div id='register-agree-link'>
+    <div id='register-agree'>
         By creating an account, you agree to our 
         <a href='<?php echo base_url() ?>terms-of-service' target='_blank'>Terms of Service</a>
         and

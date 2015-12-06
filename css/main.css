@@ -1272,10 +1272,6 @@ html, body {
     font-size: 18px;
 }
 
-#login-facebook, #register-facebook {
-    padding: 0px 0px 10px 0px;
-}
-
 #login-facebook-button {
     height: 35px;
 }
@@ -1286,8 +1282,7 @@ html, body {
 }
 
 #login-horizontal-line, #register-horizontal-line {
-    width: 450px;
-    margin: 20px auto 20px auto;
+    margin: 25px 0px 25px 0px;
     border-bottom: 1px solid lightgray;
 }
 
@@ -1297,9 +1292,8 @@ html, body {
 }
 
 #login-form-each-label, #register-form-each-label {
-    width: 285px;
     text-align: left;
-    margin: 20px auto 0px auto;
+    margin: 20px 0px 0px 0px;
 }
 
 #login-form-each-input input[type='text'], #register-form-each-input input[type='text'] {
@@ -1374,11 +1368,52 @@ html, body {
     padding: 30px 0px 30px 0px;
 }
     
-#login-agree-link, #register-agree-link {
-    font-size: 14px;
+#login-agree, #register-agree {
+    font-size: 13px;
     line-height: 20px;
     margin: 0px 0px 30px 0px;
     color: gray;
+}
+
+/*********************************************
+ ** PHOTOGRAPHER
+ *********************************************/
+
+#photographer-content {
+    margin: 20px 0px 0px 0px;
+}
+
+#photographer-search {
+    margin: 0px 0px 20px 0px;
+}
+
+#photographer-search-input {
+    float: left;
+    width: 60%;
+    margin: 0px 5px 0px 0px;
+}
+
+#photographer-search-input input[type='text'] {
+    width: 100%;
+}
+
+#photographer-search-dropdown {
+    float: left;
+    width: 165px;
+    margin: 0px 5px 0px 0px;
+}
+
+#photographer-search-dropdown select {
+    width: 100%;
+}
+
+#photographer-search-submit {
+    float: left;
+    margin: 0px 5px 0px 0px;
+}
+
+#photographer-search-clear {
+    float: left;
 }
 
 /*********************************************
@@ -1539,15 +1574,15 @@ html, body {
     box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
 }
 
-#share-hot-deal-redemption-list3-box {
-    margin: 30px 0px 0px 0px;
+#share-hot-deal-redemption-list3-container {
+    margin: 25px 0px 0px 0px;
 }
 
-.share-hot-deal-redemption-list3-box-each {
+.share-hot-deal-redemption-list3-box {
     vertical-align: top;
     display: inline-block;
     width: calc(33.33% - 22px);
-    margin: 0px 30px 30px 0px;
+    margin: 0px 25px 25px 0px;
     background-color: white;
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
@@ -1556,21 +1591,21 @@ html, body {
     box-shadow: 1px 1px 3px 0px rgba(179,179,179,0.80);
 }
 
-.share-hot-deal-redemption-list3-box-each a {
+.share-hot-deal-redemption-list3-box a {
     text-decoration: none;
 }
 
-.share-hot-deal-redemption-list3-box-each:nth-child(3n+0) {
+.share-hot-deal-redemption-list3-box:nth-child(3n+0) {
     margin-right: 0px;
 }
 
-.share-hot-deal-redemption-list3-box-each-photo-box {
+.share-hot-deal-redemption-list3-box-photo-box {
     width: 100%;
     padding-top: 100%;
     position: relative;
 }
 
-.share-hot-deal-redemption-list3-box-each-photo-box img {
+.share-hot-deal-redemption-list3-box-photo-box img {
     max-height: 100%;  
     max-width: 100%; 
     width: 100%;
@@ -1585,44 +1620,43 @@ html, body {
     object-position: center;
 }
 
-.share-hot-deal-redemption-list3-box-each-separator {
+.share-hot-deal-redemption-list3-box-separator {
     border-bottom: 1px solid #eeeeee;
 }
 
-.share-hot-deal-redemption-list3-box-each-information {
+.share-hot-deal-redemption-list3-box-information {
     padding: 20px 18px 20px 18px;
-    min-height: 40px;
 }
 
-.share-hot-deal-redemption-list3-box-each-information-title-rating {
+.share-hot-deal-redemption-list3-box-information-title-rating {
     float: left;
     width: calc(100% - 50%);
 }
 
-.share-hot-deal-redemption-list3-box-each-information-title {
+.share-hot-deal-redemption-list3-box-information-title {
     font-size: 14px;
     font-weight: bold;
     color: #444444;
 }
 
-.share-hot-deal-redemption-list3-box-each-information-rating {
+.share-hot-deal-redemption-list3-box-information-rating {
     margin: 10px 0px 0px 0px;
 }
 
-.share-hot-deal-redemption-list3-box-each-information-price {
+.share-hot-deal-redemption-list3-box-information-price {
     width: 40%;
     white-space: nowrap;
     float: right;
 }
 
-.share-hot-deal-redemption-list3-box-each-information-price-after {
+.share-hot-deal-redemption-list3-box-information-price-after {
     color: #d92222;
     font-size: 18px;
     font-weight: bold;
     text-align: right;
 }
 
-.share-hot-deal-redemption-list3-box-each-information-price-before {
+.share-hot-deal-redemption-list3-box-information-price-before {
     color: #666666;
     text-decoration: line-through;
     margin: 3px 0px 0px 0px;
@@ -1668,15 +1702,15 @@ html, body {
     box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
 }
 
-#share-hot-deal-redemption-list4-box {
-    margin: 40px 0px 0px 0px;
+#share-hot-deal-redemption-list4-container {
+    margin: 25px 0px 0px 0px;
 }
 
-.share-hot-deal-redemption-list4-box-each {
+.share-hot-deal-redemption-list4-box {
     vertical-align: top;
     display: inline-block;
-    width: calc(25% - 33px);
-    margin: 0px 40px 40px 0px;
+    width: calc(25% - 21px);
+    margin: 0px 25px 25px 0px;
     background-color: white;
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
@@ -1685,21 +1719,21 @@ html, body {
     box-shadow: 1px 1px 4px 0px rgba(179,179,179,0.80);
 }
 
-.share-hot-deal-redemption-list4-box-each a {
+.share-hot-deal-redemption-list4-box a {
     text-decoration: none;
 }
 
-.share-hot-deal-redemption-list4-box-each:nth-child(4n+0) {
+.share-hot-deal-redemption-list4-box:nth-child(4n+0) {
     margin-right: 0px;
 }
 
-.share-hot-deal-redemption-list4-box-each-photo-box {
+.share-hot-deal-redemption-list4-box-photo-box {
     width: 100%;
     padding-top: 100%;
     position: relative;
 }
 
-.share-hot-deal-redemption-list4-box-each-photo-box img {
+.share-hot-deal-redemption-list4-box-photo-box img {
     max-height: 100%;  
     max-width: 100%; 
     width: 100%;
@@ -1714,44 +1748,44 @@ html, body {
     object-position: center;
 }
 
-.share-hot-deal-redemption-list4-box-each-separator {
+.share-hot-deal-redemption-list4-box-separator {
     border-bottom: 1px solid #eeeeee;
 }
 
-.share-hot-deal-redemption-list4-box-each-information {
+.share-hot-deal-redemption-list4-box-information {
     padding: 20px 18px 20px 18px;
     min-height: 40px;
 }
 
-.share-hot-deal-redemption-list4-box-each-information-title-rating {
+.share-hot-deal-redemption-list4-box-information-title-rating {
     float: left;
     width: calc(100% - 50%);
 }
 
-.share-hot-deal-redemption-list4-box-each-information-title {
+.share-hot-deal-redemption-list4-box-information-title {
     font-size: 14px;
     font-weight: bold;
     color: #444444;
 }
 
-.share-hot-deal-redemption-list4-box-each-information-rating {
+.share-hot-deal-redemption-list4-box-information-rating {
     margin: 10px 0px 0px 0px;
 }
 
-.share-hot-deal-redemption-list4-box-each-information-price {
+.share-hot-deal-redemption-list4-box-information-price {
     width: 40%;
     white-space: nowrap;
     float: right;
 }
 
-.share-hot-deal-redemption-list4-box-each-information-price-after {
+.share-hot-deal-redemption-list4-box-information-price-after {
     color: #d92222;
     font-size: 18px;
     font-weight: bold;
     text-align: right;
 }
 
-.share-hot-deal-redemption-list4-box-each-information-price-before {
+.share-hot-deal-redemption-list4-box-information-price-before {
     color: #666666;
     text-decoration: line-through;
     margin: 4px 0px 0px 0px;
@@ -2962,44 +2996,6 @@ html, body {
     margin: 0px 0px -18px 0px;
 }
 
-/* PHOTOGRAPHER
-******************************/
-
-#photographer-content {
-    margin: 20px 0px 0px 0px;
-}
-
-#photographer-search {
-    margin: 0px 0px 20px 0px;
-}
-
-#photographer-search-input {
-    display: inline;
-}
-
-#photographer-search-input input[type='text'] {
-    width: calc(100% - 355px);
-}
-
-#photographer-search-dropdown {
-    display: inline;
-    margin: 0px 0px 0px 5px;
-}
-
-#photographer-search-dropdown select {
-    width: 180px;
-}
-
-#photographer-search-submit {
-    display: inline;
-    margin: 0px 0px 0px 5px;
-}
-
-#photographer-search-clear {
-    display: inline;
-    margin: 0px 0px 0px 5px;
-}
-
 /* OUTLET
 ******************************/
 
@@ -3288,10 +3284,9 @@ html, body {
 }
 
 #notification-table-photo-box img {
-    width: 30px;
-    height: 30px;
-    object-fit: cover; 
-    object-position: center;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 #notification-table-name {

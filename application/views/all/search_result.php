@@ -101,23 +101,21 @@ $profile_image_empty = $this->config->item('empty_image');
                                     <td>Average Rating</td>
                                     <td>:</td>
                                     <td>
-                                        <div id="form-rate2">
-                                            <?php
-                                            for ($i = 1; $i <= 5; $i++)
+                                        <?php
+                                        for ($i = 1; $i <= 5; $i++)
+                                        {
+                                            if ($i == round($average_rating))
                                             {
-                                                if ($i == round($average_rating))
-                                                {
-                                                    echo "<input class='star' type='radio' name='a-rating-$merchant_id' disabled='disabled' value='" . $i . "' checked='checked'/>";
-                                                }
-                                                else
-                                                {
-                                                    echo "<input class='star' type='radio' name='a-rating-$merchant_id' disabled='disabled' value='" . $i . "'/>";
-                                                }
+                                                echo "<input class='star' type='radio' name='a-rating-$merchant_id' disabled='disabled' value='" . $i . "' checked='checked'/>";
                                             }
-                                            ?>
-                                            <div id='float-fix'></div>
-                                            <?php echo $rating_count ?> reviews
-                                        </div>
+                                            else
+                                            {
+                                                echo "<input class='star' type='radio' name='a-rating-$merchant_id' disabled='disabled' value='" . $i . "'/>";
+                                            }
+                                        }
+                                        ?>
+                                        <div id='float-fix'></div>
+                                        <?php echo $rating_count ?> reviews
                                     </td>
                                 </tr>
                                 <tr valign="top">

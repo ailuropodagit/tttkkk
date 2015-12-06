@@ -154,7 +154,8 @@ $this->album_admin = $this->config->item('album_admin');
                 </ul>
             </div>
             <?php 
-            for($i = 101; $i < 104; $i++){
+            for($i = 101; $i < 104; $i++)
+            {
                 ${'slider_info' . $i} = $this->m_admin->banner_select_one($i);
                 ${'slider_image_url' . $i} = ${'slider_info' . $i}['banner_image_url'];
                 ${'slider_website_ur' . $i} = ${'slider_info' . $i}['banner_website_url'];
@@ -164,11 +165,12 @@ $this->album_admin = $this->config->item('album_admin');
                 <div class='fluid_container' style="width: 100.1%;">
                     <div class="camera_wrap camera_azure_skin" id="camera_wrap_1">
                         <?php 
-                        for($i = 101; $i < 104; $i++){
-                        echo "<div data-src=" . ${'slider_image_url' . $i} . " data-link=" . ${'slider_website_ur' . $i} . " data-target='_blank' ></div>";
+                        for($i = 101; $i < 104; $i++)
+                        {
+                            echo "<div data-src=" . ${'slider_image_url' . $i} . " data-link=" . ${'slider_website_ur' . $i} . " data-target='_blank' ></div>";
                         }
                         ?>
-<!--                        <div data-src="<?php //echo base_url('folder_upload/home_banner_row1/slide1.jpg') ?>"></div>
+                        <!--<div data-src="<?php //echo base_url('folder_upload/home_banner_row1/slide1.jpg') ?>"></div>
                         <div data-src="<?php //echo base_url('folder_upload/home_banner_row1/slide2.jpg') ?>"></div>
                         <div data-src="<?php //echo base_url('folder_upload/home_banner_row1/slide3.jpg') ?>"></div>-->
                     </div>
@@ -226,7 +228,7 @@ $this->album_admin = $this->config->item('album_admin');
                         $banner_image_url = $banner_info['banner_image_url'];
                         $banner_website_url = $banner_info['banner_website_url'];
                         echo "<a href='" . $banner_website_url . "' target='_blank'>" . img($banner_image_url) . "</a>"; 
-                    ?>
+                        ?>
                     </div>
                     <div id='home-row3-column1-banner-block2-row2'>
                         <?php 
@@ -234,7 +236,7 @@ $this->album_admin = $this->config->item('album_admin');
                         $banner_image_url = $banner_info['banner_image_url'];
                         $banner_website_url = $banner_info['banner_website_url'];
                         echo "<a href='" . $banner_website_url . "' target='_blank'>" . img($banner_image_url) . "</a>"; 
-                    ?>
+                        ?>
                     </div>
                 </div>
                 <div id='home-row3-column1-banner-block3'>

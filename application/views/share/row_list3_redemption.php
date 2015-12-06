@@ -45,6 +45,7 @@
             $title = $redemption['title'];
             $candie = $redemption['voucher_candie'];
             $end_time = $redemption['end_time'];
+            $average_rating = $this->m_custom->activity_rating_average($advertise_id, 'adv');
             if ($advertise_type == 'adm')
             {
                 $image_url = $this->album_admim . $image;
@@ -65,7 +66,22 @@
                             <div class="share-row-list3-redemption-box-information-title">
                                 <?php echo $title ?>
                             </div>
-                            <!--<div class="share-row-list3-redemption-box-information-rating"></div>-->
+                            <div class="share-row-list3-redemption-box-information-rating">
+                                <?php
+                                for ($i = 1; $i <= 5; $i++)
+                                {
+                                    if ($i == round($average_rating))
+                                    {
+                                        echo "<input class='star' type='radio' name='a-rating-$advertise_id' disabled='disabled' value='" . $i . "' checked='checked'/>";
+                                    }
+                                    else
+                                    {
+                                        echo "<input class='star' type='radio' name='a-rating-$advertise_id' disabled='disabled' value='" . $i . "'/>";
+                                    }
+                                }
+                                ?>
+                                <div class="float-fix"></div>
+                            </div>
                         </div>
                         <div class="share-row-list3-redemption-box-information-candie">
                             <?php echo $candie ?> Candies

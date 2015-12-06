@@ -1,0 +1,11 @@
+/*********************************************
+ ** LOGIN REGISTER
+ *********************************************/
+
+#login-title, #register-title {
+    margin-top: 25px;
+}
+
+#login-form, #register-form {
+    width: 100%;
+}

@@ -14,7 +14,7 @@ $fetch_method = $this->router->fetch_method();
 
 <div id="share-hot-deal-redemption-list4">
     <div id="share-hot-deal-redemption-list4-title"><?php echo $title ?></div>
-    <div id="share-hot-deal-redemption-list4-box">
+    <div id="share-hot-deal-redemption-list4-container">
         <?php
         foreach ($share_hotdeal_redemption_list as $row)
         {
@@ -60,28 +60,28 @@ $fetch_method = $this->router->fetch_method();
                 $advertise_detail_url = base_url() . "all/advertise/" . $advertise_id;
             }   
             ?>
-            <div class='share-hot-deal-redemption-list4-box-each'>
+            <div class='share-hot-deal-redemption-list4-box'>
                 <a href='<?php echo $advertise_detail_url ?>'>
-                    <div class="share-hot-deal-redemption-list4-box-each-photo">
-                        <div class="share-hot-deal-redemption-list4-box-each-photo-box">
+                    <div class="share-hot-deal-redemption-list4-box-photo">
+                        <div class="share-hot-deal-redemption-list4-box-photo-box">
                             <img src='<?php echo $image_url ?>'>
                         </div>
                     </div>
-                    <div class="share-hot-deal-redemption-list4-box-each-separator"></div>
-                    <div class="share-hot-deal-redemption-list4-box-each-information">
-                        <div class="share-hot-deal-redemption-list4-box-each-information-title-rating">
-                            <div class="share-hot-deal-redemption-list4-box-each-information-title">
+                    <div class="share-hot-deal-redemption-list4-box-separator"></div>
+                    <div class="share-hot-deal-redemption-list4-box-information">
+                        <div class="share-hot-deal-redemption-list4-box-information-title-rating">
+                            <div class="share-hot-deal-redemption-list4-box-information-title">
                                 <?php echo $row['title'] ?>
                             </div>
-                            <!--<div class="share-hot-deal-redemption-list4-box-each-information-rating"></div>-->
+                            <!--<div class="share-hot-deal-redemption-list4-box-information-rating"></div>-->
                         </div>
                         
                         <?php
                         if ($advertise_type == 'hot')
                         {
                             ?>
-                            <div class="share-hot-deal-redemption-list4-box-each-information-price">
-                                <div class="share-hot-deal-redemption-list4-box-each-information-price-after">
+                            <div class="share-hot-deal-redemption-list4-box-information-price">
+                                <div class="share-hot-deal-redemption-list4-box-information-price-after">
                                     <?php
                                     if ($price_after)
                                     {
@@ -89,7 +89,7 @@ $fetch_method = $this->router->fetch_method();
                                     }
                                     ?>
                                 </div>
-                                <div class="share-hot-deal-redemption-list4-box-each-information-price-before">
+                                <div class="share-hot-deal-redemption-list4-box-information-price-before">
                                     <?php
                                     if ($price_before)
                                     {

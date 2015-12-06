@@ -1,7 +1,5 @@
 <?php
-
-if (!defined('BASEPATH'))
-    exit('No direct script access allowed');
+if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 class M_custom extends CI_Model
 {
@@ -380,23 +378,31 @@ class M_custom extends CI_Model
         if ($query->num_rows() > 0)
         {
             $return = $query->row_array();
-            if ($return['main_group_id'] == $this->config->item('group_id_merchant'))
+            if($return['profile_image'] == '')
             {
-                $image_path = $this->config->item('album_merchant_profile');
-                $image = $return['profile_image'];
+                $image_path = '';
+                $image = $this->config->item('empty_image');
             }
-            else if ($return['main_group_id'] == $this->config->item('group_id_supervisor'))
+            else
             {
-                $image_path = $this->config->item('album_merchant_profile');
-                $this->db->select('profile_image');
-                $merchant_query = $this->db->get_where('users', array('id' => $return['su_merchant_id']));
-                $merchant_row = $merchant_query->row_array();
-                $image = $merchant_row['profile_image'];
-            }
-            else if ($return['main_group_id'] == $this->config->item('group_id_user'))
-            {
-                $image_path = $this->config->item('album_user_profile');
-                $image = $return['profile_image'];
+                if ($return['main_group_id'] == $this->config->item('group_id_merchant'))
+                {
+                    $image_path = $this->config->item('album_merchant_profile');
+                    $image = $return['profile_image'];
+                }
+                else if ($return['main_group_id'] == $this->config->item('group_id_supervisor'))
+                {
+                    $image_path = $this->config->item('album_merchant_profile');
+                    $this->db->select('profile_image');
+                    $merchant_query = $this->db->get_where('users', array('id' => $return['su_merchant_id']));
+                    $merchant_row = $merchant_query->row_array();
+                    $image = $merchant_row['profile_image'];
+                }
+                else if ($return['main_group_id'] == $this->config->item('group_id_user'))
+                {
+                    $image_path = $this->config->item('album_user_profile');
+                    $image = $return['profile_image'];
+                }
             }
         }
         else
