@@ -9,7 +9,7 @@ $this->load->view('template/header');
             
             <?php
             //VIEW PAGE
-            $this->load->view($page_path_name)
+            $this->load->view($page_path_name);
             ?>
             
             <?php if (!empty($bottom_path_name))
