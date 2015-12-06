@@ -114,53 +114,72 @@
                                     Get access to restaurants, spas, cloth and much more promotion...
                                 </div>
                                 <div id='visit-first-time-modal-horizontal-line'></div>
-                                <div id='visit-first-time-explore'>
-                                    Explore Keppo for <span style="color: #0185c6">FREE!</span>
+                                <div id="visit-first-time-modal-left">
+                                    <div id='visit-first-time-modal-left-explore'>
+                                        Explore Keppo for <span style="color: #0185c6">FREE!</span>
+                                    </div>
+                                    <form action="<?php echo base_url() . 'user/login'; ?>" method="post" accept-charset="utf-8" id="general_form_login">
+                                        <?php
+                                        $user_login = base_url() . 'user/login';
+                                        $user_register = base_url() . 'user/register';
+                                        $user_retrieve_pass = base_url() . 'user/retrieve-password';
+                                        $merchant_login = base_url() . 'merchant/login';
+                                        $merchant_register = base_url() . 'merchant/register';
+                                        $merchant_retrieve_pass = base_url() . 'merchant/retrieve-password';
+                                        $identity = array('name' => 'identity',
+                                            'id' => 'identity',
+                                            'type' => 'text',
+                                        );
+                                        $password = array('name' => 'password',
+                                            'id' => 'password',
+                                            'type' => 'password',
+                                        );
+                                        ?>
+                                        <div id='visit-first-time-modal-left-login-form'>
+                                            <div id='visit-first-time-modal-left-login-form-email'>
+                                                <div id='visit-first-time-modal-left-login-form-email-label'>E-mail / Username</div>
+                                                <div id='visit-first-time-modal-left-login-form-email-input'><?php echo form_input($identity); ?></div>
+                                            </div>
+                                            <div id='visit-first-time-modal-left-login-form-password'>
+                                                <div id='visit-first-time-modal-left-login-form-password-label'>Password</div>
+                                                <div id='visit-first-time-modal-left-login-form-password-input'><?php echo form_input($password); ?></div>
+                                            </div>
+                                            <div id='visit-first-time-modal-left-login-form-submit'>
+                                                <div id='visit-first-time-modal-left-login-form-submit-user'>
+                                                    <input type="submit" value="User Login" onclick="myfunction('<?php echo $user_login; ?>')"/>
+                                                </div>
+                                                <div id='visit-first-time-modal-left-login-form-submit-merchant'>
+                                                    <input type="submit" value="Merchant Login" onclick="myfunction('<?php echo $merchant_login; ?>')"/>
+                                                </div>
+                                            </div>
+                                            <div id='visit-first-time-modal-left-login-form-register'>
+                                                <div id='visit-first-time-modal-left-login-form-register-user'>
+                                                    <a href="<?php echo $user_register; ?>">User Register</a>
+                                                </div>
+                                                <div id='visit-first-time-modal-left-login-form-register-merchant'>
+                                                    <a href="<?php echo $merchant_register; ?>">Merchant Register</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
-                                <form action="<?php echo base_url() . 'user/login'; ?>" method="post" accept-charset="utf-8" id="general_form_login">
-                                    <?php
-                                    $user_login = base_url() . 'user/login';
-                                    $user_register = base_url() . 'user/register';
-                                    $user_retrieve_pass = base_url() . 'user/retrieve-password';
-                                    $merchant_login = base_url() . 'merchant/login';
-                                    $merchant_register = base_url() . 'merchant/register';
-                                    $merchant_retrieve_pass = base_url() . 'merchant/retrieve-password';
-                                    $identity = array('name' => 'identity',
-                                        'id' => 'identity',
-                                        'type' => 'text',
-                                    );
-                                    $password = array('name' => 'password',
-                                        'id' => 'password',
-                                        'type' => 'password',
-                                    );
-                                    ?>
-                                    <div id='visit-first-time-modal-login-form'>
-                                        <div id='visit-first-time-modal-login-form-email'>
-                                            <div id='visit-first-time-modal-login-form-email-label'>E-mail / Username</div>
-                                            <div id='visit-first-time-modal-login-form-email-input'><?php echo form_input($identity); ?></div>
+                                <div id="visit-first-time-modal-right">
+                                    <div id="visit-first-time-modal-right-image">
+                                        <div id="visit-first-time-modal-right-image-each">
+                                            <?php echo img('folder_upload/first_time_visit/1.jpg') ?>
                                         </div>
-                                        <div id='visit-first-time-modal-login-form-password'>
-                                            <div id='visit-first-time-modal-login-form-password-label'>Password</div>
-                                            <div id='visit-first-time-modal-login-form-password-input'><?php echo form_input($password); ?></div>
+                                        <div id="visit-first-time-modal-right-image-each">
+                                            <?php echo img('folder_upload/first_time_visit/2.jpg') ?>
                                         </div>
-                                        <div id='visit-first-time-modal-login-form-submit'>
-                                            <div id='visit-first-time-modal-login-form-submit-user'>
-                                                <input type="submit" value="User Login" onclick="myfunction('<?php echo $user_login; ?>')"/>
-                                            </div>
-                                            <div id='visit-first-time-modal-login-form-submit-merchant'>
-                                                <input type="submit" value="Merchant Login" onclick="myfunction('<?php echo $merchant_login; ?>')"/>
-                                            </div>
+                                        <div id="visit-first-time-modal-right-image-each">
+                                            <?php echo img('folder_upload/first_time_visit/3.jpg') ?>
                                         </div>
-                                        <div id='visit-first-time-modal-login-form-register'>
-                                            <div id='visit-first-time-modal-login-form-register-user'>
-                                                <a href="<?php echo $user_register; ?>">User Register</a>
-                                            </div>
-                                            <div id='visit-first-time-modal-login-form-register-merchant'>
-                                                <a href="<?php echo $merchant_register; ?>">Merchant Register</a>
-                                            </div>
+                                        <div id="visit-first-time-modal-right-image-each">
+                                            <?php echo img('folder_upload/first_time_visit/4.jpg') ?>
                                         </div>
                                     </div>
-                                </form>
+                                </div>
+                                <div class="float-fix"></div>
                             </div>
                         </div>
                     </div>

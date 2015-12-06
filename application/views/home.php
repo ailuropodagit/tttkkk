@@ -154,12 +154,12 @@ $this->album_admin = $this->config->item('album_admin');
                 </ul>
             </div>
             <?php 
-                for($i = 101; $i < 104; $i++){
-                    ${'slider_info' . $i} = $this->m_admin->banner_select_one($i);
-                    ${'slider_image_url' . $i} = ${'slider_info' . $i}['banner_image_url'];
-                    ${'slider_website_ur' . $i} = ${'slider_info' . $i}['banner_website_url'];
-                }
-                ?>
+            for($i = 101; $i < 104; $i++){
+                ${'slider_info' . $i} = $this->m_admin->banner_select_one($i);
+                ${'slider_image_url' . $i} = ${'slider_info' . $i}['banner_image_url'];
+                ${'slider_website_ur' . $i} = ${'slider_info' . $i}['banner_website_url'];
+            }
+            ?>
             <div id='home-row1-banner-main'>
                 <div class='fluid_container' style="width: 100.1%;">
                     <div class="camera_wrap camera_azure_skin" id="camera_wrap_1">

@@ -421,42 +421,80 @@ html, body {
     margin: 15px 0px 15px 0px;
 }
 
-#visit-first-time-explore {
+#visit-first-time-modal-left {
+    width: 45%;
+    float: left;
+}
+
+#visit-first-time-modal-left-explore {
     font-size: 17px;
 }
 
-#visit-first-time-modal-login-form {
+#visit-first-time-modal-left-login-form {
     margin: 20px 0px 0px 0px;
 }
 
-#visit-first-time-modal-login-form-email-input, #visit-first-time-modal-login-form-password-input {
+#visit-first-time-modal-left-login-form input[type='text'] {
+    width: 100%;
+}
+
+#visit-first-time-modal-left-login-form input[type='password'] {
+    width: 100%;
+}
+
+#visit-first-time-modal-left-login-form-email-input, #visit-first-time-modal-left-login-form-password-input {
     margin: 5px 0px 0px 0px;
 }
 
-#visit-first-time-modal-login-form-password {
+#visit-first-time-modal-left-login-form-password {
     margin: 10px 0px 0px 0px;
 }
     
-#visit-first-time-modal-login-form-submit {
+#visit-first-time-modal-left-login-form-submit {
     margin: 20px 0px 0px 0px;
 }
 
-#visit-first-time-modal-login-form-submit-user, #visit-first-time-modal-login-form-submit-merchant {
+#visit-first-time-modal-left-login-form-submit-user, #visit-first-time-modal-left-login-form-submit-merchant {
     display: inline-block;
     margin: 0px 0px 5px 0px;
 }
 
-#visit-first-time-modal-login-form-register {
+#visit-first-time-modal-left-login-form-register {
     margin: 10px 0px 0px 0px;
 }
 
-#visit-first-time-modal-login-form-register-user, #visit-first-time-modal-login-form-register-merchant {
+#visit-first-time-modal-left-login-form-register-user, #visit-first-time-modal-left-login-form-register-merchant {
     display: inline-block;
     margin: 0px 0px 5px 0px;
 }
 
-#visit-first-time-modal-login-form-register-user {
+#visit-first-time-modal-left-login-form-register-user {
     margin-right: 5px;
+}
+
+#visit-first-time-modal-right {
+    float: right;
+    width: calc(55% - 30px);
+    margin: 0px 0px 0px 30px;
+}
+
+#visit-first-time-modal-right-image-each {
+    width: calc(50% - 5px);
+    float: left;
+    margin: 0px 10px 10px 0px;
+}
+
+#visit-first-time-modal-right-image-each:nth-child(2n) {
+    margin-right: 0px;
+}
+
+#visit-first-time-modal-right-image-each:nth-child(3), #visit-first-time-modal-right-image-each:nth-child(4) {
+    margin-bottom: 0px;
+}
+
+#visit-first-time-modal-right-image-each img {
+    width: 100%;
+    display: block;
 }
 
 /*********************************************
