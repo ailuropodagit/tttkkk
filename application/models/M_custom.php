@@ -1457,6 +1457,9 @@ class M_custom extends CI_Model
                     break;
                 case 'comment':
                     $this->m_custom->notification_process('activity_history', $insert_id);
+                case 'share':
+                    $this->m_user->candie_history_insert(10, $insert_id);
+                    break;
             }
         }
     }
@@ -1645,6 +1648,46 @@ class M_custom extends CI_Model
         }
     }
 
+    //$this->m_custom->activity_share($refer_id, $refer_type);
+    //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
+    public function activity_share($refer_id, $refer_type)
+    {
+        if (check_correct_login_type($this->config->item('group_id_user')))
+        {
+            $user_id = $this->ion_auth->user()->row()->id;
+            $today_count = $this->m_custom->activity_share_user_today_count($user_id);
+            $user_max_share_get_candie_per_day = $this->m_custom->web_setting_get('user_max_share_get_candie_per_day');
+
+            if ($today_count < $user_max_share_get_candie_per_day)
+            {
+                $this->activity_check_and_insert('share', $refer_id, $refer_type, $user_id, $this->config->item('group_id_user'));
+                return TRUE;
+            }else{
+                return FALSE;
+            }
+            
+        }
+    }
+
+    //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
+    public function activity_share_count($refer_id, $refer_type)
+    {
+        $query = $this->db->get_where('activity_history', array('act_type' => 'share', 'act_refer_id' => $refer_id, 'act_refer_type' => $refer_type));
+        $rate_count = $query->num_rows();
+        return $rate_count;
+    }
+    
+    //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
+    public function activity_share_user_today_count($user_id)
+    {
+        $search_date = date(format_date_server());
+        $condition = "act_time like '%" . $search_date . "%'";
+        $this->db->where($condition);
+        $query = $this->db->get_where('activity_history', array('act_type' => 'share', 'act_by_id' => $user_id));
+        $rate_count = $query->num_rows();
+        return $rate_count;
+    }
+    
     //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
     public function activity_like_is_exist($refer_id, $refer_type)
     {
