@@ -1,7 +1,5 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-$config['keppo_path'] = '/keppo/';
-
 $config['group_id_admin'] = '1';
 $config['group_id_worker'] = '2';
 $config['group_id_merchant'] = '3';
@@ -81,3 +79,5 @@ $config['category_keppo_voucher'] = '27';
 $config['category_epay'] = '28';
 $config['category_mytaxsi'] = '29';
 $config['category_uber'] = '30';
+
+$config['suggest_list_number'] = '3';

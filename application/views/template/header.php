@@ -63,12 +63,13 @@
                 fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
 
+            var keppo_path = '<?php echo $this->config->item('keppo_path'); ?>'; 
             $(function(){
                 //AUTO COMPLETE
                 $("#search_word").autocomplete({
                     source: function(request, response) {
                         $.ajax({
-                            url: "/keppo/search_suggestion/get_merchant_list/",
+                            url: keppo_path + "search_suggestion/get_merchant_list/",
                             data: { term: $("#search_word").val()},
                             dataType: "json",
                             type: "POST",

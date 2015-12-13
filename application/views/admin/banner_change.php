@@ -22,16 +22,17 @@
             $(".chosen-select").chosen();
         });
         
+        var keppo_path = '<?php echo $this->config->item('keppo_path'); ?>';
         var temp_folder = '<?php echo $temp_folder ?>';
         $('#image-file-name').ajaxfileupload({
-            'action': 'http://' + $(location).attr('hostname') + '/keppo/all/upload_image_temp',
+            'action': 'http://' + $(location).attr('hostname') + keppo_path + 'all/upload_image_temp',
             'params': {
               'file_name': 'image-file-name',
               'image_box_id': 'image-item'
             },
             'onComplete': function(response) {
               //alert(JSON.stringify(response));
-              var post_url = 'http://' + $(location).attr('hostname') + '/keppo/' + temp_folder
+              var post_url = 'http://' + $(location).attr('hostname') + keppo_path + temp_folder;
               //var post_image = "<img src='" + post_url + response + "'>";
               var post_image = post_url + response[0];
               //$( '#upload-for-merchant-form-photo-box' ).html(post_image);

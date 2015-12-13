@@ -27,7 +27,7 @@ class All extends CI_Controller
 
     function hotdeal_list($sub_category_id)
     {
-        $this->data['share_hotdeal_redemption_list'] = $this->m_custom->getAdvertise('hot', $sub_category_id);
+        $this->data['share_hotdeal_redemption_list'] = $this->m_custom->getAdvertise('hot', $sub_category_id);       
         $this->data['title'] = "Hot Deal";
         if (!IsNullOrEmptyString($sub_category_id))
         {
@@ -169,7 +169,7 @@ class All extends CI_Controller
             }
             if ($advertise_type != NULL)
             {
-                $advertise_current_list = $this->m_custom->getAdvertise($advertise_type, $sub_category_id, $merchant_id, $show_expired);
+                $advertise_current_list = $this->m_custom->getAdvertise($advertise_type, $sub_category_id, $merchant_id, $show_expired);                
                 $advertise_id_array = get_key_array_from_list_array($advertise_current_list, 'advertise_id');
                 $previous_id = get_previous_id($advertise_id, $advertise_id_array);
                 $next_id = get_next_id($advertise_id, $advertise_id_array);
@@ -181,6 +181,7 @@ class All extends CI_Controller
                 {
                     $this->data['next_url'] = base_url() . "all/advertise/" . $next_id . "/" . $advertise_type . "/" . $sub_category_id . "/" . $merchant_id . "/" . $show_expired;
                 }
+                $this->data['advertise_suggestion_list'] = $this->m_custom->getAdvertise_suggestion($advertise_type, $sub_category_id, $advertise_id);
             }
             if ($this->ion_auth->logged_in())
             {

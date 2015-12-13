@@ -845,7 +845,7 @@ class M_custom extends CI_Model
     //$popular_hotdeal_list = $this->m_custom->getAdvertise('hot', NULL, NULL, 0, NULL, NULL, 1)
     //Get popular redemption that have at least 3 user's redemption, can change number in database web setting table
     //$popular_redemption_list = $this->m_custom->getAdvertise('pro', NULL, NULL, 0, NULL, NULL, 1)
-    function getAdvertise($advertise_type, $sub_category_id = NULL, $merchant_id = NULL, $show_expired = 0, $limit = NULL, $start = NULL, $hot_popular_only = 0, $ignore_startend = 0, $ignore_hide = 0)
+    function getAdvertise($advertise_type, $sub_category_id = NULL, $merchant_id = NULL, $show_expired = 0, $limit = NULL, $start = NULL, $hot_popular_only = 0, $ignore_startend = 0, $ignore_hide = 0, $want_random = 0)
     {
         if (!IsNullOrEmptyString($sub_category_id))
         {
@@ -865,8 +865,7 @@ class M_custom extends CI_Model
         if ($ignore_hide == 0)
         {
             $this->db->where('hide_flag', 0);
-        }
-        $this->db->order_by("advertise_id", "desc");
+        }       
         
         if (!IsNullOrEmptyString($limit) && !IsNullOrEmptyString($start))
         {
@@ -875,6 +874,23 @@ class M_custom extends CI_Model
                 $start = 0;
             } //For fix skip first index problem on pagination
             $this->db->limit($limit, $start);
+        }
+
+        if ($want_random == 1)
+        {
+            if (!IsNullOrEmptyString($limit))
+            {
+                $this->db->limit($limit);
+            }
+            else
+            {
+                $this->db->limit($this->config->item('suggest_list_number'));
+            }
+            $this->db->order_by('advertise_id', 'RANDOM');
+        }
+        else
+        {
+            $this->db->order_by("advertise_id", "desc");
         }
 
         if ($advertise_type == 'all')
@@ -936,6 +952,33 @@ class M_custom extends CI_Model
         }
         
         return $return_final;
+    }
+
+    function getAdvertise_suggestion($advertise_type, $sub_category_id = NULL, $advertise_id_current = 0, $limit = NULL)
+    {
+        //If dint pass in sub category id, then get the sub category id by advertise id
+        if (IsNullOrEmptyString($sub_category_id))
+        {
+            $advertise_current = $this->m_custom->getOneAdvertise($advertise_id_current);
+            $sub_category_id = $advertise_current['sub_category_id'];
+        }
+
+        $result = $this->m_custom->getAdvertise($advertise_type, $sub_category_id, NULL, 0, $limit, NULL, 0, 0, 0, 1);
+        $final_result = array();
+        
+        foreach ($result as $row)
+        {
+            if ($row['advertise_id'] != $advertise_id_current)   //To hide suggest self advertise
+            {
+                $additional_info = array(
+                    'suggest_image_url' => base_url() . $this->config->item('album_merchant') . $row['image'],
+                    'suggest_page_url' => base_url() . "all/advertise/" . $row['advertise_id'] . "/" . $advertise_type . "/" . $sub_category_id . "/0/0/1",
+                );
+                $final_result[] = $row + $additional_info;
+            }
+        }
+
+        return $final_result;
     }
 
     //To get merchant promotion list with branch filter or history only
@@ -1457,6 +1500,9 @@ class M_custom extends CI_Model
                     break;
                 case 'comment':
                     $this->m_custom->notification_process('activity_history', $insert_id);
+                case 'share':
+                    $this->m_user->candie_history_insert(10, $insert_id);
+                    break;
             }
         }
     }
@@ -1645,6 +1691,46 @@ class M_custom extends CI_Model
         }
     }
 
+    //$this->m_custom->activity_share($refer_id, $refer_type);
+    //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
+    public function activity_share($refer_id, $refer_type)
+    {
+        if (check_correct_login_type($this->config->item('group_id_user')))
+        {
+            $user_id = $this->ion_auth->user()->row()->id;
+            $today_count = $this->m_custom->activity_share_user_today_count($user_id);
+            $user_max_share_get_candie_per_day = $this->m_custom->web_setting_get('user_max_share_get_candie_per_day');
+
+            if ($today_count < $user_max_share_get_candie_per_day)
+            {
+                $this->activity_check_and_insert('share', $refer_id, $refer_type, $user_id, $this->config->item('group_id_user'));
+                return TRUE;
+            }else{
+                return FALSE;
+            }
+            
+        }
+    }
+
+    //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
+    public function activity_share_count($refer_id, $refer_type)
+    {
+        $query = $this->db->get_where('activity_history', array('act_type' => 'share', 'act_refer_id' => $refer_id, 'act_refer_type' => $refer_type));
+        $rate_count = $query->num_rows();
+        return $rate_count;
+    }
+    
+    //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
+    public function activity_share_user_today_count($user_id)
+    {
+        $search_date = date(format_date_server());
+        $condition = "act_time like '%" . $search_date . "%'";
+        $this->db->where($condition);
+        $query = $this->db->get_where('activity_history', array('act_type' => 'share', 'act_by_id' => $user_id));
+        $rate_count = $query->num_rows();
+        return $rate_count;
+    }
+    
     //Refer type: adv = Advertise, mua = Merchant User Album, usa = User Album
     public function activity_like_is_exist($refer_id, $refer_type)
     {

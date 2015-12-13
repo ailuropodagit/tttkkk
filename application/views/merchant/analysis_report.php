@@ -3,6 +3,7 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        var keppo_path = '<?php echo $this->config->item('keppo_path'); ?>'; 
         var options = {
             chart: {
                 type: 'bar'
@@ -46,7 +47,7 @@
         var the_adv_type = $('#the_adv_type').val();
         var the_new_user = $('#the_new_user').val();
 
-        var post_url = 'http://' + $(location).attr('hostname') + '/keppo/merchant/getChart_gender';
+        var post_url = 'http://' + $(location).attr('hostname') + keppo_path + 'merchant/getChart_gender';
         $.ajax({
             type: "POST",
             url: post_url,
@@ -71,7 +72,7 @@
             }
         });
 
-        var post_url2 = 'http://' + $(location).attr('hostname') + '/keppo/merchant/getChart_race';
+        var post_url2 = 'http://' + $(location).attr('hostname') + keppo_path + 'merchant/getChart_race';
         $.ajax({
             type: "POST",
             url: post_url2,
@@ -96,7 +97,7 @@
             }
         });
 
-        var post_url3 = 'http://' + $(location).attr('hostname') + '/keppo/merchant/getChart_age';
+        var post_url3 = 'http://' + $(location).attr('hostname') + keppo_path + 'merchant/getChart_age';
         $.ajax({
             type: "POST",
             url: post_url3,
@@ -122,7 +123,7 @@
             }
         });
 
-        var post_url4 = 'http://' + $(location).attr('hostname') + '/keppo/merchant/getChart_redeem';
+        var post_url4 = 'http://' + $(location).attr('hostname') + keppo_path + 'merchant/getChart_redeem';
         $.ajax({
             type: "POST",
             url: post_url4,
