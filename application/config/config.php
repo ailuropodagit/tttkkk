@@ -22,9 +22,11 @@ switch($_SERVER["SERVER_NAME"]) {
 case "localhost":
 //$config["base_url"] = "http://localhost/keppo/";
 $config["base_url"] = "";
+$config['keppo_path'] = '/keppo/';
 break;
 case "keppo.my":
 $config["base_url"] = "http://www.keppo.my/keppo/";
+$config['keppo_path'] = '/keppo/';    
 break;
 }
 

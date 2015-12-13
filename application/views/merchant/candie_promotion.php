@@ -3,7 +3,7 @@
 <script type="text/javascript" src="<?php echo base_url() ?>js/jquery.ajaxfileupload.js"></script>
 
 <script type="text/javascript">
-    $(document).ready(function () {
+    $(document).ready(function () {      
         var day_add = 0;
         var selected_month = $("#candie_month").val();
         var current_month = parseInt($('input[name= current_month]').val());
@@ -30,16 +30,17 @@
             });
         });
         
+       var keppo_path = '<?php echo $this->config->item('keppo_path'); ?>';  
        var temp_folder = '<?php echo $temp_folder ?>';
             $('#candie-file').ajaxfileupload({
-      'action': 'http://' + $(location).attr('hostname') + '/keppo/all/upload_image_temp',
+      'action': 'http://' + $(location).attr('hostname') + keppo_path + 'all/upload_image_temp',
       'params': {
         'file_name': 'candie-file',
         'image_box_id': 'candie-image'
       },
       'onComplete': function(response) {
         //alert(JSON.stringify(response));
-        var post_url = 'http://' + $(location).attr('hostname') + '/keppo/' + temp_folder
+        var post_url = 'http://' + $(location).attr('hostname') + keppo_path + temp_folder;
         //var post_image = "<img src='" + post_url + response + "'>";
         var post_image = post_url + response[0];
         //$( '#upload-for-merchant-form-photo-box' ).html(post_image);

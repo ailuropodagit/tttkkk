@@ -1,7 +1,5 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-$config['keppo_path'] = '/keppo/';
-
 $config['group_id_admin'] = '1';
 $config['group_id_worker'] = '2';
 $config['group_id_merchant'] = '3';

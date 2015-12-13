@@ -34,7 +34,8 @@
         var the_year = $('#the_year').val();
         var the_month = $('#the_month').val();
 
-        var post_url1 = 'http://' + $(location).attr('hostname') + '/keppo/admin/getChart_user';
+        var keppo_path = '<?php echo $this->config->item('keppo_path'); ?>';
+        var post_url1 = 'http://' + $(location).attr('hostname') + keppo_path + 'admin/getChart_user';
         $.ajax({
             type: "POST",
             url: post_url1,
