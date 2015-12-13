@@ -7,7 +7,13 @@
             nextArrow: '#share-row-list3-redemption-next',
             responsive: [
                 {
-                    breakpoint: 1200,
+                    breakpoint: 1300,
+                    settings: {
+                        slidesToShow: 3
+                    }
+                },
+                {
+                    breakpoint: 900,
                     settings: {
                         slidesToShow: 2
                     }
@@ -63,26 +69,24 @@
                     </div>
                     <div class="share-row-list3-redemption-box-separator"></div>
                     <div class="share-row-list3-redemption-box-information">
-                        <div class="share-row-list3-redemption-box-information-title-rating">
-                            <div class="share-row-list3-redemption-box-information-title">
-                                <?php echo $title ?>
-                            </div>
-                            <div class="share-row-list3-redemption-box-information-rating">
-                                <?php
-                                for ($i = 1; $i <= 5; $i++)
+                        <div class="share-row-list3-redemption-box-information-title">
+                            <?php echo $title ?>
+                        </div>
+                        <div class="share-row-list3-redemption-box-information-rating">
+                            <?php
+                            for ($i = 1; $i <= 5; $i++)
+                            {
+                                if ($i == round($average_rating))
                                 {
-                                    if ($i == round($average_rating))
-                                    {
-                                        echo "<input class='star' type='radio' name='a-rating-$advertise_id' disabled='disabled' value='" . $i . "' checked='checked'/>";
-                                    }
-                                    else
-                                    {
-                                        echo "<input class='star' type='radio' name='a-rating-$advertise_id' disabled='disabled' value='" . $i . "'/>";
-                                    }
+                                    echo "<input class='star' type='radio' name='a-rating-$advertise_id' disabled='disabled' value='" . $i . "' checked='checked'/>";
                                 }
-                                ?>
-                                <div class="float-fix"></div>
-                            </div>
+                                else
+                                {
+                                    echo "<input class='star' type='radio' name='a-rating-$advertise_id' disabled='disabled' value='" . $i . "'/>";
+                                }
+                            }
+                            ?>
+                            <div class="float-fix"></div>
                         </div>
                         <div class="share-row-list3-redemption-box-information-candie">
                             <?php echo $candie ?> Candies

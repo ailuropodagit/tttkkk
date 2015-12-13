@@ -680,7 +680,7 @@ html, body {
     float: left;
     width: 24%;
     background-color: white;
-    height: 475px;
+    height: 450px;
     border-top-left-radius: 2px;
     border-top-right-radius: 2px;
     -webkit-box-shadow: 1px 1px 3px 0px rgba(179,179,179,0.80);
@@ -824,6 +824,10 @@ html, body {
     background-color: white;
 }
 
+#home-row1-banner-main2 {
+    display: none;
+}
+
 /*********************************************
  ** HOME ROW 2
  *********************************************/
@@ -884,16 +888,6 @@ html, body {
     
 #home-row3-column1-banner {
     margin: 30px 0px 0px 0px;
-}
-
-#home-row3-column1-banner-top-line {
-    border: 2px solid #404041;
-    margin: 0px 0px 20px 0px;
-}
-
-#home-row3-column1-banner-bottom-line {
-    border: 2px solid #404041;
-    margin: 20px 0px 0px 0px;
 }
 
 #home-row3-column1-banner img {
@@ -1912,6 +1906,10 @@ html, body {
     cursor: pointer;
 }
 
+.share-row-list3-hot-deal-box a {
+    text-decoration: none;
+}
+    
 .share-row-list3-hot-deal-box:hover > a > .share-row-list3-hot-deal-box-timer-box-absolute {
     display: none;
 }
@@ -1920,7 +1918,7 @@ html, body {
     position: absolute;
     top: 50%;
     left: 50%;
-    margin: -70px 0px 0px -97px;
+    margin: -95px 0px 0px -97px;
     z-index: 199;
 }
 
@@ -1991,13 +1989,8 @@ html, body {
 }
 
 .share-row-list3-hot-deal-box-information {
-    padding: 20px 18px 20px 18px;
-    min-height: 40px;
-}
-
-.share-row-list3-hot-deal-box-information-title-rating {
-    float: left;
-    width: calc(100% - 50%);
+    padding: 18px 18px 18px 18px;
+    min-height: 100px;
 }
 
 .share-row-list3-hot-deal-box-information-title {
@@ -2013,23 +2006,19 @@ html, body {
 }
 
 .share-row-list3-hot-deal-box-information-price {
-    width: 40%;
-    white-space: nowrap;
-    float: right;
+    margin: 10px 0px 0px 0px;
 }
 
 .share-row-list3-hot-deal-box-information-price-after {
     color: #d92222;
     font-size: 18px;
     font-weight: bold;
-    text-align: right;
 }
 
 .share-row-list3-hot-deal-box-information-price-before {
     color: #666666;
     text-decoration: line-through;
     margin: 3px 0px 0px 0px;
-    text-align: right;
 }
 
 /*********************************************
@@ -2085,7 +2074,6 @@ html, body {
 
 #share-row-list3-redemption-container {
     margin: 25px 0px 0px 0px;
-    overflow: hidden;
 }
 
 .share-row-list3-redemption-box {
@@ -2098,6 +2086,10 @@ html, body {
     outline: none;
     position: relative;
     cursor: pointer;
+}
+
+.share-row-list3-redemption-box a {
+    text-decoration: none;
 }
 
 .share-row-list3-redemption-box-photo-box {
@@ -2129,11 +2121,6 @@ html, body {
     padding: 20px 18px 20px 18px;
 }
 
-.share-row-list3-redemption-box-information-title-rating {
-    float: left;
-    width: calc(100% - 50%);
-}
-
 .share-row-list3-redemption-box-information-title {
     font-size: 14px;
     font-weight: bold;
@@ -2147,13 +2134,10 @@ html, body {
 }
 
 .share-row-list3-redemption-box-information-candie {
-    width: 40%;
-    white-space: nowrap;
-    float: right;
     color: #d92222;
     font-size: 18px;
     font-weight: bold;
-    text-align: right;
+    margin: 10px 0px 0px 0px;
 }
 
 /*********************************************

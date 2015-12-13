@@ -20,7 +20,19 @@
 
 <script>
     $(function() {
+        
         $('#camera_wrap_1').camera({
+            skins: 'camera_violet_skin',
+            loader: 'none',
+            navigation: true,
+            navigationHover: false,
+            playPause: false,
+            thumbnails: false,
+            fx: 'scrollLeft',
+            height: '450px'
+        });
+        
+        $('#camera_wrap_2').camera({
             skins: 'camera_violet_skin',
             loader: 'none',
             navigation: true,
@@ -162,18 +174,23 @@ $this->album_admin = $this->config->item('album_admin');
             }
             ?>
             <div id='home-row1-banner-main'>
-                <div class='fluid_container' style="width: 100.1%;">
-                    <div class="camera_wrap camera_azure_skin" id="camera_wrap_1">
-                        <?php 
-                        for($i = 101; $i < 104; $i++)
-                        {
-                            echo "<div data-src=" . ${'slider_image_url' . $i} . " data-link=" . ${'slider_website_ur' . $i} . " data-target='_blank' ></div>";
-                        }
-                        ?>
-                        <!--<div data-src="<?php //echo base_url('folder_upload/home_banner_row1/slide1.jpg') ?>"></div>
-                        <div data-src="<?php //echo base_url('folder_upload/home_banner_row1/slide2.jpg') ?>"></div>
-                        <div data-src="<?php //echo base_url('folder_upload/home_banner_row1/slide3.jpg') ?>"></div>-->
-                    </div>
+                <div class="camera_wrap camera_azure_skin" id="camera_wrap_1">
+                    <?php 
+                    for($i = 101; $i < 104; $i++)
+                    {
+                        echo "<div data-src=" . ${'slider_image_url' . $i} . " data-link=" . ${'slider_website_ur' . $i} . " data-target='_blank' ></div>";
+                    }
+                    ?>
+                </div>
+            </div>
+            <div id='home-row1-banner-main2'>
+                <div class="camera_wrap camera_azure_skin" id="camera_wrap_2">
+                    <?php 
+                    for($i = 101; $i < 104; $i++)
+                    {
+                        echo "<div data-src=" . ${'slider_image_url' . $i} . " data-link=" . ${'slider_website_ur' . $i} . " data-target='_blank' ></div>";
+                    }
+                    ?>
                 </div>
             </div>
             <div id='float-fix'></div>
@@ -213,7 +230,6 @@ $this->album_admin = $this->config->item('album_admin');
                 ?>
             </div>
             <div id='home-row3-column1-banner'>
-                <div id="home-row3-column1-banner-top-line"></div>
                 <div id='home-row3-column1-banner-block1'>
                     <?php 
                     $banner_info = $this->m_admin->banner_select_one(108);
@@ -249,7 +265,6 @@ $this->album_admin = $this->config->item('album_admin');
                     ?>
                 </div>
                 <div id='float-fix'></div>
-                <div id="home-row3-column1-banner-bottom-line"></div>
             </div>
             <div id='home-row3-column1-redemption'>
                 <?php
