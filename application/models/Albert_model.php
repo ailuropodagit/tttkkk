@@ -13,7 +13,7 @@ class Albert_model extends CI_Model
         $this->db->where('hide_flag', '0');
         $this->db->where('end_time >=', date("Y-m-d H:i:s"));
         $this->db->where_in('sub_category_id', $array_sub_category_id);
-        $this->db->limit(3);
+        $this->db->limit($this->config->item('suggest_list_number'));
         $this->db->order_by('category_id', 'RANDOM');
         $query = $this->db->get();
         //RETURN
@@ -31,7 +31,7 @@ class Albert_model extends CI_Model
         $this->db->where('hide_flag', '0');
         $this->db->where('end_time >=', date("Y-m-d H:i:s"));
         $this->db->where_in('sub_category_id', $array_sub_category_id);
-        $this->db->limit(3);
+        $this->db->limit($this->config->item('suggest_list_number'));
         $this->db->order_by('category_id', 'RANDOM');
         $query = $this->db->get();
         //RETURN

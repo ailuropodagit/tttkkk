@@ -79,3 +79,5 @@ $config['category_keppo_voucher'] = '27';
 $config['category_epay'] = '28';
 $config['category_mytaxsi'] = '29';
 $config['category_uber'] = '30';
+
+$config['suggest_list_number'] = '3';

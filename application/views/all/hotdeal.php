@@ -236,5 +236,36 @@
                 <?php $this->load->view('all/comment_form') ?>
             </div>
         </div>
+        
+        <div id="advertise-list-suggestion-content">
+            <?php
+            if (!empty($advertise_suggestion_list))
+            {                  
+                foreach ($advertise_suggestion_list as $row)
+                {                           
+                    ?>
+                    <div id='advertise-list-box'>
+                        <div id="advertise-list-photo">
+                            <div id="advertise-list-photo-box">
+                                <a href='<?php echo $row['suggest_page_url']; ?>'>
+                                    <img src='<?php echo $row['suggest_image_url']; ?>'>
+                                </a>
+                            </div>
+                        </div>
+                        <div id="advertise-list-title2">
+                            <a href='<?php echo $row['suggest_page_url']; ?>'>
+                                <?php echo $row['title']; ?>
+                            </a>
+                        </div>
+                    </div>
+                    <?php
+                }
+            }
+            else
+            {
+                ?><div id='advertise-list-empty'>No Hot Deal Suggestion</div><?php
+            }
+            ?>
+        </div>
     </div>
 </div>
