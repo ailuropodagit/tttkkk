@@ -48,7 +48,7 @@ $user_id = $this->uri->segment(3);
         <?php        
         if(empty($album_list))
         {
-            ?><div id='empty-message'>No Picture</div><?php
+            ?><div id='album-user-empty'>No Picture</div><?php
         }
         else
         {

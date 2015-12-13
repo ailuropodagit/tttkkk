@@ -1,32 +1,4 @@
 /*********************************************
- ** HEADER
- *********************************************/
-
-#header-logo-bar-search-content {
-    display: none;
-}
-
-#header-logo-bar-search2 {
-    display: inline;
-}
-
-#header-logo-bar-search2-content {
-    margin: 20px 0px 0px 0px;
-}
-
-#header-logo-bar-search-block1 {
-    width: calc(100% - 245px);
-}
-
-#header-logo-bar-search-block1 input[type='text'] {
-    width: 100%;
-}
-
-#header-navigation-bar {
-    display: none;
-}
-
-/*********************************************
  ** FOOTER
  *********************************************/
 

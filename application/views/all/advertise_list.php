@@ -27,6 +27,7 @@ $this->album_admin = $this->config->item('album_admin');
 
 //URI
 $fetch_method = $this->router->fetch_method();
+$uri_segment_4 = $this->uri->segment(4);
 ?>
 
 <div id="advertise-list">
@@ -78,28 +79,27 @@ $fetch_method = $this->router->fetch_method();
         }
         ?>
         
-        <?php            
+        <?php
         $bottom_empty_message = '';
         if (empty($hotdeal_list))
-        {            
+        {          
             //SHARE PAGE
             $empty_message = 'No Picture';
-            if ($fetch_method == 'hotdeal_list' || $fetch_method == 'merchant_dashboard')
+            if ($fetch_method == 'merchant_dashboard')
             {
-                $empty_message = 'No Hot Deal';
-                $bottom_empty_message = 'No Hot Deal Suggestion';
-            }
-            else if ($fetch_method == 'promotion_list' || $fetch_method == 'redemption_list')
-            {
-                $empty_message = 'No Redemption';
-                $bottom_empty_message = 'No Redemption Suggestion';
-            }
-            else if ($fetch_method == 'album_merchant')
-            {
-                $empty_message = 'No Picture';
+                if ($uri_segment_4 == '')
+                {
+                    $empty_message = 'No Hot Deal';
+                    $bottom_empty_message = 'No Hot Deal Suggestion';
+                }
+                else
+                {
+                    $empty_message = 'No Redemption';
+                    $bottom_empty_message = 'No Redemption Suggestion';
+                }
             }
             //EMPTY
-            ?><div id='empty-message'><?php echo $empty_message ?></div><?php            
+            ?><div id='advertise-list-empty'><?php echo $empty_message ?></div><?php            
         }
         else
         {            
@@ -321,7 +321,7 @@ $fetch_method = $this->router->fetch_method();
                         }
                         else
                         {
-                            ?><div id='empty-message'><?php echo $bottom_empty_message ?></div><?php
+                            ?><div id='advertise-list-empty'><?php echo $bottom_empty_message ?></div><?php
                         }
                     }
                     ?>

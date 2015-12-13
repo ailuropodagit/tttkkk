@@ -1,7 +1,7 @@
 <script>
     $(function(){
         $('#share-row-list3-hot-deal-container').slick({
-            slidesToShow: 3,
+            slidesToShow: 4,
             slidesToScroll: 1,
             prevArrow: '#share-row-list3-hot-deal-prev',
             nextArrow: '#share-row-list3-hot-deal-next',
@@ -35,14 +35,15 @@
     });
 </script>
 
-<div id='share-row-list3-hot-deal-title'>Today's Deals</div>
-<div id='share-row-list3-hot-deal-navigation'>
-    <div id='share-row-list3-hot-deal-prev'> < </div>
-    <div id='share-row-list3-hot-deal-prev-next-separator'></div>
-    <div id='share-row-list3-hot-deal-next'> > </div>
+<div id='share-row-list3-hot-deal-header'>
+    <div id='share-row-list3-hot-deal-title'>Today's Deals</div>
+    <div id='share-row-list3-hot-deal-navigation'>
+        <div id='share-row-list3-hot-deal-prev'> < </div>
+        <div id='share-row-list3-hot-deal-prev-next-separator'></div>
+        <div id='share-row-list3-hot-deal-next'> > </div>
+    </div>
+    <div id='float-fix'></div>
 </div>
-<div id='float-fix'></div>
-<div id='share-row-list3-hot-deal-title-bottom-line'></div>
 
 <div id="share-row-list3-hot-deal-container">
     <?php

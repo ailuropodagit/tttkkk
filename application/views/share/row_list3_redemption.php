@@ -1,7 +1,7 @@
 <script>
     $(function(){
         $('#share-row-list3-redemption-container').slick({
-            slidesToShow: 3,
+            slidesToShow: 4,
             slidesToScroll: 1,
             prevArrow: '#share-row-list3-redemption-prev',
             nextArrow: '#share-row-list3-redemption-next',
@@ -24,14 +24,15 @@
 </script>
 
 <div id="share-row-list3-redemption">
-    <div id="share-row-list3-redemption-title">Redemption</div>
-    <div id='share-row-list3-redemption-navigation'>
-        <div id='share-row-list3-redemption-prev'> < </div>
-        <div id='share-row-list3-redemption-prev-next-separator'></div>
-        <div id='share-row-list3-redemption-next'> > </div>
+    <div id='share-row-list3-redemption-header'>
+        <div id="share-row-list3-redemption-title">Redemption</div>
+        <div id='share-row-list3-redemption-navigation'>
+            <div id='share-row-list3-redemption-prev'> < </div>
+            <div id='share-row-list3-redemption-prev-next-separator'></div>
+            <div id='share-row-list3-redemption-next'> > </div>
+        </div>
+        <div id="float-fix"></div>
     </div>
-    <div id="float-fix"></div>
-    <div id="share-row-list3-redemption-title-bottom-line"></div>
     <div id="share-row-list3-redemption-container">
         <?php 
         $redemption_list = $this->m_custom->getAdvertise('pro', NULL, NULL, 0, NULL, NULL, 1);

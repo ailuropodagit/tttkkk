@@ -2068,7 +2068,7 @@ class User extends CI_Controller
         $act_type = $act_type == NULL ? $this->config->item('user_activity_comment') : $act_type;
 
         //PAGE PATH NAME
-        $data['page_path_name'] = 'all/review_merchant';
+        $data['page_path_name'] = 'share/merchant_list3';
         $data['message'] = $this->session->flashdata('message');
         $data['title'] = "Review (" . $this->m_custom->display_static_option($act_type) . ") ";
         $data['user_review_like'] = base_url() . "user/review_merchant/" . $this->config->item('user_activity_like');
@@ -2089,7 +2089,7 @@ class User extends CI_Controller
             }
         }
         $data['category_list'] = $category_list;
-        $this->load->view('template/index', $data);
+        $this->load->view('template/index_background_blank', $data);
     }
     
     function upload_image()

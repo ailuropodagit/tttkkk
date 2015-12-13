@@ -213,6 +213,7 @@ $this->album_admin = $this->config->item('album_admin');
                 ?>
             </div>
             <div id='home-row3-column1-banner'>
+                <div id="home-row3-column1-banner-top-line"></div>
                 <div id='home-row3-column1-banner-block1'>
                     <?php 
                     $banner_info = $this->m_admin->banner_select_one(108);
@@ -248,6 +249,7 @@ $this->album_admin = $this->config->item('album_admin');
                     ?>
                 </div>
                 <div id='float-fix'></div>
+                <div id="home-row3-column1-banner-bottom-line"></div>
             </div>
             <div id='home-row3-column1-redemption'>
                 <?php
@@ -333,7 +335,7 @@ $this->album_admin = $this->config->item('album_admin');
                             <td style="width: 100%;">
                                 <div id="home-row3-column2-user-picture-notification-description">
                                     <span id="home-row3-column2-user-picture-notification-description-name">
-                                        <?php echo $notification_user_name ?>
+                                        <b><?php echo $notification_user_name ?></b>
                                     </span>
                                     <?php
                                     if (empty($notification_url)) 

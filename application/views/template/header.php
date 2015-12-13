@@ -118,13 +118,23 @@
                                     <div id='visit-first-time-modal-left-explore'>
                                         Explore Keppo for <span style="color: #0185c6">FREE!</span>
                                     </div>
+                                    <div id='visit-first-time-modal-left-login-form-register'>
+                                        <?php
+                                        $user_register = base_url() . 'user/register';
+                                        $merchant_register = base_url() . 'merchant/register';
+                                        ?>
+                                        <div id='visit-first-time-modal-left-login-form-register-user'>
+                                            <a href="<?php echo $user_register; ?>">User Register</a>
+                                        </div>
+                                        <div id='visit-first-time-modal-left-login-form-register-merchant'>
+                                            <a href="<?php echo $merchant_register; ?>">Merchant Register</a>
+                                        </div>
+                                    </div>
                                     <form action="<?php echo base_url() . 'user/login'; ?>" method="post" accept-charset="utf-8" id="general_form_login">
                                         <?php
                                         $user_login = base_url() . 'user/login';
-                                        $user_register = base_url() . 'user/register';
                                         $user_retrieve_pass = base_url() . 'user/retrieve-password';
                                         $merchant_login = base_url() . 'merchant/login';
-                                        $merchant_register = base_url() . 'merchant/register';
                                         $merchant_retrieve_pass = base_url() . 'merchant/retrieve-password';
                                         $identity = array('name' => 'identity',
                                             'id' => 'identity',
@@ -150,14 +160,6 @@
                                                 </div>
                                                 <div id='visit-first-time-modal-left-login-form-submit-merchant'>
                                                     <input type="submit" value="Merchant Login" onclick="myfunction('<?php echo $merchant_login; ?>')"/>
-                                                </div>
-                                            </div>
-                                            <div id='visit-first-time-modal-left-login-form-register'>
-                                                <div id='visit-first-time-modal-left-login-form-register-user'>
-                                                    <a href="<?php echo $user_register; ?>">User Register</a>
-                                                </div>
-                                                <div id='visit-first-time-modal-left-login-form-register-merchant'>
-                                                    <a href="<?php echo $merchant_register; ?>">Merchant Register</a>
                                                 </div>
                                             </div>
                                         </div>

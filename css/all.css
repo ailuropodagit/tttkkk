@@ -82,7 +82,7 @@ input:-moz-read-only, textarea:-moz-read-only {
 
 input[type='submit'], input[type='button'], button[type='submit'], .a-href-button {
     padding: 5px 14px 5px 14px;
-    background-color: #e91d41;
+    background-color: #1db4f3;
     color: white;
     border: 0px;
     cursor: pointer;
@@ -257,7 +257,6 @@ table {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    border: 1px solid red;
 }
 
 /*********************************************

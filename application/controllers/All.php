@@ -404,19 +404,11 @@ class All extends CI_Controller
     function merchant_category($sub_category_id = NULL)
     {
         //PAGE PATH NAME
-        $this->data['page_path_name'] = 'all/review_merchant';
+        $this->data['page_path_name'] = 'share/merchant_list3';
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['title'] = "Merchant (" . $this->m_custom->display_category($sub_category_id) . ") ";
         $this->data['review_list'] = $this->m_merchant->getMerchantList_by_subcategory($sub_category_id);
-
-        if ($this->ion_auth->logged_in())
-        {
-            $this->load->view('template/index', $this->data);
-        }
-        else
-        {
-            $this->load->view('template/layout', $this->data);
-        }
+        $this->load->view('template/index_background_blank', $this->data);
     }
 
     function merchant_user_picture($picture_id, $user_id = NULL, $merchant_id = NULL)
