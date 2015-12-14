@@ -2,8 +2,8 @@
 
 <script type="text/javascript">
     
-    $(document).ready(function () {
-        var keppo_path = '<?php echo $this->config->item('keppo_path'); ?>'; 
+    $(document).ready(function () {        
+        var keppo_path = '<?php echo $this->config->item('keppo_path'); ?>';    
         var temp_folder = '<?php echo $temp_folder ?>';
         $('#userfile').ajaxfileupload({
             'action': 'http://' + $(location).attr('hostname') + keppo_path + 'all/upload_image_temp',

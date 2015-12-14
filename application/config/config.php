@@ -24,7 +24,7 @@ case "localhost":
 $config["base_url"] = "";
 $config['keppo_path'] = '/keppo/';
 break;
-case "keppo.my":
+case "www.keppo.my":
 $config["base_url"] = "http://www.keppo.my/keppo/";
 $config['keppo_path'] = '/keppo/';    
 break;
