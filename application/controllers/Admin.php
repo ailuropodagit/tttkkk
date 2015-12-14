@@ -3894,6 +3894,77 @@ class Admin extends CI_Controller
         return TRUE;
     }
 
+    //to do, add admin redemption page
+    public function keppo_voucher_redemption_page($show_used = 0)
+    {
+        if (!$this->m_admin->check_is_any_admin(69))
+        {
+            redirect('/', 'refresh');
+        }
+
+        $login_id = $this->ion_auth->user()->row()->id;
+
+        $search_word = '';
+        if (isset($_POST) && !empty($_POST))
+        {
+            if ($this->input->post('button_action') == "search")
+            {
+                $search_word = $this->input->post('search_word');
+            }
+        }
+        $this->data['search_word'] = $search_word;
+
+        $this->data['title'] = "User Redemption";
+        if ($show_used == 1)
+        {
+            $this->data['title'] = "Redemption Used History";
+        }
+        else if ($show_used == 2)
+        {
+            $this->data['title'] = "Redemption Mark As Expired";
+        }
+
+        $this->data['show_used'] = $show_used;
+        $this->data['promotion_list'] = $this->m_custom->getPromotionAdmin($this->config->item('category_epay'));
+
+        $this->data['message'] = $this->session->flashdata('message');
+        $this->data['page_path_name'] = 'admin/keppo_voucher_redeem_done';
+        $this->load->view('template/index', $this->data);
+    }
+
+    public function keppo_voucher_redeem_done()
+    {
+        $current_url = '/';
+        if (isset($_POST) && !empty($_POST))
+        {
+            $current_url = $this->input->post('current_url');
+            $redeem_id = $this->input->post('redeem_id');
+            $user_id = $this->input->post('user_id');
+            $advertise_id = $this->input->post('advertise_id');
+            $voucher = $this->input->post('voucher');
+            $user_name = $this->m_custom->display_users($user_id);
+            if ($this->input->post('button_action') == "submit_used")
+            {
+                if ($this->m_admin->promotion_admin_redemption_done($redeem_id))
+                {
+                    $this->session->set_flashdata('message', 'You mark ' . $voucher . ' voucher for ' . $user_name . ' as used');
+                }
+                else
+                {
+                    $this->session->set_flashdata('message', 'Sorry, redeem fail. Please check with admin...');
+                }
+            }
+            else if ($this->input->post('button_action') == "submit_expired")
+            {
+                if ($this->m_admin->promotion_admin_redemption_done($redeem_id, 1))
+                {
+                    $this->session->set_flashdata('message', 'You mark ' . $voucher . ' voucher for ' . $user_name . ' as expired');
+                }
+            }
+        }
+        redirect($current_url, 'refresh');
+    }
+    
     function manage_web_setting()
     {
         if (!$this->m_admin->check_is_any_admin(73))

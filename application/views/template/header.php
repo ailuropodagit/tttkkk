@@ -388,7 +388,7 @@
                                             <li><a href='<?php echo base_url('admin/banner_management') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'banner_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Manage Banner</a></li>
                                             <li><a href='<?php echo base_url('admin/promo_code_management') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'promo_code_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Manage Promo Codes</a></li>
                                             <li><a href='<?php echo base_url('admin/keppo_voucher_management') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'keppo_voucher_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Manage Keppo Voucher</a></li>
-                                            <li><a href='<?php echo base_url('admin/keppo_voucher_redeem') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'keppo_voucher_redeem'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> User's Redeem Keppo Voucher</a></li>
+                                            <li><a href='<?php echo base_url('admin/keppo_voucher_redemption_page') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'keppo_voucher_redemption_page'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> User's Redeem Keppo Voucher</a></li>
                                             <li><a href='<?php echo base_url('admin/analysis_report') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'analysis_report'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Insights</a></li>
                                             <li><a href='<?php echo base_url('admin/manage_web_setting') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'manage_web_setting'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> Web Setting</a></li>
                                         </ul>
@@ -449,7 +449,7 @@
                                             if($this->m_admin->check_worker_role(71))
                                             { 
                                                 ?>
-                                                <li><a href='<?php echo base_url(); ?>admin/keppo_voucher_redeem' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'keppo_voucher_redeem'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> User's Redeem Keppo Voucher</a></li>
+                                                <li><a href='<?php echo base_url(); ?>admin/keppo_voucher_redemption_page' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'keppo_voucher_redemption_page'){ echo "layout-inner-right-menu-bar-active"; } ?>'><i class="fa fa-circle"></i> User's Redeem Keppo Voucher</a></li>
                                                 <?php
                                             }
                                             if($this->m_admin->check_worker_role(63))

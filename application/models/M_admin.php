@@ -580,4 +580,32 @@ class M_admin extends CI_Model
         return $final_result;
     }
 
+    public function promotion_admin_redemption_done($redeem_id, $mark_expired = 0)
+    {
+        if ($this->m_admin->check_is_any_admin(71))
+        {
+            $login_id = $this->ion_auth->user()->row()->id;
+            $login_type = $this->session->userdata('user_group_id');
+
+            $status_id = $this->config->item('voucher_used');
+            if ($mark_expired == 1)
+            {
+                $status_id = $this->config->item('voucher_expired');
+            }
+
+            $the_data = array(
+                'status_id' => $status_id,
+                'redeem_at_date' => get_part_of_date('all'),
+                'done_by' => $login_id,
+                'done_by_type' => $login_type,
+            );
+            $this->db->where('redeem_id', $redeem_id);
+            if ($this->db->update('user_redemption', $the_data))
+            {
+                return TRUE;
+            }
+        }
+        return FALSE;
+    }
+    
 }

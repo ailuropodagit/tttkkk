@@ -96,6 +96,15 @@ if(isset($message))
                                     Expire Date
                                 </div>    
                             </th>
+                            <?php
+                                if ($show_used != 0)
+                                { ?>
+                            <th>
+                                <div class="table-text-overflow-ellipsis">
+                                    Changed By
+                                </div>    
+                            </th>
+                            <?php } ?>
                         </tr>
                         <?php
                         foreach ($redeem_list as $redeem_row)
@@ -103,7 +112,7 @@ if(isset($message))
                             $user_id = $redeem_row['user_id'];
                             $user_info = $this->m_custom->getUser($user_id);
                             $user_name = $this->m_custom->display_users($user_id);
-                            $action_url = base_url() . "merchant/redeem_done";
+                            $action_url = base_url() . "admin/keppo_voucher_redeem_done";
                             ?>
                             <tr>
                                 <?php
@@ -160,6 +169,17 @@ if(isset($message))
                                         <?php echo displayDate($redeem_row['expired_date']) ?>
                                     </div>    
                                 </td>
+                                <?php
+                                if ($show_used != 0)
+                                { ?>
+                                <td>
+                                    <div class="table-text-overflow-ellipsis">
+                                        <?php 
+                                        echo $this->m_custom->display_users($redeem_row['done_by']);
+                                        ?>
+                                    </div>    
+                                </td>
+                                <?php } ?>
                             </tr>
                             <?php
                         }
@@ -182,15 +202,15 @@ if(isset($message))
         
         <div id="user-redemption-navigation">
             <div id="user-redemption-navigation-each">
-                <a href='<?php echo base_url() . "merchant/merchant_redemption_page" ?>'>Active Redeem</a>
+                <a href='<?php echo base_url() . "admin/keppo_voucher_redemption_page" ?>'>Active Redeem</a>
             </div>
             <div id="user-redemption-navigation-each-separater"> | </div>
             <div id="user-redemption-navigation-each">
-                <a href='<?php echo base_url() . "merchant/merchant_redemption_page/2" ?>'>Expired History</a>
+                <a href='<?php echo base_url() . "admin/keppo_voucher_redemption_page/2" ?>'>Expired History</a>
             </div>
             <div id="user-redemption-navigation-each-separater"> | </div>
             <div id="user-redemption-navigation-each">
-                <a href='<?php echo base_url() . "merchant/merchant_redemption_page/1" ?>'>Used History</a>
+                <a href='<?php echo base_url() . "admin/keppo_voucher_redemption_page/1" ?>'>Used History</a>
             </div>
         </div>
         

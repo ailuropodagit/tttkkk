@@ -1034,6 +1034,32 @@ class M_custom extends CI_Model
         return $advertise_query->result_array();
     }
 
+    //To get admin promotion list
+    function getPromotionAdmin($sub_category_id = 0, $show_history = 0)
+    {
+//        if ($show_history == 0)
+//        {
+//            $this->db->where('voucher_expire_date >=', get_part_of_date('all'));
+//        }
+//        else
+//        {
+//            $this->db->where('voucher_expire_date <', get_part_of_date('all'));
+//        }
+
+        if ($sub_category_id != 0)
+        {
+            $this->db->where('sub_category_id', $sub_category_id);
+        }  
+        
+        $this->db->order_by("title");
+        $this->db->where('start_time is not null AND end_time is not null');
+
+        $original_query = $this->db->get_where('advertise', array('advertise_type' => 'adm'));
+        $original_result = $original_query->result_array();
+
+        return $original_result;
+    }
+    
     function getAlbumUserMerchant($user_id = NULL, $merchant_id = NULL)
     {
         if (!IsNullOrEmptyString($user_id))
