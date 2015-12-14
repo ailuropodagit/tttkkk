@@ -168,17 +168,17 @@
                 <div id='hot-deal-information-price'>
                     <div id='hot-deal-information-price-after'>
                         <?php
-                        if($price_before_show == 1)
+                        if($price_after_show == 1)
                         {
-                            echo 'RM ' . $price_before;
+                            echo 'RM ' . $price_after;
                         }
                         ?>
                     </div>
                     <div id='hot-deal-information-price-before'>
-                        <?php
-                        if($price_after_show == 1)
+                        <?php                      
+                        if($price_before_show == 1)
                         {
-                            echo 'RM ' . $price_after;
+                            echo 'RM ' . $price_before;
                         }
                         ?>
                     </div>

@@ -17,6 +17,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | environments.
 |
 */
+
+$config['keppo_path'] = '/keppo/';
 //$config['base_url'] = '';  //original
 switch($_SERVER["SERVER_NAME"]) {
 case "localhost":
