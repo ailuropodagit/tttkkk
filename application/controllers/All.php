@@ -1134,6 +1134,7 @@ class All extends CI_Controller
             }
             if ($this->ion_auth->logged_in())
             {
+                $this->data['message'] = $this->session->flashdata('message');
                 $this->load->view('template/index', $this->data);
             }
             else
