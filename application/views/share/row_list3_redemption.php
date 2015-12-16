@@ -53,6 +53,7 @@
             $candie = $redemption['voucher_candie'];
             $end_time = $redemption['end_time'];
             $average_rating = $this->m_custom->activity_rating_average($advertise_id, 'adv');
+            $redeem_count = $this->m_custom->promotion_redeem_count($advertise_id);
             if ($advertise_type == 'adm')
             {
                 $image_url = $this->album_admim . $image;

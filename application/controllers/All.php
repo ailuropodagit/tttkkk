@@ -1098,7 +1098,7 @@ class All extends CI_Controller
             
             if ($bottom_part == NULL)
             {
-                $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('hot', NULL, $user_id);                
+                $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('hot', NULL, $user_id, 1);                
                 $this->data['title'] = "Hot Deal";
                 $this->data['bottom_path_name'] = 'all/advertise_list';
                 //ADVERTISE SUGGESTION

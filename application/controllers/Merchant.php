@@ -2146,7 +2146,8 @@ class Merchant extends CI_Controller
                     $this->m_custom->remove_row_log('advertise', $hotdeal_id, $do_by_id, $do_by_type);
                     $message_info = add_message_info($message_info, 'Hot Deal success remove.', $title);
                     $this->session->set_flashdata('message', $message_info);
-                    redirect('merchant/upload_hotdeal', 'refresh');
+                    //redirect('merchant/upload_hotdeal', 'refresh');
+                    redirect('all/merchant_dashboard/' . $this->session->userdata('company_slug'), 'refresh');
                 }
                 else
                 {
