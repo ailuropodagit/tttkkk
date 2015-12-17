@@ -21,11 +21,7 @@
     overflow: hidden;
     margin: 0;
     padding: 0;
-    margin: 0px -16px 0px -16px;
-}
-
-.slick-list:focus {
-    outline: none;
+    margin: 0px -10px 0px -13px;
 }
 
 .slick-list.dragging {
@@ -61,13 +57,12 @@
     visibility: hidden;
 }
 
-.slick-slide
-{
+.slick-slide {
     display: none;
     float: left;
     height: 100%;
     min-height: 1px;
-    margin: 0px 15px 0px 15px;
+    margin: 5px 15px 5px 15px;
 }
 
 [dir='rtl'] .slick-slide {

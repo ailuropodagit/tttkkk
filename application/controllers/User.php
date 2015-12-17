@@ -2068,7 +2068,7 @@ class User extends CI_Controller
         $act_type = $act_type == NULL ? $this->config->item('user_activity_comment') : $act_type;
 
         //PAGE PATH NAME
-        $data['page_path_name'] = 'share/merchant_list3';
+        $data['page_path_name'] = 'share/merchant_grid_list5';
         $data['message'] = $this->session->flashdata('message');
         $data['title'] = "Review (" . $this->m_custom->display_static_option($act_type) . ") ";
         $data['user_review_like'] = base_url() . "user/review_merchant/" . $this->config->item('user_activity_like');

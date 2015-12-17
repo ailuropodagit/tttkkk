@@ -1,10 +1,10 @@
 <script>
     $(function(){
-        $('#share-row-list3-redemption-container').slick({
+        $('#share-redemption-row-list4-container').slick({
             slidesToShow: 4,
             slidesToScroll: 1,
-            prevArrow: '#share-row-list3-redemption-prev',
-            nextArrow: '#share-row-list3-redemption-next',
+            prevArrow: '#share-redemption-row-list4-prev',
+            nextArrow: '#share-redemption-row-list4-next',
             responsive: [
                 {
                     breakpoint: 1300,
@@ -29,17 +29,16 @@
     });
 </script>
 
-<div id="share-row-list3-redemption">
-    <div id='share-row-list3-redemption-header'>
-        <div id="share-row-list3-redemption-title">Redemption</div>
-        <div id='share-row-list3-redemption-navigation'>
-            <div id='share-row-list3-redemption-prev'> < </div>
-            <div id='share-row-list3-redemption-prev-next-separator'></div>
-            <div id='share-row-list3-redemption-next'> > </div>
+<div id="share-redemption-row-list4">
+    <div id='share-redemption-row-list4-header'>
+        <div id="share-redemption-row-list4-title">Redemption</div>
+        <div id='share-redemption-row-list4-navigation'>
+            <div id='share-redemption-row-list4-prev'> < </div>
+            <div id='share-redemption-row-list4-next'> > </div>
         </div>
         <div id="float-fix"></div>
     </div>
-    <div id="share-row-list3-redemption-container">
+    <div id="share-redemption-row-list4-container">
         <?php 
         $redemption_list = $this->m_custom->getAdvertise('pro', NULL, NULL, 0, NULL, NULL, 1);
         foreach ($redemption_list as $redemption)
@@ -63,17 +62,17 @@
                 $image_url = $this->album_merchant . $image;
             }
             ?>
-            <div class="share-row-list3-redemption-box">
+            <div class="share-redemption-row-list4-box">
                 <a href='<?php echo base_url("all/advertise/$advertise_id") ?>'>
-                    <div class="share-row-list3-redemption-box-photo-box">
+                    <div class="share-redemption-row-list4-box-photo-box">
                         <?php echo img($image_url) ?>
                     </div>
-                    <div class="share-row-list3-redemption-box-separator"></div>
-                    <div class="share-row-list3-redemption-box-information">
-                        <div class="share-row-list3-redemption-box-information-title">
+                    <div class="share-redemption-row-list4-box-separator"></div>
+                    <div class="share-redemption-row-list4-box-information">
+                        <div class="share-redemption-row-list4-box-information-title">
                             <?php echo $title ?>
                         </div>
-                        <div class="share-row-list3-redemption-box-information-rating">
+                        <div class="share-redemption-row-list4-box-information-rating">
                             <?php
                             for ($i = 1; $i <= 5; $i++)
                             {
@@ -89,7 +88,7 @@
                             ?>
                             <div class="float-fix"></div>
                         </div>
-                        <div class="share-row-list3-redemption-box-information-candie">
+                        <div class="share-redemption-row-list4-box-information-candie">
                             <?php echo $candie ?> Candies
                         </div>
                         <div class="float-fix"></div>

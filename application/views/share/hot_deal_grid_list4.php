@@ -12,9 +12,20 @@ $this->album_admin = $this->config->item('album_admin');
 $fetch_method = $this->router->fetch_method();
 ?>
 
-<div id="share-hot-deal-redemption-list4">
-    <div id="share-hot-deal-redemption-list4-title"><?php echo $title ?></div>
-    <div id="share-hot-deal-redemption-list4-container">
+<div id="share-hot-deal-redemption-grid-list4">
+    
+    <?php    
+    if ($fetch_method == 'hotdeal_list')
+    {
+        ?><div id="share-hot-deal-redemption-grid-list4-title-green"><?php echo $title ?></div><?php
+    }
+    else if ($fetch_method == 'promotion_list')
+    {
+        ?><div id="share-hot-deal-redemption-grid-list4-title-orange"><?php echo $title ?></div><?php
+    }
+    ?>
+    
+    <div id="share-hot-deal-redemption-grid-list4-container">
         <?php
         foreach ($share_hotdeal_redemption_list as $row)
         {
@@ -26,6 +37,7 @@ $fetch_method = $this->router->fetch_method();
             $advertise_type = $row['advertise_type'];
             $price_before = $row['price_before'];
             $price_after = $row['price_after'];
+            $average_rating = $this->m_custom->activity_rating_average($advertise_id, 'adv');
             if ($advertise_type == 'adm')
             {
                 $image_url = base_url($this->album_admin . $row['image']);
@@ -60,28 +72,42 @@ $fetch_method = $this->router->fetch_method();
                 $advertise_detail_url = base_url() . "all/advertise/" . $advertise_id;
             }   
             ?>
-            <div class='share-hot-deal-redemption-list4-box'>
+            <div class='share-hot-deal-redemption-grid-list4-box'>
                 <a href='<?php echo $advertise_detail_url ?>'>
-                    <div class="share-hot-deal-redemption-list4-box-photo">
-                        <div class="share-hot-deal-redemption-list4-box-photo-box">
+                    <div class="share-hot-deal-redemption-grid-list4-box-photo">
+                        <div class="share-hot-deal-redemption-grid-list4-box-photo-box">
                             <img src='<?php echo $image_url ?>'>
                         </div>
                     </div>
-                    <div class="share-hot-deal-redemption-list4-box-separator"></div>
-                    <div class="share-hot-deal-redemption-list4-box-information">
-                        <div class="share-hot-deal-redemption-list4-box-information-title-rating">
-                            <div class="share-hot-deal-redemption-list4-box-information-title">
+                    <div class="share-hot-deal-redemption-grid-list4-box-separator"></div>
+                    <div class="share-hot-deal-redemption-grid-list4-box-information">
+                        <div class="share-hot-deal-redemption-grid-list4-box-information-title-rating">
+                            <div class="share-hot-deal-redemption-grid-list4-box-information-title">
                                 <?php echo $row['title'] ?>
                             </div>
-                            <!--<div class="share-hot-deal-redemption-list4-box-information-rating"></div>-->
+                            <div class="share-hot-deal-redemption-grid-list4-box-information-rating">
+                                <?php
+                                for ($i = 1; $i <= 5; $i++)
+                                {
+                                    if ($i == round($average_rating))
+                                    {
+                                        echo "<input class='star' type='radio' name='a-rating-$advertise_id' disabled='disabled' value='" . $i . "' checked='checked'/>";
+                                    }
+                                    else
+                                    {
+                                        echo "<input class='star' type='radio' name='a-rating-$advertise_id' disabled='disabled' value='" . $i . "'/>";
+                                    }
+                                }
+                                ?>
+                                <div class="float-fix"></div>
+                            </div>
                         </div>
-                        
                         <?php
                         if ($advertise_type == 'hot')
                         {
                             ?>
-                            <div class="share-hot-deal-redemption-list4-box-information-price">
-                                <div class="share-hot-deal-redemption-list4-box-information-price-after">
+                            <div class="share-hot-deal-redemption-grid-list4-box-information-price">
+                                <div class="share-hot-deal-redemption-grid-list4-box-information-price-after">
                                     <?php
                                     if ($price_after)
                                     {
@@ -89,7 +115,7 @@ $fetch_method = $this->router->fetch_method();
                                     }
                                     ?>
                                 </div>
-                                <div class="share-hot-deal-redemption-list4-box-information-price-before">
+                                <div class="share-hot-deal-redemption-grid-list4-box-information-price-before">
                                     <?php
                                     if ($price_before)
                                     {
@@ -101,7 +127,7 @@ $fetch_method = $this->router->fetch_method();
                             <?php
                         }
                         ?>
-                        
+                        <div class="float-fix"></div>
                     </div>
                 </a>
             </div>
@@ -111,7 +137,7 @@ $fetch_method = $this->router->fetch_method();
         if (!empty($paging_links))
         {
             ?>
-            <div id='share-hot-deal-redemption-list4-pagination'>
+            <div id='share-hot-deal-redemption-grid-list4-pagination'>
                 <?php echo $paging_links; ?>
             </div>
             <?php

@@ -226,7 +226,7 @@ $this->album_admin = $this->config->item('album_admin');
             <div id='home-row3-column1-today-deal'>
                 <?php 
                 //TODAY DEAL
-                $this->load->view('share/row_list3_hot_deal') 
+                $this->load->view('share/hot_deal_row_list4') 
                 ?>
             </div>
             <div id='home-row3-column1-banner'>
@@ -269,7 +269,7 @@ $this->album_admin = $this->config->item('album_admin');
             <div id='home-row3-column1-redemption'>
                 <?php
                 //REDEMPTION
-                $this->load->view('share/row_list3_redemption')
+                $this->load->view('share/redemption_row_list4')
                 ?>
             </div>
         </div>
