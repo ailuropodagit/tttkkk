@@ -1608,7 +1608,7 @@ html, body {
 .share-hot-deal-redemption-list3-box {
     vertical-align: top;
     display: inline-block;
-    width: calc(33.33% - 22px);
+    width: calc(25% - 21px);
     margin: 0px 25px 25px 0px;
     background-color: white;
     border-bottom-left-radius: 3px;
@@ -1622,7 +1622,7 @@ html, body {
     text-decoration: none;
 }
 
-.share-hot-deal-redemption-list3-box:nth-child(3n+0) {
+.share-hot-deal-redemption-list3-box:nth-child(4n+0) {
     margin-right: 0px;
 }
 
@@ -1655,11 +1655,6 @@ html, body {
     padding: 20px 18px 20px 18px;
 }
 
-.share-hot-deal-redemption-list3-box-information-title-rating {
-    float: left;
-    width: calc(100% - 50%);
-}
-
 .share-hot-deal-redemption-list3-box-information-title {
     font-size: 14px;
     font-weight: bold;
@@ -1671,23 +1666,19 @@ html, body {
 }
 
 .share-hot-deal-redemption-list3-box-information-price {
-    width: 40%;
-    white-space: nowrap;
-    float: right;
+    margin: 10px 0px 0px 0px;
 }
 
 .share-hot-deal-redemption-list3-box-information-price-after {
     color: #d92222;
     font-size: 18px;
     font-weight: bold;
-    text-align: right;
 }
 
 .share-hot-deal-redemption-list3-box-information-price-before {
     color: #666666;
     text-decoration: line-through;
     margin: 3px 0px 0px 0px;
-    text-align: right;
 }
 
 #share-hot-deal-redemption-list3-pagination {
@@ -2195,7 +2186,7 @@ html, body {
 .share-merchant-list3-box {
     display: inline-block;
     vertical-align: top;
-    width: calc(25% - 21px);
+    width: calc(20% - 23px);
     margin: 0px 25px 25px 0px;
     background-color: white;
     -webkit-box-shadow: 1px 1px 3px 0px rgba(179,179,179,0.80);
@@ -2205,11 +2196,11 @@ html, body {
     border-bottom-right-radius: 3px;
 }
 
-.share-merchant-list3-box:nth-child(4n) {
+.share-merchant-list3-box:nth-child(5n) {
     margin-right: 0px;
 }
 
-.share-merchant-list3-box:nth-last-child(-n+4) {
+.share-merchant-list3-box:nth-last-child(-n+5) {
     margin-bottom: 0px;
 }
 

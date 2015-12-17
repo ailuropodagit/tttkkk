@@ -35,100 +35,15 @@ $profile_image_empty = $this->config->item('empty_image');
 ?>
 
 <div id="search-result">
-    <h1>Search Result<?php echo $state_name; ?></h1>
-    <div id='search-result-content'> 
+    <h1>Search Result<?php echo $state_name ?></h1>
+    <div id='search-result-content'>
         
         <!--MERCHANT RESULT-->
         <div id="search-result-merchant">
-            <div id="search-result-merchant-title">Merchant</div>
             <?php
-            if ($home_search_merchant != null)
-            {
-                foreach ($home_search_merchant as $row)
-                {
-                    $merchant_profile_image = $row['profile_image'];
-                    $merchant_id = $row['id'];
-                    $merchant_name = $row['company'];
-                    $merchant_dashboard_url = $row['merchant_dashboard_url'];
-                    $average_rating = $this->m_custom->merchant_rating_average($merchant_id, 'adv');
-                    $rating_count = $this->m_custom->merchant_rating_average($merchant_id, 'adv', 1);
-                    ?>
-                    <div id='advertise-list-box'>
-                        <div id="advertise-list-title1">
-                            <a href='<?php echo $merchant_dashboard_url ?>'> <?php echo $merchant_name ?></a>
-                        </div>
-                        <div id="advertise-list-photo">
-                            <div id="advertise-list-photo-box">
-                                <?php
-                                if($merchant_profile_image)
-                                {
-                                    ?>
-                                    <a href='<?php echo $merchant_dashboard_url ?>'>
-                                        <img src='<?php echo base_url("$merhant_profile_album/$merchant_profile_image") ?>'>
-                                    </a>
-                                    <?php
-                                }
-                                else
-                                {
-                                    echo img($profile_image_empty);
-                                }
-                                ?>
-                            </div>
-                        </div>
-                        <div id="advertise-list-info">
-                            <table border="0" cellpadding="4px" cellspacing="0px">
-                                <tr valign="top">
-                                    <td>Category</td>
-                                    <td>:</td>
-                                    <td><?php echo $row['me_category_name'] ?></td>
-                                </tr>
-                                <tr valign="top">
-                                    <td>Like</td>
-                                    <td>:</td>
-                                    <td><?php echo $this->m_custom->merchant_like_count($merchant_id, 'adv'); ?></td>
-                                </tr>
-                                <tr valign="top">
-                                    <td>Comment</td>
-                                    <td>:</td>
-                                    <td><?php echo $this->m_custom->merchant_comment_count($merchant_id, 'adv'); ?></td>
-                                </tr>
-                                <tr valign="top">
-                                    <td>Picture</td>
-                                    <td>:</td>
-                                    <td><a href='<?php echo $merchant_dashboard_url."/picture"; ?>'><?php echo $this->m_custom->merchant_picture_count($merchant_id, 1); ?></a></td>
-                                </tr>
-                                <tr valign="top">
-                                    <td>Average Rating</td>
-                                    <td>:</td>
-                                    <td>
-                                        <?php
-                                        for ($i = 1; $i <= 5; $i++)
-                                        {
-                                            if ($i == round($average_rating))
-                                            {
-                                                echo "<input class='star' type='radio' name='a-rating-$merchant_id' disabled='disabled' value='" . $i . "' checked='checked'/>";
-                                            }
-                                            else
-                                            {
-                                                echo "<input class='star' type='radio' name='a-rating-$merchant_id' disabled='disabled' value='" . $i . "'/>";
-                                            }
-                                        }
-                                        ?>
-                                        <div id='float-fix'></div>
-                                        <?php echo $rating_count ?> reviews
-                                    </td>
-                                </tr>
-                                <tr valign="top">
-                                    <td>Share</td>
-                                    <td>:</td>
-                                    <td><span id="hot-deal-share-facebook"><i class="fa fa-facebook-square"></i></span></td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                    <?php
-                }
-            }
+            $data['title'] = 'Retailer';
+            $data['review_list'] = $home_search_merchant;
+            $this->load->view('share/merchant_list3.php', $data);
             ?>
         </div>
         
@@ -199,8 +114,8 @@ $profile_image_empty = $this->config->item('empty_image');
 
         <!--PROMOTION RESULT-->
         <div id="search-result-promotion">
-            <div id="search-result-promotion-title">Promotion</div>
-            <?php
+            <div id="search-result-promotion-title">Redemption</div>
+            <?php            
             if ($home_search_promotion != null)
             {
                 foreach ($home_search_promotion as $row)

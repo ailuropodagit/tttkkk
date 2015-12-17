@@ -22,7 +22,6 @@ $user_id = $this->uri->segment(3);
     <div id='album-user-title-bottom-line'></div>
     
     <div id="album-user-content">
-        
         <?php
         if($page_name != 'user_dashboard' && $page_name != 'merchant_dashboard')
         {

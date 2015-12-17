@@ -59,7 +59,7 @@ if (isset($message))
             ?>
         </div>
         <div id="share-merchant-list3-container">
-            <?php
+            <?php            
             if ($review_list != null)
             {
                 //var_dump($review_list);

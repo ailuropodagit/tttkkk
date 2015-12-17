@@ -55,10 +55,10 @@ if(isset($message))
     <div id='float-fix'></div>
     <div id='register-title'>Merchant Sign Up</div>
     <div id='register-subtitle'>Already have register? <a href='<?php echo base_url(); ?>merchant/login'>Log In</a></div>
-    <div id='register-horizontal-line'></div>
     
     <?php echo form_open($function_use_for); ?>
         <div id='register-form'>
+            <div id='register-horizontal-line'></div>
             <div id='register-form-each'>
                 <div id='register-form-each-label'><?php echo lang('create_merchant_company_main_label', 'company_main'); ?></div>
                 <div id='register-form-each-input'><?php echo form_input($company_main); ?></div>

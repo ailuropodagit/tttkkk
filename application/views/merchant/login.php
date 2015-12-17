@@ -37,10 +37,10 @@ if(isset($message))
     <div id='float-fix'></div>
     <div id='login-title'>Merchant Log In</div>
     <div id='login-subtitle'>Don't have an account? <a href='<?php echo base_url(); ?>merchant/register'>Sign Up</a></div>
-    <div id='login-horizontal-line'></div>
     
     <?php echo form_open("merchant/login"); ?>
     <div id='login-form'>
+        <div id='login-horizontal-line'></div>
         <div id='login-form-each'>
             <div id='login-form-each-label'><?php echo lang('login_identity_label', 'identity'); ?></div>
             <div id='login-form-each-input'><?php echo form_input($identity); ?></div>

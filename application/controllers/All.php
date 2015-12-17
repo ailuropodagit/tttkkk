@@ -1288,14 +1288,7 @@ class All extends CI_Controller
 
                 $this->data['page_path_name'] = 'all/search_result';
 
-                if ($this->ion_auth->logged_in())
-                {
-                    $this->load->view('template/index', $this->data);
-                }
-                else
-                {
-                    $this->load->view('template/layout', $this->data);
-                }
+                $this->load->view('template/index_background_blank', $this->data);
             }
         }
         //redirect('/', 'refresh');
