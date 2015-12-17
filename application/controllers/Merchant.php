@@ -1755,13 +1755,28 @@ class Merchant extends CI_Controller
             $is_supervisor = 1;
             $supervisor = $this->ion_auth->user()->row();
         }
-
+        
+        $is_history = 0;       
         if ($promotion_id != NULL)
         {
             $allowed_list = $this->m_custom->get_list_of_allow_id('advertise', 'merchant_id', $merchant_id, 'advertise_id', 'advertise_type', 'pro');
             if (!check_allowed_list($allowed_list, $promotion_id))
             {
                 redirect('/', 'refresh');
+            }
+            
+            //To check if it is history promotion, then disable the Save Button
+            $promotionAdvertise = $this->m_custom->getOneAdvertise($promotion_id);
+            if (!$promotionAdvertise)
+            {
+                $is_history = 1;
+            }
+            else
+            {
+                if ($promotionAdvertise['year'] < get_part_of_date('year') || ($promotionAdvertise['year'] == get_part_of_date('year') && $promotionAdvertise['month_id'] < get_part_of_date('month')))
+                {
+                    $is_history = 1;
+                }
             }
         }
 
@@ -1773,8 +1788,7 @@ class Merchant extends CI_Controller
         $month_list = $this->ion_auth->get_static_option_list('month');
         $year_list = generate_number_option(get_part_of_date('year', $merchant_data->created_on, 1), get_part_of_date('year'));
         $search_month = NULL;
-        $search_year = NULL;
-        $is_history = 0;
+        $search_year = NULL;      
 
         if (isset($_POST) && !empty($_POST))
         {
@@ -1801,6 +1815,10 @@ class Merchant extends CI_Controller
                 $search_year = $this->input->post('candie_year');
                 $candie_point = check_is_positive_numeric($this->input->post('candie_point'));
                 $expire_date = validateDate($this->input->post('expire_date'));
+                $price_before = check_is_positive_decimal($this->input->post('price_before'));
+                $price_after = check_is_positive_decimal($this->input->post('price_after'));
+                $price_before_show = $this->input->post('price_before_show');
+                $price_after_show = $this->input->post('price_after_show');
                 $candie_extra_term = $this->input->post('candie_extra_term');
                 $image_data = NULL;
 
@@ -1851,6 +1869,10 @@ class Merchant extends CI_Controller
                         //'voucher' => $this->m_merchant->generate_voucher($merchant_id),
                         'voucher_candie' => $candie_point,
                         'voucher_expire_date' => $expire_date,
+                        'price_before' => $price_before,
+                        'price_after' => $price_after,
+                        'price_before_show' => $price_before_show,
+                        'price_after_show' => $price_after_show,
                         'extra_term' => $candie_extra_term,
                     );
 
@@ -1900,6 +1922,10 @@ class Merchant extends CI_Controller
                         'end_time' => $end_date,
                         'voucher_candie' => $candie_point,
                         'voucher_expire_date' => $expire_date,
+                        'price_before' => $price_before,
+                        'price_after' => $price_after,
+                        'price_before_show' => $price_before_show,
+                        'price_after_show' => $price_after_show,
                         'extra_term' => $candie_extra_term,
                     );
 
@@ -1929,7 +1955,23 @@ class Merchant extends CI_Controller
                     $is_history = 1;
                 }
                 $promotion_id = NULL;
+            }          
+            if ($this->input->post('button_action') == "frozen_hotdeal")
+            {
+                $promotion_id = $this->input->post('promotion_id');
+                $this->m_custom->update_frozen_flag(1, 'advertise', $promotion_id);
+                $message_info = add_message_info($message_info, 'Candie Voucher success frozen.');
+                $this->session->set_flashdata('message', $message_info);
+                redirect('merchant/candie_promotion/' . $promotion_id, 'refresh');   
             }
+            if ($this->input->post('button_action') == "unfrozen_hotdeal")
+            {
+                $promotion_id = $this->input->post('promotion_id');
+                $this->m_custom->update_frozen_flag(0, 'advertise', $promotion_id);
+                $message_info = add_message_info($message_info, 'Candie Voucher success unfrozen.');
+                $this->session->set_flashdata('message', $message_info);
+                redirect('merchant/candie_promotion/' . $promotion_id, 'refresh');   
+            }              
         }
 
         //To get this month candie promotion if already create before
@@ -2005,6 +2047,36 @@ class Merchant extends CI_Controller
             'value' => empty($this_month_candie) ? '' : displayDate($this_month_candie['voucher_expire_date']),
         );
 
+        $this->data['promotion_price_before'] = array(
+            'name' => 'price_before',
+            'id' => 'price_before',
+            'value' => empty($this_month_candie) ? '' : $this_month_candie['price_before'],
+            'onkeypress' => 'return isNumber(event)',
+        );
+        
+        $this->data['promotion_price_after'] = array(
+            'name' => 'price_after',
+            'id' => 'price_after',
+            'value' => empty($this_month_candie) ? '' : $this_month_candie['price_after'],
+            'onkeypress' => 'return isNumber(event)',
+        );
+        
+        $price_before_show = $this_month_candie['price_before_show'];
+        $this->data['price_before_show'] = array(
+            'name' => 'price_before_show',
+            'id' => 'price_before_show',
+            'checked' => $price_before_show == "1"? TRUE : FALSE,        
+            'value' => empty($this_month_candie) ? '' : $this_month_candie['advertise_id'],
+        );
+        
+        $price_after_show = $this_month_candie['price_after_show'];
+        $this->data['price_after_show'] = array(
+            'name' => 'price_after_show',
+            'id' => 'price_after_show',
+            'checked' => $price_after_show == "1"? TRUE : FALSE,      
+            'value' => empty($this_month_candie) ? '' : $this_month_candie['advertise_id'],
+        );
+        
         $this->data['extra_term'] = array(
             'name' => 'candie_extra_term',
             'id' => 'candie_extra_term',
@@ -2013,6 +2085,9 @@ class Merchant extends CI_Controller
             'placeholder' => 'Add extra T&C seperate by Enter, one line one T&C',
         );
 
+        $this->data['promotion_id'] = empty($this_month_candie) ? '' : $this_month_candie['advertise_id'];
+        $this->data['promotion_frozen'] = empty($this_month_candie) ? '' : $this_month_candie['frozen_flag'];
+        
         $this->data['temp_folder'] = $this->temp_folder;
         $this->data['candie_term'] = $candie_term;
         $this->data['candie_branch'] = $candie_branch;

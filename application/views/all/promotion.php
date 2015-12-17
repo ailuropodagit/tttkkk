@@ -134,6 +134,32 @@ if(isset($message))
                     echo "Earn : " . $rate_candie_earn . " candies";
                     ?>
                 </div>
+                <?php
+                //PRICE
+            if($price_before_show == 1 || $price_after_show == 1)
+            {
+                ?>
+                <div id='hot-deal-information-price'>
+                    <div id='hot-deal-information-price-after'>
+                        <?php
+                        if($price_after_show == 1)
+                        {
+                            echo 'RM ' . $price_after;
+                        }
+                        ?>
+                    </div>
+                    <div id='hot-deal-information-price-before'>
+                        <?php                      
+                        if($price_before_show == 1)
+                        {
+                            echo 'RM ' . $price_before;
+                        }
+                        ?>
+                    </div>
+                </div>
+                <?php
+            }
+            ?>
             </div>         
             <?php
             //VOUCHER WORTH
@@ -188,7 +214,7 @@ if(isset($message))
             <!--REDEEM-->
             <div id='redemption-information-submit'>
                 <?php
-                if (check_correct_login_type($this->config->item('group_id_user')))
+                if (check_correct_login_type($this->config->item('group_id_user')) && $is_history == 0)
                 {
                     $action_url = base_url() . "all/user_redeem_voucher";
                     $confirm_message = "Confirm that you want to redeem this voucher? ";

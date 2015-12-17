@@ -52,7 +52,7 @@ class All extends CI_Controller
     function promotion_list()
     {
         $sub_category_id = $this->uri->segment(3);
-        $this->data['share_hotdeal_redemption_list'] = $this->m_custom->getAdvertise('pro', $sub_category_id);
+        $this->data['share_hotdeal_redemption_list'] = $this->m_custom->getAdvertise('pro', $sub_category_id, NULL, 0, NULL, NULL, 0, 0, 0, 0, 1);
         $this->data['title'] = "Redemption";
         if (!IsNullOrEmptyString($sub_category_id))
         {
@@ -115,6 +115,10 @@ class All extends CI_Controller
             $this->data['average_rating'] = $this->m_custom->activity_rating_average($advertise_id, 'adv');
             $this->data['phone_required'] = $the_row['phone_required'];
             $this->data['extra_term'] = $the_row['extra_term'];
+            $this->data['price_before'] = $the_row['price_before'];
+            $this->data['price_before_show'] = $the_row['price_before_show'];
+            $this->data['price_after'] = $the_row['price_after'];
+            $this->data['price_after_show'] = $the_row['price_after_show'];
             $this->data['message'] = $this->session->flashdata('message');
             $this->data['item_id'] = array(
                 'type' => 'hidden',
@@ -139,6 +143,12 @@ class All extends CI_Controller
             $row_advertise_type = $the_row['advertise_type'];
             if ($row_advertise_type == "pro")
             {
+                $is_history = 0;
+                if (time() > strtotime($the_row['end_time']))
+                {
+                    $is_history = 1;
+                }
+                $this->data['is_history'] = $is_history;
                 $this->data['voucher_worth'] = $the_row['voucher_worth'];
                 $this->data['voucher_candie'] = $the_row['voucher_candie'];
                 $this->data['expire_date'] = displayDate($the_row['voucher_expire_date']);
@@ -149,10 +159,6 @@ class All extends CI_Controller
             else if ($row_advertise_type == "hot")
             {
                 $this->data['post_hour'] = $the_row['post_hour'];
-                $this->data['price_before'] = $the_row['price_before'];
-                $this->data['price_before_show'] = $the_row['price_before_show'];
-                $this->data['price_after'] = $the_row['price_after'];
-                $this->data['price_after_show'] = $the_row['price_after_show'];
                 $this->data['end_time'] = displayDate($the_row['end_time'], 1, 1);
                 $this->data['page_path_name'] = 'all/hotdeal';
             }
@@ -1113,7 +1119,7 @@ class All extends CI_Controller
             }
             else if ($bottom_part == 'promotion')
             {
-                $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('pro', NULL, $user_id);
+                $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('pro', NULL, $user_id, 1, NULL, NULL, 0, 0, 0, 0, 1);
                 $this->data['title'] = "Redemption";
                 $this->data['bottom_path_name'] = 'all/advertise_list';
                 //ADVERTISE SUGGESTION
