@@ -1,6 +1,7 @@
 <script type="text/javascript" src="<?php echo base_url() ?>js/jquery-ui-1.11.4.custom/jquery-ui.js"></script>
 <?php echo link_tag('js/jquery-ui-1.11.4.custom/jquery-ui.css') ?>
 <script type="text/javascript" src="<?php echo base_url() ?>js/jquery.ajaxfileupload.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function () {      
@@ -143,6 +144,22 @@ if(isset($message))
                         <?php echo form_input($expire_date); ?>
                     </div>
                 </div>
+                <div id='candie-promotion-form-each'>
+                    <div id='candie-promotion-form-each-label'><?php echo lang("hotdeal_price_before_label"); ?><?php echo form_checkbox($price_before_show); ?></div>
+                    <div id='candie-promotion-form-each-input'>
+                        <?php
+                        echo form_input($promotion_price_before);
+                        ?>
+                    </div>
+                </div>
+                <div id='candie-promotion-form-each'>
+                    <div id='candie-promotion-form-each-label'><?php echo lang("hotdeal_price_after_label"); ?><?php echo form_checkbox($price_after_show); ?></div>
+                    <div id='candie-promotion-form-each-input'>
+                        <?php
+                        echo form_input($promotion_price_after);
+                        ?>
+                    </div>
+                </div>
                 <div id="candie-promotion-form-voucher-checkbox">
                     <div id="candie-promotion-form-voucher-checkbox-title">Select Terms & Conditions :</div>
                     <?php
@@ -217,12 +234,21 @@ if(isset($message))
                 <?php 
                 if ($is_history == 0 && $this->session->userdata('user_group_id') == $this->config->item('group_id_merchant'))
                 { 
-                    ?>                   
-                        <button name="button_action" type="submit" value="submit">Save</button>
-                    <?php
-                    }else{
-                        echo "You don't have permission to upload candie voucher";
-                    } 
+                ?>                   
+                    <button name="button_action" type="submit" value="submit">Save</button>
+                <?php
+                }else{                    
+                        echo " You cannot make changes to this candie voucher anymore, it already is history";
+                     } 
+                     if($promotion_id != ''){
+                         echo '<input type="hidden" name="promotion_id" value="'.$promotion_id.'" />';
+                         if($promotion_frozen == 0){ 
+                  ?>
+                        <button name="button_action" type="submit" value="frozen_hotdeal" onclick="return confirm('Are you sure want to frozen this promotion? After frozen then it will not show publicly until you unfrozen it.')" >Frozen</button>
+                        <?php }else{ ?>
+                        <button name="button_action" type="submit" value="unfrozen_hotdeal" >Unfrozen</button>
+                        <?php } 
+                     }
                 ?>
                  </div>
             </div>

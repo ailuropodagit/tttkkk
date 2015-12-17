@@ -845,7 +845,7 @@ class M_custom extends CI_Model
     //$popular_hotdeal_list = $this->m_custom->getAdvertise('hot', NULL, NULL, 0, NULL, NULL, 1)
     //Get popular redemption that have at least 3 user's redemption, can change number in database web setting table
     //$popular_redemption_list = $this->m_custom->getAdvertise('pro', NULL, NULL, 0, NULL, NULL, 1)
-    function getAdvertise($advertise_type, $sub_category_id = NULL, $merchant_id = NULL, $show_expired = 0, $limit = NULL, $start = NULL, $hot_popular_only = 0, $ignore_startend = 0, $ignore_hide = 0, $want_random = 0)
+    function getAdvertise($advertise_type, $sub_category_id = NULL, $merchant_id = NULL, $show_expired = 0, $limit = NULL, $start = NULL, $hot_popular_only = 0, $ignore_startend = 0, $ignore_hide = 0, $want_random = 0, $hide_frozen = 0)
     {
         if (!IsNullOrEmptyString($sub_category_id))
         {
@@ -866,6 +866,9 @@ class M_custom extends CI_Model
         {
             $this->db->where('hide_flag', 0);
         }       
+        if($hide_frozen == 1){
+            $this->db->where('frozen_flag', 0);
+        }
         
         if (!IsNullOrEmptyString($limit) && !IsNullOrEmptyString($start))
         {
