@@ -104,13 +104,13 @@ if(isset($message))
                 
                 <?php
                 echo form_hidden($edit_id);
-                $remove_or_recover = $result['hide_flag'] == 1? 'recover' : 'frozen';
-                $remove_or_recover_text = $result['hide_flag'] == 1? 'Recover' : 'Hide';
+                $ror = $result['hide_flag'] == 1? 'recover' : 'frozen';
+                $ror_text = $result['hide_flag'] == 1? 'Recover' : 'Hide';
                 ?>
                 <div id='profile-info-form-submit'>
                     <?php 
                     if($is_edit != 0){ ?>
-                    <button name="button_action" type="submit" value="<?php echo $remove_or_recover; ?>" onclick="return confirm('Are you sure want to <?php echo $remove_or_recover_text; ?> it?')"><?php echo $remove_or_recover_text; ?></button>                
+                    <button name="button_action" type="submit" value="<?php echo $ror; ?>" onclick="return confirm('Are you sure want to <?php echo $ror_text; ?> it?')"><?php echo $ror_text; ?></button>                
                     <?php } ?>
                     <button name="button_action" type="submit" value="back">Back</button>
                     <button name="button_action" type="submit" value="save" onclick="return confirm('Confirm that information is correct before save it?')">Save</button>

@@ -128,9 +128,10 @@ if(isset($message))
                                                 <input type='hidden' name='advertise_id' id='advertise_id' value='<?php echo $redeem_row['advertise_id'] ?>'/>
                                                 <input type='hidden' name='current_url' id='current_url' value='<?php echo get_current_url() ?>'/>
                                                 <input type='hidden' name='voucher' id='voucher' value='<?php echo $redeem_row['voucher'] ?>'/>
-                                                <button name='button_action' type='submit' value='submit_used' id='button-a-href'>Used</button>
-                                                |
-                                                <button name='button_action' type='submit' value='submit_expired' id='button-a-href'>Expired</button>
+                                                <button name='button_action' type='submit' value='submit_used' id='button-a-href' title='Used' class='normal-btn-submit'>
+                                                    <img src='<?php echo base_url() . "/image/btn-used.png"; ?>' title='Used' alt='Used' class='normal-btn-image'></button>
+                                                <button name='button_action' type='submit' value='submit_expired' id='button-a-href' title='Expired' class='normal-btn-submit'>
+                                                    <img src='<?php echo base_url() . "/image/btn-expired.png"; ?>' title='Expired' alt='Expired' class='normal-btn-image'></button>
                                             </form>
                                         </div>
                                     </td>

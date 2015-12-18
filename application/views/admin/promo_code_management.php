@@ -65,15 +65,17 @@ if (isset($message))
                         echo "<td>" . $last_modify . "</td>";
                         echo "<td>" . $remove_row . "</td>";
                         echo "<td>";
-                        echo "<a href='" . $url_edit . "' >Edit</a>";
+                        echo "<a href='" . $url_edit . "' ><img src='". base_url() . "/image/btn-edit.png' title='Edit' alt='Edit' class='normal-btn-image'></a>";
                         echo "</td>";
                         echo "<td>";                       
                         echo form_open($url_special_action); 
                         echo form_hidden('id', $row['code_id']); 
-                        $remove_or_recover = $row['hide_flag'] == 1 ? 'recover' : 'frozen';
-                        $remove_or_recover_text = $row['hide_flag'] == 1 ? 'Unfrozen' : 'Frozen';
+                        $ror = $row['hide_flag'] == 1 ? 'recover' : 'frozen';
+                        $ror_text = $row['hide_flag'] == 1 ? 'Unfrozen' : 'Frozen';
+                        $ror_image = $row['hide_flag'] == 1 ? base_url() . '/image/btn-unfrozen.png' : base_url() . '/image/btn-frozen.png';
                         ?>
-                        <button name="button_action" type="submit" value="<?php echo $remove_or_recover; ?>" onclick="return confirm('Are you sure want to <?php echo $remove_or_recover_text; ?> it?')"><?php echo $remove_or_recover_text; ?></button> 
+                        <button name="button_action" type="submit" value="<?php echo $ror; ?>" onclick="return confirm('Are you sure want to <?php echo $ror_text; ?> it?')" title='<?php echo $ror_text; ?>' class='normal-btn-submit'>
+                            <img src='<?php echo $ror_image; ?>' title='<?php echo $ror_text; ?>' alt='<?php echo $ror_text; ?>' class='normal-btn-image'></button>  
                         <?php
                         echo form_close(); 
                         echo "</td>";

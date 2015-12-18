@@ -33,13 +33,13 @@ if (isset($message))
             <div><a href='<?php echo $add_new_url; ?>' class="a-href-button">Add New</a></div>
         </div>
         <div id="float-fix"></div>
-        <div id='payment-charge-table'>
+        <div id='payment-charge-table' >
             <table border='1px' cellspacing='0px' cellpadding='0px' id="myTable" class="display">
                 <thead>
                     <tr style="text-align:center">
-                        <th>Category Name</th>
-                        <th>Category Level</th>
-                        <th>Main Category (If is Sub Category)</th>
+                        <th><div class="table-text-overflow-ellipsis">Category Name</div></th>
+                        <th><div class="table-text-overflow-ellipsis">Category Level</div></th>
+                        <th><div class="table-text-overflow-ellipsis">Main Category (If is Sub Category)</div></th>
 <!--                        <th>Removed Already</th>-->
                         <th>Actions</th>
                     </tr>
@@ -53,12 +53,12 @@ if (isset($message))
                         $remove_row = $row['hide_flag'] == 1 ? 'Removed' : '';
                         $url_edit = base_url() . "admin/category_edit/" . $row['category_id'];
                         echo '<tr>';
-                        echo "<td>" . $row['category_label'] . "</td>";
-                        echo "<td>" . $category_level_text . "</td>";
-                        echo "<td>" . $main_category_text . "</td>";
+                        echo "<td><div class='table-text-overflow-ellipsis'>" . $row['category_label'] . "</div></td>";
+                        echo "<td><div class='table-text-overflow-ellipsis'>" . $category_level_text . "</div></td>";
+                        echo "<td><div class='table-text-overflow-ellipsis'>" . $main_category_text . "</div></td>";
 //                        echo "<td>" . $remove_row . "</td>";
                         echo "<td>";
-                        echo "<a href='" . $url_edit . "' >Edit</a>";
+                        echo "<a href='" . $url_edit . "' ><img src='". base_url() . "/image/btn-edit.png' title='Edit' alt='Edit' class='normal-btn-image'></a>";
                         echo "</td>";
                         echo '</tr>';
                     }

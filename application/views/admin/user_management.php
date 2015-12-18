@@ -81,26 +81,29 @@ if (isset($message))
                         echo "<td>" . $remove_row . "</td>";
                         echo "<td>";
                         if($this->m_admin->check_worker_role(74)) {
-                        echo "<a href='" . $url_bonus_candie . "' >BonusCandie</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+                        echo "<a href='" . $url_bonus_candie . "' ><img src='". base_url() . "/image/btn-bonus-candie.png' title='Bonus Candie' alt='Bonus Candie' class='normal-btn-image'></a>";
                         }
                         if($this->m_admin->check_worker_role(75)) {
-                        echo "<a href='" . $url_balance_adjust . "' >AdjustBalance</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+                        echo "<a href='" . $url_balance_adjust . "' ><img src='". base_url() . "/image/btn-balance.png' title='Adjust Balance' alt='Adjust Balance' class='normal-btn-image'></a>";
                         }
                         if($this->m_admin->check_worker_role(77)) {
-                        echo "<a href='" . $url_promo_code . "' >Promocode</a>";    
+                        echo "<a href='" . $url_promo_code . "' ><img src='". base_url() . "/image/btn-promocode.png' title='Promocode' alt='Promocode' class='normal-btn-image'></a>";
                         }
                         echo "</td>";
                         echo "<td>";                       
                         echo form_open($url_special_action); 
                         echo form_hidden('id', $row['id']); 
-                        $remove_or_recover = $row['hide_flag'] == 1 ? 'recover' : 'frozen';
-                        $remove_or_recover_text = $row['hide_flag'] == 1 ? 'Unfrozen' : 'Frozen';
+                        $ror = $row['hide_flag'] == 1 ? 'recover' : 'frozen';
+                        $ror_text = $row['hide_flag'] == 1 ? 'Unfrozen' : 'Frozen';
+                        $ror_image = $row['hide_flag'] == 1 ? base_url() . '/image/btn-unfrozen.png' : base_url() . '/image/btn-frozen.png';
                         ?>
                         <?php if($this->m_admin->check_worker_role(61)) { ?>
-                        <button name="button_action" type="submit" value="log_in_as">Log In As User</button>
+                        <button name="button_action" type="submit" value="log_in_as" title='Log In As User' class='normal-btn-submit'>
+                            <img src='<?php echo base_url() . "/image/btn-login-as.png"; ?>' title='Log In As User' alt='Log In As User' class='normal-btn-image'></button>
                         <?php } ?>
                         <?php if($this->m_admin->check_worker_role(64)) { ?>
-                        <button name="button_action" type="submit" value="<?php echo $remove_or_recover; ?>" onclick="return confirm('Are you sure want to <?php echo $remove_or_recover_text; ?> it?')"><?php echo $remove_or_recover_text; ?></button> 
+                        <button name="button_action" type="submit" value="<?php echo $ror; ?>" onclick="return confirm('Are you sure want to <?php echo $ror_text; ?> it?')" title='<?php echo $ror_text; ?>' class='normal-btn-submit'>
+                        <img src='<?php echo $ror_image; ?>' title='<?php echo $ror_text; ?>' alt='<?php echo $ror_text; ?>' class='normal-btn-image'></button> 
                         <?php } ?>
                         <?php
                         echo form_close(); 
