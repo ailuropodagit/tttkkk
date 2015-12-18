@@ -88,7 +88,7 @@
                             ?>
                             <div class="float-fix"></div>
                         </div>
-                        <div class="share-redemption-row-list4-box-information-candie">
+                        <div class="share-redemption-grid-list4-box-information-candie">
                             <?php echo $candie ?> Candies
                         </div>
                         <div class="float-fix"></div>

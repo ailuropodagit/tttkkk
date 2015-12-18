@@ -1576,7 +1576,7 @@ html, body {
 }
 
 /*********************************************
- ** SHARE HOT DEAL REDEMPTION LIST4
+ ** SHARE HOT DEAL REDEMPTION GRID LIST4
  *********************************************/
 
 #share-hot-deal-redemption-grid-list4 {
@@ -1704,7 +1704,142 @@ html, body {
 }
 
 /*********************************************
- ** SHARE HOT DEAL REDEMPTION LIST5
+ ** SHARE REDEMPTION GRID LIST4
+ *********************************************/
+
+#share-redemption-grid-list4 {
+    margin: 0px 0px 40px 0px;
+}
+
+#share-redemption-grid-list4-title-green {
+    font-size: 20px;
+    font-weight: bold;
+    color: #fbfbfb;
+    letter-spacing: 1px;
+    border-left: 5px solid #9bb342;
+    padding: 10px 0px 10px 20px;
+    background-color: #c3d18e;
+}
+
+#share-redemption-grid-list4-title-orange {
+    font-size: 20px;
+    font-weight: bold;
+    color: #fbfbfb;
+    letter-spacing: 1px;
+    border-left: 5px solid #f4701e;
+    padding: 10px 0px 10px 20px;
+    background-color: #f8a978;
+}
+
+#share-redemption-grid-list4-container {
+    margin: 25px 0px 0px 0px;
+}
+
+.share-redemption-grid-list4-box {
+    vertical-align: top;
+    display: inline-block;
+    width: calc(25% - 21px);
+    margin: 0px 25px 25px 0px;
+    background-color: white;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    -webkit-box-shadow: 1px 1px 3px 0px rgba(179,179,179,0.80);
+    -moz-box-shadow: 1px 1px 3px 0px rgba(179,179,179,0.80);
+    box-shadow: 1px 1px 3px 0px rgba(179,179,179,0.80);
+}
+
+.share-redemption-grid-list4-box a {
+    text-decoration: none;
+}
+
+.share-redemption-grid-list4-box:nth-child(4n+0) {
+    margin-right: 0px;
+}
+
+.share-redemption-grid-list4-box-photo-box {
+    width: 100%;
+    padding-top: 100%;
+    position: relative;
+}
+
+.share-redemption-grid-list4-box-photo-box img {
+    max-height: 100%;  
+    max-width: 100%; 
+    width: 100%;
+    height: 100%;
+    position: absolute;  
+    top: 0;  
+    bottom: 0;  
+    left: 0;  
+    right: 0;  
+    margin: auto;
+    object-fit: cover;
+    object-position: center;
+}
+
+.share-redemption-grid-list4-box-separator {
+    border-bottom: 1px solid #eeeeee;
+}
+
+.share-redemption-grid-list4-box-information {
+    padding: 18px 18px 18px 18px;
+    min-height: 65px;
+}
+
+.share-redemption-grid-list4-box-information-title {
+    font-size: 14px;
+    font-weight: bold;
+    color: #444444;
+}
+
+.share-redemption-grid-list4-box-information-rating {
+    margin: 10px 0px 0px 0px;
+}
+
+.share-redemption-grid-list4-box-information-candie {
+    color: #d92222;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 10px 0px 0px 0px;
+}
+
+.share-redemption-grid-list4-box-information-price {
+    margin: 10px 0px 0px 0px;
+}
+
+.share-redemption-grid-list4-box-information-price-after {
+    color: #d92222;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.share-redemption-grid-list4-box-information-price-before {
+    color: #666666;
+    text-decoration: line-through;
+    margin: 3px 0px 0px 0px;
+}
+
+#share-redemption-grid-list4-pagination {
+    padding: 20px;
+    margin: 0px 0px 60px 0px;
+    background-color: white;
+    -webkit-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
+    -moz-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
+    box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
+}
+
+#share-redemption-grid-list4-pagination strong {
+    margin: 0px 5px 0px 5px;
+    font-size: 15px;
+}
+
+#share-redemption-grid-list4-pagination a {
+    margin: 0px 5px 0px 5px;
+    font-size: 15px;
+}
+
+/*********************************************
+ ** SHARE HOT DEAL REDEMPTION GRID LIST5
  *********************************************/
 
 #share-hot-deal-redemption-grid-list5 {
@@ -1824,7 +1959,7 @@ html, body {
 }
 
 /*********************************************
- ** SHARE HOT DEAL LIST4 ROW
+ ** SHARE HOT DEAL ROW LIST4
  *********************************************/
 
 #share-hot-deal-row-list4-header {
@@ -2003,7 +2138,7 @@ html, body {
 }
 
 /*********************************************
- ** SHARE ROW LIST4 REDEMPTION
+ ** SHARE REDEMPTION ROW LIST4
  *********************************************/
 
 #share-redemption-row-list4-header {
@@ -2103,6 +2238,7 @@ html, body {
 
 .share-redemption-row-list4-box-information {
     padding: 20px 18px 20px 18px;
+    min-height: 65px;
 }
 
 .share-redemption-row-list4-box-information-title {
@@ -2125,7 +2261,7 @@ html, body {
 }
 
 /*********************************************
- ** SHARE MERCHANT LIST5
+ ** SHARE MERCHANT GRID LIST5
  *********************************************/
 
 #share-merchant-grid-list5-content {
