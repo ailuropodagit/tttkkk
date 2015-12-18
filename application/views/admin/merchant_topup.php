@@ -86,7 +86,7 @@ if (isset($message))
                         echo "<td>" . $row['topup_remark'] . "</td>";
                         echo "<td>" . $admin_name . "</td>";
                         echo "<td>";
-                        echo "<a href='" . $url_edit . "' >Edit</a>";
+                        echo "<a href='" . $url_edit . "' ><img src='". base_url() . "/image/btn-edit.png' title='Edit' alt='Edit' class='normal-btn-image'></a>";
                         echo "</td>";
                         echo '</tr>';
                     }

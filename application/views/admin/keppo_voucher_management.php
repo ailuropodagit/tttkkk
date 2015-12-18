@@ -71,7 +71,7 @@ if (isset($message))
                         echo "<td>" . $expire_date_text . "</td>";
                         echo "<td>" . $remove_row . "</td>";
                         echo "<td>";
-                        echo "<a href='" . $url_edit . "' >Edit</a>";
+                        echo "<a href='" . $url_edit . "' ><img src='". base_url() . "/image/btn-edit.png' title='Edit' alt='Edit' class='normal-btn-image'></a>";
                         echo "</td>";
                         echo '</tr>';
                     }

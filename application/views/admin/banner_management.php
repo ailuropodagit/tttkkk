@@ -12,7 +12,7 @@
         });
     });
 </script>
-
+    
 <?php
 //MESSAGE
 if (isset($message))
@@ -79,18 +79,20 @@ if (isset($message))
                         echo "<td><a href='".$row['banner_url']."' target='_blank'>" . $row['banner_url'] . "</a></td>";
                         echo "<td>" . $admin_name . "</td>";
                         echo "<td>" . $remove_row . "</td>";
-                        echo "<td>";
-                        echo "<a href='" . $url_edit . "' >Edit</a>";
+                        echo "<td>";                       
+                        echo "<a href='" . $url_edit . "' ><img src='". base_url() . "/image/btn-edit.png' title='Edit' alt='Edit' class='normal-btn-image'></a>";
                         echo "</td>";
                         echo "<td>";                       
                         echo form_open($url_special_action); 
                         echo form_hidden('id', $row['banner_id']); 
                         echo form_hidden('position_id', $row['banner_position']); 
                         echo form_hidden('view_status_id', $view_status_selected);
-                        $remove_or_recover = $row['hide_flag'] == 1 ? 'recover' : 'frozen';
-                        $remove_or_recover_text = $row['hide_flag'] == 1 ? 'Recover' : 'Hide';
+                        $ror = $row['hide_flag'] == 1 ? 'recover' : 'frozen';
+                        $ror_text = $row['hide_flag'] == 1 ? 'Recover' : 'Hide';
+                        $ror_image = $row['hide_flag'] == 1 ? base_url() . '/image/btn-recover.png' : base_url() . '/image/btn-hide.png';
                         ?>
-                        <button name="button_action" type="submit" value="<?php echo $remove_or_recover; ?>" onclick="return confirm('Are you sure want to <?php echo $remove_or_recover_text; ?> it?')"><?php echo $remove_or_recover_text; ?></button> 
+                        <button name="button_action" type="submit" value="<?php echo $ror; ?>" onclick="return confirm('Are you sure want to <?php echo $ror_text; ?> it?')" title='<?php echo $ror_text; ?>' class='normal-btn-submit'>
+                            <img src='<?php echo $ror_image; ?>' title='<?php echo $ror_text; ?>' alt='<?php echo $ror_text; ?>' class='normal-btn-image'></button> 
                         <?php
                         echo form_close(); 
                         echo "</td>";

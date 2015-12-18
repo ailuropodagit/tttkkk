@@ -161,11 +161,11 @@ if(isset($message))
                 </div>
                 <?php 
                     echo form_hidden($candie_id);
-                    $remove_or_recover = $result['hide_flag'] == 1? 'recover' : 'frozen';
-                    $remove_or_recover_text = $result['hide_flag'] == 1? 'Recover' : 'Frozen';
+                    $ror = $result['hide_flag'] == 1? 'recover' : 'frozen';
+                    $ror_text = $result['hide_flag'] == 1? 'Recover' : 'Frozen';
                 ?>
                 <div id='candie-promotion-form-submit'>        
-                    <button name="button_action" type="submit" value="<?php echo $remove_or_recover; ?>" onclick="return confirm('Are you sure want to <?php echo $remove_or_recover_text; ?> it?')"><?php echo $remove_or_recover_text; ?></button>                
+                    <button name="button_action" type="submit" value="<?php echo $ror; ?>" onclick="return confirm('Are you sure want to <?php echo $ror_text; ?> it?')"><?php echo $ror_text; ?></button>                
                     <button name="button_action" type="submit" value="back">Back</button>
                     <button name="button_action" type="submit" value="save" onclick="return confirm('Confirm that information is correct before save it?')">Save</button>
                 </div>

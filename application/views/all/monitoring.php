@@ -44,8 +44,8 @@
                     <input type='hidden' name='the_id' id='the_id' value='<?php echo $row['mon_id'] ?>'/>
                     <input type='hidden' name='current_url' id='current_url' value='<?php echo get_current_url() ?>'/>
                     <?php
-                    echo "<button name='button_action' type='submit' value='removed_approve' title='Approve This Removed'>Approve</button> &nbsp&nbsp&nbsp";
-                    echo "<button name='button_action' type='submit' value='removed_recover' title='Undo This Removed'>Recover</button>";
+                    echo "<button name='button_action' type='submit' value='removed_approve' title='Approve This Removed' class='normal-btn-submit'><img src='".base_url() . "/image/btn-approve.png' title='Approve This Removed' alt='Approve This Removed' class='normal-btn-image'></button>";
+                    echo "<button name='button_action' type='submit' value='removed_recover' title='Undo This Removed' class='normal-btn-submit'><img src='".base_url() . "/image/btn-recover.png' title='Undo This Removed' alt='Undo This Removed' class='normal-btn-image'></button>";
                     echo form_close();
 
                     echo "</td>";
