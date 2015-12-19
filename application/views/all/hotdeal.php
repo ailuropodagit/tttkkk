@@ -7,6 +7,7 @@
 <script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script>
 <!--COUNTDOWN-->
 <script type="text/javascript" src="<?php echo base_url('js/jquery.countdown.js') ?>"></script>
+
 <!--SCRIPT-->
 <script type="text/javascript">
     //FB SHARE
@@ -21,13 +22,14 @@
 //        
 //        });
 //    }
-    
+
     $(function(){
         var end_time = $('#hot-deal-information-countdown-time').attr('end_time');
         $('#hot-deal-information-countdown-time').countdown(end_time, function(event) {
             $(this).html(event.strftime('%D Days &nbsp; %H Hours &nbsp; %M Minutes &nbsp; %S Seconds'));
-        });
+        });        
     });
+
 </script>
 
 <div id='hot-deal'>
@@ -82,8 +84,8 @@
                     </div>
                     <div id='hot-deal-table-row-cell' class="hot-deal-center-cell">
                         <div id='hot-deal-center'>
-                            <div id='hot-deal-photo-box'>
-                                <img src='<?php echo $image_url ?>'>
+                            <div id='hot-deal-photo-box' class="zoom-image">
+                                <img src='<?php echo $image_url ?>' >                               
                             </div>      
                         </div>      
                     </div>

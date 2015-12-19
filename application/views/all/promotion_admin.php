@@ -81,7 +81,7 @@ if(isset($message))
                         <div id="print-area">
                             <div id="float-fix"></div>
                             <div id="redemption-photo">
-                                <div id="redemption-photo-box">
+                                <div id="redemption-photo-box" class="zoom-image">
                                     <img src='<?php echo $image_url ?>'>
                                 </div>
                             </div>                                
