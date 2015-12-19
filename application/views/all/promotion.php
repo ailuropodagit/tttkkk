@@ -65,7 +65,7 @@ if(isset($message))
                     </div>
                     <div id='redemption-table-row-cell' class='redemption-center-cell'>
                         <div id='redemption-center'>
-                            <div id="redemption-photo-box">
+                            <div id="redemption-photo-box" class="zoom-image">
                                 <img src='<?php echo $image_url ?>'>
                             </div>
                         </div>

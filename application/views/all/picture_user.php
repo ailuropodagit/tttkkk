@@ -52,7 +52,7 @@
                 </div>
                 <div id='picture-user-table-row-cell' class='picture-user-center-cell'>
                     <div id='picture-user-center'>
-                        <div id='picture-user-photo-box'>
+                        <div id='picture-user-photo-box' class="zoom-image">
                             <img src='<?php echo $image_url ?>'>
                         </div>
                     </div>
