@@ -1,16 +1,4 @@
 /*********************************************
- ** HOME ROW 1
- *********************************************/
-
-#home-row1-banner-main {
-    display: none;
-}
-
-#home-row1-banner-main2 {
-    display: inline;
-}
-
-/*********************************************
  ** FOOTER
  *********************************************/
 
@@ -34,51 +22,37 @@
 }
 
 /*********************************************
- ** HOME ROW 1
+ ** HOME ROW 2 COLUMN 1
  *********************************************/
 
-#home-row1-categories-navigation {
-    display: none;
-}
-
-#home-row1-banner-main {
-    float: none;
-    margin: 0px;
-    width: 100%;
-}
-
-/*********************************************
- ** HOME ROW 3 COLUMN 1
- *********************************************/
-
-#home-row3-column1 {
+#home-row2-column1 {
     width: 100%;
     float: none;
 }
 
 /*********************************************
- ** HOME ROW 3 COLUMN 2
+ ** HOME ROW 2 COLUMN 2
  *********************************************/
 
-#home-row3-column2 {
+#home-row2-column2 {
     width: 100%;
     float: none;
 }
 
 /*********************************************
- ** HOME ROW 3 COLUMN 2 LIKE
+ ** HOME ROW 2 COLUMN 2 LIKE
  *********************************************/
 
-#home-row3-column2-like-notification {
+#home-row2-column2-like-notification {
     height: auto;
     max-height: 300px;
 }
 
 /*********************************************
- ** HOME ROW 3 COLUMN 2 USER PICTURE
+ ** HOME ROW 2 COLUMN 2 USER PICTURE
  *********************************************/
 
-#home-row3-column2-user-picture-notification {
+#home-row2-column2-user-picture-notification {
     height: auto;
     max-height: 300px;
 }

@@ -29,7 +29,7 @@
             playPause: false,
             thumbnails: false,
             fx: 'scrollLeft',
-            height: '450px'
+            height: '460px'
         });
         
         $('#camera_wrap_2').camera({
@@ -87,84 +87,6 @@ $this->album_admin = $this->config->item('album_admin');
 <div id='wrapper'>
     <div id='home'>
         <div id='home-row1'>
-            <div id='home-row1-categories-navigation'>
-                <div id="home-row1-categories-navigation-main-category-title">
-                    <span id="home-row1-categories-navigation-main-category-title-icon"><i class="fa fa-bars"></i></span>
-                    <span id="home-row1-categories-navigation-main-category-title-label">Categories</span>
-                </div>
-                <ul>
-                    <?php
-                    $result_array_main_category = $query_main_category->result_array();
-                    foreach($result_array_main_category as $main_category)
-                    {
-                        $main_category_id = $main_category['category_id'];
-                        $main_category_label = $main_category['category_label'];
-                        $where_sub_category = array('main_category_id' => $main_category_id);
-                        $query_sub_category = $this->albert_model->read_sub_category_with_merchant($where_sub_category);
-                        $num_rows_sub_category = $query_sub_category->num_rows();
-                        ?>
-                        <li <?php if($num_rows_sub_category != 0){ echo "class='has-sub'"; } ?>>
-                            <a href="#">
-                                <span id="home-row1-categories-navigation-main-category-icon">
-                                    <i class="fa fa-crosshairs"></i>
-                                </span>
-                                <span id="home-row1-categories-navigation-main-category-label">
-                                    <?php echo $main_category_label ?>
-                                </span>
-                            </a>
-                            <?php
-                            if ($num_rows_sub_category) 
-                            {
-                                $result_array_sub_category = $query_sub_category->result_array();
-                                ?>
-                                <ul>
-                                    <li>
-                                        <?php
-                                        foreach($result_array_sub_category as $sub_category)
-                                        {
-                                            $sub_category_id = $sub_category['category_id'];
-                                            $sub_category_label = $sub_category['category_label'];
-                                            ?>
-                                            <div id="home-row1-categories-navigation-box">
-                                                <div id="home-row1-categories-navigation-box-title">
-                                                    <?php echo $sub_category_label ?>
-                                                </div>
-                                                <?php
-                                                $where_user = array('me_sub_category_id' => $sub_category_id);
-                                                $query_user = $this->albert_model->read_user($where_user);
-                                                $result_array_user = $query_user->result_array();
-                                                ?>
-                                                <div id="home-row1-categories-navigation-box-merchant">
-                                                    <?php
-                                                    foreach($result_array_user as $user)
-                                                    {
-                                                        $merchant_company = $user['company'];
-                                                        $merchant_slug = $user['slug'];
-                                                        ?>
-                                                        <div id='home-row1-categories-navigation-box-merchant-each'>
-                                                            <a href='<?php echo base_url() ?>all/merchant_dashboard/<?php echo $merchant_slug ?>'>
-                                                                <?php echo $merchant_company ?>
-                                                            </a>
-                                                        </div>
-                                                        <?php
-                                                    }
-                                                    ?>
-                                                </div>
-                                            </div>
-                                            <?php
-                                        }
-                                        ?>
-                                    </li>
-                                </ul>
-                                <?php
-                            }
-                            ?>
-                        </li>
-                        <?php
-                    }
-                    ?>
-                </ul>
-            </div>
             <?php 
             for($i = 101; $i < 104; $i++)
             {
@@ -182,6 +104,7 @@ $this->album_admin = $this->config->item('album_admin');
                     }
                     ?>
                 </div>
+                <div class="float-fix"></div>
             </div>
             <div id='home-row1-banner-main2'>
                 <div class="camera_wrap camera_azure_skin" id="camera_wrap_2">
@@ -192,45 +115,45 @@ $this->album_admin = $this->config->item('album_admin');
                     }
                     ?>
                 </div>
+                <div class="float-fix"></div>
+            </div>
+            <div id='home-row1-left-banner'>
+                <div id='home-row1-left-banner-block1'>
+                    <?php 
+                    $banner_info = $this->m_admin->banner_select_one(105);
+                    $banner_image_url = $banner_info['banner_image_url'];
+                    $banner_website_url = $banner_info['banner_website_url'];
+                    echo "<a href='" . $banner_website_url . "' target='_blank'>" . img($banner_image_url) . "</a>";
+                    ?>
+                </div>
+                <div id='home-row1-left-banner-block2'>
+                    <?php 
+                    $banner_info = $this->m_admin->banner_select_one(106);
+                    $banner_image_url = $banner_info['banner_image_url'];
+                    $banner_website_url = $banner_info['banner_website_url'];
+                    echo "<a href='" . $banner_website_url . "' target='_blank'>" . img($banner_image_url) . "</a>"; 
+                    ?>
+                </div>
+                <div id='home-row1-left-banner-block3'>
+                    <?php 
+                    $banner_info = $this->m_admin->banner_select_one(107);
+                    $banner_image_url = $banner_info['banner_image_url'];
+                    $banner_website_url = $banner_info['banner_website_url'];
+                    echo "<a href='" . $banner_website_url . "' target='_blank'>" . img($banner_image_url) . "</a>"; 
+                    ?>
+                </div>
             </div>
             <div id='float-fix'></div>
         </div>
-        <div id='home-row2'>
-            <div id='home-row2-block1'>
-                <?php 
-                $banner_info = $this->m_admin->banner_select_one(105);
-                $banner_image_url = $banner_info['banner_image_url'];
-                $banner_website_url = $banner_info['banner_website_url'];
-                echo "<a href='" . $banner_website_url . "' target='_blank'>" . img($banner_image_url) . "</a>";
-                ?>
-            </div>
-            <div id='home-row2-block2'>
-                <?php 
-                $banner_info = $this->m_admin->banner_select_one(106);
-                $banner_image_url = $banner_info['banner_image_url'];
-                $banner_website_url = $banner_info['banner_website_url'];
-                echo "<a href='" . $banner_website_url . "' target='_blank'>" . img($banner_image_url) . "</a>"; 
-                ?>
-            </div>
-            <div id='home-row2-block3'>
-                <?php 
-                $banner_info = $this->m_admin->banner_select_one(107);
-                $banner_image_url = $banner_info['banner_image_url'];
-                $banner_website_url = $banner_info['banner_website_url'];
-                echo "<a href='" . $banner_website_url . "' target='_blank'>" . img($banner_image_url) . "</a>"; 
-                ?>
-            </div>
-            <div id='float-fix'></div>
-        </div>        
-        <div id='home-row3-column1'>
-            <div id='home-row3-column1-today-deal'>
+        <div id='home-row2-column1'>
+            <div id='home-row2-column1-today-deal'>
                 <?php 
                 //TODAY DEAL
                 $this->load->view('share/hot_deal_row_list4') 
                 ?>
             </div>
-            <div id='home-row3-column1-banner'>
-                <div id='home-row3-column1-banner-block1'>
+            <div id='home-row2-column1-banner'>
+                <div id='home-row2-column1-banner-block1'>
                     <?php 
                     $banner_info = $this->m_admin->banner_select_one(108);
                     $banner_image_url = $banner_info['banner_image_url'];
@@ -238,8 +161,8 @@ $this->album_admin = $this->config->item('album_admin');
                     echo "<a href='" . $banner_website_url . "' target='_blank'>" . img($banner_image_url) . "</a>"; 
                      ?>
                 </div>
-                <div id='home-row3-column1-banner-block2'>
-                    <div id='home-row3-column1-banner-block2-row1'>
+                <div id='home-row2-column1-banner-block2'>
+                    <div id='home-row2-column1-banner-block2-row1'>
                         <?php 
                         $banner_info = $this->m_admin->banner_select_one(109);
                         $banner_image_url = $banner_info['banner_image_url'];
@@ -247,7 +170,7 @@ $this->album_admin = $this->config->item('album_admin');
                         echo "<a href='" . $banner_website_url . "' target='_blank'>" . img($banner_image_url) . "</a>"; 
                         ?>
                     </div>
-                    <div id='home-row3-column1-banner-block2-row2'>
+                    <div id='home-row2-column1-banner-block2-row2'>
                         <?php 
                         $banner_info = $this->m_admin->banner_select_one(110);
                         $banner_image_url = $banner_info['banner_image_url'];
@@ -256,7 +179,7 @@ $this->album_admin = $this->config->item('album_admin');
                         ?>
                     </div>
                 </div>
-                <div id='home-row3-column1-banner-block3'>
+                <div id='home-row2-column1-banner-block3'>
                     <?php 
                     $banner_info = $this->m_admin->banner_select_one(111);
                     $banner_image_url = $banner_info['banner_image_url'];
@@ -266,17 +189,17 @@ $this->album_admin = $this->config->item('album_admin');
                 </div>
                 <div id='float-fix'></div>
             </div>
-            <div id='home-row3-column1-redemption'>
+            <div id='home-row2-column1-redemption'>
                 <?php
                 //REDEMPTION
                 $this->load->view('share/redemption_row_list4')
                 ?>
             </div>
         </div>
-        <div id='home-row3-column2'>
-            <div id='home-row3-column2-like'>
-                <div id="home-row3-column2-like-title">Like</div>
-                <div id="home-row3-column2-like-notification">
+        <div id='home-row2-column2'>
+            <div id='home-row2-column2-like'>
+                <div id="home-row2-column2-like-title">Like</div>
+                <div id="home-row2-column2-like-notification">
                     <table border="0px" cellpading="0px" cellspacing="0px">
                         <?php
                         $notification_list = $this->m_custom->notification_display(0, 1, 'like');
@@ -290,13 +213,13 @@ $this->album_admin = $this->config->item('album_admin');
                             ?>
                             <tr>
                                 <td valign="top">
-                                    <div id="home-row3-column2-like-notification-user-image">
+                                    <div id="home-row2-column2-like-notification-user-image">
                                         <?php echo $notification_user_image ?>
                                     </div>
                                 </td>
                                 <td style="width: 100%;">
-                                    <div id="home-row3-column2-like-notification-description">
-                                        <span id="home-row3-column2-like-notification-description-name">
+                                    <div id="home-row2-column2-like-notification-description">
+                                        <span id="home-row2-column2-like-notification-description-name">
                                             <?php echo $notification_user_name ?>
                                         </span>
                                         <?php
@@ -314,7 +237,7 @@ $this->album_admin = $this->config->item('album_admin');
                                     </div>
                                 </td>
                                 <td valign="top">
-                                    <div id="home-row3-column2-like-notification-item-image">
+                                    <div id="home-row2-column2-like-notification-item-image">
                                         <a href="<?php echo base_url($notification_url) ?>">
                                             <?php echo img($notification_item_image) ?>
                                         </a>
@@ -327,9 +250,9 @@ $this->album_admin = $this->config->item('album_admin');
                     </table>
                 </div>
             </div>
-            <div id='home-row3-column2-user-picture'>
-                <div id="home-row3-column2-user-picture-title">Users Pictures</div>
-                <div id="home-row3-column2-user-picture-notification">
+            <div id='home-row2-column2-user-picture'>
+                <div id="home-row2-column2-user-picture-title">Users Pictures</div>
+                <div id="home-row2-column2-user-picture-notification">
                     <table border="0px" cellpading="0px" cellspacing="0px">
                     <?php 
                     $notification_list = $this->m_custom->notification_display(0, 1, 'upload_image');
@@ -343,13 +266,13 @@ $this->album_admin = $this->config->item('album_admin');
                         ?>
                         <tr>
                             <td valign="top">
-                                <div id="home-row3-column2-user-picture-notification-user-image">
+                                <div id="home-row2-column2-user-picture-notification-user-image">
                                     <?php echo $notification_user_image ?>
                                 </div>
                             </td>
                             <td style="width: 100%;">
-                                <div id="home-row3-column2-user-picture-notification-description">
-                                    <span id="home-row3-column2-user-picture-notification-description-name">
+                                <div id="home-row2-column2-user-picture-notification-description">
+                                    <span id="home-row2-column2-user-picture-notification-description-name">
                                         <b><?php echo $notification_user_name ?></b>
                                     </span>
                                     <?php
@@ -367,7 +290,7 @@ $this->album_admin = $this->config->item('album_admin');
                                 </div>
                             </td>
                             <td valign="top">
-                                <div id="home-row3-column2-user-picture-notification-item-image">
+                                <div id="home-row2-column2-user-picture-notification-item-image">
                                     <a href="<?php echo base_url($notification_url) ?>">
                                         <?php echo img($notification_item_image) ?>
                                     </a>

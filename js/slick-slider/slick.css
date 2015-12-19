@@ -63,6 +63,15 @@
     height: 100%;
     min-height: 1px;
     margin: 5px 15px 5px 15px;
+    outline: none;
+}
+
+.slick-slide:focus { 
+    outline: none;
+}
+
+.slick-slide a {
+    outline: none;
 }
 
 [dir='rtl'] .slick-slide {

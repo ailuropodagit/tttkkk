@@ -1,0 +1,27 @@
+/*********************************************
+ ** HOME ROW 1
+ *********************************************/
+
+#home-row1-banner-main {
+    display: none;
+}
+
+#home-row1-banner-main2 {
+    display: block;
+}
+
+#home-row1-left-banner {
+    float: none;
+    width: 100%;
+    margin: 30px 0px 0px 0px;
+}
+
+#home-row1-left-banner-block1, #home-row1-left-banner-block2, #home-row1-left-banner-block3 {
+    float: left;
+    width: calc(33.33% - 13.5px);
+    margin: 0px 20px 0px 0px;
+}
+
+#home-row1-left-banner-block3 {
+    margin: 0px 0px 0px 0px;
+}
