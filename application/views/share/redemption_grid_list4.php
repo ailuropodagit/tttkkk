@@ -112,8 +112,26 @@ $fetch_method = $this->router->fetch_method();
                                 <div class="float-fix"></div>
                             </div>
                         </div>
-                        <div class="share-redemption-row-list4-box-information-candie">
+                        <div class="share-redemption-grid-list4-box-information-candie">
                             <?php echo $candie ?> Candies
+                        </div>
+                        <div class="share-redemption-grid-list4-box-information-price">
+                            <div class="share-redemption-grid-list4-box-information-price-after">
+                                <?php
+                                if ($price_after)
+                                {
+                                    echo 'RM ' . $price_after;
+                                }
+                                ?>
+                            </div>
+                            <div class="share-redemption-grid-list4-box-information-price-before">
+                                <?php
+                                if ($price_before)
+                                {
+                                    echo 'RM ' . $price_before;
+                                }
+                                ?>
+                            </div>
                         </div>
                              <?php
                 //PRICE

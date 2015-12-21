@@ -3,8 +3,8 @@
         $('#share-redemption-row-list4-container').slick({
             slidesToShow: 4,
             slidesToScroll: 1,
-            prevArrow: '#share-redemption-row-list4-prev',
-            nextArrow: '#share-redemption-row-list4-next',
+            prevArrow: '#share-redemption-row-list4-header-navigation-prev',
+            nextArrow: '#share-redemption-row-list4-header-navigation-next',
             responsive: [
                 {
                     breakpoint: 1300,
@@ -31,12 +31,19 @@
 
 <div id="share-redemption-row-list4">
     <div id='share-redemption-row-list4-header'>
-        <div id="share-redemption-row-list4-title">Redemption</div>
-        <div id='share-redemption-row-list4-navigation'>
-            <div id='share-redemption-row-list4-prev'> < </div>
-            <div id='share-redemption-row-list4-next'> > </div>
+        <div id='share-redemption-row-list4-header-table'>
+            <div id='share-redemption-row-list4-header-table-row'>
+                <div id='share-redemption-row-list4-header-table-row-cell'>
+                    <div id="share-redemption-row-list4-header-title">Redemption</div>
+                </div>
+                <div id='share-redemption-row-list4-header-table-row-cell'>
+                    <div id='share-redemption-row-list4-header-navigation'>
+                        <div id='share-redemption-row-list4-header-navigation-prev'><</div>
+                        <div id='share-redemption-row-list4-header-navigation-next'>></div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div id="float-fix"></div>
     </div>
     <div id="share-redemption-row-list4-container">
         <?php 
@@ -49,6 +56,10 @@
             $merchant_id = $redemption['merchant_id'];
             $image = $redemption['image'];
             $title = $redemption['title'];
+            $price_before_show = $redemption['price_before_show'];
+            $price_before = $redemption['price_before'];
+            $price_after_show = $redemption['price_after_show'];
+            $price_after = $redemption['price_after'];
             $candie = $redemption['voucher_candie'];
             $end_time = $redemption['end_time'];
             $average_rating = $this->m_custom->activity_rating_average($advertise_id, 'adv');
@@ -93,10 +104,27 @@
                             ?>
                             <div class="float-fix"></div>
                         </div>
-                        <div class="share-redemption-grid-list4-box-information-candie">
+                        <div class="share-redemption-row-list4-box-information-candie">
                             <?php echo $candie ?> Candies
                         </div>
-                        <div class="float-fix"></div>
+                        <div class="share-redemption-row-list4-box-information-price">
+                            <div class="share-hot-deal-row-list4-box-information-price-after">
+                                <?php
+                                if ($price_after_show)
+                                {
+                                    echo 'RM ' . $price_after;
+                                }
+                                ?>
+                            </div>
+                            <div class="share-redemption-row-list4-box-information-price-before">
+                                <?php 
+                                if ($price_before_show) 
+                                {
+                                    echo 'RM ' . $price_before;
+                                }
+                                ?>
+                            </div>
+                        </div>
                     </div>
                 </a>
             </div>
