@@ -2158,7 +2158,8 @@ class Admin extends CI_Controller
             $us_ic = $this->input->post('us_ic');
             $wo_worker_id = $this->input->post('wo_worker_id');
             $wo_department = $this->input->post('wo_department');
-            $phone = '+60'.$this->input->post('phone');
+            //$phone = '+60'.$this->input->post('phone');
+            $phone = $this->input->post('phone');
             $username = strtolower($this->input->post('username'));
             $email = strtolower($this->input->post('email'));
             $wo_join_date = validateDate($this->input->post('wo_join_date'));
@@ -2172,7 +2173,7 @@ class Admin extends CI_Controller
             $this->form_validation->set_rules('us_ic', $this->lang->line('worker_ic_label'), 'required');
             $this->form_validation->set_rules('wo_worker_id', $this->lang->line('worker_id_label'), 'required');
             $this->form_validation->set_rules('wo_department', $this->lang->line('worker_department_label'));
-            $this->form_validation->set_rules('phone', $this->lang->line('create_user_validation_phone_label'), 'required|valid_contact_number_short');           
+            $this->form_validation->set_rules('phone', $this->lang->line('create_user_validation_phone_label'), 'required|valid_contact_number');           
             $this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'trim|required|valid_email|is_unique[' . $tables['users'] . '.email]');
             $this->form_validation->set_rules('wo_join_date', $this->lang->line('worker_joindate_label'), 'trim|required');
             $this->form_validation->set_rules('username', $this->lang->line('create_user_validation_username_label'), 'trim|required|is_unique[' . $tables['users'] . '.username]');

@@ -24,7 +24,8 @@ $image_path_user_profile = $this->config->item('album_user_profile');
                     }
                     $noti_message = $row['noti_message'];
                     $noti_url = base_url() .$row['noti_url'];
-
+                    $notification_item_image = $row['noti_image_url'];
+                    
                     //USER INFO
                     $where_read_user = array('id'=>$notification_from_user_id);
                     $query_read_user = $this->albert_model->read_user($where_read_user);
@@ -73,6 +74,13 @@ $image_path_user_profile = $this->config->item('album_user_profile');
                                 ?>
                             </div>
                         </td>
+                        <td valign="top">
+                                <div id="home-row2-column2-user-picture-notification-item-image">
+                                    <a href="<?php echo $noti_url ?>">
+                                        <?php echo img($notification_item_image) ?>
+                                    </a>
+                                </div>
+                            </td>
                         <td>
                             <div id='notification-table-delete'>
                                 <?php echo form_open("all/notification_process") ?>

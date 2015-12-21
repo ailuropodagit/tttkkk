@@ -765,7 +765,7 @@ class Merchant extends CI_Controller
         $this->form_validation->set_rules('me_country', $this->lang->line('create_merchant_validation_country_label'), 'required');
         $this->form_validation->set_rules('me_category_id', $this->lang->line('create_merchant_category_label'), 'callback_check_main_category');
         $this->form_validation->set_rules('me_sub_category_id', $this->lang->line('create_merchant_sub_category_label'), 'callback_check_sub_category');
-        $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required|valid_contact_number_short');
+        $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required|valid_contact_number');
         $this->form_validation->set_rules('username', $this->lang->line('create_merchant_validation_username_label'), 'trim|required|is_unique[' . $tables['users'] . '.username]');
         $this->form_validation->set_rules('email', $this->lang->line('create_merchant_validation_email_label'), 'trim|required|valid_email|is_unique[' . $tables['users'] . '.email]');
         $this->form_validation->set_rules('password', $this->lang->line('create_merchant_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
@@ -783,7 +783,8 @@ class Merchant extends CI_Controller
             $postcode = $this->input->post('postcode');
             $state = $this->input->post('me_state_id');
             $country = $this->input->post('me_country');
-            $phone = '+60' . $this->input->post('phone');    
+            //$phone = '+60' . $this->input->post('phone');    
+            $phone = $this->input->post('phone'); 
             $additional_data = array(
                 'username' => $username,
                 'company_main' => $company_main,
@@ -2148,6 +2149,7 @@ class Merchant extends CI_Controller
             $title = $this->input->post('title');
             $description = $this->input->post('desc');
             $hotdeal_hour = check_is_positive_numeric($this->input->post('hour'));
+            $hotdeal_hour = $hotdeal_hour * 24;
             $hotdeal_price_before = check_is_positive_decimal($this->input->post('price_before'));
             $hotdeal_price_after = check_is_positive_decimal($this->input->post('price_after'));
             $price_before_show = $this->input->post('price_before_show');
@@ -2155,9 +2157,9 @@ class Merchant extends CI_Controller
             
             if ($this->input->post('button_action') == "edit_hotdeal")
             {
-                if ($hotdeal_hour > 720)
+                if ($hotdeal_hour > 1440)
                 {
-                    $message_info = add_message_info($message_info, 'Hot Deal please put in a valid hour between 1 to 720(Max 30 days only).', $title);
+                    $message_info = add_message_info($message_info, 'Hot Deal please put in a valid hour between 0 to 60(Max 2 months only).', $title);
                     $hotdeal_hour = 0;
                 }
 
@@ -2271,7 +2273,7 @@ class Merchant extends CI_Controller
         $this->data['hotdeal_hour'] = array(
             'name' => 'hour',
             'id' => 'hour',
-            'value' => empty($hotdeal_result) ? '' : $hotdeal_result['post_hour'],
+            'value' => empty($hotdeal_result) ? '' : ($hotdeal_result['post_hour']/24),
             'onkeypress' => 'return isNumber(event)',
         );
 
@@ -2423,14 +2425,15 @@ class Merchant extends CI_Controller
                     $title = $this->input->post('title-' . $i);
                     $description = $this->input->post('desc-' . $i);
                     $hotdeal_hour = check_is_positive_numeric($this->input->post('hour-' . $i));
+                    $hotdeal_hour = $hotdeal_hour * 24;
                     $hotdeal_price_before = check_is_positive_decimal($this->input->post('price_before-' . $i));
                     $hotdeal_price_after = check_is_positive_decimal($this->input->post('price_after-' . $i));
                     $price_before_show = $this->input->post('price_before_show-' . $i) == null? 0 : 1;
                     $price_after_show = $this->input->post('price_after_show-' . $i) == null? 0 : 1;
 
-                    if ($hotdeal_hour > 720)
+                    if ($hotdeal_hour > 1440)
                     {
-                        $message_info = add_message_info($message_info, 'Hot Deal please put in a valid hour between 1 to 720(Max 30 days only).', $title);
+                        $message_info = add_message_info($message_info, 'Hot Deal please put in a valid hour between 0 to 60(Max 2 months only).', $title);
                         $hotdeal_hour = 0;
                     }
 
@@ -2616,7 +2619,7 @@ class Merchant extends CI_Controller
             $this->data[$hotdeal_hour] = array(
                 'name' => 'hour-' . $i,
                 'id' => 'hour-' . $i,
-                'value' => empty($hotdeal_today_result[$i]) ? '' : $hotdeal_today_result[$i]['post_hour'],
+                'value' => empty($hotdeal_today_result[$i]) ? '' : ($hotdeal_today_result[$i]['post_hour']/24),
                 'onkeypress' => 'return isNumber(event)',
             );
 

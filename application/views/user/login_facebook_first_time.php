@@ -46,7 +46,8 @@ if(isset($message))
             </div>
             <div id='register-form-each'>
                 <div id='register-form-each-label'>Contact Number:</div>
-                <div id='register-form-each-input-contact-number'>+60 <input type="text" name="contact_number" value="<?php echo $contact_number ?>"></div>
+<!--                <div id='register-form-each-input-contact-number'>+60 <input type="text" name="contact_number" value="<?php //echo $contact_number ?>"></div>-->
+                <div id='register-form-each-input-contact-number'><input type="text" name="contact_number" value="<?php echo $contact_number ?>"></div>
             </div>
             <div id='register-form-each'>
                 <div id='register-form-each-label'>Date of Birth:</div>
