@@ -12,9 +12,9 @@ $this->album_admin = $this->config->item('album_admin');
 $fetch_method = $this->router->fetch_method();
 ?>
 
-<div id="share-hot-deal-redemption-grid-list5">
-    <div id="share-hot-deal-redemption-grid-list5-title"><?php echo $title ?></div>
-    <div id="share-hot-deal-redemption-grid-list5-container">
+<div id="share-redemption-grid-list5">
+    <div id="share-redemption-grid-list5-title"><?php echo $title ?></div>
+    <div id="share-redemption-grid-list5-container">
         <?php
         foreach ($share_hotdeal_redemption_list as $row)
         {
@@ -23,8 +23,11 @@ $fetch_method = $this->router->fetch_method();
             $merchant_id = $row['merchant_id'];
             $merchant_name = $this->m_custom->display_users($merchant_id);
             $merchant_dashboard_url = $this->m_custom->generate_merchant_link($merchant_id);
+            $candie = $row['voucher_candie'];
             $advertise_type = $row['advertise_type'];
+            $price_before_show = $row['price_before_show'];
             $price_before = $row['price_before'];
+            $price_after_show = $row['price_after_show'];
             $price_after = $row['price_after'];
             $average_rating = $this->m_custom->activity_rating_average($advertise_id, 'adv');
             if ($advertise_type == 'adm')
@@ -61,20 +64,20 @@ $fetch_method = $this->router->fetch_method();
                 $advertise_detail_url = base_url() . "all/advertise/" . $advertise_id;
             }   
             ?>
-            <div class='share-hot-deal-redemption-grid-list5-box'>
+            <div class='share-redemption-grid-list5-box'>
                 <a href='<?php echo $advertise_detail_url ?>'>
-                    <div class="share-hot-deal-redemption-grid-list5-box-photo">
-                        <div class="share-hot-deal-redemption-grid-list5-box-photo-box">
+                    <div class="share-redemption-grid-list5-box-photo">
+                        <div class="share-redemption-grid-list5-box-photo-box">
                             <img src='<?php echo $image_url ?>'>
                         </div>
                     </div>
-                    <div class="share-hot-deal-redemption-grid-list5-box-separator"></div>
-                    <div class="share-hot-deal-redemption-grid-list5-box-information">
-                        <div class="share-hot-deal-redemption-grid-list5-box-information-title">
+                    <div class="share-redemption-grid-list5-box-separator"></div>
+                    <div class="share-redemption-grid-list5-box-information">
+                        <div class="share-redemption-grid-list5-box-information-title">
                             <?php echo $row['title'] ?>
                         </div>
-                        <div class="share-hot-deal-redemption-grid-list5-box-information-rating">
-                            <div class="share-hot-deal-redemption-grid-list5-box-information-rating">
+                        <div class="share-redemption-grid-list5-box-information-rating">
+                            <div class="share-redemption-grid-list5-box-information-rating">
                                 <?php
                                 for ($i = 1; $i <= 5; $i++)
                                 {
@@ -91,31 +94,27 @@ $fetch_method = $this->router->fetch_method();
                                 <div class="float-fix"></div>
                             </div>
                         </div>
-                        <?php                        
-                        if ($advertise_type == 'hot')
-                        {
-                            ?>
-                            <div class="share-hot-deal-redemption-grid-list5-box-information-price">
-                                <div class="share-hot-deal-redemption-grid-list5-box-information-price-after">
-                                    <?php
-                                    if ($price_after)
-                                    {
-                                        echo 'RM ' . $price_after;
-                                    }
-                                    ?>
-                                </div>
-                                <div class="share-hot-deal-redemption-grid-list5-box-information-price-before">
-                                    <?php
-                                    if ($price_before)
-                                    {
-                                        echo 'RM ' . $price_before;
-                                    }
-                                    ?>
-                                </div>
+                        <div class="share-redemption-grid-list5-box-information-candie">
+                            <?php echo $candie ?> Candies
+                        </div>
+                        <div class="share-redemption-grid-list5-box-information-price">
+                            <div class="share-redemption-grid-list5-box-information-price-after">
+                                <?php
+                                if ($price_after)
+                                {
+                                    echo 'RM ' . $price_after;
+                                }
+                                ?>
                             </div>
-                            <?php
-                        }
-                        ?>
+                            <div class="share-redemption-grid-list5-box-information-price-before">
+                                <?php
+                                if ($price_before)
+                                {
+                                    echo 'RM ' . $price_before;
+                                }
+                                ?>
+                            </div>
+                        </div>
                     </div>
                 </a>
             </div>
@@ -125,7 +124,7 @@ $fetch_method = $this->router->fetch_method();
         if (!empty($paging_links))
         {
             ?>
-            <div id='share-hot-deal-redemption-grid-list5-pagination'>
+            <div id='share-redemption-grid-list5-pagination'>
                 <?php echo $paging_links; ?>
             </div>
             <?php

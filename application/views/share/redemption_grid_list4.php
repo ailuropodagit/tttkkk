@@ -36,8 +36,10 @@ $fetch_method = $this->router->fetch_method();
             $merchant_dashboard_url = $this->m_custom->generate_merchant_link($merchant_id);
             $candie = $row['voucher_candie'];
             $advertise_type = $row['advertise_type'];
-//            $price_before = $row['price_before'];
-//            $price_after = $row['price_after'];
+            $price_before_show = $row['price_before_show'];
+            $price_before = $row['price_before'];
+            $price_after_show = $row['price_after_show'];
+            $price_after = $row['price_after'];
             $average_rating = $this->m_custom->activity_rating_average($advertise_id, 'adv');
             if ($advertise_type == 'adm')
             {
@@ -103,37 +105,27 @@ $fetch_method = $this->router->fetch_method();
                                 <div class="float-fix"></div>
                             </div>
                         </div>
-                        <div class="share-redemption-row-list4-box-information-candie">
+                        <div class="share-redemption-grid-list4-box-information-candie">
                             <?php echo $candie ?> Candies
                         </div>
-                        
-                        <?php
-                        if ($advertise_type == 'hot')
-                        {
-                            ?>
-<!--                            <div class="share-redemption-grid-list4-box-information-price">
-                                <div class="share-redemption-grid-list4-box-information-price-after">
-                                    <?php
-                                    if ($price_after)
-                                    {
-                                        echo 'RM ' . $price_after;
-                                    }
-                                    ?>
-                                </div>
-                                <div class="share-redemption-grid-list4-box-information-price-before">
-                                    <?php
-                                    if ($price_before)
-                                    {
-                                        echo 'RM ' . $price_before;
-                                    }
-                                    ?>
-                                </div>
-                            </div>-->
-                            <?php
-                        }
-                        ?>
-                            
-                        <div class="float-fix"></div>
+                        <div class="share-redemption-grid-list4-box-information-price">
+                            <div class="share-redemption-grid-list4-box-information-price-after">
+                                <?php
+                                if ($price_after)
+                                {
+                                    echo 'RM ' . $price_after;
+                                }
+                                ?>
+                            </div>
+                            <div class="share-redemption-grid-list4-box-information-price-before">
+                                <?php
+                                if ($price_before)
+                                {
+                                    echo 'RM ' . $price_before;
+                                }
+                                ?>
+                            </div>
+                        </div>
                     </div>
                 </a>
             </div>
