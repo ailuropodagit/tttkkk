@@ -109,7 +109,7 @@ $fetch_method = $this->router->fetch_method();
                             <div class="share-hot-deal-redemption-grid-list4-box-information-price">
                                 <div class="share-hot-deal-redemption-grid-list4-box-information-price-after">
                                     <?php
-                                    if ($price_after)
+                                    if ($price_after != 0)
                                     {
                                         echo 'RM ' . $price_after;
                                     }
@@ -117,7 +117,7 @@ $fetch_method = $this->router->fetch_method();
                                 </div>
                                 <div class="share-hot-deal-redemption-grid-list4-box-information-price-before">
                                     <?php
-                                    if ($price_before)
+                                    if ($price_before != 0)
                                     {
                                         echo 'RM ' . $price_before;
                                     }

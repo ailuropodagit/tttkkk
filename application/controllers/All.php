@@ -115,11 +115,20 @@ class All extends CI_Controller
             $this->data['average_rating'] = $this->m_custom->activity_rating_average($advertise_id, 'adv');
             $this->data['phone_required'] = $the_row['phone_required'];
             $this->data['extra_term'] = $the_row['extra_term'];
+            
+            $this->data['show_extra_info'] = $the_row['show_extra_info'];
             $this->data['price_before'] = $the_row['price_before'];
             $this->data['price_before_show'] = $the_row['price_before_show'];
             $this->data['price_after'] = $the_row['price_after'];
             $this->data['price_after_show'] = $the_row['price_after_show'];
+            $this->data['voucher_worth'] = $the_row['voucher_worth'];
+            $this->data['get_off_percent'] = $the_row['get_off_percent'];
+            $this->data['how_many_buy'] = $the_row['how_many_buy'];
+            $this->data['how_many_get'] = $the_row['how_many_get'];
+            
             $this->data['advertise_suggestion_list'] = $this->m_custom->getAdvertise_suggestion($advertise_type, $sub_category_id, $advertise_id);
+            $this->data['advertise_type'] = $advertise_type;
+            
             $this->data['message'] = $this->session->flashdata('message');
             $this->data['item_id'] = array(
                 'type' => 'hidden',
@@ -150,7 +159,6 @@ class All extends CI_Controller
                     $is_history = 1;
                 }
                 $this->data['is_history'] = $is_history;
-                $this->data['voucher_worth'] = $the_row['voucher_worth'];
                 $this->data['voucher_candie'] = $the_row['voucher_candie'];
                 $this->data['expire_date'] = displayDate($the_row['voucher_expire_date']);
                 $this->data['candie_term'] = $this->m_custom->many_get_childlist_detail('candie_term', $advertise_id, 'dynamic_option');
@@ -167,8 +175,7 @@ class All extends CI_Controller
             {
                 //For admin promotion, overwrite some info
                 $this->data['image_url'] = base_url($this->album_admin . $the_row['image']);
-                $this->data['voucher_not_need'] = $the_row['voucher_not_need'];
-                $this->data['voucher_worth'] = $the_row['voucher_worth'];
+                $this->data['voucher_not_need'] = $the_row['voucher_not_need'];                
                 $this->data['voucher_candie'] = $the_row['voucher_candie'];
                 $this->data['expire_date'] = displayDate($the_row['voucher_expire_date']);
                 $this->data['candie_term'] = $this->m_custom->many_get_childlist_detail('candie_term', $advertise_id, 'dynamic_option');

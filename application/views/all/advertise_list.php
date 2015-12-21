@@ -112,6 +112,17 @@ $uri_segment_4 = $this->uri->segment(4);
                 $merchant_name = $this->m_custom->display_users($merchant_id);
                 $merchant_dashboard_url = $this->m_custom->generate_merchant_link($merchant_id);
                 $advertise_type = $row['advertise_type'];
+                
+                $show_extra_info = $row['show_extra_info'];
+                $price_before = $row['price_before'];
+                $price_before_show = $row['price_before_show'];
+                $price_after = $row['price_after'];
+                $price_after_show = $row['price_after_show'];
+                $voucher_worth = $row['voucher_worth'];
+                $get_off_percent = $row['get_off_percent'];
+                $how_many_buy = $row['how_many_buy'];
+                $how_many_get = $row['how_many_get'];
+            
                 $second_parameter = $this->uri->segment(4);
                 if ($advertise_type == 'adm')
                 {
@@ -193,7 +204,7 @@ $uri_segment_4 = $this->uri->segment(4);
                     <div id="advertise-list-info">
                         <table border="0" cellpadding="4px" cellspacing="0px">
                             <?php
-                            if (($advertise_type == 'pro' || $advertise_type == 'adm') && !empty($row['voucher_worth']))
+                            if (($advertise_type == 'adm' && !empty($row['voucher_worth'])) || ($advertise_type == 'pro'  && $show_extra_info == 122))
                             { 
                                 ?>
                                 <tr valign='top'>

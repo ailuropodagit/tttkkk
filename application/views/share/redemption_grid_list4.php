@@ -36,8 +36,17 @@ $fetch_method = $this->router->fetch_method();
             $merchant_dashboard_url = $this->m_custom->generate_merchant_link($merchant_id);
             $candie = $row['voucher_candie'];
             $advertise_type = $row['advertise_type'];
-//            $price_before = $row['price_before'];
-//            $price_after = $row['price_after'];
+            
+            $show_extra_info = $row['show_extra_info'];
+            $price_before = $row['price_before'];
+            $price_before_show = $row['price_before_show'];
+            $price_after = $row['price_after'];
+            $price_after_show = $row['price_after_show'];
+            $voucher_worth = $row['voucher_worth'];
+            $get_off_percent = $row['get_off_percent'];
+            $how_many_buy = $row['how_many_buy'];
+            $how_many_get = $row['how_many_get'];
+            
             $average_rating = $this->m_custom->activity_rating_average($advertise_id, 'adv');
             if ($advertise_type == 'adm')
             {
@@ -106,8 +115,62 @@ $fetch_method = $this->router->fetch_method();
                         <div class="share-redemption-row-list4-box-information-candie">
                             <?php echo $candie ?> Candies
                         </div>
-                        
+                             <?php
+                //PRICE
+            if($show_extra_info == 121)
+            {
+                ?>
+                <div id='hot-deal-information-price'>
+                    <div id='hot-deal-information-price-after'>
                         <?php
+                        if($price_after_show == 1)
+                        {
+                            echo 'RM ' . $price_after;
+                        }
+                        ?>
+                    </div>
+                    <div id='hot-deal-information-price-before'>
+                        <?php                      
+                        if($price_before_show == 1)
+                        {
+                            echo 'RM ' . $price_before;
+                        }
+                        ?>
+                    </div>
+                </div>
+                <?php
+            }
+            ?>
+    
+            <?php
+            //VOUCHER WORTH
+            if ($show_extra_info == 122)
+            {
+                ?>
+                <div id="redemption-information-voucher-worth">
+                    <?php echo "Worth RM " . $voucher_worth ?>
+                </div>
+                <?php
+            }
+            //GET OFF PERCENTAGE
+            if ($show_extra_info == 123)
+            {
+                ?>
+                <div id="redemption-information-voucher-worth">
+                    <?php echo "Get off - " . $get_off_percent . "%" ?>
+                </div>
+                <?php
+            }
+            //BUY X GET X
+            if ($show_extra_info == 124)
+            {
+                ?>
+                <div id="redemption-information-voucher-worth">
+                    <?php echo "Buy " . $how_many_buy . " Get " . $how_many_get ?>
+                </div>
+                <?php
+            }
+
                         if ($advertise_type == 'hot')
                         {
                             ?>

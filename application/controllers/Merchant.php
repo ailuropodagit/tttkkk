@@ -1816,10 +1816,25 @@ class Merchant extends CI_Controller
                 $search_year = $this->input->post('candie_year');
                 $candie_point = check_is_positive_numeric($this->input->post('candie_point'));
                 $expire_date = validateDate($this->input->post('expire_date'));
+                $show_extra_info = $this->input->post('show_extra_info');
                 $price_before = check_is_positive_decimal($this->input->post('price_before'));
                 $price_after = check_is_positive_decimal($this->input->post('price_after'));
-                $price_before_show = $this->input->post('price_before_show');
-                $price_after_show = $this->input->post('price_after_show');
+                //$price_before_show = $this->input->post('price_before_show');
+                //$price_after_show = $this->input->post('price_after_show');
+                if ($show_extra_info == 121)
+                {
+                    $price_before_show = 1;
+                    $price_after_show = 1;
+                }
+                else
+                {
+                    $price_before_show = 0;
+                    $price_after_show = 0;
+                }
+                $get_off_percent = check_is_positive_decimal($this->input->post('get_off_percent'));
+                $how_many_buy = check_is_positive_numeric($this->input->post('how_many_buy'));
+                $how_many_get = check_is_positive_numeric($this->input->post('how_many_get'));
+                $adv_worth = check_is_positive_decimal($this->input->post('adv_worth'));
                 $candie_extra_term = $this->input->post('candie_extra_term');
                 $image_data = NULL;
 
@@ -1870,10 +1885,15 @@ class Merchant extends CI_Controller
                         //'voucher' => $this->m_merchant->generate_voucher($merchant_id),
                         'voucher_candie' => $candie_point,
                         'voucher_expire_date' => $expire_date,
+                        'show_extra_info' => $show_extra_info,
                         'price_before' => $price_before,
                         'price_after' => $price_after,
                         'price_before_show' => $price_before_show,
                         'price_after_show' => $price_after_show,
+                        'get_off_percent' => $get_off_percent,
+                        'how_many_buy' => $how_many_buy,
+                        'how_many_get' => $how_many_get,
+                        'voucher_worth' => $adv_worth,
                         'extra_term' => $candie_extra_term,
                     );
 
@@ -1923,10 +1943,15 @@ class Merchant extends CI_Controller
                         'end_time' => $end_date,
                         'voucher_candie' => $candie_point,
                         'voucher_expire_date' => $expire_date,
+                        'show_extra_info' => $show_extra_info,
                         'price_before' => $price_before,
                         'price_after' => $price_after,
                         'price_before_show' => $price_before_show,
                         'price_after_show' => $price_after_show,
+                        'get_off_percent' => $get_off_percent,
+                        'how_many_buy' => $how_many_buy,
+                        'how_many_get' => $how_many_get,
+                        'voucher_worth' => $adv_worth,
                         'extra_term' => $candie_extra_term,
                     );
 
@@ -2048,6 +2073,14 @@ class Merchant extends CI_Controller
             'value' => empty($this_month_candie) ? '' : displayDate($this_month_candie['voucher_expire_date']),
         );
 
+        $this->data['show_extra_info_list'] = $this->m_custom->get_static_option_array('adv_extra_info', '0', 'Select Extra Info To Show', 0, NULL, 1);
+        $this->data['show_extra_info'] = array(
+            'name' => 'show_extra_info',
+            'id' => 'show_extra_info',
+            'onchange' => 'showextrainfodiv()',
+        );
+        $this->data['show_extra_info_selected'] = empty($this_month_candie) ? '' : $this_month_candie['show_extra_info'];
+        
         $this->data['promotion_price_before'] = array(
             'name' => 'price_before',
             'id' => 'price_before',
@@ -2076,6 +2109,36 @@ class Merchant extends CI_Controller
             'id' => 'price_after_show',
             'checked' => $price_after_show == "1"? TRUE : FALSE,      
             'value' => empty($this_month_candie) ? '' : $this_month_candie['advertise_id'],
+        );
+        
+        $this->data['get_off_percent'] = array(
+            'name' => 'get_off_percent',
+            'id' => 'get_off_percent',
+            'value' => empty($this_month_candie) ? '' : $this_month_candie['get_off_percent'],
+            'onkeypress' => 'return isNumber(event)',
+        );
+        
+        $this->data['how_many_buy'] = array(
+            'name' => 'how_many_buy',
+            'id' => 'how_many_buy',
+            'value' => empty($this_month_candie) ? '' : $this_month_candie['how_many_buy'],
+            'onkeypress' => 'return isNumber(event)',
+            'style' => 'width:70px',
+        );
+        
+        $this->data['how_many_get'] = array(
+            'name' => 'how_many_get',
+            'id' => 'how_many_get',
+            'value' => empty($this_month_candie) ? '' : $this_month_candie['how_many_get'],
+            'onkeypress' => 'return isNumber(event)',
+            'style' => 'width:70px',
+        );
+        
+        $this->data['adv_worth'] = array(
+            'name' => 'adv_worth',
+            'id' => 'adv_worth',
+            'value' => empty($this_month_candie) ? '' : $this_month_candie['voucher_worth'],
+            'onkeypress' => 'return isNumber(event)',
         );
         
         $this->data['extra_term'] = array(

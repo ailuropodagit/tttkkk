@@ -95,6 +95,12 @@ if(isset($message))
             <div id="redemption-information-title">
                 <a href='<?php echo $merchant_dashboard_url ?>'><?php echo $merchant_name ?></a>
             </div>
+            <div id="show-me-address">
+                <?php
+                $show_outlet = base_url() . 'all/merchant_outlet/' . generate_slug($merchant_name) . '#outlet';
+                ?>
+                <a href="<?php echo $show_outlet ?>" target="_blank"><img src="<?php echo base_url() . "/image/icon-map.png"; ?>" style="width:20px"/> Show me Address...</a>
+            </div>
             <!--REQUIRED CANDIES-->
             <div id="redemption-information-required-candies">
                 Require <?php echo $voucher_candie ?> Candies
@@ -136,7 +142,7 @@ if(isset($message))
                 </div>
                 <?php
                 //PRICE
-            if($price_before_show == 1 || $price_after_show == 1)
+            if($show_extra_info == 121)
             {
                 ?>
                 <div id='hot-deal-information-price'>
@@ -163,11 +169,29 @@ if(isset($message))
             </div>         
             <?php
             //VOUCHER WORTH
-            if (!empty($voucher_worth))
+            if ($show_extra_info == 122)
             {
                 ?>
                 <div id="redemption-information-voucher-worth">
                     <?php echo "Worth RM " . $voucher_worth ?>
+                </div>
+                <?php
+            }
+            //GET OFF PERCENTAGE
+            if ($show_extra_info == 123)
+            {
+                ?>
+                <div id="redemption-information-voucher-worth">
+                    <?php echo "Get off - " . $get_off_percent . "%" ?>
+                </div>
+                <?php
+            }
+            //BUY X GET X
+            if ($show_extra_info == 124)
+            {
+                ?>
+                <div id="redemption-information-voucher-worth">
+                    <?php echo "Buy " . $how_many_buy . " Get " . $how_many_get ?>
                 </div>
                 <?php
             }

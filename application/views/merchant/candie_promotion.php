@@ -47,10 +47,28 @@
         //$( '#upload-for-merchant-form-photo-box' ).html(post_image);
         $('img#'+ response[1]).attr('src', post_image);
       }
+    });  
     });
-
     
-    });
+    function showextrainfodiv()
+    {
+        var e = document.getElementById("show_extra_info");
+        var selectedValue = e.options[e.selectedIndex].value;
+        document.getElementById('extra_info_price_before_after').style.display = 'none';
+        document.getElementById('extra_info_worth').style.display = 'none';
+        document.getElementById('extra_info_get_off').style.display = 'none';
+        document.getElementById('extra_info_buy_get').style.display = 'none';
+        if (selectedValue == '121')
+        {
+            document.getElementById('extra_info_price_before_after').style.display = 'inline';
+        }else if (selectedValue == '122'){
+            document.getElementById('extra_info_worth').style.display = 'inline';
+        }else if (selectedValue == '123'){
+            document.getElementById('extra_info_get_off').style.display = 'inline';
+        }else if (selectedValue == '124'){
+            document.getElementById('extra_info_buy_get').style.display = 'inline';
+        }
+    }
 </script>
 
 <?php
@@ -144,22 +162,68 @@ if(isset($message))
                         <?php echo form_input($expire_date); ?>
                     </div>
                 </div>
+                
                 <div id='candie-promotion-form-each'>
-                    <div id='candie-promotion-form-each-label'><?php echo lang("hotdeal_price_before_label"); ?><?php echo form_checkbox($price_before_show); ?></div>
+                    <div id='candie-promotion-form-each-label'><?php echo lang("candie_show_extra_info_label"); ?></div>
                     <div id='candie-promotion-form-each-input'>
                         <?php
-                        echo form_input($promotion_price_before);
+                        echo form_dropdown($show_extra_info, $show_extra_info_list, $show_extra_info_selected);
                         ?>
                     </div>
                 </div>
-                <div id='candie-promotion-form-each'>
-                    <div id='candie-promotion-form-each-label'><?php echo lang("hotdeal_price_after_label"); ?><?php echo form_checkbox($price_after_show); ?></div>
-                    <div id='candie-promotion-form-each-input'>
-                        <?php
-                        echo form_input($promotion_price_after);
-                        ?>
+                
+                <div id='extra_info_price_before_after' <?php if($show_extra_info_selected == 121){ echo 'style="display:inline"';}else{echo 'style="display:none"';} ?> >
+                    <div id='candie-promotion-form-each'>
+                        <div id='candie-promotion-form-each-label'><?php echo lang("hotdeal_price_before_label"); ?><?php //echo form_checkbox($price_before_show); ?></div>
+                        <div id='candie-promotion-form-each-input'>
+                            <?php
+                            echo form_input($promotion_price_before);
+                            ?>
+                        </div>
+                    </div>
+                    <div id='candie-promotion-form-each'>
+                        <div id='candie-promotion-form-each-label'><?php echo lang("hotdeal_price_after_label"); ?><?php //echo form_checkbox($price_after_show); ?></div>
+                        <div id='candie-promotion-form-each-input'>
+                            <?php
+                            echo form_input($promotion_price_after);
+                            ?>
+                        </div>
+                    </div>
+                </div>      
+                
+                <div id='extra_info_worth' <?php if($show_extra_info_selected == 122){ echo 'style="display:inline"';}else{echo 'style="display:none"';} ?> >
+                    <div id='candie-promotion-form-each'>
+                        <div id='candie-promotion-form-each-label'><?php echo lang("candie_adv_worth_label"); ?></div>
+                        <div id='candie-promotion-form-each-input'>
+                            <?php
+                            echo form_input($adv_worth);
+                            ?>
+                        </div>
                     </div>
                 </div>
+                
+                <div id='extra_info_get_off' <?php if($show_extra_info_selected == 123){ echo 'style="display:inline"';}else{echo 'style="display:none"';} ?> >
+                    <div id='candie-promotion-form-each'>
+                        <div id='candie-promotion-form-each-label'><?php echo lang("candie_get_off_label"); ?></div>
+                        <div id='candie-promotion-form-each-input'>
+                            <?php
+                            echo form_input($get_off_percent) . " %";
+                            ?>
+                        </div>
+                    </div>
+                </div>
+
+                <div id='extra_info_buy_get' <?php if($show_extra_info_selected == 124){ echo 'style="display:inline"';}else{echo 'style="display:none"';} ?> >
+                    <div id='candie-promotion-form-each'>
+                        <div id='candie-promotion-form-each-label'><?php echo lang("candie_buy_get_label"); ?></div>
+                        <div id='candie-promotion-form-each-input'>
+                            <?php
+                            echo 'Buy ' . form_input($how_many_buy) . " Get " . form_input($how_many_get);
+                            ?>
+                        </div>
+                    </div>
+                </div>
+
                 <div id="candie-promotion-form-voucher-checkbox">
                     <div id="candie-promotion-form-voucher-checkbox-title">Select Terms & Conditions :</div>
                     <?php

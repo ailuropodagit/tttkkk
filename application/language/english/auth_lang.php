@@ -218,6 +218,10 @@ $lang['candie_year_label']                = 'Code Voucher Year : ';
 $lang['candie_year_month_label']          = 'Voucher of Year & Month : ';
 $lang['candie_extra_term_label']          = 'Extra Terms & Conditions : ';
 $lang['candie_worth_label']               = 'Voucher Worth (RM) : ';
+$lang['candie_show_extra_info_label']     = 'Can select one extra info to show : ';
+$lang['candie_adv_worth_label']           = 'Worth : (RM)';
+$lang['candie_get_off_label']             = 'Get Off Percentage : ';
+$lang['candie_buy_get_label']             = 'Buy x Get x : ';
 
 $lang['candie_validation_description_label']         = 'Description';
 $lang['candie_validation_title_label']               = 'Title';

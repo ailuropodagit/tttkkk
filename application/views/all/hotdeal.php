@@ -110,9 +110,15 @@
             </div>
         </div>        
         <div id='hot-deal-information'>
-            <!--TITLE-->
+            <!--TITLE-->           
             <div id="hot-deal-information-title">
-                <a href='<?php echo $merchant_dashboard_url ?>'> <?php echo $merchant_name ?></a>
+                <a href='<?php echo $merchant_dashboard_url ?>'> <?php echo $merchant_name ?></a>            
+            </div>      
+            <div id="show-me-address">
+                <?php
+                $show_outlet = base_url() . 'all/merchant_outlet/' . generate_slug($merchant_name) . '#outlet';
+                ?>
+                <a href="<?php echo $show_outlet ?>" target="_blank"><img src="<?php echo base_url() . "/image/icon-map.png"; ?>" style="width:20px"/> Show me Address...</a>
             </div>
             <?php
             //COUNTDOWN
