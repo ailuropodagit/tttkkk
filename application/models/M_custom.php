@@ -957,13 +957,14 @@ class M_custom extends CI_Model
         return $return_final;
     }
 
-    function getAdvertise_suggestion($advertise_type, $sub_category_id = NULL, $advertise_id_current = 0, $limit = NULL)
+    function getAdvertise_suggestion($advertise_type = NULL, $sub_category_id = NULL, $advertise_id_current = 0, $limit = NULL)
     {
         //If dint pass in sub category id, then get the sub category id by advertise id
-        if (IsNullOrEmptyString($sub_category_id))
+        if (IsNullOrEmptyString($sub_category_id) || IsNullOrEmptyString($advertise_type))
         {
             $advertise_current = $this->m_custom->getOneAdvertise($advertise_id_current);
             $sub_category_id = $advertise_current['sub_category_id'];
+            $advertise_type = $advertise_current['advertise_type'];
         }
 
         $result = $this->m_custom->getAdvertise($advertise_type, $sub_category_id, NULL, 0, $limit, NULL, 0, 0, 0, 1);

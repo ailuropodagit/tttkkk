@@ -7,26 +7,13 @@ class MY_Form_validation extends CI_Form_validation
     {
         parent::__construct();
     }
-
-    //VALID CONTACT NUMBER
-    public function valid_contact_number_short($str)
-    {
-        $this->CI->form_validation->set_message('valid_contact_number_short', 'The %s field is incorrect, please set a real contact number');
-        if (preg_match("/^([\.+\s-0-9_-]){9,12}+$/i", $str))
-        {
-            return TRUE;
-        }
-        else
-        {
-            return FALSE;
-        }
-    }
-   
+    
     //VALID CONTACT NUMBER
     public function valid_contact_number($str)
     {
         $this->CI->form_validation->set_message('valid_contact_number', 'The %s field is incorrect, please set a real contact number');
-        if (preg_match("/^([\.+\s-0-9_-]){11,15}+$/i", $str))
+       //if (preg_match("/^([\.+\s-0-9_-]){11,15}+$/i", $str))
+        if (preg_match("/^\+?6? ?(0 ?)1?(\d ?){8,9}$/i", $str))
         {
             return TRUE;
         }

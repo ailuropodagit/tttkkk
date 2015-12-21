@@ -119,6 +119,7 @@ class All extends CI_Controller
             $this->data['price_before_show'] = $the_row['price_before_show'];
             $this->data['price_after'] = $the_row['price_after'];
             $this->data['price_after_show'] = $the_row['price_after_show'];
+            $this->data['advertise_suggestion_list'] = $this->m_custom->getAdvertise_suggestion($advertise_type, $sub_category_id, $advertise_id);
             $this->data['message'] = $this->session->flashdata('message');
             $this->data['item_id'] = array(
                 'type' => 'hidden',
@@ -186,9 +187,8 @@ class All extends CI_Controller
                 if ($next_id)
                 {
                     $this->data['next_url'] = base_url() . "all/advertise/" . $next_id . "/" . $advertise_type . "/" . $sub_category_id . "/" . $merchant_id . "/" . $show_expired;
-                }
-                $this->data['advertise_suggestion_list'] = $this->m_custom->getAdvertise_suggestion($advertise_type, $sub_category_id, $advertise_id);
-            }
+                }                
+            }            
             if ($this->ion_auth->logged_in())
             {
                 $this->load->view('template/index', $this->data);

@@ -51,7 +51,8 @@ if(isset($message))
                 </div>
                 <div id='register-form-each'>
                     <div id='register-form-each-label'><?php echo lang('create_user_contact_number_label', 'contact number'); ?></div>
-                    <div id='register-form-each-input-contact-number'>+60 <?php echo form_input($phone); ?></div>
+<!--                    <div id='register-form-each-input-contact-number'>+60 <?php //echo form_input($phone); ?></div>-->
+                    <div id='register-form-each-input'><?php echo form_input($phone); ?>
                 </div>
                 <div id='register-form-each'>
                     <div id='register-form-each-label'><?php echo lang('create_user_email_label', 'email address'); ?></div>
@@ -87,7 +88,8 @@ if(isset($message))
             </div>
             <?php echo form_close(); ?>
         </div>
-        <div id="float-fix"></div>
+
         
     </div>
 </div>
+     <div id="float-fix"></div>

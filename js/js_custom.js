@@ -3,11 +3,21 @@ $(document).ready(function () {
         $('.phone_blur').blur(function () {
             var value = $(this).val();
             var text_length = value.length;
-            if (text_length === 9) {
+            
+            if (text_length === 8) {
+                value = value.slice(0, 1) + " " + value.slice(1, 4) + " " + value.slice(4);
+            }
+            else if (text_length === 9) {
                 value = value.slice(0, 2) + " " + value.slice(2, 5) + " " + value.slice(5);
             }
-            else if (text_length === 8) {
-                value = value.slice(0, 1) + " " + value.slice(1, 4) + " " + value.slice(4);
+            else if (text_length === 10) { 
+                value = value.slice(0, 2) + " " + value.slice(2, 6) + " " + value.slice(6); 
+            }
+            else if (text_length === 11) { 
+                value = value.slice(0, 3) + " " + value.slice(3, 7) + " " + value.slice(7); 
+            }
+            else if (text_length === 12) { 
+                value = value.slice(0, 4) + " " + value.slice(4, 8) + " " + value.slice(8); 
             }
             else {
                 value = value.match(/.{1,3}/g).join(" ");
