@@ -115,10 +115,15 @@ $fetch_method = $this->router->fetch_method();
                         <div class="share-redemption-grid-list4-box-information-candie">
                             <?php echo $candie ?> Candies
                         </div>
+                              <?php
+                //PRICE
+            if($show_extra_info == 121)
+            {
+                ?>
                         <div class="share-redemption-grid-list4-box-information-price">
                             <div class="share-redemption-grid-list4-box-information-price-after">
                                 <?php
-                                if ($price_after)
+                                if ($price_after_show == 1)
                                 {
                                     echo 'RM ' . $price_after;
                                 }
@@ -126,41 +131,15 @@ $fetch_method = $this->router->fetch_method();
                             </div>
                             <div class="share-redemption-grid-list4-box-information-price-before">
                                 <?php
-                                if ($price_before)
+                                if ($price_before_show == 1)
                                 {
                                     echo 'RM ' . $price_before;
                                 }
                                 ?>
                             </div>
                         </div>
-                             <?php
-                //PRICE
-            if($show_extra_info == 121)
-            {
-                ?>
-                <div id='hot-deal-information-price'>
-                    <div id='hot-deal-information-price-after'>
-                        <?php
-                        if($price_after_show == 1)
-                        {
-                            echo 'RM ' . $price_after;
-                        }
-                        ?>
-                    </div>
-                    <div id='hot-deal-information-price-before'>
-                        <?php                      
-                        if($price_before_show == 1)
-                        {
-                            echo 'RM ' . $price_before;
-                        }
-                        ?>
-                    </div>
-                </div>
-                <?php
-            }
-            ?>
-    
             <?php
+            }      
             //VOUCHER WORTH
             if ($show_extra_info == 122)
             {
@@ -187,34 +166,9 @@ $fetch_method = $this->router->fetch_method();
                     <?php echo "Buy " . $how_many_buy . " Get " . $how_many_get ?>
                 </div>
                 <?php
-            }
+            } ?>
 
-                        if ($advertise_type == 'hot')
-                        {
-                            ?>
-<!--                            <div class="share-redemption-grid-list4-box-information-price">
-                                <div class="share-redemption-grid-list4-box-information-price-after">
-                                    <?php
-                                    if ($price_after)
-                                    {
-                                        echo 'RM ' . $price_after;
-                                    }
-                                    ?>
-                                </div>
-                                <div class="share-redemption-grid-list4-box-information-price-before">
-                                    <?php
-                                    if ($price_before)
-                                    {
-                                        echo 'RM ' . $price_before;
-                                    }
-                                    ?>
-                                </div>
-                            </div>-->
-                            <?php
-                        }
-                        ?>
-                            
-                        <div class="float-fix"></div>
+       
                     </div>
                 </a>
             </div>
