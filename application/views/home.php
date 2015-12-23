@@ -42,11 +42,11 @@
             fx: 'scrollLeft'
         });
         
-        $('#home-row4-logo-slider-box').slick({
+        $('#home-row3-logo-slider-box').slick({
             slidesToShow: 5,
             slidesToScroll: 1,
-            prevArrow: '#home-row4-logo-slider-prev',
-            nextArrow: '#home-row4-logo-slider-next',
+            prevArrow: '#home-row3-logo-slider-prev',
+            nextArrow: '#home-row3-logo-slider-next',
             responsive: [
                 {
                     breakpoint: 1200,
@@ -305,37 +305,37 @@ $this->album_admin = $this->config->item('album_admin');
             </div>
         </div>
         <div id="float-fix"></div>        
-        <div id="home-row4-logo-slider">
-            <div id="home-row4-logo-slider-prev">
-                <div id="home-row4-logo-slider-prev-round">
+        <div id="home-row3-logo-slider">
+            <div id="home-row3-logo-slider-prev">
+                <div id="home-row3-logo-slider-prev-round">
                     <?php echo img('image/slider-prev.png') ?>
                 </div>
             </div>
-            <div id="home-row4-logo-slider-box">
+            <div id="home-row3-logo-slider-box">
                 <div>
-                    <img src="<?php echo base_url('folder_upload/home_banner_row4/1.png') ?>" style="height: 45px; margin-top: 19px;">
+                    <img src="<?php echo base_url('folder_upload/home_banner_row3/1.png') ?>" style="height: 45px; margin-top: 19px;">
                 </div>
                 <div>
-                    <img src="<?php echo base_url('folder_upload/home_banner_row4/2.png') ?>" style="height: 65px; margin-top: 10px;">
+                    <img src="<?php echo base_url('folder_upload/home_banner_row3/2.png') ?>" style="height: 65px; margin-top: 10px;">
                 </div>
                 <div>
-                    <img src="<?php echo base_url('folder_upload/home_banner_row4/3.png') ?>" style="height: 40px; margin-top: 19px;">
+                    <img src="<?php echo base_url('folder_upload/home_banner_row3/3.png') ?>" style="height: 40px; margin-top: 19px;">
                 </div>
                 <div>
-                    <img src="<?php echo base_url('folder_upload/home_banner_row4/4.png') ?>" style="height: 80px;">
+                    <img src="<?php echo base_url('folder_upload/home_banner_row3/4.png') ?>" style="height: 80px;">
                 </div>
                 <div>
-                    <img src="<?php echo base_url('folder_upload/home_banner_row4/5.png') ?>" style="height: 40px; margin-top: 20px;">
+                    <img src="<?php echo base_url('folder_upload/home_banner_row3/5.png') ?>" style="height: 40px; margin-top: 20px;">
                 </div>
                 <div>
-                    <img src="<?php echo base_url('folder_upload/home_banner_row4/6.png') ?>" style="height: 80px;">
+                    <img src="<?php echo base_url('folder_upload/home_banner_row3/6.png') ?>" style="height: 80px;">
                 </div>
                 <div>
-                    <img src="<?php echo base_url('folder_upload/home_banner_row4/7.png') ?>" style="height: 80px;">
+                    <img src="<?php echo base_url('folder_upload/home_banner_row3/7.png') ?>" style="height: 80px;">
                 </div>
             </div>
-            <div id="home-row4-logo-slider-next">
-                <div id="home-row4-logo-slider-next-round">
+            <div id="home-row3-logo-slider-next">
+                <div id="home-row3-logo-slider-next-round">
                     <?php echo img('image/slider-next.png') ?>
                 </div>
             </div>

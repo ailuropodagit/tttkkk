@@ -926,32 +926,32 @@ html, body {
 }
 
 /*********************************************
- ** HOME ROW 4 LOGO SLIDER
+ ** HOME ROW 3 LOGO SLIDER
  *********************************************/
 
-#home-row4-logo-slider {
+#home-row3-logo-slider {
     background-color: #4babd4;
     padding: 20px 0px 20px 0px;
     margin: 30px 0px 30px 0px;
 }
 
-#home-row4-logo-slider img {
+#home-row3-logo-slider img {
     margin: 0px auto 0px auto;
 }
     
-#home-row4-logo-slider-prev, #home-row4-logo-slider-next { 
+#home-row3-logo-slider-prev, #home-row3-logo-slider-next { 
     margin: 25px 0px 0px 0px;
     position: relative;
 }
 
-#home-row4-logo-slider-prev {
+#home-row3-logo-slider-prev {
     float: left;
     width: 40px;
     text-align: center;
     line-height: 53px;
 }
 
-#home-row4-logo-slider-prev-round {
+#home-row3-logo-slider-prev-round {
     background-color: white;
     border-radius: 40px;
     height: 40px;
@@ -965,14 +965,14 @@ html, body {
     box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.3);
 }
 
-#home-row4-logo-slider-next {
+#home-row3-logo-slider-next {
     float: right;
     width: 40px;
     text-align: center;
     line-height: 53px;
 }
 
-#home-row4-logo-slider-next-round {
+#home-row3-logo-slider-next-round {
     background-color: white;
     border-radius: 40px;
     height: 40px;
@@ -986,12 +986,12 @@ html, body {
     box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.3);
 }
 
-#home-row4-logo-slider-box {
+#home-row3-logo-slider-box {
     float: left;
     width: calc(100% - 100px);
 }
 
-#home-row4-logo-slider-box div {
+#home-row3-logo-slider-box div {
     outline: none;
 }
 
@@ -1659,7 +1659,7 @@ html, body {
 
 .share-redemption-grid-list4-box-information {
     padding: 18px 18px 18px 18px;
-    min-height: 65px;
+    min-height: 120px;
 }
 
 .share-redemption-grid-list4-box-information-title {
