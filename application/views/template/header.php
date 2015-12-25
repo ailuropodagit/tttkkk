@@ -24,10 +24,29 @@
         <link rel="stylesheet" href="<?php echo base_url('js/bootstrap-3.3.5/dist/css/custom-bootstrap-modal.css') ?>">
         <link rel="stylesheet" href="<?php echo base_url('js/bootstrap-3.3.5/dist/css/custom-bootstrap-modal-center.css') ?>">
         <script type="text/javascript" src="<?php echo base_url('js/bootstrap-3.3.5/dist/js/bootstrap.min.js') ?>"></script>
+        <script type="text/javascript" src='<?php echo base_url('js/transit/jquery.transit.min.js') ?>'></script>
         <script>
             $(function(){                
                 //BOOSTRAP MODAL
                 $('#visit-first-time-modal').modal('show');
+                
+                //MOBILE MENU
+                var mobile_menu_show = 0;
+                $('#header-logo-bar-search-mobile-navigation-icon').click(function(){
+                    if(mobile_menu_show == 0){
+                        mobile_menu_show = 1;
+                        $("body").transition({ x: 200 });
+                        $("html").css({overflow: 'hidden'});
+                        $("#mobile-navigation").css({display: 'inline'});
+                        $("#mobile-navigation").transition({ x: -200 });
+                    }else{
+                        mobile_menu_show = 0;
+                        $("body").transition({ x: 0 });
+                        $("html").css({overflow: 'visible'});
+                        $("#mobile-navigation").transition({ x: -200 });
+                    }
+                });
+                
             });
                         
             //FB LOGOUT
@@ -91,6 +110,12 @@
 
         </script>
     </head>
+    
+    <!--MOBILE NAVIGATION-->
+    <div id="mobile-navigation">
+        123
+    </div>
+    
     <body>
         <?php
         if (!isset($_COOKIE['visit_first_time']))
@@ -191,7 +216,6 @@
             }
         }
         ?>
-              
         <!--HEADER-->
         <div id='header'>
             <?php
@@ -496,6 +520,9 @@
                     <div id="header-logo-bar-search">
                         <div id="header-logo-bar-search-content">
                             <?php $this->load->view('home_search_box') ?>
+                        </div>
+                        <div id="header-logo-bar-search-mobile-navigation-icon">
+                            <i class="fa fa-bars"></i>
                         </div>
                     </div>
                     <div id="header-logo-bar-profile-display">

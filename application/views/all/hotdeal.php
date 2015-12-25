@@ -114,12 +114,6 @@
             <div id="hot-deal-information-title">
                 <a href='<?php echo $merchant_dashboard_url ?>'> <?php echo $merchant_name ?></a>            
             </div>      
-            <div id="show-me-address">
-                <?php
-                $show_outlet = base_url() . 'all/merchant_outlet/' . generate_slug($merchant_name) . '#outlet';
-                ?>
-                <a href="<?php echo $show_outlet ?>" target="_blank"><img src="<?php echo base_url() . "/image/icon-map.png"; ?>" style="width:20px"/> Show me Address...</a>
-            </div>
             <?php
             //COUNTDOWN
             if ($post_hour != 0)
@@ -132,6 +126,16 @@
                 <?php
             }
             ?>
+            <!--SHOW ME ADDRESS-->
+            <div id="hot-deal-information-show-me-address">
+                <?php
+                $show_outlet = base_url() . 'all/merchant_outlet/' . generate_slug($merchant_name) . '#outlet';
+                ?>
+                <a href="<?php echo $show_outlet ?>" target="_blank">
+                    <img src="<?php echo base_url() . "/image/icon-map.png"; ?>"/>
+                    Show me Address
+                </a>
+            </div>
             <!--SUB TITLE-->
             <div id="hot-deal-information-sub-title">
                 <?php echo $title ?>
@@ -173,22 +177,24 @@
             if($price_before_show == 1 || $price_after_show == 1)
             {
                 ?>
-                <div id='hot-deal-information-price'>
-                    <div id='hot-deal-information-price-after'>
-                        <?php
-                        if($price_after_show == 1)
-                        {
-                            echo 'RM ' . $price_after;
-                        }
-                        ?>
-                    </div>
-                    <div id='hot-deal-information-price-before'>
-                        <?php                      
-                        if($price_before_show == 1)
-                        {
-                            echo 'RM ' . $price_before;
-                        }
-                        ?>
+                <div id="hot-deal-information-extra-info">
+                    <div id='hot-deal-information-extra-info-price'>
+                        <div id='hot-deal-information-extra-info-price-after'>
+                            <?php
+                            if($price_after_show == 1)
+                            {
+                                echo 'RM ' . $price_after;
+                            }        
+                            ?>
+                        </div>
+                        <div id='hot-deal-information-extra-info-price-before'>
+                            <?php
+                            if($price_before_show == 1)
+                            {
+                                echo 'RM ' . $price_before;
+                            }
+                            ?>
+                        </div>
                     </div>
                 </div>
                 <?php

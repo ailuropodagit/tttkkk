@@ -20,6 +20,22 @@ html, body {
 }
 
 /*********************************************
+ ** MOBILE NAVIGATION
+ *********************************************/
+
+#mobile-navigation {
+    background-color: #44494e;
+    width: 200px;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    z-index: 399;
+    display: none;
+}
+
+/*********************************************
  ** HEADER
  *********************************************/
 
@@ -236,6 +252,13 @@ html, body {
     margin: 0px 0px 0px -3px;
     vertical-align: top;
     width: 120px;
+}
+
+#header-logo-bar-search-mobile-navigation-icon {
+    margin: 0px 40px 0px 0px;
+    font-size: 25px;
+    display: none;
+    cursor: pointer;
 }
 
 #header-logo-bar-search2 {
@@ -2562,6 +2585,17 @@ html, body {
     font-size: 17px;
 }
 
+#hot-deal-information-show-me-address {
+    margin: 25px 0px 0px 0px;
+    line-height: 20px;
+}
+
+#hot-deal-information-show-me-address img {
+    float: left;
+    width: 18px;
+    margin: 0px 5px 0px 0px;
+}
+
 #hot-deal-information-sub-title {
     margin: 25px 0px 0px 0px;
     font-size: 16px;
@@ -2604,12 +2638,6 @@ html, body {
     text-decoration: line-through;
     margin: 5px 0px 0px 0px;
     font-size: 15px;
-}
-
-#hot-deal-information-extra-info-general {
-    color: #d92222;
-    font-size: 20px;
-    font-weight: bold;
 }
 
 #hot-deal-information-description {
@@ -2823,6 +2851,17 @@ html, body {
     font-weight: bold;
     font-size: 18px;
     margin: 25px 0px 0px 0px;
+}
+
+#redemption-information-show-me-address {
+    margin: 25px 0px 0px 0px;
+    line-height: 20px;
+}
+
+#redemption-information-show-me-address img {
+    float: left;
+    width: 18px;
+    margin: 0px 5px 0px 0px;
 }
 
 #redemption-information-sub-title {
