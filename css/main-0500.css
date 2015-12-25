@@ -2,25 +2,10 @@
  ** HEADER
  *********************************************/
 
-#header-top-bar-social-media {
-    display: none;
-}
-
-#header-logo-bar-search-block1, #header-logo-bar-search-block2, #header-logo-bar-search-block3 {
+#header-logo-bar-profile-display {
+    margin: 20px 0px 0px 0px;
     display: block;
-}
-
-#header-logo-bar-search-block1, #header-logo-bar-search-block2 {
     width: 100%;
-    margin: 0px;
-    border: 1px solid lightgray;
-    box-sizing: border-box;
-}
-
-#header-logo-bar-search-block3 {
-    width: 100%;
-    margin: 0px;
-    box-sizing: border-box;
 }
 
 /*********************************************
@@ -62,14 +47,4 @@
 
 #home-row2-block2, #home-row2-block3 {
     margin: 20px 0px 0px 0px;
-}
-
-/*********************************************
- ** SHARE HOT DEAL REDEMPTION LIST TITLE
- *********************************************/
-
-.share-hot-deal-redemption-list-box-each {
-    width: 100%;
-    display: block;
-    margin: 0px 0px 30px 0px;
 }

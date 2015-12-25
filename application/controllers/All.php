@@ -420,7 +420,7 @@ class All extends CI_Controller
         //PAGE PATH NAME
         $this->data['page_path_name'] = 'share/merchant_grid_list5';
         $this->data['message'] = $this->session->flashdata('message');
-        $this->data['title'] = "Merchant (" . $this->m_custom->display_category($sub_category_id) . ") ";
+        $this->data['title'] = $this->m_custom->display_category($sub_category_id);
         $this->data['review_list'] = $this->m_merchant->getMerchantList_by_subcategory($sub_category_id);
         $this->load->view('template/index_background_blank', $this->data);
     }

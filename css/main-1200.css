@@ -25,3 +25,59 @@
 #home-row1-left-banner-block3 {
     margin: 0px 0px 0px 0px;
 }
+
+/*********************************************
+ ** SHARE MERCHANT GRID LIST5
+ *********************************************/
+
+.share-merchant-grid-list5-box {
+    width: calc(25% - 21px);
+}
+
+.share-merchant-grid-list5-box:nth-child(5n) {
+    margin: 0px 25px 25px 0px;
+}
+
+.share-merchant-grid-list5-box:nth-child(4n) {
+    margin-right: 0px;
+}
+
+.share-merchant-grid-list5-box:nth-last-child(-n+5) {
+    margin-bottom: 25px;
+}
+
+.share-merchant-grid-list5-box:nth-last-child(-n+4) {
+    margin-bottom: 0px;
+}
+
+/*********************************************
+ ** SHARE HOT DEAL GRID LIST4
+ *********************************************/
+
+.share-hot-deal-grid-list4-box {
+    width: calc(33.33% - 19px);
+}
+
+.share-hot-deal-grid-list4-box:nth-child(4n) {
+    margin: 0px 25px 25px 0px;
+}
+
+.share-hot-deal-grid-list4-box:nth-child(3n) {
+    margin-right: 0px;
+}
+
+/*********************************************
+ ** SHARE REDEMPTION GRID LIST4
+ *********************************************/
+
+.share-redemption-grid-list4-box {
+    width: calc(33.33% - 19px);
+}
+
+.share-redemption-grid-list4-box:nth-child(4n) {
+    margin: 0px 25px 25px 0px;
+}
+
+.share-redemption-grid-list4-box:nth-child(3n) {
+    margin-right: 0px;
+}

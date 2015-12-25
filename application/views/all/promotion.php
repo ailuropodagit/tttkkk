@@ -141,70 +141,78 @@ if(isset($message))
                     ?>
                 </div>
                 <?php
-                //PRICE
-            if($show_extra_info == 121)
-            {
-                ?>
-                <div id='hot-deal-information-price'>
-                    <div id='hot-deal-information-price-after'>
+                //EXTRA INFO
+                if($show_extra_info)
+                {
+                    ?>
+                    <div id='redemption-information-extra-info'>
                         <?php
-                        if($price_after_show == 1)
+                        //PRICE
+                        if($show_extra_info == 121)
                         {
-                            echo 'RM ' . $price_after;
+                            ?>
+                            <div id='redemption-information-extra-info-price'>
+                                <div id='redemption-information-extra-info-price-after'>
+                                    <?php
+                                    if($price_after_show == 1)
+                                    {
+                                        echo 'RM ' . $price_after;
+                                    }
+                                    ?>
+                                </div>
+                                <div id='redemption-information-extra-info-price-before'>
+                                    <?php                      
+                                    if($price_before_show == 1)
+                                    {
+                                        echo 'RM ' . $price_before;
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                            <?php
+                        }
+                        //VOUCHER WORTH
+                        if ($show_extra_info == 122)
+                        {
+                            ?>
+                            <div id="redemption-information-extra-info-general">
+                                <?php echo "Worth RM " . $voucher_worth ?>
+                            </div>
+                            <?php
+                        }
+                        //GET OFF PERCENTAGE
+                        if ($show_extra_info == 123)
+                        {
+                            ?>
+                            <div id="redemption-information-extra-info-general">
+                                <?php echo "Get off - " . $get_off_percent . "%" ?>
+                            </div>
+                            <?php
+                        }
+                        //BUY X GET X
+                        if ($show_extra_info == 124)
+                        {
+                            ?>
+                            <div id="redemption-information-extra-info-general">
+                                <?php echo "Buy " . $how_many_buy . " Get " . $how_many_get ?>
+                            </div>
+                            <?php
+                        }
+                        //DESCRIPTION
+                        if ($description)
+                        {
+                            ?>
+                            <div id="redemption-information-extra-info-general">
+                                <?php echo $description ?>
+                            </div>
+                            <?php
                         }
                         ?>
                     </div>
-                    <div id='hot-deal-information-price-before'>
-                        <?php                      
-                        if($price_before_show == 1)
-                        {
-                            echo 'RM ' . $price_before;
-                        }
-                        ?>
-                    </div>
-                </div>
-                <?php
-            }
-            ?>
-            </div>         
-            <?php
-            //VOUCHER WORTH
-            if ($show_extra_info == 122)
-            {
+                    <?php
+                }
                 ?>
-                <div id="redemption-information-voucher-worth">
-                    <?php echo "Worth RM " . $voucher_worth ?>
-                </div>
-                <?php
-            }
-            //GET OFF PERCENTAGE
-            if ($show_extra_info == 123)
-            {
-                ?>
-                <div id="redemption-information-voucher-worth">
-                    <?php echo "Get off - " . $get_off_percent . "%" ?>
-                </div>
-                <?php
-            }
-            //BUY X GET X
-            if ($show_extra_info == 124)
-            {
-                ?>
-                <div id="redemption-information-voucher-worth">
-                    <?php echo "Buy " . $how_many_buy . " Get " . $how_many_get ?>
-                </div>
-                <?php
-            }
-            //DESCRIPTION
-            if ($description)
-            {
-                ?>
-                <div id="redemption-information-description">
-                    <?php echo $description ?>
-                </div>
-                <?php
-            }
-            ?>
+            </div>
             <!--LIKE COMMENT-->
             <div id="redemption-information-like-comment">
                 <div id="redemption-information-like-comment">

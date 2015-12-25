@@ -180,27 +180,25 @@ $uri_segment_4 = $this->uri->segment(4);
                     <div id="advertise-list-title2">
                         <a href='<?php echo $advertise_detail_url ?>'><?php echo $row['title'] ?>&nbsp;</a>
                     </div>
-                    <?php
-                    if ($advertise_type == 'hot')
-                    { 
-                        if ($row['post_hour'] != 0)
+                    <div id="advertise-list-dynamic-time">
+                        <?php
+                        if ($advertise_type == 'hot')
                         { 
-                            ?>
-                            <div id="advertise-list-dynamic-time">
+                            if ($row['post_hour'] != 0)
+                            { 
+                                ?>
                                 <i class="fa fa-clock-o"></i><span id="advertise-list-dynamic-time-label" data-countdown='<?php echo $row['end_time'] ?>'></span>
-                            </div>
-                            <?php
-                        } 
-                    }
-                    if ($advertise_type == 'pro' || $advertise_type == 'adm')
-                    {
-                        ?>
-                        <div id="advertise-list-dynamic-time">
+                                <?php
+                            } 
+                        }
+                        if ($advertise_type == 'pro' || $advertise_type == 'adm')
+                        {
+                            ?>
                             <i class="fa fa-bullseye"></i><span id="advertise-list-dynamic-time-label"><?php echo $row['voucher_candie'] ?> candies</span>
-                        </div>
-                        <?php 
-                    } 
-                    ?>
+                            <?php 
+                        }
+                        ?>
+                    </div>
                     <div id="advertise-list-info">
                         <table border="0" cellpadding="4px" cellspacing="0px">
                             <?php

@@ -7,13 +7,13 @@
             nextArrow: '#share-hot-deal-row-list4-next',
             responsive: [
                 {
-                    breakpoint: 1300,
+                    breakpoint: 1200,
                     settings: {
                         slidesToShow: 3
                     }
                 },
                 {
-                    breakpoint: 750,
+                    breakpoint: 700,
                     settings: {
                         slidesToShow: 2
                     }
