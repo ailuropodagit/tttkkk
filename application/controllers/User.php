@@ -1287,6 +1287,7 @@ class User extends CI_Controller
             'id' => 'phone',
             'type' => 'text',
             'value' => $this->form_validation->set_value('phone', $user->phone),
+            'class' => 'phone_blur',
         );     
         
         $this->data['instagram_url'] = array(
