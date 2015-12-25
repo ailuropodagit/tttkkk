@@ -1,4 +1,5 @@
 <script type="text/javascript" src="<?php echo base_url() ?>js/jquery.ajaxfileupload.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script>
 
 <script type="text/javascript">
     function showraceother()
@@ -36,8 +37,6 @@
     });
     
 </script>
-
-<script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script>   <!-- Cannot put on top, if put on top the ajaxfileupload will not function -->
 
 <?php
 //MESSAGE

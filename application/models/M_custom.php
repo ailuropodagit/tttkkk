@@ -3247,12 +3247,15 @@ class M_custom extends CI_Model
 
     public function insert_row_log($the_table, $new_id, $do_by = NULL, $do_by_type = NULL)
     {
+        $admin_login_as = $this->session->userdata('admin_login_as');  //If is admin login as this user
         $the_data = array(
             'table_type' => $the_table,
             'table_row_id' => $new_id,
             'create_time' => get_part_of_date('all'),
             'create_by' => $do_by,
             'create_by_type' => $do_by_type,
+            'admin_login_as' => $admin_login_as == 0? NULL : $admin_login_as,
+            
         );
         $this->db->insert('table_row_activity', $the_data);
     }
@@ -3268,9 +3271,12 @@ class M_custom extends CI_Model
         }
         $activity_row = $query->row();
 
+        $admin_login_as = $this->session->userdata('admin_login_as');  //If is admin login as this user
+
         $the_data = array(
             'last_modify_by' => $do_by,
             'last_modify_by_type' => $do_by_type,
+            'admin_login_as' => $admin_login_as == 0? NULL : $admin_login_as,
         );
 
         $this->db->where('activity_id', $activity_row->activity_id);
@@ -3288,14 +3294,29 @@ class M_custom extends CI_Model
         }
         $activity_row = $query->row();
 
+        $admin_login_as = $this->session->userdata('admin_login_as');  //If is admin login as this user
+        
         $the_data = array(
             'hide_time' => get_part_of_date('all'),
             'hide_by' => $do_by,
             'hide_by_type' => $do_by_type,
+            'admin_login_as' => $admin_login_as == 0? NULL : $admin_login_as,
         );
 
         $this->db->where('activity_id', $activity_row->activity_id);
         $this->db->update('table_row_activity', $the_data);
+    }
+
+    public function row_log_get_admin($the_table, $the_id)
+    {
+        $query = $this->db->get_where('table_row_activity', array('table_type' => $the_table, 'table_row_id' => $the_id), 1);
+        if ($query->num_rows() == 1)
+        {
+            $activity_row = $query->row();
+            $return = $activity_row['admin_login_as'] == NULL ? '' : $activity_row['admin_login_as'];
+            return $return;
+        }
+        return '';
     }
 
     public function check_valid_phone($str)

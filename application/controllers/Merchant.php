@@ -1168,6 +1168,7 @@ class Merchant extends CI_Controller
             'id' => 'phone',
             'type' => 'text',
             'value' => $this->form_validation->set_value('phone', $user->phone),
+            'class' => 'phone_blur',
         );
         $this->data['person_incharge'] = array(
             'name' => 'person_incharge',
@@ -1180,6 +1181,7 @@ class Merchant extends CI_Controller
             'id' => 'person_contact',
             'type' => 'text',
             'value' => $this->form_validation->set_value('person_contact', $user->me_person_contact),
+            'class' => 'phone_blur',
         );
         $this->data['website'] = array(
             'name' => 'website',

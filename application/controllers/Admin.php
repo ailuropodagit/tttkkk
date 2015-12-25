@@ -873,6 +873,7 @@ class Admin extends CI_Controller
             'id' => 'phone',
             'type' => 'text',
             'value' => $this->form_validation->set_value('phone', $user->phone),
+            'class' => 'phone_blur',
         );
 
         $this->data['temp_folder'] = $this->temp_folder;
@@ -2504,6 +2505,7 @@ class Admin extends CI_Controller
             'id' => 'phone',
             'type' => 'text',
             'value' => $this->form_validation->set_value('phone', $result['phone']),
+            'class' => 'phone_blur',
         );
         $this->data['password'] = array(
             'name' => 'password',
