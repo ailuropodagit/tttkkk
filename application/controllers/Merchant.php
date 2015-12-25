@@ -2024,6 +2024,7 @@ class Merchant extends CI_Controller
             'name' => 'candie_title',
             'id' => 'candie_title',
             'value' => empty($this_month_candie) ? '' : $this_month_candie['title'],
+            'maxlength' => '20'
         );
 
         $this->data['candie_desc'] = array(
@@ -2153,7 +2154,6 @@ class Merchant extends CI_Controller
 
         $this->data['promotion_id'] = empty($this_month_candie) ? '' : $this_month_candie['advertise_id'];
         $this->data['promotion_frozen'] = empty($this_month_candie) ? '' : $this_month_candie['frozen_flag'];
-        
         $this->data['temp_folder'] = $this->temp_folder;
         $this->data['candie_term'] = $candie_term;
         $this->data['candie_branch'] = $candie_branch;
@@ -2318,6 +2318,7 @@ class Merchant extends CI_Controller
             'name' => 'title',
             'id' => 'title',
             'value' => empty($hotdeal_result) ? '' : $hotdeal_result['title'],
+            'max_length' => '20'
         );
 
         $this->data['hotdeal_image'] = empty($hotdeal_result) ? $this->config->item('empty_image') : $this->album_merchant . $hotdeal_result['image'];
@@ -2655,6 +2656,7 @@ class Merchant extends CI_Controller
                 'name' => 'title-' . $i,
                 'id' => 'title-' . $i,
                 'value' => empty($hotdeal_today_result[$i]) ? '' : $hotdeal_today_result[$i]['title'],
+                'maxlength' => '20'
             );
 
             $hotdeal_image = 'hotdeal_image' . $i;
