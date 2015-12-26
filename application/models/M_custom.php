@@ -2779,7 +2779,7 @@ class M_custom extends CI_Model
                     case 'com':
                         $refer_row = $this->m_custom->activity_get_one_row($row['mon_table_id']);
                         $hide_item_type = "Comment";
-                        $hide_item_desc = '<table style="border:none">' .
+                        $hide_item_desc = '<table style="border:none"><col width="120"><col width="5"><col >' .
                                 '<tr><td>Content</td><td>:</td><td>' . nl2br($refer_row['comment']) . '</td></tr>' .
                                 '<tr><td>Comment At</td><td>:</td><td>' . $this->m_custom->generate_act_refer_type_link($refer_row['act_refer_id'], $refer_row['act_refer_type']) . '</td></tr>' .
                                 '<tr><td>Comment By</td><td>:</td><td>' . $this->m_custom->generate_user_link($refer_row['act_by_id']) . ' (' . $this->m_custom->display_users_groups($refer_row['act_by_type'], 'description') . ')' . '</td></tr>' .
@@ -2790,7 +2790,7 @@ class M_custom extends CI_Model
                     case 'mua':
                         $refer_row = $this->m_custom->get_one_table_record('merchant_user_album', 'merchant_user_album_id', $row['mon_table_id'], 1);
                         $hide_item_type = "Picture Upload For Merchant";
-                        $hide_item_desc = '<table style="border:none">' .
+                        $hide_item_desc = '<table style="border:none"><col width="120"><col width="5"><col >' .
                                 '<tr><td>Title</td><td>:</td><td>' . $refer_row['title'] . '</td></tr>' .
                                 '<tr><td>Description</td><td>:</td><td>' . nl2br($refer_row['description']) . '</td></tr>' .
                                 '<tr><td>Upload By</td><td>:</td><td>' . $this->m_custom->generate_user_link($refer_row['user_id']) . '</td></tr>' .
@@ -2802,7 +2802,7 @@ class M_custom extends CI_Model
                     case 'adv':
                         $refer_row = $this->m_custom->getOneAdvertise($row['mon_table_id'], 1, 1);
                         $hide_item_type = "Merchant Picture";
-                        $hide_item_desc = '<table style="border:none">' .
+                        $hide_item_desc = '<table style="border:none"><col width="120"><col width="5"><col >' .
                                 '<tr><td>Title</td><td>:</td><td>' . $refer_row['title'] . '</td></tr>' .
                                 '<tr><td>Description</td><td>:</td><td>' . nl2br($refer_row['description']) . '</td></tr>' .
                                 '<tr><td>Post Date</td><td>:</td><td>' . displayDate($refer_row['create_date'], 1) . '</td></tr>' .
