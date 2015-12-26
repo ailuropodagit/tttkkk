@@ -409,6 +409,11 @@ class M_custom extends CI_Model
                     $image_path = $this->config->item('album_user_profile');
                     $image = $return['profile_image'];
                 }
+                else if ($return['main_group_id'] == $this->config->item('group_id_admin') || $return['main_group_id'] == $this->config->item('group_id_worker'))
+                {
+                    $image_path = $this->config->item('album_admin_profile');
+                    $image = $return['profile_image'];
+                }
             }
         }
         else
@@ -2406,6 +2411,10 @@ class M_custom extends CI_Model
         else if ($user_row['main_group_id'] == $this->config->item('group_id_user'))
         {
             return "<a target='_blank' href='" . base_url() . "all/user_dashboard/" . $user_id . "' style='color:black'>" . $user_name . "</a>";
+        }
+        else if ($user_row['main_group_id'] == $this->config->item('group_id_admin') || $user_row['main_group_id'] == $this->config->item('group_id_worker'))   //If is admin item then mark green color and don't have link
+        {
+            return "<span style='color:green'>". $user_name . "</span>";
         }
     }
 
