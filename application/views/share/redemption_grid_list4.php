@@ -70,11 +70,25 @@ $fetch_method = $this->router->fetch_method();
             }
             else if ($fetch_method == 'promotion_list')
             {
-                $advertise_detail_url = base_url() . "all/advertise/" . $advertise_id . "/pro/" . $sub_category_id;
+                if ($check_is_main_category)
+                {
+                    $advertise_detail_url = base_url() . "all/advertise/" . $advertise_id . "/pro/" . $check_is_main_category;
+                }
+                else
+                {
+                    $advertise_detail_url = base_url() . "all/advertise/" . $advertise_id . "/pro/" . $sub_category_id;
+                } 
             }
             else if ($fetch_method == 'redemption_list')
-            {
-                $advertise_detail_url = base_url() . "all/advertise/" . $advertise_id . "/adm/" . $sub_category_id;
+            {               
+                if ($check_is_main_category)
+                {
+                    $advertise_detail_url = base_url() . "all/advertise/" . $advertise_id . "/adm/" . $check_is_main_category;
+                }
+                else
+                {
+                    $advertise_detail_url = base_url() . "all/advertise/" . $advertise_id . "/adm/" . $sub_category_id;
+                }
             }
             else
             {

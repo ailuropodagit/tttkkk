@@ -296,19 +296,33 @@ class M_custom extends CI_Model
     }
 
     //GET MAIN CATEGORY BY SUB CATEGORY ID
-    public function display_main_category($category_id = NULL)
+    public function display_main_category($sub_category_id = NULL, $want_id = 0)
     {
+        $main_category_label = '';
         $this->db->select('');
         $this->db->from('category');
-        $this->db->where('category_id', $category_id);
+        $this->db->where('category_id', $sub_category_id);
         $query = $this->db->get();
-        $main_category_id = $query->row()->main_category_id;
+        if ($query->num_rows() == 1)
+        {
+            $main_category_id = $query->row()->main_category_id;
 
-        $this->db->select('category_label');
-        $this->db->from('category');
-        $this->db->where('category_id', $main_category_id);
-        $query = $this->db->get();
-        $main_category_label = $query->row()->category_label;
+            $this->db->select('category_id, category_label');
+            $this->db->from('category');
+            $this->db->where('category_id', $main_category_id);
+            $query2 = $this->db->get();
+            if ($query2->num_rows() == 1)
+            {
+                if ($want_id == 1)
+                {
+                    $main_category_label = $query2->row()->category_id;
+                }
+                else
+                {
+                    $main_category_label = $query2->row()->category_label;
+                }
+            }
+        }
         return $main_category_label;
     }
 
@@ -860,7 +874,30 @@ class M_custom extends CI_Model
     {
         if (!IsNullOrEmptyString($sub_category_id))
         {
-            $this->db->where('sub_category_id', $sub_category_id);
+            if ($advertise_type == 'adm')
+            {
+                $check_is_main_category = $this->m_custom->check_is_main_category_id($sub_category_id, 1);   //if is keppo voucher need change first parameter
+            }
+            else
+            {
+                $check_is_main_category = $this->m_custom->check_is_main_category_id($sub_category_id);
+            }
+            if ($check_is_main_category)
+            {
+                $sub_category_list = $this->m_custom->getSubCategory($sub_category_id, 0, 1);
+                foreach ($sub_category_list as $row)
+                {
+                        $sub_category_array[] = $row['category_id'];
+                }
+                if (!empty($sub_category_array))
+                {
+                    $this->db->where_in('sub_category_id', $sub_category_array);
+                }
+            }
+            else
+            {
+                $this->db->where('sub_category_id', $sub_category_id);
+            }
         }
         if (!IsNullOrEmptyString($merchant_id))
         {
@@ -1125,6 +1162,8 @@ class M_custom extends CI_Model
         {
             $this->db->where('hide_flag', 0);
         }
+        $this->db->where('remove_flag', 0);
+        
         $query = $this->db->get_where('category', array('category_level' => '0'));
         $return = array();
         if ($default_value != NULL)
@@ -1160,8 +1199,28 @@ class M_custom extends CI_Model
         return $return;
     }
 
+    function check_is_main_category_id($category_id, $is_keppo_voucher = 0)
+    {
+        if ($is_keppo_voucher == 1)
+        {
+            $check_is_main_category = $this->m_custom->getCategory(1, 0, 0, 1, 0, $category_id);   //if is keppo voucher need change first parameter
+        }
+        else
+        {
+            $check_is_main_category = $this->m_custom->getCategory(0, 0, 0, 1, 0, $category_id);
+        }
+        if ($check_is_main_category)
+        {
+            return $check_is_main_category[0]['category_id'];
+        }
+        else
+        {
+            return FALSE;
+        }
+    }
+
     //To get all main category
-    function getCategory($get_special = 0, $ignore_hide = 0, $get_all = 0, $want_array = 0, $main_id = 0)
+    function getCategory($get_special = 0, $ignore_hide = 0, $get_all = 0, $want_array = 0, $main_id = 0, $check_is_main = 0)
     {
         if ($get_special == 0)
         {
@@ -1179,7 +1238,12 @@ class M_custom extends CI_Model
         {
             $this->db->where('main_category_id', $main_id);
         }
-        
+        if ($check_is_main != 0)
+        {
+            $this->db->where('category_id', $check_is_main);
+        }
+        $this->db->where('remove_flag', 0);
+         
         $this->db->order_by('category_label');
         $this->db->from('category');
         $query = $this->db->get();
@@ -1293,14 +1357,29 @@ class M_custom extends CI_Model
     }
 
     //To get related sub category by pass in the main category id
-    function getSubCategory($id, $ignore_hide = 0)
+    function getSubCategory($id, $ignore_hide = 0, $want_array = 0)
     {
         if ($ignore_hide == 0)
         {
             $this->db->where('hide_flag', 0);
         }
         $query = $this->db->get_where('category', array('main_category_id' => $id, 'category_level' => '1'));
-        return $query->result();
+        if ($want_array == 1)
+        {
+            return $query->result_array();
+        }
+        else
+        {
+            return $query->result();
+        }
+    }
+
+    function check_still_have_any_sub_category($id)
+    {
+        $condition = "(hide_flag = 0 or remove_flag = 0)";
+        $this->db->where($condition);
+        $query = $this->db->get_where('category', array('main_category_id' => $id, 'category_level' => '1'));
+        return $query->num_rows();
     }
 
     function getBranchList($id, $want_array = 0)
@@ -3254,6 +3333,30 @@ class M_custom extends CI_Model
         $this->db->update($table, $the_data);
     }
 
+    public function update_remove_flag($remove_flag, $table, $table_id, $last_modify_by = NULL)
+    {
+        $fields = $this->db->list_fields($table);
+        foreach ($fields as $field)
+        {
+            $field_name[] = $field;
+        }
+        if ($last_modify_by == NULL)
+        {
+            $the_data = array(
+                'remove_flag' => $remove_flag,
+            );
+        }
+        else
+        {
+            $the_data = array(
+                'remove_flag' => $remove_flag,
+                'last_modify_by' => $last_modify_by,
+            );
+        }
+        $this->db->where($field_name[0], $table_id);
+        $this->db->update($table, $the_data);
+    }
+    
     public function insert_row_log($the_table, $new_id, $do_by = NULL, $do_by_type = NULL)
     {
         $admin_login_as = $this->session->userdata('admin_login_as');  //If is admin login as this user

@@ -150,11 +150,11 @@
                                         $merchant_register = base_url() . 'merchant/register';
                                         ?>
                                         <div id='visit-first-time-modal-left-login-form-register-user'>
-                                            <a href="<?php echo $user_register; ?>">User Register</a>
+                                            Already Register? <a href="<?php echo $user_register; ?>">User Register</a>
                                         </div>
-                                        <div id='visit-first-time-modal-left-login-form-register-merchant'>
-                                            <a href="<?php echo $merchant_register; ?>">Merchant Register</a>
-                                        </div>
+<!--                                        <div id='visit-first-time-modal-left-login-form-register-merchant'>
+                                            <a href="<?php //echo $merchant_register; ?>">Merchant Register</a>
+                                        </div>-->
                                     </div>
                                     <form action="<?php echo base_url() . 'user/login'; ?>" method="post" accept-charset="utf-8" id="general_form_login">
                                         <?php
@@ -184,9 +184,9 @@
                                                 <div id='visit-first-time-modal-left-login-form-submit-user'>
                                                     <input type="submit" value="User Login" onclick="myfunction('<?php echo $user_login; ?>')"/>
                                                 </div>
-                                                <div id='visit-first-time-modal-left-login-form-submit-merchant'>
-                                                    <input type="submit" value="Merchant Login" onclick="myfunction('<?php echo $merchant_login; ?>')"/>
-                                                </div>
+<!--                                                <div id='visit-first-time-modal-left-login-form-submit-merchant'>
+                                                    <input type="submit" value="Merchant Login" onclick="myfunction('<?php //echo $merchant_login; ?>')"/>
+                                                </div>-->
                                             </div>
                                         </div>
                                     </form>
@@ -194,16 +194,40 @@
                                 <div id="visit-first-time-modal-right">
                                     <div id="visit-first-time-modal-right-image">
                                         <div id="visit-first-time-modal-right-image-each">
-                                            <?php echo img('folder_upload/first_time_visit_modal/1.jpg') ?>
+                                            <?php
+                                            $banner_info = $this->m_admin->banner_select_one(112);
+                                            $banner_image_url = $banner_info['banner_image_url'];
+                                            $banner_website_url = $banner_info['banner_website_url'];
+                                            echo "<a href='" . $banner_website_url . "' target='_blank'>" . img($banner_image_url) . "</a>";
+                                            ?>
+                                            <?php //echo img('folder_upload/first_time_visit_modal/1.jpg') ?>
                                         </div>
                                         <div id="visit-first-time-modal-right-image-each">
-                                            <?php echo img('folder_upload/first_time_visit_modal/2.jpg') ?>
+                                            <?php
+                                            $banner_info = $this->m_admin->banner_select_one(113);
+                                            $banner_image_url = $banner_info['banner_image_url'];
+                                            $banner_website_url = $banner_info['banner_website_url'];
+                                            echo "<a href='" . $banner_website_url . "' target='_blank'>" . img($banner_image_url) . "</a>";
+                                            ?>
+                                            <?php //echo img('folder_upload/first_time_visit_modal/2.jpg') ?>
                                         </div>
                                         <div id="visit-first-time-modal-right-image-each">
-                                            <?php echo img('folder_upload/first_time_visit_modal/3.jpg') ?>
+                                            <?php
+                                            $banner_info = $this->m_admin->banner_select_one(114);
+                                            $banner_image_url = $banner_info['banner_image_url'];
+                                            $banner_website_url = $banner_info['banner_website_url'];
+                                            echo "<a href='" . $banner_website_url . "' target='_blank'>" . img($banner_image_url) . "</a>";
+                                            ?>
+                                            <?php //echo img('folder_upload/first_time_visit_modal/3.jpg') ?>
                                         </div>
                                         <div id="visit-first-time-modal-right-image-each">
-                                            <?php echo img('folder_upload/first_time_visit_modal/4.jpg') ?>
+                                            <?php
+                                            $banner_info = $this->m_admin->banner_select_one(115);
+                                            $banner_image_url = $banner_info['banner_image_url'];
+                                            $banner_website_url = $banner_info['banner_website_url'];
+                                            echo "<a href='" . $banner_website_url . "' target='_blank'>" . img($banner_image_url) . "</a>";
+                                            ?>
+                                            <?php //echo img('folder_upload/first_time_visit_modal/4.jpg') ?>
                                         </div>
                                     </div>
                                 </div>
@@ -667,12 +691,12 @@
                                 </ul>
                             </li>
                             <li <?php if($header_fetch_method == 'hotdeal_list' || $header_uri_segment4 == 'hot'){ echo "class='header-navigation-bar-active'"; } ?>>
-                                <a href='<?php echo base_url('all/hotdeal-list/26') ?>'>
+                                <a href='<?php echo base_url('all/hotdeal-list/1') ?>'>
                                     <i class="fa fa-fire header-navigation-bar-left-icon"></i> Hot Deal
                                 </a>
                             </li>
                             <li <?php if($header_fetch_method == 'promotion_list' || $header_uri_segment4 == 'pro'){ echo "class='header-navigation-bar-active'"; } ?>>
-                                <a href="<?php echo base_url('all/promotion-list/26') ?>">
+                                <a href="<?php echo base_url('all/promotion-list/1') ?>">
                                     <i class="fa fa-gift header-navigation-bar-left-icon"></i> Redemption
                                 </a>
                             </li>

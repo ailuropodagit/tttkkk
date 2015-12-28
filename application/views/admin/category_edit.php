@@ -39,10 +39,13 @@ if(isset($message))
             <?php 
                 echo form_hidden('id', $result['category_id']); 
                 $ror = $result['hide_flag'] == 1? 'recover' : 'frozen';
-                $ror_text = $result['hide_flag'] == 1? 'Recover' : 'Remove';
+                $ror_text = $result['hide_flag'] == 1? 'Recover' : 'Hide';
             ?>
             <div id='profile-info-form-submit'>
-                <button name="button_action" type="submit" value="<?php echo $ror; ?>" onclick="return confirm('Are you sure want to <?php echo $ror_text; ?> it?')"><?php echo $ror_text; ?></button>                
+                <button name="button_action" type="submit" value="<?php echo $ror; ?>" onclick="return confirm('Are you sure want to <?php echo $ror_text; ?> it?')"><?php echo $ror_text; ?></button>     
+                <?php if($result['hide_flag'] == 1){ ?>
+                <button name="button_action" type="submit" value="remove_real" onclick="return confirm('Are you sure want to remove it? Remove cannot be undo.')">Remove</button>  
+                <?php } ?>
                 <button name="button_action" type="submit" value="back">Back</button>
                 <button name="button_action" type="submit" value="save" onclick="return confirm('Confirm that information is correct before save it?')">Save</button>
             </div>

@@ -703,6 +703,15 @@ class M_merchant extends CI_Model
         return $voucher;
     }
 
+    public function merchant_redemption_check($merchant_id, $advertise_id){
+        $query = $this->db->get_where('advertise', array('merchant_id' => $merchant_id, 'advertise_id' => $advertise_id));
+        if($query->num_rows() == 0){
+            return FALSE;
+        }else{
+            return TRUE;
+        }
+    }
+    
     public function hotdeal_hide($advertise_id)
     {
         if ($this->ion_auth->logged_in())

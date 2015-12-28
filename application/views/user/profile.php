@@ -76,7 +76,7 @@ if(isset($message))
                         <input type="file" name="userfile" id="userfile" size="10"/>
                     </div>
                     <div id="profile-photo-button">
-                        <button name="button_action" type="submit" value="change_image" >Change Image</button>
+                        <button name="button_action" type="submit" value="change_image" >Save Image</button>
                     </div>
                 <?php echo form_close(); ?>
             <?php  } ?>

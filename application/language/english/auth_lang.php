@@ -196,8 +196,8 @@ $lang['hotdeal_description_label']         = 'Description : ';
 $lang['hotdeal_hour_label']                = 'Countdown Day(0 to 60) : ';
 $lang['hotdeal_title_label']               = 'Title : ';
 $lang['hotdeal_sub_category_label']        = 'Category : ';
-$lang['hotdeal_price_before_label']        = 'Price Before : Show ';
-$lang['hotdeal_price_after_label']         = 'Price After : Show ';
+$lang['hotdeal_price_before_label']        = 'Price Before (RM) : ';
+$lang['hotdeal_price_after_label']         = 'Price After (RM) : ';
 
 // User Album
 $lang['album_description_label']         = 'Description : ';
@@ -219,7 +219,7 @@ $lang['candie_year_month_label']          = 'Voucher of Year & Month : ';
 $lang['candie_extra_term_label']          = 'Extra Terms & Conditions : ';
 $lang['candie_worth_label']               = 'Voucher Worth (RM) : ';
 $lang['candie_show_extra_info_label']     = 'Can select one extra info to show : ';
-$lang['candie_adv_worth_label']           = 'Worth : (RM)';
+$lang['candie_adv_worth_label']           = 'Worth (RM) : ';
 $lang['candie_get_off_label']             = 'Get Off Percentage : ';
 $lang['candie_buy_get_label']             = 'Buy x Get x : ';
 

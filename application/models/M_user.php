@@ -200,9 +200,9 @@ class M_user extends CI_Model
         $query = $this->db->get_where('candie_history', array('get_from_table_id' => $redeem_id, 'get_from_table' => 'user_redemption'));
         return $query->row_array();
     }
-
-    public function user_redemption_check($user_id, $advertise_id){
-        $query = $this->db->get_where('user_redemption', array('user_id' => $user_id, 'advertise_id' => $advertise_id));
+    
+    public function user_redemption_check($user_id, $redeem_id){
+        $query = $this->db->get_where('user_redemption', array('user_id' => $user_id, 'redeem_id' => $redeem_id));
         if($query->num_rows() == 0){
             return FALSE;
         }else{
