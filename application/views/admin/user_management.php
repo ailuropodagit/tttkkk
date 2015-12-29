@@ -28,10 +28,10 @@ if (isset($message))
             <table border='1px' cellspacing='0px' cellpadding='0px' id="myTable" class="display">
                 <thead>
                     <tr style="text-align:center">                                             
-                        <?php if($this->m_admin->check_worker_role(62)) { ?>
-                        <th>Username</th> 
-                        <th>Password</th>
-                        <?php } ?>
+                        <?php //if($this->m_admin->check_worker_role(62)) { ?>
+<!--                        <th>Username</th> 
+                        <th>Password</th>-->
+                        <?php //} ?>
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Email</th>
@@ -64,10 +64,10 @@ if (isset($message))
                         $url_dashboard = base_url() . "all/user_dashboard/" . $row['id'];
                         $url_special_action = base_url() . "admin/user_special_action";
                         echo '<tr>';
-                        if($this->m_admin->check_worker_role(62)) {
-                        echo "<td>" . $row['username'] . "</td>";                                                
-                        echo "<td>" . $row['password_visible'] . "</td>";
-                        }
+//                        if($this->m_admin->check_worker_role(62)) {
+//                        echo "<td>" . $row['username'] . "</td>";                                                
+//                        echo "<td>" . $row['password_visible'] . "</td>";
+//                        }
                         echo "<td><a href='" . $url_dashboard . "' target='_blank' >" . $row['first_name'] . "</a></td>";
                         echo "<td>" . $row['last_name'] . "</td>";
                         echo "<td>" . $row['email'] . "</td>";

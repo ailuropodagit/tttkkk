@@ -3,8 +3,11 @@
 <div id="dashboard">
     <h1>Map</h1>
     <div id="dashboard-content">
-        <div id="dashboard-photo-box">
-            <?php            
+        <div id="dashboard-photo">
+            <div id="dashboard-photo-box">
+            <?php    
+            $merchant_slug = generate_slug($company_name);
+            $merchant_url = base_url() . 'all/merchant_dashboard/' . $merchant_slug;
             if(IsNullOrEmptyString($image))
             {
                 ?>
@@ -14,14 +17,15 @@
             else
             {
                 ?>
-                <img src="<?php echo base_url() . $image_path . $image ?>">
+                <a href="<?php echo $merchant_url; ?>" ><img src="<?php echo base_url() . $image_path . $image ?>"></a>
                 <?php
             }
             ?>
+            </div>
         </div>
         <div id="dashboard-info">
             <div id="dashboard-info-title">
-                <?php echo $company_name; ?>
+                <?php echo "<a href='".$merchant_url."'>".$company_name."</a>"; ?>
             </div>
             <div id="dashboard-info-address">
                 <?php echo $address; ?>
