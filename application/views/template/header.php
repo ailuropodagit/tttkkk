@@ -32,21 +32,28 @@
                 
                 //MOBILE MENU
                 var mobile_menu_show = 0;
-                $('#header-logo-bar-search-mobile-navigation-icon').click(function(){
+                $('#header-logo-bar-mobile-navigation-icon').click(function(){
                     if(mobile_menu_show == 0){
                         mobile_menu_show = 1;
                         $("body").transition({ x: 200 });
                         $("html").css({overflow: 'hidden'});
-                        $("#mobile-navigation").css({display: 'inline'});
-                        $("#mobile-navigation").transition({ x: -200 });
+                        $("#header-mobile-navigation").css({display: 'inline'});
+                        $("#header-mobile-navigation").transition({ x: -200 });
+                        $("#header-mobile-navigation-block").css({display: 'inline'});
                     }else{
                         mobile_menu_show = 0;
                         $("body").transition({ x: 0 });
                         $("html").css({overflow: 'visible'});
-                        $("#mobile-navigation").transition({ x: -200 });
+                        $("#header-mobile-navigation").transition({ x: -200 });
                     }
                 });
-                
+                $("#header-mobile-navigation-block").click(function(){
+                    mobile_menu_show = 0;
+                    $("body").transition({ x: 0 });
+                    $("html").css({overflow: 'visible'});
+                    $("#header-mobile-navigation").transition({ x: -200 });
+                    $("#header-mobile-navigation-block").css({display: 'none'});
+                });
             });
                         
             //FB LOGOUT
@@ -110,12 +117,6 @@
 
         </script>
     </head>
-    
-    <!--MOBILE NAVIGATION-->
-    <div id="mobile-navigation">
-        123
-    </div>
-    
     <body>
         <?php
         if (!isset($_COOKIE['visit_first_time']))
@@ -223,13 +224,11 @@
             $header_album_user_profile_path = $this->config->item('album_user_profile');
             $header_album_merchant_profile_path = $this->config->item('album_merchant_profile');
             $header_empty_image = $this->config->item('empty_image');
-            $header_voucher_active = $this->config->item('voucher_active');
-                        
+            $header_voucher_active = $this->config->item('voucher_active');       
             //URI
             $header_fetch_class = $this->router->fetch_class();
             $header_fetch_method = $this->router->fetch_method();
             $header_uri_segment4 = $this->uri->segment(4);
-            
             if (check_is_login())
             {
                 $login_user_id = $this->session->userdata('user_id');                            
@@ -512,97 +511,113 @@
             <!--HEADER LOGO BAR-->
             <div id='header-logo-bar'>
                 <div id='wrapper'>
-                    <div id='header-logo-bar-logo'>
-                        <a href='<?php echo base_url('home') ?>'>
-                            <img src='<?php echo base_url('image/logo-red.png') ?>'>
-                        </a>
-                    </div>
-                    <div id="header-logo-bar-search">
-                        <div id="header-logo-bar-search-content">
-                            <?php $this->load->view('home_search_box') ?>
-                        </div>
-                        <div id="header-logo-bar-search-mobile-navigation-icon">
-                            <i class="fa fa-bars"></i>
-                        </div>
-                    </div>
-                    <div id="header-logo-bar-profile-display">
-                        <?php
-                        if (check_is_login())
-                        {                          
-                            if (check_correct_login_type($this->config->item('group_id_user'))) 
+                    <div id='header-logo-bar-table'>
+                        <div id='header-logo-bar-table-row'>
+                            <div id='header-logo-bar-table-row-cell' class="header-logo-bar-table-row-cell-mobile-logo">
+                                <div id='header-logo-bar-logo'>
+                                    <a href='<?php echo base_url('home') ?>'>
+                                        <img src='<?php echo base_url('image/logo-red.png') ?>'>
+                                    </a>
+                                </div>
+                            </div>
+                            <div id='header-logo-bar-table-row-cell' class="header-logo-bar-table-row-cell-mobile-search">
+                                <div id="header-logo-bar-search">
+                                    <div id="header-logo-bar-search-content">
+                                        <?php $this->load->view('home_search_box') ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id='header-logo-bar-table-row-cell' class="header-logo-bar-table-row-cell-mobile-navigation">
+                                <div id="header-logo-bar-mobile-navigation-icon">
+                                    <i class="fa fa-bars"></i>
+                                </div>
+                            </div>
+                            <?php
+                            if (check_is_login())
                             {
                                 ?>
-                                <a href='<?php echo base_url("all/user_dashboard/$login_user_id") ?>'>
-                                    <div id="header-logo-bar-profile-display-photo">
-                                        <div id="header-logo-bar-profile-display-photo-box">
-                                            <?php 
-                                            if($header_profile_login_profile_image)
-                                            {
-                                                echo img("$header_album_user_profile_path/$header_profile_login_profile_image");
-                                            }
-                                            else
-                                            {
-                                                echo img($header_empty_image);
-                                            }
+                                <div id='header-logo-bar-table-row-cell' class="header-logo-bar-table-row-cell-profile-display">
+                                    <div id="header-logo-bar-profile-display">
+                                        <?php
+                                        if (check_correct_login_type($this->config->item('group_id_user'))) 
+                                        {
                                             ?>
-                                        </div>
-                                    </div>
-                                    <div id="header-logo-bar-profile-display-name">
-                                        <?php echo $header_profile_login_user_name; ?>
-                                    </div>
-                                </a>
-                                <?php
-                            }
-                            else if ($this->m_admin->check_is_any_admin()) 
-                            {
-                                ?>
-                                <a href='<?php echo base_url("admin/admin_dashboard/$login_user_id") ?>'>
-                                    <div id="header-logo-bar-profile-display-photo">
-                                        <div id="header-logo-bar-profile-display-photo-box">
-                                            <?php 
-                                            if($header_profile_login_profile_image)
-                                            {
-                                                echo img("$header_album_user_profile_path/$header_profile_login_profile_image");
-                                            }
-                                            else
-                                            {
-                                                echo img($header_empty_image);
-                                            }
-                                            ?>
-                                        </div>
-                                    </div>
-                                    <div id="header-logo-bar-profile-display-name">
-                                        <?php echo $header_profile_login_user_name; ?>
-                                    </div>
-                                </a>
-                                <?php
-                            }
-                            else 
-                            {
-                                ?>
-                                <a href='<?php echo base_url("all/merchant_dashboard/$header_profile_login_slug") ?>'>
-                                    <div id="header-logo-bar-profile-display-photo">
-                                        <div id="header-logo-bar-profile-display-photo-box">
+                                            <a href='<?php echo base_url("all/user_dashboard/$login_user_id") ?>'>
+                                                <div id="header-logo-bar-profile-display-photo">
+                                                    <div id="header-logo-bar-profile-display-photo-box">
+                                                        <?php 
+                                                        if($header_profile_login_profile_image)
+                                                        {
+                                                            echo img("$header_album_user_profile_path/$header_profile_login_profile_image");
+                                                        }
+                                                        else
+                                                        {
+                                                            echo img($header_empty_image);
+                                                        }
+                                                        ?>
+                                                    </div>
+                                                </div>
+                                                <div id="header-logo-bar-profile-display-name">
+                                                    <?php echo $header_profile_login_user_name; ?>
+                                                </div>
+                                            </a>
                                             <?php
-                                            if($header_profile_login_profile_image)
-                                            {
-                                                echo img("$header_album_merchant_profile_path/$header_profile_login_profile_image");
-                                            }
-                                            else
-                                            {
-                                                echo img($header_empty_image);
-                                            }
+                                        }
+                                        else if ($this->m_admin->check_is_any_admin()) 
+                                        {
                                             ?>
-                                        </div>
+                                            <a href='<?php echo base_url("admin/admin_dashboard/$login_user_id") ?>'>
+                                                <div id="header-logo-bar-profile-display-photo">
+                                                    <div id="header-logo-bar-profile-display-photo-box">
+                                                        <?php 
+                                                        if($header_profile_login_profile_image)
+                                                        {
+                                                            echo img("$header_album_user_profile_path/$header_profile_login_profile_image");
+                                                        }
+                                                        else
+                                                        {
+                                                            echo img($header_empty_image);
+                                                        }
+                                                        ?>
+                                                    </div>
+                                                </div>
+                                                <div id="header-logo-bar-profile-display-name">
+                                                    <?php echo $header_profile_login_user_name; ?>
+                                                </div>
+                                            </a>
+                                            <?php
+                                        }
+                                        else 
+                                        {
+                                            ?>
+                                            <a href='<?php echo base_url("all/merchant_dashboard/$header_profile_login_slug") ?>'>
+                                                <div id="header-logo-bar-profile-display-photo">
+                                                    <div id="header-logo-bar-profile-display-photo-box">
+                                                        <?php
+                                                        if($header_profile_login_profile_image)
+                                                        {
+                                                            echo img("$header_album_merchant_profile_path/$header_profile_login_profile_image");
+                                                        }
+                                                        else
+                                                        {
+                                                            echo img($header_empty_image);
+                                                        }
+                                                        ?>
+                                                    </div>
+                                                </div>
+                                                <div id="header-logo-bar-profile-display-name">
+                                                    <?php echo $header_profile_login_company_name; ?>
+                                                </div>
+                                            </a>
+                                            <?php
+                                        }
+                                        ?>
                                     </div>
-                                    <div id="header-logo-bar-profile-display-name">
-                                        <?php echo $header_profile_login_company_name; ?>
-                                    </div>
-                                </a>
+                                </div>
                                 <?php
                             }
-                        }
-                        ?>
+                            ?>
+                        </div>
                     </div>
                     <div id="header-logo-bar-search2">
                         <div id="header-logo-bar-search2-content">
@@ -694,6 +709,71 @@
                     </div>
                     <div id="float-fix"></div>
                 </div>
+            </div>            
+            <!--MOBILE NAVIGATION-->
+            <div id="header-mobile-navigation">
+                <div id="header-mobile-navigation-content">
+                    <ul>
+                        <li>
+                            <a href='<?php echo base_url('home') ?>'>Home</a>
+                        </li>
+                        <li>
+                            <a href='#'>Categories</a>
+                                <ul>
+                                    <li>
+                                        <div id="header-mobile-navigation-bar-box">
+                                            <?php
+                                            $main_category_object = $this->m_custom->getCategory();
+                                            foreach ($main_category_object as $main_category) 
+                                            {
+                                                $main_category_id = $main_category->category_id;
+                                                $main_category_label = $main_category->category_label;
+                                                ?>
+                                                <div id="header-mobile-navigation-bar-box-each">
+                                                    <div id="header-mobile-navigation-bar-box-each-title"><?php echo $main_category_label ?></div>
+                                                    <div id="header-mobile-navigation-bar-box-each-merchant">
+                                                        <?php
+                                                        $sub_category_object = $this->m_custom->getSubCategory($main_category_id); 
+                                                        foreach ($sub_category_object as $sub_category)
+                                                        {
+                                                            $sub_category_id = $sub_category->category_id;
+                                                            $sub_category_label = $sub_category->category_label;
+                                                            ?>
+                                                            <div id="header-mobile-navigation-bar-box-each-merchant-each">
+                                                                <a href="<?php echo base_url() ?>all/merchant-category/<?php echo $sub_category_id ?>">
+                                                                    <span id="header-mobile-navigation-bar-box-each-merchant-each-icon"><i class="fa fa-caret-right"></i></span>
+                                                                    <span id="header-mobile-navigation-bar-box-each-merchant-each-label">
+                                                                        <?php echo $sub_category_label ?>
+                                                                        (<?php echo $this->m_merchant->getMerchantCount_by_subcategory($sub_category_id); ?>)
+                                                                    </span>
+                                                                </a> 
+                                                            </div>
+                                                            <?php
+                                                        }
+                                                        ?>
+                                                    </div>
+                                                </div>
+                                                <?php
+                                            }
+                                            ?>
+                                        </div>
+                                    </li>
+                                </ul>
+                        </li>
+                        <li>
+                            <a href='<?php echo base_url('all/hotdeal-list/26') ?>'>Hot Deal</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url('all/promotion-list/26') ?>">Redemption</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url('blogger') ?>">Blogger</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo base_url('photographer') ?>">Photographer</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div  style="display: none"><i class="fa fa-bars"></i></div>
+            <div id="header-mobile-navigation-block"></div>
         </div>

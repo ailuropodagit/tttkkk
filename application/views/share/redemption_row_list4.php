@@ -77,8 +77,8 @@
                 <a href='<?php echo base_url("all/advertise/$advertise_id") ?>'>             
                     <div class="share-redemption-row-list4-box-photo-box">
                         <?php echo img($image_url) ?>
-                        <div class="share-redemption-grid-list4-box-photo-box-redemption-count">
-                            <div class="share-redemption-grid-list4-box-photo-box-redemption-count-text">
+                        <div class="share-redemption-row-list4-box-photo-box-redemption-count">
+                            <div class="share-redemption-row-list4-box-photo-box-redemption-count-text">
                                 <?php echo $redeem_count ?><br/>Redemption
                             </div>
                         </div>

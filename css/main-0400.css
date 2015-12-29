@@ -1,4 +1,16 @@
 /*********************************************
+ ** HEADER
+ *********************************************/
+
+.header-logo-bar-table-row-cell-mobile-navigation {
+    width: 40px;
+}
+
+#header-logo-bar-mobile-navigation-icon {
+    width: 40px;
+}
+
+/*********************************************
  ** SHARE MERCHANT GRID LIST5
  *********************************************/
 
