@@ -34,17 +34,17 @@ if (isset($message))
             <table border='1px' cellspacing='0px' cellpadding='0px' id="myTable" class="display">
                 <thead>
                     <tr style="text-align:center">                                                
-                        <?php if($this->m_admin->check_worker_role(62)) { ?>
-                        <th>Username</th> 
-                        <th>Password</th>
-                        <?php } ?>
+                        <?php //if($this->m_admin->check_worker_role(62)) { ?>
+<!--                        <th>Username</th> 
+                        <th>Password</th>-->
+                        <?php //} ?>
                         <th>Company Name</th>
                         <th>Shop Name</th>
                         <th>Email</th>
                         <th>Company Category</th>
-                        <th>Company Contact</th>   
+<!--                        <th>Company Contact</th>   
                         <th>Person Incharge</th>
-                        <th>Person Contact</th>
+                        <th>Person Contact</th>-->
                         <th>Balance (RM)</th>
                         <th>Frozen Already</th>   
                         <th>Actions</th>
@@ -72,17 +72,17 @@ if (isset($message))
                         }
                         
                         echo '<tr>';                                         
-                        if($this->m_admin->check_worker_role(62)) {
-                        echo "<td>" . $row['username'] . "</td>";    
-                        echo "<td>" . $row['password_visible'] . "</td>";
-                        }
+                        //if($this->m_admin->check_worker_role(62)) {
+                        //echo "<td>" . $row['username'] . "</td>";    
+                        //echo "<td>" . $row['password_visible'] . "</td>";
+                        //}
                         echo "<td>" . $row['company_main'] . "</td>";
                         echo "<td><a href='" . $url_dashboard . "' target='_blank' >" . $row['company'] . "</a></td>";
                         echo "<td>" . $row['email'] . "</td>";
                         echo "<td>" . $main_category_text . "</td>";                       
-                        echo "<td>" . $row['phone'] . "</td>";
-                        echo "<td>" . $row['me_person_incharge'] . "</td>";
-                        echo "<td>" . $row['me_person_contact'] . "</td>";
+//                        echo "<td>" . $row['phone'] . "</td>";
+//                        echo "<td>" . $row['me_person_incharge'] . "</td>";
+//                        echo "<td>" . $row['me_person_contact'] . "</td>";
                         echo "<td style='text-align:right'>" . $merchant_balance_text . "</td>";
                         echo "<td>" . $remove_row . "</td>";
                         echo "<td>";

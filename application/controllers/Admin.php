@@ -2530,7 +2530,7 @@ class Admin extends CI_Controller
         );
 
         $this->data['admin_role_current'] = empty($result) ? array() : $this->m_custom->many_get_childlist('admin_role', $result['id']);
-        $this->data['admin_role'] = $this->m_custom->get_static_option_array('admin_role', NULL, NULL, 1);
+        $this->data['admin_role'] = $this->m_custom->get_static_option_array('admin_role', NULL, NULL, 1, NULL, 1);
 
         $this->data['page_path_name'] = 'admin/worker_edit';
         $this->load->view('template/index', $this->data);
