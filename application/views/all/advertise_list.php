@@ -1,4 +1,6 @@
 <script type="text/javascript" src="<?php echo base_url() ?>js/jquery.countdown.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>js/star-rating/jquery.rating.js"></script>
+<?php echo link_tag('js/star-rating/jquery.rating.css') ?>
 <script type="text/javascript">
     $(document).ready(function () {
         $('[data-countdown]').each(function () {
@@ -49,6 +51,9 @@ $uri_segment_4 = $this->uri->segment(4);
             elseif ($fetch_method == 'album_merchant' || $fetch_method == 'merchant_dashboard')
             {
                 $upload_picture_url = 'merchant/upload_hotdeal';
+            }
+            if (check_correct_login_type($this->config->item('group_id_user'))){
+                $upload_picture_url = 'user/upload_for_merchant/' . $this->uri->segment(3);
             }
             if (!empty($upload_picture_url))
             {
@@ -112,6 +117,7 @@ $uri_segment_4 = $this->uri->segment(4);
                 $merchant_name = $this->m_custom->display_users($merchant_id);
                 $merchant_dashboard_url = $this->m_custom->generate_merchant_link($merchant_id);
                 $advertise_type = $row['advertise_type'];
+                $average_rating = $this->m_custom->activity_rating_average($advertise_id, 'adv');
                 
                 $show_extra_info = $row['show_extra_info'];
                 $price_before = $row['price_before'];
@@ -216,10 +222,25 @@ $uri_segment_4 = $this->uri->segment(4);
                             } 
                             ?>
                             <tr valign='top'>
-                                <td>Category</td>
+                                <td>Rating</td>
                                 <td>:</td>
                                 <td>
-                                    <?php echo $this->m_custom->display_category($row['sub_category_id']) ?>
+                                    <div>
+                                        <?php
+                                        for ($i = 1; $i <= 5; $i++)
+                                        {
+                                            if ($i == round($average_rating))
+                                            {
+                                                echo "<input class='star' type='radio' name='a-rating-$advertise_id' disabled='disabled' value='" . $i . "' checked='checked'/>";
+                                            }
+                                            else
+                                            {
+                                                echo "<input class='star' type='radio' name='a-rating-$advertise_id' disabled='disabled' value='" . $i . "'/>";
+                                            }
+                                        }
+                                        ?>
+                                        <div class="float-fix"></div>
+                                    </div>
                                 </td>
                             </tr>
                             <?php

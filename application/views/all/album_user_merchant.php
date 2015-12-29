@@ -11,9 +11,14 @@ $user_id = $this->uri->segment(3);
     <?php
     if (check_correct_login_type($this->config->item('group_id_user')))
     {
+        $fetch_method = $this->router->fetch_method();
+        $merchant_slug = '';
+        if($fetch_method == 'merchant_dashboard'){
+            $merchant_slug = $this->uri->segment(3);
+        }
         ?>
         <div id='album-user-title-upload'>
-            <a href='<?php echo base_url() ?>user/upload_for_merchant'><i class="fa fa-upload album-user-title-upload-icon"></i>Upload Picture</a>
+            <a href='<?php echo base_url() ?>user/upload_for_merchant/<?php echo $merchant_slug ?>'><i class="fa fa-upload album-user-title-upload-icon"></i>Upload Picture</a>
         </div>
         <?php
     }

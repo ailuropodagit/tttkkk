@@ -88,19 +88,22 @@ $this->album_admin = $this->config->item('album_admin');
     <div id='home'>
         <div id='home-row1'>
             <?php 
-            for($i = 101; $i < 104; $i++)
+            for($i = 101; $i <= 104; $i++)
             {
                 ${'slider_info' . $i} = $this->m_admin->banner_select_one($i);
                 ${'slider_image_url' . $i} = ${'slider_info' . $i}['banner_image_url'];
-                ${'slider_website_ur' . $i} = ${'slider_info' . $i}['banner_website_url'];
+                ${'slider_website_url' . $i} = ${'slider_info' . $i}['banner_website_url'];
+                ${'slider_no_image' . $i} = ${'slider_info' . $i}['no_image'];
             }
             ?>
             <div id='home-row1-banner-main'>
                 <div class="camera_wrap camera_azure_skin" id="camera_wrap_1">
                     <?php 
-                    for($i = 101; $i < 104; $i++)
+                    for($i = 101; $i <= 104; $i++)
                     {
-                        echo "<div data-src=" . ${'slider_image_url' . $i} . " data-link=" . ${'slider_website_ur' . $i} . " data-target='_blank' ></div>";
+                        if(${'slider_no_image' . $i} == 0){
+                            echo "<div data-src=" . ${'slider_image_url' . $i} . " data-link=" . ${'slider_website_url' . $i} . " data-target='_blank' ></div>";
+                        }
                     }
                     ?>
                 </div>
@@ -109,9 +112,11 @@ $this->album_admin = $this->config->item('album_admin');
             <div id='home-row1-banner-main2'>
                 <div class="camera_wrap camera_azure_skin" id="camera_wrap_2">
                     <?php 
-                    for($i = 101; $i < 104; $i++)
+                    for($i = 101; $i <= 104; $i++)
                     {
-                        echo "<div data-src=" . ${'slider_image_url' . $i} . " data-link=" . ${'slider_website_ur' . $i} . " data-target='_blank' ></div>";
+                        if(${'slider_no_image' . $i} == 0){
+                            echo "<div data-src=" . ${'slider_image_url' . $i} . " data-link=" . ${'slider_website_url' . $i} . " data-target='_blank' ></div>";
+                        }
                     }
                     ?>
                 </div>
@@ -311,28 +316,45 @@ $this->album_admin = $this->config->item('album_admin');
                     <?php echo img('image/slider-prev.png') ?>
                 </div>
             </div>
-            <div id="home-row3-logo-slider-box">
-                <div>
-                    <img src="<?php echo base_url('folder_upload/home_banner_row3/1.png') ?>" style="height: 45px; margin-top: 19px;">
+            <?php 
+            for($i = 131; $i <= 138; $i++)
+            {
+                ${'logo_info' . $i} = $this->m_admin->banner_select_one($i);
+                ${'logo_image_url' . $i} = ${'logo_info' . $i}['banner_image_url'];
+                ${'logo_website_url' . $i} = ${'logo_info' . $i}['banner_website_url'];
+                ${'logo_no_image' . $i} = ${'logo_info' . $i}['no_image'];
+            }
+            ?>
+            <div id="home-row3-logo-slider-box">              
+                    <?php 
+                    for($i = 131; $i <= 138; $i++)
+                    {
+                        if(${'logo_no_image' . $i} == 0){
+                            echo "<div><a href='" . ${'logo_website_url' . $i} . "' target='_blank'><img src='" . ${'logo_image_url' . $i} . "' style='max-width:150px;'/></a></div>"; 
+                        }
+                    }
+                    ?>                
+<!--                <div>
+                    <img src="<?php //echo base_url('folder_upload/home_banner_row3/1.png') ?>" style="height: 45px; margin-top: 19px;">
                 </div>
                 <div>
-                    <img src="<?php echo base_url('folder_upload/home_banner_row3/2.png') ?>" style="height: 65px; margin-top: 10px;">
+                    <img src="<?php //echo base_url('folder_upload/home_banner_row3/2.png') ?>" style="height: 65px; margin-top: 10px;">
                 </div>
                 <div>
-                    <img src="<?php echo base_url('folder_upload/home_banner_row3/3.png') ?>" style="height: 40px; margin-top: 19px;">
+                    <img src="<?php //echo base_url('folder_upload/home_banner_row3/3.png') ?>" style="height: 40px; margin-top: 19px;">
                 </div>
                 <div>
-                    <img src="<?php echo base_url('folder_upload/home_banner_row3/4.png') ?>" style="height: 80px;">
+                    <img src="<?php //echo base_url('folder_upload/home_banner_row3/4.png') ?>" style="height: 80px;">
                 </div>
                 <div>
-                    <img src="<?php echo base_url('folder_upload/home_banner_row3/5.png') ?>" style="height: 40px; margin-top: 20px;">
+                    <img src="<?php //echo base_url('folder_upload/home_banner_row3/5.png') ?>" style="height: 40px; margin-top: 20px;">
                 </div>
                 <div>
-                    <img src="<?php echo base_url('folder_upload/home_banner_row3/6.png') ?>" style="height: 80px;">
+                    <img src="<?php //echo base_url('folder_upload/home_banner_row3/6.png') ?>" style="height: 80px;">
                 </div>
                 <div>
-                    <img src="<?php echo base_url('folder_upload/home_banner_row3/7.png') ?>" style="height: 80px;">
-                </div>
+                    <img src="<?php //echo base_url('folder_upload/home_banner_row3/7.png') ?>" style="height: 80px;">
+                </div>-->
             </div>
             <div id="home-row3-logo-slider-next">
                 <div id="home-row3-logo-slider-next-round">

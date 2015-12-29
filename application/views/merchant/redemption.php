@@ -104,6 +104,7 @@ if(isset($message))
                             $user_info = $this->m_custom->getUser($user_id);
                             $user_name = $this->m_custom->display_users($user_id);
                             $action_url = base_url() . "merchant/redeem_done";
+                            $advertise_detail_url = base_url() . "all/voucher/" . $redeem_row['advertise_id'] . "/" . $redeem_row['redeem_id'];
                             ?>
                             <tr>
                                 <?php
@@ -153,7 +154,7 @@ if(isset($message))
                                 </td>
                                 <td>
                                     <div class="table-text-overflow-ellipsis">
-                                        <?php echo $redeem_row['voucher'] ?>
+                                        <a href='<?php echo $advertise_detail_url; ?>' target='_blank'><?php echo $redeem_row['voucher'] ?></a>
                                     </div>
                                 </td>
                                 <td>

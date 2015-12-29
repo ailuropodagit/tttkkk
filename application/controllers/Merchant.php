@@ -1808,7 +1808,8 @@ class Merchant extends CI_Controller
                 $this->load->library('upload', $upload_rule);
 
                 $candie_id = $this->input->post('candie_id');
-                $sub_category_id = $this->input->post('candie_category');
+                //$sub_category_id = $this->input->post('candie_category');
+                $sub_category_id = $merchant_data->me_sub_category_id;  //merchant cannot change sub category anymore
                 $title = $this->input->post('candie_title');
                 $description = $this->input->post('candie_desc');
                 $upload_file = "candie-file";
@@ -2013,7 +2014,7 @@ class Merchant extends CI_Controller
             'current_month' => get_part_of_date('month'),
         );
 
-        $this->data['sub_category_list'] = $this->ion_auth->get_sub_category_list($merchant_data->me_category_id);
+        $this->data['sub_category_list'] = $this->m_custom->getSubCategoryList(NULL, NULL, $merchant_data->me_category_id);
         $this->data['candie_category'] = array(
             'name' => 'candie_category',
             'id' => 'candie_category',
@@ -2254,7 +2255,7 @@ class Merchant extends CI_Controller
 
                 //To update previous hot deal
                 $data = array(
-                    'sub_category_id' => $sub_category_id,
+                    //'sub_category_id' => $sub_category_id,  //merchant cannot change sub category anymore
                     'title' => $title,
                     'description' => $description,
                     'image' => empty($image_data) ? $previous_image_name : $image_data['upload_data']['file_name'],
@@ -2311,7 +2312,7 @@ class Merchant extends CI_Controller
 
         $hotdeal_result = $this->m_custom->getOneAdvertise($hotdeal_id);
 
-        $this->data['sub_category_list'] = $this->ion_auth->get_sub_category_list($merchant_data->me_category_id);
+        $this->data['sub_category_list'] = $this->m_custom->getSubCategoryList(NULL, NULL, $merchant_data->me_category_id);
         $this->data['hotdeal_date'] = empty($hotdeal_result) ? '' : displayDate($hotdeal_result['start_time']);
 
         $this->data['hotdeal_title'] = array(
@@ -2487,7 +2488,8 @@ class Merchant extends CI_Controller
                     $hotdeal_id = $this->input->post('hotdeal_id-' . $i);
                     $hotdeal_file = "hotdeal-file-" . $i;
 
-                    $sub_category_id = $this->input->post('category-' . $i);
+                    //$sub_category_id = $this->input->post('category-' . $i);
+                    $sub_category_id = $merchant_data->me_sub_category_id;  //merchant cannot change sub category anymore
                     $title = $this->input->post('title-' . $i);
                     $description = $this->input->post('desc-' . $i);
                     $hotdeal_hour = check_is_positive_numeric($this->input->post('hour-' . $i));
@@ -2646,8 +2648,8 @@ class Merchant extends CI_Controller
         $this->data['hotdeal_today_count'] = $this->m_merchant->get_merchant_today_hotdeal($merchant_id, 1, $search_date, 1);
         $this->data['hotdeal_today_count_removed'] = $this->m_merchant->get_merchant_today_hotdeal_removed($merchant_id, $search_date);
         //$this->data['hour_list'] = generate_number_option(1, 24);
-        $this->data['sub_category_list'] = $this->ion_auth->get_sub_category_list($merchant_data->me_category_id);
-
+        $this->data['sub_category_list'] = $this->m_custom->getSubCategoryList(NULL, NULL, $merchant_data->me_category_id);
+        
         //To dynamic create the hot deal box
         for ($i = 0; $i < $box_number_update; $i++)
         {

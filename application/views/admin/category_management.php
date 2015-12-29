@@ -39,8 +39,8 @@ if (isset($message))
                     <tr style="text-align:center">
                         <th><div class="table-text-overflow-ellipsis">Category Name</div></th>
                         <th><div class="table-text-overflow-ellipsis">Category Level</div></th>
-                        <th><div class="table-text-overflow-ellipsis">Main Category (If is Sub Category)</div></th>
-<!--                        <th>Removed Already</th>-->
+                        <th><div class="table-text-overflow-ellipsis">Main Category (If is Sub Category)</div></th>    
+                        <th><div class="table-text-overflow-ellipsis">Hide Already</div></th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -50,13 +50,13 @@ if (isset($message))
                     {
                         $category_level_text = $row['category_level'] == 0 ? 'Main Category' : '<i>Sub Category</i>';
                         $main_category_text = $row['category_level'] == 0 ? '' : $this->m_custom->display_category($row['main_category_id']);
-                        $remove_row = $row['hide_flag'] == 1 ? 'Removed' : '';
+                        $remove_row = $row['hide_flag'] == 1 ? 'Hide' : '';
                         $url_edit = base_url() . "admin/category_edit/" . $row['category_id'];
                         echo '<tr>';
                         echo "<td><div class='table-text-overflow-ellipsis'>" . $row['category_label'] . "</div></td>";
                         echo "<td><div class='table-text-overflow-ellipsis'>" . $category_level_text . "</div></td>";
                         echo "<td><div class='table-text-overflow-ellipsis'>" . $main_category_text . "</div></td>";
-//                        echo "<td>" . $remove_row . "</td>";
+                        echo "<td>" . $remove_row . "</td>";
                         echo "<td>";
                         echo "<a href='" . $url_edit . "' ><img src='". base_url() . "/image/btn-edit.png' title='Edit' alt='Edit' class='normal-btn-image'></a>";
                         echo "</td>";

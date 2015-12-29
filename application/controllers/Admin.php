@@ -948,14 +948,14 @@ class Admin extends CI_Controller
             }
         }
 
-        $this->data['main_category_list'] = $this->m_custom->getCategoryList('0', 'All Category');
+        $this->data['main_category_list'] = $this->m_custom->getCategoryList('0', 'All Category', 0, 1);
         $this->data['main_category_id'] = array(
             'name' => 'main_category_id',
             'id' => 'main_category_id',
         );
         $this->data['main_category_selected'] = $search_category;
 
-        $category_list = $this->m_custom->getCategory(0, 0, 1, 1, $search_category);  //0, 1, 1, 1 will show hide
+        $category_list = $this->m_custom->getCategory(0, 1, 1, 1, $search_category);  //0, 1, 1, 1 will show hide
         $this->data['the_result'] = $category_list;
 
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
@@ -1146,12 +1146,12 @@ class Admin extends CI_Controller
                 $count_check = count($this->m_custom->getSubCategory($edit_id));
                 if ($count_check > 0)
                 {
-                    $message_info = add_message_info($message_info, $category_label . ' cannot remove, because it still have Sub Category under it.');
+                    $message_info = add_message_info($message_info, $category_label . ' cannot hide, because it still have Sub Category under it.');
                     $can_redirect_to = 1;
                 }
                 else
                 {
-                    $message_info = add_message_info($message_info, $category_label . ' success remove.');
+                    $message_info = add_message_info($message_info, $category_label . ' success hide.');
                     $this->m_custom->update_hide_flag(1, 'category', $edit_id);
                     $can_redirect_to = 2;
                 }
@@ -1162,7 +1162,22 @@ class Admin extends CI_Controller
                 $this->m_custom->update_hide_flag(0, 'category', $edit_id);
                 $can_redirect_to = 2;
             }
-
+            if ($this->input->post('button_action') == "remove_real")
+            {
+                $count_check = $this->m_custom->check_still_have_any_sub_category($edit_id);
+                if ($count_check > 0)
+                {
+                    $message_info = add_message_info($message_info, $category_label . ' cannot remove, because it still have Sub Category under it not yet totally remove.');
+                    $can_redirect_to = 1;
+                }
+                else
+                {
+                    $message_info = add_message_info($message_info, $category_label . ' success remove.');
+                    $this->m_custom->update_remove_flag(1, 'category', $edit_id);
+                    $can_redirect_to = 2;
+                }
+            }
+            
             direct_go:
             if ($message_info != NULL)
             {
@@ -1200,7 +1215,7 @@ class Admin extends CI_Controller
             'value' => $this->form_validation->set_value('category_level', $edit_id),
         );
 
-        $this->data['main_category_list'] = $this->m_custom->getCategoryList('0', 'Please Select');
+        $this->data['main_category_list'] = $this->m_custom->getCategoryList('0', 'Please Select', 0, 1);
         $this->data['main_category_id'] = array(
             'name' => 'main_category_id',
             'id' => 'main_category_id',

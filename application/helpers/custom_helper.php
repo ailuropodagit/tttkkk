@@ -722,6 +722,22 @@ if (!function_exists('get_key_array_from_list_array'))
 
 }
 
+if (!function_exists('get_key_string_from_list_array'))
+{
+
+    function get_key_string_from_list_array($list_array, $column_wanted, $separator = ',')
+    {
+        $key_string = array();
+        foreach ($list_array as $row)
+        {
+            $key_string[] = $row[$column_wanted];
+        }
+        $return = arraylist_to_string($key_string, $separator);
+        return $return;
+    }
+
+}
+
 if (!function_exists('get_previous_id'))
 {
 

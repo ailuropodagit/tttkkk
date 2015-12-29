@@ -85,7 +85,7 @@ if($this->ion_auth->user()->num_rows())
                     <input type="file" name="userfile" id="userfile" size="10"/>
                 </div>
                 <div id="profile-photo-button">
-                    <button name="button_action" type="submit" value="change_image" >Change Logo</button>
+                    <button name="button_action" type="submit" value="change_image" >Save Logo</button>
                 </div>          
                 <?php echo form_close(); ?>
             <?php  } ?>
@@ -98,7 +98,9 @@ if($this->ion_auth->user()->num_rows())
                 <div id="dashboard-info-edit-link">
                     <?php 
                     if (check_correct_login_type($this->config->item('group_id_merchant')) && $dashboard_users_id == $logged_user_id){
-                    echo "<a href='".base_url()."merchant/profile'>Edit My Profile</a>";
+                        $promo_code = $this->m_custom->promo_code_get('merchant', $logged_user_id, 1);
+                        echo "Promo Code : <input type='text' value='$promo_code' readonly='true' style='width:100px'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+                        echo "<a href='".base_url()."merchant/profile'>Edit My Profile</a>";
                     }
                     ?>
                 </div>

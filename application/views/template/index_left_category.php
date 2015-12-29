@@ -30,9 +30,26 @@ $this->load->view('template/header');
             {
                 $main_category_id = $main_category->category_id;
                 $main_category_label = $main_category->category_label;
+                
+                if ($fetch_method == 'promotion_list' || $fetch_method == 'redemption_list')
+                    {
+                        //PROMOTION LIST
+                        $main_navigate_to = base_url() . "all/promotion-list/" . $main_category_id;
+                        if ($main_category->hide_special == 1)
+                        {
+                            $main_navigate_to = base_url() . "all/redemption-list/" . $main_category_id;
+                        }
+                    }
+                    if ($fetch_method == 'hotdeal_list')
+                    {
+                        //HOTDEAL LIST
+                        $main_navigate_to = base_url() . "all/hotdeal-list/" . $main_category_id;
+                    }
                 ?>
                 <div id="index-left-category-label">
-                    <?php echo $main_category_label ?>
+                    <a href="<?php echo $main_navigate_to ?>" style="color:#244964">
+                        <?php echo $main_category_label ?>
+                    </a> 
                 </div>
                 <?php
                 //GET SUB CATEGORY

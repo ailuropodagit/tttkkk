@@ -34,6 +34,8 @@ class All extends CI_Controller
             $this->data['main_category'] = $this->m_custom->display_main_category($sub_category_id);
             $this->data['sub_category'] = $this->m_custom->display_category($sub_category_id);
         }
+        $this->data['check_is_main_category'] = $this->m_custom->check_is_main_category_id($sub_category_id);
+        
         //ADVERTISE SUGGESTION
         $where_read_category = array('category_id'=>$sub_category_id);
         $main_category_id = $this->albert_model->read_category($where_read_category)->row()->main_category_id;        
@@ -59,6 +61,8 @@ class All extends CI_Controller
             $this->data['main_category'] = $this->m_custom->display_main_category($sub_category_id);
             $this->data['sub_category'] = $this->m_custom->display_category($sub_category_id);
         }
+        $this->data['check_is_main_category'] = $this->m_custom->check_is_main_category_id($sub_category_id);
+        
         //ADVERTISE SUGGESTION
         $where_read_category = array('category_id'=>$sub_category_id);
         $main_category_id = $this->albert_model->read_category($where_read_category)->row()->main_category_id;        
@@ -84,6 +88,8 @@ class All extends CI_Controller
             $this->data['main_category'] = $this->m_custom->display_main_category($sub_category_id);
             $this->data['sub_category'] = $this->m_custom->display_category($sub_category_id);
         }
+        $this->data['check_is_main_category'] = $this->m_custom->check_is_main_category_id($sub_category_id, 1);
+        
         $this->data['page_path_name'] = 'all/advertise_list';
         $this->load->view('template/layout_category', $this->data);
     }
@@ -353,7 +359,7 @@ class All extends CI_Controller
         if ($the_row)
         {
             $advertise_type = $the_row['advertise_type'];
-            if (($advertise_type != "pro" && $advertise_type != "adm") || !$this->m_user->user_redemption_check($login_id, $advertise_id))
+            if (($advertise_type != "pro" && $advertise_type != "adm") || (!$this->m_user->user_redemption_check($login_id, $redeem_id) && !$this->m_merchant->merchant_redemption_check($login_id, $advertise_id)))  //To check is user have redeem this voucher or not and do this voucher belong to this merchant or not
             {
                 redirect('/', 'refresh');
             }

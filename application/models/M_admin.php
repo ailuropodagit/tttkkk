@@ -88,6 +88,7 @@ class M_admin extends CI_Model
             $final_result = array(
                 'banner_website_url' => base_url(),
                 'banner_image_url' => base_url() . $this->config->item('album_banner') . $this->m_custom->display_static_option($banner_position, 'option_desc'),
+                'no_image' => '1',
             );
             return $final_result;
         }
@@ -105,6 +106,7 @@ class M_admin extends CI_Model
                     'banner_website_url' => $result['banner_url'],
                     'banner_position' => $result['banner_position'],
                     'banner_position_name' => $this->m_custom->display_static_option($result['banner_position']),
+                    'no_image' => '0',
                 );
             }
             else
@@ -113,6 +115,7 @@ class M_admin extends CI_Model
                     'banner_image_url' => base_url() . $this->config->item('album_banner') . $result['banner_image'],
                     'banner_website_url' => $result['banner_url'],
                     'banner_position_name' => $this->m_custom->display_static_option($result['banner_position']),
+                    'no_image' => '0',
                 );
                 $final_result = $result + $additional_info;
             }

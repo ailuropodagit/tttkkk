@@ -30,9 +30,11 @@
                         <div id="print-area">
                             <div id="redemption-voucher-barcode">
                                 <?php
-                                if (!empty($voucher_barcode) && $voucher_not_need == 0)
+                                //if ($default_barcode_url != $voucher_barcode && $voucher_not_need == 0)  //if epay not need voucher then add this
+                                $default_barcode_url = base_url('barcode/generate');
+                                if ($default_barcode_url != $voucher_barcode)
                                 {
-                                echo "<img src='" . $voucher_barcode . "'  alt='not show'/>";
+                                    echo "<img src='" . $voucher_barcode . "' alt='no barcode'/>";
                                 }
                                 ?>
                             </div>

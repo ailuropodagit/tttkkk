@@ -64,7 +64,7 @@ if(isset($message))
                         ?>
                     </div>
                 </div>
-                <div id='hot-deal-advertise-form-each'>
+                <div id='hot-deal-advertise-form-each' style="display:none">
                     <div id='hot-deal-advertise-form-each-label'><?php echo lang("hotdeal_sub_category_label"); ?></div>
                     <div id='hot-deal-advertise-form-each-input'>
                         <?php

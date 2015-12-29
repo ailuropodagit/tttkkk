@@ -118,7 +118,7 @@ if(isset($message))
                         ?>
                     </div>
                 </div>
-                <div id='candie-promotion-form-each'>
+                <div id='candie-promotion-form-each' style="display:none">
                     <div id='candie-promotion-form-each-label'><?php echo lang("candie_sub_category_label"); ?></div>
                     <div id='candie-promotion-form-each-input'>
                         <?php
