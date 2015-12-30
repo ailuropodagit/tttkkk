@@ -203,7 +203,15 @@ $this->album_admin = $this->config->item('album_admin');
         </div>
         <div id='home-row2-column2'>
             <div id='home-row2-column2-like'>
-                <div id="home-row2-column2-like-title">Like</div>
+                <div id='home-row2-column2-like-header'>
+                    <div id='home-row2-column2-like-header-table'>
+                        <div id='home-row2-column2-like-header-table-row'>
+                            <div id='home-row2-column2-like-header-table-row-cell'>
+                                <div id="home-row2-column2-like-header-title">Like</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div id="home-row2-column2-like-notification">
                     <table border="0px" cellpading="0px" cellspacing="0px">
                         <?php
@@ -256,7 +264,15 @@ $this->album_admin = $this->config->item('album_admin');
                 </div>
             </div>
             <div id='home-row2-column2-user-picture'>
-                <div id="home-row2-column2-user-picture-title">Users Pictures</div>
+                <div id='home-row2-column2-user-picture-header'>
+                    <div id='home-row2-column2-user-picture-header-table'>
+                        <div id='home-row2-column2-user-picture-header-table-row'>
+                            <div id='home-row2-column2-user-picture-header-table-row-cell'>
+                                <div id="home-row2-column2-user-picture-header-title">Like</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div id="home-row2-column2-user-picture-notification">
                     <table border="0px" cellpading="0px" cellspacing="0px">
                     <?php 
@@ -333,8 +349,8 @@ $this->album_admin = $this->config->item('album_admin');
                     {
                         ?>
                         <div style='display: table'>
-                            <div style='display: table-cell; vertical-align: middle; height: 40px;'>
-                                <?php echo "<a href='" . ${'logo_website_url' . $i} . "' target='_blank'><img src='" . ${'logo_image_url' . $i} . "' style='max-width: 100%;'/></a>"; ?> 
+                            <div style='display: table-cell; vertical-align: middle; height: 80px;'>
+                                <?php echo "<a href='" . ${'logo_website_url' . $i} . "' target='_blank'><img src='" . ${'logo_image_url' . $i} . "' style='max-width: 100%; max-height: 100%;'/></a>"; ?> 
                             </div>
                         </div>
                         <?php

@@ -886,15 +886,33 @@ html, body {
     box-shadow: 1px 1px 3px 0px rgba(179,179,179,0.80);
 }
 
-#home-row2-column2-like-title {
+#home-row2-column2-like-header {
+    padding: 0px 0px 0px 20px;
+    background-color: #404041;
+}
+
+#home-row2-column2-like-header-table {
+    display: table;
+    width: 100%;
+    height: 40px;
+}
+
+#home-row2-column2-like-header-table-row {
+    display: table-row;
+}
+
+#home-row2-column2-like-header-table-row-cell {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#home-row2-column2-like-header-title {
     text-transform: uppercase;
     font-weight: 700;
     font-size: 15px;
     letter-spacing: 2px;
     color: #fbfbfb;
-    padding: 13px 18px 13px 18px;
-    border-bottom: 1px solid lightgray;
-    background-color: #404041;
+    margin: 4px 0px 4px 0px; 
 }
 
 #home-row2-column2-like table tr {
@@ -958,15 +976,33 @@ html, body {
     box-shadow: 1px 1px 3px 0px rgba(179,179,179,0.80);
 }
 
-#home-row2-column2-user-picture-title {
+#home-row2-column2-user-picture-header {
+    padding: 0px 0px 0px 20px;
+    background-color: #404041;
+}
+
+#home-row2-column2-user-picture-header-table {
+    display: table;
+    width: 100%;
+    height: 40px;
+}
+
+#home-row2-column2-user-picture-header-table-row {
+    display: table-row;
+}
+
+#home-row2-column2-user-picture-header-table-row-cell {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#home-row2-column2-user-picture-header-title {
     text-transform: uppercase;
     font-weight: 700;
     font-size: 15px;
     letter-spacing: 2px;
     color: #fbfbfb;
-    padding: 13px 18px 13px 18px;
-    border-bottom: 1px solid lightgray;
-    background-color: #404041;
+    margin: 4px 0px 4px 0px; 
 }
 
 #home-row2-column2-user-picture table tr {
@@ -1076,7 +1112,7 @@ html, body {
 
 #home-row3-logo-slider-box {
     float: left;
-    width: calc(100% - 100px);
+    width: calc(100% - 90px);
 }
 
 #home-row3-logo-slider-box div {
@@ -1533,24 +1569,34 @@ html, body {
     margin: 0px 0px 40px 0px;
 }
 
-#share-hot-deal-grid-list4-title-green {
-    font-size: 20px;
-    font-weight: bold;
-    color: #fbfbfb;
-    letter-spacing: 1px;
-    border-left: 5px solid #9bb342;
-    padding: 10px 0px 10px 20px;
-    background-color: #c3d18e;
+#share-hot-deal-grid-list4-header-table {
+    display: table;
+    width: 100%;
+    height: 40px;
 }
 
-#share-hot-deal-grid-list4-title-orange {
-    font-size: 20px;
-    font-weight: bold;
-    color: #fbfbfb;
-    letter-spacing: 1px;
-    border-left: 5px solid #f4701e;
+#share-hot-deal-grid-list4-header-table-row {
+    display: table-row;
+}
+
+#share-hot-deal-grid-list4-header-table-row-cell {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#share-hot-deal-grid-list4-header {
+    border-left: 5px solid #bf315a;
     padding: 10px 0px 10px 20px;
-    background-color: #f8a978;
+    background-color: #872642;
+}
+
+#share-hot-deal-grid-list4-header-title {
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 2px;
+    color: #fbfbfb;
+    margin: 4px 0px 4px 0px;
 }
 
 #share-hot-deal-grid-list4-container {
@@ -1787,24 +1833,34 @@ html, body {
     margin: 0px 0px 40px 0px;
 }
 
-#share-redemption-grid-list4-title-green {
-    font-size: 20px;
-    font-weight: bold;
-    color: #fbfbfb;
-    letter-spacing: 1px;
-    border-left: 5px solid #9bb342;
-    padding: 10px 0px 10px 20px;
-    background-color: #c3d18e;
+#share-redemption-grid-list4-header-table {
+    display: table;
+    width: 100%;
+    height: 40px;
 }
 
-#share-redemption-grid-list4-title-orange {
-    font-size: 20px;
-    font-weight: bold;
-    color: #fbfbfb;
-    letter-spacing: 1px;
-    border-left: 5px solid #f4701e;
+#share-redemption-grid-list4-header-table-row {
+    display: table-row;
+}
+
+#share-redemption-grid-list4-header-table-row-cell {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#share-redemption-grid-list4-header {
+    border-left: 5px solid #f6aa26;
     padding: 10px 0px 10px 20px;
-    background-color: #f8a978;
+    background-color: #f6c026
+}
+
+#share-redemption-grid-list4-header-title {
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 2px;
+    color: #fbfbfb;
+    margin: 4px 0px 4px 0px;
 }
 
 #share-redemption-grid-list4-container {
@@ -2059,35 +2115,52 @@ html, body {
 
 #share-hot-deal-row-list4-header {
     border-left: 5px solid #bf315a;
-    padding: 10px 0px 10px 20px;
     background-color: #872642;
 }
 
-#share-hot-deal-row-list4-title {
+#share-hot-deal-row-list4-header-table {
+    display: table;
+    width: 100%;
+    height: 40px;
+}
+
+#share-hot-deal-row-list4-header-table-row {
+    display: table-row;
+}
+
+#share-hot-deal-row-list4-header-table-row-cell {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#share-hot-deal-row-list4-header-table-row-cell:nth-child(2) {
+    width: 70px;
+}
+
+#share-hot-deal-row-list4-header-title {
     text-transform: uppercase;
     font-weight: 700;
     font-size: 15px;
     letter-spacing: 2px;
     color: #fbfbfb;
     float: left;
-    margin: 4px 0px 4px 0px;
+    margin: 0px 0px 0px 15px;
 }
 
-#share-hot-deal-row-list4-navigation {
-    float: right;
-    margin: 0px 15px 0px 0px;
+#share-hot-deal-row-list4-header-navigation {
+   text-align: center;
 }
 
-#share-hot-deal-row-list4-prev {
-    float: left;
+#share-hot-deal-row-list4-header-navigation-prev {
+    display: inline;
     font-size: 18px;
     cursor: pointer;
     color: #fbfbfb;
     margin: 0px 7px 0px 0px;
 }
 
-#share-hot-deal-row-list4-next {
-    float: left;
+#share-hot-deal-row-list4-header-navigation-next {
+    display: inline;
     font-size: 18px;
     cursor: pointer;
     color: #fbfbfb;
@@ -2326,9 +2399,9 @@ html, body {
 
 .share-redemption-row-list4-box-photo-box-redemption-count {
     background-image: url('../image/redemption-count.png');
-    background-size: 100px;
-    height: 100px;
-    width: 100px;
+    background-size: 110px;
+    height: 110px;
+    width: 110px;
     top: 0px;
     left: 0px;
     z-index: 299;
@@ -2336,9 +2409,9 @@ html, body {
 }
 
 .share-redemption-row-list4-box-photo-box-redemption-count-text {
-    margin: 15px 0px 0px -35px;
+    margin: 16px 0px 0px -38px;
     text-align: center;
-    font-size: 14px;
+    font-size: 15px;
     color: white;
     -webkit-transform: rotate(-45deg); /* Safari */
     -moz-transform: rotate(-45deg); /* Firefox */

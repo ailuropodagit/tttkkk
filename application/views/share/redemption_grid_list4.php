@@ -13,18 +13,15 @@ $fetch_method = $this->router->fetch_method();
 ?>
 
 <div id="share-redemption-grid-list4">
-    
-    <?php    
-    if ($fetch_method == 'hotdeal_list')
-    {
-        ?><div id="share-redemption-grid-list4-title-green"><?php echo $title ?></div><?php
-    }
-    else if ($fetch_method == 'promotion_list')
-    {
-        ?><div id="share-redemption-grid-list4-title-orange"><?php echo $title ?></div><?php
-    }
-    ?>
-    
+    <div id='share-redemption-grid-list4-header-table'>
+        <div id='share-redemption-grid-list4-header-table-row'>
+            <div id='share-redemption-grid-list4-header-table-row-cell'>
+                <div id="share-redemption-grid-list4-header">
+                    <div id="share-redemption-grid-list4-header-title"><?php echo $title ?></div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="share-redemption-grid-list4-container">
         <?php
         foreach ($share_hotdeal_redemption_list as $row)
