@@ -1513,7 +1513,7 @@ class Admin extends CI_Controller
 
     function merchant_edit($edit_id, $low_balance_only = 0)
     {
-        if (!$this->m_admin->check_is_any_admin(65))
+        if (!$this->m_admin->check_is_any_admin(78))
         {
             redirect('/', 'refresh');
         }
@@ -1642,6 +1642,8 @@ class Admin extends CI_Controller
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 
         $this->data['result'] = $result;
+        $this->data['title'] = "Merchant Edit";
+        $this->data['can_edit'] = 1;
 
         $this->data['username'] = array(
             'name' => 'username',
@@ -1725,6 +1727,137 @@ class Admin extends CI_Controller
         $this->load->view('template/index', $this->data);
     }
 
+    function merchant_view($edit_id, $low_balance_only = 0)
+    {
+        $message_info = '';
+        $login_id = $this->login_id;
+        $login_type = $this->login_type;
+        $result = $this->m_custom->getUser($edit_id, $this->group_id_merchant);
+
+        if (empty($result))
+        {
+            redirect('/', 'refresh');
+        }
+
+        if (isset($_POST) && !empty($_POST))
+        {
+            $can_redirect_to = 0;
+            if ($this->input->post('button_action') == "back")
+            {
+                $can_redirect_to = 2;
+            }
+
+            direct_go:
+            if ($message_info != NULL)
+            {
+                $this->session->set_flashdata('message', $message_info);
+            }
+            if ($can_redirect_to == 1)
+            {
+                redirect(uri_string(), 'refresh');
+            }
+            elseif ($can_redirect_to == 2)
+            {
+                if ($low_balance_only == 1)
+                {
+                    redirect('admin/merchant_management/1', 'refresh');
+                }
+                else
+                {
+                    redirect('admin/merchant_management', 'refresh');
+                }
+            }
+        }
+
+        // set the flash data error message if there is one
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+
+        $this->data['result'] = $result;
+        $this->data['title'] = "Merchant View";
+        $this->data['can_edit'] = 0;
+
+        $this->data['username'] = array(
+            'name' => 'username',
+            'id' => 'username',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('username', $result['username']),
+        );
+        $this->data['email'] = array(
+            'name' => 'email',
+            'id' => 'email',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('email', $result['email']),
+        );
+        $this->data['company_main'] = array(
+            'name' => 'company_main',
+            'id' => 'company_main',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('company_main', $result['company_main']),
+        );
+        $this->data['company'] = array(
+            'name' => 'company',
+            'id' => 'company',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('company', $result['company']),
+        );
+
+        $this->data['me_person_incharge'] = array(
+            'name' => 'me_person_incharge',
+            'id' => 'me_person_incharge',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('me_person_incharge', $result['me_person_incharge']),
+        );
+        $this->data['me_person_contact'] = array(
+            'name' => 'me_person_contact',
+            'id' => 'me_person_contact',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('me_person_contact', $result['me_person_contact']),
+        );
+
+        $this->data['me_ssm'] = array(
+            'name' => 'me_ssm',
+            'id' => 'me_ssm',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('me_ssm', $result['me_ssm']),
+        );
+
+        $this->data['category_selected'] = $result['me_category_id'];
+        $this->data['category_list'] = $this->ion_auth->get_main_category_list();
+        $this->data['me_category_id'] = array(
+            'name' => 'me_category_id',
+            'id' => 'me_category_id',
+            'value' => $this->form_validation->set_value('me_category_id'),
+        );
+        $this->data['address'] = array(
+            'name' => 'address',
+            'id' => 'address',
+            'value' => $this->form_validation->set_value('address', $result['address']),
+        );
+        $this->data['postcode'] = array(
+            'name' => 'postcode',
+            'id' => 'postcode',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('postcode', $result['postcode']),
+        );
+        $this->data['state_selected'] = $result['me_state_id'];
+        $this->data['state_list'] = $this->ion_auth->get_static_option_list('state');
+        $this->data['me_state_id'] = array(
+            'name' => 'me_state_id',
+            'id' => 'me_state_id',
+            'value' => $this->form_validation->set_value('me_state_id'),
+        );
+
+        $this->data['phone'] = array(
+            'name' => 'phone',
+            'id' => 'phone',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('phone', $result['phone']),
+        );
+
+        $this->data['page_path_name'] = 'admin/merchant_edit';
+        $this->load->view('template/index', $this->data);
+    }
+    
     function check_state_id($dropdown_selection)
     {
         if ($dropdown_selection == 0)

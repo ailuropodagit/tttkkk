@@ -59,6 +59,7 @@ if (isset($message))
                         $state_text = $this->m_custom->display_static_option($row['me_state_id']);
                         $merchant_balance_text = $this->m_merchant->merchant_balance_color($row['id'], 1);
                         $remove_row = $row['hide_flag'] == 1 ? 'Frozen' : '';
+                        $url_view = base_url() . "admin/merchant_view/" . $row['id'];
                         $url_edit = base_url() . "admin/merchant_edit/" . $row['id'];
                         $url_topup = base_url() . "admin/merchant_topup/" . $row['id'];                      
                         $url_promo_code = base_url() . "admin/promo_code_change_merchant/" . $row['id'];                       
@@ -66,6 +67,7 @@ if (isset($message))
                         $url_special_action = base_url() . "admin/merchant_special_action";
                         
                         if($low_balance_only == 1){
+                            $url_view = base_url() . "admin/merchant_view/" . $row['id'] . "/1";
                             $url_edit = base_url() . "admin/merchant_edit/" . $row['id'] . "/1";
                             $url_topup = base_url() . "admin/merchant_topup/" . $row['id']. "/1";
                             $url_special_action = base_url() . "admin/merchant_special_action/1";
@@ -86,7 +88,10 @@ if (isset($message))
                         echo "<td style='text-align:right'>" . $merchant_balance_text . "</td>";
                         echo "<td>" . $remove_row . "</td>";
                         echo "<td>";
+                        echo "<a href='" . $url_view . "' ><img src='". base_url() . "/image/btn-view.png' title='View' alt='View' class='normal-btn-image'></a>";
+                        if($this->m_admin->check_worker_role(78)) {
                         echo "<a href='" . $url_edit . "' ><img src='". base_url() . "/image/btn-edit.png' title='Edit' alt='Edit' class='normal-btn-image'></a>";
+                        }
                         if($this->m_admin->check_worker_role(67)) {
                         echo "<a href='" . $url_topup . "' ><img src='". base_url() . "/image/btn-topup.png' title='Top Up' alt='Top Up' class='normal-btn-image'></a>";
                         }

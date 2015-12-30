@@ -9,7 +9,7 @@ if(isset($message))
 ?>
 
 <div id="profile">
-    <h1>Merchant Edit</h1>
+    <h1><?php echo $title; ?></h1>
     <div id='profile-content'>            
         <div id='profile-info'>
             <?php echo form_open(uri_string()); ?>
@@ -68,11 +68,15 @@ if(isset($message))
                 $ror = $result['hide_flag'] == 1? 'recover' : 'frozen';
                 $ror_text = $result['hide_flag'] == 1? 'Recover' : 'Frozen';
             ?>
+            
             <div id='profile-info-form-submit'>
-                <button name="button_action" type="submit" value="<?php echo $ror; ?>" onclick="return confirm('Are you sure want to <?php echo $ror_text; ?> it?')"><?php echo $ror_text; ?></button>                
                 <button name="button_action" type="submit" value="back">Back</button>
+                <?php if($can_edit == 1){ ?>
+                <button name="button_action" type="submit" value="<?php echo $ror; ?>" onclick="return confirm('Are you sure want to <?php echo $ror_text; ?> it?')"><?php echo $ror_text; ?></button>                               
                 <button name="button_action" type="submit" value="save" onclick="return confirm('Confirm that information is correct before save it?')">Save</button>
+                <?php } ?>
             </div>
+            
             <?php echo form_close(); ?>
         </div>
         
