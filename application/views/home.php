@@ -268,7 +268,7 @@ $this->album_admin = $this->config->item('album_admin');
                     <div id='home-row2-column2-user-picture-header-table'>
                         <div id='home-row2-column2-user-picture-header-table-row'>
                             <div id='home-row2-column2-user-picture-header-table-row-cell'>
-                                <div id="home-row2-column2-user-picture-header-title">Like</div>
+                                <div id="home-row2-column2-user-picture-header-title">Users Pictures</div>
                             </div>
                         </div>
                     </div>
