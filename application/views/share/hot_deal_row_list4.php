@@ -3,8 +3,8 @@
         $('#share-hot-deal-row-list4-container').slick({
             slidesToShow: 4,
             slidesToScroll: 1,
-            prevArrow: '#share-hot-deal-row-list4-prev',
-            nextArrow: '#share-hot-deal-row-list4-next',
+            prevArrow: '#share-hot-deal-row-list4-header-navigation-prev',
+            nextArrow: '#share-hot-deal-row-list4-header-navigation-next',
             responsive: [
                 {
                     breakpoint: 1200,
@@ -43,12 +43,19 @@
 
 <div id="share-hot-deal-row-list4">
     <div id='share-hot-deal-row-list4-header'>
-        <div id='share-hot-deal-row-list4-title'>Today's Deals</div>
-        <div id='share-hot-deal-row-list4-navigation'>
-            <div id='share-hot-deal-row-list4-prev'> < </div>
-            <div id='share-hot-deal-row-list4-next'> > </div>
+        <div id='share-hot-deal-row-list4-header-table'>
+            <div id='share-hot-deal-row-list4-header-table-row'>
+                <div id='share-hot-deal-row-list4-header-table-row-cell'>
+                    <div id='share-hot-deal-row-list4-header-title'>Today's Deals</div>
+                </div>
+                <div id='share-hot-deal-row-list4-header-table-row-cell'>
+                    <div id='share-hot-deal-row-list4-header-navigation'>
+                        <div id='share-hot-deal-row-list4-header-navigation-prev'> < </div>
+                        <div id='share-hot-deal-row-list4-header-navigation-next'> > </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div id='float-fix'></div>
     </div>
     <div id="share-hot-deal-row-list4-container">
         <?php

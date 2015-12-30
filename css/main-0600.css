@@ -6,6 +6,36 @@
     display: none;
 }
 
+#header-logo-bar-table-row-cell {
+    display: block;
+}
+
+.header-logo-bar-table-row-cell-mobile-logo {
+    float: left;
+}
+
+.header-logo-bar-table-row-cell-mobile-navigation {
+    float: right;
+}
+
+.header-logo-bar-table-row-cell-profile-display {
+    clear: both;
+    float: left;
+}
+
+#header-logo-bar-mobile-navigation {
+    width: calc(100% - 250px);
+    text-align: right;
+}
+
+#header-logo-bar-profile-display {
+    margin: 20px 0px 0px 0px;
+    display: block;
+    width: 100%;
+    border-left: 0px solid lightgray;
+    padding: 0px 0px 0px 0px;
+}
+
 #header-logo-bar-search-block1, #header-logo-bar-search-block2, #header-logo-bar-search-block3 {
     display: block;
 }

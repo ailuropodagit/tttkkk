@@ -203,7 +203,15 @@ $this->album_admin = $this->config->item('album_admin');
         </div>
         <div id='home-row2-column2'>
             <div id='home-row2-column2-like'>
-                <div id="home-row2-column2-like-title">Like</div>
+                <div id='home-row2-column2-like-header'>
+                    <div id='home-row2-column2-like-header-table'>
+                        <div id='home-row2-column2-like-header-table-row'>
+                            <div id='home-row2-column2-like-header-table-row-cell'>
+                                <div id="home-row2-column2-like-header-title">Like</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div id="home-row2-column2-like-notification">
                     <table border="0px" cellpading="0px" cellspacing="0px">
                         <?php
@@ -256,7 +264,15 @@ $this->album_admin = $this->config->item('album_admin');
                 </div>
             </div>
             <div id='home-row2-column2-user-picture'>
-                <div id="home-row2-column2-user-picture-title">Users Pictures</div>
+                <div id='home-row2-column2-user-picture-header'>
+                    <div id='home-row2-column2-user-picture-header-table'>
+                        <div id='home-row2-column2-user-picture-header-table-row'>
+                            <div id='home-row2-column2-user-picture-header-table-row-cell'>
+                                <div id="home-row2-column2-user-picture-header-title">Users Pictures</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div id="home-row2-column2-user-picture-notification">
                     <table border="0px" cellpading="0px" cellspacing="0px">
                     <?php 
@@ -325,36 +341,22 @@ $this->album_admin = $this->config->item('album_admin');
                 ${'logo_no_image' . $i} = ${'logo_info' . $i}['no_image'];
             }
             ?>
-            <div id="home-row3-logo-slider-box">              
-                    <?php 
-                    for($i = 131; $i <= 138; $i++)
+            <div id="home-row3-logo-slider-box">   
+                <?php 
+                for($i = 131; $i <= 138; $i++)
+                {
+                    if(${'logo_no_image' . $i} == 0)
                     {
-                        if(${'logo_no_image' . $i} == 0){
-                            echo "<div><a href='" . ${'logo_website_url' . $i} . "' target='_blank'><img src='" . ${'logo_image_url' . $i} . "' style='max-width:150px;'/></a></div>"; 
-                        }
+                        ?>
+                        <div style='display: table'>
+                            <div style='display: table-cell; vertical-align: middle; height: 80px;'>
+                                <?php echo "<a href='" . ${'logo_website_url' . $i} . "' target='_blank'><img src='" . ${'logo_image_url' . $i} . "' style='max-width: 100%; max-height: 100%;'/></a>"; ?> 
+                            </div>
+                        </div>
+                        <?php
                     }
-                    ?>                
-<!--                <div>
-                    <img src="<?php //echo base_url('folder_upload/home_banner_row3/1.png') ?>" style="height: 45px; margin-top: 19px;">
-                </div>
-                <div>
-                    <img src="<?php //echo base_url('folder_upload/home_banner_row3/2.png') ?>" style="height: 65px; margin-top: 10px;">
-                </div>
-                <div>
-                    <img src="<?php //echo base_url('folder_upload/home_banner_row3/3.png') ?>" style="height: 40px; margin-top: 19px;">
-                </div>
-                <div>
-                    <img src="<?php //echo base_url('folder_upload/home_banner_row3/4.png') ?>" style="height: 80px;">
-                </div>
-                <div>
-                    <img src="<?php //echo base_url('folder_upload/home_banner_row3/5.png') ?>" style="height: 40px; margin-top: 20px;">
-                </div>
-                <div>
-                    <img src="<?php //echo base_url('folder_upload/home_banner_row3/6.png') ?>" style="height: 80px;">
-                </div>
-                <div>
-                    <img src="<?php //echo base_url('folder_upload/home_banner_row3/7.png') ?>" style="height: 80px;">
-                </div>-->
+                }
+                ?>
             </div>
             <div id="home-row3-logo-slider-next">
                 <div id="home-row3-logo-slider-next-round">
