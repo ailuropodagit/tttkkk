@@ -1196,6 +1196,10 @@ class User extends CI_Controller
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
         // pass the user to the view
         $this->data['user'] = $user;
+        $this->data['title'] = "Profile";
+        $this->data['can_edit'] = 1;
+        $this->data['user_id'] = $user_id;
+        
         $the_date = explode('-', $user->us_birthday);
         $this->data['b_year'] = $the_date[0];
         $this->data['b_month'] = $the_date[1];
@@ -1265,12 +1269,16 @@ class User extends CI_Controller
             'name' => 'gender_id',
             'id' => 'gender_id',
         );
+        $this->data['us_gender_id'] = $user->us_gender_id;
+        
         $this->data['race_list'] = $this->ion_auth->get_static_option_list('race');
         $this->data['race_id'] = array(
             'name' => 'race_id',
             'id' => 'race_id',
             'onchange' => 'showraceother()',
         );
+        $this->data['us_race_id'] = $user->us_race_id;
+        
         $this->data['race_other'] = array(
             'name' => 'race_other',
             'id' => 'race_other',
@@ -1451,8 +1459,8 @@ class User extends CI_Controller
                 {
                     if (!$this->upload->do_upload($post_file))
                     {
-                        //$error = array('error' => $this->upload->display_errors());
-                        $message_info = add_message_info($message_info, $this->upload->display_errors(), $post_title);
+                        //$message_info = add_message_info($message_info, $this->upload->display_errors(), $post_title);
+                        $message_info = add_message_info($message_info, $this->upload->display_errors(), $post_desc);
                     }
                     else
                     {
@@ -1467,7 +1475,8 @@ class User extends CI_Controller
                 $data = array(
                     'merchant_id' => $post_merchant_id,
                     'post_id' => $post_merchant_id,
-                    'title' => $post_title,
+                    //'title' => $post_title,
+                    'title' => '',
                     'description' => $post_desc,
                     'image' => empty($image_data) ? $previous_image_name : $image_data['upload_data']['file_name'],
                 );
@@ -1475,11 +1484,13 @@ class User extends CI_Controller
                 if ($this->m_custom->simple_update('merchant_user_album', $data, 'merchant_user_album_id', $picture_id))
                 {
                     $this->m_custom->update_row_log('merchant_user_album', $picture_id, $do_by_id, $do_by_type);
-                    $message_info = add_message_info($message_info, 'Picture for merchant success update.', $post_title);
+                    //$message_info = add_message_info($message_info, 'Picture for merchant success update.', $post_title);
+                    $message_info = add_message_info($message_info, 'Picture for merchant success update.', $post_desc);
                 }
                 else
                 {
-                    $message_info = add_message_info($message_info, $this->ion_auth->errors(), $post_title);
+                    //$message_info = add_message_info($message_info, $this->ion_auth->errors(), $post_title);
+                    $message_info = add_message_info($message_info, $this->ion_auth->errors(), $post_desc);
                 }
 
                 $this->session->set_flashdata('message', $message_info);
@@ -1493,12 +1504,14 @@ class User extends CI_Controller
                 if ($this->m_custom->simple_update('merchant_user_album', $data, 'merchant_user_album_id', $picture_id))
                 {
                     $this->m_custom->remove_row_log('merchant_user_album', $picture_id, $do_by_id, $do_by_type);
-                    $message_info = add_message_info($message_info, 'Picture for merchant success remove.', $post_title);
+                    //$message_info = add_message_info($message_info, 'Picture for merchant success remove.', $post_title);
+                    $message_info = add_message_info($message_info, 'Picture for merchant success remove.', $post_desc);
                     redirect('all/album_user_merchant/' . $user_id, 'refresh');
                 }
                 else
                 {
-                    $message_info = add_message_info($message_info, $this->ion_auth->errors(), $post_title);
+                    //$message_info = add_message_info($message_info, $this->ion_auth->errors(), $post_title);
+                    $message_info = add_message_info($message_info, $this->ion_auth->errors(), $post_desc);
                 }
             }
             if ($this->input->post('button_action') == "back_picture")
@@ -1594,8 +1607,8 @@ class User extends CI_Controller
                 {
                     if (!$this->upload->do_upload($post_file))
                     {
-                        //$error = array('error' => $this->upload->display_errors());
-                        $message_info = add_message_info($message_info, $this->upload->display_errors(), $post_title);
+                        //$message_info = add_message_info($message_info, $this->upload->display_errors(), $post_title);
+                        $message_info = add_message_info($message_info, $this->upload->display_errors(), $post_desc);
                     }
                     else
                     {
@@ -1608,7 +1621,8 @@ class User extends CI_Controller
                 }
 
                 $data = array(
-                    'title' => $post_title,
+                    //'title' => $post_title,
+                    'title' => '',
                     'description' => $post_desc,
                     'image' => empty($image_data) ? $previous_image_name : $image_data['upload_data']['file_name'],
                 );
@@ -1616,11 +1630,13 @@ class User extends CI_Controller
                 if ($this->m_custom->simple_update('user_album', $data, 'user_album_id', $picture_id))
                 {
                     $this->m_custom->update_row_log('user_album', $picture_id, $do_by_id, $do_by_type);
-                    $message_info = add_message_info($message_info, 'Picture for user success update.', $post_title);
+                    //$message_info = add_message_info($message_info, 'Picture for user success update.', $post_title);
+                    $message_info = add_message_info($message_info, 'Picture for user success update.', $post_desc);
                 }
                 else
                 {
-                    $message_info = add_message_info($message_info, $this->ion_auth->errors(), $post_title);
+                    //$message_info = add_message_info($message_info, $this->ion_auth->errors(), $post_title);
+                    $message_info = add_message_info($message_info, $this->ion_auth->errors(), $post_desc);
                 }
 
                 $this->session->set_flashdata('message', $message_info);
@@ -1634,12 +1650,14 @@ class User extends CI_Controller
                 if ($this->m_custom->simple_update('user_album', $data, 'user_album_id', $picture_id))
                 {
                     $this->m_custom->remove_row_log('user_album', $picture_id, $do_by_id, $do_by_type);
-                    $message_info = add_message_info($message_info, 'Picture for user success remove.', $post_title);
+                    //$message_info = add_message_info($message_info, 'Picture for user success remove.', $post_title);
+                    $message_info = add_message_info($message_info, 'Picture for user success remove.', $post_desc);
                     redirect('all/album_user/' . $user_id, 'refresh');
                 }
                 else
                 {
-                    $message_info = add_message_info($message_info, $this->ion_auth->errors(), $post_title);
+                    //$message_info = add_message_info($message_info, $this->ion_auth->errors(), $post_title);
+                    $message_info = add_message_info($message_info, $this->ion_auth->errors(), $post_desc);
                 }
             }
             if ($this->input->post('button_action') == "back_picture")
@@ -1742,13 +1760,15 @@ class User extends CI_Controller
                         if ($post_merchant_id == null)
                         {
                             $validate_fail = 1;
-                            $message_info = add_message_info($message_info, 'Merchant cannot be empty.', $post_title);
+                            //$message_info = add_message_info($message_info, 'Merchant cannot be empty.', $post_title);
+                            $message_info = add_message_info($message_info, 'Merchant cannot be empty.', $post_desc);
                             goto ValidateFail;
                         }
                         if (!$this->upload->do_upload($post_file))
                         {
                             $validate_fail = 1;
-                            $message_info = add_message_info($message_info, $this->upload->display_errors(), $post_title);
+                            //$message_info = add_message_info($message_info, $this->upload->display_errors(), $post_title);
+                            $message_info = add_message_info($message_info, $this->upload->display_errors(), $post_desc);
                         }
                         else
                         {
@@ -1758,7 +1778,8 @@ class User extends CI_Controller
                                 'user_id' => $user_id,
                                 'merchant_id' => $post_merchant_id,
                                 'post_id' => $post_merchant_id,
-                                'title' => $post_title,
+                                //'title' => $post_title,
+                                'title' => '',
                                 'description' => $post_desc,
                                 'image' => $image_data['upload_data']['file_name'],
                             );
@@ -1771,11 +1792,13 @@ class User extends CI_Controller
                                 $this->m_merchant->transaction_history_insert($post_merchant_id, 14, $new_id, 'merchant_user_album');
                                 //$this->m_user->user_trans_history_insert($user_id, 21, $new_id);   //Temporary comment this because user upload image for merchant cannot get cash back already 
                                 $this->m_custom->notification_process('merchant_user_album', $new_id);
-                                $message_info = add_message_info($message_info, 'Image for merchant ' . $this->m_custom->display_users($post_merchant_id) . ' success create.', $post_title);
+                                //$message_info = add_message_info($message_info, 'Image for merchant ' . $this->m_custom->display_users($post_merchant_id) . ' success create.', $post_title);
+                                $message_info = add_message_info($message_info, 'Image for merchant ' . $this->m_custom->display_users($post_merchant_id) . ' success create.', $post_desc);
                             }
                             else
                             {
-                                $message_info = add_message_info($message_info, $this->ion_auth->errors(), $post_title);
+                                //$message_info = add_message_info($message_info, $this->ion_auth->errors(), $post_title);
+                                $message_info = add_message_info($message_info, $this->ion_auth->errors(), $post_desc);
                             }
                         }
                     }
@@ -2136,14 +2159,16 @@ class User extends CI_Controller
                         if (!$this->upload->do_upload($post_file))
                         {
                             $validate_fail = 1;
-                            $message_info = add_message_info($message_info, $this->upload->display_errors(), $post_title);
+                            //$message_info = add_message_info($message_info, $this->upload->display_errors(), $post_title);
+                            $message_info = add_message_info($message_info, $this->upload->display_errors(), $post_desc);
                         }
                         else
                         {
                             $image_data = array('upload_data' => $this->upload->data());
                             $data = array(
                                 'user_id' => $user_id,
-                                'title' => $post_title,
+                                //'title' => $post_title,
+                                'title' => '',
                                 'description' => $post_desc,
                                 'image' => $image_data['upload_data']['file_name'],
                             );
@@ -2152,11 +2177,13 @@ class User extends CI_Controller
                             if ($new_id)
                             {
                                 $this->m_user->candie_history_insert(5, $new_id, 'user_album');
-                                $message_info = add_message_info($message_info, 'Image for user ' . $this->m_custom->display_users($user_id) . ' success create.', $post_title);
+                                //$message_info = add_message_info($message_info, 'Image for user ' . $this->m_custom->display_users($user_id) . ' success create.', $post_title);
+                                $message_info = add_message_info($message_info, 'Image for user ' . $this->m_custom->display_users($user_id) . ' success create.', $post_desc);
                             }
                             else
                             {
-                                $message_info = add_message_info($message_info, $this->ion_auth->errors(), $post_title);
+                                //$message_info = add_message_info($message_info, $this->ion_auth->errors(), $post_title);
+                                $message_info = add_message_info($message_info, $this->ion_auth->errors(), $post_desc);
                             }
                         }
                     }

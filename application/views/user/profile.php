@@ -47,9 +47,10 @@ if(isset($message))
 ?>
 
 <div id="profile">
-    <h1>Profile</h1>
+    <h1><?php echo $title; ?></h1>
     <div id='profile-content'>
         
+        <?php if($can_edit == 1){ ?>
         <div id="profile-photo">
             <div id="profile-photo-box">
                 <?php            
@@ -75,12 +76,13 @@ if(isset($message))
                     <div id="profile-photo-input-file">
                         <input type="file" name="userfile" id="userfile" size="10"/>
                     </div>
-                    <div id="profile-photo-button">
+                    <div id="profile-photo-button">                       
                         <button name="button_action" type="submit" value="change_image" >Save Image</button>
                     </div>
                 <?php echo form_close(); ?>
             <?php  } ?>
         </div>
+        <?php } ?>
         
         <div id='profile-info'> 
             <?php echo form_open(uri_string()); ?>
@@ -93,6 +95,7 @@ if(isset($message))
                     <div id='profile-info-form-each-label'><?php echo lang('create_user_last_name_label', 'last name'); ?></div>
                     <div id='profile-info-form-each-input'><?php echo form_input($last_name); ?></div>
                 </div>
+                <?php if($can_edit == 1){ ?>
                 <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_user_promo_code_label', 'promo_code_no'); ?></div>
                     <div id='profile-info-form-each-input'><?php echo form_input($promo_code_no); ?></div>
@@ -100,6 +103,7 @@ if(isset($message))
                 <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('promo_code_redeem_count') . $promo_code_url; ?></div>
                 </div>
+                <?php } ?>
                 <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_user_description_label', 'description'); ?></div>
                     <div id='profile-info-form-each-input'><?php echo form_textarea($description); ?></div>
@@ -123,11 +127,11 @@ if(isset($message))
                 </div>
                 <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_user_gender_label', 'gender_id'); ?></div>
-                    <div id='profile-info-form-each-input'><?php echo form_dropdown($gender_id, $gender_list, $user->us_gender_id); ?></div>
+                    <div id='profile-info-form-each-input'><?php echo form_dropdown($gender_id, $gender_list, $us_gender_id); ?></div>
                 </div>
                 <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_user_race_label', 'race_id'); ?></div>
-                    <div id='profile-info-form-each-input'><?php echo form_dropdown($race_id, $race_list, $user->us_race_id); ?></div>
+                    <div id='profile-info-form-each-input'><?php echo form_dropdown($race_id, $race_list, $us_race_id); ?></div>
                 </div>
                 <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'>
@@ -245,10 +249,14 @@ if(isset($message))
                 </div>
 
             </div>
-            <?php echo form_hidden('id', $user->id); ?>
+            <?php echo form_hidden('id', $user_id); ?>
             <?php echo form_hidden($csrf); ?>
             <div id='profile-info-form-submit'>
+                <?php if($can_edit == 1){ ?>
                 <button name="button_action" type="submit" value="confirm">Confirm</button>
+                <?php }else{ ?>
+                <button name="button_action" type="submit" value="back">Back</button>
+                <?php } ?>
             </div>
         </div>
         <div id="float-fix"></div>

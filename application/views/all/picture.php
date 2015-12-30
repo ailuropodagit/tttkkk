@@ -136,7 +136,7 @@
                 <div id='picture-user-table-row-cell' class='picture-user-left-cell'></div>
                 <div id='picture-user-table-row-cell' class='picture-user-center-cell'>
                     <div id='picture-user-center'>
-                        <div id="picture-user-sub-title">
+                        <div id="picture-user-sub-title" style="display:none">
                             <?php echo $title ?>
                         </div>
                         <div id="picture-user-rate-upload-by">

@@ -57,6 +57,7 @@ if (isset($message))
                         $user_candie_text = $this->m_user->candie_check_balance($row['id']);
                         $user_balance_text = $this->m_user->user_check_balance($row['id']);
                         $remove_row = $row['hide_flag'] == 1 ? 'Frozen' : '';
+                        $url_view = base_url() . "admin/user_view/" . $row['id'];
                         //$url_edit = base_url() . "admin/user_edit/" . $row['id'];
                         $url_bonus_candie = base_url() . "admin/user_bonus_candie/" . $row['id'];
                         $url_balance_adjust = base_url() . "admin/user_balance_adjust/" . $row['id'];
@@ -80,6 +81,7 @@ if (isset($message))
                         echo "<td style='text-align:right'>" . $user_balance_text . "</td>";
                         echo "<td>" . $remove_row . "</td>";
                         echo "<td>";
+                        echo "<a href='" . $url_view . "' ><img src='". base_url() . "/image/btn-view.png' title='View' alt='View' class='normal-btn-image'></a>";
                         if($this->m_admin->check_worker_role(74)) {
                         echo "<a href='" . $url_bonus_candie . "' ><img src='". base_url() . "/image/btn-bonus-candie.png' title='Bonus Candie' alt='Bonus Candie' class='normal-btn-image'></a>";
                         }

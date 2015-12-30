@@ -64,7 +64,7 @@ $user_id = $this->uri->segment(3);
                 }
                 ?>
                 <div id='album-user-box'>
-                    <div id='album-user-main-title'>
+                    <div id='album-user-main-title' style="display:none">
                         <a href='<?php echo $picture_detail_url ?>'><?php echo $row['title'] ?></a> 
                     </div>
                     <a href='<?php echo $picture_detail_url ?>'>

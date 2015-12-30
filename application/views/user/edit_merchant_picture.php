@@ -52,12 +52,11 @@ if(isset($message))
                 <div id='hot-deal-advertise-form-input-file'>
                     <?php echo "<input type='file' accept='image/*' name='post-file' id='post-file' />"; ?> 
                 </div>
-                <div id='hot-deal-advertise-form-each'>
+                <div id='hot-deal-advertise-form-each' style="display:none">
                     <div id='hot-deal-advertise-form-each-label'><?php echo lang('hotdeal_title_label'); ?></div>
                     <div id='hot-deal-advertise-form-each-input'>
                         <?php
-                        echo form_input($picture_title);
-                        echo form_hidden($picture_id);
+                        echo form_input($picture_title);                      
                         ?>
                     </div>
                 </div>
@@ -66,6 +65,7 @@ if(isset($message))
                     <div id='hot-deal-advertise-form-each-input'>
                         <?php
                         echo form_dropdown($picture_merchant, $merchant_list, $picture_merchant_selected);
+                        echo form_hidden($picture_id);
                         ?>
                     </div>
                 </div>

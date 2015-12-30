@@ -28,7 +28,7 @@
                 <div id='picture-user-table-row-cell' class='picture-user-left-cell'></div>
                 <div id='picture-user-table-row-cell' class='picture-user-center-cell'>
                     <div id='picture-user-center'>
-                        <div id="picture-user-title">
+                        <div id="picture-user-title" style="display:none">
                             <?php echo $title ?>
                         </div>
                     </div>

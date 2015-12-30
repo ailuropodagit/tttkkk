@@ -18,6 +18,7 @@ class Admin extends CI_Controller
         $this->album_admin = $this->config->item('album_admin');
         $this->album_admin_profile = $this->config->item('album_admin_profile');
         $this->album_banner = $this->config->item('album_banner');
+        $this->album_user_profile = $this->config->item('album_user_profile');
         $this->folder_image = $this->config->item('folder_image');
         $this->temp_folder = $this->config->item('folder_image_temp');
 
@@ -1236,6 +1237,193 @@ class Admin extends CI_Controller
         return TRUE;
     }
 
+    function user_view($user_id)
+    {
+        if (!$this->m_admin->check_is_any_admin(65))
+        {
+            redirect('/', 'refresh');
+        }
+
+        $user = $this->m_custom->getUser($user_id, $this->group_id_user);
+       
+        if (isset($_POST) && !empty($_POST))
+        {
+            if ($this->input->post('button_action') == "back")
+            {
+                redirect('admin/user_management', 'refresh');
+            }
+        }
+    
+        $this->data['image_path'] = $this->album_user_profile;
+        $this->data['image'] = $user['profile_image'];
+        // display the edit user form
+        $this->data['csrf'] = $this->_get_csrf_nonce();
+        // set the flash data error message if there is one
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+        // pass the user to the view
+        $this->data['user'] = $user;
+        $this->data['title'] = "User View";
+        $this->data['can_edit'] = 0;
+        $this->data['user_id'] = $user_id;
+        
+        $the_date = explode('-', $user['us_birthday']);
+        $this->data['b_year'] = $the_date[0];
+        $this->data['b_month'] = $the_date[1];
+        $this->data['b_day'] = $the_date[2];
+        $this->data['username'] = array(
+            'name' => 'username',
+            'id' => 'username',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('username', $user['username']),
+        );
+        $this->data['first_name'] = array(
+            'name' => 'first_name',
+            'id' => 'first_name',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('first_name', $user['first_name']),
+        );
+        $this->data['last_name'] = array(
+            'name' => 'last_name',
+            'id' => 'last_name',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('last_name', $user['last_name']),
+        );
+//        $promo_code = $this->m_custom->promo_code_get('user', $user->id, 1);
+//        $this->data['promo_code_no'] = array(
+//            'name' => 'promo_code_no',
+//            'id' => 'promo_code_no',
+//            'type' => 'text',
+//            'readonly' => 'true',
+//            'value' => $promo_code,
+//        );
+//        $this->data['promo_code_url'] = $this->m_custom->generate_promo_code_list_link($promo_code, 32);
+        $this->data['description'] = array(
+                'name' => 'description',
+                'id' => 'description',
+                'value' => $this->form_validation->set_value('description', $user['description']),
+        );
+        $this->data['email'] = array(
+            'name' => 'email',
+            'id' => 'email',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('email', $user['email']),
+        );
+        $this->data['day_list'] = generate_number_option(1, 31);
+        $this->data['day'] = array(
+            'name' => 'day',
+            'id' => 'day',
+        );
+        $this->data['month_list'] = $this->ion_auth->get_static_option_list('month');
+        $this->data['month'] = array(
+            'name' => 'month',
+            'id' => 'month',
+        );
+        $this->data['year_list'] = generate_number_option(1930, 2010);
+        $this->data['year'] = array(
+            'name' => 'year',
+            'id' => 'year',
+        );
+        $this->data['age'] = array(
+            'name' => 'age',
+            'id' => 'age',
+            'type' => 'text',
+            'readonly' => 'true',
+            'value' => age_count($user['us_birthday']),
+        );
+        $this->data['gender_list'] = $this->ion_auth->get_static_option_list('gender');
+        $this->data['gender_id'] = array(
+            'name' => 'gender_id',
+            'id' => 'gender_id',
+        );
+        $this->data['us_gender_id'] = $user['us_gender_id'];
+                
+        $this->data['race_list'] = $this->ion_auth->get_static_option_list('race');
+        $this->data['race_id'] = array(
+            'name' => 'race_id',
+            'id' => 'race_id',
+            'onchange' => 'showraceother()',
+        );
+        $this->data['us_race_id'] = $user['us_race_id'];
+        
+        $this->data['race_other'] = array(
+            'name' => 'race_other',
+            'id' => 'race_other',
+            'type' => 'text',
+            'style' => $this->m_custom->display_static_option($user['us_race_id']) == 'Other' ? 'display:inline' : 'display:none',
+            'value' => $this->form_validation->set_value('race_other', $user['us_race_other']),
+        );
+        $this->data['race_other_attributes'] = array(
+            'id' => 'race_other_label',
+            'style' => $this->m_custom->display_static_option($user['us_race_id']) == 'Other' ? 'display:inline' : 'display:none',
+        );
+        $this->data['phone'] = array(
+            'name' => 'phone',
+            'id' => 'phone',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('phone', $user['phone']),
+            'class' => 'phone_blur',
+        );     
+        
+        $this->data['instagram_url'] = array(
+            'name' => 'instagram_url',
+            'id' => 'instagram_url',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('instagram_url', $user['us_instagram_url']),
+        );
+        $this->data['facebook_url'] = array(
+            'name' => 'facebook_url',
+            'id' => 'facebook_url',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('facebook_url', $user['us_facebook_url']),
+        );
+        
+        //Blogger Function
+        $us_is_blogger = $user['us_is_blogger'];
+        $this->data['us_is_blogger'] = $us_is_blogger;
+        $this->data['is_blogger'] = array(
+            'name' => 'is_blogger',
+            'id' => 'is_blogger',
+            'checked' => $us_is_blogger == "1"? TRUE : FALSE,
+            'onclick' => "checkbox_showhide('is_blogger','profile-blogger-div')",
+            'value' => $this->form_validation->set_value('is_blogger', $us_is_blogger),           
+        );
+        
+        $this->data['blog_url'] = array(
+            'name' => 'blog_url',
+            'id' => 'blog_url',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('blog_url', $user['us_blog_url']),
+        );
+        
+        $this->data['blogger_list'] = $this->m_custom->get_dynamic_option_array('photography');
+        $this->data['blogger_current'] = empty($user) ? array() : $this->m_custom->many_get_childlist('blogger', $user['id']);
+        
+        //Photographer Function
+        $us_is_photographer = $user['us_is_photographer'];
+        $this->data['us_is_photographer'] = $us_is_photographer;
+        $this->data['is_photographer'] = array(
+            'name' => 'is_photographer',
+            'id' => 'is_photographer',
+            'checked' => $us_is_photographer == "1"? TRUE : FALSE,
+            'onclick' => "checkbox_showhide('is_photographer','profile-photographer-div')",
+            'value' => $this->form_validation->set_value('is_photographer', $us_is_photographer),           
+        );
+        
+        $this->data['photography_url'] = array(
+            'name' => 'photography_url',
+            'id' => 'photography_url',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('photography_url', $user['us_photography_url']),
+        );
+        
+        $this->data['photography_list'] = $this->m_custom->get_dynamic_option_array('photography');
+        $this->data['photography_current'] = empty($user) ? array() : $this->m_custom->many_get_childlist('photography', $user['id']);
+        
+        $this->data['temp_folder'] = $this->temp_folder;  
+        $this->data['page_path_name'] = 'user/profile';
+        $this->load->view('template/index', $this->data);
+    }
+    
     function user_management()
     {
         if (!$this->m_admin->check_is_any_admin(65))
@@ -1729,6 +1917,11 @@ class Admin extends CI_Controller
 
     function merchant_view($edit_id, $low_balance_only = 0)
     {
+        if (!$this->m_admin->check_is_any_admin(65))
+        {
+            redirect('/', 'refresh');
+        }
+        
         $message_info = '';
         $login_id = $this->login_id;
         $login_type = $this->login_type;
