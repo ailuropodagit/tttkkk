@@ -2336,9 +2336,9 @@ html, body {
 }
 
 .share-redemption-row-list4-box-photo-box-redemption-count-text {
-    margin: 16px 0px 0px -35px;
+    margin: 15px 0px 0px -35px;
     text-align: center;
-    font-size: 13px;
+    font-size: 14px;
     color: white;
     -webkit-transform: rotate(-45deg); /* Safari */
     -moz-transform: rotate(-45deg); /* Firefox */
