@@ -2132,6 +2132,162 @@ class Admin extends CI_Controller
         }
     }
 
+    function merchant_feecharge($merchant_id, $low_balance_only = 0)
+    {
+        if (!$this->m_admin->check_is_any_admin(67))
+        {
+            redirect('/', 'refresh');
+        }
+
+        $result = $this->m_custom->getUser($merchant_id, $this->group_id_merchant);
+        if (empty($result))
+        {
+            redirect('/', 'refresh');
+        }
+
+        $this->data['merchant_id'] = $merchant_id;
+        $charge_list = $this->m_admin->getAllFeeCharge($merchant_id);
+        $this->data['the_result'] = $charge_list;
+        $this->data['low_balance_only'] = $low_balance_only;
+
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+        $this->data['page_path_name'] = 'admin/merchant_feecharge';
+        $this->load->view('template/index', $this->data);
+    }
+    
+    function merchant_feecharge_add($merchant_id, $low_balance_only = 0)
+    {
+        if (!$this->m_admin->check_is_any_admin(67))
+        {
+            redirect('/', 'refresh');
+        }
+
+        $result = $this->m_custom->getUser($merchant_id, $this->group_id_merchant);
+        if (empty($result))
+        {
+            redirect('/', 'refresh');
+        }
+
+        $message_info = '';
+        $login_id = $this->login_id;
+        $login_type = $this->login_type;
+        $merchant_name = $this->m_custom->display_users($merchant_id);
+
+        if (isset($_POST) && !empty($_POST))
+        {
+            $can_redirect_to = 0;
+            $feecharge_select = $this->input->post('feecharge_id');
+            $feecharge_amount = $this->m_custom->display_dynamic_option($feecharge_select, NULL, NULL, 'option_value');
+            $feecharge_remark = $this->input->post('feecharge_remark');
+
+            // validate form input
+            $this->form_validation->set_rules('feecharge_id', 'Fee Charge Type', 'callback_check_merchant_fee_id');
+            $this->form_validation->set_rules('feecharge_remark', 'Transaction Remark');
+
+            if ($this->input->post('button_action') == "save")
+            {
+                if ($this->form_validation->run() === TRUE)
+                {
+                    $data = array(
+                        'user_id' => $merchant_id,
+                        'admin_id' => $login_id,
+                        'trans_conf_id' => 20,
+                        'amount_change' => $feecharge_amount * -1,
+                        'refer_id' => $feecharge_select,
+                        'trans_remark' => $feecharge_remark,
+                    );
+
+                    $new_id = $this->m_custom->get_id_after_insert('transaction_extra', $data);
+                    if ($new_id)
+                    {
+                        $this->m_merchant->transaction_history_insert($merchant_id, 20, $new_id, 'transaction_extra', 0, $feecharge_amount);
+                        $this->m_merchant->merchant_balance_update($merchant_id);
+                        $this->m_custom->insert_row_log('transaction_extra', $new_id, $login_id, $login_type);
+                        $message_info = add_message_info($message_info, $merchant_name . ' success add fee charge.');
+                        $can_redirect_to = 2;
+                    }
+                    else
+                    {
+                        $message_info = add_message_info($message_info, $this->ion_auth->errors());
+                        $can_redirect_to = 1;
+                    }
+                }
+            }
+            if ($this->input->post('button_action') == "back")
+            {
+                $can_redirect_to = 2;
+            }
+            if ($this->input->post('button_action') == "back_list")
+            {
+                $can_redirect_to = 3;
+            }
+
+            direct_go:
+            if ($message_info != NULL)
+            {
+                $this->session->set_flashdata('message', $message_info);
+            }
+            if ($can_redirect_to == 1)
+            {
+                redirect(uri_string(), 'refresh');
+            }
+            elseif ($can_redirect_to == 2)
+            {
+                if ($low_balance_only == 1)
+                {
+                    redirect('admin/merchant_feecharge/' . $merchant_id . '/1', 'refresh');
+                }
+                else
+                {
+                    redirect('admin/merchant_feecharge/' . $merchant_id, 'refresh');
+                }
+            }
+            elseif ($can_redirect_to == 3)
+            {
+                if ($low_balance_only == 1)
+                {
+                    redirect('admin/merchant_management/1', 'refresh');
+                }
+                else
+                {
+                    redirect('admin/merchant_management', 'refresh');
+                }
+            }
+        }
+
+        // set the flash data error message if there is one
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+
+        $this->data['feecharge_list'] = $this->m_custom->get_dynamic_option_array('merchant_fee', '0', 'Please Select', NULL, NULL, 0, 0, 1);
+        $this->data['feecharge_id'] = array(
+            'name' => 'feecharge_id',
+            'id' => 'feecharge_id',
+            'value' => $this->form_validation->set_value('feecharge_id'),
+        );
+
+        $this->data['feecharge_remark'] = array(
+            'name' => 'feecharge_remark',
+            'id' => 'feecharge_remark',
+            'value' => $this->form_validation->set_value('feecharge_remark'),
+        );
+
+        $this->data['title'] = 'Merchant Fee Charge Add';
+        $this->data['merchant_id'] = $merchant_id;
+
+        $this->data['page_path_name'] = 'admin/merchant_feecharge_change';
+        $this->load->view('template/index', $this->data);
+    }
+    
+    function check_merchant_fee_id($dropdown_selection)
+    {
+        if ($dropdown_selection == 0)
+        {
+            $this->form_validation->set_message('check_merchant_fee_id', 'The Fee Charge Type is required');
+            return FALSE;
+        }
+        return TRUE;
+    }
+    
     function merchant_topup($merchant_id, $low_balance_only = 0)
     {
         if (!$this->m_admin->check_is_any_admin(67))
@@ -4845,6 +5001,57 @@ class Admin extends CI_Controller
         $this->load->view('template/index', $this->data);
     }
 
+    function manage_merchant_fee()
+    {
+        if (!$this->m_admin->check_is_any_admin(76))
+        {
+            redirect('/', 'refresh');
+        }
+
+        $message_info = '';
+        //$login_id = $this->login_id;
+        //$login_type = $this->login_type;
+        $main_table = 'dynamic_option';
+        $main_table_id_column = 'option_id';
+        $main_table_filter_column = 'option_type';
+        $main_table_fiter_value = 'merchant_fee';
+
+        if (isset($_POST) && !empty($_POST))
+        {
+            $can_redirect_to = 1;
+            $id = $this->input->post('id');
+            $display_name = $this->m_custom->display_dynamic_option($id);
+            if ($this->input->post('button_action') == "frozen")
+            {
+                $message_info = add_message_info($message_info, $display_name . ' success hide.');
+                $this->m_custom->update_hide_flag(1, $main_table, $id);
+                $can_redirect_to = 1;
+            }
+            if ($this->input->post('button_action') == "recover")
+            {
+                $message_info = add_message_info($message_info, $display_name . ' success unhide.');
+                $this->m_custom->update_hide_flag(0, $main_table, $id);
+                $can_redirect_to = 1;
+            }
+
+            if ($message_info != NULL)
+            {
+                $this->session->set_flashdata('message', $message_info);
+            }
+            if ($can_redirect_to == 1)
+            {
+                redirect(uri_string(), 'refresh');
+            }
+        }
+
+        $result_list = $this->m_custom->get_many_table_record($main_table, $main_table_filter_column, $main_table_fiter_value, 1);
+        $this->data['the_result'] = $result_list;
+
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+        $this->data['page_path_name'] = 'admin/manage_merchant_fee';
+        $this->load->view('template/index', $this->data);
+    }
+    
     function manage_trans_config()
     {
         if (!$this->m_admin->check_is_any_admin(76))

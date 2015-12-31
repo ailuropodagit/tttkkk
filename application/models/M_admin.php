@@ -20,6 +20,21 @@ class M_admin extends CI_Model
         return $result;
     }
 
+    function getAllFeeCharge($merchant_id = 0)
+    {
+        if ($merchant_id != 0)
+        {
+            $this->db->where('user_id', $merchant_id);
+        }
+
+        $this->db->where('trans_conf_id', 20);
+        $this->db->order_by('trans_time', 'desc');
+        $this->db->from('transaction_extra');
+        $query = $this->db->get();
+        $result = $query->result_array();
+        return $result;
+    }
+    
     public function check_is_any_admin($check_worker_role = NULL)
     {
         $have_role = 0;

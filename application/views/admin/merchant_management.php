@@ -61,6 +61,7 @@ if (isset($message))
                         $remove_row = $row['hide_flag'] == 1 ? 'Frozen' : '';
                         $url_view = base_url() . "admin/merchant_view/" . $row['id'];
                         $url_edit = base_url() . "admin/merchant_edit/" . $row['id'];
+                        $url_feecharge = base_url() . "admin/merchant_feecharge/" . $row['id'];         
                         $url_topup = base_url() . "admin/merchant_topup/" . $row['id'];                      
                         $url_promo_code = base_url() . "admin/promo_code_change_merchant/" . $row['id'];                       
                         $url_dashboard = base_url() . "all/merchant_dashboard/" . $row['slug'];
@@ -69,6 +70,7 @@ if (isset($message))
                         if($low_balance_only == 1){
                             $url_view = base_url() . "admin/merchant_view/" . $row['id'] . "/1";
                             $url_edit = base_url() . "admin/merchant_edit/" . $row['id'] . "/1";
+                            $url_feecharge = base_url() . "admin/merchant_feecharge/" . $row['id'] . "/1"; 
                             $url_topup = base_url() . "admin/merchant_topup/" . $row['id']. "/1";
                             $url_special_action = base_url() . "admin/merchant_special_action/1";
                         }
@@ -90,13 +92,14 @@ if (isset($message))
                         echo "<td>";
                         echo "<a href='" . $url_view . "' ><img src='". base_url() . "/image/btn-view.png' title='View' alt='View' class='normal-btn-image'></a>";
                         if($this->m_admin->check_worker_role(78)) {
-                        echo "<a href='" . $url_edit . "' ><img src='". base_url() . "/image/btn-edit.png' title='Edit' alt='Edit' class='normal-btn-image'></a>";
+                            echo "<a href='" . $url_edit . "' ><img src='". base_url() . "/image/btn-edit.png' title='Edit' alt='Edit' class='normal-btn-image'></a>";
                         }
                         if($this->m_admin->check_worker_role(67)) {
-                        echo "<a href='" . $url_topup . "' ><img src='". base_url() . "/image/btn-topup.png' title='Top Up' alt='Top Up' class='normal-btn-image'></a>";
+                            echo "<a href='" . $url_feecharge . "' ><img src='". base_url() . "/image/btn-fee-charge.png' title='Fee Charge' alt='Fee Charge' class='normal-btn-image'></a>";
+                            echo "<a href='" . $url_topup . "' ><img src='". base_url() . "/image/btn-topup.png' title='Top Up' alt='Top Up' class='normal-btn-image'></a>";
                         }
                         if($this->m_admin->check_worker_role(77)) {
-                        echo "<a href='" . $url_promo_code . "' ><img src='". base_url() . "/image/btn-promocode.png' title='Promocode' alt='Promocode' class='normal-btn-image'></a>";
+                            echo "<a href='" . $url_promo_code . "' ><img src='". base_url() . "/image/btn-promocode.png' title='Promocode' alt='Promocode' class='normal-btn-image'></a>";
                         }
                         echo "</td>";
                         echo "<td>";                       

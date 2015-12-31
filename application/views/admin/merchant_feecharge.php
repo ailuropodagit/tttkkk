@@ -22,7 +22,7 @@ if (isset($message))
 ?>
 
 <div id="profile">
-    <h1>Merchant Top Up History</h1>
+    <h1>Merchant Fee Charge History</h1>
     <div id="payment-charge-content">
         <div style="float:left">
             <?php 
@@ -36,13 +36,13 @@ if (isset($message))
         </div>
         <div style="float:right">
             <?php 
-            $add_new_url = base_url() . 'admin/merchant_topup_add/' . $merchant_id; 
+            $add_new_url = base_url() . 'admin/merchant_feecharge_add/' . $merchant_id; 
             if ($low_balance_only == 1)
             {
-                $add_new_url = base_url() . 'admin/merchant_topup_add/' . $merchant_id . "/1"; 
+                $add_new_url = base_url() . 'admin/merchant_feecharge_add/' . $merchant_id . "/1"; 
             }
             ?>        
-            <div><a href='<?php echo $add_new_url; ?>' class="a-href-button">Add New Top Up</a></div>
+            <div><a href='<?php echo $add_new_url; ?>' class="a-href-button">Add New Fee Charge</a></div>
         </div>
         <div id="float-fix"></div>
         <div id='profile-info-form-each'>
@@ -57,37 +57,36 @@ if (isset($message))
                     <tr style="text-align:center">
                         <th>Merchant Name</th>
                         <th>Amount (RM)</th>
-                        <th>Transaction Bank</th>
+                        <th>Fee Charge Type</th>
                         <th>Transaction Date</th>
-                        <th>Transaction No</th>
                         <th>Remark</th>
-                        <th>Top Up Record By Admin</th>
-                        <th>Actions</th>
+                        <th>Fee Charge Record By Admin</th>
+<!--                        <th>Actions</th>-->
                     </tr>
                 </thead>
                 <tbody>
                     <?php
                     foreach ($the_result as $row)
                     {
-                        $merchant_name = $this->m_custom->display_users($row['merchant_id']);
-                        $topup_trans_date = displayDate($row['topup_trans_date']);
+                        $merchant_name = $this->m_custom->display_users($row['user_id']);
+                        $fee_charge_type = $this->m_custom->display_dynamic_option($row['refer_id']);
+                        $trans_date = displayDate($row['trans_time']);
                         $admin_name = $this->m_custom->display_users($row['admin_id']);
-                        $url_edit = base_url() . "admin/merchant_topup_edit/" . $row['merchant_id'] . "/" . $row['topup_id'];
-                        if ($low_balance_only == 1)
-                        {
-                            $url_edit = base_url() . "admin/merchant_topup_edit/" . $row['merchant_id'] . "/" . $row['topup_id'] . "/1";
-                        }
+//                        $url_edit = base_url() . "admin/merchant_feecharge_edit/" . $row['user_id'] . "/" . $row['extra_id'];
+//                        if ($low_balance_only == 1)
+//                        {
+//                            $url_edit = base_url() . "admin/merchant_feecharge_edit/" . $row['user_id'] . "/" . $row['extra_id'] . "/1";
+//                        }
                         echo '<tr>';
                         echo "<td>" . $merchant_name . "</td>";
-                        echo "<td style='text-align:right'>" . $row['topup_amount'] . "</td>";
-                        echo "<td>" . $row['topup_bank'] . "</td>";
-                        echo "<td>" . $topup_trans_date . "</td>";
-                        echo "<td>" . $row['topup_trans_no'] . "</td>";
-                        echo "<td>" . $row['topup_remark'] . "</td>";
+                        echo "<td style='text-align:right'>" . $row['amount_change'] . "</td>";
+                        echo "<td>" . $fee_charge_type . "</td>";
+                        echo "<td>" . $trans_date . "</td>";
+                        echo "<td>" . $row['trans_remark'] . "</td>";
                         echo "<td>" . $admin_name . "</td>";
-                        echo "<td>";
-                        echo "<a href='" . $url_edit . "' ><img src='". base_url() . "/image/btn-edit.png' title='Edit' alt='Edit' class='normal-btn-image'></a>";
-                        echo "</td>";
+//                        echo "<td>";
+//                        echo "<a href='" . $url_edit . "' ><img src='". base_url() . "/image/btn-edit.png' title='Edit' alt='Edit' class='normal-btn-image'></a>";
+//                        echo "</td>";
                         echo '</tr>';
                     }
                     ?>

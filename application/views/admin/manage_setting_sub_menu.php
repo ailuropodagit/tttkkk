@@ -11,6 +11,8 @@
             { ?>
             <div id='candie-navigation-each-separator'>|</div>
             <div id='candie-navigation-each'><a href="<?php echo base_url() . "admin/manage_trans_config";; ?>" >Manage Transaction Config</a></div>
+            <div id='candie-navigation-each-separator'>|</div>
+            <div id='candie-navigation-each'><a href="<?php echo base_url() . "admin/manage_merchant_fee";; ?>" >Manage Merchant Fee Charge Type</a></div>
             <?php } ?>
         </div>
         <div id="float-fix"></div><br/><br/>

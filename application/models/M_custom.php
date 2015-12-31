@@ -483,7 +483,7 @@ class M_custom extends CI_Model
     }
 
     //Get one static option text by it option id
-    public function display_dynamic_option($option_id = NULL, $prefix = NULL, $postfix = NULL, $use_option_title = 0)
+    public function display_dynamic_option($option_id = NULL, $prefix = NULL, $postfix = NULL, $column_used = 'option_desc')
     {
         if (IsNullOrEmptyString($option_id))
         {
@@ -497,14 +497,7 @@ class M_custom extends CI_Model
         }
 
         $row = $query->row_array();
-        if ($use_option_title == 1)
-        {
-            $the_text = $row['option_title'];
-        }
-        else
-        {
-            $the_text = $row['option_desc'];
-        }
+        $the_text = $row[$column_used];
 
         if (!IsNullOrEmptyString($prefix) && $row['option_special'] == 1)
         {
@@ -519,7 +512,7 @@ class M_custom extends CI_Model
     }
 
     //Get all the dynamic option of an option type
-    public function get_dynamic_option_array($option_type, $default_value = NULL, $default_text = NULL, $prefix = NULL, $postfix = NULL, $use_option_title = 0, $option_level = 0)
+    public function get_dynamic_option_array($option_type, $default_value = NULL, $default_text = NULL, $prefix = NULL, $postfix = NULL, $use_option_title = 0, $option_level = 0, $add_value_behind = 0)
     {
         switch ($option_level)
         {
@@ -539,7 +532,7 @@ class M_custom extends CI_Model
         $query = $this->db->get_where('dynamic_option', array('option_type' => $option_type, 'hide_flag' => 0));
 
         $return = array();
-        if (!IsNullOrEmptyString($default_value))
+        if ($default_value != NULL)
         {
             $return[$default_value] = $default_text;
         }
@@ -563,6 +556,11 @@ class M_custom extends CI_Model
                 if (!IsNullOrEmptyString($postfix) && $row['option_special'] == 2)
                 {
                     $the_text = $the_text . ' ' . $postfix;
+                }
+
+                if ($add_value_behind == 1)
+                {
+                    $the_text = $the_text . ' (RM ' . $row['option_value'] . ')';
                 }
 
                 $return[$row['option_id']] = $the_text;
