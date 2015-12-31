@@ -66,6 +66,6 @@ if(isset($message))
             </div>
             <?php echo form_close(); ?>
         </div>
-        
+        <div id="float-fix"></div>
     </div>
 </div>

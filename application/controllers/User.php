@@ -16,7 +16,8 @@ class User extends CI_Controller
         $this->album_user_merchant = $this->config->item('album_user_merchant');
         $this->folder_image = $this->config->item('folder_image');
         $this->box_number = $this->config->item('user_upload_box_per_page');
-        $this->temp_folder = $this->config->item('folder_image_temp');      
+        $this->temp_folder = $this->config->item('folder_image_temp');    
+        $this->strong_password = $this->config->item('strong_password');
     }
 
     // redirect if needed, otherwise display the user list
@@ -359,7 +360,14 @@ class User extends CI_Controller
     function change_password()
     {
         $this->form_validation->set_rules('old', $this->lang->line('change_password_validation_old_password_label'), 'required');
-        $this->form_validation->set_rules('new', $this->lang->line('change_password_validation_new_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[new_confirm]');
+        if ($this->strong_password == 1)
+        {
+            $this->form_validation->set_rules('new', $this->lang->line('change_password_validation_new_password_label'), 'required|matches[new_confirm]|min_length[8]|callback_password_check');
+        }
+        else
+        {
+            $this->form_validation->set_rules('new', $this->lang->line('change_password_validation_new_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[new_confirm]');
+        }
         $this->form_validation->set_rules('new_confirm', $this->lang->line('change_password_validation_new_password_confirm_label'), 'required');
 
         if (!check_correct_login_type($this->main_group_id))
@@ -426,6 +434,16 @@ class User extends CI_Controller
         }
     }
     
+    function password_check($str)
+    {
+        if (preg_match('#[0-9]#', $str) && preg_match('#[a-z]#', $str) && preg_match('#[A-Z]#', $str))
+        {
+            return TRUE;
+        }
+        $this->form_validation->set_message('password_check', $this->lang->line('strong_password_rule'));
+        return FALSE;
+    }
+
     //FOLLOWER
     function follower($user_type, $user_id)
     {
@@ -877,7 +895,14 @@ class User extends CI_Controller
         $this->form_validation->set_rules('race_other', $this->lang->line('create_user_race_other_label'));
         $this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'trim|required|valid_email|is_unique[' . $tables['users'] . '.email]');
         $this->form_validation->set_rules('username', $this->lang->line('create_user_validation_username_label'), 'trim|required|is_unique[' . $tables['users'] . '.username]');       
-        $this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
+        if ($this->strong_password == 1)
+        {
+            $this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|matches[password_confirm]|min_length[8]|callback_password_check');
+        }
+        else
+        {
+            $this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
+        }
         $this->form_validation->set_rules('password_confirm', $this->lang->line('create_user_validation_password_confirm_label'), 'required');
         $this->form_validation->set_rules('promo_code', $this->lang->line('create_user_promo_code_label2'));
         $this->form_validation->set_rules('accept_terms', '...', 'callback_accept_terms');
@@ -1789,7 +1814,7 @@ class User extends CI_Controller
                             {
                                 $this->m_custom->insert_row_log('merchant_user_album', $new_id, $user_id, $login_type);
                                 $this->m_user->candie_history_insert(4, $new_id, 'merchant_user_album');
-                                $this->m_merchant->transaction_history_insert($post_merchant_id, 14, $new_id, 'merchant_user_album');
+                                //$this->m_merchant->transaction_history_insert($post_merchant_id, 14, $new_id, 'merchant_user_album');
                                 //$this->m_user->user_trans_history_insert($user_id, 21, $new_id);   //Temporary comment this because user upload image for merchant cannot get cash back already 
                                 $this->m_custom->notification_process('merchant_user_album', $new_id);
                                 //$message_info = add_message_info($message_info, 'Image for merchant ' . $this->m_custom->display_users($post_merchant_id) . ' success create.', $post_title);

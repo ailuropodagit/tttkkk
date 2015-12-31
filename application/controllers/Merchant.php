@@ -21,6 +21,7 @@ class Merchant extends CI_Controller
         $this->folder_image = $this->config->item('folder_image');
         $this->box_number = $this->config->item('merchant_upload_box_per_page');
         $this->temp_folder = $this->config->item('folder_image_temp');
+        $this->strong_password = $this->config->item('strong_password');
     }
 
     // redirect if needed, otherwise display the user list
@@ -149,7 +150,14 @@ class Merchant extends CI_Controller
     function change_password()
     {
         $this->form_validation->set_rules('old', $this->lang->line('change_password_validation_old_password_label'), 'required');
-        $this->form_validation->set_rules('new', $this->lang->line('change_password_validation_new_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[new_confirm]');
+        if ($this->strong_password == 1)
+        {
+            $this->form_validation->set_rules('new', $this->lang->line('change_password_validation_new_password_label'), 'required|matches[new_confirm]|min_length[8]|callback_password_check');
+        }
+        else
+        {
+            $this->form_validation->set_rules('new', $this->lang->line('change_password_validation_new_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[new_confirm]');
+        }
         $this->form_validation->set_rules('new_confirm', $this->lang->line('change_password_validation_new_password_confirm_label'), 'required');
 
         if (!check_correct_login_type($this->main_group_id))
@@ -216,6 +224,16 @@ class Merchant extends CI_Controller
         }
     }
 
+    function password_check($str)
+    {
+        if (preg_match('#[0-9]#', $str) && preg_match('#[a-z]#', $str) && preg_match('#[A-Z]#', $str))
+        {
+            return TRUE;
+        }
+        $this->form_validation->set_message('password_check', $this->lang->line('strong_password_rule'));
+        return FALSE;
+    }
+    
     //FOLLOWER
     function follower($user_type, $user_id)
     {
@@ -768,7 +786,14 @@ class Merchant extends CI_Controller
         $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required|valid_contact_number');
         $this->form_validation->set_rules('username', $this->lang->line('create_merchant_validation_username_label'), 'trim|required|is_unique[' . $tables['users'] . '.username]');
         $this->form_validation->set_rules('email', $this->lang->line('create_merchant_validation_email_label'), 'trim|required|valid_email|is_unique[' . $tables['users'] . '.email]');
-        $this->form_validation->set_rules('password', $this->lang->line('create_merchant_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
+        if ($this->strong_password == 1)
+        {
+            $this->form_validation->set_rules('password', $this->lang->line('create_merchant_validation_password_label'), 'required|matches[password_confirm]|min_length[8]|callback_password_check');
+        }
+        else
+        {
+            $this->form_validation->set_rules('password', $this->lang->line('create_merchant_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]');
+        }
         $this->form_validation->set_rules('password_confirm', $this->lang->line('create_merchant_validation_password_confirm_label'), 'required');        
         if ($this->form_validation->run() == true)
         {

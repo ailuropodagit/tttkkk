@@ -66,15 +66,19 @@ if (isset($message))
                     foreach ($the_result as $row)
                     {
                         $redeem_row = $row['redeem_count'] === NULL ? NULL : $row['redeem_count'] . " (" . money($row['redeem_amount']) . ")";
-                        $userupload_row = $row['userupload_count'] === NULL ? NULL : $row['userupload_count'] . " (" . money($row['userupload_amount']) . ")";
+                        //$userupload_row = $row['userupload_count'] === NULL ? NULL : $row['userupload_count'] . " (" . money($row['userupload_amount']) . ")";
+                        $userupload_row = $row['userupload_count'] === NULL ? NULL : $row['userupload_count'];
                         $remove_row = $row['hide_flag'] == 1 ? 'Removed' : '';
                         echo '<tr>';
                         echo "<td>" . displayDate($row['create_date'], 1) . "</td>";
                         echo "<td>" . $row['title_url'] . "</td>";
                         echo "<td>" . $row['type_text'] . "</td>";
-                        echo "<td>" . $row['view_count'] . " (" . money($row['view_amount']) . ")</td>";
-                        echo "<td>" . $row['like_count'] . " (" . money($row['like_amount']) . ")</td>";
-                        echo "<td>" . $row['rating_count'] . " (" . money($row['rating_amount']) . ")</td>";
+                        //echo "<td>" . $row['view_count'] . " (" . money($row['view_amount']) . ")</td>";
+                        //echo "<td>" . $row['like_count'] . " (" . money($row['like_amount']) . ")</td>";
+                        //echo "<td>" . $row['rating_count'] . " (" . money($row['rating_amount']) . ")</td>";
+                        echo "<td>" . $row['view_count'] . "</td>";
+                        echo "<td>" . $row['like_count'] . "</td>";
+                        echo "<td>" . $row['rating_count'] . "</td>";
                         echo "<td>" . $redeem_row . "</td>";
                         echo "<td>" . $userupload_row . "</td>";
                         echo "<td>" . $remove_row . "</td>";

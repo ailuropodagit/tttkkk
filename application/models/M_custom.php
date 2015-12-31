@@ -1537,7 +1537,7 @@ class M_custom extends CI_Model
             {
                 case 'view_advertise':
                     $this->m_user->candie_history_insert(1, $insert_id, 'many_to_many');
-                    $this->m_merchant->transaction_history_insert($merchant_id, 11, $insert_id, 'many_to_many');
+                    //$this->m_merchant->transaction_history_insert($merchant_id, 11, $insert_id, 'many_to_many');
                     break;
             }
         }
@@ -1610,12 +1610,12 @@ class M_custom extends CI_Model
             {
                 case 'like':
                     $this->m_user->candie_history_insert(2, $insert_id);
-                    $this->m_merchant->transaction_history_insert($merchant_id, 12, $insert_id);
+                    //$this->m_merchant->transaction_history_insert($merchant_id, 12, $insert_id);
                     $this->m_custom->notification_process('activity_history', $insert_id);
                     break;
                 case 'rating':
                     $this->m_user->candie_history_insert(3, $insert_id);
-                    $this->m_merchant->transaction_history_insert($merchant_id, 13, $insert_id);
+                    //$this->m_merchant->transaction_history_insert($merchant_id, 13, $insert_id);
                     $this->m_custom->notification_process('activity_history', $insert_id);
                     break;
                 case 'comment':

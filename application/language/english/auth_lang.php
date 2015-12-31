@@ -260,6 +260,7 @@ $lang['change_password_submit_btn']                            = 'Save & Change'
 $lang['change_password_validation_old_password_label']         = 'Current Password';
 $lang['change_password_validation_new_password_label']         = 'New Password';
 $lang['change_password_validation_new_password_confirm_label'] = 'Re-Password';
+$lang['strong_password_rule'] = 'The password must contain at least 1 number, 1 uppercase character and 1 lowercase character.';
 
 // Forgot Password
 $lang['forgot_password_heading']                 = 'Forgot Your Password?';
