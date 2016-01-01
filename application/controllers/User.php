@@ -2536,6 +2536,105 @@ class User extends CI_Controller
         return $this->email->send();
     }
 
+    function contact_admin()
+    {
+        if (!check_correct_login_type($this->main_group_id))
+        {
+            redirect('/', 'refresh');
+        }
+
+        $message_info = '';
+        $login_id = $this->ion_auth->user()->row()->id;
+        //$login_type = $this->login_type;
+        $main_table = 'user_message';
+        $main_table_id_column = 'msg_id';
+        $main_table_filter_column = 'msg_type';
+        $main_table_fiter_value = 'withdraw';
+
+        $result_list = $this->m_custom->get_many_table_record($main_table, $main_table_filter_column, $main_table_fiter_value, 1, 'msg_from_id', $login_id);
+        $this->data['the_result'] = $result_list;
+
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+        $this->data['page_path_name'] = 'user/contact_admin';
+        $this->load->view('template/index', $this->data);
+    }
+    
+    function contact_admin_change()
+    {
+        if (!check_correct_login_type($this->main_group_id))
+        {
+            redirect('/', 'refresh');
+        }
+
+        $message_info = '';
+        $login_id = $this->ion_auth->user()->row()->id;
+
+        if (isset($_POST) && !empty($_POST))
+        {
+            $can_redirect_to = 0;
+            $msg_content = $this->input->post('msg_content');
+            $msg_desc = $this->input->post('msg_desc');
+            $msg_remark = $this->input->post('msg_remark');
+
+            // validate form input
+            $this->form_validation->set_rules('msg_content', 'Bank Name', 'required');
+            $this->form_validation->set_rules('msg_desc', 'Bank Account No', 'required');
+            $this->form_validation->set_rules('msg_remark', 'Extra Info');
+            
+            if ($this->input->post('button_action') == "save")
+            {
+                if ($this->form_validation->run() === TRUE)
+                {
+                    $this->m_custom->user_message_insert_withdraw_request($msg_content, $msg_desc, $msg_remark);
+                    $message_info = add_message_info($message_info, 'Withdraw request send.');
+                    $can_redirect_to = 2;
+                }
+            }
+            if ($this->input->post('button_action') == "back")
+            {
+                $can_redirect_to = 2;
+            }
+
+            direct_go:
+            if ($message_info != NULL)
+            {
+                $this->session->set_flashdata('message', $message_info);
+            }
+            if ($can_redirect_to == 1)
+            {
+                redirect(uri_string(), 'refresh');
+            }
+            elseif ($can_redirect_to == 2)
+            {
+                redirect('user/contact_admin', 'refresh');
+            }       
+        }
+
+        // set the flash data error message if there is one
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+        
+        $this->data['msg_content'] = array(
+            'name' => 'msg_content',
+            'id' => 'msg_content',
+            'value' => $this->form_validation->set_value('msg_content'),
+        );
+        
+        $this->data['msg_desc'] = array(
+            'name' => 'msg_desc',
+            'id' => 'msg_desc',
+            'value' => $this->form_validation->set_value('msg_desc'),
+        );
+        
+        $this->data['msg_remark'] = array(
+            'name' => 'msg_remark',
+            'id' => 'msg_remark',
+            'value' => $this->form_validation->set_value('msg_remark', 'I want to withdraw RM50.'),
+        );
+
+        $this->data['page_path_name'] = 'user/contact_admin_change';
+        $this->load->view('template/index', $this->data);
+    }
+    
     function promo_code()
     {
         if (!check_correct_login_type($this->main_group_id))

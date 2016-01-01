@@ -2293,6 +2293,40 @@ class M_custom extends CI_Model
         return $notification_list;
     }
 
+    public function user_message_insert($msg_to_id, $msg_type, $msg_content = NULL, $msg_desc = NULL, $msg_remark = NULL)
+    {
+        if ($this->ion_auth->logged_in())
+        {
+            $login_id = $this->ion_auth->user()->row()->id;
+            //$login_type = $this->session->userdata('user_group_id');
+
+            $the_data = array(
+                'msg_to_id' => $msg_to_id,
+                'msg_from_id' => $login_id,
+                'msg_content' => $msg_content,
+                'msg_type' => $msg_type,
+                'msg_desc' => $msg_desc,
+                'msg_remark' => $msg_remark,
+            );
+            $this->db->insert('user_message', $the_data);
+        }
+    }
+
+    public function user_message_insert_withdraw_request($msg_content = NULL, $msg_desc = NULL, $msg_remark = NULL)
+    {
+        $this->m_custom->user_message_insert(0, 'withdraw', $msg_content, $msg_desc, $msg_remark);
+    }
+    
+    public function user_message_withdraw_request_done($msg_id, $msg_reply = NULL, $msg_status = '1')
+    {
+        $the_data = array(
+            'msg_reply' => $msg_reply,
+            'msg_status' => $msg_status,
+        );
+        $this->db->where('msg_id', $msg_id);
+        $this->db->update('user_message', $the_data);
+    }
+    
     public function trans_extra_insert($user_id = NULL, $trans_conf_id = NULL, $amount_change = NULL, $admin_id = NULL, $trans_bank = NULL, $trans_date = NULL, $trans_no = NULL, $trans_remark = NULL)
     {
         if ($user_id == NULL || $trans_conf_id == NULL || $amount_change == NULL || $admin_id == NULL)

@@ -77,7 +77,7 @@ if(isset($message))
                 <b>Your current balance RM<?php echo $current_balance; ?></b>
             </div>
             <div id='payment-your-balance'>
-                If your balance reach RM50. You can contact keppo admin to get a cash back.
+                If your balance reach RM50. You can <a href="contact_admin">contact keppo admin</a> to get a cash back.
             </div>
             <div id='payment-assistance'>
                 If need further assistance please contact us: xxx-xxxxxxxx
