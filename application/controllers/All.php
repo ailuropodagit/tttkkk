@@ -27,7 +27,7 @@ class All extends CI_Controller
 
     function hotdeal_list($sub_category_id)
     {
-        $this->data['share_hotdeal_redemption_list'] = $this->m_custom->getAdvertise('hot', $sub_category_id);       
+        $this->data['share_hotdeal_redemption_list'] = $this->m_custom->getAdvertise('hot', $sub_category_id, NULL, 0, NULL, NULL, 0, 0, 0, 0, 1);       
         $this->data['title'] = "Hot Deal";
         if (!IsNullOrEmptyString($sub_category_id))
         {
@@ -1117,7 +1117,7 @@ class All extends CI_Controller
             
             if ($bottom_part == NULL)
             {
-                $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('hot', NULL, $user_id, 1);                
+                $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('hot', NULL, $user_id, 1, NULL, NULL, 0, 0, 0, 0, 1);                
                 $this->data['title'] = "Hot Deal";
                 $this->data['bottom_path_name'] = 'all/advertise_list';
                 //ADVERTISE SUGGESTION

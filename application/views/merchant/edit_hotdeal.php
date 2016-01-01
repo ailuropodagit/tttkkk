@@ -115,7 +115,9 @@ if(isset($message))
                 </div>
             </div>
             <div id="float-fix"></div>
-
+            <?php $have_role = $this->m_custom->check_role_su_can_uploadhotdeal();  
+            if($have_role == 1){
+             ?>  
             <button name="button_action" type="submit" value="edit_hotdeal" >Save</button>
             <?php if($hotdeal_frozen == 0){ ?>
             <button name="button_action" type="submit" value="frozen_hotdeal" onclick="return confirm('Are you sure want to temporary frozen this hotdeal? After frozen then it will not show publicly until you unfrozen it.')" >Frozen</button>
@@ -123,6 +125,11 @@ if(isset($message))
             <button name="button_action" type="submit" value="unfrozen_hotdeal" >Unfrozen</button>
             <?php } ?>
             <button name="button_action" type="submit" value="remove_hotdeal" onclick="return confirm('Are you sure want to remove it?')" >Remove</button>
+            <?php    }
+            else {
+               echo "You don't have permission to edit hot deal";
+            }
+            ?>
         <?php echo form_close(); ?>
 
     </div>

@@ -1009,6 +1009,77 @@ class Merchant extends CI_Controller
         echo $output;
     }
 
+    function hotdeal_expired()
+    {
+        if (!check_correct_login_type($this->main_group_id) && !check_correct_login_type($this->group_id_supervisor))
+        {
+            redirect('/', 'refresh');
+        }
+
+        $message_info = '';
+        $login_id = $this->ion_auth->user()->row()->id;
+        $merchant_id = $this->ion_auth->user()->row()->id;
+        $do_by_type = $this->main_group_id;
+        $main_table = 'advertise';
+
+        //if is login by supervisor then need change some setting
+        if (check_correct_login_type($this->group_id_supervisor))
+        {
+            $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;
+            $do_by_type = $this->group_id_supervisor;
+        }
+        
+        if (isset($_POST) && !empty($_POST))
+        {
+            $can_redirect_to = 1;
+            $id = $this->input->post('id');
+            $display_name = $this->input->post('title');
+            if ($this->input->post('button_action') == "change_to_preview")
+            {
+                $data = array(
+                    'post_hour' => 0,
+                );
+
+                if ($this->m_custom->simple_update('advertise', $data, 'advertise_id', $id))
+                {
+                    $message_info = add_message_info($message_info, $display_name . ' success change to normal preview hot deal.');
+                    $this->m_custom->update_row_log('advertise', $id, $login_id, $do_by_type);
+                    $can_redirect_to = 1;
+                }
+            }
+            if ($this->input->post('button_action') == "frozen")
+            {
+                $message_info = add_message_info($message_info, $display_name . ' success frozen.');
+                $this->m_custom->update_frozen_flag(1, $main_table, $id);
+                $this->m_custom->update_row_log('advertise', $id, $login_id, $do_by_type);
+                $can_redirect_to = 1;
+            }
+            if ($this->input->post('button_action') == "remove")
+            {
+                $message_info = add_message_info($message_info, $display_name . ' success remove.');
+                $this->m_custom->update_hide_flag(1, $main_table, $id);
+                $this->m_custom->remove_row_log('advertise', $id, $login_id, $do_by_type);
+                $can_redirect_to = 1;
+            }
+            
+            if ($message_info != NULL)
+            {
+                $this->session->set_flashdata('message', $message_info);
+            }
+            if ($can_redirect_to == 1)
+            {
+                redirect(uri_string(), 'refresh');
+            }
+        }
+
+        $result_list = $this->m_custom->getAdvertise_expired($merchant_id);
+        $this->data['the_result'] = $result_list;
+
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+        $this->data['page_path_name'] = 'merchant/hotdeal_expired';
+        $this->load->view('template/index', $this->data);
+    }
+    
     //merchant profile view and edit page
     function profile()
     {

@@ -362,7 +362,7 @@
                                     $header_merchant_slug = generate_slug($this->session->userdata('company_name'));
                                     $merchant_balance_text = $this->m_merchant->merchant_balance_color($login_user_id);
                                     $follower_count = $this->albert_model->follower_count($login_user_id);
-                                    $notification_count = $this->m_custom->notification_count($login_user_id) + $this->m_custom->display_row_monitor(1);
+                                    $notification_count = $this->m_custom->notification_count($login_user_id) + $this->m_custom->display_row_monitor(1) + $this->m_custom->getAdvertise_expired($login_user_id, 1);
                                     ?>
                                     <li>
                                         <a>My Account</a>
@@ -396,7 +396,7 @@
                                     $login_main_merchant_id = $this->albert_model->read_user($where_read_user)->row()->su_merchant_id;
                                     $follower_count = $this->albert_model->follower_count($login_main_merchant_id);
                                     $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;
-                                    $notification_count = $this->m_custom->notification_count($merchant_id); 
+                                    $notification_count = $this->m_custom->notification_count($merchant_id) + $this->m_custom->getAdvertise_expired($merchant_id, 1); 
                                     ?>
                                     <li>
                                         <a>My Account</a>

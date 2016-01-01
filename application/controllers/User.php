@@ -2589,8 +2589,8 @@ class User extends CI_Controller
 
         $this->data['page_path_name'] = 'user/promo_code';
         $this->load->view('template/index', $this->data);
-    }
-
+    }   
+    
     function _get_csrf_nonce()
     {
         $this->load->helper('string');

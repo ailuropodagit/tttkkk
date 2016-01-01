@@ -1031,6 +1031,30 @@ class M_custom extends CI_Model
         return $final_result;
     }
 
+    function getAdvertise_expired($merchant_id = 0, $want_count = 0, $advertise_type = 'hot')
+    {
+        if ($merchant_id != 0)
+        {
+            $this->db->where('merchant_id', $merchant_id);
+        }
+        $this->db->where('advertise_type', $advertise_type);
+        $this->db->where('end_time <=', get_part_of_date('all'));
+        $this->db->where('frozen_flag', 0);
+        $this->db->where('hide_flag', 0);
+        $this->db->where('post_hour !=', 0);
+        $this->db->order_by("advertise_id", "desc");
+        $this->db->from('advertise');
+        $query = $this->db->get();
+        if ($want_count == 1)
+        {
+            return $query->num_rows();
+        }
+        else
+        {
+            return $query->result_array();
+        }
+    }
+
     //To get merchant promotion list with branch filter or history only
     function getPromotion($merchant_id, $supervisor_id = 0, $show_history = 0)
     {

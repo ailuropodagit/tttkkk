@@ -1,10 +1,25 @@
+<script type="text/javascript" src="<?php echo base_url() ?>js/datatables/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>js/datatables/js/moment.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>js/datatables/js/datetime-moment.js"></script>
+<?php echo link_tag('js/datatables/css/jquery.dataTables.min.css') ?>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.fn.dataTable.moment('DD-MM-YYYY');
+        $('#myTable').DataTable({
+            "pageLength": 25,
+            "order": []
+        });
+    });
+</script>
+
 <div id="monitoring">
     <h1>Monitoring Remove Action</h1>
     <div id="monitoring-content">
         <?php
         $this->load->view('all/notification_sub_menu');
         ?>
-        <div id='table-all'>
+        <div id='payment-charge-table'>
             <table border='1px' cellspacing='0px' cellpadding='0px' id="myTable" class="display">
                 <colgroup>
                     <col>                        
