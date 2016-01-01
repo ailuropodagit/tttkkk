@@ -124,7 +124,7 @@ if(isset($message))
             <?php }else{ ?>
             <button name="button_action" type="submit" value="unfrozen_hotdeal" >Unfrozen</button>
             <?php } ?>
-            <button name="button_action" type="submit" value="remove_hotdeal" onclick="return confirm('Are you sure want to remove it?')" >Remove</button>
+            <button name="button_action" type="submit" value="remove_hotdeal" onclick="return confirm('Are you sure want to remove it? It cannot be recover.')" >Remove</button>
             <?php    }
             else {
                echo "You don't have permission to edit hot deal";

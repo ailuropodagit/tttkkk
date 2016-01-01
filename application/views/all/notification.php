@@ -61,7 +61,7 @@ $image_path_user_profile = $this->config->item('album_user_profile');
                         <td>
                             <div id='notification-table-message'>
                                 <?php 
-                                if (empty($noti_url)) 
+                                if (empty($row['noti_url'])) 
                                 { 
                                     echo $noti_message;
                                 } 
@@ -76,9 +76,20 @@ $image_path_user_profile = $this->config->item('album_user_profile');
                         </td>
                         <td valign="top">
                                 <div id="home-row2-column2-user-picture-notification-item-image">
-                                    <a href="<?php echo $noti_url ?>">
-                                        <?php echo img($notification_item_image) ?>
-                                    </a>
+                                    <?php 
+                                    if (empty($row['noti_url'])) 
+                                    { 
+                                        echo img($notification_item_image);
+                                    } 
+                                    else
+                                    {
+                                        ?>
+                                        <a href="<?php echo $noti_url ?>" target="_blank">
+                                            <?php echo img($notification_item_image) ?>
+                                        </a>
+                                        <?php
+                                    }
+                                    ?>
                                 </div>
                             </td>
                         <td>

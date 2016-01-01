@@ -1057,6 +1057,11 @@ class Merchant extends CI_Controller
             if ($this->input->post('button_action') == "remove")
             {
                 $message_info = add_message_info($message_info, $display_name . ' success remove.');
+                if ($do_by_type == $this->group_id_supervisor)
+                {
+                    //$noti_url = 'all/advertise/' . $hotdeal_id;
+                    $this->m_custom->notification_insert($merchant_id, 14, '', 'advertise', 'advertise_id', $id);
+                }
                 $this->m_custom->update_hide_flag(1, $main_table, $id);
                 $this->m_custom->remove_row_log('advertise', $id, $login_id, $do_by_type);
                 $can_redirect_to = 1;
@@ -2367,6 +2372,12 @@ class Merchant extends CI_Controller
                 {
                     $this->m_custom->update_row_log('advertise', $hotdeal_id, $do_by_id, $do_by_type);
                     $message_info = add_message_info($message_info, 'Hot Deal success update.', $title);
+                    if ($do_by_type == $this->group_id_supervisor)
+                    {
+                        $noti_url = 'all/advertise/' . $hotdeal_id;
+                        $advertise = $this->m_custom->getOneAdvertise($hotdeal_id, 1, 1, 1);
+                        $this->m_custom->notification_insert($advertise['merchant_id'], 15, $noti_url, 'advertise', 'advertise_id', $hotdeal_id);
+                    }
                 }
                 else
                 {
@@ -2385,6 +2396,13 @@ class Merchant extends CI_Controller
                     $this->m_custom->remove_row_log('advertise', $hotdeal_id, $do_by_id, $do_by_type);
                     $message_info = add_message_info($message_info, 'Hot Deal success remove.', $title);
                     $this->session->set_flashdata('message', $message_info);
+                    if ($do_by_type == $this->group_id_supervisor)
+                    {
+                        //$noti_url = 'all/advertise/' . $hotdeal_id;
+                        $noti_url = '';
+                        $advertise = $this->m_custom->getOneAdvertise($hotdeal_id, 1, 1, 1);
+                        $this->m_custom->notification_insert($advertise['merchant_id'], 14, $noti_url, 'advertise', 'advertise_id', $hotdeal_id);
+                    }
                     //redirect('merchant/upload_hotdeal', 'refresh');
                     redirect('all/merchant_dashboard/' . $this->session->userdata('company_slug'), 'refresh');
                 }

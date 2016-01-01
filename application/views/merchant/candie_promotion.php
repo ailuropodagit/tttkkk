@@ -302,7 +302,7 @@ if(isset($message))
                     <button name="button_action" type="submit" value="submit">Save</button>
                 <?php
                 }else{                    
-                        echo " You cannot make changes to this candie voucher anymore, it already is history";
+                        echo " You cannot make changes to this candie voucher, either it already is history, not yet reach this month or you don't have privilege.";
                      } 
                      if($promotion_id != ''){
                          echo '<input type="hidden" name="promotion_id" value="'.$promotion_id.'" />';

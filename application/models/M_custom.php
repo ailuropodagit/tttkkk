@@ -398,7 +398,7 @@ class M_custom extends CI_Model
         if ($query->num_rows() > 0)
         {
             $return = $query->row_array();
-            if($return['profile_image'] == '')
+            if($return['profile_image'] == '' && $return['main_group_id'] != $this->config->item('group_id_supervisor'))
             {
                 $image_path = '';
                 $image = $this->config->item('empty_image');
@@ -2248,7 +2248,7 @@ class M_custom extends CI_Model
             $table_column = $notification['noti_refer_table_column'];
             $table_id = $notification['noti_refer_table_id'];
             
-            if ($table_name == 'users')
+            if ($table_name == 'users' || ($table_name == 'advertise' && $msg_type == 14))  //If it is supervisor remove hotdeal
             {
                 $record = $this->m_custom->get_one_table_record($table_name, $table_column, $table_id, 1);
             }
