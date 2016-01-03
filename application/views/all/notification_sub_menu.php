@@ -40,6 +40,14 @@
                 <div id='candie-navigation-each'><a href='<?php echo base_url() . "admin/merchant-management/1" ?>' >Merchant Insufficient Fund (<?php echo $merchant_low_balance_count; ?>)</a></div>
             <?php } ?>    
             <?php
+            if ($this->m_admin->check_is_any_admin(75))
+            {
+                $user_withdraw_request_count = $this->m_admin->user_withdraw_request(1, 0);               
+            ?>
+                <div id='candie-navigation-each-separator'>|</div>
+                <div id='candie-navigation-each'><a href='<?php echo base_url() . "admin/user-withdraw" ?>' >User Withdraw Request (<?php echo $user_withdraw_request_count; ?> new)</a></div>
+            <?php } ?>      
+            <?php
             if (check_correct_login_type($this->group_id_merchant) || check_correct_login_type($this->config->item('group_id_supervisor')))
             {
                 $merchant_hotdeal_expired_count = $this->m_custom->getAdvertise_expired($noti_to_id, 1);               

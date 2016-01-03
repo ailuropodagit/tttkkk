@@ -228,6 +228,25 @@ class M_admin extends CI_Model
         }
     }
     
+    public function user_withdraw_request($want_count = 0, $msg_status = 3)
+    {
+        if ($msg_status != 3)
+        {
+            $this->db->where('msg_status', $msg_status);
+        }
+
+        $this->db->order_by('msg_time', 'desc');
+        $query = $this->db->get_where('user_message', array('msg_type' => 'withdraw'));
+        if ($want_count == 1)
+        {
+            return $query->num_rows();
+        }
+        else
+        {
+            return $query->result_array();
+        }
+    }
+
     public function banner_expired_count(){
         $this->db->where('end_time <=', get_part_of_date('all'));
         $query = $this->db->get_where('banner', array('hide_flag' => 0));

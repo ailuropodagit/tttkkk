@@ -2553,7 +2553,8 @@ class User extends CI_Controller
 
         $result_list = $this->m_custom->get_many_table_record($main_table, $main_table_filter_column, $main_table_fiter_value, 1, 'msg_from_id', $login_id);
         $this->data['the_result'] = $result_list;
-
+        $this->data['current_balance'] = $this->m_user->user_check_balance($login_id);
+        
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
         $this->data['page_path_name'] = 'user/contact_admin';
         $this->load->view('template/index', $this->data);

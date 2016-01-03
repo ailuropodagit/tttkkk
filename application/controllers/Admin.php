@@ -1584,7 +1584,7 @@ class Admin extends CI_Controller
         $this->load->view('template/index', $this->data);
     }
 
-    function user_balance_adjust($user_id)
+    function user_balance_adjust($user_id, $request_msg_id = NULL)
     {
         if (!$this->m_admin->check_is_any_admin(75))
         {
@@ -1633,7 +1633,11 @@ class Admin extends CI_Controller
             }
             if ($this->input->post('button_action') == "back")
             {
-                $can_redirect_to = 2;
+                if($request_msg_id == NULL){
+                    $can_redirect_to = 2;
+                }else{
+                    $can_redirect_to = 3;
+                }
             }
 
             direct_go:
@@ -1648,6 +1652,10 @@ class Admin extends CI_Controller
             elseif ($can_redirect_to == 2)
             {
                 redirect('admin/user_management', 'refresh');
+            }
+            elseif ($can_redirect_to == 3)
+            {
+                redirect('admin/user_withdraw', 'refresh');
             }
         }
 
@@ -1676,6 +1684,77 @@ class Admin extends CI_Controller
         $this->load->view('template/index', $this->data);
     }
 
+    function user_withdraw($view_status = 0)
+    {
+        if (!$this->m_admin->check_is_any_admin(75))
+        {
+            redirect('/', 'refresh');
+        }
+
+        $message_info = '';
+        $login_id = $this->login_id;
+        $main_table = 'user_message';
+        $main_table_id_column = 'msg_id';
+        
+        if (isset($_POST) && !empty($_POST))
+        {
+            $can_redirect_to = 0;
+            $view_status = $this->input->post('view_status_id');
+            $id = $this->input->post('id');
+            $display_name = $this->m_custom->display_users($this->input->post('msg_from_id'));
+            
+            if ($this->input->post('button_action') == "success")
+            {
+                $data = array(
+                    'msg_status' => 1,
+                    'status_change_by' => $login_id,
+                );
+
+                if ($this->m_custom->simple_update($main_table, $data, $main_table_id_column, $id))
+                {
+                    $message_info = add_message_info($message_info, ' success withdraw.', $display_name);
+                    $can_redirect_to = 1;
+                }
+            }
+            if ($this->input->post('button_action') == "fail")
+            {
+                $data = array(
+                    'msg_status' => 2,
+                    'status_change_by' => $login_id,
+                );
+
+                if ($this->m_custom->simple_update($main_table, $data, $main_table_id_column, $id))
+                {
+                    $message_info = add_message_info($message_info, ' fail to withdraw.', $display_name);
+                    $can_redirect_to = 1;
+                }
+            }
+            
+            if ($message_info != NULL)
+            {
+                $this->session->set_flashdata('message', $message_info);
+            }
+            if ($can_redirect_to == 1)
+            {
+                redirect(uri_string(), 'refresh');
+            }
+        }
+        
+        $this->data['view_status_list'] = array('0' => 'Show New Only', '1' => 'Show Success Only', '2' => 'Show Fail Only', '3' => 'Show All');
+        $this->data['view_status_id'] = array(
+            'name' => 'view_status_id',
+            'id' => 'view_status_id',
+        );
+        $this->data['view_status_selected'] = $view_status;
+        
+        $result_list = $this->m_admin->user_withdraw_request(0, $view_status);     
+        $this->data['the_result'] = $result_list;
+        
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+        $this->data['page_path_name'] = 'admin/user_withdraw';
+        $this->load->view('template/index', $this->data);
+    }
+    
     function merchant_management($low_balance_only = 0)
     {
         if (!$this->m_admin->check_is_any_admin(65))

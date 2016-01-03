@@ -21,6 +21,10 @@ if (isset($message))
 <div id="payment-charge">
     <h1>Request Cash Back Withdraw</h1>
     <div id="payment-charge-content">
+        <div id="payment-balance">
+            Current Balance : RM <?php echo $current_balance; ?>
+        </div>
+        <div id="float-fix"></div>
         <div style="float:left">
             <?php $back_url = base_url() . 'user/balance_page'; ?>           
             <div><a href='<?php echo $back_url; ?>' class="a-href-button">Back</a></div>
@@ -37,18 +41,26 @@ if (isset($message))
                         <th>Bank Name</th> 
                         <th>Bank Account</th>
                         <th>Extra Info</th>
-                        <th>Admin Reply</th>
+                        <th>Withdraw Status</th>
+                        <th>Admin Reply</th>                      
                     </tr>
                 </thead>
                 <tbody>
                     <?php
                     foreach ($the_result as $row)
                     {
+                        $msg_status_text = '';
+                        if($row['msg_status'] == 1){
+                            $msg_status_text = 'Success Withdraw';
+                        }else if($row['msg_status'] == 2){
+                            $msg_status_text = 'Fail Withdraw';
+                        }
                         echo '<tr>';
                         echo "<td>" . $row['msg_content'] . "</td>";
                         echo "<td>" . $row['msg_desc'] . "</td>";
                         echo "<td>" . $row['msg_remark'] . "</td>";
-                        echo "<td>" . $row['msg_reply'] . "</td>";
+                        echo "<td>" . $msg_status_text . "</td>";
+                        echo "<td>" . $row['msg_reply'] . "</td>";                      
                         echo '</tr>';
                     }
                     ?>

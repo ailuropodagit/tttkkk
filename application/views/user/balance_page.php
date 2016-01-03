@@ -9,8 +9,7 @@ if(isset($message))
 ?>
 
 <div id="payment">
-    <h1>Balance</h1>
-    <h1>Payment</h1>
+    <h1>Payment Balance</h1>
     <div id='payment-content'>
         <!--PAYMENT GO-->
         <div id="payment-go">
