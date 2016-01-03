@@ -1598,6 +1598,15 @@ class Admin extends CI_Controller
             redirect('/', 'refresh');
         }
 
+        if ($request_msg_id != NULL)  //to check the request message id is it correct for this user
+        {
+            $allowed_list = $this->m_custom->get_list_of_allow_id('user_message', 'msg_from_id', $user_id, 'msg_id', 'msg_type', 'withdraw');
+            if (!check_allowed_list($allowed_list, $request_msg_id))
+            {
+                $request_msg_id = NULL;
+            }
+        }
+
         $message_info = '';
         $login_id = $this->login_id;
         $login_type = $this->login_type;
@@ -1613,14 +1622,28 @@ class Admin extends CI_Controller
             // validate form input
             $this->form_validation->set_rules('amount_change', 'Balance Adjust Amount (RM)', 'required|numeric');
             $this->form_validation->set_rules('trans_remark', 'Adjust Reason', 'required');
-
+            
             if ($this->input->post('button_action') == "save")
             {
+                if ($request_msg_id != NULL)  //if have link to user withdraw request then need check this
+                {
+                    $msg_reply = $this->input->post('msg_reply');
+                    $this->form_validation->set_rules('msg_reply', 'Admin Reply', 'required');
+                }
+
                 if ($this->form_validation->run() === TRUE)
                 {
                     $new_id = $this->m_admin->trans_extra_balance_adjust($user_id, $amount_change, $trans_remark);
                     if ($new_id)
                     {
+                        if ($request_msg_id != NULL)
+                        {
+                            $data = array(
+                                'msg_reply' => $msg_reply,
+                            );
+                            $this->m_custom->simple_update('user_message', $data, 'msg_id', $request_msg_id);  //To update also the message to reply to user
+                        }
+                        
                         $message_info = add_message_info($message_info, 'Succes adjust ' . $user_name . ' user balance.');
                         $can_redirect_to = 1;
                     }
@@ -1633,9 +1656,12 @@ class Admin extends CI_Controller
             }
             if ($this->input->post('button_action') == "back")
             {
-                if($request_msg_id == NULL){
+                if ($request_msg_id == NULL)  //either redirect back to withdraw request page or user page
+                {
                     $can_redirect_to = 2;
-                }else{
+                }
+                else
+                {
                     $can_redirect_to = 3;
                 }
             }
@@ -1668,7 +1694,7 @@ class Admin extends CI_Controller
             'name' => 'amount_change',
             'id' => 'amount_change',
             'type' => 'text',
-            'value' => $this->form_validation->set_value('amount_change'),
+            'value' => $request_msg_id == NULL ? $this->form_validation->set_value('amount_change') : $this->form_validation->set_value('amount_change', '-50'),
             'placeholder' => '-50',
         );
 
@@ -1678,6 +1704,13 @@ class Admin extends CI_Controller
             'value' => $this->form_validation->set_value('trans_remark'),
         );
 
+        $this->data['request_msg_id'] = $request_msg_id;
+        $this->data['msg_reply'] = array(
+            'name' => 'msg_reply',
+            'id' => 'msg_reply',
+            'value' => $this->form_validation->set_value('msg_reply'),
+        );
+        
         $result_list = $this->m_custom->get_many_table_record('transaction_extra', 'trans_conf_id', '23', 1, 'user_id', $user_id);
         $this->data['the_result'] = $result_list;
         $this->data['page_path_name'] = 'admin/user_balance_adjust';

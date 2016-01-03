@@ -31,10 +31,12 @@ if (isset($message))
                 <span id="payment-charge-go-button"><button name="button_action" type="submit" value="filter_result">Go</button></span>
             <?php echo form_close();  ?>
         </div>
+        <br/><br/>
         <div id='payment-charge-table'>
             <table border='1px' cellspacing='0px' cellpadding='0px' id="myTable" class="display">
                 <thead>
                     <tr style="text-align:center">
+                        <th>Request Date</th> 
                         <th>User Name</th> 
                         <th>Bank Name</th> 
                         <th>Bank Account</th>
@@ -62,6 +64,7 @@ if (isset($message))
                         $url_balance_adjust = base_url() . "admin/user_balance_adjust/" . $row['msg_from_id'] . "/" . $row['msg_id'];
                         $url_special_action = base_url() . "admin/user_withdraw";
                         echo '<tr>';
+                        echo "<td>" . displayDate($row['msg_time']) . "</td>";
                         echo "<td>" . $user_name . "</td>";
                         echo "<td>" . $row['msg_content'] . "</td>";
                         echo "<td>" . $row['msg_desc'] . "</td>";

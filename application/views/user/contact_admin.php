@@ -38,6 +38,7 @@ if (isset($message))
             <table border='1px' cellspacing='0px' cellpadding='0px' id="myTable" class="display">
                 <thead>
                     <tr style="text-align:center">
+                        <th>Request Date</th> 
                         <th>Bank Name</th> 
                         <th>Bank Account</th>
                         <th>Extra Info</th>
@@ -56,6 +57,7 @@ if (isset($message))
                             $msg_status_text = 'Fail Withdraw';
                         }
                         echo '<tr>';
+                        echo "<td>" . displayDate($row['msg_time']) . "</td>";
                         echo "<td>" . $row['msg_content'] . "</td>";
                         echo "<td>" . $row['msg_desc'] . "</td>";
                         echo "<td>" . $row['msg_remark'] . "</td>";

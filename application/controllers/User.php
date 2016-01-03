@@ -2551,7 +2551,7 @@ class User extends CI_Controller
         $main_table_filter_column = 'msg_type';
         $main_table_fiter_value = 'withdraw';
 
-        $result_list = $this->m_custom->get_many_table_record($main_table, $main_table_filter_column, $main_table_fiter_value, 1, 'msg_from_id', $login_id);
+        $result_list = $this->m_admin->user_withdraw_request(0, 3, $login_id);     
         $this->data['the_result'] = $result_list;
         $this->data['current_balance'] = $this->m_user->user_check_balance($login_id);
         

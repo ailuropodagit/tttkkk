@@ -228,8 +228,13 @@ class M_admin extends CI_Model
         }
     }
     
-    public function user_withdraw_request($want_count = 0, $msg_status = 3)
+    public function user_withdraw_request($want_count = 0, $msg_status = 3, $user_id = 0)
     {
+        if ($user_id != 0)
+        {
+            $this->db->where('msg_from_id', $user_id);
+        }
+
         if ($msg_status != 3)
         {
             $this->db->where('msg_status', $msg_status);

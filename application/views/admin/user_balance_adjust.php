@@ -39,6 +39,12 @@ if(isset($message))
                     <div id='profile-info-form-each-label'><?php echo 'Adjust Reason : '; ?></div>
                     <div id='profile-info-form-each-input'><?php echo form_textarea($trans_remark); ?></div>
                 </div>              
+                <?php if($request_msg_id != NULL){ ?>
+                <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><?php echo 'Can add an Admin Reply for Notify User : '; ?></div>
+                    <div id='profile-info-form-each-input'><?php echo form_textarea($msg_reply); ?></div>
+                </div>   
+                <?php } ?>
             </div>
             <?php 
                 echo form_hidden('user_id', $result['id']); 
