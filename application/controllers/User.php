@@ -1622,6 +1622,8 @@ class User extends CI_Controller
             $post_file = "post-file";
             $post_title = $this->input->post('picture-title');
             $post_desc = $this->input->post('picture-desc');
+            $post_album_id = $this->input->post('picture-main-album');
+             
             if ($this->input->post('button_action') == "edit_picture")
             {
                 $image_data = NULL;
@@ -1649,6 +1651,7 @@ class User extends CI_Controller
                     //'title' => $post_title,
                     'title' => '',
                     'description' => $post_desc,
+                    'album_id' => $post_album_id,
                     'image' => empty($image_data) ? $previous_image_name : $image_data['upload_data']['file_name'],
                 );
 
@@ -1709,6 +1712,13 @@ class User extends CI_Controller
             'value' => empty($picture_result) ? '' : $picture_result['description'],
         );
 
+        $this->data['picture_main_album'] = array(
+            'name' => 'picture-main-album',
+            'id' => 'picture-main-album',
+        );
+        $this->data['main_album_list'] = $this->m_custom->getMainAlbum($user_id, NULL, 1);
+        $this->data['picture_main_album_selected'] = empty($picture_result) ? '' : $picture_result['album_id'];
+        
         $usa_id = empty($picture_result) ? '0' : $picture_result['user_album_id'];
         //$this->data['usa_id_value'] = $usa_id;
 
@@ -1722,6 +1732,168 @@ class User extends CI_Controller
         $this->load->view('template/index', $this->data);
     }
 
+    function main_album($user_id = NULL)
+    {
+        $album_list = '';
+        if ($user_id != NULL)
+        {
+            $album_list = $this->m_custom->getMainAlbum($user_id);
+        }
+        else
+        {
+            $album_list = $this->m_custom->getMainAlbum();
+        }
+        $this->data['album_list'] = $album_list;
+
+        $this->data['title'] = "My Album";
+        $this->data['message'] = $this->session->flashdata('message');
+        $this->data['page_path_name'] = 'user/main_album';
+        if ($this->ion_auth->logged_in())
+        {
+            $this->load->view('template/index', $this->data);
+        }
+        else
+        {
+            $this->load->view('template/layout', $this->data);
+        }
+    }
+    
+    function main_album_change($edit_id = NULL)
+    {
+        if (!check_correct_login_type($this->main_group_id))
+        {
+            redirect('/', 'refresh');
+        }
+
+        $message_info = '';
+        $login_id = $this->ion_auth->user()->row()->id;
+        $login_type = $this->session->userdata('user_group_id');
+        $is_edit = 0;
+        $main_table = 'main_album';
+        $main_table_id_column = 'album_id';
+        $main_table_filter_column = 'user_id';
+        $main_table_fiter_value = $login_id;
+
+        if ($edit_id != NULL)
+        {
+            $allowed_list = $this->m_custom->get_list_of_allow_id($main_table, $main_table_filter_column, $main_table_fiter_value, $main_table_id_column);
+            if (!check_allowed_list($allowed_list, $edit_id))
+            {
+                redirect('/', 'refresh');
+            }
+            $is_edit = 1;
+        }
+
+        if (isset($_POST) && !empty($_POST))
+        {
+            $can_redirect_to = 0;
+
+            $edit_id = $this->input->post('edit_id');
+            $album_title = $this->input->post('album_title');
+
+            // validate form input
+            $this->form_validation->set_rules('album_title', $this->lang->line('main_album_title_label'), 'required');
+
+            if ($edit_id == 0)
+            {
+                $is_edit = 0;
+            }
+            else
+            {
+                $is_edit = 1;
+            }
+
+            if ($this->input->post('button_action') == "save")
+            {
+                if ($this->form_validation->run() === TRUE)
+                {
+                    if ($is_edit == 0)
+                    {
+                        $data = array(
+                            'album_title' => $album_title,
+                            'user_id' => $login_id,
+                            'user_type' => $login_type,
+                        );
+
+                        $new_id = $this->m_custom->get_id_after_insert($main_table, $data);
+                        if ($new_id)
+                        {
+                            $message_info = add_message_info($message_info, $album_title . ' success create.');
+                            $edit_id = $new_id;
+                            $can_redirect_to = 2;
+                        }
+                        else
+                        {
+                            $message_info = add_message_info($message_info, $this->ion_auth->errors());
+                            $can_redirect_to = 1;
+                        }
+                    }
+                    else
+                    {
+                        $data = array(
+                            'album_title' => $album_title,
+                        );
+
+                        if ($this->m_custom->simple_update($main_table, $data, $main_table_id_column, $edit_id))
+                        {
+                            $message_info = add_message_info($message_info, $album_title . ' success update.');
+                            $can_redirect_to = 2;
+                        }
+                        else
+                        {
+                            $message_info = add_message_info($message_info, $this->ion_auth->errors());
+                            $can_redirect_to = 3;
+                        }
+                    }
+                }
+            }
+            if ($this->input->post('button_action') == "back")
+            {
+                $can_redirect_to = 2;
+            }
+
+            direct_go:
+            if ($message_info != NULL)
+            {
+                $this->session->set_flashdata('message', $message_info);
+            }
+            if ($can_redirect_to == 1)
+            {
+                redirect(uri_string(), 'refresh');
+            }
+            elseif ($can_redirect_to == 2)
+            {
+                redirect('user/main_album/' . $login_id, 'refresh');
+            }
+            elseif ($can_redirect_to == 3)
+            {
+                redirect('user/main_album_change/' . $edit_id, 'refresh');
+            }
+        }
+
+        // set the flash data error message if there is one
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+
+        $result = $this->m_custom->get_one_table_record($main_table, $main_table_id_column, $edit_id, 1);
+        $this->data['result'] = $result;
+
+        $this->data['edit_id'] = array(
+            'edit_id' => empty($result) ? '0' : $result[$main_table_id_column],
+            'is_edit' => $is_edit,
+        );
+
+        $this->data['is_edit'] = $is_edit;
+
+        $this->data['album_title'] = array(
+            'name' => 'album_title',
+            'id' => 'album_title',
+            'value' => empty($result) ? $this->form_validation->set_value('album_title') : $this->form_validation->set_value('album_title', $result['album_title']),
+        );
+
+        $this->data['page_path_name'] = 'user/main_album_change';
+        $this->load->view('template/index', $this->data);
+    }
+    
     function upload_for_merchant($slug = NULL)
     {
         if (!check_correct_login_type($this->main_group_id))
@@ -2179,8 +2351,18 @@ class User extends CI_Controller
                     $post_file = "image-file-" . $i;
                     $post_title = $this->input->post('image-title-' . $i);
                     $post_desc = $this->input->post('image-desc-' . $i);
+                    $post_album_id = $this->input->post('image-main-album-' . $i);
+                    
                     if (!empty($_FILES[$post_file]['name']))
                     {
+                        if ($post_album_id == '0')
+                        {
+                            $validate_fail = 1;
+                            //$message_info = add_message_info($message_info, 'Main Album cannot be empty.', $post_title);
+                            $message_info = add_message_info($message_info, 'Main Album cannot be empty.', $post_desc);
+                            goto ValidateFail;
+                        }
+                        
                         if (!$this->upload->do_upload($post_file))
                         {
                             $validate_fail = 1;
@@ -2195,6 +2377,7 @@ class User extends CI_Controller
                                 //'title' => $post_title,
                                 'title' => '',
                                 'description' => $post_desc,
+                                'album_id' => $post_album_id,
                                 'image' => $image_data['upload_data']['file_name'],
                             );
 
@@ -2212,6 +2395,7 @@ class User extends CI_Controller
                             }
                         }
                     }
+                    ValidateFail:
                 }
                 $this->session->set_flashdata('message', $message_info);
                 if ($validate_fail == 0)
@@ -2221,6 +2405,7 @@ class User extends CI_Controller
                 }
             }
         }
+        $this->data['main_album_list'] = $this->m_custom->getMainAlbum($user_id, NULL, 1, '0', 'Please Select');
         for ($i = 0; $i < $this->box_number; $i++)
         {
             $image_title = 'image_title' . $i;
@@ -2236,6 +2421,12 @@ class User extends CI_Controller
                 'name' => 'image-desc-' . $i,
                 'id' => 'image-desc-' . $i,
                 'value' => $this->form_validation->set_value('image-desc-' . $i),
+            );
+            $image_main_album = 'image_main_album' . $i;
+            $this->data[$image_main_album] = array(
+                'name' => 'image-main-album-' . $i,
+                'id' => 'image-main-album-' . $i,
+                'value' => $this->form_validation->set_value('image-main-album-' . $i),
             );
         }
         $this->data['temp_folder'] = $this->temp_folder;             
@@ -2545,7 +2736,7 @@ class User extends CI_Controller
 
         $message_info = '';
         $login_id = $this->ion_auth->user()->row()->id;
-        //$login_type = $this->login_type;
+        //$login_type = $this->session->userdata('user_group_id');
         $main_table = 'user_message';
         $main_table_id_column = 'msg_id';
         $main_table_filter_column = 'msg_type';

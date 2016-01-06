@@ -69,6 +69,14 @@ if(isset($message))
                         ?>
                     </div>
                 </div>
+                <div id='hot-deal-advertise-form-each'>
+                    <div id='hot-deal-advertise-form-each-label'><?php echo lang("album_main_label"); ?></div>
+                    <div id='hot-deal-advertise-form-each-input'>
+                        <?php
+                        echo form_dropdown($picture_main_album, $main_album_list, $picture_main_album_selected);
+                        ?>
+                    </div>
+                </div>
                 <div id="float-fix"></div>
                 <br/>
             </div>

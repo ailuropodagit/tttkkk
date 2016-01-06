@@ -621,13 +621,15 @@ class All extends CI_Controller
         }
     }
 
-    function album_user($user_id = NULL)
+    function album_user($user_id = NULL, $album_id = NULL)
     {
         $album_list = '';
         if ($user_id != NULL)
         {
-            $album_list = $this->m_custom->getAlbumUser($user_id);
-        }else{
+            $album_list = $this->m_custom->getAlbumUser($user_id, $album_id);
+        }
+        else
+        {
             $album_list = $this->m_custom->getAlbumUser();
         }
         $this->data['album_list'] = $album_list;

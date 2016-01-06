@@ -94,6 +94,14 @@ if(isset($message))
                             ?>
                         </div>
                     </div>         
+                    <div id='upload-for-merchant-form-each'>
+                        <div id='upload-for-merchant-form-each-label'><?php echo lang("album_main_label"); ?></div>
+                        <div id='upload-for-merchant-form-each-input'>
+                            <?php
+                            echo form_dropdown(${'image_main_album' . $i}, $main_album_list);
+                            ?>
+                        </div>
+                    </div>
                 </div>
             </div>
             <?php 
