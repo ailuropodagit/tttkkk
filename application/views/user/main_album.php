@@ -7,7 +7,7 @@ $user_id = $this->uri->segment(3);
 ?>
 
 <div id="album-user">
-    <div id='album-user-title'><?php echo $title ?></div>
+    <div id='album-user-title'><?php echo $title ?> (All)</div>
     <?php
     if (check_correct_login_type($this->config->item('group_id_user')))
     {
@@ -23,26 +23,7 @@ $user_id = $this->uri->segment(3);
     
     <div id="album-user-content">
         <?php
-        //NAVIGATION
-        if($page_name != 'user_dashboard' && $page_name != 'merchant_dashboard')
-        {
-            if (check_correct_login_type($this->config->item('group_id_user')))
-            {
-                $user_id = $this->ion_auth->user()->row()->id;
-                ?>
-                <div id="album-user-navigation">
-                    <div id="album-user-navigation-each">
-                        <a href="<?php echo base_url() ?>user/main_album/<?php echo $user_id ?>">My Album</a>
-                    </div>
-                    <div id='album-user-navigation-separater'>|</div>
-                    <div id="album-user-navigation-each">
-                        <a href="<?php echo base_url() ?>all/album_user_merchant/<?php echo $user_id ?>">Merchant Album</a>
-                    </div>
-                    <div id="float-fix"></div>
-                </div>
-                <?php
-            }
-        }
+        $this->load->view('all/album_user_sub_menu');
         ?>
         
         <?php        
@@ -82,7 +63,19 @@ $user_id = $this->uri->segment(3);
                         <?php echo $count_image . " " . $count_image_text; ?>
                         </div>
                         <div style="float:right">
-                            <a href='<?php echo $url_edit ?>'><i class="fa fa-pencil-square-o"></i>Edit</a>
+                            <?php
+                                if (check_is_login())
+                                {
+                                    $login_id = $this->ion_auth->user()->row()->id;
+                                    $allowed_list = $this->m_custom->get_list_of_allow_id('main_album', 'user_id', $login_id, 'album_id');
+                                    if (check_correct_login_type($this->config->item('group_id_user'), $allowed_list, $row['album_id']))
+                                    {
+                                        ?>
+                                        <a href='<?php echo $url_edit ?>'><i class="fa fa-pencil-square-o"></i>Edit</a>
+                                        <?php
+                                    }
+                                }
+                            ?>                            
                         </div>
                         <div id="float-fix"></div>
                     </div>

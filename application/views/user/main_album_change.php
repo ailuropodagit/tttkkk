@@ -17,7 +17,12 @@ if(isset($message))
         echo '<h1>Edit Album</h1>';
     }                       
     ?>
-    <div id='profile-content'>              
+    <div id='profile-content'>     
+        <div id="upload-for-merchant-merchant-album">
+            <?php
+            $this->load->view('all/album_user_sub_menu');
+            ?>
+        </div>
         <div id='profile-info'> 
             <?php echo form_open(uri_string()); ?>
             <div id='profile-info-form'>

@@ -37,22 +37,7 @@ if(isset($message))
     <div id="upload-for-merchant-content">
         <div id="upload-for-merchant-merchant-album">
             <?php
-            if (check_correct_login_type($this->config->item('group_id_user')))
-            {
-                $user_id = $this->ion_auth->user()->row()->id;
-                ?>
-                <div id="album-user-navigation">
-                    <div id="album-user-navigation-each">
-                        <a href="<?php echo base_url() ?>all/album_user/<?php echo $user_id ?>">My Album</a>
-                    </div>
-                    <div id="album-user-navigation-separater">|</div>
-                    <div id="album-user-navigation-each">
-                        <a href="<?php echo base_url() ?>all/album_user_merchant/<?php echo $user_id ?>">Merchants Album</a>
-                    </div>
-                    <div id="float-fix"></div>
-                </div>
-                <?php
-            }
+            $this->load->view('all/album_user_sub_menu');
             ?>
         </div>
         <div id="upload-for-merchant-upload-image-note" style="display:none">

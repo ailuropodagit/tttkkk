@@ -520,7 +520,7 @@ class All extends CI_Controller
         $this->data['page_path_name'] = 'all/picture';
     }
 
-    function user_picture($picture_id, $user_id = NULL)
+    function user_picture($picture_id, $user_id = NULL, $album_id = NULL)
     {
 
         $this->data['page_title'] = "User Album";
@@ -573,17 +573,17 @@ class All extends CI_Controller
 
             if ($user_id != NULL)
             {
-                $current_list = $this->m_custom->getAlbumUser($user_id);
+                $current_list = $this->m_custom->getAlbumUser($user_id, $album_id);
                 $id_array = get_key_array_from_list_array($current_list, 'user_album_id');
                 $previous_id = get_previous_id($picture_id, $id_array);
                 $next_id = get_next_id($picture_id, $id_array);
                 if ($previous_id)
                 {
-                    $this->data['previous_url'] = base_url() . "all/user_picture/" . $previous_id . "/" . $user_id;
+                    $this->data['previous_url'] = base_url() . "all/user_picture/" . $previous_id . "/" . $user_id . "/" . $album_id;
                 }
                 if ($next_id)
                 {
-                    $this->data['next_url'] = base_url() . "all/user_picture/" . $next_id . "/" . $user_id;
+                    $this->data['next_url'] = base_url() . "all/user_picture/" . $next_id . "/" . $user_id . "/" . $album_id;
                 }
             }
 
@@ -935,10 +935,12 @@ class All extends CI_Controller
                 {
                     //USER ALBUM
                     $data['title'] = "User Album";
-                    $data['bottom_path_name'] = 'all/album_user';
+                    //$data['bottom_path_name'] = 'all/album_user';
+                    $data['bottom_path_name'] = 'user/main_album';
                     $where_user_album = array('user_id' => $user_id, 'hide_flag' => '0');
-                    $query_user_album = $this->albert_model->read_user_album($where_user_album);
-                    $data['album_list'] = $query_user_album->result_array();
+                    //$query_user_album = $this->albert_model->read_user_album($where_user_album);
+                    //$data['album_list'] = $query_user_album->result_array();
+                    $data['album_list'] = $this->m_custom->getMainAlbum($user_id);
                 }
                 else
                 {
