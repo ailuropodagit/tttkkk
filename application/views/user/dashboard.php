@@ -268,11 +268,11 @@ if($this->ion_auth->user()->num_rows())
         
         <div id="dashboard-navigation">
             <div id="dashboard-navigation-each">
-                <a href="<?php echo base_url() ?>all/user_dashboard/<?php echo $dashboard_users_id ?>"><i class="fa fa-picture-o dashboard-navigation-each-icon"></i>User Album</a>
+                <a href="<?php echo base_url() ?>all/user_dashboard/<?php echo $dashboard_users_id ?>#dashboard-navigation"><i class="fa fa-picture-o dashboard-navigation-each-icon"></i>User Album</a>
             </div>
             <div id="dashboard-navigation-separater">|</div>
             <div id="dashboard-navigation-each">
-                <a href="<?php echo base_url() ?>all/user_dashboard/<?php echo $dashboard_users_id ?>/merchant_album"><i class="fa fa-file-image-o dashboard-navigation-each-icon"></i>Merchant Album</a>
+                <a href="<?php echo base_url() ?>all/user_dashboard/<?php echo $dashboard_users_id ?>/merchant_album#dashboard-navigation"><i class="fa fa-file-image-o dashboard-navigation-each-icon"></i>Merchant Album</a>
             </div>
             <div id="float-fix"></div>
         </div>

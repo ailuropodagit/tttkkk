@@ -61,7 +61,7 @@ if(isset($message))
                     </div>
                 </div>
                 <div id='hot-deal-advertise-form-each'>
-                    <div id='hot-deal-advertise-form-each-label'><?php echo lang("hotdeal_sub_category_label"); ?></div>
+                    <div id='hot-deal-advertise-form-each-label'><?php echo lang("album_merchant_label"); ?></div>
                     <div id='hot-deal-advertise-form-each-input'>
                         <?php
                         echo form_dropdown($picture_merchant, $merchant_list, $picture_merchant_selected);

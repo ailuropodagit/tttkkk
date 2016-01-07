@@ -4,10 +4,22 @@ $page_name = $this->router->fetch_method();
 
 //USER ID
 $user_id = $this->uri->segment(3);
+$album_id = $this->uri->segment(4);
+$album_title = $this->m_custom->get_one_field_by_key('main_album', 'album_id', $album_id, 'album_title');
+$user_name = $this->m_custom->display_users($user_id);
+$user_url = base_url() . 'all/user_dashboard/' . $user_id . '#dashboard-navigation';
+$title = "<a href='$user_url' style='color:#244964' >$user_name Album</a>";
+if (check_correct_login_type($this->config->item('group_id_user')))
+{
+    $login_id = $this->ion_auth->user()->row()->id;
+    if($login_id == $user_id){
+        $title = 'My Album';
+    }
+}
 ?>
 
 <div id="album-user">
-    <div id='album-user-title'><?php echo $title ?></div>
+    <div id='album-user-title'><?php echo $title ?> - <?php echo $album_title ?></div>
     <?php
     if (check_correct_login_type($this->config->item('group_id_user')))
     {
@@ -23,26 +35,7 @@ $user_id = $this->uri->segment(3);
     
     <div id="album-user-content">
         <?php
-        //NAVIGATION
-        if($page_name != 'user_dashboard' && $page_name != 'merchant_dashboard')
-        {
-            if (check_correct_login_type($this->config->item('group_id_user')))
-            {
-                $user_id = $this->ion_auth->user()->row()->id;
-                ?>
-                <div id="album-user-navigation">
-                    <div id="album-user-navigation-each">
-                        <a href="<?php echo base_url() ?>all/album_user/<?php echo $user_id ?>">My Album</a>
-                    </div>
-                    <div id='album-user-navigation-separater'>|</div>
-                    <div id="album-user-navigation-each">
-                        <a href="<?php echo base_url() ?>all/album_user_merchant/<?php echo $user_id ?>">Merchant Album</a>
-                    </div>
-                    <div id="float-fix"></div>
-                </div>
-                <?php
-            }
-        }
+        $this->load->view('all/album_user_sub_menu');
         ?>
         
         <?php        
@@ -56,7 +49,7 @@ $user_id = $this->uri->segment(3);
             {
                 if ($this->router->fetch_method() == 'album_user' || $this->router->fetch_method() == 'user_dashboard')
                 {
-                    $picture_detail_url = base_url() . "all/user_picture/" . $row['user_album_id'] . "/" . $row['user_id'];
+                    $picture_detail_url = base_url() . "all/user_picture/" . $row['user_album_id'] . "/" . $row['user_id'] . "/" . $album_id;
                 }
                 else
                 {

@@ -1161,16 +1161,74 @@ class M_custom extends CI_Model
         return $return_final;
     }
 
-    function getAlbumUser($user_id = NULL)
+    function getAlbumUser($user_id = NULL, $album_id = NULL)
+    {
+        if (!IsNullOrEmptyString($user_id))
+        {
+            $this->db->where('user_id', $user_id);
+        }
+        if (!IsNullOrEmptyString($album_id))
+        {
+            $this->db->where('album_id', $album_id);
+        }
+        
+        $this->db->order_by("user_album_id", "desc");
+        $query = $this->db->get_where('user_album', array('hide_flag' => 0));
+        return $query->result_array();
+    }
+
+    function getMainAlbum($user_id = NULL, $user_type = NULL, $want_list = 0, $default_value = NULL, $default_text = NULL)
     {
         if (!IsNullOrEmptyString($user_id))
         {
             $this->db->where('user_id', $user_id);
         }
 
-        $this->db->order_by("user_album_id", "desc");
-        $query = $this->db->get_where('user_album', array('hide_flag' => 0));
+        if (IsNullOrEmptyString($user_type))
+        {
+            $user_type = $this->config->item('group_id_user');
+        }
+
+        $this->db->where('user_type', $user_type);
+        $this->db->order_by("album_time", "desc");
+        $query = $this->db->get_where('main_album', array('hide_flag' => 0));
+        $final_return = $query->result_array();
+        
+        if ($want_list == 1)
+        {
+            $return = array();
+            if ($default_value != NULL)
+            {
+                $return[$default_value] = $default_text;
+            }
+            if ($query->num_rows() > 0)
+            {
+                foreach ($final_return as $row)
+                {
+                    $return[$row['album_id']] = $row['album_title'];
+                }
+            }
+            $final_return = $return;
+        }
+        
+        return $final_return;
+    }
+
+    function getMainAlbum_LatestImage($album_id, $album_table = 'user_album', $ablum_column_name = 'album_id')
+    {
+        $id_column = $this->m_custom->table_id_column($album_table);
+        $this->db->where($ablum_column_name, $album_id);
+        $this->db->order_by($id_column, "desc");
+        $this->db->limit(1);
+        $query = $this->db->get_where($album_table, array('hide_flag' => 0));
         return $query->result_array();
+    }
+
+    function getMainAlbum_CountImage($album_id, $album_table = 'user_album', $ablum_column_name = 'album_id')
+    {
+        $this->db->where($ablum_column_name, $album_id);
+        $query = $this->db->get_where($album_table, array('hide_flag' => 0));
+        return $query->num_rows();
     }
 
     //Get all the main category
