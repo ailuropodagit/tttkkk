@@ -3,8 +3,8 @@
         $('#share-redemption-row-list4-container').slick({
             slidesToShow: 4,
             slidesToScroll: 1,
-            prevArrow: '#share-redemption-row-list4-header-navigation-prev',
-            nextArrow: '#share-redemption-row-list4-header-navigation-next',
+            prevArrow: '#share-redemption-row-list4-header-navigation-prev1',
+            nextArrow: '#share-redemption-row-list4-header-navigation-next1',
             responsive: [
                 {
                     breakpoint: 1200,
@@ -38,8 +38,8 @@
                 </div>
                 <div id='share-redemption-row-list4-header-table-row-cell'>
                     <div id='share-redemption-row-list4-header-navigation'>
-                        <div id='share-redemption-row-list4-header-navigation-prev'><</div>
-                        <div id='share-redemption-row-list4-header-navigation-next'>></div>
+                        <div id='share-redemption-row-list4-header-navigation-prev1'> 123 </div>
+                        <div id='share-redemption-row-list4-header-navigation-next1'> 321 </div>
                     </div>
                 </div>
             </div>

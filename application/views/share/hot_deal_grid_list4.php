@@ -13,9 +13,9 @@ $fetch_method = $this->router->fetch_method();
 ?>
 
 <div id="share-hot-deal-grid-list4">
-    <div id='share-redemption-row-list4-header-table'>
-        <div id='share-redemption-row-list4-header-table-row'>
-            <div id='share-redemption-row-list4-header-table-row-cell'>
+    <div id='share-hot-deal-row-list4-header-table'>
+        <div id='share-hot-deal-row-list4-header-table-row'>
+            <div id='share-hot-deal-row-list4-header-table-row-cell'>
                 <div id="share-hot-deal-grid-list4-header">
                     <div id="share-hot-deal-grid-list4-header-title"><?php echo $title ?></div>
                 </div>
@@ -34,6 +34,8 @@ $fetch_method = $this->router->fetch_method();
             $advertise_type = $row['advertise_type'];
             $price_before = $row['price_before'];
             $price_after = $row['price_after'];
+            $end_time = $row['end_time'];
+            $post_hour = $row['post_hour'];
             $average_rating = $this->m_custom->activity_rating_average($advertise_id, 'adv');
             if ($advertise_type == 'adm')
             {
@@ -78,6 +80,33 @@ $fetch_method = $this->router->fetch_method();
             ?>
             <div class='share-hot-deal-grid-list4-box'>
                 <a href='<?php echo $advertise_detail_url ?>'>
+                    <?php                
+                    if ($post_hour != 0)
+                    {
+                        ?>
+                        <div class="share-hot-deal-grid-list4-box-timer-box-absolute">
+                            <div class="share-hot-deal-grid-list4-box-timer-box-relative" end_date="<?php echo $end_time ?>">
+                                <div class="share-hot-deal-grid-list4-box-timer-box1">
+                                    <div class="share-hot-deal-grid-list4-box-timer-box1-time-day">1</div>
+                                    <div class="share-hot-deal-grid-list4-box-timer-box1-label">Days</div>
+                                </div>
+                                <div class="share-hot-deal-grid-list4-box-timer-box2">
+                                    <div class="share-hot-deal-grid-list4-box-timer-box2-time-hour">2</div>
+                                    <div class="share-hot-deal-grid-list4-box-timer-box2-label">Hours</div>
+                                </div>
+                                <div class="share-hot-deal-grid-list4-box-timer-box3">
+                                    <div class="share-hot-deal-grid-list4-box-timer-box3-time-minute">3</div>
+                                    <div class="share-hot-deal-grid-list4-box-timer-box3-label">Mins</div>
+                                </div>
+                                <div class="share-hot-deal-grid-list4-box-timer-box4">
+                                    <div class="share-hot-deal-grid-list4-box-timer-box4-time-second">4</div>
+                                    <div class="share-hot-deal-grid-list4-box-timer-box4-label">Secs</div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                    ?>
                     <div class="share-hot-deal-grid-list4-box-photo">
                         <div class="share-hot-deal-grid-list4-box-photo-box">
                             <img src='<?php echo $image_url ?>'>

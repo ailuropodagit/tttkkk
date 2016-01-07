@@ -50,8 +50,8 @@
                 </div>
                 <div id='share-hot-deal-row-list4-header-table-row-cell'>
                     <div id='share-hot-deal-row-list4-header-navigation'>
-                        <div id='share-hot-deal-row-list4-header-navigation-prev'> < </div>
-                        <div id='share-hot-deal-row-list4-header-navigation-next'> > </div>
+                        <div id='share-hot-deal-row-list4-header-navigation-prev'><</div>
+                        <div id='share-hot-deal-row-list4-header-navigation-next'>></div>
                     </div>
                 </div>
             </div>

@@ -1613,7 +1613,8 @@ html, body {
     border-bottom-right-radius: 3px;
     -webkit-box-shadow: 1px 1px 3px 0px rgba(179,179,179,0.80);
     -moz-box-shadow: 1px 1px 3px 0px rgba(179,179,179,0.80);
-    box-shadow: 1px 1px 3px 0px rgba(179,179,179,0.80);
+    box-shadow: 1px 1px 3px 0px rgba(179,179,179,0.80);  
+    position: relative;
 }
 
 .share-hot-deal-grid-list4-box a {
@@ -1622,6 +1623,59 @@ html, body {
 
 .share-hot-deal-grid-list4-box:nth-child(4n+0) {
     margin-right: 0px;
+}
+
+.share-hot-deal-grid-list4-box:hover > a > .share-hot-deal-grid-list4-box-timer-box-absolute {
+    display: none;
+}
+
+.share-hot-deal-grid-list4-box-timer-box-absolute {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -95px 0px 0px -97px;
+    z-index: 199;
+}
+
+.share-hot-deal-grid-list4-box-timer-box-relative {
+    position: relative;
+}
+
+.share-hot-deal-grid-list4-box-timer-box1, .share-hot-deal-grid-list4-box-timer-box2,
+.share-hot-deal-grid-list4-box-timer-box3, .share-hot-deal-grid-list4-box-timer-box4 {
+    position: absolute;
+    background-color: #4babd4;
+    color: white;
+    width: 42px;
+    text-align: center;
+}
+
+.share-hot-deal-grid-list4-box-timer-box1-label, .share-hot-deal-grid-list4-box-timer-box2-label,
+.share-hot-deal-grid-list4-box-timer-box3-label, .share-hot-deal-grid-list4-box-timer-box4-label {
+    padding: 0px 0px 7px 0px;
+}
+
+.share-hot-deal-grid-list4-box-timer-box1-time-day, .share-hot-deal-grid-list4-box-timer-box2-time-hour,
+.share-hot-deal-grid-list4-box-timer-box3-time-minute, .share-hot-deal-grid-list4-box-timer-box4-time-second {
+    font-weight: bold;
+    font-size: 18px;
+    padding: 6px 0px 5px 0px;
+}
+
+.share-hot-deal-grid-list4-box-timer-box1 {
+    left: 0px;
+}
+
+.share-hot-deal-grid-list4-box-timer-box2 {
+    left: 50px;
+}
+
+.share-hot-deal-grid-list4-box-timer-box3 {
+    left: 100px;
+}
+
+.share-hot-deal-grid-list4-box-timer-box4 {
+    left: 150px;
 }
 
 .share-hot-deal-grid-list4-box-photo-box {
@@ -2341,7 +2395,6 @@ html, body {
 }
 
 #share-redemption-row-list4-header-navigation-prev {
-    display: inline;
     font-size: 18px;
     cursor: pointer;
     color: #fbfbfb;
@@ -2349,7 +2402,6 @@ html, body {
 }
 
 #share-redemption-row-list4-header-navigation-next {
-    display: inline;
     font-size: 18px;
     cursor: pointer;
     color: #fbfbfb;
