@@ -1259,10 +1259,11 @@ class Merchant extends CI_Controller
             'id' => 'me_country',
             'value' => $this->form_validation->set_value('me_country'),
         );
+        $default_desc = 'Operating Hours : ' . PHP_EOL . 'Services : ' . PHP_EOL . 'Specialties : ' . PHP_EOL . 'Payment : ';
         $this->data['description'] = array(
             'name' => 'description',
             'id' => 'description',
-            'value' => $this->form_validation->set_value('description', $user->description),
+            'value' => empty($user->description) ? $default_desc : $this->form_validation->set_value('description', $user->description),
         );
         $this->data['phone'] = array(
             'name' => 'phone',
