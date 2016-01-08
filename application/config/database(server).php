@@ -64,7 +64,7 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
+	'hostname' => '103.3.173.164',
 	'username' => 'keppomy_database',
 	'password' => '1q2w3e4r5t',
 	'database' => 'keppomy_database',

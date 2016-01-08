@@ -41,7 +41,6 @@ if(isset($message))
         <div id="float-fix"></div>
         
         <div id="print-area"></div>
-        
         <div id="redemption-photo">
             <div id='redemption-table'>
                 <div id='redemption-table-row'>
@@ -144,79 +143,79 @@ if(isset($message))
                     echo "Earn : " . $rate_candie_earn . " candies";
                     ?>
                 </div>
-                <?php
-                //EXTRA INFO
-                if($show_extra_info)
-                {
-                    ?>
-                    <div id='redemption-information-extra-info'>
-                        <?php
-                        //PRICE
-                        if($show_extra_info == 121)
-                        {
-                            ?>
-                            <div id='redemption-information-extra-info-price'>
-                                <div id='redemption-information-extra-info-price-after'>
-                                    <?php
-                                    if($price_after_show == 1)
-                                    {
-                                        echo 'RM ' . $price_after;
-                                    }
-                                    ?>
-                                </div>
-                                <div id='redemption-information-extra-info-price-before'>
-                                    <?php                      
-                                    if($price_before_show == 1)
-                                    {
-                                        echo 'RM ' . $price_before;
-                                    }
-                                    ?>
-                                </div>
-                            </div>
-                            <?php
-                        }
-                        //VOUCHER WORTH
-                        if ($show_extra_info == 122)
-                        {
-                            ?>
-                            <div id="redemption-information-extra-info-general">
-                                <?php echo "Worth RM " . $voucher_worth ?>
-                            </div>
-                            <?php
-                        }
-                        //GET OFF PERCENTAGE
-                        if ($show_extra_info == 123)
-                        {
-                            ?>
-                            <div id="redemption-information-extra-info-general">
-                                <?php echo "Get off - " . $get_off_percent . "%" ?>
-                            </div>
-                            <?php
-                        }
-                        //BUY X GET X
-                        if ($show_extra_info == 124)
-                        {
-                            ?>
-                            <div id="redemption-information-extra-info-general">
-                                <?php echo "Buy " . $how_many_buy . " Get " . $how_many_get ?>
-                            </div>
-                            <?php
-                        }
-                        //DESCRIPTION
-                        if ($description)
-                        {
-                            ?>
-                            <div id="redemption-information-extra-info-general">
-                                <?php echo $description ?>
-                            </div>
-                            <?php
-                        }
-                        ?>
-                    </div>
-                    <?php
-                }
-                ?>
             </div>
+            <?php
+            //EXTRA INFO
+            if($show_extra_info)
+            {
+                ?>
+                <div id='redemption-information-extra-info'>
+                    <?php
+                    //PRICE
+                    if($show_extra_info == 121)
+                    {
+                        ?>
+                        <div id='redemption-information-extra-info-price'>
+                            <div id='redemption-information-extra-info-price-after'>
+                                <?php
+                                if($price_after_show == 1)
+                                {
+                                    echo 'RM ' . $price_after;
+                                }
+                                ?>
+                            </div>
+                            <div id='redemption-information-extra-info-price-before'>
+                                <?php                      
+                                if($price_before_show == 1)
+                                {
+                                    echo 'RM ' . $price_before;
+                                }
+                                ?>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                    //VOUCHER WORTH
+                    if ($show_extra_info == 122)
+                    {
+                        ?>
+                        <div id="redemption-information-extra-info-general">
+                            <?php echo "Worth RM " . $voucher_worth ?>
+                        </div>
+                        <?php
+                    }
+                    //GET OFF PERCENTAGE
+                    if ($show_extra_info == 123)
+                    {
+                        ?>
+                        <div id="redemption-information-extra-info-general">
+                            <?php echo "Get off - " . $get_off_percent . "%" ?>
+                        </div>
+                        <?php
+                    }
+                    //BUY X GET X
+                    if ($show_extra_info == 124)
+                    {
+                        ?>
+                        <div id="redemption-information-extra-info-general">
+                            <?php echo "Buy " . $how_many_buy . " Get " . $how_many_get ?>
+                        </div>
+                        <?php
+                    }
+                    ?>
+                </div>
+                <?php
+            }
+            //DESCRIPTION
+            if ($description)
+            {
+                ?>
+                <div id="redemption-information-description">
+                    <?php echo $description ?>
+                </div>
+                <?php
+            }
+            ?>
             <!--LIKE COMMENT-->
             <div id="redemption-information-like-comment">
                 <div id="redemption-information-like-comment">

@@ -2399,6 +2399,7 @@ html, body {
     cursor: pointer;
     color: #fbfbfb;
     padding: 0px 7px 0px 0px;
+    background-color: red;
 }
 
 #share-redemption-row-list4-header-navigation-next {
@@ -2406,6 +2407,7 @@ html, body {
     cursor: pointer;
     color: #fbfbfb;
     padding: 0px 0px 0px 7px;
+    background-color: blue;
 }
 
 #share-redemption-row-list4-container {
@@ -2832,7 +2834,7 @@ html, body {
 }
 
 #hot-deal-information-description {
-    line-height: 20px;
+    line-height: 26px;
     color: #666666;
     margin: 25px 0px 0px 0px;
     font-size: 18px;
@@ -3076,6 +3078,12 @@ html, body {
     font-size: 12px;
 }
 
+#redemption-information-rate-earn-candie {
+    font-size: 13px;
+    margin: 3px 0px 0px 0px;
+    color: #939393;
+}
+
 #redemption-information-extra-info {
     margin: 25px 0px 0px 0px;
 }
@@ -3099,14 +3107,8 @@ html, body {
     font-weight: bold;
 }
 
-#redemption-information-rate-earn-candie {
-    font-size: 13px;
-    margin: 3px 0px 0px 0px;
-    color: #939393;
-}
-
 #redemption-information-description {
-    line-height: 20px;
+    line-height: 26px;
     color: #666666;
     margin: 25px 0px 0px 0px;
     font-size: 18px;
