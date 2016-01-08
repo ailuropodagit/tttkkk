@@ -36,24 +36,27 @@
                 $('#header-logo-bar-mobile-navigation-icon').click(function(){
                     if(mobile_menu_show == 0){
                         mobile_menu_show = 1;
-                        $("body").transition({ x: 200 });
-                        $("html").css({overflow: 'hidden'});
-                        $("#header-mobile-navigation").css({display: 'inline'});
-                        $("#header-mobile-navigation").transition({ x: -200 });
-                        $("#header-mobile-navigation-block").css({display: 'inline'});
+//                        $("body").transition({ x: 200 });
+//                        $("html").css({overflow: 'hidden'});
+//                        $("#header-mobile-navigation").css({display: 'inline'});
+//                        $("#header-mobile-navigation").transition({ x: -200 });
+//                        $("#header-mobile-navigation-block").css({display: 'inline'});
+
+                        $("body").css({'position': 'relative', 'left': 200px});
+
                     }else{
                         mobile_menu_show = 0;
-                        $("body").transition({ x: 0 });
-                        $("html").css({overflow: 'visible'});
-                        $("#header-mobile-navigation").transition({ x: -200 });
+//                        $("body").transition({ x: 0 });
+//                        $("html").css({overflow: 'visible'});
+//                        $("#header-mobile-navigation").transition({ x: -200 });
                     }
                 });
                 $("#header-mobile-navigation-block").click(function(){
                     mobile_menu_show = 0;
-                    $("body").transition({ x: 0 });
-                    $("html").css({overflow: 'visible'});
-                    $("#header-mobile-navigation").transition({ x: -200 });
-                    $("#header-mobile-navigation-block").css({display: 'none'});
+//                    $("body").transition({ x: 0 });
+//                    $("html").css({overflow: 'visible'});
+//                    $("#header-mobile-navigation").transition({ x: -200 });
+//                    $("#header-mobile-navigation-block").css({display: 'none'});
                 });
             });
                         

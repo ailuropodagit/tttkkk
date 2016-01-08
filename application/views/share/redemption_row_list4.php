@@ -38,8 +38,9 @@
                 </div>
                 <div id='share-redemption-row-list4-header-table-row-cell'>
                     <div id='share-redemption-row-list4-header-navigation'>
-                        <div id='share-redemption-row-list4-header-navigation-prev'> 123 </div>
-                        <div id='share-redemption-row-list4-header-navigation-next'> 321 </div>
+                        <div id='share-redemption-row-list4-header-navigation-prev'><</div>
+                        <div id='share-redemption-row-list4-header-navigation-next'>></div>
+                        <div class="float-fix"></div>
                     </div>
                 </div>
             </div>
