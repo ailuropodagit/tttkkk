@@ -18,7 +18,9 @@ class All extends CI_Controller
         $this->group_id_admin = $this->config->item('group_id_admin');
         $this->group_id_worker = $this->config->item('group_id_worker');
         $this->login_type = 0;
-        $this->temp_folder = $this->config->item('folder_image_temp');     
+        $this->temp_folder = $this->config->item('folder_image_temp');   
+        $this->temp_folder_cut = $this->config->item('folder_image_temp_cut');
+        $this->box_number_user = $this->config->item('user_upload_box_per_page');
         if ($this->ion_auth->logged_in())
         {
             $this->login_type = $this->session->userdata('user_group_id');
@@ -1286,6 +1288,73 @@ class All extends CI_Controller
         }
         echo json_encode(array($image_data['upload_data']['file_name'], $post_image_box));
     }  
+
+    public function upload_image_temp_multiple()
+    {
+        $temp_folder = $this->temp_folder_cut;
+        $upload_rule = array(
+            'upload_path' => $temp_folder,
+            'allowed_types' => $this->config->item('allowed_types_image'),
+            'max_size' => $this->config->item('max_size'),
+            'max_width' => $this->config->item('max_width'),
+            'max_height' => $this->config->item('max_height'),
+        );
+
+        $this->load->library('upload', $upload_rule);
+
+        if (!is_dir($temp_folder))
+        {
+            mkdir($temp_folder, 0777, TRUE);
+        }
+
+        if (isset($_FILES["myfile"]))
+        {
+            $ret = array();
+
+            $error = $_FILES["myfile"]["error"];
+            {
+
+                if (!is_array($_FILES["myfile"]['name'])) //single file
+                {
+                    $RandomNum = time();
+
+                    $ImageName = str_replace(' ', '-', strtolower($_FILES['myfile']['name']));
+                    $ImageType = $_FILES['myfile']['type']; //"image/png", image/jpeg etc.
+
+                    $ImageExt = substr($ImageName, strrpos($ImageName, '.'));
+                    $ImageExt = str_replace('.', '', $ImageExt);
+                    $ImageName = preg_replace("/\.[^.\s]{3,4}$/", "", $ImageName);
+                    $NewImageName = $ImageName . '-' . $RandomNum . '.' . $ImageExt;
+
+                    move_uploaded_file($_FILES["myfile"]["tmp_name"], $temp_folder . $NewImageName);
+                    //echo "<br> Error: ".$_FILES["myfile"]["error"];
+
+                    //$ret[$NewImageName] = $temp_folder . $NewImageName;
+                    $ret[] = $temp_folder . $NewImageName;
+                }
+                else
+                {
+                    $fileCount = count($_FILES["myfile"]['name']);
+                    for ($i = 0; $i < $fileCount; $i++)
+                    {
+                        $RandomNum = time();
+
+                        $ImageName = str_replace(' ', '-', strtolower($_FILES['myfile']['name'][$i]));
+                        $ImageType = $_FILES['myfile']['type'][$i]; //"image/png", image/jpeg etc.
+
+                        $ImageExt = substr($ImageName, strrpos($ImageName, '.'));
+                        $ImageExt = str_replace('.', '', $ImageExt);
+                        $ImageName = preg_replace("/\.[^.\s]{3,4}$/", "", $ImageName);
+                        $NewImageName = $ImageName . '-' . $RandomNum . '.' . $ImageExt;
+
+                        $ret[$NewImageName] = $temp_folder . $NewImageName;
+                        move_uploaded_file($_FILES["myfile"]["tmp_name"][$i], $temp_folder . $NewImageName);
+                    }
+                }
+            }
+            echo json_encode($NewImageName);
+        }
+    }
 
     public function home_search()
     {

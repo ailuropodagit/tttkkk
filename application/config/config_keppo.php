@@ -16,6 +16,7 @@ $config['album_user_merchant_phy'] = realpath(APPPATH . '..\folder_upload\album_
 $config['album_banner_phy'] = realpath(APPPATH . '..\folder_upload\album_banner');
 $config['folder_merchant_ssm_phy'] = realpath(APPPATH . '..\folder_upload\merchant_ssm');
 $config['folder_image_temp_phy'] = realpath(APPPATH . '..\folder_upload\temp_image');
+$config['folder_image_temp_cut_phy'] = realpath(APPPATH . '..\folder_upload\temp_image_cut');
 
 $config['album_admin'] = 'folder_upload/album_admin/';
 $config['album_admin_profile'] = 'folder_upload/album_admin_profile/';
@@ -28,6 +29,7 @@ $config['album_banner'] = 'folder_upload/album_banner/';
 $config['folder_merchant_ssm'] = 'folder_upload/merchant_ssm/';
 $config['folder_image'] = 'image/';
 $config['folder_image_temp'] = 'folder_upload/temp_image/';
+$config['folder_image_temp_cut'] = 'folder_upload/temp_image_cut/';
 
 $config['user_default_image'] = 'demo-profile-user.png';
 $config['empty_image'] = 'image/image-empty.jpg';

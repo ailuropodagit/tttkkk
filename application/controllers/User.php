@@ -17,6 +17,7 @@ class User extends CI_Controller
         $this->folder_image = $this->config->item('folder_image');
         $this->box_number = $this->config->item('user_upload_box_per_page');
         $this->temp_folder = $this->config->item('folder_image_temp');    
+        $this->temp_folder_cut = $this->config->item('folder_image_temp_cut');
         $this->strong_password = $this->config->item('strong_password');
     }
 
@@ -2429,7 +2430,9 @@ class User extends CI_Controller
                 'value' => $this->form_validation->set_value('image-main-album-' . $i),
             );
         }
-        $this->data['temp_folder'] = $this->temp_folder;             
+        $this->data['temp_folder'] = $this->temp_folder;   
+        $this->data['temp_folder_cut'] = $this->temp_folder_cut;     
+        $this->data['empty_image'] = $this->config->item('empty_image');
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'user/upload_image';
         $this->load->view('template/index', $this->data);
