@@ -60,12 +60,16 @@ if(isset($message))
                 <div id="profile-photo-note">
                     <?php echo $this->config->item('upload_guide_image'); ?>
                 </div>
-                <div id="profile-photo-input-file">
-                    <input type="file" name="userfile" id="userfile" size="10"/>
+                <div id="dashboard-photo-input-file">                      
+                    <div class="fileUpload btn btn-primary" style="float:left">
+                        <span>Choose Logo</span>
+                        <input type="file" name="userfile" id="userfile" accept='image/*' class="upload"/>
+                    </div>
+                    <div id="dashboard-photo-button" style="float:right">
+                        <button name="button_action" type="submit" value="change_image" >Save Logo</button>
+                    </div>
+                    <div id="float-fix"></div>
                 </div>
-                <div id="profile-photo-button">
-                    <button name="button_action" type="submit" value="change_image" >Save Logo</button>
-                </div>          
                 <?php echo form_close(); ?>
             <?php  } ?>
         </div>
