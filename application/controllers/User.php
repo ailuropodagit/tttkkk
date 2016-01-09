@@ -2315,7 +2315,7 @@ class User extends CI_Controller
         $this->load->view('template/index_background_blank', $data);
     }
     
-    function upload_image()
+    function upload_image($album_id = NULL)
     {
         if (!check_correct_login_type($this->main_group_id))
         {
@@ -2354,6 +2354,14 @@ class User extends CI_Controller
                     $post_desc = $this->input->post('image-desc-' . $i);
                     $post_album_id = $this->input->post('image-main-album-' . $i);
                     
+                    $have_hidden_image = 0;
+                    $post_hidden_image = $this->input->post('hideimage-' . $i);
+                    if (!empty($post_hidden_image))
+                    {
+                        $have_hidden_image = 1;
+                        goto HiddenImageSkip;
+                    }
+
                     if (!empty($_FILES[$post_file]['name']))
                     {
                         if ($post_album_id == '0')
@@ -2372,14 +2380,28 @@ class User extends CI_Controller
                         }
                         else
                         {
-                            $image_data = array('upload_data' => $this->upload->data());
+                            HiddenImageSkip:
+                            $image_file_name = '';
+                            if ($have_hidden_image == 0)
+                            {
+                                $image_data = array('upload_data' => $this->upload->data());
+                                $image_file_name = $image_data['upload_data']['file_name'];
+                            }
+                            else
+                            {
+                                $from_path = $this->temp_folder_cut . $post_hidden_image;
+                                $to_path = $this->album_user . $post_hidden_image;   
+                                rename($from_path, $to_path);
+                                $image_file_name = $post_hidden_image;
+                            }
+
                             $data = array(
                                 'user_id' => $user_id,
                                 //'title' => $post_title,
                                 'title' => '',
                                 'description' => $post_desc,
                                 'album_id' => $post_album_id,
-                                'image' => $image_data['upload_data']['file_name'],
+                                'image' => $image_file_name,
                             );
 
                             $new_id = $this->m_custom->get_id_after_insert('user_album', $data);
@@ -2415,6 +2437,7 @@ class User extends CI_Controller
                 'id' => 'image-title-' . $i,
                 'value' => $this->form_validation->set_value('image-title-' . $i),
             );
+            
             $image_url = 'image_url' . $i;
             $this->data[$image_url] = $this->config->item('empty_image');
             $image_desc = 'image_desc' . $i;
@@ -2423,12 +2446,15 @@ class User extends CI_Controller
                 'id' => 'image-desc-' . $i,
                 'value' => $this->form_validation->set_value('image-desc-' . $i),
             );
+            
             $image_main_album = 'image_main_album' . $i;
             $this->data[$image_main_album] = array(
                 'name' => 'image-main-album-' . $i,
                 'id' => 'image-main-album-' . $i,
                 'value' => $this->form_validation->set_value('image-main-album-' . $i),
             );
+            $image_main_album_selected = 'image_main_album_selected' . $i;
+            $this->data[$image_main_album_selected] = empty($album_id) ? '' : $album_id;
         }
         $this->data['temp_folder'] = $this->temp_folder;   
         $this->data['temp_folder_cut'] = $this->temp_folder_cut;     
