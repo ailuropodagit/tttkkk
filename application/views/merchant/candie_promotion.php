@@ -301,18 +301,21 @@ if(isset($message))
                 ?>                   
                     <button name="button_action" type="submit" value="submit">Save</button>
                 <?php
-                }else{                    
-                        echo " You cannot make changes to this candie voucher, either it already is history, not yet reach this month or you don't have privilege.";
-                     } 
-                     if($promotion_id != ''){
-                         echo '<input type="hidden" name="promotion_id" value="'.$promotion_id.'" />';
-                         if($promotion_frozen == 0){ 
-                  ?>
-                        <button name="button_action" type="submit" value="frozen_hotdeal" onclick="return confirm('Are you sure want to frozen this promotion? After frozen then it will not show publicly until you unfrozen it.')" >Frozen</button>
-                        <?php }else{ ?>
-                        <button name="button_action" type="submit" value="unfrozen_hotdeal" >Unfrozen</button>
-                        <?php } 
-                     }
+                }
+                else
+                {                    
+                    echo " You cannot make changes to this candie voucher, either it already is history, not yet reach this month or you don't have privilege.";
+                } 
+                
+                if($promotion_id != ''){
+                    echo '<input type="hidden" name="promotion_id" value="'.$promotion_id.'" />';
+                    if($promotion_frozen == 0){ 
+                ?>
+                   <button name="button_action" type="submit" value="frozen_hotdeal" onclick="return confirm('Are you sure want to frozen this promotion? After frozen then it will not show publicly until you unfrozen it.')" >Frozen</button>
+                   <?php }else{ ?>
+                   <button name="button_action" type="submit" value="unfrozen_hotdeal" >Unfrozen</button>
+                   <?php } 
+                }
                 ?>
                  </div>
             </div>
