@@ -1681,7 +1681,7 @@ class User extends CI_Controller
                     $this->m_custom->remove_row_log('user_album', $picture_id, $do_by_id, $do_by_type);
                     //$message_info = add_message_info($message_info, 'Picture for user success remove.', $post_title);
                     $message_info = add_message_info($message_info, 'Picture for user success remove.', $post_desc);
-                    redirect('all/album_user/' . $user_id, 'refresh');
+                    redirect('all/album_user/' . $user_id . '/' . $post_album_id, 'refresh');
                 }
                 else
                 {
@@ -2424,7 +2424,7 @@ class User extends CI_Controller
                 if ($validate_fail == 0)
                 {
                     $this->m_custom->remove_image_temp();
-                    redirect('all/album_user/' . $user_id, 'refresh');
+                    redirect('all/album_user/' . $user_id . '/' . $album_id, 'refresh');
                 }
             }
         }
