@@ -301,6 +301,7 @@ $lang['web_setting_register_promo_code_get_candie']    = 'Default Register Promo
 $lang['web_setting_merchant_promo_code_get_candie']    = 'Default Merchant Promo Code get Candie';
 $lang['web_setting_popular_hotdeal_number']    = 'Number of Like to become Hot Deal';
 $lang['web_setting_popular_redemption_number']    = 'Number of Redeem to become Hot Redemption';
+$lang['web_setting_min_rating_get_for_sort_list']    = 'Minimum Rating Review for Rating Sort List';
 
 // Promo Code
 $lang['promo_code_no']             = 'Promo Code';

@@ -57,6 +57,10 @@ if(isset($message))
                     <div id='profile-info-form-each-label'><?php echo lang('web_setting_popular_redemption_number', 'popular_redemption_number'); ?></div>
                     <div id='profile-info-form-each-input'><?php echo form_input($popular_redemption_number); ?></div>
                 </div>  
+                <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><?php echo lang('web_setting_min_rating_get_for_sort_list', 'min_rating_get_for_sort_list'); ?></div>
+                    <div id='profile-info-form-each-input'><?php echo form_input($min_rating_get_for_sort_list); ?></div>
+                </div> 
             </div>
             <div id='profile-info-form-submit'>
                 <button name="button_action" type="submit" value="save" onclick="return confirm('Confirm that information is correct before save it?')">Save</button>
