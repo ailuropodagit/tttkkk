@@ -27,7 +27,7 @@
         <script type="text/javascript" src="<?php echo base_url('js/bootstrap-3.3.5/dist/js/bootstrap.min.js') ?>"></script>
         <script type="text/javascript" src='<?php echo base_url('js/transit/jquery.transit.min.js') ?>'></script>
         <script>
-            $(function(){                
+            $(function(){
                 //BOOSTRAP MODAL
                 $('#visit-first-time-modal').modal('show');
                 
@@ -42,7 +42,9 @@
 //                        $("#header-mobile-navigation").transition({ x: -200 });
 //                        $("#header-mobile-navigation-block").css({display: 'inline'});
 
-                        $("body").css({'position': 'relative', 'left': 200px});
+                        //$("body").css({'position': 'relative', 'left': 200px});
+                        
+                        alert('123');
 
                     }else{
                         mobile_menu_show = 0;
@@ -121,7 +123,7 @@
 
         </script>
     </head>
-    <body>
+    <body>        
         <?php
         if (!isset($_COOKIE['visit_first_time']))
         {
