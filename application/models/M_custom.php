@@ -868,8 +868,9 @@ class M_custom extends CI_Model
     //$popular_hotdeal_list = $this->m_custom->getAdvertise('hot', NULL, NULL, 0, NULL, NULL, 1)
     //Get popular redemption that have at least 3 user's redemption, can change number in database web setting table
     //$popular_redemption_list = $this->m_custom->getAdvertise('pro', NULL, NULL, 0, NULL, NULL, 1)
-    function getAdvertise($advertise_type, $sub_category_id = NULL, $merchant_id = NULL, $show_expired = 0, $limit = NULL, $start = NULL, $hot_popular_only = 0, $ignore_startend = 0, $ignore_hide = 0, $want_random = 0, $hide_frozen = 0)
+    function getAdvertise($advertise_type, $sub_category_id = NULL, $merchant_id = NULL, $show_expired = 0, $limit = NULL, $start = NULL, $hot_popular_only = 0, $ignore_startend = 0, $ignore_hide = 0, $want_random = 0, $hide_frozen = 0, $have_sort = 0, $sort_by = 'advertise_id', $sort_sequence = 'desc')
     {
+        $min_rating_get_for_sort_list = $this->m_custom->web_setting_get('min_rating_get_for_sort_list');
         if (!IsNullOrEmptyString($sub_category_id))
         {
             if ($advertise_type == 'adm')
@@ -935,21 +936,51 @@ class M_custom extends CI_Model
             {
                 $this->db->limit($this->config->item('suggest_list_number'));
             }
-            $this->db->order_by('advertise_id', 'RANDOM');
+            $this->db->order_by($sort_by, 'RANDOM');
         }
         else
         {
-            $this->db->order_by("advertise_id", "desc");
+            $this->db->order_by($sort_by, $sort_sequence);
         }
 
-        if ($advertise_type == 'all')
+        if ($advertise_type != 'all')
         {
-            $query = $this->db->get_where('advertise', array());
+            $this->db->where('advertise_type', $advertise_type);
         }
-        else
+
+        $table_name = 'advertise';
+        if ($have_sort == 1)
         {
-            $query = $this->db->get_where('advertise', array('advertise_type' => $advertise_type));
+            if ($sort_by == 'price_after')
+            {
+                $this->db->where('price_after is not NULL');
+                if ($advertise_type == 'hot')
+                {
+                    $this->db->where('price_after_show', 1);
+                }
+                if ($advertise_type == 'pro')
+                {
+                    $this->db->where('show_extra_info', 121);
+                }
+            }
+            if ($sort_by == 'voucher_worth')
+            {
+                $this->db->where('voucher_worth is not NULL');
+                $this->db->where('show_extra_info', 122);
+            }
+            if ($sort_by == 'average_rating')
+            {
+                $this->db->where('average_rating is not NULL');
+                $this->db->where('count_rating>=', $min_rating_get_for_sort_list);
+                $table_name = 'advertise_view';
+            }
+            if($sort_by == 'count_like'){
+                $table_name = 'advertise_view';
+            }
         }
+
+        $query = $this->db->get_where($table_name, array());
+
         //var_dump($query->result_array());
         $return = $query->result_array();
         $return_final = array();

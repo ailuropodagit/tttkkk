@@ -3398,7 +3398,7 @@ html, body {
 }
 
 #dashboard-photo-button {
-    margin: 20px 0px 20px 0px;
+    margin: 10px 0px 20px 0px;
 }
 
 #dashboard-info {
@@ -5042,4 +5042,38 @@ html, body {
     list-style-type: upper-latin;
     color: #4a4a4a;
     font-weight: normal;
+}
+
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+}
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #337ab7;
+  border-color: #2e6da4;
+  padding: 8px;
+}
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary.focus,
+.btn-primary:active,
+.btn-primary.active,
+.open > .dropdown-toggle.btn-primary {
+  color: #fff;
+  background-color: #286090;
+  border-color: #204d74;
 }

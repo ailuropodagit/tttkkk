@@ -1259,10 +1259,11 @@ class Merchant extends CI_Controller
             'id' => 'me_country',
             'value' => $this->form_validation->set_value('me_country'),
         );
+        $default_desc = 'Operating Hours : ' . PHP_EOL . 'Services : ' . PHP_EOL . 'Specialties : ' . PHP_EOL . 'Payment : ';
         $this->data['description'] = array(
             'name' => 'description',
             'id' => 'description',
-            'value' => $this->form_validation->set_value('description', $user->description),
+            'value' => empty($user->description) ? $default_desc : $this->form_validation->set_value('description', $user->description),
         );
         $this->data['phone'] = array(
             'name' => 'phone',
@@ -1860,6 +1861,8 @@ class Merchant extends CI_Controller
             $supervisor = $this->ion_auth->user()->row();
         }
         
+        $search_month = NULL;
+        $search_year = NULL;   
         $is_history = 0;       
         if ($promotion_id != NULL)
         {
@@ -1880,6 +1883,8 @@ class Merchant extends CI_Controller
                 if ($promotionAdvertise['year'] < get_part_of_date('year') || ($promotionAdvertise['year'] == get_part_of_date('year') && $promotionAdvertise['month_id'] < get_part_of_date('month')))
                 {
                     $is_history = 1;
+                    $search_month = $promotionAdvertise['month_id'];
+                    $search_year = $promotionAdvertise['year'];
                 }
             }
         }
@@ -1890,9 +1895,7 @@ class Merchant extends CI_Controller
         $candie_branch = $this->m_custom->get_keyarray_list('merchant_branch', 'merchant_id', $merchant_id, 'branch_id', 'name');
         $candie_term = $this->m_custom->get_dynamic_option_array('candie_term', NULL, NULL, $merchant_data->company, NULL, 0, 3);
         $month_list = $this->ion_auth->get_static_option_list('month');
-        $year_list = generate_number_option(get_part_of_date('year', $merchant_data->created_on, 1), get_part_of_date('year'));
-        $search_month = NULL;
-        $search_year = NULL;      
+        $year_list = generate_number_option(get_part_of_date('year', $merchant_data->created_on, 1), get_part_of_date('year'));          
 
         if (isset($_POST) && !empty($_POST))
         {
@@ -2079,10 +2082,12 @@ class Merchant extends CI_Controller
                 $search_month = $this->input->post('candie_month');
                 $search_year = $this->input->post('candie_year');
                 if ($search_year < get_part_of_date('year') ||
-                        ($search_year == get_part_of_date('year') && $search_month < get_part_of_date('month')) ||
-                        ($search_year == get_part_of_date('year') && $search_month > (get_part_of_date('month') + 1)))
+                   ($search_year == get_part_of_date('year') && $search_month < get_part_of_date('month')) ||
+                   ($search_year == get_part_of_date('year') && $search_month > (get_part_of_date('month') + 1)))
                 {
                     $is_history = 1;
+                }else{
+                    $is_history = 0;
                 }
                 $promotion_id = NULL;
             }          

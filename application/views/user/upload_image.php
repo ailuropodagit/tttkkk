@@ -43,6 +43,7 @@
                     if (images.indexOf(empty_image) >= 0){
                         data = data.replace(/\"/g, '');
                         $('img#image_url-'+counter).attr('src', 'http://' + $(location).attr('hostname') + keppo_path + temp_folder_cut + data);
+                        $('input[name="hideimage-'+counter+'"]').val(data);
                         break;
                     }                
                 }
@@ -100,6 +101,7 @@ if(isset($message))
                     <div id='upload-for-merchant-form-photo-box'>
                         <?php 
                         echo "<img src='" . base_url(${'image_url' . $i}) . "' id='image_url-" . $i . "'>"; 
+                        echo "<input type='hidden' name='hideimage-" . $i . "' >"; 
                         ?>
                     </div>
                     <div id='upload-for-merchant-form-input-file'>
@@ -125,7 +127,7 @@ if(isset($message))
                         <div id='upload-for-merchant-form-each-label'><?php echo lang("album_main_label"); ?></div>
                         <div id='upload-for-merchant-form-each-input'>
                             <?php
-                            echo form_dropdown(${'image_main_album' . $i}, $main_album_list);
+                            echo form_dropdown(${'image_main_album' . $i}, $main_album_list, ${'image_main_album_selected' . $i});
                             ?>
                         </div>
                     </div>

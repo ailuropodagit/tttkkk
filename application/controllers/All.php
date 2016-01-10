@@ -29,14 +29,46 @@ class All extends CI_Controller
 
     function hotdeal_list($sub_category_id)
     {
-        $this->data['share_hotdeal_redemption_list'] = $this->m_custom->getAdvertise('hot', $sub_category_id, NULL, 0, NULL, NULL, 0, 0, 0, 0, 1);       
+        //SORTING REQUEST
+        $view_status = 'advertise_id';
+        $view_status2 = 'desc';
+        $have_sort = 0;
+        $this->session->unset_userdata('adv_sort_by');
+        $this->session->unset_userdata('adv_sort_sequence');
+        if (isset($_POST) && !empty($_POST))
+        {
+            if ($this->input->post('button_action') == "filter_result")
+            {
+                $view_status = $this->input->post('view_status_id');
+                $view_status2 = $this->input->post('view_status_id2');
+                $have_sort = 1;
+                $this->session->set_userdata("adv_sort_by",$view_status);
+                $this->session->set_userdata("adv_sort_sequence",$view_status2);
+            }
+        }
+        $this->data['view_status_list'] = array('advertise_id' => 'Sort By What?', 'price_after' => 'Price After', 'average_rating' => 'Rating', 'count_like' => 'Like');
+        $this->data['view_status_id'] = array(
+            'name' => 'view_status_id',
+            'id' => 'view_status_id',
+        );
+        $this->data['view_status_selected'] = $view_status;
+        
+        $this->data['view_status_list2'] = array('desc' => 'High To Low', 'asc' => 'Low To High');
+        $this->data['view_status_id2'] = array(
+            'name' => 'view_status_id2',
+            'id' => 'view_status_id2',
+        );
+        $this->data['view_status_selected2'] = $view_status2;
+        
+        //GET LIST
+        $this->data['share_hotdeal_redemption_list'] = $this->m_custom->getAdvertise('hot', $sub_category_id, NULL, 0, NULL, NULL, 0, 0, 0, 0, 1, $have_sort, $view_status, $view_status2);       
         $this->data['title'] = "Hot Deal";
         if (!IsNullOrEmptyString($sub_category_id))
         {
             $this->data['main_category'] = $this->m_custom->display_main_category($sub_category_id);
             $this->data['sub_category'] = $this->m_custom->display_category($sub_category_id);
         }
-        $this->data['check_is_main_category'] = $this->m_custom->check_is_main_category_id($sub_category_id);
+        $this->data['check_is_main_category'] = $this->m_custom->check_is_main_category_id($sub_category_id);       
         
         //ADVERTISE SUGGESTION
         $where_read_category = array('category_id'=>$sub_category_id);
@@ -55,8 +87,40 @@ class All extends CI_Controller
 
     function promotion_list()
     {
+        //SORTING REQUEST
+        $view_status = 'advertise_id';
+        $view_status2 = 'desc';
+        $have_sort = 0;
+        $this->session->unset_userdata('adv_sort_by');
+        $this->session->unset_userdata('adv_sort_sequence');
+        if (isset($_POST) && !empty($_POST))
+        {
+            if ($this->input->post('button_action') == "filter_result")
+            {
+                $view_status = $this->input->post('view_status_id');
+                $view_status2 = $this->input->post('view_status_id2');
+                $have_sort = 1;
+                $this->session->set_userdata("adv_sort_by",$view_status);
+                $this->session->set_userdata("adv_sort_sequence",$view_status2);
+            }
+        }
+        $this->data['view_status_list'] = array('advertise_id' => 'Sort By What?', 'price_after' => 'Price After', 'average_rating' => 'Rating', 'count_like' => 'Like', 'voucher_worth' => 'Worth');
+        $this->data['view_status_id'] = array(
+            'name' => 'view_status_id',
+            'id' => 'view_status_id',
+        );
+        $this->data['view_status_selected'] = $view_status;
+        
+        $this->data['view_status_list2'] = array('desc' => 'High To Low', 'asc' => 'Low To High');
+        $this->data['view_status_id2'] = array(
+            'name' => 'view_status_id2',
+            'id' => 'view_status_id2',
+        );
+        $this->data['view_status_selected2'] = $view_status2;
+        
+        //GET LIST
         $sub_category_id = $this->uri->segment(3);
-        $this->data['share_hotdeal_redemption_list'] = $this->m_custom->getAdvertise('pro', $sub_category_id, NULL, 0, NULL, NULL, 0, 0, 0, 0, 1);
+        $this->data['share_hotdeal_redemption_list'] = $this->m_custom->getAdvertise('pro', $sub_category_id, NULL, 0, NULL, NULL, 0, 0, 0, 0, 1, $have_sort, $view_status, $view_status2);
         $this->data['title'] = "Redemption";
         if (!IsNullOrEmptyString($sub_category_id))
         {
@@ -191,7 +255,21 @@ class All extends CI_Controller
             }
             if ($advertise_type != NULL)
             {
-                $advertise_current_list = $this->m_custom->getAdvertise($advertise_type, $sub_category_id, $merchant_id, $show_expired);                
+                //GET SORTING INFO
+                $adv_sort_by = 'advertise_id';
+                $adv_sort_sequence = 'desc';
+                $have_sort = 0;
+                if ($this->session->userdata('adv_sort_by'))
+                {
+                    $adv_sort_by = $this->session->userdata('adv_sort_by');
+                    $have_sort = 1;
+                }
+                if ($this->session->userdata('adv_sort_sequence'))
+                {
+                    $adv_sort_sequence = $this->session->userdata('adv_sort_sequence');
+                }
+
+                $advertise_current_list = $this->m_custom->getAdvertise($advertise_type, $sub_category_id, $merchant_id, $show_expired, NULL, NULL, 0, 0, 0, 0, 1, $have_sort, $adv_sort_by, $adv_sort_sequence);                
                 $advertise_id_array = get_key_array_from_list_array($advertise_current_list, 'advertise_id');
                 $previous_id = get_previous_id($advertise_id, $advertise_id_array);
                 $next_id = get_next_id($advertise_id, $advertise_id_array);

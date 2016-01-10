@@ -139,8 +139,8 @@ if(isset($message))
                 </div>
                 <div id="redemption-information-rate-earn-candie">
                     <?php
-                    $rate_candie_earn = $this->m_custom->display_trans_config(3);
-                    echo "Earn : " . $rate_candie_earn . " candies";
+//                    $rate_candie_earn = $this->m_custom->display_trans_config(3);
+//                    echo "Earn : " . $rate_candie_earn . " candies";
                     ?>
                 </div>
             </div>
@@ -227,9 +227,10 @@ if(isset($message))
                     </div>
                     <div id="redemption-information-like-comment-earn-candie">
                         <?php
-                        $like_comment_candie_earn = $this->m_custom->display_trans_config(2);
-                        echo "Earn : " . $like_comment_candie_earn . " candies"; 
+//                        $like_comment_candie_earn = $this->m_custom->display_trans_config(2);
+//                        echo "Earn : " . $like_comment_candie_earn . " candies"; 
                         ?>
+                        CLICK BY EARN CANDIES
                     </div>
                 </div>
             </div>
@@ -275,7 +276,7 @@ if(isset($message))
                     <img src='/keppo/image/social-media-facebook-share.png'>
                 </div>
                 <div id="redemption-information-share-earn-candie">
-                    <?php echo "Earn : " . $this->m_custom->display_trans_config(10) . " candies" ?>
+                    <?php //echo "Earn : " . $this->m_custom->display_trans_config(10) . " candies" ?>
                 </div>
             </div>
                                         

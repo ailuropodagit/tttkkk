@@ -25,7 +25,7 @@ if (check_correct_login_type($this->config->item('group_id_user')))
     {
         ?>
         <div id='album-user-title-upload'>
-            <a href='<?php echo base_url() ?>user/upload_image'><i class="fa fa-upload album-user-title-upload-icon"></i>Upload Picture</a>
+            <a href='<?php echo base_url() ?>user/upload_image/<?php echo $album_id ?>'><i class="fa fa-upload album-user-title-upload-icon"></i>Upload Picture</a>
         </div>
         <?php
     }

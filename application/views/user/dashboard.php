@@ -107,17 +107,22 @@ if($this->ion_auth->user()->num_rows())
                 }
                 ?>
             </div>
-            <?php if (check_correct_login_type($this->config->item('group_id_user'))) { ?>
+            <?php if (check_correct_login_type($this->config->item('group_id_user')) && $dashboard_users_id == $logged_user_id) { ?>
                 <?php echo form_open_multipart('user/update_profile_image'); ?>
                     <div id="dashboard-photo-note">
                         <?php echo $this->config->item('upload_guide_image'); ?>
                     </div>
-                    <div id="dashboard-photo-input-file">
-                        <input type="file" name="userfile" id="userfile" size="10"/>
+                    <div id="dashboard-photo-input-file">                      
+                        <div class="fileUpload btn btn-primary" style="float:left">
+                            <span>Choose Image</span>
+                            <input type="file" name="userfile" id="userfile" accept='image/*' class="upload"/>
+                        </div>
+                        <div id="dashboard-photo-button" style="float:right">
+                            <button name="button_action" type="submit" value="change_image" >Save Image</button>
+                        </div>
+                        <div id="float-fix"></div>
                     </div>
-                    <div id="dashboard-photo-button">
-                        <button name="button_action" type="submit" value="change_image" >Save Image</button>
-                    </div>
+                    
                 <?php echo form_close(); ?>
             <?php  } ?>
         </div>
