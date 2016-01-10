@@ -30,7 +30,7 @@ html, body {
     top: 0px;
     bottom: 0px;
     left: 0px;
-    z-index: 399;
+    z-index: 599;
     display: none;
     color: white;
 }
@@ -40,7 +40,8 @@ html, body {
     top: 0px;
     bottom: 0px;
     height: 100%;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 #header-mobile-navigation ul {
@@ -60,6 +61,30 @@ html, body {
     display: block;
     text-transform: uppercase;
     text-decoration: none;
+}
+
+#header-mobile-navigation ul ul {
+    margin: 0px 0px 13px 13px;
+}
+
+#header-mobile-navigation ul li ul li {
+    border: 0px;
+    text-transform: uppercase;
+    color: lightgray;
+}
+
+#header-mobile-navigation ul li ul li a {
+    padding: 3px 0px 0px 0px;
+    font-size: 12px;
+    color: lightgray;
+}
+
+#header-mobile-navigation-bar-box-each {
+    margin: 0px 0px 10px 0px;
+}
+
+#header-mobile-navigation-bar-box-each-merchant-each-icon {
+    padding: 0px 2px 0px 0px;
 }
 
 #header-mobile-navigation-block {

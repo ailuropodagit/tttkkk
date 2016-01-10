@@ -25,7 +25,6 @@
         <link rel="stylesheet" href="<?php echo base_url('js/bootstrap-3.3.5/dist/css/custom-bootstrap-modal.css') ?>">
         <link rel="stylesheet" href="<?php echo base_url('js/bootstrap-3.3.5/dist/css/custom-bootstrap-modal-center.css') ?>">
         <script type="text/javascript" src="<?php echo base_url('js/bootstrap-3.3.5/dist/js/bootstrap.min.js') ?>"></script>
-        <script type="text/javascript" src='<?php echo base_url('js/transit/jquery.transit.min.js') ?>'></script>
         <script>
             $(function(){
                 //BOOSTRAP MODAL
@@ -36,29 +35,21 @@
                 $('#header-logo-bar-mobile-navigation-icon').click(function(){
                     if(mobile_menu_show == 0){
                         mobile_menu_show = 1;
-//                        $("body").transition({ x: 200 });
-//                        $("html").css({overflow: 'hidden'});
-//                        $("#header-mobile-navigation").css({display: 'inline'});
-//                        $("#header-mobile-navigation").transition({ x: -200 });
-//                        $("#header-mobile-navigation-block").css({display: 'inline'});
-
-                        //$("body").css({'position': 'relative', 'left': 200px});
-                        
-                        alert('123');
-
+                        $("#header-mobile-navigation").css({display: 'inline'});                        
+                        $("#header-mobile-navigation-block").css({display: 'inline'});
+                        $("body").css({'overflow': 'hidden'});
                     }else{
                         mobile_menu_show = 0;
-//                        $("body").transition({ x: 0 });
-//                        $("html").css({overflow: 'visible'});
-//                        $("#header-mobile-navigation").transition({ x: -200 });
+                        $("#header-mobile-navigation").css({display: 'none'});                        
+                        $("#header-mobile-navigation-block").css({display: 'none'});
+                        $("body").css({'overflow': 'scroll'});
                     }
                 });
                 $("#header-mobile-navigation-block").click(function(){
                     mobile_menu_show = 0;
-//                    $("body").transition({ x: 0 });
-//                    $("html").css({overflow: 'visible'});
-//                    $("#header-mobile-navigation").transition({ x: -200 });
-//                    $("#header-mobile-navigation-block").css({display: 'none'});
+                    $("#header-mobile-navigation").css({display: 'none'});                        
+                    $("#header-mobile-navigation-block").css({display: 'none'});
+                    $("body").css({'overflow': 'auto'});
                 });
             });
                         
@@ -749,46 +740,46 @@
                         </li>
                         <li>
                             <a href='#'>Categories</a>
-                                <ul>
-                                    <li>
-                                        <div id="header-mobile-navigation-bar-box">
-                                            <?php
-                                            $main_category_object = $this->m_custom->getCategory();
-                                            foreach ($main_category_object as $main_category) 
-                                            {
-                                                $main_category_id = $main_category->category_id;
-                                                $main_category_label = $main_category->category_label;
-                                                ?>
-                                                <div id="header-mobile-navigation-bar-box-each">
-                                                    <div id="header-mobile-navigation-bar-box-each-title"><?php echo $main_category_label ?></div>
-                                                    <div id="header-mobile-navigation-bar-box-each-merchant">
-                                                        <?php
-                                                        $sub_category_object = $this->m_custom->getSubCategory($main_category_id); 
-                                                        foreach ($sub_category_object as $sub_category)
-                                                        {
-                                                            $sub_category_id = $sub_category->category_id;
-                                                            $sub_category_label = $sub_category->category_label;
-                                                            ?>
-                                                            <div id="header-mobile-navigation-bar-box-each-merchant-each">
-                                                                <a href="<?php echo base_url() ?>all/merchant-category/<?php echo $sub_category_id ?>">
-                                                                    <span id="header-mobile-navigation-bar-box-each-merchant-each-icon"><i class="fa fa-caret-right"></i></span>
-                                                                    <span id="header-mobile-navigation-bar-box-each-merchant-each-label">
-                                                                        <?php echo $sub_category_label ?>
-                                                                        (<?php echo $this->m_merchant->getMerchantCount_by_subcategory($sub_category_id); ?>)
-                                                                    </span>
-                                                                </a> 
-                                                            </div>
-                                                            <?php
-                                                        }
-                                                        ?>
-                                                    </div>
-                                                </div>
-                                                <?php
-                                            }
+                            <ul>
+                                <li>
+                                    <div id="header-mobile-navigation-bar-box">
+                                        <?php
+                                        $main_category_object = $this->m_custom->getCategory();
+                                        foreach ($main_category_object as $main_category) 
+                                        {
+                                            $main_category_id = $main_category->category_id;
+                                            $main_category_label = $main_category->category_label;
                                             ?>
-                                        </div>
-                                    </li>
-                                </ul>
+                                            <div id="header-mobile-navigation-bar-box-each">
+                                                <div id="header-mobile-navigation-bar-box-each-title"><?php echo $main_category_label ?></div>
+                                                <div id="header-mobile-navigation-bar-box-each-merchant">
+                                                    <?php
+                                                    $sub_category_object = $this->m_custom->getSubCategory($main_category_id); 
+                                                    foreach ($sub_category_object as $sub_category)
+                                                    {
+                                                        $sub_category_id = $sub_category->category_id;
+                                                        $sub_category_label = $sub_category->category_label;
+                                                        ?>
+                                                        <div id="header-mobile-navigation-bar-box-each-merchant-each">
+                                                            <a href="<?php echo base_url() ?>all/merchant-category/<?php echo $sub_category_id ?>">
+                                                                <span id="header-mobile-navigation-bar-box-each-merchant-each-icon"><i class="fa fa-caret-right"></i></span>
+                                                                <span id="header-mobile-navigation-bar-box-each-merchant-each-label">
+                                                                    <?php echo $sub_category_label ?>
+                                                                    (<?php echo $this->m_merchant->getMerchantCount_by_subcategory($sub_category_id); ?>)
+                                                                </span>
+                                                            </a> 
+                                                        </div>
+                                                        <?php
+                                                    }
+                                                    ?>
+                                                </div>
+                                            </div>
+                                            <?php
+                                        }
+                                        ?>
+                                    </div>
+                                </li>
+                            </ul>
                         </li>
                         <li>
                             <a href='<?php echo base_url('all/hotdeal-list/26') ?>'>Hot Deal</a>
