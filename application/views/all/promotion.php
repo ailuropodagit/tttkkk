@@ -273,7 +273,7 @@ if(isset($message))
                     Share This Redemption
                 </div>
                 <div id="redemption-information-share-facebook" onclick="fbShare()">
-                    <img src='/keppo/image/social-media-facebook-share.png'>
+                    <img src="<?php echo base_url() . 'image/social-media-facebook-share.png'; ?>" >
                 </div>
                 <div id="redemption-information-share-earn-candie">
                     <?php //echo "Earn : " . $this->m_custom->display_trans_config(10) . " candies" ?>

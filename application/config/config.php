@@ -18,7 +18,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 
-$config['keppo_path'] = '/keppo/';
+$config['keppo_path'] = '/';
 //$config['base_url'] = '';  //original
 switch($_SERVER["SERVER_NAME"]) {
 case "localhost":
@@ -27,8 +27,9 @@ $config["base_url"] = "";
 $config['keppo_path'] = '/keppo/';
 break;
 case "www.keppo.my":
-$config["base_url"] = "http://www.keppo.my/keppo/";
-$config['keppo_path'] = '/keppo/';    
+//$config["base_url"] = "http://www.keppo.my/keppo/";
+$config["base_url"] = "http://www.keppo.my/";
+$config['keppo_path'] = '/';    
 break;
 }
 

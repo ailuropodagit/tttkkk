@@ -2751,7 +2751,7 @@ class User extends CI_Controller
         $this->email->subject('Email Test');
         $this->email->message("
             You has been invited by $logged_user_email to join <a href='http://www.keppo.my/'>www.keppo.my</a> <br/><br/>
-            <a href='http://keppo.my/user/register'>Sign Up</a> Now
+            <a href='http://www.keppo.my/user/register'>Sign Up</a> Now
         ");
         return $this->email->send();
     }
