@@ -65,10 +65,10 @@
 
             window.fbAsyncInit = function () {
                 FB.init({
-                    appId: '1636247466623391',
+                    appId: '1682555468669559',
                     cookie: true,
                     xfbml: true,
-                    version: 'v2.2'
+                    version: 'v2.5'
                 });
                 //Get if logged in
                 FB.getLoginStatus();
@@ -84,28 +84,7 @@
                 js.id = id;
                 js.src = "//connect.facebook.net/en_US/sdk.js";
                 fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));
-
-            var keppo_path = '<?php echo $this->config->item('keppo_path'); ?>'; 
-            $(function(){
-                //AUTO COMPLETE
-                $("#search_word").autocomplete({
-                    source: function(request, response) {
-                        $.ajax({
-                            url: keppo_path + "search_suggestion/get_merchant_list/",
-                            data: { term: $("#search_word").val()},
-                            dataType: "json",
-                            type: "POST",
-                            success: function(data){
-                                var resp = $.map(data,function(obj){                     
-                                    return obj.tag;                  
-                                });
-                                response(data);
-                            }
-                        });
-                    }
-                });
-            });       
+            }(document, 'script', 'facebook-jssdk'));     
             
             function myfunction(submit_to_where) {
                 document.getElementById("general_form_login").action = submit_to_where;

@@ -115,10 +115,10 @@
 
     window.fbAsyncInit = function () {
         FB.init({
-            appId: '1636247466623391',
+            appId: '1682555468669559',
             cookie: true,
             xfbml: true,
-            version: 'v2.2'
+            version: 'v2.5'
         });
         //Get if logged in
         FB.getLoginStatus(function (response) {

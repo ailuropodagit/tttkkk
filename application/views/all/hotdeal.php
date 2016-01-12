@@ -14,8 +14,8 @@
 //    function fbShare() {
 //        FB.ui({
 //            method: 'share',
-//            href: 'http://keppo.my/keppo/all/advertise/56/hot/26',           
-//            picture: 'http://keppo.my/keppo/folder_upload/album_merchant/KFC13.jpg',
+//            href: 'http://www.keppo.my/keppo/all/advertise/56/hot/26',           
+//            picture: 'http://www.keppo.my/keppo/folder_upload/album_merchant/KFC13.jpg',
 //            title: 'title here',
 //            description: "description here"
 //        }, function(response){
@@ -232,7 +232,7 @@
                     Share This Deal
                 </div>
                 <div id="hot-deal-information-share-facebook" onclick="fbShare()">
-                    <img src='/keppo/image/social-media-facebook-share.png'>
+                    <img src="<?php echo base_url() . 'image/social-media-facebook-share.png'; ?>" >
                 </div>
                 <div id="hot-deal-information-share-earn-candie">
                     <?php //echo "Earn : " . $this->m_custom->display_trans_config(10) . " candies"; ?>

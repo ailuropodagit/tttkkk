@@ -1,3 +1,32 @@
+<script>
+            var keppo_path = '<?php echo $this->config->item('keppo_path'); ?>'; 
+            $(function(){
+                //AUTO COMPLETE
+                $("#search_word").autocomplete({
+                    source: function(request, response) {
+                        $.ajax({
+                            url: keppo_path + "search_suggestion/get_merchant_list/",
+                            data: { term: $("#search_word").val()},
+                            dataType: "json",
+                            type: "POST",
+                            success: function(data){
+                                var resp = $.map(data,function(obj){                     
+                                    return obj.tag;                  
+                                });
+                                response(data);
+                            }
+                        });
+                    }
+                });
+            });  
+</script>
+
+<style>
+.ui-autocomplete {
+    z-index:200;
+}
+</style>
+
 <?php echo form_open('all/home_search') ?>
     <div id="header-logo-bar-search-block1">
         <input type="text" placeholder="Search: shop name, product, hot deal, redemption" name="search_word" id="search_word">
