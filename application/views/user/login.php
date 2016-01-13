@@ -140,9 +140,7 @@ if(isset($message))
 
 <div id="login">
     <div id='login-link'>
-        <a href='<?php echo base_url(); ?>merchant/login'>
-            <i class="fa fa-user-secret" id="login-link-icon"></i>Merchant Login
-        </a>
+        <a href='<?php echo base_url(); ?>merchant/login' class="a-href-button">Merchant Login</a>
     </div>
     <div id='float-fix'></div>
     <div id='login-title'>User Log In</div>

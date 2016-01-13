@@ -94,10 +94,6 @@ if(isset($message))
             <div id="redemption-information-title">
                 <a href='<?php echo $merchant_dashboard_url ?>'><?php echo $merchant_name ?></a>
             </div>
-            <!--REQUIRED CANDIES-->
-            <div id="redemption-information-required-candies">
-                Require <?php echo $voucher_candie ?> Candies
-            </div>
             <!--SHOW ME ADDRESS-->
             <div id="redemption-information-show-me-address">
                 <?php
@@ -107,6 +103,11 @@ if(isset($message))
                     <img src="<?php echo base_url() . "/image/icon-map.png"; ?>"/> 
                     Show me Address
                 </a>
+            </div>
+            <div class="float-fix"></div>
+            <!--REQUIRED CANDIES-->
+            <div id="redemption-information-required-candies">
+                Require <?php echo $voucher_candie ?> Candies
             </div>
             <!--SUB TITLE-->
             <div id="redemption-information-sub-title">

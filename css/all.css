@@ -99,7 +99,7 @@ input[type='submit'], input[type='button'], button[type='submit'], .a-href-butto
 }
 
 .a-href-button:hover {
-    text-decoration: none;
+    text-decoration: none !important;
 }
 
 .a-href-button:hover:active {

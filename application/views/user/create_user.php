@@ -1,5 +1,4 @@
 <script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script>
-
 <script type="text/javascript">
     function showpassword()
     {
@@ -137,7 +136,6 @@
         js.src = "//connect.facebook.net/en_US/sdk.js";
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
-
 </script>
 
 <?php
@@ -151,9 +149,7 @@ if(isset($message))
 <div id="register">
 
     <div id='register-link'>
-        <a href='<?php echo base_url(); ?>merchant/register'>
-            <i class="fa fa-user-plus" id="register-link-icon"></i>Merchant Register
-        </a>
+        <a href='<?php echo base_url('merchant/register') ?>' class="a-href-button">Merchant Register</a>
     </div>
     <div id='float-fix'></div>
     <div id='register-title'>User Sign Up</div>

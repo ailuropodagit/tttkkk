@@ -40,7 +40,7 @@ html, body {
     top: 0px;
     bottom: 0px;
     height: 100%;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
 }
 
@@ -1264,12 +1264,6 @@ html, body {
     font-size: 15px;
 }
 
-#login-link-icon, #register-link-icon {
-    margin: 0px 8px 0px 0px;
-    color: #6262ff;
-    font-size: 13px;
-}
-
 #login, #register {
     text-align: center;
 }
@@ -1742,7 +1736,7 @@ html, body {
     font-weight: bold;
     color: #444444;
     white-space: nowrap;
-    text-overflow: ellipsis-word;
+    text-overflow: ellipsis;
     overflow: hidden;
 }
 
@@ -1865,7 +1859,7 @@ html, body {
     font-weight: bold;
     color: #444444;
     white-space: nowrap;
-    text-overflow: ellipsis-word;
+    text-overflow: ellipsis;
     overflow: hidden;
 }
 
@@ -2006,7 +2000,7 @@ html, body {
     font-weight: bold;
     color: #444444;
     white-space: nowrap;
-    text-overflow: ellipsis-word;
+    text-overflow: ellipsis;
     overflow: hidden;
 }
 
@@ -2142,7 +2136,7 @@ html, body {
     font-weight: bold;
     color: #444444;
     white-space: nowrap;
-    text-overflow: ellipsis-word;
+    text-overflow: ellipsis;
     overflow: hidden;
 }
 
@@ -2361,6 +2355,7 @@ html, body {
     font-weight: bold;
     color: #444444;
     white-space: nowrap;
+    text-overflow: ellipsis;
     overflow: hidden;
 }
 
@@ -2521,6 +2516,7 @@ html, body {
     font-weight: bold;
     color: #444444;
     white-space: nowrap;
+    text-overflow: ellipsis;
     overflow: hidden;
 }
 
@@ -2788,10 +2784,25 @@ html, body {
     margin: 0px 50px 0px 50px;
 }
 
+#hot-deal-information-title {
+    float: left;
+    margin: 0px 25px 0px 0px;
+}
+
 #hot-deal-information-title a {
     color: #00bcd4;
     font-size: 18px;
     font-weight: bold;
+}
+
+#hot-deal-information-show-me-address {
+    float: left;
+}
+
+#hot-deal-information-show-me-address img {
+    float: left;
+    width: 18px;
+    margin: 0px 7px 0px 0px;
 }
 
 #hot-deal-information-countdown {
@@ -2809,17 +2820,6 @@ html, body {
 #hot-deal-information-countdown-time {
     display: inline;
     font-size: 17px;
-}
-
-#hot-deal-information-show-me-address {
-    margin: 25px 0px 0px 0px;
-    line-height: 20px;
-}
-
-#hot-deal-information-show-me-address img {
-    float: left;
-    width: 18px;
-    margin: 0px 5px 0px 0px;
 }
 
 #hot-deal-information-sub-title {
@@ -3066,10 +3066,25 @@ html, body {
     margin: 0px 0px 0px 50px;
 }
 
+#redemption-information-title {
+    float: left;
+    margin: 0px 25px 0px 0px;
+}
+
 #redemption-information-title a {
     color: #00bcd4;
     font-size: 18px;
     font-weight: bold;
+}
+
+#redemption-information-show-me-address {
+    float: left;
+}
+
+#redemption-information-show-me-address img {
+    float: left;
+    width: 18px;
+    margin: 0px 7px 0px 0px;
 }
 
 #redemption-information-required-candies {
@@ -3077,17 +3092,6 @@ html, body {
     font-weight: bold;
     font-size: 18px;
     margin: 25px 0px 0px 0px;
-}
-
-#redemption-information-show-me-address {
-    margin: 25px 0px 0px 0px;
-    line-height: 20px;
-}
-
-#redemption-information-show-me-address img {
-    float: left;
-    width: 18px;
-    margin: 0px 5px 0px 0px;
 }
 
 #redemption-information-sub-title {

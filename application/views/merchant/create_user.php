@@ -1,5 +1,4 @@
 <script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script>
-
 <script type="text/javascript">
     function showpassword()
     {
@@ -34,8 +33,7 @@
                 alert(errorThrown);
             }
         });
-    }   
-    
+    }
 </script>
 
 <?php
@@ -48,9 +46,7 @@ if(isset($message))
 
 <div id='register'>
     <div id='register-link'>
-        <a href='<?php echo base_url(); ?>user/register'>
-            <i class="fa fa-user-plus" id="register-link-icon"></i>User Register
-        </a>
+        <a href='<?php echo base_url('user/register') ?>' class="a-href-button">User Register</a>
     </div>
     <div id='float-fix'></div>
     <div id='register-title'>Merchant Sign Up</div>
