@@ -1197,7 +1197,7 @@ html, body {
     text-transform: uppercase;
     color: #444444;
     border-bottom: 1px solid #dddddd;
-    padding: 15px 22px 15px 22px;
+    padding: 14px 22px 14px 22px;
 }
 
 #index-left-category-title-label {
@@ -2548,11 +2548,143 @@ html, body {
 }
 
 /*********************************************
+ ** SHARE MERCHANT GRID LIST4
+ *********************************************/
+
+#share-merchant-grid-list4-content {
+    margin: 0px 0px 0px 0px;
+}
+
+#share-merchant-grid-list4-header {
+    -webkit-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
+    -moz-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
+    box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
+    padding: 10px 18px 10px 18px;
+    background: white;
+}
+
+#share-merchant-grid-list4-header-title {
+    color: #244964;
+    font-size: 25px;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 2px;
+    margin: 4px 0px 4px 0px;
+}
+
+#share-merchant-grid-list4-header-navigation {
+    font-size: 15px;
+    margin: 20px 0px 0px 0px;
+}
+
+#share-merchant-grid-list4-header-navigation-each {
+    float: left;
+}
+
+#share-merchant-grid-list4-header-navigation-separater {
+    float: left;
+    margin: 0px 13px 0px 13px;
+    color: lightgray;
+}
+
+#share-merchant-grid-list4-category-list {
+    margin: 20px 0px 0px 0px;
+}
+
+#share-merchant-grid-list4-category-list a {
+    color: black;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+#share-merchant-grid-list4-container {
+    margin: 25px 0px 60px 0px;
+}
+    
+.share-merchant-grid-list4-box {
+    display: inline-block;
+    vertical-align: top;
+    width: calc(25% - 21px);
+    margin: 0px 25px 25px 0px;
+    background-color: white;
+    -webkit-box-shadow: 1px 1px 3px 0px rgba(179,179,179,0.80);
+    -moz-box-shadow: 1px 1px 3px 0px rgba(179,179,179,0.80);
+    box-shadow: 1px 1px 3px 0px rgba(179,179,179,0.80);
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.share-merchant-grid-list4-box:nth-child(4n) {
+    margin-right: 0px;
+}
+
+.share-merchant-grid-list4-box:nth-last-child(-n+4) {
+    margin-bottom: 0px;
+}
+
+.share-merchant-grid-list4-box a {
+    text-decoration: none;
+}
+
+.share-merchant-grid-list4-box-photo-box {
+    padding-top: 100%;
+    width: 100%;
+    position: relative;
+}
+
+.share-merchant-grid-list4-box-photo-box img {
+    max-height: 100%;  
+    max-width: 100%; 
+    width: 100%;
+    height: 100%;
+    position: absolute;  
+    top: 0;  
+    bottom: 0;  
+    left: 0;  
+    right: 0;  
+    margin: auto;
+    object-fit: contain;
+}
+
+.share-merchant-grid-list4-box-separator {
+    border-bottom: 1px solid #eeeeee;
+}
+
+.share-merchant-grid-list4-box-information {
+    padding: 20px 18px 20px 18px;
+    min-height: 120px;
+}
+
+.share-merchant-grid-list4-box-information-title {
+    font-size: 14px;
+    font-weight: bold;
+    color: #444444;
+    white-space: nowrap;
+    text-overflow: ellipsis-word;
+    overflow: hidden;
+}
+
+.share-merchant-grid-list4-box-information-rating {
+    margin: 10px 0px 0px 0px;
+}
+
+#share-merchant-grid-list4-empty {
+    font-size: 14px;
+    padding: 30px 0px 30px 25px;
+    color: gray;
+    background-color: white;
+    -webkit-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
+    -moz-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
+    box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
+}
+
+/*********************************************
  ** SHARE MERCHANT GRID LIST5
  *********************************************/
 
 #share-merchant-grid-list5-content {
-    margin: 20px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
 }
 
 #share-merchant-grid-list5-header {
@@ -2566,8 +2698,11 @@ html, body {
 #share-merchant-grid-list5-header-title {
     color: #244964;
     font-size: 25px;
-    letter-spacing: 1px;
-    font-weight: bold;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 2px;
+    margin: 4px 0px 4px 0px;
 }
 
 #share-merchant-grid-list5-header-navigation {
@@ -2591,7 +2726,7 @@ html, body {
 
 #share-merchant-grid-list5-category-list a {
     color: black;
-    font-size: 20px;
+    font-size: 16px;
     text-decoration: none;
 }
 

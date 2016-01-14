@@ -19,24 +19,24 @@ if (isset($message))
 }
 ?>
 
-<div id="share-merchant-grid-list5">
-    <div id='share-merchant-grid-list5-content'>
-        <div id="share-merchant-grid-list5-header">
-            <div id="share-merchant-grid-list5-header-title"><?php echo $title ?></div>
+<div id="share-merchant-grid-list4">
+    <div id='share-merchant-grid-list4-content'>
+        <div id="share-merchant-grid-list4-header">
+            <div id="share-merchant-grid-list4-header-title"><?php echo $title ?></div>
             <?php 
             if ($this->router->fetch_method() == 'review_merchant')
-            {
+            { 
                 ?>
-                <div id='share-merchant-grid-list5-header-navigation'>
-                    <div id='share-merchant-grid-list5-header-navigation-each'>
+                <div id='share-merchant-grid-list4-header-navigation'>
+                    <div id='share-merchant-grid-list4-header-navigation-each'>
                         <a href="<?php echo $user_review_like; ?>" >Like</a> 
                     </div>
-                    <div id='share-merchant-grid-list5-header-navigation-separater'>|</div> 
-                    <div id='share-merchant-grid-list5-header-navigation-each'>
+                    <div id='share-merchant-grid-list4-header-navigation-separater'>|</div> 
+                    <div id='share-merchant-grid-list4-header-navigation-each'>
                         <a href="<?php echo $user_review_comment; ?>" >Comment</a>
                     </div>
-                    <div id='share-merchant-grid-list5-header-navigation-separater'>|</div> 
-                    <div id='share-merchant-grid-list5-header-navigation-each'>
+                    <div id='share-merchant-grid-list4-header-navigation-separater'>|</div> 
+                    <div id='share-merchant-grid-list4-header-navigation-each'>
                         <a href="<?php echo $user_review_rating; ?>" >Rating</a>
                     </div>
                     <div id='float-fix'></div>
@@ -45,7 +45,7 @@ if (isset($message))
                 if( !empty($category_list))
                 {
                     ?>
-                    <div id='share-merchant-grid-list5-category-list'>
+                    <div id='share-merchant-grid-list4-category-list'>
                         <?php
                         foreach ($category_list as $cat_row)
                         {
@@ -58,7 +58,7 @@ if (isset($message))
             }
             ?>
         </div>
-        <div id="share-merchant-grid-list5-container">
+        <div id="share-merchant-grid-list4-container">
             <?php            
             if ($review_list != null)
             {
@@ -72,10 +72,10 @@ if (isset($message))
                     $average_rating = $this->m_custom->merchant_rating_average($merchant_id, 'adv');
                     $rating_count = $this->m_custom->merchant_rating_average($merchant_id, 'adv', 1);
                     ?>
-                    <div class='share-merchant-grid-list5-box'>
+                    <div class='share-merchant-grid-list4-box'>
                         <a href='<?php echo $merchant_dashboard_url ?>'>
-                            <div class="share-merchant-grid-list5-box-photo">
-                                <div class="share-merchant-grid-list5-box-photo-box">
+                            <div class="share-merchant-grid-list4-box-photo">
+                                <div class="share-merchant-grid-list4-box-photo-box">
                                     <?php
                                     if($merchant_profile_image)
                                     {
@@ -88,12 +88,12 @@ if (isset($message))
                                     ?>
                                 </div>
                             </div>
-                            <div class='share-merchant-grid-list5-box-separator'></div>
-                            <div class="share-merchant-grid-list5-box-information">
-                                <div class="share-merchant-grid-list5-box-information-title">
+                            <div class='share-merchant-grid-list4-box-separator'></div>
+                            <div class="share-merchant-grid-list4-box-information">
+                                <div class="share-merchant-grid-list4-box-information-title">
                                     <?php echo $merchant_name ?>
                                 </div>
-                                <div class="share-merchant-grid-list5-box-information-rating">
+                                <div class="share-merchant-grid-list4-box-information-rating">
                                     <?php
                                     for ($i = 1; $i <= 5; $i++)
                                     {
@@ -118,7 +118,7 @@ if (isset($message))
             else
             {
                 ?>
-                <div id='share-merchant-grid-list5-empty'>
+                <div id='share-merchant-grid-list4-empty'>
                     
                     <?php
                     if ($fetch_method == 'review_merchant')

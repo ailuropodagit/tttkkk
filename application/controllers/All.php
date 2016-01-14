@@ -503,12 +503,11 @@ class All extends CI_Controller
 
     function merchant_category($sub_category_id = NULL)
     {
-        //PAGE PATH NAME
-        $this->data['page_path_name'] = 'share/merchant_grid_list5';
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['title'] = $this->m_custom->display_category($sub_category_id);
         $this->data['review_list'] = $this->m_merchant->getMerchantList_by_subcategory($sub_category_id);
-        $this->load->view('template/index_background_blank', $this->data);
+        $this->data['page_path_name'] = 'share/merchant_grid_list4';
+        $this->load->view('template/index_left_category', $this->data);
     }
 
     function merchant_user_picture($picture_id, $user_id = NULL, $merchant_id = NULL)
