@@ -1,26 +1,23 @@
 <script type="text/javascript" src="<?php echo base_url() ?>js/jquery.ajaxfileupload.js"></script>
-
 <script type="text/javascript">
     $(document).ready(function () {
-        var keppo_path = '<?php echo $this->config->item('keppo_path'); ?>';      
+    var keppo_path = '<?php echo $this->config->item('keppo_path'); ?>';
         var temp_folder = '<?php echo $temp_folder ?>';
-            $('#userfile').ajaxfileupload({
-      'action': 'http://' + $(location).attr('hostname') + keppo_path + 'all/upload_image_temp',
-      'params': {
-        'file_name': 'userfile',
-        'image_box_id': 'userimage'
-      },
-      'onComplete': function(response) {
-        //alert(JSON.stringify(response));
-        var post_url = 'http://' + $(location).attr('hostname') + keppo_path + temp_folder;
-        //var post_image = "<img src='" + post_url + response + "'>";
-        var post_image = post_url + response[0];
-        //$( '#upload-for-merchant-form-photo-box' ).html(post_image);
-        $('img#'+ response[1]).attr('src', post_image);
-      }
-    });
-
-    
+        $('#userfile').ajaxfileupload({
+            'action': 'http://' + $(location).attr('hostname') + keppo_path + 'all/upload_image_temp',
+            'params': {
+                'file_name': 'userfile',
+                'image_box_id': 'userimage'
+            },
+            'onComplete': function (response) {
+                //alert(JSON.stringify(response));
+                var post_url = 'http://' + $(location).attr('hostname') + keppo_path + temp_folder;
+                //var post_image = "<img src='" + post_url + response + "'>";
+                var post_image = post_url + response[0];
+                //$( '#upload-for-merchant-form-photo-box' ).html(post_image);
+                $('img#' + response[1]).attr('src', post_image);
+            }
+        });
     });
     document.title = "<?php echo $browser_title; ?>";
 </script>
@@ -99,16 +96,21 @@ if($this->ion_auth->user()->num_rows())
                 <div id="dashboard-info-title-name">
                     <?php echo $company_name; ?>
                 </div>
-                <div id="dashboard-info-edit-link">
-                    <?php 
-                    if (check_correct_login_type($this->config->item('group_id_merchant')) && $dashboard_users_id == $logged_user_id){
-                        $promo_code = $this->m_custom->promo_code_get('merchant', $logged_user_id, 1);
-                        echo "Promo Code : <input type='text' value='$promo_code' readonly='true' style='width:100px'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-                        echo "<a href='".base_url()."merchant/profile'>Edit My Profile</a>";
-                    }
-                    ?>
-                </div>
                 <?php
+                //CORRECT LOGIN
+                if (check_correct_login_type($this->config->item('group_id_merchant')) && $dashboard_users_id == $logged_user_id)
+                {
+                    $promo_code = $this->m_custom->promo_code_get('merchant', $logged_user_id, 1);
+                    ?>
+                    <div id="dashboard-info-edit-link">
+                        <a href='<?php echo base_url('merchant/profile') ?>' class="a-href-button">Edit My Profile</a>
+                    </div>
+                    <div id="dashboard-info-promo-code">
+                        Promo Code : <?php echo $promo_code ?>
+                    </div>
+                    <?php
+                }
+                
                 //LOGGED IN
                 if($this->ion_auth->user()->num_rows())
                 {  
