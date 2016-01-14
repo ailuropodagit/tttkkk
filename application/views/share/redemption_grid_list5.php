@@ -13,7 +13,15 @@ $fetch_method = $this->router->fetch_method();
 ?>
 
 <div id="share-redemption-grid-list5">
-    <div id="share-redemption-grid-list5-title"><?php echo $title ?></div>
+    <div id='share-redemption-grid-list5-header'>
+        <div id='share-redemption-grid-list5-header-table'>
+            <div id='share-redemption-grid-list5-header-table-row'>
+                <div id='share-redemption-grid-list5-header-table-row-cell'>
+                    <div id="share-redemption-grid-list5-header-title"><?php echo $title ?></div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="share-redemption-grid-list5-container">
         <?php
         foreach ($share_hotdeal_redemption_list as $row)

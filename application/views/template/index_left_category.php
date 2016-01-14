@@ -50,10 +50,8 @@ $this->load->view('template/header');
                     $main_navigate_to = base_url() . "all/merchant-category/" . $main_category_id;
                 }
                 ?>
-                <div id="index-left-category-label">
-                    <a href="<?php echo $main_navigate_to ?>" style="color:#244964">
-                        <?php echo $main_category_label ?>
-                    </a> 
+                <div id="index-left-category-label" <?php if($main_category_id == $page_category_id){ echo 'class="index-left-category-label-active"'; } ?>>
+                    <a href="<?php echo $main_navigate_to ?>"><?php echo $main_category_label ?></a>
                 </div>
                 <?php
                 //GET SUB CATEGORY

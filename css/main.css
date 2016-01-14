@@ -1197,7 +1197,7 @@ html, body {
     text-transform: uppercase;
     color: #444444;
     border-bottom: 1px solid #dddddd;
-    padding: 14px 22px 14px 22px;
+    padding: 12px 22px 12px 22px;
 }
 
 #index-left-category-title-label {
@@ -1213,6 +1213,16 @@ html, body {
     margin: 25px 0px 10px 0px;
     text-transform: uppercase;
     color: #244964;
+}
+
+#index-left-category-label a {
+    color: #244964;
+    text-decoration: none;
+}
+
+.index-left-category-label-active > a {
+    color: #d50000 !important;
+    font-weight: bold;
 }
 
 #index-left-category-nav {
@@ -1622,6 +1632,14 @@ html, body {
     margin: 4px 0px 4px 0px;
 }
 
+#share-hot-deal-grid-list4-sort {
+    margin: 20px 0px 0px 0px;
+}
+
+#share-hot-deal-grid-list4-sort-label {
+    font-size: 18px;
+}
+
 #share-hot-deal-grid-list4-container {
     margin: 25px 0px 0px 0px;
 }
@@ -1787,16 +1805,39 @@ html, body {
     margin: 0px 0px 40px 0px;
 }
 
-#share-hot-deal-grid-list5-title {
-    font-size: 20px;
-    font-weight: bold;
-    color: #244964;
-    letter-spacing: 1px;
-    padding: 16px;
-    background-color: white;
+#share-hot-deal-grid-list5-header {
     -webkit-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
     -moz-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
     box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
+    background: white;
+}
+
+#share-hot-deal-grid-list5-header-table {
+    display: table;
+    width: 100%;
+    height: 40px;
+}
+
+#share-hot-deal-grid-list5-header-table-row {
+    display: table-row;
+}
+
+#share-hot-deal-grid-list5-header-table-row-cell {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#share-hot-deal-grid-list5-header-table-row-cell:nth-child(2) {
+    width: 50px;
+}
+    
+#share-hot-deal-grid-list5-header-title {
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 2px;
+    color: black;
+    margin: 0px 0px 0px 15px;
 }
 
 #share-hot-deal-grid-list5-container {
@@ -1910,7 +1951,43 @@ html, body {
     margin: 0px 0px 40px 0px;
 }
 
+#share-redemption-grid-list4-header {
+    border-left: 5px solid #f6aa26;
+    background-color: #f6c026;
+}
+
 #share-redemption-grid-list4-header-table {
+    display: table;
+    width: 100%;
+    height: 40px;
+}
+
+#share-redemption-grid-list4-header-table-row {
+    display: table-row;
+}
+
+#share-redemption-grid-list4-header-table-row-cell {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#share-redemption-grid-list4-header-table-row-cell:nth-child(2) {
+    width: 50px;
+}
+
+#share-redemption-grid-list4-header-title {
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 2px;
+    color: #fbfbfb;
+    float: left;
+    margin: 0px 0px 0px 15px;
+}
+
+
+
+/*#share-redemption-grid-list4-header-table {
     display: table;
     width: 100%;
     height: 40px;
@@ -1938,6 +2015,14 @@ html, body {
     letter-spacing: 2px;
     color: #fbfbfb;
     margin: 4px 0px 4px 0px;
+}*/
+
+#share-redemption-grid-list4-sort {
+    margin: 20px 0px 0px 0px;
+}
+
+#share-redemption-grid-list4-sort-label {
+    font-size: 18px;
 }
 
 #share-redemption-grid-list4-container {
@@ -2064,16 +2149,39 @@ html, body {
     margin: 0px 0px 40px 0px;
 }
 
-#share-redemption-grid-list5-title {
-    font-size: 20px;
-    font-weight: bold;
-    color: #244964;
-    letter-spacing: 1px;
-    padding: 16px;
-    background-color: white;
+#share-redemption-grid-list5-header {
     -webkit-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
     -moz-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
     box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
+    background: white;
+}
+
+#share-redemption-grid-list5-header-table {
+    display: table;
+    width: 100%;
+    height: 40px;
+}
+
+#share-redemption-grid-list5-header-table-row {
+    display: table-row;
+}
+
+#share-redemption-grid-list5-header-table-row-cell {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#share-redemption-grid-list5-header-table-row-cell:nth-child(2) {
+    width: 50px;
+}
+    
+#share-redemption-grid-list5-header-title {
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 2px;
+    color: black;
+    margin: 0px 0px 0px 15px;
 }
 
 #share-redemption-grid-list5-container {
@@ -2551,26 +2659,39 @@ html, body {
  ** SHARE MERCHANT GRID LIST4
  *********************************************/
 
-#share-merchant-grid-list4-content {
-    margin: 0px 0px 0px 0px;
-}
-
 #share-merchant-grid-list4-header {
     -webkit-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
     -moz-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
     box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
-    padding: 10px 18px 10px 18px;
     background: white;
 }
 
+#share-merchant-grid-list4-header-table {
+    display: table;
+    width: 100%;
+    height: 40px;
+}
+
+#share-merchant-grid-list4-header-table-row {
+    display: table-row;
+}
+
+#share-merchant-grid-list4-header-table-row-cell {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#share-merchant-grid-list4-header-table-row-cell:nth-child(2) {
+    width: 50px;
+}
+    
 #share-merchant-grid-list4-header-title {
-    color: #244964;
-    font-size: 25px;
     text-transform: uppercase;
     font-weight: 700;
     font-size: 15px;
     letter-spacing: 2px;
-    margin: 4px 0px 4px 0px;
+    color: black;
+    margin: 0px 0px 0px 15px;
 }
 
 #share-merchant-grid-list4-header-navigation {
@@ -2683,26 +2804,39 @@ html, body {
  ** SHARE MERCHANT GRID LIST5
  *********************************************/
 
-#share-merchant-grid-list5-content {
-    margin: 0px 0px 0px 0px;
-}
-
 #share-merchant-grid-list5-header {
     -webkit-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
     -moz-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
     box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
-    padding: 12px 18px 12px 18px;
     background: white;
 }
 
+#share-merchant-grid-list5-header-table {
+    display: table;
+    width: 100%;
+    height: 40px;
+}
+
+#share-merchant-grid-list5-header-table-row {
+    display: table-row;
+}
+
+#share-merchant-grid-list5-header-table-row-cell {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#share-merchant-grid-list5-header-table-row-cell:nth-child(2) {
+    width: 50px;
+}
+    
 #share-merchant-grid-list5-header-title {
-    color: #244964;
-    font-size: 25px;
     text-transform: uppercase;
     font-weight: 700;
     font-size: 15px;
     letter-spacing: 2px;
-    margin: 4px 0px 4px 0px;
+    color: black;
+    margin: 0px 0px 0px 15px;
 }
 
 #share-merchant-grid-list5-header-navigation {

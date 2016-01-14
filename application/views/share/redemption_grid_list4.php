@@ -13,22 +13,24 @@ $fetch_method = $this->router->fetch_method();
 ?>
 
 <div id="share-redemption-grid-list4">
-    <div id='share-redemption-grid-list4-header-table'>
-        <div id='share-redemption-grid-list4-header-table-row'>
-            <div id='share-redemption-grid-list4-header-table-row-cell'>
-                <div id="share-redemption-grid-list4-header">
-                    <div id="share-redemption-grid-list4-header-title"><?php echo $title ?></div>
+    <div id="share-redemption-grid-list4-header">
+        <div id='share-redemption-grid-list4-header-table'>
+            <div id='share-redemption-grid-list4-header-table-row'>
+                <div id='share-redemption-grid-list4-header-table-row-cell'>
+                    <div id="share-redemption-grid-list4-header">
+                        <div id="share-redemption-grid-list4-header-title"><?php echo $title ?></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div id="payment-charge-go">
-            <?php echo form_open(uri_string()); ?>
-                <span id="payment-charge-go-label"><?php echo "Sort "; ?></span>
-                <span id="payment-charge-go-dropdown"><?php echo form_dropdown($view_status_id, $view_status_list, $view_status_selected); ?></span>
-                <span id="payment-charge-go-dropdown"><?php echo form_dropdown($view_status_id2, $view_status_list2, $view_status_selected2); ?></span>
-                <span id="payment-charge-go-button"><button name="button_action" type="submit" value="filter_result">Go</button></span>
-            <?php echo form_close();  ?>
+    <div id="share-redemption-grid-list4-sort">
+        <?php echo form_open(uri_string()); ?>
+        <span id="share-redemption-grid-list4-sort-label"><?php echo "Sort : "; ?></span>
+        <span id="share-redemption-grid-list4-sort-dropdown"><?php echo form_dropdown($view_status_id, $view_status_list, $view_status_selected); ?></span>
+        <span id="share-redemption-grid-list4-sort-dropdown"><?php echo form_dropdown($view_status_id2, $view_status_list2, $view_status_selected2); ?></span>
+        <span id="share-redemption-grid-list4-sort-button"><button name="button_action" type="submit" value="filter_result">Go</button></span>
+        <?php echo form_close();  ?>
     </div>
     <div id="float-fix"></div>
     <div id="share-redemption-grid-list4-container">

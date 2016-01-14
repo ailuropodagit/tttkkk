@@ -20,124 +20,130 @@ if (isset($message))
 ?>
 
 <div id="share-merchant-grid-list4">
-    <div id='share-merchant-grid-list4-content'>
-        <div id="share-merchant-grid-list4-header">
-            <div id="share-merchant-grid-list4-header-title"><?php echo $title ?></div>
-            <?php 
-            if ($this->router->fetch_method() == 'review_merchant')
-            { 
-                ?>
-                <div id='share-merchant-grid-list4-header-navigation'>
-                    <div id='share-merchant-grid-list4-header-navigation-each'>
-                        <a href="<?php echo $user_review_like; ?>" >Like</a> 
-                    </div>
-                    <div id='share-merchant-grid-list4-header-navigation-separater'>|</div> 
-                    <div id='share-merchant-grid-list4-header-navigation-each'>
-                        <a href="<?php echo $user_review_comment; ?>" >Comment</a>
-                    </div>
-                    <div id='share-merchant-grid-list4-header-navigation-separater'>|</div> 
-                    <div id='share-merchant-grid-list4-header-navigation-each'>
-                        <a href="<?php echo $user_review_rating; ?>" >Rating</a>
-                    </div>
-                    <div id='float-fix'></div>
+    <div id="share-merchant-grid-list4-header">
+        <div id='share-merchant-grid-list4-header-table'>
+            <div id='share-merchant-grid-list4-header-table-row'>
+                <div id='share-merchant-grid-list4-header-table-row-cell'>
+                    <div id="share-merchant-grid-list4-header-title"><?php echo $title ?></div>
                 </div>
-                <?php 
-                if( !empty($category_list))
-                {
-                    ?>
-                    <div id='share-merchant-grid-list4-category-list'>
-                        <?php
-                        foreach ($category_list as $cat_row)
-                        {
-                            echo $cat_row;
-                        }
+                <div id='share-merchant-grid-list4-header-table-row-cell'>
+                    <?php 
+                    if ($this->router->fetch_method() == 'review_merchant')
+                    {
                         ?>
-                    </div>
-                    <?php
-                }
-            }
-            ?>
-        </div>
-        <div id="share-merchant-grid-list4-container">
-            <?php            
-            if ($review_list != null)
-            {
-                //var_dump($review_list);
-                foreach ($review_list as $row)
-                {
-                    $merchant_id = $row['id'];
-                    $merchant_profile_image = $row['profile_image'];
-                    $merchant_name = $row['company'];
-                    $merchant_dashboard_url = $row['merchant_dashboard_url'];
-                    $average_rating = $this->m_custom->merchant_rating_average($merchant_id, 'adv');
-                    $rating_count = $this->m_custom->merchant_rating_average($merchant_id, 'adv', 1);
+                        <div id='share-merchant-grid-list4-header-navigation'>
+                            <div id='share-merchant-grid-list4-header-navigation-each'>
+                                <a href="<?php echo $user_review_like; ?>" >Like</a> 
+                            </div>
+                            <div id='share-merchant-grid-list4-header-navigation-separater'>|</div> 
+                            <div id='share-merchant-grid-list4-header-navigation-each'>
+                                <a href="<?php echo $user_review_comment; ?>" >Comment</a>
+                            </div>
+                            <div id='share-merchant-grid-list4-header-navigation-separater'>|</div> 
+                            <div id='share-merchant-grid-list4-header-navigation-each'>
+                                <a href="<?php echo $user_review_rating; ?>" >Rating</a>
+                            </div>
+                            <div id='float-fix'></div>
+                        </div>
+                        <?php 
+                        if( !empty($category_list))
+                        {
+                            ?>
+                            <div id='share-merchant-grid-list4-category-list'>
+                                <?php
+                                foreach ($category_list as $cat_row)
+                                {
+                                    echo $cat_row;
+                                }
+                                ?>
+                            </div>
+                            <?php
+                        }
+                    }
                     ?>
-                    <div class='share-merchant-grid-list4-box'>
-                        <a href='<?php echo $merchant_dashboard_url ?>'>
-                            <div class="share-merchant-grid-list4-box-photo">
-                                <div class="share-merchant-grid-list4-box-photo-box">
-                                    <?php
-                                    if($merchant_profile_image)
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="share-merchant-grid-list4-container">
+        <?php            
+        if ($review_list != null)
+        {
+            //var_dump($review_list);
+            foreach ($review_list as $row)
+            {
+                $merchant_id = $row['id'];
+                $merchant_profile_image = $row['profile_image'];
+                $merchant_name = $row['company'];
+                $merchant_dashboard_url = $row['merchant_dashboard_url'];
+                $average_rating = $this->m_custom->merchant_rating_average($merchant_id, 'adv');
+                $rating_count = $this->m_custom->merchant_rating_average($merchant_id, 'adv', 1);
+                ?>
+                <div class='share-merchant-grid-list4-box'>
+                    <a href='<?php echo $merchant_dashboard_url ?>'>
+                        <div class="share-merchant-grid-list4-box-photo">
+                            <div class="share-merchant-grid-list4-box-photo-box">
+                                <?php
+                                if($merchant_profile_image)
+                                {
+                                    ?><img src='<?php echo base_url($this->config->item('album_merchant_profile') . $merchant_profile_image) ?>'><?php
+                                }
+                                else
+                                {
+                                    echo img($this->config->item('empty_image'));
+                                }
+                                ?>
+                            </div>
+                        </div>
+                        <div class='share-merchant-grid-list4-box-separator'></div>
+                        <div class="share-merchant-grid-list4-box-information">
+                            <div class="share-merchant-grid-list4-box-information-title">
+                                <?php echo $merchant_name ?>
+                            </div>
+                            <div class="share-merchant-grid-list4-box-information-rating">
+                                <?php
+                                for ($i = 1; $i <= 5; $i++)
+                                {
+                                    if ($i == round($average_rating))
                                     {
-                                        ?><img src='<?php echo base_url($this->config->item('album_merchant_profile') . $merchant_profile_image) ?>'><?php
+                                        echo "<input class='star' type='radio' name='a-rating-m$merchant_id' disabled='disabled' value='" . $i . "' checked='checked'/>";
                                     }
                                     else
                                     {
-                                        echo img($this->config->item('empty_image'));
+                                        echo "<input class='star' type='radio' name='a-rating-m$merchant_id' disabled='disabled' value='" . $i . "'/>";
                                     }
-                                    ?>
-                                </div>
+                                }
+                                ?>
+                                <div id='float-fix'></div>
                             </div>
-                            <div class='share-merchant-grid-list4-box-separator'></div>
-                            <div class="share-merchant-grid-list4-box-information">
-                                <div class="share-merchant-grid-list4-box-information-title">
-                                    <?php echo $merchant_name ?>
-                                </div>
-                                <div class="share-merchant-grid-list4-box-information-rating">
-                                    <?php
-                                    for ($i = 1; $i <= 5; $i++)
-                                    {
-                                        if ($i == round($average_rating))
-                                        {
-                                            echo "<input class='star' type='radio' name='a-rating-m$merchant_id' disabled='disabled' value='" . $i . "' checked='checked'/>";
-                                        }
-                                        else
-                                        {
-                                            echo "<input class='star' type='radio' name='a-rating-m$merchant_id' disabled='disabled' value='" . $i . "'/>";
-                                        }
-                                    }
-                                    ?>
-                                    <div id='float-fix'></div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <?php
-                }
-            }
-            else
-            {
-                ?>
-                <div id='share-merchant-grid-list4-empty'>
-                    
-                    <?php
-                    if ($fetch_method == 'review_merchant')
-                    {
-                        echo 'No Review';
-                    }
-                    else if ($fetch_method == 'merchant_category')
-                    {
-                        echo 'No Merchant';
-                    }
-                    else
-                    {
-                        
-                    }
-                    ?>
+                        </div>
+                    </a>
                 </div>
                 <?php
             }
+        }
+        else
+        {
             ?>
-        </div>
+            <div id='share-merchant-grid-list4-empty'>
+
+                <?php
+                if ($fetch_method == 'review_merchant')
+                {
+                    echo 'No Review';
+                }
+                else if ($fetch_method == 'merchant_category')
+                {
+                    echo 'No Merchant';
+                }
+                else
+                {
+
+                }
+                ?>
+            </div>
+            <?php
+        }
+        ?>
     </div>
 </div>

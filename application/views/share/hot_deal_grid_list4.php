@@ -22,15 +22,14 @@ $fetch_method = $this->router->fetch_method();
             </div>
         </div>
     </div>
-    <div id="payment-charge-go">
-            <?php echo form_open(uri_string()); ?>
-                <span id="payment-charge-go-label"><?php echo "Sort "; ?></span>
-                <span id="payment-charge-go-dropdown"><?php echo form_dropdown($view_status_id, $view_status_list, $view_status_selected); ?></span>
-                <span id="payment-charge-go-dropdown"><?php echo form_dropdown($view_status_id2, $view_status_list2, $view_status_selected2); ?></span>
-                <span id="payment-charge-go-button"><button name="button_action" type="submit" value="filter_result">Go</button></span>
-            <?php echo form_close();  ?>
+    <div id="share-hot-deal-grid-list4-sort">
+        <?php echo form_open(uri_string()); ?>
+        <span id="share-hot-deal-grid-list4-sort-label"><?php echo "Sort : "; ?></span>
+        <span id="share-hot-deal-grid-list4-sort-dropdown"><?php echo form_dropdown($view_status_id, $view_status_list, $view_status_selected); ?></span>
+        <span id="share-hot-deal-grid-list4-sort-dropdown"><?php echo form_dropdown($view_status_id2, $view_status_list2, $view_status_selected2); ?></span>
+        <span id="share-hot-deal-grid-list4-sort-button"><button name="button_action" type="submit" value="filter_result">Go</button></span>
+        <?php echo form_close() ?>
     </div>
-    <div id="float-fix"></div>
     <div id="share-hot-deal-grid-list4-container">
         <?php
         foreach ($share_hotdeal_redemption_list as $row)
