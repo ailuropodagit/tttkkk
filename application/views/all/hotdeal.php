@@ -7,22 +7,31 @@
 <script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script>
 <!--COUNTDOWN-->
 <script type="text/javascript" src="<?php echo base_url('js/jquery.countdown.js') ?>"></script>
+<script type="text/javascript" src="http://connect.facebook.net/en_US/all.js"></script>
 
 <!--SCRIPT-->
 <script type="text/javascript">
     //FB SHARE
-//    function fbShare() {
-//        FB.ui({
-//            method: 'share',
-//            href: 'http://www.keppo.my/keppo/all/advertise/56/hot/26',           
-//            picture: 'http://www.keppo.my/keppo/folder_upload/album_merchant/KFC13.jpg',
-//            title: 'title here',
-//            description: "description here"
-//        }, function(response){
-//        
-//        });
-//    }
+    FB.init({
+         appId  : '161842160851201',
+         status : true, // check login status
+         cookie : true, // enable cookies to allow the server to access the session
+         xfbml  : true  // parse XFBML
+       });
 
+    function fbShare(name, description, hrefTitle, hrefLink, userPrompt){        
+        FB.ui({ 
+            method : 'feed', 
+            message: userPrompt,
+            link: hrefLink,
+            caption: hrefTitle,
+            picture: '<?php echo $image_url; ?>'
+        });
+    }
+    function publishStream() {
+        fbShare("Keppo", 'Hotdeal', '<?php echo $title; ?>', '<?php echo base_url() . uri_string(); ?>', "Keppo");
+    }
+            
     $(function(){
         var end_time = $('#hot-deal-information-countdown-time').attr('end_time');
         $('#hot-deal-information-countdown-time').countdown(end_time, function(event) {
@@ -34,6 +43,7 @@
 
 <div id='hot-deal'>
     <h1>Hot Deal</h1>
+    <div id="fb-root"></div>
     <div id='hot-deal-content'>
         <div id="hot-deal-category">
             Category: <?php echo $sub_category; ?>
@@ -231,7 +241,7 @@
                 <div id="hot-deal-information-share-label">
                     Share This Deal
                 </div>
-                <div id="hot-deal-information-share-facebook" onclick="fbShare()">
+                <div id="hot-deal-information-share-facebook" onclick="publishStream(); return false;">
                     <img src="<?php echo base_url() . 'image/social-media-facebook-share.png'; ?>" >
                 </div>
                 <div id="hot-deal-information-share-earn-candie">
