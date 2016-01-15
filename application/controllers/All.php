@@ -146,8 +146,39 @@ class All extends CI_Controller
 
     function redemption_list()
     {
+        //SORTING REQUEST
+        $view_status = 'advertise_id';
+        $view_status2 = 'desc';
+        $have_sort = 0;
+        $this->session->unset_userdata('adv_sort_by');
+        $this->session->unset_userdata('adv_sort_sequence');
+        if (isset($_POST) && !empty($_POST))
+        {
+            if ($this->input->post('button_action') == "filter_result")
+            {
+                $view_status = $this->input->post('view_status_id');
+                $view_status2 = $this->input->post('view_status_id2');
+                $have_sort = 1;
+                $this->session->set_userdata("adv_sort_by",$view_status);
+                $this->session->set_userdata("adv_sort_sequence",$view_status2);
+            }
+        }
+        $this->data['view_status_list'] = array('advertise_id' => 'Sort By What?', 'price_after' => 'Price After', 'average_rating' => 'Rating', 'count_like' => 'Like', 'voucher_worth' => 'Worth');
+        $this->data['view_status_id'] = array(
+            'name' => 'view_status_id',
+            'id' => 'view_status_id',
+        );
+        $this->data['view_status_selected'] = $view_status;
+        
+        $this->data['view_status_list2'] = array('desc' => 'High To Low', 'asc' => 'Low To High');
+        $this->data['view_status_id2'] = array(
+            'name' => 'view_status_id2',
+            'id' => 'view_status_id2',
+        );
+        $this->data['view_status_selected2'] = $view_status2;
+        
         $sub_category_id = $this->uri->segment(3);
-        $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('adm', $sub_category_id);
+        $this->data['share_hotdeal_redemption_list'] = $this->m_custom->getAdvertise('adm', $sub_category_id);
         $this->data['title'] = "Redemption";
         if (!IsNullOrEmptyString($sub_category_id))
         {
@@ -155,9 +186,8 @@ class All extends CI_Controller
             $this->data['sub_category'] = $this->m_custom->display_category($sub_category_id);
         }
         $this->data['check_is_main_category'] = $this->m_custom->check_is_main_category_id($sub_category_id, 1);
-        
-        $this->data['page_path_name'] = 'all/advertise_list';
-        $this->load->view('template/layout_category', $this->data);
+        $this->data['page_path_name'] = 'share/hot_deal_grid_list4';
+        $this->load->view('template/index_left_category', $this->data);
     }
 
     function advertise($advertise_id, $advertise_type = NULL, $sub_category_id = NULL, $merchant_id = NULL, $show_expired = 0)
