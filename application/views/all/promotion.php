@@ -5,6 +5,31 @@
 <script type="text/javascript" src="<?php echo base_url() ?>js/jgrowl/jquery.jgrowl.js"></script>
 <?php echo link_tag('js/jgrowl/jquery.jgrowl.css') ?>
 <script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script>
+<script type="text/javascript" src="http://connect.facebook.net/en_US/all.js"></script>
+
+<script type="text/javascript">
+    //FB SHARE
+    FB.init({
+         appId  : '161842160851201',
+         status : true, // check login status
+         cookie : true, // enable cookies to allow the server to access the session
+         xfbml  : true  // parse XFBML
+       });
+
+    function fbShare(name, description, hrefTitle, hrefLink, userPrompt){        
+        FB.ui({ 
+            method : 'feed', 
+            message: userPrompt,
+            link: hrefLink,
+            caption: hrefTitle,
+            picture: '<?php echo $image_url; ?>'
+        });
+    }
+    function publishStream() {
+        fbShare("Keppo", 'Redemption', '<?php echo $title; ?>', '<?php echo base_url() . uri_string(); ?>', "Keppo");
+    }           
+
+</script>
 
 <?php
 //MESSAGE
@@ -16,6 +41,7 @@ if(isset($message))
 
 <div id="redemption">
     <h1>Redemption</h1>
+    <div id="fb-root"></div>
     <div id="redemption-content">
         <div id="redemption-category">
             Category: <?php echo $sub_category; ?>
@@ -273,7 +299,7 @@ if(isset($message))
                 <div id="redemption-information-share-label">
                     Share This Redemption
                 </div>
-                <div id="redemption-information-share-facebook" onclick="fbShare()">
+                <div id="redemption-information-share-facebook" onclick="publishStream(); return false;">
                     <img src="<?php echo base_url() . 'image/social-media-facebook-share.png'; ?>" >
                 </div>
                 <div id="redemption-information-share-earn-candie">
