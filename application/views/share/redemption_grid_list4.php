@@ -53,8 +53,8 @@ $fetch_method = $this->router->fetch_method();
             $get_off_percent = $row['get_off_percent'];
             $how_many_buy = $row['how_many_buy'];
             $how_many_get = $row['how_many_get'];
-            
             $average_rating = $this->m_custom->activity_rating_average($advertise_id, 'adv');
+            $redeem_count = $this->m_custom->promotion_redeem_count($advertise_id);
             if ($advertise_type == 'adm')
             {
                 $image_url = base_url($this->album_admin . $row['image']);
@@ -108,6 +108,11 @@ $fetch_method = $this->router->fetch_method();
                     <div class="share-redemption-grid-list4-box-photo">
                         <div class="share-redemption-grid-list4-box-photo-box">
                             <img src='<?php echo $image_url ?>'>
+                            <div class="share-redemption-row-list4-box-photo-box-redemption-count">
+                                <div class="share-redemption-row-list4-box-photo-box-redemption-count-text">
+                                    <?php echo $redeem_count ?><br/>Redemption
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="share-redemption-grid-list4-box-separator"></div>

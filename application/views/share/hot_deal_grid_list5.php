@@ -34,6 +34,8 @@ $fetch_method = $this->router->fetch_method();
             $advertise_type = $row['advertise_type'];
             $price_before = $row['price_before'];
             $price_after = $row['price_after'];
+            $end_time = $row['end_time'];
+            $post_hour = $row['post_hour'];
             $average_rating = $this->m_custom->activity_rating_average($advertise_id, 'adv');
             if ($advertise_type == 'adm')
             {
@@ -71,6 +73,33 @@ $fetch_method = $this->router->fetch_method();
             ?>
             <div class='share-hot-deal-grid-list5-box'>
                 <a href='<?php echo $advertise_detail_url ?>'>
+                    <?php                
+                    if ($post_hour != 0)
+                    {
+                        ?>
+                        <div class="share-hot-deal-grid-list5-box-timer-box-absolute">
+                            <div class="share-hot-deal-grid-list5-box-timer-box-relative" end_date="<?php echo $end_time ?>">
+                                <div class="share-hot-deal-grid-list5-box-timer-box1">
+                                    <div class="share-hot-deal-grid-list5-box-timer-box1-time-day">1</div>
+                                    <div class="share-hot-deal-grid-list5-box-timer-box1-label">Days</div>
+                                </div>
+                                <div class="share-hot-deal-grid-list5-box-timer-box2">
+                                    <div class="share-hot-deal-grid-list5-box-timer-box2-time-hour">2</div>
+                                    <div class="share-hot-deal-grid-list5-box-timer-box2-label">Hours</div>
+                                </div>
+                                <div class="share-hot-deal-grid-list5-box-timer-box3">
+                                    <div class="share-hot-deal-grid-list5-box-timer-box3-time-minute">3</div>
+                                    <div class="share-hot-deal-grid-list5-box-timer-box3-label">Mins</div>
+                                </div>
+                                <div class="share-hot-deal-grid-list5-box-timer-box4">
+                                    <div class="share-hot-deal-grid-list5-box-timer-box4-time-second">4</div>
+                                    <div class="share-hot-deal-grid-list5-box-timer-box4-label">Secs</div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                    ?>
                     <div class="share-hot-deal-grid-list5-box-photo">
                         <div class="share-hot-deal-grid-list5-box-photo-box">
                             <img src='<?php echo $image_url ?>'>
@@ -82,22 +111,20 @@ $fetch_method = $this->router->fetch_method();
                             <?php echo $row['title'] ?>
                         </div>
                         <div class="share-hot-deal-grid-list5-box-information-rating">
-                            <div class="share-hot-deal-redemption-list4-box-information-rating">
-                                <?php
-                                for ($i = 1; $i <= 5; $i++)
+                            <?php
+                            for ($i = 1; $i <= 5; $i++)
+                            {
+                                if ($i == round($average_rating))
                                 {
-                                    if ($i == round($average_rating))
-                                    {
-                                        echo "<input class='star' type='radio' name='a-rating-$advertise_id' disabled='disabled' value='" . $i . "' checked='checked'/>";
-                                    }
-                                    else
-                                    {
-                                        echo "<input class='star' type='radio' name='a-rating-$advertise_id' disabled='disabled' value='" . $i . "'/>";
-                                    }
+                                    echo "<input class='star' type='radio' name='a-rating-$advertise_id' disabled='disabled' value='" . $i . "' checked='checked'/>";
                                 }
-                                ?>
-                                <div class="float-fix"></div>
-                            </div>
+                                else
+                                {
+                                    echo "<input class='star' type='radio' name='a-rating-$advertise_id' disabled='disabled' value='" . $i . "'/>";
+                                }
+                            }
+                            ?>
+                            <div class="float-fix"></div>
                         </div>
                         <div class="share-hot-deal-grid-list5-box-information-price">
                             <div class="share-hot-deal-grid-list5-box-information-price-after">
