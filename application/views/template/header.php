@@ -65,7 +65,7 @@
 
             window.fbAsyncInit = function () {
                 FB.init({
-                    appId: '1682555468669559',
+                    appId: '<?php echo fb_appID(); ?>',
                     cookie: true,
                     xfbml: true,
                     version: 'v2.5'
@@ -228,6 +228,7 @@
             //URI
             $header_fetch_class = $this->router->fetch_class();
             $header_fetch_method = $this->router->fetch_method();
+            $fetch_method = $this->router->fetch_method();
             $header_uri_segment4 = $this->uri->segment(4);
             if (check_is_login())
             {
