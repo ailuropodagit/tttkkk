@@ -106,7 +106,7 @@ if ($this->ion_auth->logged_in())
 
     window.fbAsyncInit = function () {
         FB.init({
-            appId: '1682555468669559',
+            appId: '<?php echo fb_appID(); ?>',
             cookie: true,
             xfbml: true,
             version: 'v2.5'

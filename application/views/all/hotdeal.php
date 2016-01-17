@@ -13,23 +13,20 @@
 <script type="text/javascript">
     //FB SHARE
     FB.init({
-         appId  : '161842160851201',
+         appId  : '<?php echo fb_appID(); ?>',
          status : true, // check login status
          cookie : true, // enable cookies to allow the server to access the session
          xfbml  : true  // parse XFBML
        });
 
-    function fbShare(name, description, hrefTitle, hrefLink, userPrompt){        
+    function fbShare(){        
         FB.ui({ 
-            method : 'feed', 
-            message: userPrompt,
-            link: hrefLink,
-            caption: hrefTitle,
-            picture: '<?php echo $image_url; ?>'
-        });
-    }
-    function publishStream() {
-        fbShare("Keppo", 'Hotdeal', '<?php echo $title; ?>', '<?php echo base_url() . uri_string(); ?>', "Keppo");
+                method : 'feed', 
+                link   :  '<?php echo base_url() . uri_string(); ?>',
+                caption:  '<?php echo $title; ?>',
+                picture: '<?php echo $image_url; ?>',
+                name:'<?php echo $merchant_name; ?>'
+       });
     }
             
     $(function(){
@@ -241,7 +238,7 @@
                 <div id="hot-deal-information-share-label">
                     Share This Deal
                 </div>
-                <div id="hot-deal-information-share-facebook" onclick="publishStream(); return false;">
+                <div id="hot-deal-information-share-facebook" onclick="fbShare(); return false;">
                     <img src="<?php echo base_url() . 'image/social-media-facebook-share.png'; ?>" >
                 </div>
                 <div id="hot-deal-information-share-earn-candie">
