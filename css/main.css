@@ -1602,6 +1602,11 @@ html, body {
     margin: 0px 0px 40px 0px;
 }
 
+#share-hot-deal-grid-list4-header {
+    border-left: 5px solid #bf315a;
+    background-color: #872642;
+}
+
 #share-hot-deal-grid-list4-header-table {
     display: table;
     width: 100%;
@@ -1617,10 +1622,8 @@ html, body {
     vertical-align: middle;
 }
 
-#share-hot-deal-grid-list4-header {
-    border-left: 5px solid #bf315a;
-    padding: 10px 0px 10px 20px;
-    background-color: #872642;
+#share-hot-deal-grid-list4-header-table-row-cell:nth-child(2) {
+    width: 50px;
 }
 
 #share-hot-deal-grid-list4-header-title {
@@ -1629,7 +1632,8 @@ html, body {
     font-size: 15px;
     letter-spacing: 2px;
     color: #fbfbfb;
-    margin: 4px 0px 4px 0px;
+    float: left;
+    margin: 0px 0px 0px 15px;
 }
 
 #share-hot-deal-grid-list4-sort {
@@ -1805,11 +1809,17 @@ html, body {
     margin: 0px 0px 40px 0px;
 }
 
-#share-hot-deal-grid-list5-header {
+#share-hot-deal-grid-list5-header-white {
     -webkit-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
     -moz-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
     box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
     background: white;
+}
+
+#share-hot-deal-grid-list5-header-darkred {
+    border-left: 5px solid #bf315a;
+    background-color: #872642;
+    color: white;
 }
 
 #share-hot-deal-grid-list5-header-table {
@@ -1836,7 +1846,6 @@ html, body {
     font-weight: 700;
     font-size: 15px;
     letter-spacing: 2px;
-    color: black;
     margin: 0px 0px 0px 15px;
 }
 
@@ -2216,11 +2225,17 @@ html, body {
     margin: 0px 0px 40px 0px;
 }
 
-#share-redemption-grid-list5-header {
+#share-redemption-grid-list5-header-white {
     -webkit-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
     -moz-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
     box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
     background: white;
+}
+
+#share-redemption-grid-list5-header-orange {
+    border-left: 5px solid #f6aa26;
+    background-color: #f6c026;
+    color: white;
 }
 
 #share-redemption-grid-list5-header-table {
@@ -2247,7 +2262,6 @@ html, body {
     font-weight: 700;
     font-size: 15px;
     letter-spacing: 2px;
-    color: black;
     margin: 0px 0px 0px 15px;
 }
 
@@ -3016,8 +3030,16 @@ html, body {
  ** HOT DEAL
  *********************************************/
 
-#hot-deal-content {
+#hot-deal {
     margin: 20px 0px 0px 0px;
+    background: white;
+    -webkit-box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
+    -moz-box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
+    box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
+}
+
+#hot-deal-content {
+    padding: 20px;
 }
 
 #hot-deal-category {
@@ -3289,12 +3311,24 @@ html, body {
     border: 1px solid #e4e4e4;
 }
 
+#hot-deal-suggestion {
+    margin: 30px 0px 0px 0px;
+}
+
 /*********************************************
  ** REDEMPTION
  *********************************************/
 
-#redemption-content {
+#redemption {
     margin: 20px 0px 0px 0px;
+    background: white;
+    -webkit-box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
+    -moz-box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
+    box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
+}
+
+#redemption-content {
+    padding: 20px;
 }
 
 #redemption-category {
@@ -3662,6 +3696,10 @@ html, body {
     border: 1px solid #e4e4e4;
 }
 
+#redemption-suggestion {
+    margin: 30px 0px 0px 0px;
+}
+
 
 
 
@@ -3704,13 +3742,12 @@ html, body {
 }
 
 .layout-inner-right-menu-bar {
-    
-    padding: 8px 15px 8px 15px;
-    display: block;
+    /*padding: 8px 120px 8px 120px;*/
+    /*display: block;*/
 }
 
 .layout-inner-right-menu-bar-active {
-    background-color: #e91d41;
+    background-color: #1db4f3;
     color: white !important;
 }
 
@@ -3855,26 +3892,6 @@ html, body {
     color: lightgray;
     margin: 0px 15px 0px 15px;
     float: left;
-}
-
-/* ADVERTISE LIST SUGGESTION
-******************************/
-
-#advertise-list-suggestion {
-    margin: 20px 0px 0px 0px;
-}
-
-#advertise-list-suggestion-content {
-    margin: 20px 0px 0px 0px;
-}
-
-#advertise-list-suggestion-page-title {
-    color: #244964;
-    font-size: 25px;
-    border-bottom: 1px solid lightgray;
-    padding: 0px 0px 6px 0px;
-    margin: 0px 0px 10px 0px;
-    letter-spacing: 1px;
 }
 
 /* BLOGGER

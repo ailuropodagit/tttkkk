@@ -10,18 +10,43 @@ $this->album_admin = $this->config->item('album_admin');
 
 //URI
 $fetch_method = $this->router->fetch_method();
+$uri_segment_4 = $this->uri->segment(4);
 ?>
 
 <div id="share-redemption-grid-list5">
-    <div id='share-redemption-grid-list5-header'>
-        <div id='share-redemption-grid-list5-header-table'>
-            <div id='share-redemption-grid-list5-header-table-row'>
-                <div id='share-redemption-grid-list5-header-table-row-cell'>
-                    <div id="share-redemption-grid-list5-header-title"><?php echo $title ?></div>
+    <?php        
+    if ($fetch_method == 'advertise')
+    {
+        if ($uri_segment_4 == 'pro')
+        {
+            ?>
+            <div id='share-redemption-grid-list5-header-orange'>
+                <div id='share-redemption-grid-list5-header-table'>
+                    <div id='share-redemption-grid-list5-header-table-row'>
+                        <div id='share-redemption-grid-list5-header-table-row-cell'>
+                            <div id="share-redemption-grid-list5-header-title"><?php echo $title ?></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php
+        }
+    }
+    else
+    {
+        ?>
+        <div id='share-redemption-grid-list5-header-white'>     
+            <div id='share-redemption-grid-list5-header-table'>
+                <div id='share-redemption-grid-list5-header-table-row'>
+                    <div id='share-redemption-grid-list5-header-table-row-cell'>
+                        <div id="share-redemption-grid-list5-header-title"><?php echo $title ?></div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+        <?php
+    }
+    ?>
     <div id="share-redemption-grid-list5-container">
         <?php
         foreach ($share_hotdeal_redemption_list as $row)
@@ -38,6 +63,7 @@ $fetch_method = $this->router->fetch_method();
             $price_after_show = $row['price_after_show'];
             $price_after = $row['price_after'];
             $average_rating = $this->m_custom->activity_rating_average($advertise_id, 'adv');
+            $redeem_count = $this->m_custom->promotion_redeem_count($advertise_id);
             if ($advertise_type == 'adm')
             {
                 $image_url = base_url($this->album_admin . $row['image']);
@@ -77,6 +103,11 @@ $fetch_method = $this->router->fetch_method();
                     <div class="share-redemption-grid-list5-box-photo">
                         <div class="share-redemption-grid-list5-box-photo-box">
                             <img src='<?php echo $image_url ?>'>
+                            <div class="share-redemption-row-list4-box-photo-box-redemption-count">
+                                <div class="share-redemption-row-list4-box-photo-box-redemption-count-text">
+                                    <?php echo $redeem_count ?><br/>Redemption
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="share-redemption-grid-list5-box-separator"></div>

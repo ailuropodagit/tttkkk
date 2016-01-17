@@ -37,9 +37,9 @@ if(isset($message))
 ?>
 
 <div id="redemption">
-    <h1>Redemption</h1>
     <div id="fb-root"></div>
     <div id="redemption-content">
+        <h1>Redemption</h1>
         <div id="redemption-category">
             Category: <?php echo $sub_category; ?>
         </div>
@@ -62,7 +62,6 @@ if(isset($message))
             ?>
         </div>
         <div id="float-fix"></div>
-        
         <div id="print-area"></div>
         <div id="redemption-photo">
             <div id='redemption-table'>
@@ -134,7 +133,7 @@ if(isset($message))
             </div>
             <!--SUB TITLE-->
             <div id="redemption-information-sub-title">
-                <?php echo $title ?>
+                <?php echo $sub_title ?>
             </div>
             <!--RATE-->
             <div id="redemption-information-rate">
@@ -351,35 +350,50 @@ if(isset($message))
                 <?php $this->load->view('all/comment_form') ?>
             </div>
         </div>
-        <div id="advertise-list-suggestion-content">
-            <?php
-            if (!empty($advertise_suggestion_list))
-            {                  
-                foreach ($advertise_suggestion_list as $row)
-                {                           
-                    ?>
-                    <div id='advertise-list-box'>
-                        <div id="advertise-list-photo">
-                            <div id="advertise-list-photo-box">
-                                <a href='<?php echo $row['suggest_page_url']; ?>'>
-                                    <img src='<?php echo $row['suggest_image_url']; ?>'>
-                                </a>
-                            </div>
-                        </div>
-                        <div id="advertise-list-title2">
+    </div>
+</div>
+        
+<div id='redemption-suggestion'>
+    <?php
+    if (!empty($advertise_suggestion_list))
+    {     
+        $data['share_hotdeal_redemption_list'] = $advertise_suggestion_list;
+        $data['title'] = "Redemption Suggestion";
+        $this->load->view('share/redemption_grid_list5', $data);
+    }
+    ?>
+</div>
+    
+    
+<!--<div id="advertise-list-suggestion" style="border: 1px solid red;">
+    <div id="advertise-list-suggestion-content">
+        <?php
+        if (!empty($advertise_suggestion_list))
+        {                  
+            foreach ($advertise_suggestion_list as $row)
+            {                           
+                ?>
+                <div id='advertise-list-box'>
+                    <div id="advertise-list-photo">
+                        <div id="advertise-list-photo-box">
                             <a href='<?php echo $row['suggest_page_url']; ?>'>
-                                <?php echo $row['title']; ?>
+                                <img src='<?php echo $row['suggest_image_url']; ?>'>
                             </a>
                         </div>
                     </div>
-                    <?php
-                }
+                    <div id="advertise-list-title2">
+                        <a href='<?php echo $row['suggest_page_url']; ?>'>
+                            <?php echo $row['title']; ?>
+                        </a>
+                    </div>
+                </div>
+                <?php
             }
-            else
-            {
-                ?><div id='advertise-list-empty'>No Redemption Suggestion</div><?php
-            }
-            ?>
-        </div>
+        }
+        else
+        {
+            ?><div id='advertise-list-empty'>No Redemption Suggestion</div><?php
+        }
+        ?>
     </div>
-</div>
+</div>-->

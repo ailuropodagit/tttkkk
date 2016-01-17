@@ -206,12 +206,12 @@ class All extends CI_Controller
             $this->data['merchant_dashboard_url'] = base_url() . "all/merchant-dashboard/" . $merchant_row['slug'];
             $this->data['advertise_id'] = $advertise_id;
             $this->data['merchant_name'] = $merchant_row['company'];
-            $this->data['title'] = $the_row['title'];
+            $this->data['sub_title'] = $the_row['title'];
             $this->data['description'] = $the_row['description'];
             $this->data['image_url'] = base_url($this->album_merchant . $the_row['image']);
             $this->data['sub_category'] = $this->m_custom->display_category($the_row['sub_category_id']);
             $this->data['start_date'] = displayDate($the_row['start_time']);
-            $this->data['end_date'] = displayDate($the_row['end_time']);
+            $this->data['end_time'] = displayDate($the_row['end_time']);
             $this->data['like_url'] = $this->m_custom->generate_like_link($advertise_id, 'adv');
             $this->data['comment_url'] = $this->m_custom->generate_comment_link($advertise_id, 'adv');
             $this->data['average_rating'] = $this->m_custom->activity_rating_average($advertise_id, 'adv');
@@ -312,14 +312,7 @@ class All extends CI_Controller
                     $this->data['next_url'] = base_url() . "all/advertise/" . $next_id . "/" . $advertise_type . "/" . $sub_category_id . "/" . $merchant_id . "/" . $show_expired;
                 }                
             }            
-            if ($this->ion_auth->logged_in())
-            {
-                $this->load->view('template/index', $this->data);
-            }
-            else
-            {
-                $this->load->view('template/layout', $this->data);
-            }
+            $this->load->view('template/index_background_blank', $this->data);
         }
         else
         {

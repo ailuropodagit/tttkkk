@@ -13,10 +13,10 @@ $fetch_method = $this->router->fetch_method();
 ?>
 
 <div id="share-hot-deal-grid-list4">
-    <div id='share-hot-deal-row-list4-header-table'>
-        <div id='share-hot-deal-row-list4-header-table-row'>
-            <div id='share-hot-deal-row-list4-header-table-row-cell'>
-                <div id="share-hot-deal-grid-list4-header">
+    <div id="share-hot-deal-grid-list4-header">
+        <div id='share-hot-deal-row-list4-header-table'>
+            <div id='share-hot-deal-row-list4-header-table-row'>
+                <div id='share-hot-deal-row-list4-header-table-row-cell'>
                     <div id="share-hot-deal-grid-list4-header-title"><?php echo $title ?></div>
                 </div>
             </div>
