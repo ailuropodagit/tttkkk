@@ -11,23 +11,23 @@
 
 <!--SCRIPT-->
 <script type="text/javascript">
-    //FB SHARE
-    FB.init({
-         appId  : '<?php echo fb_appID(); ?>',
-         status : true, // check login status
-         cookie : true, // enable cookies to allow the server to access the session
-         xfbml  : true  // parse XFBML
-       });
-
-    function fbShare(){        
-        FB.ui({ 
-            method: 'feed', 
-            link: '<?php echo base_url() . uri_string(); ?>',
-            caption: '<?php echo $title; ?>',
-            picture: '<?php echo $image_url; ?>',
-            name: '<?php echo $merchant_name; ?>'
-        });
-    }
+//    //FB SHARE
+//    FB.init({
+//         appId  : '<?php echo fb_appID(); ?>',
+//         status : true, // check login status
+//         cookie : true, // enable cookies to allow the server to access the session
+//         xfbml  : true  // parse XFBML
+//       });
+//
+//    function fbShare(){        
+//        FB.ui({ 
+//            method: 'feed', 
+//            link: '<?php echo base_url() . uri_string(); ?>',
+//            caption: '<?php echo $title; ?>',
+//            picture: '<?php echo $image_url; ?>',
+//            name: '<?php echo $merchant_name; ?>'
+//        });
+//    }
             
     $(function(){
         var end_date = $('#hot-deal-information-countdown-time').attr('end_date');        

@@ -2,6 +2,24 @@
 <?php echo link_tag('js/star-rating/jquery.rating.css') ?>
 <script type="text/javascript" src="<?php echo base_url() ?>js/jgrowl/jquery.jgrowl.js"></script>
 <?php echo link_tag('js/jgrowl/jquery.jgrowl.css') ?>
+<!--COUNTDOWN-->
+<script type="text/javascript" src="<?php echo base_url('js/jquery.countdown.js') ?>"></script>
+
+<script>
+    $(function(){
+        $('.share-hot-deal-grid-list5-box-timer-box-relative').each(function(){
+            var _this = $(this);
+            var end_date = $(this).attr('end_date');
+            _this.countdown(end_date, function(event) {
+                //$(this).html(event.strftime('%D days %H:%M:%S'));
+                $(this).children().find('.share-hot-deal-grid-list5-box-timer-box1-time-day').html(event.strftime('%D'));
+                $(this).children().find('.share-hot-deal-grid-list5-box-timer-box2-time-hour').html(event.strftime('%H'));
+                $(this).children().find('.share-hot-deal-grid-list5-box-timer-box3-time-minute').html(event.strftime('%M'));
+                $(this).children().find('.share-hot-deal-grid-list5-box-timer-box4-time-second').html(event.strftime('%S'));
+            });
+        });
+    });
+</script>
 
 <?php
 //CONFIG DATA

@@ -1077,34 +1077,6 @@ class All extends CI_Controller
         }
     }
 
-    function user_review($users_id = NULL)
-    {
-        if ($users_id == NULL)
-        {
-            redirect('/', 'refresh');
-        }
-        //QUERY USERS
-        $query_users_where = array('id' => $users_id);
-        $data['query_users'] = $this->albert_model->read_user($query_users_where);
-        //PAGE PATH NAME
-        $data['page_path_name'] = 'all/advertise_list';
-        //BOTTON PATH NAME
-        $data['title'] = "Review";
-        //QUERY HOTDEAL LIST
-        $hotdeal_list_where = array('act_by_id' => $users_id);
-        $data['hotdeal_list'] = $this->albert_model->red_activity_history_inner_join_advertise($hotdeal_list_where)->result_array();
-        if ($this->ion_auth->logged_in())
-        {
-            //LOGGED IN
-            $this->load->view('template/index', $data);
-        }
-        else
-        {
-            //NOT LOGGED IN
-            $this->load->view('template/layout', $data);
-        }
-    }
-
     public function comment_add()
     {
         $message_info = '';
