@@ -21,21 +21,20 @@
 
     function fbShare(){        
         FB.ui({ 
-                method : 'feed', 
-                link   :  '<?php echo base_url() . uri_string(); ?>',
-                caption:  '<?php echo $title; ?>',
-                picture: '<?php echo $image_url; ?>',
-                name:'<?php echo $merchant_name; ?>'
-       });
+            method: 'feed', 
+            link: '<?php echo base_url() . uri_string(); ?>',
+            caption: '<?php echo $title; ?>',
+            picture: '<?php echo $image_url; ?>',
+            name: '<?php echo $merchant_name; ?>'
+        });
     }
             
     $(function(){
-        var end_date = $('#hot-deal-information-countdown-time').attr('end_date');
+        var end_date = $('#hot-deal-information-countdown-time').attr('end_date');        
         $('#hot-deal-information-countdown-time').countdown(end_date, function(event) {
             $(this).html(event.strftime('%D Days &nbsp; %H Hours &nbsp; %M Minutes &nbsp; %S Seconds'));
         });        
     });
-
 </script>
 
 <div id='hot-deal'>
@@ -137,8 +136,8 @@
             { 
                 ?>
                 <div id="hot-deal-information-countdown">
-                     <div id="hot-deal-information-countdown-icon"><i class="fa fa-clock-o"></i></div>
-                    <div id="hot-deal-information-countdown-time" end_date="<?php echo $end_date ?>"></div>
+                    <div id="hot-deal-information-countdown-icon"><i class="fa fa-clock-o"></i></div>
+                    <div id="hot-deal-information-countdown-time" end_date="<?php echo $end_time ?>"></div>
                 </div>
                 <?php
             }
