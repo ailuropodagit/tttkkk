@@ -31,14 +31,9 @@ if(isset($message))
 
 <div id="register">
     <div id='register-title'>Facebook First Time Log In</div>
-    
-    <div id='register-facebook'>
-        <img src='<?php echo base_url(); ?>image/facebook-icon.png'>
-    </div>
-    
-    <div id='register-horizontal-line'></div>
-    
+    <div id='register-facebook'><img src='<?php echo base_url(); ?>image/facebook-icon.png'></div>
     <div id='register-form'>
+        <div id='register-horizontal-line'></div>
         <form method="POST">
             <div id='register-form-each'>
                 <div id='register-form-each-label'>E-mail Address:</div>
@@ -46,8 +41,8 @@ if(isset($message))
             </div>
             <div id='register-form-each'>
                 <div id='register-form-each-label'>Contact Number:</div>
-<!--                <div id='register-form-each-input-contact-number'>+60 <input type="text" name="contact_number" value="<?php //echo $contact_number ?>"></div>-->
-                <div id='register-form-each-input-contact-number'><input type="text" name="contact_number" value="<?php echo $contact_number ?>"></div>
+                <div id='register-form-each-input'><input type="text" name="contact_number" value="<?php echo $contact_number ?>"></div>
+                <!--<div id='register-form-each-input-contact-number'><input type="text" name="contact_number" value="<?php echo $contact_number ?>"></div>-->
             </div>
             <div id='register-form-each'>
                 <div id='register-form-each-label'>Date of Birth:</div>
@@ -80,7 +75,6 @@ if(isset($message))
             </div>
         </form>
     </div>
-    
     <div id='login-agree'>
         By logging in, you agree to our 
         <a href='<?php echo base_url() ?>terms-of-service' target='_blank'>Terms of Service</a>

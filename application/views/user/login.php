@@ -149,7 +149,6 @@ if(isset($message))
         <div id="login-facebook-button"><fb:login-button data-size="large" scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button></div>
         <div id="login-facebook-label">Log In with facebook</div>
     </div>
-
     <?php echo form_open("user/login"); ?>       
     <div id='login-form'>
         <div id='login-horizontal-line'></div>
