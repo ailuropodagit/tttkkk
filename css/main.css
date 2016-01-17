@@ -1590,8 +1590,24 @@ html, body {
 
 #advertise-list-empty {
     font-size: 14px;
-    padding: 15px 0px 15px 20px;
+    padding: 15px 0px 35px 20px;
     color: gray;
+}
+
+#advertise-list-suggestion {
+    margin: 35px 0px 0px 0px;
+}
+
+#advertise-list-suggestion-page-title {
+    color: #244964;
+    font-size: 25px;
+    letter-spacing: 1px;
+    font-weight: bold;
+    background-color: white;
+}
+
+#advertise-list-suggestion-content {
+    margin: 20px 0px 0px 0px;
 }
 
 /*********************************************

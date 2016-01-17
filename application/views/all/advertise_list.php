@@ -293,6 +293,7 @@ $uri_segment_4 = $this->uri->segment(4);
                     } 
                     ?>
                 </div>
+                <div id="advertise-list-title-bottom-line"></div>
                 <div id="advertise-list-suggestion-content">
                     <?php
                     if (!empty($query_advertise_suggestion))
