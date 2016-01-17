@@ -211,7 +211,7 @@ class All extends CI_Controller
             $this->data['image_url'] = base_url($this->album_merchant . $the_row['image']);
             $this->data['sub_category'] = $this->m_custom->display_category($the_row['sub_category_id']);
             $this->data['start_date'] = displayDate($the_row['start_time']);
-            $this->data['end_time'] = displayDate($the_row['end_time']);
+            $this->data['end_date'] = displayDate($the_row['end_time']);
             $this->data['like_url'] = $this->m_custom->generate_like_link($advertise_id, 'adv');
             $this->data['comment_url'] = $this->m_custom->generate_comment_link($advertise_id, 'adv');
             $this->data['average_rating'] = $this->m_custom->activity_rating_average($advertise_id, 'adv');

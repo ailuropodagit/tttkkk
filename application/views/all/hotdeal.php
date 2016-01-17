@@ -30,8 +30,8 @@
     }
             
     $(function(){
-        var end_time = $('#hot-deal-information-countdown-time').attr('end_time');
-        $('#hot-deal-information-countdown-time').countdown(end_time, function(event) {
+        var end_date = $('#hot-deal-information-countdown-time').attr('end_date');
+        $('#hot-deal-information-countdown-time').countdown(end_date, function(event) {
             $(this).html(event.strftime('%D Days &nbsp; %H Hours &nbsp; %M Minutes &nbsp; %S Seconds'));
         });        
     });
@@ -138,7 +138,7 @@
                 ?>
                 <div id="hot-deal-information-countdown">
                      <div id="hot-deal-information-countdown-icon"><i class="fa fa-clock-o"></i></div>
-                    <div id="hot-deal-information-countdown-time" end_time="<?php echo $end_time ?>"></div>
+                    <div id="hot-deal-information-countdown-time" end_date="<?php echo $end_date ?>"></div>
                 </div>
                 <?php
             }

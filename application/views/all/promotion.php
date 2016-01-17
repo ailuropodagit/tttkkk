@@ -17,12 +17,12 @@
        });
 
     function fbShare(){        
-        FB.ui({ 
-                method : 'feed', 
-                link   :  '<?php echo base_url() . uri_string(); ?>',
-                caption:  '<?php echo $title; ?>',
-                picture: '<?php echo $image_url; ?>',
-                name:'<?php echo $merchant_name; ?>'
+        FB.ui({
+            method : 'feed', 
+            link   :  '<?php echo base_url() . uri_string(); ?>',
+            caption:  '<?php echo $title; ?>',
+            picture: '<?php echo $image_url; ?>',
+            name:'<?php echo $merchant_name; ?>'
        });
     }    
 
