@@ -20,7 +20,7 @@
         FB.ui({
             method : 'feed', 
             link   :  '<?php echo base_url() . uri_string(); ?>',
-            caption:  '<?php echo $title; ?>',
+            caption:  '<?php echo $sub_title; ?>',
             picture: '<?php echo $image_url; ?>',
             name:'<?php echo $merchant_name; ?>'
        });
