@@ -147,7 +147,6 @@ if(isset($message))
 ?>
 
 <div id="register">
-
     <div id='register-link'>
         <a href='<?php echo base_url('merchant/register') ?>' class="a-href-button">Merchant Register</a>
     </div>
@@ -158,82 +157,80 @@ if(isset($message))
         <div id="login-facebook-button"><fb:login-button data-size="large" scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button></div>
         <div id="login-facebook-label">Log In with facebook</div>
     </div>
-
     <?php echo form_open("user/register"); ?>       
         <div id='register-form'>
             <div id='register-horizontal-line'></div>
-            <div id='register-form-each'>
-                <div id='register-form-each-label'><?php echo lang('create_user_first_name_label', 'first name'); ?></div>
-                <div id='register-form-each-input'><?php echo form_input($first_name); ?></div>
-            </div>
-            <div id='register-form-each'>
-                <div id='register-form-each-label'><?php echo lang('create_user_last_name_label', 'last name'); ?></div>
-                <div id='register-form-each-input'><?php echo form_input($last_name); ?></div>
-            </div>
-            <div id='register-form-each'>
-                <div id='register-form-each-label'><?php echo lang('create_user_contact_number_label', 'contact number'); ?></div>
-<!--                <div id='register-form-each-input-contact-number'>+60 <?php //echo form_input($phone); ?></div>-->
-                <div id='register-form-each-input'><?php echo form_input($phone); ?>
-            </div>
-            <div id='register-form-each'>
-                <div id='register-form-each-label'><?php echo lang('create_user_dob_label'); ?></div>
-                <div id='register-form-each-input-dob'>
-                    <div id='register-form-each-input-dob-day'><?php echo form_dropdown($day, $day_list); ?></div>
-                    <div id='register-form-each-input-dob-month'><?php echo form_dropdown($month, $month_list); ?></div>
-                    <div id='register-form-each-input-dob-year'><?php echo form_dropdown($year, $year_list); ?></div>
-                    <div id="float-fix"></div>
+                <div id='register-form-each'>
+                    <div id='register-form-each-label'><?php echo lang('create_user_first_name_label', 'first name'); ?></div>
+                    <div id='register-form-each-input'><?php echo form_input($first_name); ?></div>
                 </div>
-            </div>
-            <div id='register-form-each'>            
-                <div id='register-form-each-label'><?php echo lang('create_user_gender_label', 'gender_id'); ?></div>
-                <div id='register-form-each-input'><?php echo form_dropdown($gender_id, $gender_list); ?></div>
-            </div>
-            <div id='register-form-each'>
-                <div id='register-form-each-label'><?php echo lang('create_user_race_label', 'race_id'); ?></div>
-                <div id='register-form-each-input'><?php echo form_dropdown($race_id, $race_list); ?></div>
-            </div>
-            <div id='register-form-each'>
-                <div id='register-form-each-label'><span id="race_other_label" style="display:none"><?php echo lang('create_user_race_other_label', 'race_other'); ?></span></div>
-                <div id='register-form-each-input'><?php echo form_input($race_other); ?></div>
-            </div>
-            <div id='register-form-each'>
-                <div id='register-form-each-label'><?php echo lang('create_user_email_label', 'email address'); ?></div>
-                <div id='register-form-each-input'><?php echo form_input($email); ?></div>
-            </div>
-            <div id='register-form-each'>
-                <div id='register-form-each-label'><?php echo lang('create_user_username_label', 'username'); ?></div>
-                <div id='register-form-each-input'><?php echo form_input($username); ?></div>
-            </div>
-            <div id='register-form-each'>
-                <div id='register-form-each-label'><?php echo lang('create_merchant_password_label', 'password'); ?></div>
-                <div id='register-form-each-input'><?php echo form_input($password); ?></div>
-            </div>
-            <div id='register-form-each'>
-                <div id='register-form-each-label'><?php echo lang('create_merchant_password_confirm_label', 'password_confirm'); ?></div>
-                <div id='register-form-each-input'><?php echo form_input($password_confirm); ?></div>
-            </div>
-            <div id='register-form-each'>
-                <div id='register-form-each-label'><?php echo lang('create_user_promo_code_label2', 'promo_code'); ?></div>
-                <div id='register-form-each-input'><?php echo form_input($promo_code); ?></div>
-            </div>
-            <div id='register-form-forgot-password'>
-                <input type="checkbox" id="show_password" name="show_password" onclick="showpassword();"/>
-                <span class="checkbox-text"><label for='show_password'>Show Password</label></span>
-            </div>
-            <div id="register-form-agree-checkbox">
-                <input type="checkbox" name="accept_terms" value="1" /> I agree to the Terms of Service and Privacy Policy.
-            </div>
-            <div id='register-form-submit'>
-                <?php echo form_submit('submit', 'Sign Up'); ?>
+                <div id='register-form-each'>
+                    <div id='register-form-each-label'><?php echo lang('create_user_last_name_label', 'last name'); ?></div>
+                    <div id='register-form-each-input'><?php echo form_input($last_name); ?></div>
+                </div>
+                <div id='register-form-each'>
+                    <div id='register-form-each-label'><?php echo lang('create_user_contact_number_label', 'contact number'); ?></div>
+                    <!--<div id='register-form-each-input-contact-number'>+60 <?php //echo form_input($phone); ?></div>-->
+                    <div id='register-form-each-input'><?php echo form_input($phone); ?>
+                </div>
+                <div id='register-form-each'>
+                    <div id='register-form-each-label'><?php echo lang('create_user_dob_label'); ?></div>
+                    <div id='register-form-each-input-dob'>
+                        <div id='register-form-each-input-dob-day'><?php echo form_dropdown($day, $day_list); ?></div>
+                        <div id='register-form-each-input-dob-month'><?php echo form_dropdown($month, $month_list); ?></div>
+                        <div id='register-form-each-input-dob-year'><?php echo form_dropdown($year, $year_list); ?></div>
+                        <div id="float-fix"></div>
+                    </div>
+                </div>
+                <div id='register-form-each'>            
+                    <div id='register-form-each-label'><?php echo lang('create_user_gender_label', 'gender_id'); ?></div>
+                    <div id='register-form-each-input'><?php echo form_dropdown($gender_id, $gender_list); ?></div>
+                </div>
+                <div id='register-form-each'>
+                    <div id='register-form-each-label'><?php echo lang('create_user_race_label', 'race_id'); ?></div>
+                    <div id='register-form-each-input'><?php echo form_dropdown($race_id, $race_list); ?></div>
+                </div>
+                <div id='register-form-each'>
+                    <div id='register-form-each-label'><span id="race_other_label" style="display:none"><?php echo lang('create_user_race_other_label', 'race_other'); ?></span></div>
+                    <div id='register-form-each-input'><?php echo form_input($race_other); ?></div>
+                </div>
+                <div id='register-form-each'>
+                    <div id='register-form-each-label'><?php echo lang('create_user_email_label', 'email address'); ?></div>
+                    <div id='register-form-each-input'><?php echo form_input($email); ?></div>
+                </div>
+                <div id='register-form-each'>
+                    <div id='register-form-each-label'><?php echo lang('create_user_username_label', 'username'); ?></div>
+                    <div id='register-form-each-input'><?php echo form_input($username); ?></div>
+                </div>
+                <div id='register-form-each'>
+                    <div id='register-form-each-label'><?php echo lang('create_merchant_password_label', 'password'); ?></div>
+                    <div id='register-form-each-input'><?php echo form_input($password); ?></div>
+                </div>
+                <div id='register-form-each'>
+                    <div id='register-form-each-label'><?php echo lang('create_merchant_password_confirm_label', 'password_confirm'); ?></div>
+                    <div id='register-form-each-input'><?php echo form_input($password_confirm); ?></div>
+                </div>
+                <div id='register-form-each'>
+                    <div id='register-form-each-label'><?php echo lang('create_user_promo_code_label2', 'promo_code'); ?></div>
+                    <div id='register-form-each-input'><?php echo form_input($promo_code); ?></div>
+                </div>
+                <div id='register-form-forgot-password'>
+                    <input type="checkbox" id="show_password" name="show_password" onclick="showpassword();"/>
+                    <span class="checkbox-text"><label for='show_password'>Show Password</label></span>
+                </div>
+                <div id="register-form-agree-checkbox">
+                    <input type="checkbox" name="accept_terms" value="1" /> I agree to the Terms of Service and Privacy Policy.
+                </div>
+                <div id='register-form-submit'>
+                    <?php echo form_submit('submit', 'Sign Up'); ?>
+                </div>
             </div>
         </div>
     <?php echo form_close(); ?>
-
     <div id='register-agree'>
         By creating an account, you agree to our 
         <a href='<?php echo base_url() ?>terms-of-service' target='_blank'>Terms of Service</a>
         and
         <a href='<?php echo base_url() ?>privacy-policy' target='_blank'>Privacy Policy.</a>
     </div>
-    
 </div>

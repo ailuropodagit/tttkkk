@@ -51,7 +51,6 @@ if(isset($message))
     <div id='float-fix'></div>
     <div id='register-title'>Merchant Sign Up</div>
     <div id='register-subtitle'>Already have register? <a href='<?php echo base_url(); ?>merchant/login'>Log In</a></div>
-    
     <?php echo form_open($function_use_for); ?>
         <div id='register-form'>
             <div id='register-horizontal-line'></div>
@@ -93,7 +92,7 @@ if(isset($message))
             </div>
             <div id='register-form-each'>
                 <div id='register-form-each-label'><?php echo lang('create_merchant_phone_label', 'phone'); ?></div>
-<!--                <div id='register-form-each-input-contact-number'>+60 <?php //echo form_input($phone); ?></div>-->
+                <!--<div id='register-form-each-input-contact-number'>+60 <?php //echo form_input($phone); ?></div>-->
                 <div id='register-form-each-input'><?php echo form_input($phone); ?>
             </div>
             <div id='register-form-each'>
@@ -123,13 +122,12 @@ if(isset($message))
                 <?php echo form_submit('submit', 'Sign Up'); ?>
             </div>
         </div>
+    </div>
     <?php echo form_close(); ?>
-    
     <div id='register-agree'>
         By creating an account, you agree to our 
         <a href='<?php echo base_url() ?>terms-of-service' target='_blank'>Terms of Service</a>
         and
         <a href='<?php echo base_url() ?>privacy-policy' target='_blank'>Privacy Policy.</a>
     </div>
-    
 </div>

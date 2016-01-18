@@ -48,7 +48,6 @@ class Home extends CI_Controller
         $where_read_sub_category_with_merchant = array('main_category_id'=>$main_category_id);
         $query_read_sub_category_with_merchant = $this->albert_model->read_sub_category_with_merchant($where_read_sub_category_with_merchant);
         $data['query_read_sub_category_with_merchant'] = $query_read_sub_category_with_merchant;
-
         //QUERY BANNER
         $banner_where_position_1 = array('category_id'=>$main_category_id, 'banner_position'=>1);
         $data['query_banner_position_1'] = $this->albert_model->read_banner($banner_where_position_1);

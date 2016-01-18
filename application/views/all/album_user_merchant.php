@@ -7,25 +7,26 @@ $user_id = $this->uri->segment(3);
 ?>
 
 <div id="album-user">
-    <div id='album-user-title'><?php echo $title ?></div>
-    <?php
-    if (check_correct_login_type($this->config->item('group_id_user')))
-    {
-        $fetch_method = $this->router->fetch_method();
-        $merchant_slug = '';
-        if($fetch_method == 'merchant_dashboard'){
-            $merchant_slug = $this->uri->segment(3);
+    <div id="album-user-header">
+        <div id='album-user-title'><?php echo $title ?></div>
+        <?php
+        if (check_correct_login_type($this->config->item('group_id_user')))
+        {
+            $fetch_method = $this->router->fetch_method();
+            $merchant_slug = '';
+            if($fetch_method == 'merchant_dashboard'){
+                $merchant_slug = $this->uri->segment(3);
+            }
+            ?>
+            <div id='album-user-title-upload'>
+                <a href='<?php echo base_url() ?>user/upload_for_merchant/<?php echo $merchant_slug ?>'><i class="fa fa-upload album-user-title-upload-icon"></i>Upload Picture</a>
+            </div>
+            <?php
         }
         ?>
-        <div id='album-user-title-upload'>
-            <a href='<?php echo base_url() ?>user/upload_for_merchant/<?php echo $merchant_slug ?>'><i class="fa fa-upload album-user-title-upload-icon"></i>Upload Picture</a>
-        </div>
-        <?php
-    }
-    ?>
-    <div id='float-fix'></div>
-    <div id='album-user-title-bottom-line'></div>
-    
+        <div id='float-fix'></div>
+        <div id='album-user-title-bottom-line'></div>
+    </div>
     <div id="album-user-content">
         <?php
         $this->load->view('all/album_user_sub_menu');
@@ -95,7 +96,6 @@ $user_id = $this->uri->segment(3);
             }
             ?>
             <div id='float-fix'></div>
-            <div id='album-user-bottom-empty-fix'>&nbsp;</div>
             <?php
         }
         ?>

@@ -2,7 +2,6 @@
 
 class All extends CI_Controller
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -217,7 +216,6 @@ class All extends CI_Controller
             $this->data['average_rating'] = $this->m_custom->activity_rating_average($advertise_id, 'adv');
             $this->data['phone_required'] = $the_row['phone_required'];
             $this->data['extra_term'] = $the_row['extra_term'];
-            
             $this->data['show_extra_info'] = $the_row['show_extra_info'];
             $this->data['price_before'] = $the_row['price_before'];
             $this->data['price_before_show'] = $the_row['price_before_show'];
@@ -227,10 +225,8 @@ class All extends CI_Controller
             $this->data['get_off_percent'] = $the_row['get_off_percent'];
             $this->data['how_many_buy'] = $the_row['how_many_buy'];
             $this->data['how_many_get'] = $the_row['how_many_get'];
-            
             $this->data['advertise_suggestion_list'] = $this->m_custom->getAdvertise_suggestion($advertise_type, $sub_category_id, $advertise_id);
             $this->data['advertise_type'] = $advertise_type;
-            
             $this->data['message'] = $this->session->flashdata('message');
             $this->data['item_id'] = array(
                 'type' => 'hidden',
@@ -298,7 +294,6 @@ class All extends CI_Controller
                 {
                     $adv_sort_sequence = $this->session->userdata('adv_sort_sequence');
                 }
-
                 $advertise_current_list = $this->m_custom->getAdvertise($advertise_type, $sub_category_id, $merchant_id, $show_expired, NULL, NULL, 0, 0, 0, 0, 1, $have_sort, $adv_sort_by, $adv_sort_sequence);                
                 $advertise_id_array = get_key_array_from_list_array($advertise_current_list, 'advertise_id');
                 $previous_id = get_previous_id($advertise_id, $advertise_id_array);
@@ -1195,16 +1190,16 @@ class All extends CI_Controller
             
             if ($bottom_part == NULL)
             {
-                $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('hot', NULL, $user_id, 1, NULL, NULL, 0, 0, 0, 0, 1);                
+                $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('hot', NULL, $user_id, 1, NULL, NULL, 0, 0, 0, 0, 1);
                 $this->data['title'] = "Hot Deal";
-                $this->data['bottom_path_name'] = 'all/advertise_list';
+                $this->data['bottom_path_name'] = 'share/hot_deal_grid_list5_old';
                 //ADVERTISE SUGGESTION
                 $where_user = array('slug'=>$slug);
                 $main_category_id = $this->albert_model->read_user($where_user)->row()->me_category_id;
                 $where_read_category2 = array('main_category_id'=>$main_category_id);
                 $result_array_sub_category_id = $this->albert_model->read_category($where_read_category2)->result_array();
                 $array_sub_category_id = array_column($result_array_sub_category_id, 'category_id');  
-                $this->data['query_advertise_suggestion'] = $this->albert_model->read_advertise_hot_deal_suggestion($array_sub_category_id);
+                $this->data['query_advertise_suggestion'] = $this->albert_model->read_advertise_hot_deal_suggestion($array_sub_category_id)->result_array();
                 $this->data['advertise_suggestion_page_path_name'] = 'all/hot_deal_list_suggestion';
                 $this->data['advertise_suggestion_page_title'] = 'Hot Deal Suggestion';
             }
@@ -1212,14 +1207,14 @@ class All extends CI_Controller
             {
                 $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('pro', NULL, $user_id, 1, NULL, NULL, 0, 0, 0, 0, 1);
                 $this->data['title'] = "Redemption";
-                $this->data['bottom_path_name'] = 'all/advertise_list';
+                $this->data['bottom_path_name'] = 'share/redemption_grid_list5_old';
                 //ADVERTISE SUGGESTION
                 $where_user = array('slug'=>$slug);
                 $main_category_id = $this->albert_model->read_user($where_user)->row()->me_category_id;
                 $where_read_category2 = array('main_category_id'=>$main_category_id);
                 $result_array_sub_category_id = $this->albert_model->read_category($where_read_category2)->result_array();
                 $array_sub_category_id = array_column($result_array_sub_category_id, 'category_id');  
-                $this->data['query_advertise_suggestion'] = $this->albert_model->read_advertise_redemption_suggestion($array_sub_category_id);
+                $this->data['query_advertise_suggestion'] = $this->albert_model->read_advertise_redemption_suggestion($array_sub_category_id)->result_array();
                 $this->data['advertise_suggestion_page_path_name'] = 'all/hot_deal_list_suggestion';
                 $this->data['advertise_suggestion_page_title'] = 'Redemption Suggestion';
             }
@@ -1232,11 +1227,7 @@ class All extends CI_Controller
             if ($this->ion_auth->logged_in())
             {
                 $this->data['message'] = $this->session->flashdata('message');
-                $this->load->view('template/index', $this->data);
-            }
-            else
-            {
-                $this->load->view('template/layout', $this->data);
+                $this->load->view('template/index_background_blank', $this->data);
             }
         }
         else
