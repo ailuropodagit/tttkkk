@@ -137,7 +137,7 @@ if($this->ion_auth->user()->num_rows())
                     $promo_code = $this->m_custom->promo_code_get('user', $logged_user_id, 1);
                     ?>
                     <div id="dashboard-info-edit-link">
-                        <a href='".base_url()."user/profile' class="a-href-button">Edit My Profile</a>
+                        <a href='<?php echo base_url('user/profile') ?>' class="a-href-button">Edit My Profile</a>
                     </div>
                     <div id="dashboard-info-promo-code">
                         Promo Code : <?php echo $promo_code ?>
