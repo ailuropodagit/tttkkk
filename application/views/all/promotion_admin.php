@@ -86,7 +86,7 @@ if(isset($message))
                                 </div>
                             </div>                                
                             <div id="redemption-sub-title">
-                                <?php echo $title ?>
+                                <?php echo $sub_title ?>
                             </div>
                             <div id="redemption-voucher-worth">
                                 <?php
