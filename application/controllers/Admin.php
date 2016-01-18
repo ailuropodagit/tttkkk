@@ -3502,7 +3502,7 @@ class Admin extends CI_Controller
                 $search_year = $this->input->post('the_year');
             }
         }
-        $year_list = generate_number_option(get_part_of_date('year'), get_part_of_date('year'));
+        $year_list = generate_number_option(2015, get_part_of_date('year'));
         $this->data['year_list'] = $year_list;
         $this->data['the_year'] = array(
             'name' => 'the_year',
@@ -3581,7 +3581,7 @@ class Admin extends CI_Controller
                 $search_year = $this->input->post('the_year');
             }
         }
-        $year_list = generate_number_option(get_part_of_date('year'), get_part_of_date('year'));
+        $year_list = generate_number_option(2015, get_part_of_date('year'));
         $this->data['year_list'] = $year_list;
         $this->data['the_year'] = array(
             'name' => 'the_year',
