@@ -36,9 +36,14 @@ $(document).ready(function () {
         $('.auto-submit-star').rating({
             required: true,
             callback: function (value, link) {
+                var keppopath = '/keppo/';
+                var hostname = $(location).attr('hostname');
+                if (hostname.indexOf('keppo') >= 0){
+                    keppopath = '/';
+                }
                 var item_id = $('#item_id').val();
                 var item_type = $('#item_type').val();
-                var post_url = 'http://' + $(location).attr('hostname') + '/keppo/all/user_rating';
+                var post_url = 'http://' + hostname + keppopath + 'all/user_rating';
                 $.ajax({
                     type: "POST",
                     url: post_url,
@@ -58,8 +63,13 @@ $(document).ready(function () {
 });
 
 function click_like(user_id) {
+    var keppopath = '/keppo/';
+    var hostname = $(location).attr('hostname');
+    if (hostname.indexOf('keppo') >= 0){
+        keppopath = '/';
+    }
     var item_type = $('#item_type').val();
-    var post_url = 'http://' + $(location).attr('hostname') + '/keppo/all/user_click_like/' + user_id + '/' + item_type;
+    var post_url = 'http://' + hostname + keppopath + 'all/user_click_like/' + user_id + '/' + item_type;
     $.ajax({
         type: 'POST',
         url: post_url,
