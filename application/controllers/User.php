@@ -236,11 +236,11 @@ class User extends CI_Controller
                 //FORM VALIDATION TRUE
                 //READ USERS
                 $where_read_user = array('email'=>$fb_email);
-                $query_read_user = $this->albert_model->read_user($where_read_user);
-                $password_visible = $this->albert_model->read_user($where_read_user)->row()->password_visible;
+                $query_read_user = $this->albert_model->read_user($where_read_user);               
                 $num_rows_read_user = $query_read_user->num_rows();
                 if($num_rows_read_user)
                 {                    
+                    $password_visible = $this->albert_model->read_user($where_read_user)->row()->password_visible;
                     //UPDATE USER
                     $where_update_user = array('email'=>$fb_email);
                     $data_update_user = array('us_fb_id'=>$fb_id);
@@ -293,7 +293,7 @@ class User extends CI_Controller
                         if ($this->ion_auth->login($email, $password_visible, $remember, $this->main_group_id))
                         {
                             $user_id = $this->session->userdata('user_id');
-                            redirect("user/all/user_dashboard/$user_id", 'refresh');
+                            redirect("all/user_dashboard/$user_id", 'refresh');
                         }
                         else
                         {
@@ -2865,6 +2865,7 @@ class User extends CI_Controller
 
         $message_info = '';
         $login_id = $this->ion_auth->user()->row()->id;
+        $this->m_custom->promo_code_insert_user($login_id);
         
         if (isset($_POST) && !empty($_POST))
         {

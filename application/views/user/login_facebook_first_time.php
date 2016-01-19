@@ -20,7 +20,7 @@
         });
     });
 </script>
-
+<script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script>
 <?php
 //MESSAGE
 if(isset($message))
@@ -41,7 +41,7 @@ if(isset($message))
             </div>
             <div id='register-form-each'>
                 <div id='register-form-each-label'>Contact Number:</div>
-                <div id='register-form-each-input'><input type="text" name="contact_number" value="<?php echo $contact_number ?>"></div>
+                <div id='register-form-each-input'><input type="text" name="contact_number" value="<?php echo $contact_number ?>" class="phone_blur"></div>
                 <!--<div id='register-form-each-input-contact-number'><input type="text" name="contact_number" value="<?php echo $contact_number ?>"></div>-->
             </div>
             <div id='register-form-each'>
