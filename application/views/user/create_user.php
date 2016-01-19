@@ -57,7 +57,7 @@
                                         var login_fb_id_success = $response.filter('#login-fb-id-success').text();
                                         if (login_fb_merchant_email) {
                                             fbLogout();
-                                            $('#login-facebook-label').html('Facebook login is not available for Merchant. <a href="<?php echo base_url() ?>merchant/login">Click Here</a> for merchant login');
+                                            $('#login-facebook-label').html('This Facebook account email already register as Merchant. Please use another Facebook account or email for user.');
                                         }
                                         if (login_fb_id_not_exists) {
                                             window.location.replace("<?php echo base_url() ?>user/login_facebook_first_time");

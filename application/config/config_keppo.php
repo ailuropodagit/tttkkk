@@ -58,7 +58,7 @@ $config['keppo_admin_id'] = '1';
 $config['keppo_email_domain'] = '@keppo.my';
 $config['froze_account_activate'] = 0;
 $config['notification_auto_mark_as_read'] = 1;
-$config['strong_password'] = 0;
+$config['strong_password'] = 1;
 
 $config['custom_per_page'] = '8';
 
