@@ -73,8 +73,8 @@ if($this->ion_auth->user()->num_rows())
 ?>
 
 <div id="dashboard">
-    <h1>Dashboard</h1>
     <div id="dashboard-content">
+        <h1>Dashboard</h1>
         <?php
         //USERS ROW
         $row_users = $query_users->row_array();

@@ -708,14 +708,7 @@ class All extends CI_Controller
         $this->data['title'] = "Merchant Album";
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'all/album_user_merchant';
-        if ($this->ion_auth->logged_in())
-        {
-            $this->load->view('template/index', $this->data);
-        }
-        else
-        {
-            $this->load->view('template/layout', $this->data);
-        }
+        $this->load->view('template/index_background_blank', $this->data);
     }
 
     function album_user($user_id = NULL, $album_id = NULL)
@@ -734,14 +727,7 @@ class All extends CI_Controller
         $this->data['title'] = "My Album";
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'all/album_user';
-        if ($this->ion_auth->logged_in())
-        {
-            $this->load->view('template/index', $this->data);
-        }
-        else
-        {
-            $this->load->view('template/layout', $this->data);
-        }
+        $this->load->view('template/index_background_blank', $this->data);
     }
 
     function album_merchant($slug = NULL, $page = 1)
@@ -1048,16 +1034,7 @@ class All extends CI_Controller
                     $query_merchant_user_album = $this->albert_model->read_merchant_user_album($where_merchant_user_album);
                     $data['album_list'] = $query_merchant_user_album->result_array();
                 }
-                if ($this->ion_auth->logged_in())
-                {
-                    //LOGGED IN
-                    $this->load->view('template/index', $data);
-                }
-                else
-                {
-                    //NOT LOGGED IN
-                    $this->load->view('template/layout', $data);
-                }
+                $this->load->view('template/index_background_blank', $data);
             }
             else
             {

@@ -1749,14 +1749,7 @@ class User extends CI_Controller
         $this->data['title'] = "My Album";
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'user/main_album';
-        if ($this->ion_auth->logged_in())
-        {
-            $this->load->view('template/index', $this->data);
-        }
-        else
-        {
-            $this->load->view('template/layout', $this->data);
-        }
+        $this->load->view('template/index_background_blank', $this->data);
     }
     
     function main_album_change($edit_id = NULL)
