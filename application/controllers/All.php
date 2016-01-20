@@ -908,6 +908,19 @@ class All extends CI_Controller
         }
     }
 
+    function send_test_mail_process($to_email = 'wilkinwilly999', $to_email_domain = 'gmail.com',  $to_subject = 'Test Mail', $to_message = 'Testing send email.')
+    {
+        $get_status = send_mail_simple($to_email . '@' . $to_email_domain, $to_subject, $to_message, '', 0);
+        if ($get_status)
+        {
+            echo "Success Send Email";
+        }
+        else
+        {
+            echo "Fail Send Email";
+        }
+    }
+
     function simple_message()
     {
         display_simple_message();
