@@ -99,7 +99,7 @@ $fetch_method = $this->router->fetch_method();
                     if ($advertise_type == 'pro' || $advertise_type == 'adm')
                     {
                         ?>
-                        <span id="advertise-list-dynamic-time-label"><?php echo $row['voucher_candie'] ?> candies</span>
+                        <span id="advertise-list-dynamic-time-label"><?php echo $row['voucher_candie'] ?> candy</span>
                         <?php 
                     } 
                     ?>                    

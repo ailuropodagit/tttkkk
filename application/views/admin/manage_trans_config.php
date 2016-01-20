@@ -29,7 +29,7 @@ if(isset($message))
                     ?>   
                         <div id='profile-info-form-each' style='width:500px'>
                             <div id='profile-info-form-each-label'><?php echo $field_desc; ?></div>
-                            <?php if($change_type == 'dec'){echo '- ';} echo form_input(${$conf_slug}); ?> candies
+                            <?php if($change_type == 'dec'){echo '- ';} echo form_input(${$conf_slug}); ?> candy
                         </div>
                 <?php }else{ ?>    
                         <div id='profile-info-form-each' style='width:500px'>

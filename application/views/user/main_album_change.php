@@ -36,6 +36,7 @@ if(isset($message))
             ?>
             <div id='profile-info-form-submit'>              
                 <button name="button_action" type="submit" value="back">Back</button>
+                <button name="button_action" type="submit" value="remove_real" onclick="return confirm('Are you sure want to remove it? Remove cannot be undo. All Image under this album also will remove together')">Remove</button>  
                 <button name="button_action" type="submit" value="save" onclick="return confirm('Confirm that information is correct before save it?')">Save</button>
             </div>
             <?php echo form_close(); ?>

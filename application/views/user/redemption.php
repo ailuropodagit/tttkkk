@@ -11,7 +11,7 @@ if(isset($message))
     <div id='voucher-content'>
 
         <div id='voucher-navigation'>
-            <div id='voucher-navigation-each'><a href="<?php echo $candie_url; ?>" >Candies Balance</a></div>
+            <div id='voucher-navigation-each'><a href="<?php echo $candie_url; ?>" >Candy Balance</a></div>
             <div id='voucher-navigation-each-separator'>|</div> 
             <div id='voucher-navigation-each'><a href="<?php echo $voucher_active_url; ?>" ><?php echo $voucher_active_count; ?></a></div>
             <div id='voucher-navigation-each-separator'>|</div>
@@ -62,7 +62,7 @@ if(isset($message))
                         <a href='<?php echo $advertise_detail_url; ?>' target='_blank'><?php echo $row['title'] ?></a>
                     </div>                
                     <div id="advertise-list-dynamic-time">
-                        <i class="fa fa-bullseye"></i><span id="advertise-list-dynamic-time-label"><?php echo $row['voucher_candie'] ?> candies</span>
+                        <i class="fa fa-bullseye"></i><span id="advertise-list-dynamic-time-label"><?php echo $row['voucher_candie'] ?> candy</span>
                     </div>
                     <div id="advertise-list-dynamic-time">
                         <span id="advertise-list-dynamic-time-label"><?php echo "Voucher : ".$row['voucher'] ?></span>

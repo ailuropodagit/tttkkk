@@ -1852,7 +1852,13 @@ class User extends CI_Controller
             {
                 $can_redirect_to = 2;
             }
-
+            if ($this->input->post('button_action') == "remove_real")
+            {
+                $message_info = add_message_info($message_info, $album_title . ' success remove. All image in this album also removed.');
+                $this->m_custom->update_hide_flag(1, $main_table, $edit_id);
+                $can_redirect_to = 2;
+            }
+            
             direct_go:
             if ($message_info != NULL)
             {
