@@ -42,7 +42,7 @@ $dashboard_users_id = $this->albert_model->read_user($where_read_user)->row()->i
 
 //LOGGED
 if($this->ion_auth->user()->num_rows())
-{  
+{
     //LOGGED
     $logged_main_group_id = $this->ion_auth->user()->row()->main_group_id; 
     $logged_user_id = $this->session->userdata('user_id');
@@ -54,8 +54,8 @@ if($this->ion_auth->user()->num_rows())
 ?>
 
 <div id="dashboard">
-    <h1>Dashboard</h1>
     <div id="dashboard-content">
+        <h1>Dashboard</h1>
         <div id='dashboard-photo'>
             <div id="dashboard-photo-box">
                 <?php            

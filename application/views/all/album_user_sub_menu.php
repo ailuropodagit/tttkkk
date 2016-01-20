@@ -26,6 +26,6 @@
             }
         }
         ?>
-</div>        
-        <div id="float-fix"></div>
-        <br/><br/>
+</div>    
+
+<div id="float-fix"></div>

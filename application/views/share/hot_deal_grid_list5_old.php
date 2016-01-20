@@ -32,49 +32,53 @@ $fetch_method = $this->router->fetch_method();
 $uri_segment_4 = $this->uri->segment(4);
 ?>
 
-<div id="advertise-list">
-    <div id="advertise-list-title"><?php echo $title ?></div>
-    <?php
-    //UPLOAD BUTTON
-    if ($this->ion_auth->logged_in())
-    {
-        //To check is supervisor have role to upload hot deal
-        $have_role = $this->m_custom->check_role_su_can_uploadhotdeal();
-        if ($have_role == 1)
+<div id="share-hot-deal-grid-list5-old-combine"></div>
+
+<div id="share-hot-deal-grid-list5-old">
+    <div id="share-hot-deal-grid-list5-old-header">
+        <div id="share-hot-deal-grid-list5-old-title"><?php echo $title ?></div>
+        <?php
+        //UPLOAD BUTTON
+        if ($this->ion_auth->logged_in())
         {
-            $upload_picture_url = '';
-            $second_parameter = $this->uri->segment(4);
-            if ($fetch_method == 'album_redemption' || ($fetch_method == 'merchant_dashboard' && $second_parameter == 'promotion'))
+            //To check is supervisor have role to upload hot deal
+            $have_role = $this->m_custom->check_role_su_can_uploadhotdeal();
+            if ($have_role == 1)
             {
-                $upload_picture_url = 'merchant/candie_promotion';
-            }
-            elseif ($fetch_method == 'album_merchant' || $fetch_method == 'merchant_dashboard')
-            {
-                $upload_picture_url = 'merchant/upload_hotdeal';
-            }
-            if (check_correct_login_type($this->config->item('group_id_user'))){
-                $upload_picture_url = 'user/upload_for_merchant/' . $this->uri->segment(3);
-            }
-            if (!empty($upload_picture_url))
-            {
-                ?>     
-                <div id='advertise-list-title-upload'>
-                    <a href='<?php echo base_url($upload_picture_url) ?>'><i class="fa fa-upload advertise-list-title-upload-icon"></i>Upload Picture</a>
-                </div>
-                <?php
+                $upload_picture_url = '';
+                $second_parameter = $this->uri->segment(4);
+                if ($fetch_method == 'album_redemption' || ($fetch_method == 'merchant_dashboard' && $second_parameter == 'promotion'))
+                {
+                    $upload_picture_url = 'merchant/candie_promotion';
+                }
+                elseif ($fetch_method == 'album_merchant' || $fetch_method == 'merchant_dashboard')
+                {
+                    $upload_picture_url = 'merchant/upload_hotdeal';
+                }
+                if (check_correct_login_type($this->config->item('group_id_user'))){
+                    $upload_picture_url = 'user/upload_for_merchant/' . $this->uri->segment(3);
+                }
+                if (!empty($upload_picture_url))
+                {
+                    ?>     
+                    <div id='share-hot-deal-grid-list5-old-title-upload'>
+                        <a href='<?php echo base_url($upload_picture_url) ?>'><i class="fa fa-upload share-hot-deal-grid-list5-old-title-upload-icon"></i>Upload Picture</a>
+                    </div>
+                    <?php
+                }
             }
         }
-    }
-    ?>
-    <div id="float-fix"></div>
-    <div id='advertise-list-title-bottom-line'></div>
-    <div id="advertise-list-content">
+        ?>
+        <div id="float-fix"></div>
+        <div id='share-hot-deal-grid-list5-old-title-bottom-line'></div>
+    </div>
+    <div id="share-hot-deal-grid-list5-old-content">
         <?php
         //CATEGORY BREADCRUMB
         if (!empty($sub_category))
         {
             ?>
-            <div id='advertise-list-category-breadcrumb'>
+            <div id='share-hot-deal-grid-list5-old-category-breadcrumb'>
                 <?php echo $main_category; ?>
                 &nbsp; > &nbsp;
                 <?php echo $sub_category; ?>
@@ -103,7 +107,7 @@ $uri_segment_4 = $this->uri->segment(4);
                 }
             }
             //EMPTY
-            ?><div id='advertise-list-empty'><?php echo $empty_message ?></div><?php            
+            ?><div id='share-hot-deal-grid-list5-old-empty'><?php echo $empty_message ?></div><?php            
         }
         else
         {            
@@ -164,45 +168,45 @@ $uri_segment_4 = $this->uri->segment(4);
                     $advertise_detail_url = base_url() . "all/advertise/" . $advertise_id;
                 }
                 ?>
-                <div id='advertise-list-box'>
+                <div id='share-hot-deal-grid-list5-old-box'>
                     <?php
                     if ($fetch_method != 'merchant_dashboard')
                     {
                         ?>
-                        <div id="advertise-list-title1">
+                        <div id="share-hot-deal-grid-list5-old-title1">
                             <?php echo $merchant_dashboard_url ?>
                         </div>
                         <?php
                     }
                     ?>
-                    <div id="advertise-list-photo">
-                        <div id="advertise-list-photo-box">
+                    <div id="share-hot-deal-grid-list5-old-photo">
+                        <div id="share-hot-deal-grid-list5-old-photo-box">
                             <a href='<?php echo $advertise_detail_url ?>'><img src='<?php echo $image_url ?>'></a>
                         </div>
                     </div>
-                    <div id="advertise-list-title2">
+                    <div id="share-hot-deal-grid-list5-old-title2">
                         <a href='<?php echo $advertise_detail_url ?>'><?php echo $row['title'] ?>&nbsp;</a>
                     </div>
-                    <div id="advertise-list-dynamic-time">
+                    <div id="share-hot-deal-grid-list5-old-dynamic-time">
                         <?php
                         if ($advertise_type == 'hot')
                         { 
                             if ($row['post_hour'] != 0)
                             { 
                                 ?>
-                                <i class="fa fa-clock-o"></i><span id="advertise-list-dynamic-time-label" data-countdown='<?php echo $row['end_time'] ?>'></span>
+                                <i class="fa fa-clock-o"></i><span id="share-hot-deal-grid-list5-old-dynamic-time-label" data-countdown='<?php echo $row['end_time'] ?>'></span>
                                 <?php
                             } 
                         }
                         if ($advertise_type == 'pro' || $advertise_type == 'adm')
                         {
                             ?>
-                            <i class="fa fa-bullseye"></i><span id="advertise-list-dynamic-time-label"><?php echo $row['voucher_candie'] ?> candy</span>
+                            <i class="fa fa-bullseye"></i><span id="share-hot-deal-grid-list5-old-dynamic-time-label"><?php echo $row['voucher_candie'] ?> candies</span>
                             <?php 
                         }
                         ?>
                     </div>
-                    <div id="advertise-list-info">
+                    <div id="share-hot-deal-grid-list5-old-info">
                         <table border="0" cellpadding="4px" cellspacing="0px">
                             <?php
                             if (($advertise_type == 'adm' && !empty($row['voucher_worth'])) || ($advertise_type == 'pro'  && $show_extra_info == 122))
@@ -212,7 +216,7 @@ $uri_segment_4 = $this->uri->segment(4);
                                     <td>Worth</td>
                                     <td>:</td>
                                     <td>
-                                        <div id="advertise-list-voucher-worth"><?php echo "RM " . $row['voucher_worth']; ?></div>
+                                        <div id="share-hot-deal-grid-list5-old-voucher-worth"><?php echo "RM " . $row['voucher_worth']; ?></div>
                                     </td>
                                 </tr>    
                                 <?php
@@ -266,7 +270,7 @@ $uri_segment_4 = $this->uri->segment(4);
             if (!empty($paging_links))
             {
                 ?>
-                <div id='advertise-list-pagination'>
+                <div id='share-hot-deal-grid-list5-old-pagination'>
                     <?php echo $paging_links; ?>
                 </div>
                 <?php
@@ -275,3 +279,11 @@ $uri_segment_4 = $this->uri->segment(4);
         ?>
     </div>
 </div>
+
+<?php
+if ($fetch_method != 'album_merchant' && $fetch_method != 'album_redemption')
+{
+    $data['share_hotdeal_redemption_list'] = $query_advertise_suggestion;
+    $data['title'] = $advertise_suggestion_page_title;
+    $this->load->view('share/hot_deal_grid_list5.php', $data);
+}

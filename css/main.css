@@ -2045,6 +2045,196 @@ html, body {
 }
 
 /*********************************************
+ ** SHARE HOT DEAL GRID LIST 5 OLD
+ *********************************************/
+
+#share-hot-deal-grid-list5-old-combine {
+    background: white;
+    height: 20px;
+    width: 100%;
+    margin: 0px 0px -18px 0px;
+    position: relative;
+    z-index: 299;
+}
+
+#share-hot-deal-grid-list5-old {
+    background-color: white;
+    -webkit-box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
+    -moz-box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
+    box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
+    margin: 0px 0px 30px 0px;
+}
+
+#share-hot-deal-grid-list5-old-header {
+    padding: 20px 20px 0px 20px;
+}
+
+#share-hot-deal-grid-list5-old-content {
+    padding: 20px;
+}
+
+#share-hot-deal-grid-list5-old-category-breadcrumb {
+    font-size: 16px;
+    color: #5c5c5c;
+    margin: -10px 0px 20px 0px;
+    background-color: white;
+}
+
+#share-hot-deal-grid-list5-old-title {
+    color: #244964;
+    font-size: 25px;
+    letter-spacing: 1px;
+    font-weight: bold;
+    background-color: white;
+    float: left;
+}
+
+#share-hot-deal-grid-list5-old-title-upload {
+    float: left;
+    margin: 6px 0px 0px 20px;
+}
+
+.share-hot-deal-grid-list5-old-title-upload-icon {
+    font-size: 14px;
+    margin-right: 7px;
+}
+
+#share-hot-deal-grid-list5-old-title-bottom-line {
+    border-bottom: 1px solid lightgray;
+    padding: 0px 0px 6px 0px;
+    margin: 0px 0px 10px 0px;
+}
+
+#share-hot-deal-grid-list5-old-box {
+    vertical-align: top;
+    display: inline-block;
+    width: calc(20% - 26.5px);
+    margin: 0px 30px 30px 0px;
+}
+
+#share-hot-deal-grid-list5-old-box:nth-child(5n) {
+    margin-right: 0px;
+}
+
+#share-hot-deal-grid-list5-old-box:nth-last-child(-n+5) {
+    margin-bottom: 0px;
+}
+
+#share-hot-deal-grid-list5-old-photo-box {
+    background-color: whitesmoke;
+    width: 100%;
+    padding-top: 100%;
+    position: relative;
+    border: 1px solid lightgray;
+}
+
+#share-hot-deal-grid-list5-old-photo-box img {
+    max-height: 100%;  
+    max-width: 100%; 
+    width: 100%;
+    height: 100%;
+    position: absolute;  
+    top: 0;  
+    bottom: 0;  
+    left: 0;  
+    right: 0;  
+    margin: auto;
+    object-fit: cover;
+    object-position: center;
+}
+
+#share-hot-deal-grid-list5-old-title1 {
+    margin: 0px 0px 10px 0px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+#share-hot-deal-grid-list5-old-title1 a {
+    font-size: 20px;
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#share-hot-deal-grid-list5-old-title2 {
+    font-size: 22px;
+    margin: 5px 0px 0px 0px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+#share-hot-deal-grid-list5-old-title2 a {
+    font-size: 17px;
+    color: black;
+}
+
+#share-hot-deal-grid-list5-old-title2 a:hover {
+    text-decoration: none;
+}
+
+#share-hot-deal-grid-list5-old-info {
+    margin: 10px 0px 0px 0px;
+    font-size: 15px;
+}
+
+#share-hot-deal-grid-list5-old-voucher-worth {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#share-hot-deal-grid-list5-old-dynamic-time {
+    border-top: 1px dotted #ababab;
+    border-bottom: 1px dotted #ababab;
+    padding: 10px 0px 10px 0px;
+    margin: 10px 0px 0px 0px;
+    font-size: 15px;
+    text-align: center;
+    height: 20px;
+}
+
+#share-hot-deal-grid-list5-old-dynamic-time-label {
+    margin: 0px 0px 0px 6px;
+}
+
+#share-hot-deal-grid-list5-old-pagination {
+    margin: 25px 0px 0px 0px;
+}
+
+#share-hot-deal-grid-list5-old-pagination strong {
+    margin: 0px 7px 0px 0px;
+    font-size: 15px;
+}
+
+#share-hot-deal-grid-list5-old-pagination a {
+    margin: 0px 7px 0px 0px;
+    font-size: 15px;
+}
+
+#share-hot-deal-grid-list5-old-empty {
+    font-size: 14px;
+    padding: 5px 0px 25px 20px;
+    color: gray;
+}
+
+#share-hot-deal-grid-list5-old-suggestion {
+    margin: 35px 0px 0px 0px;
+}
+
+#share-hot-deal-grid-list5-old-suggestion-page-title {
+    color: #244964;
+    font-size: 25px;
+    letter-spacing: 1px;
+    font-weight: bold;
+    background-color: white;
+}
+
+#share-hot-deal-grid-list5-old-suggestion-content {
+    margin: 20px 0px 0px 0px;
+}
+
+/*********************************************
  ** SHARE REDEMPTION GRID LIST4
  *********************************************/
 
@@ -3716,89 +3906,46 @@ html, body {
     margin: 30px 0px 0px 0px;
 }
 
-
-
-
-
-
-
-
-
-
-/* SEARCH RESULT
-******************************/
-
-#search-result-content {
-    margin: 20px 0px 0px 0px;
-}
-
-#search-result-merchant-title, #search-result-hot-deal-title, #search-result-promotion-title {
-    font-size: 22px;
-    font-weight: bold;
-    margin: 0px 0px 20px 0px;
-}
-
-/* LAYOUT INNER RIGHT MENU
-******************************/
-
-#layout-inner-right-menu {
-    float: right;
-    width: 200px;
-}
-
-#layout-inner-right-menu ul {
-    list-style: none;
-    padding: 0px;
-    margin: 0px;
-}
-
-#layout-inner-right-menu li {
-    padding: 1px 0px 1px 0px;
-    border-top: 1px solid lightgray;
-}
-
-.layout-inner-right-menu-bar {
-    /*padding: 8px 120px 8px 120px;*/
-    /*display: block;*/
-}
-
-.layout-inner-right-menu-bar-active {
-    background-color: #1db4f3;
-    color: white !important;
-}
-
-#layout-inner-right-menu li a {
-    text-decoration: none;
-    color: black;
-    font-size: 13px;
-}
-
-/* DASHBOARD
-******************************/
+/*********************************************
+ ** DASHBOARD
+ *********************************************/
 
 #dashboard {
-    margin: 0px 0px 0px 0px;
+    margin: 20px 0px 0px 0px;
+    background: white;
+    -webkit-box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
+    -moz-box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
+    box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
 }
 
 #dashboard-content {
-    margin: 20px 0px 35px 0px;
+    padding: 20px;
 }
 
 #dashboard-photo {
     float: left;
+    width: 17%;
+    margin: 10px 0px 0px 0px;
 }
 
 #dashboard-photo-box {
-    width: 250px;
-    height: 250px;
+    width: 100%;
+    padding-top: 100%;
     border: 1px solid lightgray;
-    background-color: whitesmoke;    
+    position: relative;
 }
 
 #dashboard-photo-box img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+    max-height: 100%;  
+    max-width: 100%; 
+    width: auto;
+    height: auto;
+    position: absolute;  
+    top: 0;  
+    bottom: 0;  
+    left: 0;  
+    right: 0;  
+    margin: auto;
 }
 
 #dashboard-photo-note {
@@ -3823,7 +3970,7 @@ html, body {
     font-size: 17px;
     float: left;
     margin: 0px 0px 0px 30px;
-    width: calc(100% - 290px);
+    width: calc(83% - 30px);
 }
 
 #dashboard-info-title {
@@ -3908,6 +4055,199 @@ html, body {
     color: lightgray;
     margin: 0px 15px 0px 15px;
     float: left;
+}
+
+/*********************************************
+ ** ALBUM USER
+ *********************************************/
+
+#album-user-combine {
+    background: white;
+    height: 20px;
+    width: 100%;
+    margin: 0px 0px -18px 0px;
+    position: relative;
+    z-index: 299;
+}
+
+#album-user {
+    background-color: white;
+    -webkit-box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
+    -moz-box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
+    box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
+    margin: 0px 0px 70px 0px;
+}
+
+#album-user-content {
+    padding: 20px;
+}
+
+#album-user-title {
+    color: #244964;
+    font-size: 25px;
+    letter-spacing: 1px;
+    font-weight: bold;
+    float: left;
+}
+
+#album-user-title-upload {
+    float: left;
+    margin: 6px 0px 0px 20px;
+}
+
+.album-user-title-upload-icon {
+    font-size: 14px;
+    margin-right: 7px;
+}
+
+#album-user-title-bottom-line {
+    border-bottom: 1px solid lightgray;
+    padding: 0px 0px 6px 0px;
+    margin: 0px 0px 10px 0px;
+}
+
+#album-user-navigation {
+    font-size: 15px;
+    margin: 0px 0px 20px 0px;
+}
+
+#album-user-navigation-each {
+    float: left;
+}
+
+#album-user-navigation-separater {
+    float: left;
+    margin: 0px 13px 0px 13px;
+    color: lightgray;
+}
+
+#album-user-upload-button {
+    margin: 0px 10px 20px 0px;
+}
+
+#album-user-box {
+    float: left;
+    margin: 0px 50px 50px 0px;
+    width: 180px;
+}
+
+#album-user-photo-box {
+    width: 180px;
+    height: 180px;
+    border: 1px solid #e1e1e1;
+    background-color: whitesmoke;
+}
+
+#album-user-photo-box img {
+    width: 180px;
+    height: 180px;
+    object-fit: cover; 
+    object-position: center;
+}
+
+#album-user-main-title {
+    margin: 0px 0px 10px 0px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+#album-user-main-title a {
+    font-size: 20px;
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#album-user-sub-title {
+    margin: 10px 0px 0px 0px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-weight: bold;
+}
+
+#album-user-sub-title a {
+    font-size: 17px;
+    color: black;
+}
+
+#album-user-sub-title a:hover {
+    text-decoration: none;
+}
+
+#album-user-info {
+    margin: 10px 0px 0px 0px;
+}
+
+#album-user-upload-by {
+    margin: 10px 0px 0px 0px;
+    font-size: 15px
+}
+
+#album-user-empty {
+    font-size: 14px;
+    padding: 20px 0px 20px 20px;
+    color: gray;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* SEARCH RESULT
+******************************/
+
+#search-result-content {
+    margin: 20px 0px 0px 0px;
+}
+
+#search-result-merchant-title, #search-result-hot-deal-title, #search-result-promotion-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin: 0px 0px 20px 0px;
+}
+
+/* LAYOUT INNER RIGHT MENU
+******************************/
+
+#layout-inner-right-menu {
+    float: right;
+    width: 200px;
+}
+
+#layout-inner-right-menu ul {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+#layout-inner-right-menu li {
+    padding: 1px 0px 1px 0px;
+    border-top: 1px solid lightgray;
+}
+
+.layout-inner-right-menu-bar {
+    /*padding: 8px 120px 8px 120px;*/
+    /*display: block;*/
+}
+
+.layout-inner-right-menu-bar-active {
+    background-color: #1db4f3;
+    color: white !important;
+}
+
+#layout-inner-right-menu li a {
+    text-decoration: none;
+    color: black;
+    font-size: 13px;
 }
 
 /* BLOGGER
@@ -4626,127 +4966,6 @@ html, body {
 #hot-deal-advertise-remove {
     margin: 20px 0px 0px;
     height: 20px;
-}
-
-/* ALBUM USER
-******************************/
-
-#album-user-content {
-    margin: 20px 0px 0px 0px;
-}
-
-#album-user-title {
-    color: #244964;
-    font-size: 25px;
-    letter-spacing: 1px;
-    font-weight: bold;
-    float: left;
-}
-
-#album-user-title-upload {
-    font-size: 15px;
-    float: left;
-    margin: 6px 0px 0px 20px;
-}
-
-.album-user-title-upload-icon {
-    font-size: 14px;
-    margin-right: 7px;
-}
-
-#album-user-title-bottom-line {
-    border-bottom: 1px solid lightgray;
-    padding: 0px 0px 6px 0px;
-    margin: 0px 0px 10px 0px;
-}
-
-#album-user-navigation {
-    font-size: 15px;
-    margin: 0px 0px 20px 0px;
-}
-
-#album-user-navigation-each {
-    float: left;
-}
-
-#album-user-navigation-separater {
-    float: left;
-    margin: 0px 13px 0px 13px;
-    color: lightgray;
-}
-
-#album-user-upload-button {
-    margin: 0px 10px 20px 0px;
-}
-
-#album-user-box {
-    float: left;
-    margin: 0px 50px 50px 0px;
-    width: 180px;
-}
-
-#album-user-photo-box {
-    width: 180px;
-    height: 180px;
-    border: 1px solid #e1e1e1;
-    background-color: whitesmoke;
-}
-
-#album-user-photo-box img {
-    width: 180px;
-    height: 180px;
-    object-fit: cover; 
-    object-position: center;
-}
-
-#album-user-main-title {
-    margin: 0px 0px 10px 0px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-}
-
-#album-user-main-title a {
-    font-size: 20px;
-    color: black;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-#album-user-sub-title {
-    margin: 10px 0px 0px 0px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    font-weight: bold;
-}
-
-#album-user-sub-title a {
-    font-size: 17px;
-    color: black;
-}
-
-#album-user-sub-title a:hover {
-    text-decoration: none;
-}
-
-#album-user-info {
-    margin: 10px 0px 0px 0px;
-}
-
-#album-user-upload-by {
-    margin: 10px 0px 0px 0px;
-    font-size: 15px
-}
-
-#album-user-empty {
-    font-size: 14px;
-    padding: 15px 0px 15px 20px;
-    color: gray;
-}
-
-#album-user-bottom-empty-fix {
-    margin: 0px 0px -70px 0px;
 }
 
 /* UPLOAD FOR MERCHANT

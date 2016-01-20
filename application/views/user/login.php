@@ -12,7 +12,7 @@ if ($this->ion_auth->logged_in())
         if (document.getElementById('show_password').checked)
         {
             document.getElementById('password').type = 'text';
-        } 
+        }
         else
         {
             document.getElementById('password').type = 'password';
@@ -174,7 +174,6 @@ if(isset($message))
         <div id='login-form-submit'><?php echo form_submit('submit', lang('login_submit_btn')); ?></div>
     </div>
     <?php echo form_close(); ?>
-
     <div id='login-agree'>
         By logging in, you agree to our 
         <a href='<?php echo base_url() ?>terms-of-service' target='_blank'>Terms of Service</a>

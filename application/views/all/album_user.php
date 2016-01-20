@@ -18,6 +18,8 @@ if (check_correct_login_type($this->config->item('group_id_user')))
 }
 ?>
 
+<div id="album-user-combine"></div>
+
 <div id="album-user">
     <div id='album-user-title'><?php echo $title ?> - <?php echo $album_title ?></div>
     <?php

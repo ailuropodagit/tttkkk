@@ -32,39 +32,15 @@ $uri_segment_4 = $this->uri->segment(4);
 ?>
 
 <div id="share-hot-deal-grid-list5">    
-    <?php        
-    if ($fetch_method == 'advertise')
-    {
-        if ($uri_segment_4 == 'hot')
-        {
-            ?>
-            <div id='share-hot-deal-grid-list5-header-darkred'>
-                <div id='share-hot-deal-grid-list5-header-table'>
-                    <div id='share-hot-deal-grid-list5-header-table-row'>
-                        <div id='share-hot-deal-grid-list5-header-table-row-cell'>
-                            <div id="share-hot-deal-grid-list5-header-title"><?php echo $title ?></div>
-                        </div>
-                    </div>
+    <div id='share-hot-deal-grid-list5-header-darkred'>
+        <div id='share-hot-deal-grid-list5-header-table'>
+            <div id='share-hot-deal-grid-list5-header-table-row'>
+                <div id='share-hot-deal-grid-list5-header-table-row-cell'>
+                    <div id="share-hot-deal-grid-list5-header-title"><?php echo $title ?></div>
                 </div>
             </div>
-            <?php
-        }
-    }
-    else
-    {
-        ?>
-            <div id='share-hot-deal-grid-list5-header-white'>
-                <div id='share-hot-deal-grid-list5-header-table'>
-                    <div id='share-hot-deal-grid-list5-header-table-row'>
-                        <div id='share-hot-deal-grid-list5-header-table-row-cell'>
-                            <div id="share-hot-deal-grid-list5-header-title"><?php echo $title ?></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        <?php
-    }
-    ?>
+        </div>
+    </div>
     <div id="share-hot-deal-grid-list5-container">
         <?php
         foreach ($share_hotdeal_redemption_list as $row)
