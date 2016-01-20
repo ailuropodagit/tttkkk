@@ -21,6 +21,7 @@ class Merchant extends CI_Controller
         $this->folder_image = $this->config->item('folder_image');
         $this->box_number = $this->config->item('merchant_upload_box_per_page');
         $this->temp_folder = $this->config->item('folder_image_temp');
+        $this->temp_folder_cut = $this->config->item('folder_image_temp_cut');
         $this->strong_password = $this->config->item('strong_password');
     }
 
@@ -2634,6 +2635,15 @@ class Merchant extends CI_Controller
                             goto direct_go;
                         }
 
+                        //For Multiple Image Upload
+                        $have_hidden_image = 0;
+                        $post_hidden_image = $this->input->post('hideimage-' . $i);
+                        if (!empty($post_hidden_image))
+                        {
+                            $have_hidden_image = 1;
+                            goto HiddenImageSkip;
+                        }
+
                         //To check new hot deal is it got image upload or not
                         if (!empty($_FILES[$hotdeal_file]['name']))
                         {
@@ -2645,14 +2655,28 @@ class Merchant extends CI_Controller
                             }
                             else
                             {
-                                $image_data = array('upload_data' => $this->upload->data());
+                                HiddenImageSkip:
+                                $image_file_name = '';
+                                if ($have_hidden_image == 0)
+                                {
+                                    $image_data = array('upload_data' => $this->upload->data());
+                                    $image_file_name = $image_data['upload_data']['file_name'];
+                                }
+                                else  //For Multiple Image Upload
+                                {
+                                    $from_path = $this->temp_folder_cut . $post_hidden_image;
+                                    $to_path = $this->album_merchant . $post_hidden_image;   
+                                    rename($from_path, $to_path);
+                                    $image_file_name = $post_hidden_image;
+                                }
+
                                 $data = array(
                                     'advertise_type' => 'hot',
                                     'merchant_id' => $merchant_id,
                                     'sub_category_id' => $sub_category_id,
                                     'title' => $title,
                                     'description' => $description,
-                                    'image' => $image_data['upload_data']['file_name'],
+                                    'image' => $image_file_name,
                                     'post_hour' => $hotdeal_hour,
                                     'price_before' => $hotdeal_price_before,
                                     'price_after' => $hotdeal_price_after,
@@ -2868,6 +2892,8 @@ class Merchant extends CI_Controller
         $this->data['box_number'] = $box_number_update;
         $this->data['hotdeal_per_day'] = $this->m_custom->web_setting_get('merchant_max_hotdeal_per_day');
         $this->data['temp_folder'] = $this->temp_folder;
+        $this->data['temp_folder_cut'] = $this->temp_folder_cut;     
+        $this->data['empty_image'] = $this->config->item('empty_image');
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'merchant/upload_hotdeal';
         $this->load->view('template/index', $this->data);
