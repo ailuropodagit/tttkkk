@@ -3092,10 +3092,8 @@ html, body {
  *********************************************/
 
 #share-merchant-grid-list5-header {
-    -webkit-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
-    -moz-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
-    box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
-    background: white;
+    padding: 0px 0px 0px 20px;
+    background-color: #404041;
 }
 
 #share-merchant-grid-list5-header-table {
@@ -3122,8 +3120,8 @@ html, body {
     font-weight: 700;
     font-size: 15px;
     letter-spacing: 2px;
-    color: black;
-    margin: 0px 0px 0px 15px;
+    color: #fbfbfb;
+    margin: 4px 0px 4px 0px; 
 }
 
 #share-merchant-grid-list5-header-navigation {
