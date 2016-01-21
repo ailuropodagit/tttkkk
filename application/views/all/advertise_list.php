@@ -197,7 +197,7 @@ $uri_segment_4 = $this->uri->segment(4);
                         if ($advertise_type == 'pro' || $advertise_type == 'adm')
                         {
                             ?>
-                            <i class="fa fa-bullseye"></i><span id="advertise-list-dynamic-time-label"><?php echo $row['voucher_candie'] ?> candies</span>
+                            <i class="fa fa-bullseye"></i><span id="advertise-list-dynamic-time-label"><?php echo $row['voucher_candie'] ?> candy</span>
                             <?php 
                         }
                         ?>

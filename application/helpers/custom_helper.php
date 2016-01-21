@@ -220,7 +220,7 @@ if (!function_exists('send_mail_simple'))
         }
         else
         {
-            //show_error($this->email->print_debugger());
+            //show_error($ci->email->print_debugger());
             if ($have_session == 1)
             {
                 $ci->ion_auth->set_error('fail_to_send_email');

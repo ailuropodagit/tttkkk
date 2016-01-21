@@ -894,7 +894,7 @@ class All extends CI_Controller
                 . $mail_top_up_phone
                 . $mail_expire_code . '<br/><br/>'
                 . $mail_info['message']
-                . '<br/>Congrats : You have earn another ' . $this->m_custom->display_trans_config(9) . ' candies and RM'. $this->m_custom->display_trans_config(24) . '<br/>';
+                . '<br/>Congrats : You have earn another ' . $this->m_custom->display_trans_config(9) . ' candy and RM'. $this->m_custom->display_trans_config(24) . '<br/>';
         $get_status = send_mail_simple($mail_info['email'], $mail_info['redeem_info']['redeem_email_subject'], $mail_message, 'keppo_redeem_send_email_success');
         if ($get_status)
         {
@@ -905,6 +905,19 @@ class All extends CI_Controller
         {
             $this->session->set_flashdata('message', $mail_info['message']);
             redirect($mail_info['return_url'], 'refresh');
+        }
+    }
+
+    function send_test_mail_process($to_email = 'wilkinwilly999', $to_email_domain = 'gmail.com',  $to_subject = 'Test Mail', $to_message = 'Testing send email.')
+    {
+        $get_status = send_mail_simple($to_email . '@' . $to_email_domain, $to_subject, $to_message, '', 0);
+        if ($get_status)
+        {
+            echo "Success Send Email";
+        }
+        else
+        {
+            echo "Fail Send Email";
         }
     }
 

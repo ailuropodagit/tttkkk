@@ -225,12 +225,15 @@ class User extends CI_Controller
             $data['race_other'] = $race_other;
             $data['gender'] = $gender;
             //validation
-            $this->form_validation->set_rules('email', 'E-mail address:', 'required|valid_email|valid_facebook_email['.$fb_email.']'); 
+            //$this->form_validation->set_rules('email', 'E-mail address:', 'required|valid_email|valid_facebook_email['.$fb_email.']'); 
+            $this->form_validation->set_rules('email', 'Active E-mail address:', 'required|valid_email'); 
             $this->form_validation->set_rules('contact_number', 'Contact Number:', 'required|valid_contact_number'); 
             $this->form_validation->set_rules('dob', 'Date of Birth:', 'valid_date');
             $this->form_validation->set_rules('race', 'Race:', 'required_dropdown');
             if($race == '19') { $this->form_validation->set_rules('race_other', 'Race Other:', 'required'); } //19 = other
-            $this->form_validation->set_rules('gender', 'Gender:', 'required_dropdown');            
+            $this->form_validation->set_rules('gender', 'Gender:', 'required_dropdown');     
+            $this->form_validation->set_rules('accept_terms', '...', 'callback_accept_terms');
+            
             if ($this->form_validation->run() == TRUE) 
             {
                 //FORM VALIDATION TRUE
@@ -264,8 +267,8 @@ class User extends CI_Controller
                     $ip_address = $this->input->ip_address();
                     $main_group_id = $this->config->item('group_id_user');
                     $dob = $dob_year.'-'.date('m',strtotime($dob_month)).'-'.$dob_day;
-                    $password = '$2y$08$ZVpY8J57SFYYDYpGg7six.kGYBvf2yJdQPPQox7ekfVurUEfsv3r6';
-                    $password_visible = '1';
+                    $password = '$2y$08$fvjTQXgk4TZVAwToXlYUN.f0x2lLTmYObetnD3Zk6kCeKwP6gdWxC';
+                    $password_visible = '!Keppo123';
                     //CREATE USER
                     $data_update_user = array(
                         'ip_address'=>$ip_address, 
@@ -293,7 +296,22 @@ class User extends CI_Controller
                         if ($this->ion_auth->login($email, $password_visible, $remember, $this->main_group_id))
                         {
                             $user_id = $this->session->userdata('user_id');
-                            redirect("all/user_dashboard/$user_id", 'refresh');
+                            $this->m_custom->promo_code_insert_user($user_id);
+                            $get_status = send_mail_simple($email, 'Your Keppo User Account Success Created', 'Name:' . $fb_first_name . ' ' . $fb_last_name .
+                                '<br/>Contact Number:' . $contact_number .
+                                '<br/>username:' . $email .
+                                '<br/>E-mail:' . $email .
+                                '<br/>Temporary Password:' . $password_visible .
+                                '<br/>Please change this temporary password to your own password after login.', 'create_user_send_email_success', 0);
+                                if ($get_status)
+                                {
+                                     redirect("all/user_dashboard/$user_id", 'refresh');
+                                }
+                                else
+                                {
+                                    $this->session->set_flashdata('message', $this->ion_auth->errors());
+                                    redirect("user/register", 'refresh');
+                                }                          
                         }
                         else
                         {
@@ -1845,7 +1863,13 @@ class User extends CI_Controller
             {
                 $can_redirect_to = 2;
             }
-
+            if ($this->input->post('button_action') == "remove_real")
+            {
+                $message_info = add_message_info($message_info, $album_title . ' success remove. All image in this album also removed.');
+                $this->m_custom->update_hide_flag(1, $main_table, $edit_id);
+                $can_redirect_to = 2;
+            }
+            
             direct_go:
             if ($message_info != NULL)
             {
@@ -1941,6 +1965,15 @@ class User extends CI_Controller
                     $post_merchant_id = $this->input->post('image-merchant-' . $i);
                     $post_desc = $this->input->post('image-desc-' . $i);
 
+                    //For Multiple Image Upload
+                    $have_hidden_image = 0;
+                    $post_hidden_image = $this->input->post('hideimage-' . $i);
+                    if (!empty($post_hidden_image))
+                    {
+                        $have_hidden_image = 1;
+                        goto HiddenImageSkip;
+                    }
+                    
                     if (!empty($_FILES[$post_file]['name']))
                     {
                         //to do todo if want to add auto populate back
@@ -1963,7 +1996,21 @@ class User extends CI_Controller
                         }
                         else
                         {
-                            $image_data = array('upload_data' => $this->upload->data());
+                            HiddenImageSkip:
+                            $image_file_name = '';
+                            if ($have_hidden_image == 0)
+                            {
+                                $image_data = array('upload_data' => $this->upload->data());
+                                $image_file_name = $image_data['upload_data']['file_name'];
+                            }
+                            else   //For Multiple Image Upload
+                            {
+                                $from_path = $this->temp_folder_cut . $post_hidden_image;
+                                $to_path = $this->album_user_merchant . $post_hidden_image;   
+                                rename($from_path, $to_path);
+                                $image_file_name = $post_hidden_image;
+                            }
+                            
                             $data = array(
                                 'post_type' => 'mer',
                                 'user_id' => $user_id,
@@ -1972,7 +2019,7 @@ class User extends CI_Controller
                                 //'title' => $post_title,
                                 'title' => '',
                                 'description' => $post_desc,
-                                'image' => $image_data['upload_data']['file_name'],
+                                'image' => $image_file_name,
                             );
 
                             $new_id = $this->m_custom->get_id_after_insert('merchant_user_album', $data);
@@ -2046,6 +2093,8 @@ class User extends CI_Controller
         }
 
         $this->data['temp_folder'] = $this->temp_folder;  
+        $this->data['temp_folder_cut'] = $this->temp_folder_cut;     
+        $this->data['empty_image'] = $this->config->item('empty_image');
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'user/upload_for_merchant';
         $this->load->view('template/index', $this->data);
@@ -2347,6 +2396,7 @@ class User extends CI_Controller
                     $post_desc = $this->input->post('image-desc-' . $i);
                     $post_album_id = $this->input->post('image-main-album-' . $i);
                     
+                    //For Multiple Image Upload
                     $have_hidden_image = 0;
                     $post_hidden_image = $this->input->post('hideimage-' . $i);
                     if (!empty($post_hidden_image))
@@ -2380,7 +2430,7 @@ class User extends CI_Controller
                                 $image_data = array('upload_data' => $this->upload->data());
                                 $image_file_name = $image_data['upload_data']['file_name'];
                             }
-                            else
+                            else  //For Multiple Image Upload
                             {
                                 $from_path = $this->temp_folder_cut . $post_hidden_image;
                                 $to_path = $this->album_user . $post_hidden_image;   

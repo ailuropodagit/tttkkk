@@ -19,7 +19,7 @@
             ?>
         </div>
         <div id="redemption-candies">
-            Require <?php echo $voucher_candie ?> Candies
+            Require <?php echo $voucher_candie ?> Candy
         </div>
         <div id="float-fix"></div>
 

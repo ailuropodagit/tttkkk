@@ -28,11 +28,11 @@ if (isset($message))
 ?>
 
 <div id="candie">
-    <h1>Total Candies</h1>
+    <h1>Total Candy</h1>
     <div id="candie-content">
         
         <div id="candie-navigation">
-            <div id='candie-navigation-each'><a href="<?php echo $candie_url; ?>" >Candies Balance</a></div>
+            <div id='candie-navigation-each'><a href="<?php echo $candie_url; ?>" >Candy Balance</a></div>
             <div id='candie-navigation-each-separator'>|</div>
             <div id='candie-navigation-each'><a href="<?php echo $voucher_active_url; ?>" ><?php echo $voucher_active_count; ?></a></div>
             <div id='candie-navigation-each-separator'>|</div>
@@ -49,7 +49,7 @@ if (isset($message))
             <span id="candie-go-button"><button name="button_action" type="submit" value="search_history">Go</button></span>
             <?php echo form_close(); ?>
         </div>
-        <div id="candie-balance">Current Candies : <span id="candie-balance-number"><?php echo $current_balance ?></span></div>
+        <div id="candie-balance">Current Candy : <span id="candie-balance-number"><?php echo $current_balance ?></span></div>
         <div id='float-fix'></div>
                 
         <div id='candie-subtitle'>
@@ -72,17 +72,17 @@ if (isset($message))
                                 <th>Status</th>
                                 <th>Redeem Time</th>
                                 <th>Expire Date</th>
-                                <th>Candies</th>
+                                <th>Candy</th>
                             </tr>
                         </thead>      
                         <tbody>
                             <tr>
-                                <td><?php echo $previous_month_selected_text['month_year_text']; ?> End Candies</td>
+                                <td><?php echo $previous_month_selected_text['month_year_text']; ?> End Candy</td>
                                 <td></td><td></td><td></td><td></td><td></td>  <!--I do like this because datatable not support colspan or rowspan-->
                                 <td style="text-align:right"><?php echo $previous_end_month_balance ?></td>
                             </tr>
                             <tr>
-                                <td><?php echo $the_month_selected_text; ?> Candies Gain</td>
+                                <td><?php echo $the_month_selected_text; ?> Candy Gain</td>
                                 <td></td><td></td><td></td><td></td><td></td>
                                 <td style="text-align:right">
                                     <a href="#" onclick="toggle_visibility('candie-how-gain');">+ <?php echo $this_month_candie_gain ?></a>
@@ -106,7 +106,7 @@ if (isset($message))
                             ?>
 
                             <tr>
-                            <td><b>Month End Candies</b></td><td></td><td></td><td></td><td></td><td></td><td style="text-align:right"><?php echo $end_month_balance; ?></td> 
+                            <td><b>Month End Candy</b></td><td></td><td></td><td></td><td></td><td></td><td style="text-align:right"><?php echo $end_month_balance; ?></td> 
                             </tr>   
                         </tbody>
                     </table>
@@ -146,7 +146,7 @@ if (isset($message))
                                     echo '</tr>';
                                 }
                             }
-                            echo '<td><b>' . $the_month_selected_text . ' Candies Gain</b></td><td colspan="2"></td><td>' . $candie_gain_only . '</td>';
+                            echo '<td><b>' . $the_month_selected_text . ' Candy Gain</b></td><td colspan="2"></td><td>' . $candie_gain_only . '</td>';
                             ?>
                         </table> 
                     </div>

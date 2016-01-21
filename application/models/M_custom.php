@@ -2848,12 +2848,12 @@ class M_custom extends CI_Model
             }
             else
             {
-                $valid_row = 1;
+                $valid_row = 0;
             }
             
-            $valid_row = $this->m_custom->check_can_show_advertise($row);
+            $valid_row2 = $this->m_custom->check_can_show_advertise($row);
             
-            if ($valid_row == 1)
+            if ($valid_row == 1 && $valid_row2 == 1)
             {
                 $return[] = $row;
             }

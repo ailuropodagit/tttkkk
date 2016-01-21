@@ -134,7 +134,7 @@ $uri_segment_4 = $this->uri->segment(4);
                             </div>
                         </div>
                         <div class="share-redemption-grid-list5-box-information-candie">
-                            <?php echo $candie ?> Candies
+                            <?php echo $candie ?> Candy
                         </div>
                         <div class="share-redemption-grid-list5-box-information-price">
                             <div class="share-redemption-grid-list5-box-information-price-after">

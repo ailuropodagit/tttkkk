@@ -129,7 +129,7 @@ if(isset($message))
             <div class="float-fix"></div>
             <!--REQUIRED CANDIES-->
             <div id="redemption-information-required-candies">
-                Require <?php echo $voucher_candie ?> Candies
+                Require <?php echo $voucher_candie ?> Candy
             </div>
             <!--SUB TITLE-->
             <div id="redemption-information-sub-title">
@@ -163,7 +163,7 @@ if(isset($message))
                 <div id="redemption-information-rate-earn-candie">
                     <?php
 //                    $rate_candie_earn = $this->m_custom->display_trans_config(3);
-//                    echo "Earn : " . $rate_candie_earn . " candies";
+//                    echo "Earn : " . $rate_candie_earn . " candy";
                     ?>
                 </div>
             </div>
@@ -251,7 +251,7 @@ if(isset($message))
                     <div id="redemption-information-like-comment-earn-candie">
                         <?php
 //                        $like_comment_candie_earn = $this->m_custom->display_trans_config(2);
-//                        echo "Earn : " . $like_comment_candie_earn . " candies"; 
+//                        echo "Earn : " . $like_comment_candie_earn . " candy"; 
                         ?>
                         CLICK BY EARN CANDIES
                     </div>
@@ -299,7 +299,7 @@ if(isset($message))
                     <img src="<?php echo base_url() . 'image/social-media-facebook-share.png'; ?>" >
                 </div>
                 <div id="redemption-information-share-earn-candie">
-                    <?php //echo "Earn : " . $this->m_custom->display_trans_config(10) . " candies" ?>
+                    <?php //echo "Earn : " . $this->m_custom->display_trans_config(10) . " candy" ?>
                 </div>
             </div>
                                         
