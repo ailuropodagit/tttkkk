@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+    <html xmlns="https://www.w3.org/1999/xhtml" xmlns:og="https://ogp.me/ns#" xmlns:fb="https://www.facebook.com/2008/fbml">
     <head>
         <meta charset="UTF-8">
         <title>Keppo</title>
