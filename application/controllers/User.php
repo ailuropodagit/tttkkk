@@ -297,12 +297,12 @@ class User extends CI_Controller
                         {
                             $user_id = $this->session->userdata('user_id');
                             $this->m_custom->promo_code_insert_user($user_id);
-                            $get_status = send_mail_simple($email, 'Your Keppo User Account Success Created', 'Name:' . $fb_first_name . ' ' . $fb_last_name .
-                                '<br/>Contact Number:' . $contact_number .
-                                '<br/>username:' . $email .
-                                '<br/>E-mail:' . $email .
-                                '<br/>Temporary Password:' . $password_visible .
-                                '<br/>Please change this temporary password to your own password after login.', 'create_user_send_email_success', 0);
+                            $get_status = send_mail_simple($email, 'Your Keppo User Account Success Created', 'Name : ' . $fb_first_name . ' ' . $fb_last_name .
+                                '<br/>Contact Number : ' . $contact_number .
+                                '<br/>username : ' . $email .
+                                '<br/>E-mail : ' . $email .
+                                '<br/>Temporary Password : ' . $password_visible .
+                                '<br/><br/>Please change this temporary password to your own password after login.', 'create_user_send_email_success', 0);
                                 if ($get_status)
                                 {
                                      redirect("all/user_dashboard/$user_id", 'refresh');
@@ -958,11 +958,11 @@ class User extends CI_Controller
         if ($this->form_validation->run() == true && $this->ion_auth->register($username, $password, $email, $additional_data, $group_ids))
         {
             $this->session->set_flashdata('message', $this->ion_auth->messages());
-            $get_status = send_mail_simple($email, 'Your Keppo User Account Success Created', 'Name:' . $first_name . ' ' . $last_name .
-                    '<br/>Contact Number:' . $phone .
-                    '<br/>username:' . $username .
-                    '<br/>E-mail:' . $email .
-                    '<br/>Password:' . $password, 'create_user_send_email_success');
+            $get_status = send_mail_simple($email, 'Your Keppo User Account Success Created', 'Name : ' . $first_name . ' ' . $last_name .
+                    '<br/>Contact Number : ' . $phone .
+                    '<br/>username : ' . $username .
+                    '<br/>E-mail : ' . $email .
+                    '<br/>Password : ' . $password, 'create_user_send_email_success');
             if ($get_status)
             {
                 redirect("user/login", 'refresh');
