@@ -4,7 +4,6 @@
 <?php echo link_tag('js/jgrowl/jquery.jgrowl.css') ?>
 <!--COUNTDOWN-->
 <script type="text/javascript" src="<?php echo base_url('js/jquery.countdown.js') ?>"></script>
-
 <script>
     $(function(){
         $('.share-hot-deal-grid-list5-box-timer-box-relative').each(function(){
@@ -31,7 +30,7 @@ $fetch_method = $this->router->fetch_method();
 $uri_segment_4 = $this->uri->segment(4);
 ?>
 
-<div id="share-hot-deal-grid-list5">    
+<div id="share-hot-deal-grid-list5">
     <div id='share-hot-deal-grid-list5-header-darkred'>
         <div id='share-hot-deal-grid-list5-header-table'>
             <div id='share-hot-deal-grid-list5-header-table-row'>
@@ -55,7 +54,7 @@ $uri_segment_4 = $this->uri->segment(4);
             $price_after = $row['price_after'];
             $end_time = $row['end_time'];
             $post_hour = $row['post_hour'];
-            $average_rating = $this->m_custom->activity_rating_average($advertise_id, 'adv');
+            $average_rating = $this->m_custom->activity_rating_average($advertise_id, 'adv');            
             if ($advertise_type == 'adm')
             {
                 $image_url = base_url($this->album_admin . $row['image']);

@@ -1432,11 +1432,8 @@ class All extends CI_Controller
                 }
 
                 $this->data['page_path_name'] = 'all/search_result';
-
                 $this->load->view('template/index_background_blank', $this->data);
             }
         }
-        //redirect('/', 'refresh');
     }
-
 }
