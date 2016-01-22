@@ -299,7 +299,7 @@ class User extends CI_Controller
                             $this->m_custom->promo_code_insert_user($user_id);
                             $get_status = send_mail_simple($email, 'Your Keppo User Account Success Created', 'Name : ' . $fb_first_name . ' ' . $fb_last_name .
                                 '<br/>Contact Number : ' . $contact_number .
-                                '<br/>username : ' . $email .
+                                '<br/>Username : ' . $email .
                                 '<br/>E-mail : ' . $email .
                                 '<br/>Temporary Password : ' . $password_visible .
                                 '<br/><br/>Please change this temporary password to your own password after login.', 'create_user_send_email_success', 0);
@@ -960,7 +960,7 @@ class User extends CI_Controller
             $this->session->set_flashdata('message', $this->ion_auth->messages());
             $get_status = send_mail_simple($email, 'Your Keppo User Account Success Created', 'Name : ' . $first_name . ' ' . $last_name .
                     '<br/>Contact Number : ' . $phone .
-                    '<br/>username : ' . $username .
+                    '<br/>Username : ' . $username .
                     '<br/>E-mail : ' . $email .
                     '<br/>Password : ' . $password, 'create_user_send_email_success');
             if ($get_status)

@@ -25,6 +25,7 @@
             name:'<?php echo $merchant_name; ?>',
             description: '<?php echo limit_character($description, 150, 1); ?>'
        });
+       <?php $this->m_custom->activity_share($advertise_id, 'adv'); ?>
     }    
 
 </script>
