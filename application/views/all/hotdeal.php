@@ -30,9 +30,10 @@
         FB.ui({ 
             method: 'feed', 
             link: '<?php echo base_url() . uri_string(); ?>',
-            caption: '<?php echo $sub_title; ?>',
+            caption: 'KEPPO.MY',
             picture: '<?php echo $image_url; ?>',
-            name: '<?php echo $merchant_name; ?>'
+            name: '<?php echo $merchant_name; ?>',
+            description: '<?php echo limit_character($description, 150, 1); ?>'
         });
     }           
 </script>

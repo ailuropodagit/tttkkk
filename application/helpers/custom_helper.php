@@ -294,6 +294,38 @@ if (!function_exists('format_decimal'))
 
 }
 
+if (!function_exists('limit_text'))
+{
+
+    function limit_text($text, $limit)
+    {
+        if (str_word_count($text, 0) > $limit)
+        {
+            $words = str_word_count($text, 2);
+            $pos = array_keys($words);
+            $text = substr($text, 0, $pos[$limit]) . '...';
+        }
+
+        return $text;
+    }
+
+}
+
+if (!function_exists('limit_character'))
+{
+
+    function limit_character($text, $limit, $remove_invalid = 0)
+    {
+        if ($remove_invalid == 1)
+        {
+            $text = preg_replace("/[^\p{L} 0-9.!]/u", '', $text);
+        }
+        $text = mb_strimwidth($text, 0, $limit, "...");
+        return $text;
+    }
+
+}
+
 if (!function_exists('limited_month_select'))
 {
 
