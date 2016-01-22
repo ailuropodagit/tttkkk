@@ -1825,14 +1825,7 @@ html, body {
     margin: 0px 0px 40px 0px;
 }
 
-#share-hot-deal-grid-list5-header-white {
-    -webkit-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
-    -moz-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
-    box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
-    background: white;
-}
-
-#share-hot-deal-grid-list5-header-darkred {
+#share-hot-deal-grid-list5-header {
     border-left: 5px solid #bf315a;
     background-color: #872642;
     color: white;
@@ -2431,14 +2424,7 @@ html, body {
     margin: 0px 0px 40px 0px;
 }
 
-#share-redemption-grid-list5-header-white {
-    -webkit-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
-    -moz-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
-    box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
-    background: white;
-}
-
-#share-redemption-grid-list5-header-orange {
+#share-redemption-grid-list5-header {
     border-left: 5px solid #f6aa26;
     background-color: #f6c026;
     color: white;

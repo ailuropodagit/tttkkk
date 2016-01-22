@@ -4,9 +4,9 @@
         <!--MERCHANT RESULT-->
         <div id="search-result-merchant">
             <?php
-//            $data['title'] = 'Retailer';
-//            $data['review_list'] = $home_search_merchant;
-//            $this->load->view('share/merchant_grid_list5', $data);
+            $data['title'] = 'Retailer';
+            $data['review_list'] = $home_search_merchant;
+            $this->load->view('share/merchant_grid_list5', $data);
             ?>
         </div>
         <!--HOT DEAL RESULT-->
@@ -20,9 +20,9 @@
         <!--PROMOTION RESULT-->
         <div id="search-result-promotion">
             <?php
-//            $data['title'] = 'Redemption';
-//            $data['share_hotdeal_redemption_list'] = $home_search_promotion;
-//            $this->load->view('share/redemption_grid_list5', $data);
+            $data['title'] = 'Redemption';
+            $data['share_hotdeal_redemption_list'] = $home_search_promotion;
+            $this->load->view('share/redemption_grid_list5', $data);
             ?>
         </div>
     </div>
