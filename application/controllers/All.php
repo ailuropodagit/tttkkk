@@ -610,6 +610,14 @@ class All extends CI_Controller
                 }
             }
 
+            $meta = array(
+                array('property' => 'og:type', 'content' => 'article'),
+                array('property' => 'og:title', 'content' => $the_row['title']),
+                array('property' => 'og:description', 'content' => limit_character($the_row['description'], 150)),
+                array('property' => 'og:image', 'content' => base_url($this->album_user_merchant . $the_row['image']))
+            );
+            $this->data['meta_fb'] = meta_fb($meta);
+            
             if ($this->ion_auth->logged_in())
             {
                 $this->load->view('template/index', $this->data);
@@ -641,7 +649,7 @@ class All extends CI_Controller
                 $login_data = $this->m_custom->getUser($login_id);
             }
 
-            $user_row = $this->m_custom->getUser($the_row['user_id']);
+            $user_row = $this->m_custom->getUserInfo($the_row['user_id']);
 
             $this->data['picture_id'] = $picture_id;
             $this->data['picture_user_id'] = $the_row['user_id'];
@@ -694,6 +702,14 @@ class All extends CI_Controller
                 }
             }
 
+            $meta = array(
+                array('property' => 'og:type', 'content' => 'article'),
+                array('property' => 'og:title', 'content' => $user_row['name']),
+                array('property' => 'og:description', 'content' => limit_character($the_row['description'], 150)),
+                array('property' => 'og:image', 'content' => base_url($this->album_user . $the_row['image']))
+            );
+            $this->data['meta_fb'] = meta_fb($meta);
+            
             if ($this->ion_auth->logged_in())
             {
                 $this->load->view('template/index', $this->data);
