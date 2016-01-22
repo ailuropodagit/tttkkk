@@ -207,7 +207,7 @@ class All extends CI_Controller
             $this->data['merchant_name'] = $merchant_row['company'];
             $this->data['sub_title'] = $the_row['title'];
             $this->data['description'] = $the_row['description'];
-            $this->data['image_url'] = base_url($this->album_merchant . $the_row['image']);
+            $image_url = base_url($this->album_merchant . $the_row['image']);
             $this->data['sub_category'] = $this->m_custom->display_category($the_row['sub_category_id']);
             $this->data['start_date'] = displayDate($the_row['start_time']);
             $this->data['end_date'] = displayDate($the_row['end_time']);
@@ -272,7 +272,7 @@ class All extends CI_Controller
             else if ($row_advertise_type == "adm")
             {
                 //For admin promotion, overwrite some info
-                $this->data['image_url'] = base_url($this->album_admin . $the_row['image']);
+                $image_url = base_url($this->album_admin . $the_row['image']);
                 $this->data['voucher_not_need'] = $the_row['voucher_not_need'];                
                 $this->data['voucher_candie'] = $the_row['voucher_candie'];
                 $this->data['expire_date'] = displayDate($the_row['voucher_expire_date']);
@@ -306,7 +306,17 @@ class All extends CI_Controller
                 {
                     $this->data['next_url'] = base_url() . "all/advertise/" . $next_id . "/" . $advertise_type . "/" . $sub_category_id . "/" . $merchant_id . "/" . $show_expired;
                 }                
-            }            
+            }
+            
+            $this->data['image_url'] = $image_url;
+            $meta = array(
+                array('property' => 'og:type', 'content' => 'article'),
+                array('property' => 'og:title', 'content' => $merchant_row['company']),
+                array('property' => 'og:description', 'content' => limit_character($the_row['description'], 150)),
+                array('property' => 'og:image', 'content' => $image_url)
+            );
+            $this->data['meta_fb'] = meta_fb($meta);
+
             $this->load->view('template/index_background_blank', $this->data);
         }
         else
@@ -1047,6 +1057,17 @@ class All extends CI_Controller
                     $query_merchant_user_album = $this->albert_model->read_merchant_user_album($where_merchant_user_album);
                     $data['album_list'] = $query_merchant_user_album->result_array();
                 }
+
+                $user_data = $this->m_custom->getUserInfo($user_id);
+                $meta = array(
+                    array('property' => 'og:type', 'content' => 'article'),
+                    array('property' => 'og:title', 'content' => $user_data['name']),
+                    array('property' => 'og:url', 'content' => $user_data['user_dashboard_url']),
+                    array('property' => 'og:description', 'content' => limit_character($user_data['description'], 150)),
+                    array('property' => 'og:image', 'content' => $user_data['profile_image_url'])
+                );
+                $data['meta_fb'] = meta_fb($meta);
+
                 $this->load->view('template/index_background_blank', $data);
             }
             else
@@ -1177,6 +1198,14 @@ class All extends CI_Controller
             $this->data['follower_count'] = $this->albert_model->follower_count($user_id);
             $this->data['following_count'] = $this->albert_model->following_count($user_id);
             $this->data['temp_folder'] = $this->temp_folder; 
+            
+            $meta = array(
+                array('property' => 'og:type', 'content' => 'article'),
+                array('property' => 'og:title', 'content' => $the_row->company),
+                array('property' => 'og:description', 'content' => limit_character($the_row->address, 150)),
+                array('property' => 'og:image', 'content' => base_url() . $this->album_merchant_profile . $the_row->profile_image)
+            );
+            $this->data['meta_fb'] = meta_fb($meta);
             
             if ($bottom_part == NULL)
             {

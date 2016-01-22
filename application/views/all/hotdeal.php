@@ -35,7 +35,7 @@
             name: '<?php echo $merchant_name; ?>',
             description: '<?php echo limit_character($description, 150, 1); ?>'
         });
-    }           
+    }          
 </script>
 
 <div id='hot-deal'>

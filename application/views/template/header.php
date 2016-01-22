@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
     <html xmlns="https://www.w3.org/1999/xhtml" xmlns:og="https://ogp.me/ns#" xmlns:fb="https://www.facebook.com/2008/fbml">
-    <head>
+    <head>       
         <meta charset="UTF-8">
+        <meta property="fb:app_id" content="1682555468669559" />
         <title>Keppo</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" href="<?php echo base_url('image/favicon.ico') ?>">
@@ -93,6 +94,12 @@
             }
 
         </script>
+        <?php
+        if (isset($meta_fb))
+        {
+            echo $meta_fb;
+        }
+        ?>
     </head>
     <body>
         <?php
