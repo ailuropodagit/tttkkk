@@ -1424,13 +1424,11 @@ class All extends CI_Controller
                 $this->data['home_search_merchant'] = $this->m_custom->home_search_merchant($search_value, $state_id);
                 $this->data['home_search_hotdeal'] = $this->m_custom->home_search_hotdeal($search_value, $state_id);
                 $this->data['home_search_promotion'] = $this->m_custom->home_search_promotion($search_value, $state_id);
-
                 $this->data['state_name'] = "";
                 if ($state_id != 0)
                 {
                     $this->data['state_name'] = " : " . $this->m_custom->display_static_option($state_id);
                 }
-
                 $this->data['page_path_name'] = 'all/search_result';
                 $this->load->view('template/index_background_blank', $this->data);
             }

@@ -87,84 +87,11 @@ $uri_segment_4 = $this->uri->segment(4);
             else
             {
                 $advertise_detail_url = base_url() . "all/advertise/" . $advertise_id;
-            }   
+            }
+            
+            echo $advertise_id;
             ?>
-            <div class='share-hot-deal-grid-list5-box'>
-                <a href='<?php echo $advertise_detail_url ?>'>
-                    <?php                
-                    if ($post_hour != 0)
-                    {
-                        ?>
-                        <div class="share-hot-deal-grid-list5-box-timer-box-absolute">
-                            <div class="share-hot-deal-grid-list5-box-timer-box-relative" end_date="<?php echo $end_time ?>">
-                                <div class="share-hot-deal-grid-list5-box-timer-box1">
-                                    <div class="share-hot-deal-grid-list5-box-timer-box1-time-day">1</div>
-                                    <div class="share-hot-deal-grid-list5-box-timer-box1-label">Days</div>
-                                </div>
-                                <div class="share-hot-deal-grid-list5-box-timer-box2">
-                                    <div class="share-hot-deal-grid-list5-box-timer-box2-time-hour">2</div>
-                                    <div class="share-hot-deal-grid-list5-box-timer-box2-label">Hours</div>
-                                </div>
-                                <div class="share-hot-deal-grid-list5-box-timer-box3">
-                                    <div class="share-hot-deal-grid-list5-box-timer-box3-time-minute">3</div>
-                                    <div class="share-hot-deal-grid-list5-box-timer-box3-label">Mins</div>
-                                </div>
-                                <div class="share-hot-deal-grid-list5-box-timer-box4">
-                                    <div class="share-hot-deal-grid-list5-box-timer-box4-time-second">4</div>
-                                    <div class="share-hot-deal-grid-list5-box-timer-box4-label">Secs</div>
-                                </div>
-                            </div>
-                        </div>
-                        <?php
-                    }
-                    ?>
-                    <div class="share-hot-deal-grid-list5-box-photo">
-                        <div class="share-hot-deal-grid-list5-box-photo-box">
-                            <img src='<?php echo $image_url ?>'>
-                        </div>
-                    </div>
-                    <div class="share-hot-deal-grid-list5-box-separator"></div>
-                    <div class="share-hot-deal-grid-list5-box-information">
-                        <div class="share-hot-deal-grid-list5-box-information-title">
-                            <?php echo $row['title'] ?>
-                        </div>
-                        <div class="share-hot-deal-grid-list5-box-information-rating">
-                            <?php
-                            for ($i = 1; $i <= 5; $i++)
-                            {
-                                if ($i == round($average_rating))
-                                {
-                                    echo "<input class='star' type='radio' name='a-rating-$advertise_id' disabled='disabled' value='" . $i . "' checked='checked'/>";
-                                }
-                                else
-                                {
-                                    echo "<input class='star' type='radio' name='a-rating-$advertise_id' disabled='disabled' value='" . $i . "'/>";
-                                }
-                            }
-                            ?>
-                            <div class="float-fix"></div>
-                        </div>
-                        <div class="share-hot-deal-grid-list5-box-information-price">
-                            <div class="share-hot-deal-grid-list5-box-information-price-after">
-                                <?php
-                                if ($price_after)
-                                {
-                                    echo 'RM ' . $price_after;
-                                }
-                                ?>
-                            </div>
-                            <div class="share-hot-deal-grid-list5-box-information-price-before">
-                                <?php
-                                if ($price_before)
-                                {
-                                    echo 'RM ' . $price_before;
-                                }
-                                ?>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
+
             <?php
         }
         //PAGINATION
