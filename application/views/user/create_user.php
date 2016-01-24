@@ -53,11 +53,16 @@
                                     success: function (data) {
                                         var $response = $(data);
                                         var login_fb_merchant_email = $response.filter('#login-fb-merchant-email').text()
+                                        var login_fb_user_frozen = $response.filter('#login-fb-user-frozen').text();
                                         var login_fb_id_not_exists = $response.filter('#login-fb-id-not-exists').text()
                                         var login_fb_id_success = $response.filter('#login-fb-id-success').text();
                                         if (login_fb_merchant_email) {
                                             fbLogout();
                                             $('#login-facebook-label').html('This Facebook account email already register as Merchant. Please use another Facebook account or email for user.');
+                                        }
+                                        if (login_fb_user_frozen) {
+                                            fbLogout();
+                                            $('#login-facebook-label').html('This User account already frozen by website admin. Please <a href="/contact-us" >contact Keppo admin</a> for the detail.');
                                         }
                                         if (login_fb_id_not_exists) {
                                             window.location.replace("<?php echo base_url() ?>user/login_facebook_first_time");

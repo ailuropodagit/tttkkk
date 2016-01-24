@@ -654,6 +654,7 @@ class All extends CI_Controller
             $this->data['picture_id'] = $picture_id;
             $this->data['picture_user_id'] = $the_row['user_id'];
             $this->data['user_name_url'] = $this->m_custom->generate_user_link($the_row['user_id']);
+            $this->data['user_name'] = $this->m_custom->display_users($the_row['user_id']);
             $this->data['title'] = $the_row['title'];
             $this->data['description'] = $the_row['description'];
             $this->data['image_url'] = base_url($this->album_user . $the_row['image']);
@@ -1078,7 +1079,7 @@ class All extends CI_Controller
                 $meta = array(
                     array('property' => 'og:type', 'content' => 'article'),
                     array('property' => 'og:title', 'content' => $user_data['name']),
-                    array('property' => 'og:url', 'content' => $user_data['user_dashboard_url']),
+                    //array('property' => 'og:url', 'content' => $user_data['user_dashboard_url']),
                     array('property' => 'og:description', 'content' => limit_character($user_data['description'], 150)),
                     array('property' => 'og:image', 'content' => $user_data['profile_image_url'])
                 );

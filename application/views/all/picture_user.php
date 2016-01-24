@@ -3,8 +3,33 @@
 <script type="text/javascript" src="<?php echo base_url() ?>js/jgrowl/jquery.jgrowl.js"></script>
 <?php echo link_tag('js/jgrowl/jquery.jgrowl.css') ?>
 <script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script>
+<script type="text/javascript" src="http://connect.facebook.net/en_US/all.js"></script>
+
+<script type="text/javascript">
+    //FB SHARE
+    FB.init({
+         appId  : '<?php echo fb_appID(); ?>',
+         status : true, // check login status
+         cookie : true, // enable cookies to allow the server to access the session
+         xfbml  : true  // parse XFBML
+       });
+
+    function fbShare(){        
+        FB.ui({
+            method : 'feed', 
+            link   :  '<?php echo base_url() . uri_string(); ?>',
+            caption:  'KEPPO.MY',
+            picture: '<?php echo $image_url; ?>',
+            name:'<?php echo $user_name; ?>',
+            description: '<?php echo limit_character($description, 150, 1); ?>'
+       });
+       <?php $this->m_custom->activity_share($picture_id, 'usa'); ?>
+    }    
+
+</script>
 
 <div id='picture-user'>
+    <div id="fb-root"></div>
     <h1><?php echo $page_title; ?></h1>
     <div id='picture-user-content'>
         <div id="picture-user-edit-link">
@@ -119,9 +144,9 @@
                             </div>
                             <div id="picture-user-share">
                                 Share :
-                                <span id="picture-user-share-facebook">
-                                    <i class="fa fa-facebook-square"></i>
-                                </span>
+                                <div id="redemption-information-share-facebook" onclick="fbShare(); return false;">
+                                    <img src="<?php echo base_url() . 'image/social-media-facebook-share.png'; ?>" >
+                                </div>
                             </div>
                             <div id="float-fix"></div>
                         </div>

@@ -130,22 +130,33 @@ class User extends CI_Controller
         {
             //FB LOGIN NOT MERCHANT EMAIL
             //READ USERS
-            $where_user = array('us_fb_id' => $fb_id);
+            $where_user = array('us_fb_id' => $fb_id, 'us_register_type' => 'fbr');
             $query_user = $this->albert_model->read_user($where_user);        
             $num_rows_user = $query_user->num_rows();
             if($num_rows_user)
             {
-                $username = $query_user->row()->username;
-                $password = $query_user->row()->password_visible;
-                $remember = 0;
-                if ($this->ion_auth->login($username, $password, $remember, $this->main_group_id))
+                $hide_flag = $query_user->row()->hide_flag;
+                if ($hide_flag)
                 {
+                    //USER ALREADY FROZEN
+                    ?>
+                    <div id="login-fb-user-frozen">1</div>
+                    <?php
+                }
+                else
+                {
+                    $username = $query_user->row()->username;
+                    $password = $query_user->row()->password_visible;
+                    $remember = 0;
+                    if ($this->ion_auth->login($username, $password, $remember, $this->main_group_id))
+                    {
                     ?>
                     <!--LOGIN USER ID-->
                     <div id="login-user-id"><?php echo $this->session->userdata('user_id') ?></div>
                     <!--LOGIN SUCCESS-->
                     <div id="login-fb-id-success">1</div>
                     <?php
+                }
                 }
             }
             else
