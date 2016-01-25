@@ -1197,7 +1197,7 @@ html, body {
     text-transform: uppercase;
     color: #444444;
     border-bottom: 1px solid #dddddd;
-    padding: 12px 22px 12px 22px;
+    padding: 11px 22px 11px 22px;
 }
 
 #index-left-category-title-label {
@@ -2954,10 +2954,8 @@ html, body {
  *********************************************/
 
 #share-merchant-grid-list4-header {
-    -webkit-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
-    -moz-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
-    box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
-    background: white;
+    padding: 0px 0px 0px 20px;
+    background-color: #404041;
 }
 
 #share-merchant-grid-list4-header-table {
@@ -2984,8 +2982,8 @@ html, body {
     font-weight: 700;
     font-size: 15px;
     letter-spacing: 2px;
-    color: black;
-    margin: 0px 0px 0px 15px;
+    color: #fbfbfb;
+    margin: 4px 0px 4px 0px; 
 }
 
 #share-merchant-grid-list4-header-navigation {

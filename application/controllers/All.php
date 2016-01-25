@@ -1260,11 +1260,8 @@ class All extends CI_Controller
                 $this->data['title'] = "User's Pictures";
                 $this->data['bottom_path_name'] = 'all/album_user_merchant';
             }
-            if ($this->ion_auth->logged_in())
-            {
-                $this->data['message'] = $this->session->flashdata('message');
-                $this->load->view('template/index_background_blank', $this->data);
-            }
+            $this->data['message'] = $this->session->flashdata('message');
+            $this->load->view('template/index_background_blank', $this->data);
         }
         else
         {

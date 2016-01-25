@@ -108,7 +108,7 @@ $fetch_method = $this->router->fetch_method();
                             <img src='<?php echo $image_url ?>'>
                             <div class="share-redemption-row-list4-box-photo-box-redemption-count">
                                 <div class="share-redemption-row-list4-box-photo-box-redemption-count-text">
-                                    <?php echo $redeem_count ?><br/>Redemption
+                                    <?php echo $redeem_count ?><br/>Redeem
                                 </div>
                             </div>
                         </div>
