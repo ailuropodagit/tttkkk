@@ -3240,7 +3240,7 @@ html, body {
  *********************************************/
 
 #hot-deal {
-    margin: 20px 0px 0px 0px;
+    margin: 20px 0px 60px 0px;
     background: white;
     -webkit-box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
     -moz-box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
@@ -3349,6 +3349,7 @@ html, body {
     width: calc(60% - 100px);
     text-align: left;
     margin: 0px 50px 0px 50px;
+    color: #2E2D2C;
 }
 
 #hot-deal-information-title {
@@ -3358,8 +3359,10 @@ html, body {
 
 #hot-deal-information-title a {
     color: #00bcd4;
-    font-size: 18px;
+    font-size: 22px;
     font-weight: bold;
+    text-transform: uppercase;
+    font-family: 'Helvetica Neue';
 }
 
 #hot-deal-information-show-me-address {
@@ -3498,12 +3501,12 @@ html, body {
     text-align: left;
 }
 
-#hot-deal-tab-box {
+#hot-deal-information-tab-box {
     border: 1px solid #e4e4e4;
-    margin: 40px 45px 20px 50px;
+    margin: 40px 0px 20px 0px;
 }
 
-#hot-deal-tab-box-title {
+#hot-deal-information-tab-box-title {
     font-weight: bold;
     text-transform: uppercase;
     padding: 20px;
@@ -3512,11 +3515,11 @@ html, body {
     border-bottom: 1px solid #e4e4e4;
 }
 
-#hot-deal-tab-box-user-comment {
+#hot-deal-information-tab-box-user-comment {
     padding: 20px;
 }
 
-#hot-deal-tab-box-user-comment textarea {
+#hot-deal-information-tab-box-user-comment textarea {
     border: 1px solid #e4e4e4;
 }
 
@@ -3643,6 +3646,7 @@ html, body {
     width: calc(58% - 50px);
     text-align: left;
     margin: 0px 0px 0px 50px;
+    color: #2E2D2C;
 }
 
 #redemption-information-title {
@@ -3652,8 +3656,10 @@ html, body {
 
 #redemption-information-title a {
     color: #00bcd4;
-    font-size: 18px;
+    font-size: 22px;
     font-weight: bold;
+    text-transform: uppercase;
+    font-family: 'Helvetica Neue';
 }
 
 #redemption-information-show-me-address {
@@ -3815,15 +3821,11 @@ html, body {
     color: #939393;
 }
 
-#redemption-voucher-barcode {
-    margin: 5px 0px 15px 0px;
+#redemption-information-terms-conditions {
+    margin: 30px 0px 0px 0px;
 }
 
-#redemption-terms-conditions {
-    margin: 30px 45px 0px 50px;
-}
-
-#redemption-terms-conditions-title {
+#redemption-information-terms-conditions-title {
     font-weight: bold;
     font-size: 14px;
     color: black;
@@ -3831,23 +3833,23 @@ html, body {
     margin: 0px 0px 8px 0px;
 }
 
-#redemption-terms-conditions ul {
+#redemption-information-terms-conditions ul {
     margin: 0px 0px 0px 20px;
     padding: 0px;
 }
 
-#redemption-terms-conditions li {
+#redemption-information-terms-conditions li {
     margin: 0px 0px 8px 0px;
     color: black;
     font-size: 14px;
 }
 
-#redemption-available-branch {
-    margin: 20px 45px 0px 50px;
+#redemption-information-available-branch {
+    margin: 20px 0px 0px 0px;
     text-align: left;
 }
 
-#redemption-available-branch-title {
+#redemption-information-available-branch-title {
     font-weight: bold;
     font-size: 14px;
     color: black;
@@ -3855,40 +3857,40 @@ html, body {
     margin: 0px 0px 8px 0px;
 }
 
-#redemption-available-branch ul {
+#redemption-information-available-branch ul {
     margin: 0px 0px 0px 20px;
     padding: 0px;
 }
 
-#redemption-available-branch li {
+#redemption-information-available-branch li {
     margin: 0px 0px 10px 0px;
     color: black;
     font-size: 14px;
 }
 
-#redemption-available-branch-name {
+#redemption-information-available-branch-name {
     font-weight: bold;
     font-size: 13px;
 }
 
-#redemption-available-branch-address {
+#redemption-information-available-branch-address {
     margin: 5px 0px 0px 0px;
 }
 
-#redemption-available-branch-tel {
+#redemption-information-available-branch-tel {
     margin: 5px 0px 0px 0px;
 }
 
-#redemption-available-branch-view-map {
+#redemption-information-available-branch-view-map {
     margin: 5px 0px 0px 0px;
 }
 
-#redemption-tab-box {
+#redemption-information-tab-box {
     border: 1px solid #e4e4e4;
-    margin: 40px 45px 20px 50px;
+    margin: 40px 0px 20px 0px;
 }
 
-#redemption-tab-box-title {
+#redemption-information-tab-box-title {
     font-weight: bold;
     text-transform: uppercase;
     padding: 20px;
@@ -3897,12 +3899,16 @@ html, body {
     border-bottom: 1px solid #e4e4e4;
 }
 
-#redemption-tab-box-user-comment {
+#redemption-information-tab-box-user-comment {
     padding: 20px;
 }
 
-#redemption-tab-box-user-comment textarea {
+#redemption-information-tab-box-user-comment textarea {
     border: 1px solid #e4e4e4;
+}
+
+#redemption-voucher-barcode {
+    margin: 5px 0px 15px 0px;
 }
 
 #redemption-suggestion {

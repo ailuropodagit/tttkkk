@@ -259,19 +259,16 @@ if(isset($message))
                     </div>
                 </div>
             </div>
-            
             <!--REDEMPTION PERIOD-->
             <div id="redemption-information-redemption-period">
                 <div id="redemption-information-redemption-period-icon"><i class="fa fa-gift header-menu-icon"></i></div>
                 <div id="redemption-information-redemption-period-label">Redeem Period: <?php echo $start_date ?> to <?php echo $end_date ?></div>
             </div>
-            
             <!--EXPIRED DATE-->
             <div id='redemption-information-expired-date'>
                 <div id='redemption-information-expired-date-icon'><i class="fa fa-calendar-o"></i></div>
                 <div id='redemption-information-expired-date-label'>Expiry Date: <?php echo $expire_date ?></div>
             </div>
-            
             <!--REDEEM-->
             <div id='redemption-information-submit'>
                 <?php
@@ -289,9 +286,7 @@ if(isset($message))
                 }
                 ?>
             </div>
-            
             <div id="redemption-information-horizontal-separator"></div>
-            
             <!--SHARE-->
             <div id="redemption-information-share">
                 <div id="redemption-information-share-label">
@@ -304,54 +299,56 @@ if(isset($message))
                     <?php //echo "Earn : " . $this->m_custom->display_trans_config(10) . " candy" ?>
                 </div>
             </div>
-                                        
-        </div>        
-        <div id="float-fix"></div>
-        <div id="redemption-terms-conditions">
-            <div id="redemption-terms-conditions-title">Terms & Condition:</div>
-            <ul>
-                <?php
-                foreach ($candie_term as $value)
-                {
-                    echo "<li>" . $this->m_custom->display_dynamic_option($value['option_id'], $merchant_name) . "</li>";
-                }
-                ?>                              
-                <?php
-                if (!empty($extra_term))
-                {
-                    $extra_term_array = explode("\n", $extra_term);
-                    foreach ($extra_term_array as $extra_term_row)
-                    {
-                        echo "<li>" . $extra_term_row . "</li>";
-                    }
-                }
-                ?>
-            </ul>   
-        </div>       
-        <div id="redemption-available-branch">
-            <div id="redemption-available-branch-title">Available Branch:</div>
-            <ul>
-                <?php
-                foreach ($candie_branch as $value)
-                {
-                    ?>
-                    <li>
-                        <div id="redemption-available-branch-name"><?php echo $value['name'] ?></div>
-                        <div id="redemption-available-branch-address"><?php echo $value['address'] ?></div>
-                        <div id="redemption-available-branch-tel"><a href='tel: <?php echo $value['phone'] ?>'><?php echo $value['phone'] ?></a></div>
-                        <div id="redemption-available-branch-view-map"><a href='<?php echo base_url() ?>all/merchant-map/<?php echo $value['branch_id'] ?>' target='_blank'>View Map</a></div>
-                    </li>
+            <!--TERMS AND CONDITIONS-->
+            <div id="redemption-information-terms-conditions">
+                <div id="redemption-information-terms-conditions-title">Terms & Condition:</div>
+                <ul>
                     <?php
-                }
-                ?>  
-            </ul>
-        </div>         
-        <div id='redemption-tab-box'>
-            <div id='redemption-tab-box-title'>User Comment</div>
-            <div id="redemption-tab-box-user-comment">
-                <?php $this->load->view('all/comment_form') ?>
+                    foreach ($candie_term as $value)
+                    {
+                        echo "<li>" . $this->m_custom->display_dynamic_option($value['option_id'], $merchant_name) . "</li>";
+                    }
+                    ?>                              
+                    <?php
+                    if (!empty($extra_term))
+                    {
+                        $extra_term_array = explode("\n", $extra_term);
+                        foreach ($extra_term_array as $extra_term_row)
+                        {
+                            echo "<li>" . $extra_term_row . "</li>";
+                        }
+                    }
+                    ?>
+                </ul>   
+            </div>
+            <!--AVAILABLE BRANCH-->
+            <div id="redemption-information-available-branch">
+                <div id="redemption-information-available-branch-title">Available Branch:</div>
+                <ul>
+                    <?php
+                    foreach ($candie_branch as $value)
+                    {
+                        ?>
+                        <li>
+                            <div id="redemption-information-available-branch-name"><?php echo $value['name'] ?></div>
+                            <div id="redemption-information-available-branch-address"><?php echo $value['address'] ?></div>
+                            <div id="redemption-information-available-branch-tel"><a href='tel: <?php echo $value['phone'] ?>'><?php echo $value['phone'] ?></a></div>
+                            <div id="redemption-information-available-branch-view-map"><a href='<?php echo base_url() ?>all/merchant-map/<?php echo $value['branch_id'] ?>' target='_blank'>View Map</a></div>
+                        </li>
+                        <?php
+                    }
+                    ?>  
+                </ul>
+            </div>
+            <!--TAB BOX--> 
+            <div id='redemption-information-tab-box'>
+                <div id='redemption-information-tab-box-title'>User Comment</div>
+                <div id="redemption-information-tab-box-user-comment">
+                    <?php $this->load->view('all/comment_form') ?>
+                </div>
             </div>
         </div>
+        <div id="float-fix"></div>
     </div>
 </div>
         
