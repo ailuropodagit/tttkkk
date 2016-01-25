@@ -27,41 +27,41 @@ if (isset($message))
                 </div>
             </div>
         </div>
+    </div>
+    <?php 
+    if ($this->router->fetch_method() == 'review_merchant')
+    {
+        ?>
+        <div id='share-merchant-grid-list5-header-navigation'>
+            <div id='share-merchant-grid-list5-header-navigation-each'>
+                <a href="<?php echo $user_review_like; ?>" >Like</a> 
+            </div>
+            <div id='share-merchant-grid-list5-header-navigation-separater'>|</div> 
+            <div id='share-merchant-grid-list5-header-navigation-each'>
+                <a href="<?php echo $user_review_comment; ?>" >Comment</a>
+            </div>
+            <div id='share-merchant-grid-list5-header-navigation-separater'>|</div> 
+            <div id='share-merchant-grid-list5-header-navigation-each'>
+                <a href="<?php echo $user_review_rating; ?>" >Rating</a>
+            </div>
+            <div id='float-fix'></div>
+        </div>
         <?php 
-        if ($this->router->fetch_method() == 'review_merchant')
+        if( !empty($category_list))
         {
             ?>
-            <div id='share-merchant-grid-list5-header-navigation'>
-                <div id='share-merchant-grid-list5-header-navigation-each'>
-                    <a href="<?php echo $user_review_like; ?>" >Like</a> 
-                </div>
-                <div id='share-merchant-grid-list5-header-navigation-separater'>|</div> 
-                <div id='share-merchant-grid-list5-header-navigation-each'>
-                    <a href="<?php echo $user_review_comment; ?>" >Comment</a>
-                </div>
-                <div id='share-merchant-grid-list5-header-navigation-separater'>|</div> 
-                <div id='share-merchant-grid-list5-header-navigation-each'>
-                    <a href="<?php echo $user_review_rating; ?>" >Rating</a>
-                </div>
-                <div id='float-fix'></div>
-            </div>
-            <?php 
-            if( !empty($category_list))
-            {
-                ?>
-                <div id='share-merchant-grid-list5-category-list'>
-                    <?php
-                    foreach ($category_list as $cat_row)
-                    {
-                        echo $cat_row;
-                    }
-                    ?>
-                </div>
+            <div id='share-merchant-grid-list5-category-list'>
                 <?php
-            }
+                foreach ($category_list as $cat_row)
+                {
+                    echo $cat_row;
+                }
+                ?>
+            </div>
+            <?php
         }
-        ?>
-    </div>
+    }
+    ?>
     <div id="share-merchant-grid-list5-container">
         <?php            
         if ($review_list != null)
