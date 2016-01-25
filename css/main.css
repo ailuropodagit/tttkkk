@@ -4586,7 +4586,6 @@ html, body {
 }
 
 #notification-table table {
-    width: 100%;
     table-layout: fixed;
 }
 
@@ -4596,15 +4595,6 @@ html, body {
     
 #notification-table table td:first-child {
     width: 40px;
-}
-
-#notification-table table td:nth-child(2) {
-    width: 180px;
-    padding: 0px 5px 0px 0px;
-}
-
-#notification-table table td:nth-child(5) {
-    width: 15px;
 }
 
 #notification-table tr:first-child {
@@ -4620,7 +4610,7 @@ html, body {
 }
 
 #notification-table-photo-box {
-    width: 30px;
+    padding: 0px 5px 0px 5px;
     height: 30px;
     border: 1px solid lightgray;
     background-color: whitesmoke;
@@ -4637,6 +4627,7 @@ html, body {
     overflow: hidden; 
     white-space: nowrap; 
     text-overflow: ellipsis;
+    padding: 0px 5px 0px 10px;
 }
 
 #notification-table-name a {
@@ -4652,6 +4643,7 @@ html, body {
     overflow: hidden; 
     white-space: nowrap; 
     text-overflow: ellipsis;
+    padding: 0px 10px 0px 5px;
 }
 
 #notification-table-message a {
@@ -4664,6 +4656,7 @@ html, body {
 
 #notification-table-delete button {
     color: black;
+    padding: 0px 10px 0px 5px;
 }
 
 #notification-table-delete button:hover {
