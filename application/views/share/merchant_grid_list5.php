@@ -123,13 +123,12 @@ if (isset($message))
         {
             ?>
             <div id='share-merchant-grid-list5-empty'>
-
                 <?php
                 if ($fetch_method == 'review_merchant')
                 {
                     echo 'No Review';
                 }
-                else if ($fetch_method == 'merchant_category')
+                else if ($fetch_method == 'merchant_category' || $fetch_method == 'home_search')
                 {
                     echo 'No Merchant';
                 }

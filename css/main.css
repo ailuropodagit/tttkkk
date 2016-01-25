@@ -2037,6 +2037,16 @@ html, body {
     font-size: 15px;
 }
 
+#share-hot-deal-grid-list5-empty {
+    font-size: 14px;
+    padding: 30px 0px 30px 25px;
+    color: gray;
+    background-color: white;
+    -webkit-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
+    -moz-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
+    box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
+}
+
 /*********************************************
  ** SHARE HOT DEAL GRID LIST 5 OLD
  *********************************************/
@@ -2565,6 +2575,17 @@ html, body {
 #share-redemption-grid-list5-pagination a {
     margin: 0px 5px 0px 5px;
     font-size: 15px;
+}
+
+#share-redemption-grid-list5-empty {
+    font-size: 14px;
+    padding: 30px 0px 30px 25px;
+    color: gray;
+    background-color: white;
+    -webkit-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
+    -moz-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
+    box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
+    margin: 0px 0px 60px 0px;
 }
 
 /*********************************************
