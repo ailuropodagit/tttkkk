@@ -1159,6 +1159,7 @@ html, body {
     background-position: -285px 0px;
     background-color: #00bcd4;
     position: relative;
+    z-index: -299;
 } 
 
 #home-bottom-background-text {
@@ -4087,11 +4088,11 @@ html, body {
     margin: 0px 0px 70px 0px;
 }
 
-#album-user-content {
-    padding: 20px;
+#album-user-header {
+    padding: 20px 20px 15px 20px;
 }
 
-#album-user-title {
+#album-user-header-title {
     color: #244964;
     font-size: 25px;
     letter-spacing: 1px;
@@ -4099,25 +4100,29 @@ html, body {
     float: left;
 }
 
-#album-user-title-upload {
+#album-user-header-title-upload {
     float: left;
     margin: 6px 0px 0px 20px;
 }
 
-.album-user-title-upload-icon {
+.album-user-header-title-upload-icon {
     font-size: 14px;
     margin-right: 7px;
 }
 
-#album-user-title-bottom-line {
+#album-user-header-title-bottom-line {
     border-bottom: 1px solid lightgray;
     padding: 0px 0px 6px 0px;
     margin: 0px 0px 10px 0px;
 }
 
+#album-user-content {
+    padding: 0px 20px 20px 20px;
+}
+
 #album-user-navigation {
     font-size: 15px;
-    margin: 0px 0px 20px 0px;
+    margin: 0px 0px 30px 12px;
 }
 
 #album-user-navigation-each {
@@ -4135,22 +4140,39 @@ html, body {
 }
 
 #album-user-box {
-    float: left;
-    margin: 0px 50px 50px 0px;
-    width: 180px;
+    display: inline-block;
+    vertical-align: top;
+    width: calc(20% - 22.5px);
+    margin: 0px 25px 25px 0px;
 }
 
-#album-user-photo-box {
-    width: 180px;
-    height: 180px;
-    border: 1px solid #e1e1e1;
-    background-color: whitesmoke;
+#album-user-box:nth-child(5n) {
+    margin-right: 0px;
+    margin-bottom: 25px;
 }
 
-#album-user-photo-box img {
-    width: 180px;
-    height: 180px;
-    object-fit: cover; 
+#album-user-box:nth-last-child(-n+5) {
+    margin-bottom: 0px;
+}
+
+#album-user-box-photo-box {
+    width: 100%;
+    padding-top: 100%;
+    position: relative;
+}
+
+#album-user-box-photo-box img {
+    max-height: 100%;  
+    max-width: 100%; 
+    width: 100%;
+    height: 100%;
+    position: absolute;  
+    top: 0;  
+    bottom: 0;  
+    left: 0;  
+    right: 0;  
+    margin: auto;
+    object-fit: cover;
     object-position: center;
 }
 
@@ -4159,6 +4181,7 @@ html, body {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    width: 100%;
 }
 
 #album-user-main-title a {
@@ -4186,12 +4209,20 @@ html, body {
 }
 
 #album-user-info {
+    font-size: 15px;
     margin: 10px 0px 0px 0px;
 }
 
-#album-user-upload-by {
-    margin: 10px 0px 0px 0px;
-    font-size: 15px
+#album-user-info-count {
+    float: left;
+}
+
+#album-user-info-edit {
+    float: right;
+}
+
+#album-user-info-edit i {
+    padding: 0px 5px 0px 0px;
 }
 
 #album-user-empty {
@@ -4200,6 +4231,41 @@ html, body {
     color: gray;
 }
 
+/*********************************************
+ ** MAIN ALBUM CHANGE
+ *********************************************/
+
+#main-album-change-sub-menu {
+    margin: 25px 0px 0px -10px;
+}
+
+#main-album-change-content {
+    margin: 20px 0px 0px 0px;
+}
+
+#main-album-change-form {
+    width: 215px;
+}
+
+#main-album-change-form-each-label {
+    margin: 10px 0px 10px 0px;
+}
+
+#main-album-change-form-each-label-icon {
+    margin: 0px 0px 0px 7px;
+    font-size: 16px;
+    color: #4a4a4a;
+}
+
+#main-album-change-form-each-input input[type='text'] {
+    height: 25px;
+    width: 100%;
+    margin: 0px 0px 10px 0px;
+}
+
+#main-album-change-form-submit {
+    margin: 10px 0px 0px 0px;
+}
 
 
 
@@ -4610,8 +4676,8 @@ html, body {
 }
 
 #notification-table-photo-box {
-    padding: 0px 5px 0px 5px;
     height: 30px;
+    width: 30px;
     border: 1px solid lightgray;
     background-color: whitesmoke;
 }

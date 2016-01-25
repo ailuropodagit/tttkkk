@@ -1,46 +1,51 @@
 <?php
-//CONFIG DATA
-$page_name = $this->router->fetch_method();
+//URI
+$fetch_method = $this->router->fetch_method();
 
 //USER ID
 $user_id = $this->uri->segment(3);
 ?>
 
-<div id="album-user-combine"></div>
+<?php
+//COMBINE WITH DASHBOARD
+if ($fetch_method == 'merchant_dashboard')
+{
+    ?><div id="album-user-combine"></div><?php
+}
+?>
 
 <div id="album-user">
-    <div id="album-user-content">
-        <div id="album-user-header">
-            <div id='album-user-title'><?php echo $title ?></div>
-            <?php
-            if (check_correct_login_type($this->config->item('group_id_user')))
+    <div id="album-user-header">
+        <div id='album-user-header-title'><?php echo $title ?></div>
+        <?php
+        if (check_correct_login_type($this->config->item('group_id_user')))
+        {
+            $fetch_method = $this->router->fetch_method();
+            $merchant_slug = '';
+            if($fetch_method == 'merchant_dashboard')
             {
-                $fetch_method = $this->router->fetch_method();
-                $merchant_slug = '';
-                if($fetch_method == 'merchant_dashboard'){
-                    $merchant_slug = $this->uri->segment(3);
-                }
-                ?>
-                <div id='album-user-title-upload'>
-                    <a href='<?php echo base_url() ?>user/upload_for_merchant/<?php echo $merchant_slug ?>'><i class="fa fa-upload album-user-title-upload-icon"></i>Upload Picture</a>
-                </div>
-                <?php
+                $merchant_slug = $this->uri->segment(3);
             }
             ?>
-            <div id='float-fix'></div>
-            <div id='album-user-title-bottom-line'></div>
-        </div>
-        
+            <div id='album-user-header-title-upload'>
+                <a href='<?php echo base_url() ?>user/upload_for_merchant/<?php echo $merchant_slug ?>'><i class="fa fa-upload album-user-header-title-upload-icon"></i>Upload Picture</a>
+            </div>
+            <?php
+        }
+        ?>
+        <div id='float-fix'></div>
+        <div id='album-user-header-title-bottom-line'></div>
+    </div>
+    
+    <div id="album-user-navigation">
         <?php
         $this->load->view('all/album_user_sub_menu');
         ?>
+    </div>
         
+    <div id="album-user-content">        
         <?php        
-        if(empty($album_list))
-        {
-            ?><div id='album-user-empty'>No Picture</div><?php
-        }
-        else
+        if(!empty($album_list))
         {
             foreach ($album_list as $row)
             {
@@ -68,10 +73,8 @@ $user_id = $this->uri->segment(3);
                         <a href='<?php echo $merchant_dashboard_url ?>'><?php echo $merchant_name ?></a>
                     </div>
                     <a href='<?php echo $picture_detail_url ?>'>
-                        <div id='album-user-photo'>
-                            <div id='album-user-photo-box'>
-                                <img src='<?php echo base_url($this->album_user_merchant . $row['image']) ?>'>
-                            </div>
+                        <div id='album-user-box-photo-box'>
+                            <img src='<?php echo base_url($this->album_user_merchant . $row['image']) ?>'>
                         </div>
                     </a>
                     <div id='album-user-sub-title' style="display:none">
@@ -89,17 +92,20 @@ $user_id = $this->uri->segment(3);
                                 <td>:</td>
                                 <td><?php echo $this->m_custom->activity_comment_count($row['merchant_user_album_id'], 'mua'); ?></td>
                             </tr>
+                            <tr>
+                                <td>Upload by</td>
+                                <td>:</td> 
+                                <td><?php echo $this->m_custom->generate_user_link($row['user_id']); ?></td>
+                            </tr>
                         </table>
-                    </div>
-                    <div id='album-user-upload-by'>
-                        Upload by : <?php echo $this->m_custom->generate_user_link($row['user_id']); ?>
                     </div>
                 </div>
                 <?php
             }
-            ?>
-            <div id='float-fix'></div>
-            <?php
+        }
+        else
+        {
+            ?><div id='album-user-empty'>No Picture</div><?php
         }
         ?>
     </div>
