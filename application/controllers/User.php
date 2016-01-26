@@ -1920,7 +1920,7 @@ class User extends CI_Controller
         );
 
         $this->data['page_path_name'] = 'user/main_album_change';
-        $this->load->view('template/index', $this->data);
+        $this->load->view('template/index_background_blank', $this->data);
     }
     
     function upload_for_merchant($slug = NULL)

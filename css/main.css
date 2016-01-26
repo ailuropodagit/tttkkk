@@ -4122,7 +4122,7 @@ html, body {
 
 #album-user-navigation {
     font-size: 15px;
-    margin: 30px 0px 20px 12px;
+    margin: 30px 0px 20px 25px;
 }
 
 #album-user-navigation-each {
@@ -4235,12 +4235,9 @@ html, body {
  ** MAIN ALBUM CHANGE
  *********************************************/
 
-#main-album-change-sub-menu {
-    margin: 25px 0px 0px -10px;
-}
-
 #main-album-change-content {
     margin: 20px 0px 0px 0px;
+    border: 1px solid red;
 }
 
 #main-album-change-form {
