@@ -8,13 +8,14 @@ $user_id = $this->uri->segment(3);
 
 <?php
 //COMBINE WITH DASHBOARD
-if ($fetch_method == 'merchant_dashboard')
+if ($fetch_method == 'user_dashboard' || $fetch_method == 'merchant_dashboard')
 {
     ?><div id="album-user-combine"></div><?php
 }
 ?>
 
 <div id="album-user">
+    
     <div id="album-user-header">
         <div id='album-user-header-title'><?php echo $title ?></div>
         <?php
@@ -37,13 +38,12 @@ if ($fetch_method == 'merchant_dashboard')
         <div id='album-user-header-title-bottom-line'></div>
     </div>
     
-    <div id="album-user-navigation">
-        <?php
-        $this->load->view('all/album_user_sub_menu');
-        ?>
-    </div>
+    <?php
+    //ALBUM USER NAVIGATION
+    $this->load->view('all/album_user_sub_menu');
+    ?>
         
-    <div id="album-user-content">        
+    <div id="album-user-content">
         <?php        
         if(!empty($album_list))
         {

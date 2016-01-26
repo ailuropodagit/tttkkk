@@ -1,7 +1,4 @@
 <?php
-//CONFIG DATA
-$page_name = $this->router->fetch_method();
-
 //USER ID
 $user_id = $this->uri->segment(3);
 $album_id = $this->uri->segment(4);
@@ -42,11 +39,10 @@ if (check_correct_login_type($this->config->item('group_id_user')))
         <div id='album-user-header-title-bottom-line'></div>
     </div>
     
-    <div id='album-user-navigation'>
-        <?php
-        $this->load->view('all/album_user_sub_menu');
-        ?>
-    </div>
+    <?php
+    //ALBUM USER NAVIGATION
+    $this->load->view('all/album_user_sub_menu');
+    ?>
     
     <div id="album-user-content">
         <?php        

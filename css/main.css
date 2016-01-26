@@ -4089,7 +4089,7 @@ html, body {
 }
 
 #album-user-header {
-    padding: 20px 20px 15px 20px;
+    padding: 20px 20px 0px 20px;
 }
 
 #album-user-header-title {
@@ -4117,12 +4117,12 @@ html, body {
 }
 
 #album-user-content {
-    padding: 0px 20px 20px 20px;
+    padding: 10px 20px 20px 20px;
 }
 
 #album-user-navigation {
     font-size: 15px;
-    margin: 0px 0px 30px 12px;
+    margin: 30px 0px 20px 12px;
 }
 
 #album-user-navigation-each {
