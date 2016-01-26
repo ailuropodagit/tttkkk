@@ -463,7 +463,7 @@ class All extends CI_Controller
             redirect('/', 'refresh');
         }
 
-        $the_row = $this->m_custom->getOneAdvertise($advertise_id);
+        $the_row = $this->m_custom->getOneAdvertise($advertise_id, 0, 0, 0, 1);
         if ($the_row)
         {
             $advertise_type = $the_row['advertise_type'];

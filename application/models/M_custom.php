@@ -799,7 +799,7 @@ class M_custom extends CI_Model
     }
 
     //To find one advertise record in DB
-    public function getOneAdvertise($advertise_id, $ignore_have_money = 0, $ignore_hide = 0, $ignore_startend = 0)
+    public function getOneAdvertise($advertise_id, $ignore_have_money = 0, $ignore_hide = 0, $ignore_startend = 0, $show_frozen = 0)
     {
         if ($ignore_hide == 0)
         {
@@ -818,7 +818,7 @@ class M_custom extends CI_Model
         $return = $query->row_array();
         if (($this->m_merchant->have_money($return['merchant_id']) && $ignore_have_money == 0) || $ignore_have_money != 0)
         {
-            $valid_row = $this->m_custom->check_can_show_advertise($return);
+            $valid_row = $this->m_custom->check_can_show_advertise($return, $show_frozen);
             if ($valid_row == 1)
             {
                 return $return;
@@ -2753,7 +2753,7 @@ class M_custom extends CI_Model
         }
     }
 
-    public function check_can_show_advertise($row)
+    public function check_can_show_advertise($row, $show_frozen = 0)
     {
         $valid_row = 0;
 
@@ -2776,7 +2776,13 @@ class M_custom extends CI_Model
             {
                 $valid_row = 0;
             }
+
+            if ($show_frozen == 1)
+            {
+                $valid_row = 1;
+            }
         }
+
         return $valid_row;
     }
 

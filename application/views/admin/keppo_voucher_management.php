@@ -59,8 +59,9 @@ if (isset($message))
                         $start_date_text = displayDate($row['start_time']);
                         $end_date_text = displayDate($row['end_time']);
                         $expire_date_text = displayDate($row['voucher_expire_date']);
-                        $remove_row = $row['hide_flag'] == 1 ? 'Frozen' : '';
+                        $remove_row = $row['frozen_flag'] == 1 ? 'Frozen' : '';
                         $url_edit = base_url() . "admin/keppo_voucher_change/" . $row['advertise_id'];
+                        $url_special_action = base_url() . "admin/keppo_voucher_management";
                         echo '<tr>';
                         echo "<td>" . $row['title'] . "</td>";
                         echo "<td>" . $sub_category_text . "</td>";
@@ -70,8 +71,21 @@ if (isset($message))
                         echo "<td>" . $end_date_text . "</td>";
                         echo "<td>" . $expire_date_text . "</td>";
                         echo "<td>" . $remove_row . "</td>";
-                        echo "<td>";
+                        echo "<td>";                       
+                        echo form_open($url_special_action); 
+                        echo form_hidden('id', $row['advertise_id']); 
+                        echo form_hidden('title', $row['title']); 
+                        $ror = $row['frozen_flag'] == 1 ? 'recover' : 'frozen';
+                        $ror_text = $row['frozen_flag'] == 1 ? 'Unfrozen' : 'Frozen';
+                        $ror_image = $row['frozen_flag'] == 1 ? base_url() . '/image/btn-unfrozen.png' : base_url() . '/image/btn-frozen.png';
                         echo "<a href='" . $url_edit . "' ><img src='". base_url() . "/image/btn-edit.png' title='Edit' alt='Edit' class='normal-btn-image'></a>";
+                        ?>
+                        <button name="button_action" type="submit" value="<?php echo $ror; ?>" onclick="return confirm('Are you sure want to <?php echo $ror_text; ?> it?')" title='<?php echo $ror_text; ?>' class='normal-btn-submit'>
+                            <img src='<?php echo $ror_image; ?>' title='<?php echo $ror_text; ?>' alt='<?php echo $ror_text; ?>' class='normal-btn-image'></button>  
+                        <button name="button_action" type="submit" value="remove" title='Remove' class='normal-btn-submit'>
+                            <img src='<?php echo base_url() . "/image/btn-remove.png"; ?>' title='Remove' alt='Remove' class='normal-btn-image'></button>    
+                        <?php
+                        echo form_close(); 
                         echo "</td>";
                         echo '</tr>';
                     }

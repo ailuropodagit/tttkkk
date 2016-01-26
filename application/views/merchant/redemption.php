@@ -40,16 +40,6 @@ if(isset($message))
             <div id="user-redemption-table">
                 <div id="table-all">
                     <table border='1px' cellpadding='0px' cellspacing='0px' style="table-layout: fixed;">
-                        <!--<colgroup>-->
-                            <?php
-                            if ($show_used == 0)
-                            {
-                                ?>
-                                <!--<col style='width: 120px;'>-->
-                                <?php
-                            }
-                            ?>
-                        <!--</colgroup>-->
                         <colgroup>
                             <col class="user-redemption-table-column-1">
                         </colgroup>

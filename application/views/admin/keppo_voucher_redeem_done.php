@@ -40,32 +40,10 @@ if(isset($message))
             <div id="user-redemption-table">
                 <div id="table-all">
                     <table border='1px' cellpadding='0px' cellspacing='0px' style="table-layout: fixed;">
-                        <!--<colgroup>-->
-                            <?php
-                            if ($show_used == 0)
-                            {
-                                ?>
-                                <!--<col style='width: 120px;'>-->
-                                <?php
-                            }
-                            ?>
-                        <!--</colgroup>-->
                         <colgroup>
-                            <col class="user-redemption-table-column-1">
+                            <col style='width: 100px;'>
                         </colgroup>
-                        <tr>
-                            <?php
-                            if ($show_used == 0)
-                            {
-                                ?>
-                                <th>
-                                    <div class="table-text-overflow-ellipsis">
-                                        Mark As
-                                    </div>
-                                </th>
-                                <?php
-                            }
-                            ?>                       
+                        <tr>                    
                             <th>
                                 <div class="table-text-overflow-ellipsis">
                                     User ID
@@ -78,12 +56,17 @@ if(isset($message))
                             </th>
                             <th>
                                 <div class="table-text-overflow-ellipsis">
-                                    Date of Birth
+                                    Email
                                 </div>
                             </th>
                             <th>
                                 <div class="table-text-overflow-ellipsis">
-                                    Email
+                                    Phone
+                                </div>
+                            </th>
+                            <th>
+                                <div class="table-text-overflow-ellipsis">
+                                    Redeem Date
                                 </div>
                             </th>
                             <th>
@@ -93,11 +76,30 @@ if(isset($message))
                             </th>
                             <th>
                                 <div class="table-text-overflow-ellipsis">
-                                    Expire Date
-                                </div>    
+                                    Serial Code
+                                </div>
+                            </th>
+                            <th>
+                                <div class="table-text-overflow-ellipsis">
+                                    Top Up Date
+                                </div>
+                            </th>
+                            <th>
+                                <div class="table-text-overflow-ellipsis">
+                                    Top Up Time
+                                </div>
                             </th>
                             <?php
-                                if ($show_used != 0)
+                            if ($show_used == 0)
+                            {
+                                ?>
+                                <th>
+                                    <div class="table-text-overflow-ellipsis">
+                                        Action
+                                    </div>
+                                </th>
+                                <?php
+                            }else
                                 { ?>
                             <th>
                                 <div class="table-text-overflow-ellipsis">
@@ -113,31 +115,10 @@ if(isset($message))
                             $user_info = $this->m_custom->getUser($user_id);
                             $user_name = $this->m_custom->display_users($user_id);
                             $action_url = base_url() . "admin/keppo_voucher_redeem_done";
+                            $advertise_detail_url = base_url() . "all/voucher/" . $redeem_row['advertise_id'] . "/" . $redeem_row['redeem_id'];
+                            $url_edit = base_url() . "admin/keppo_voucher_redeem_change/" . $redeem_row['redeem_id'];
                             ?>
                             <tr>
-                                <?php
-                                if ($show_used == 0)
-                                {
-                                    $confirm_message = "Confirm that you want to change " . $user_name . " voucher " . $redeem_row['voucher'] . " status?";
-                                    ?>
-                                    <td>
-                                        <div class="table-text-overflow-ellipsis">
-                                            <form action="<?php echo $action_url; ?>" onSubmit="return confirm('<?php echo $confirm_message ?>')" method="post" accept-charset="utf-8">
-                                                <input type='hidden' name='redeem_id' id='redeem_id' value='<?php echo $redeem_row['redeem_id'] ?>'/>
-                                                <input type='hidden' name='user_id' id='user_id' value='<?php echo $user_id ?>'/>
-                                                <input type='hidden' name='advertise_id' id='advertise_id' value='<?php echo $redeem_row['advertise_id'] ?>'/>
-                                                <input type='hidden' name='current_url' id='current_url' value='<?php echo get_current_url() ?>'/>
-                                                <input type='hidden' name='voucher' id='voucher' value='<?php echo $redeem_row['voucher'] ?>'/>
-                                                <button name='button_action' type='submit' value='submit_used' id='button-a-href' title='Used' class='normal-btn-submit'>
-                                                    <img src='<?php echo base_url() . "/image/btn-used.png"; ?>' title='Used' alt='Used' class='normal-btn-image'></button>
-                                                <button name='button_action' type='submit' value='submit_expired' id='button-a-href' title='Expired' class='normal-btn-submit'>
-                                                    <img src='<?php echo base_url() . "/image/btn-expired.png"; ?>' title='Expired' alt='Expired' class='normal-btn-image'></button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                    <?php
-                                } 
-                                ?>
                                 <td>
                                     <div class="table-text-overflow-ellipsis">
                                         <?php echo $user_id ?>
@@ -152,27 +133,62 @@ if(isset($message))
                                 </td>
                                 <td>
                                     <div class="table-text-overflow-ellipsis">
-                                        <?php echo displayDate($user_info['us_birthday']) ?>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="table-text-overflow-ellipsis">
                                         <?php echo $user_info['email'] ?>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="table-text-overflow-ellipsis">
-                                        <?php echo $redeem_row['voucher'] ?>
+                                        <?php echo $redeem_row['top_up_phone'] ?>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="table-text-overflow-ellipsis">
-                                        <?php echo displayDate($redeem_row['expired_date']) ?>
-                                    </div>    
+                                        <?php echo displayDate($redeem_row['redeem_time']) ?>
+                                    </div>
                                 </td>
+                                <td>
+                                    <div class="table-text-overflow-ellipsis">
+                                        <a href='<?php echo $advertise_detail_url; ?>' target='_blank'><?php echo $redeem_row['voucher'] ?></a>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="table-text-overflow-ellipsis">
+                                        <?php echo $redeem_row['top_up_serial_code'] ?>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="table-text-overflow-ellipsis">
+                                        <?php echo displayDate($redeem_row['top_up_date']) ?>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="table-text-overflow-ellipsis">
+                                        <?php echo $redeem_row['top_up_time'] ?>
+                                    </div>
+                                </td>   
                                 <?php
-                                if ($show_used != 0)
-                                { ?>
+                                if ($show_used == 0)
+                                {
+                                    $confirm_message = "Confirm that you want to change " . $user_name . " voucher " . $redeem_row['voucher'] . " status?";
+                                    ?>
+                                    <td>
+                                        <div class="table-text-overflow-ellipsis">
+                                            <form action="<?php echo $action_url; ?>" onSubmit="return confirm('<?php echo $confirm_message ?>')" method="post" accept-charset="utf-8">
+                                                <input type='hidden' name='redeem_id' id='redeem_id' value='<?php echo $redeem_row['redeem_id'] ?>'/>
+                                                <input type='hidden' name='user_id' id='user_id' value='<?php echo $user_id ?>'/>
+                                                <input type='hidden' name='advertise_id' id='advertise_id' value='<?php echo $redeem_row['advertise_id'] ?>'/>
+                                                <input type='hidden' name='current_url' id='current_url' value='<?php echo get_current_url() ?>'/>
+                                                <input type='hidden' name='voucher' id='voucher' value='<?php echo $redeem_row['voucher'] ?>'/>
+                                                <button name='button_action' type='submit' value='submit_used' id='button-a-href' title='Mark As Used' class='normal-btn-submit'>
+                                                    <img src='<?php echo base_url() . "/image/btn-used.png"; ?>' title='Mark As Used' alt='Mark As Used' class='normal-btn-image'></button>
+                                                <button name='button_action' type='submit' value='submit_expired' id='button-a-href' title='Mark As Expired' class='normal-btn-submit'>
+                                                    <img src='<?php echo base_url() . "/image/btn-expired.png"; ?>' title='Mark As Expired' alt='Mark As Expired' class='normal-btn-image'></button>
+                                                <a href='<?php echo $url_edit; ?>' ><img src='<?php echo base_url(); ?>/image/btn-edit.png' title='Edit' alt='Edit' class='normal-btn-image'></a>
+                                            </form>
+                                        </div>
+                                    </td>
+                                    <?php
+                                } else{ ?>
                                 <td>
                                     <div class="table-text-overflow-ellipsis">
                                         <?php 
