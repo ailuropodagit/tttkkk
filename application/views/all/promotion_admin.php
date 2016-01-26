@@ -163,7 +163,7 @@ if (check_correct_login_type($this->config->item('group_id_user')))
                     $confirm_message = "Confirm that you want to redeem this voucher? ";
                     if ($phone_required == 1)
                     {
-                        $confirm_message = "Confirm that this is the correct phone number to top up? ";
+                        $confirm_message = "Confirm that this is the correct phone number to send the top up serial code? ";
                     }
                     ?>
                     <form action="<?php echo $action_url; ?>" onSubmit="return confirm('<?php echo $confirm_message ?>')" method="post" accept-charset="utf-8">
@@ -174,10 +174,10 @@ if (check_correct_login_type($this->config->item('group_id_user')))
                             ?>
                             <div class="bootstrap-form">
                                 <div class="bootstrap-form-label">
-                                    <div style="color:red; font-weight:bold">Please Make Sure You Key In The Correct Phone Number To Prevent Wrong Top Up!</div>
+                                    <div style="color:red; font-weight:bold">Please Make Sure You Key In The Correct Phone Number! Keppo Admin Will Send You A Serial Code For Top Up.</div>
                                 </div>
                                 <div class="bootstrap-form-input">
-                                    <input type="text" placeholder="Top Up Phone Number (Example: 012-345 6789)" id="phone" name="phone"><br/>
+                                    <input type="text" placeholder="Contact Phone Number (Example: 012 345 6789)" id="phone" name="phone" class="phone_blur" ><br/>
                                 </div>
                             </div>
                             <?php
