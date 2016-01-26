@@ -236,7 +236,8 @@ class M_user extends CI_Model
         $result = array();
         foreach ($red_result as $row)
         {
-            $advertise = $this->m_custom->getOneAdvertise($row['advertise_id']);
+            $advertise = $this->m_custom->getOneAdvertise($row['advertise_id'], 0, 0, 0, 1);
+
             if ($advertise != FALSE)
             {
                 $candie = $this->m_user->get_candie_history_from_redemption($row['redeem_id']);

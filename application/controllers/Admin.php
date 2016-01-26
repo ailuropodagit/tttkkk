@@ -3137,12 +3137,37 @@ class Admin extends CI_Controller
             redirect('/', 'refresh');
         }
 
+        $message_info = '';
+        $login_id = $this->ion_auth->user()->row()->id;
+        $do_by_type = $this->main_group_id;
+        $main_table = 'advertise';
+        
         $search_category = 0;
+        
         if (isset($_POST) && !empty($_POST))
         {
+            $id = $this->input->post('id');
+            $display_name = $this->input->post('title');
             if ($this->input->post('button_action') == "filter_result")
             {
                 $search_category = $this->input->post('sub_category_id');
+            }
+            if ($this->input->post('button_action') == "frozen")
+            {
+                $message_info = add_message_info($message_info, $display_name . ' success frozen.');
+                $this->m_custom->update_frozen_flag(1, $main_table, $id);
+                $this->m_custom->update_row_log('advertise', $id, $login_id, $do_by_type);
+            }
+            if ($this->input->post('button_action') == "recover")
+            {
+                $message_info = add_message_info($message_info, $display_name . ' success unfrozen.');
+                $this->m_custom->update_frozen_flag(0, $main_table, $id);
+            }
+            if ($this->input->post('button_action') == "remove")
+            {
+                $message_info = add_message_info($message_info, $display_name . ' success remove.');
+                $this->m_custom->update_hide_flag(1, $main_table, $id);
+                $this->m_custom->remove_row_log('advertise', $id, $login_id, $do_by_type);
             }
         }
 
@@ -3153,7 +3178,7 @@ class Admin extends CI_Controller
         );
         $this->data['sub_category_selected'] = $search_category;
 
-        $advertise_list = $this->m_custom->getAdvertise('adm', $search_category, NULL, 1, NULL, NULL, 0, 1, 1);
+        $advertise_list = $this->m_custom->getAdvertise('adm', $search_category, NULL, 1, NULL, NULL, 0, 1, 0);
         $this->data['the_result'] = $advertise_list;
 
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
@@ -4575,6 +4600,101 @@ class Admin extends CI_Controller
             }
         }
         redirect($current_url, 'refresh');
+    }
+    
+    function keppo_voucher_redeem_change($edit_id)
+    {
+        if (!$this->m_admin->check_is_any_admin(69))
+        {
+            redirect('/', 'refresh');
+        }
+
+        $message_info = '';
+        $login_id = $this->login_id;
+        $login_type = $this->login_type;
+        $main_table = 'user_redemption';
+        $main_table_id_column = 'redeem_id';
+        $result = $this->m_custom->get_one_table_record($main_table, $main_table_id_column, $edit_id, 1);
+
+        if (empty($result))
+        {
+            redirect('/', 'refresh');
+        }
+
+        if (isset($_POST) && !empty($_POST))
+        {
+            $can_redirect_to = 0;
+            $id = $this->input->post('id');       
+            $top_up_serial_code = $this->input->post('top_up_serial_code');
+            $top_up_date = validateDate($this->input->post('top_up_date'));    
+
+            $this->form_validation->set_rules('top_up_serial_code', 'Serial Code');
+            $this->form_validation->set_rules('top_up_date', 'Top Up Date');
+            
+            if ($this->input->post('button_action') == "save")
+            {
+                if ($this->form_validation->run() === TRUE)
+                {
+                    $data = array(
+                        'top_up_serial_code' => $top_up_serial_code,
+                        'top_up_date' => $top_up_date,
+                    );
+
+                    if ($this->m_custom->simple_update($main_table, $data, $main_table_id_column, $id))
+                    {
+                        $message_info = add_message_info($message_info, 'Record success update.');
+                        $can_redirect_to = 2;
+                    }
+                    else
+                    {
+                        $message_info = add_message_info($message_info, $this->ion_auth->errors());
+                        $can_redirect_to = 1;
+                    }
+                }
+            }
+            if ($this->input->post('button_action') == "back")
+            {
+                $can_redirect_to = 2;
+            }
+
+            direct_go:
+            if ($message_info != NULL)
+            {
+                $this->session->set_flashdata('message', $message_info);
+            }
+            if ($can_redirect_to == 1)
+            {
+                redirect(uri_string(), 'refresh');
+            }
+            elseif ($can_redirect_to == 2)
+            {
+                redirect('admin/keppo_voucher_redemption_page', 'refresh');
+            }
+        }
+
+        // set the flash data error message if there is one
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+
+        $this->data['result'] = $result;
+        $this->data['title'] = "User Redemption Edit";
+        $this->data['can_edit'] = 1;
+
+        $this->data['top_up_serial_code'] = array(
+            'name' => 'top_up_serial_code',
+            'id' => 'top_up_serial_code',
+            'type' => 'text',
+            'value' => $result['top_up_serial_code'],
+        );     
+
+        $this->data['top_up_date'] = array(
+            'name' => 'top_up_date',
+            'id' => 'top_up_date',
+            'readonly' => 'true',
+            'value' => empty($result) ? '' : displayDate($result['top_up_date']),
+        );
+        
+        $this->data['page_path_name'] = 'admin/keppo_voucher_redeem_change';
+        $this->load->view('template/index', $this->data);
     }
     
     function manage_web_setting()

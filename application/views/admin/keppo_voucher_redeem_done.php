@@ -158,7 +158,7 @@ if(isset($message))
                                 </td>
                                 <td>
                                     <div class="table-text-overflow-ellipsis">
-                                        <?php echo $redeem_row['top_up_date'] ?>
+                                        <?php echo displayDate($redeem_row['top_up_date']) ?>
                                     </div>
                                 </td>
                                 <td>
