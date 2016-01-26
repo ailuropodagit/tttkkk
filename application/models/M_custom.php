@@ -2829,7 +2829,6 @@ class M_custom extends CI_Model
                 $this->db->where("(`title` LIKE $search_word OR `description` LIKE $search_word)");
             }
         }
-
         $this->db->where('end_time >=', get_part_of_date('all'));
         $this->db->where('start_time is not null AND end_time is not null');
         $this->db->order_by("advertise_id", "desc");
@@ -2839,7 +2838,6 @@ class M_custom extends CI_Model
         foreach ($result as $row)
         {
             $merchant_info = $this->m_custom->getMerchantInfo($row['merchant_id']);
-
             $valid_row = 0;
             if ($state_id != 0)
             {
@@ -2852,7 +2850,6 @@ class M_custom extends CI_Model
             {
                 $valid_row = 0;
             }
-            
             $valid_row2 = $this->m_custom->check_can_show_advertise($row);
             
             if ($valid_row == 1 && $valid_row2 == 1)

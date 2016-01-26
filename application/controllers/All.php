@@ -1260,11 +1260,8 @@ class All extends CI_Controller
                 $this->data['title'] = "User's Pictures";
                 $this->data['bottom_path_name'] = 'all/album_user_merchant';
             }
-            if ($this->ion_auth->logged_in())
-            {
-                $this->data['message'] = $this->session->flashdata('message');
-                $this->load->view('template/index_background_blank', $this->data);
-            }
+            $this->data['message'] = $this->session->flashdata('message');
+            $this->load->view('template/index_background_blank', $this->data);
         }
         else
         {
@@ -1469,20 +1466,15 @@ class All extends CI_Controller
                 }
                 $this->data['home_search_merchant'] = $this->m_custom->home_search_merchant($search_value, $state_id);
                 $this->data['home_search_hotdeal'] = $this->m_custom->home_search_hotdeal($search_value, $state_id);
-                $this->data['home_search_promotion'] = $this->m_custom->home_search_promotion($search_value, $state_id);
-
+                $this->data['home_search_promotion'] = $this->m_custom->home_search_promotion($search_value, $state_id);                
                 $this->data['state_name'] = "";
                 if ($state_id != 0)
                 {
                     $this->data['state_name'] = " : " . $this->m_custom->display_static_option($state_id);
                 }
-
                 $this->data['page_path_name'] = 'all/search_result';
-
                 $this->load->view('template/index_background_blank', $this->data);
             }
         }
-        //redirect('/', 'refresh');
     }
-
 }

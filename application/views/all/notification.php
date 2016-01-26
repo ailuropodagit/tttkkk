@@ -57,7 +57,6 @@ $image_path_user_profile = $this->config->item('album_user_profile');
                                 <?php echo $row['noti_user_url'] ?>
                             </div>
                         </td>
-
                         <td>
                             <div id='notification-table-message'>
                                 <?php 
@@ -75,23 +74,23 @@ $image_path_user_profile = $this->config->item('album_user_profile');
                             </div>
                         </td>
                         <td valign="top">
-                                <div id="home-row2-column2-user-picture-notification-item-image">
-                                    <?php 
-                                    if (empty($row['noti_url'])) 
-                                    { 
-                                        echo img($notification_item_image);
-                                    } 
-                                    else
-                                    {
-                                        ?>
-                                        <a href="<?php echo $noti_url ?>" target="_blank">
-                                            <?php echo img($notification_item_image) ?>
-                                        </a>
-                                        <?php
-                                    }
+                            <div id="home-row2-column2-user-picture-notification-item-image">
+                                <?php 
+                                if (empty($row['noti_url'])) 
+                                { 
+                                    echo img($notification_item_image);
+                                } 
+                                else
+                                {
                                     ?>
-                                </div>
-                            </td>
+                                    <a href="<?php echo $noti_url ?>" target="_blank">
+                                        <?php echo img($notification_item_image) ?>
+                                    </a>
+                                    <?php
+                                }
+                                ?>
+                            </div>
+                        </td>
                         <td>
                             <div id='notification-table-delete'>
                                 <?php echo form_open("all/notification_process") ?>

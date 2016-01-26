@@ -1,35 +1,44 @@
 <?php
 //CONFIG DATA
-$page_name = $this->router->fetch_method();
+$fetch_method = $this->router->fetch_method();
 
 //USER ID
 $user_id = $this->uri->segment(3);
 ?>
 
-<div id="album-user-combine"></div>
+<?php
+//COMBINE WITH DASHBOARD
+if ($fetch_method == 'user_dashboard')
+{
+    ?><div id="album-user-combine"></div><?php
+}
+?>
 
 <div id="album-user">
-    <div id="album-user-content">
-        <div id='album-user-title'><?php echo $title ?> (All)</div>
+    <div id="album-user-header">
+        <div id='album-user-header-title'><?php echo $title ?> (All)</div>
         <?php
         if (check_correct_login_type($this->config->item('group_id_user')))
         {
             ?>
-            <div id='album-user-title-upload'>
-                <a href='<?php echo base_url() ?>user/main_album_change'><i class="fa fa-plus-square album-user-title-upload-icon"></i>Create Album</a>
+            <div id='album-user-header-title-upload'>
+                <a href='<?php echo base_url() ?>user/main_album_change'><i class="fa fa-plus-square album-user-header-title-upload-icon"></i>Create Album</a>
             </div>
             <?php
         }
         ?>
         <div id='float-fix'></div>
-        <div id='album-user-title-bottom-line'></div>
+        <div id='album-user-header-title-bottom-line'></div>
+    </div>
+    
+    <?php
+    //ALBUM USER NAVIGATION
+    $this->load->view('all/album_user_sub_menu');
+    ?>
+    
+    <div id="album-user-content">
         <?php
-        $this->load->view('all/album_user_sub_menu');
-        if (empty($album_list))
-        {
-            ?><div id='empty-message'>No Picture</div><?php
-        }
-        else
+        if (!empty($album_list))
         {
             foreach ($album_list as $row)
             {
@@ -47,23 +56,20 @@ $user_id = $this->uri->segment(3);
                 }
                 $url_edit = base_url() . "user/main_album_change/" . $row['album_id'];
                 ?>
-                <div id='album-user-box'>                    
-                    <a href='<?php echo $picture_detail_url ?>'>
-                        <div id='album-user-photo'>
-                            <div id='album-user-photo-box'>
-                                <img src='<?php echo $url_image ?>'>
-                            </div>
-                        </div>
-                    </a>
+                <div id='album-user-box'>    
                     <div id='album-user-main-title'>
                         <a href='<?php echo $picture_detail_url ?>'><?php echo $row['album_title'] ?></a> 
                     </div>
-                    <div id='album-user-sub-title'></div>
+                    <a href='<?php echo $picture_detail_url ?>'>
+                        <div id='album-user-box-photo-box'>
+                            <img src='<?php echo $url_image ?>'>
+                        </div>
+                    </a>
                     <div id="album-user-info">
-                        <div style="float:left">
+                        <div id="album-user-info-count">
                             <?php echo $count_image . " " . $count_image_text; ?>
                         </div>
-                        <div style="float:right">
+                        <div id="album-user-info-edit">
                             <?php
                             if (check_is_login())
                             {
@@ -78,15 +84,14 @@ $user_id = $this->uri->segment(3);
                             }
                             ?>                            
                         </div>
-                        <div id="float-fix"></div>
                     </div>
                 </div>
                 <?php
             }
-            ?>
-            <div id='float-fix'></div>
-            <div id='album-user-bottom-empty-fix'>&nbsp;</div>
-            <?php
+        }
+        else
+        {
+            ?><div id='empty-message'>No Picture</div><?php
         }
         ?>
     </div>

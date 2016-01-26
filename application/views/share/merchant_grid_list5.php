@@ -1,7 +1,6 @@
 <!--RATING-->
 <script type="text/javascript" src="<?php echo base_url() ?>js/star-rating/jquery.rating.js"></script>
 <?php echo link_tag('js/star-rating/jquery.rating.css') ?>
-
 <!--JGROWL-->
 <script type="text/javascript" src="<?php echo base_url() ?>js/jgrowl/jquery.jgrowl.js"></script>
 <?php echo link_tag('js/jgrowl/jquery.jgrowl.css') ?>
@@ -28,41 +27,41 @@ if (isset($message))
                 </div>
             </div>
         </div>
+    </div>
+    <?php 
+    if ($this->router->fetch_method() == 'review_merchant')
+    {
+        ?>
+        <div id='share-merchant-grid-list5-header-navigation'>
+            <div id='share-merchant-grid-list5-header-navigation-each'>
+                <a href="<?php echo $user_review_like; ?>" >Like</a> 
+            </div>
+            <div id='share-merchant-grid-list5-header-navigation-separater'>|</div> 
+            <div id='share-merchant-grid-list5-header-navigation-each'>
+                <a href="<?php echo $user_review_comment; ?>" >Comment</a>
+            </div>
+            <div id='share-merchant-grid-list5-header-navigation-separater'>|</div> 
+            <div id='share-merchant-grid-list5-header-navigation-each'>
+                <a href="<?php echo $user_review_rating; ?>" >Rating</a>
+            </div>
+            <div id='float-fix'></div>
+        </div>
         <?php 
-        if ($this->router->fetch_method() == 'review_merchant')
+        if( !empty($category_list))
         {
             ?>
-            <div id='share-merchant-grid-list5-header-navigation'>
-                <div id='share-merchant-grid-list5-header-navigation-each'>
-                    <a href="<?php echo $user_review_like; ?>" >Like</a> 
-                </div>
-                <div id='share-merchant-grid-list5-header-navigation-separater'>|</div> 
-                <div id='share-merchant-grid-list5-header-navigation-each'>
-                    <a href="<?php echo $user_review_comment; ?>" >Comment</a>
-                </div>
-                <div id='share-merchant-grid-list5-header-navigation-separater'>|</div> 
-                <div id='share-merchant-grid-list5-header-navigation-each'>
-                    <a href="<?php echo $user_review_rating; ?>" >Rating</a>
-                </div>
-                <div id='float-fix'></div>
-            </div>
-            <?php 
-            if( !empty($category_list))
-            {
-                ?>
-                <div id='share-merchant-grid-list5-category-list'>
-                    <?php
-                    foreach ($category_list as $cat_row)
-                    {
-                        echo $cat_row;
-                    }
-                    ?>
-                </div>
+            <div id='share-merchant-grid-list5-category-list'>
                 <?php
-            }
+                foreach ($category_list as $cat_row)
+                {
+                    echo $cat_row;
+                }
+                ?>
+            </div>
+            <?php
         }
-        ?>
-    </div>
+    }
+    ?>
     <div id="share-merchant-grid-list5-container">
         <?php            
         if ($review_list != null)
@@ -124,13 +123,12 @@ if (isset($message))
         {
             ?>
             <div id='share-merchant-grid-list5-empty'>
-
                 <?php
                 if ($fetch_method == 'review_merchant')
                 {
                     echo 'No Review';
                 }
-                else if ($fetch_method == 'merchant_category')
+                else if ($fetch_method == 'merchant_category' || $fetch_method == 'home_search')
                 {
                     echo 'No Merchant';
                 }

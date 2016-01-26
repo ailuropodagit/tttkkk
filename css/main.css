@@ -1159,6 +1159,7 @@ html, body {
     background-position: -285px 0px;
     background-color: #00bcd4;
     position: relative;
+    z-index: -299;
 } 
 
 #home-bottom-background-text {
@@ -1197,7 +1198,7 @@ html, body {
     text-transform: uppercase;
     color: #444444;
     border-bottom: 1px solid #dddddd;
-    padding: 12px 22px 12px 22px;
+    padding: 11px 22px 11px 22px;
 }
 
 #index-left-category-title-label {
@@ -1825,14 +1826,7 @@ html, body {
     margin: 0px 0px 40px 0px;
 }
 
-#share-hot-deal-grid-list5-header-white {
-    -webkit-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
-    -moz-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
-    box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
-    background: white;
-}
-
-#share-hot-deal-grid-list5-header-darkred {
+#share-hot-deal-grid-list5-header {
     border-left: 5px solid #bf315a;
     background-color: #872642;
     color: white;
@@ -2042,6 +2036,16 @@ html, body {
 #share-hot-deal-grid-list5-pagination a {
     margin: 0px 5px 0px 5px;
     font-size: 15px;
+}
+
+#share-hot-deal-grid-list5-empty {
+    font-size: 14px;
+    padding: 30px 0px 30px 25px;
+    color: gray;
+    background-color: white;
+    -webkit-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
+    -moz-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
+    box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
 }
 
 /*********************************************
@@ -2431,14 +2435,7 @@ html, body {
     margin: 0px 0px 40px 0px;
 }
 
-#share-redemption-grid-list5-header-white {
-    -webkit-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
-    -moz-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
-    box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
-    background: white;
-}
-
-#share-redemption-grid-list5-header-orange {
+#share-redemption-grid-list5-header {
     border-left: 5px solid #f6aa26;
     background-color: #f6c026;
     color: white;
@@ -2579,6 +2576,17 @@ html, body {
 #share-redemption-grid-list5-pagination a {
     margin: 0px 5px 0px 5px;
     font-size: 15px;
+}
+
+#share-redemption-grid-list5-empty {
+    font-size: 14px;
+    padding: 30px 0px 30px 25px;
+    color: gray;
+    background-color: white;
+    -webkit-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
+    -moz-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
+    box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
+    margin: 0px 0px 60px 0px;
 }
 
 /*********************************************
@@ -2947,10 +2955,8 @@ html, body {
  *********************************************/
 
 #share-merchant-grid-list4-header {
-    -webkit-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
-    -moz-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
-    box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
-    background: white;
+    padding: 0px 0px 0px 20px;
+    background-color: #404041;
 }
 
 #share-merchant-grid-list4-header-table {
@@ -2977,8 +2983,8 @@ html, body {
     font-weight: 700;
     font-size: 15px;
     letter-spacing: 2px;
-    color: black;
-    margin: 0px 0px 0px 15px;
+    color: #fbfbfb;
+    margin: 4px 0px 4px 0px; 
 }
 
 #share-merchant-grid-list4-header-navigation {
@@ -3092,10 +3098,8 @@ html, body {
  *********************************************/
 
 #share-merchant-grid-list5-header {
-    -webkit-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
-    -moz-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
-    box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
-    background: white;
+    padding: 0px 0px 0px 20px;
+    background-color: #404041;
 }
 
 #share-merchant-grid-list5-header-table {
@@ -3122,8 +3126,8 @@ html, body {
     font-weight: 700;
     font-size: 15px;
     letter-spacing: 2px;
-    color: black;
-    margin: 0px 0px 0px 15px;
+    color: #fbfbfb;
+    margin: 4px 0px 4px 0px; 
 }
 
 #share-merchant-grid-list5-header-navigation {
@@ -3237,7 +3241,7 @@ html, body {
  *********************************************/
 
 #hot-deal {
-    margin: 20px 0px 0px 0px;
+    margin: 20px 0px 60px 0px;
     background: white;
     -webkit-box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
     -moz-box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
@@ -3346,6 +3350,7 @@ html, body {
     width: calc(60% - 100px);
     text-align: left;
     margin: 0px 50px 0px 50px;
+    color: #2E2D2C;
 }
 
 #hot-deal-information-title {
@@ -3355,8 +3360,10 @@ html, body {
 
 #hot-deal-information-title a {
     color: #00bcd4;
-    font-size: 18px;
+    font-size: 22px;
     font-weight: bold;
+    text-transform: uppercase;
+    font-family: 'Helvetica Neue';
 }
 
 #hot-deal-information-show-me-address {
@@ -3495,12 +3502,12 @@ html, body {
     text-align: left;
 }
 
-#hot-deal-tab-box {
+#hot-deal-information-tab-box {
     border: 1px solid #e4e4e4;
-    margin: 40px 45px 20px 50px;
+    margin: 40px 0px 20px 0px;
 }
 
-#hot-deal-tab-box-title {
+#hot-deal-information-tab-box-title {
     font-weight: bold;
     text-transform: uppercase;
     padding: 20px;
@@ -3509,11 +3516,11 @@ html, body {
     border-bottom: 1px solid #e4e4e4;
 }
 
-#hot-deal-tab-box-user-comment {
+#hot-deal-information-tab-box-user-comment {
     padding: 20px;
 }
 
-#hot-deal-tab-box-user-comment textarea {
+#hot-deal-information-tab-box-user-comment textarea {
     border: 1px solid #e4e4e4;
 }
 
@@ -3640,6 +3647,7 @@ html, body {
     width: calc(58% - 50px);
     text-align: left;
     margin: 0px 0px 0px 50px;
+    color: #2E2D2C;
 }
 
 #redemption-information-title {
@@ -3649,8 +3657,10 @@ html, body {
 
 #redemption-information-title a {
     color: #00bcd4;
-    font-size: 18px;
+    font-size: 22px;
     font-weight: bold;
+    text-transform: uppercase;
+    font-family: 'Helvetica Neue';
 }
 
 #redemption-information-show-me-address {
@@ -3812,15 +3822,11 @@ html, body {
     color: #939393;
 }
 
-#redemption-voucher-barcode {
-    margin: 5px 0px 15px 0px;
+#redemption-information-terms-conditions {
+    margin: 30px 0px 0px 0px;
 }
 
-#redemption-terms-conditions {
-    margin: 30px 45px 0px 50px;
-}
-
-#redemption-terms-conditions-title {
+#redemption-information-terms-conditions-title {
     font-weight: bold;
     font-size: 14px;
     color: black;
@@ -3828,23 +3834,23 @@ html, body {
     margin: 0px 0px 8px 0px;
 }
 
-#redemption-terms-conditions ul {
+#redemption-information-terms-conditions ul {
     margin: 0px 0px 0px 20px;
     padding: 0px;
 }
 
-#redemption-terms-conditions li {
+#redemption-information-terms-conditions li {
     margin: 0px 0px 8px 0px;
     color: black;
     font-size: 14px;
 }
 
-#redemption-available-branch {
-    margin: 20px 45px 0px 50px;
+#redemption-information-available-branch {
+    margin: 20px 0px 0px 0px;
     text-align: left;
 }
 
-#redemption-available-branch-title {
+#redemption-information-available-branch-title {
     font-weight: bold;
     font-size: 14px;
     color: black;
@@ -3852,40 +3858,40 @@ html, body {
     margin: 0px 0px 8px 0px;
 }
 
-#redemption-available-branch ul {
+#redemption-information-available-branch ul {
     margin: 0px 0px 0px 20px;
     padding: 0px;
 }
 
-#redemption-available-branch li {
+#redemption-information-available-branch li {
     margin: 0px 0px 10px 0px;
     color: black;
     font-size: 14px;
 }
 
-#redemption-available-branch-name {
+#redemption-information-available-branch-name {
     font-weight: bold;
     font-size: 13px;
 }
 
-#redemption-available-branch-address {
+#redemption-information-available-branch-address {
     margin: 5px 0px 0px 0px;
 }
 
-#redemption-available-branch-tel {
+#redemption-information-available-branch-tel {
     margin: 5px 0px 0px 0px;
 }
 
-#redemption-available-branch-view-map {
+#redemption-information-available-branch-view-map {
     margin: 5px 0px 0px 0px;
 }
 
-#redemption-tab-box {
+#redemption-information-tab-box {
     border: 1px solid #e4e4e4;
-    margin: 40px 45px 20px 50px;
+    margin: 40px 0px 20px 0px;
 }
 
-#redemption-tab-box-title {
+#redemption-information-tab-box-title {
     font-weight: bold;
     text-transform: uppercase;
     padding: 20px;
@@ -3894,12 +3900,16 @@ html, body {
     border-bottom: 1px solid #e4e4e4;
 }
 
-#redemption-tab-box-user-comment {
+#redemption-information-tab-box-user-comment {
     padding: 20px;
 }
 
-#redemption-tab-box-user-comment textarea {
+#redemption-information-tab-box-user-comment textarea {
     border: 1px solid #e4e4e4;
+}
+
+#redemption-voucher-barcode {
+    margin: 5px 0px 15px 0px;
 }
 
 #redemption-suggestion {
@@ -4078,11 +4088,11 @@ html, body {
     margin: 0px 0px 70px 0px;
 }
 
-#album-user-content {
-    padding: 20px;
+#album-user-header {
+    padding: 20px 20px 0px 20px;
 }
 
-#album-user-title {
+#album-user-header-title {
     color: #244964;
     font-size: 25px;
     letter-spacing: 1px;
@@ -4090,25 +4100,29 @@ html, body {
     float: left;
 }
 
-#album-user-title-upload {
+#album-user-header-title-upload {
     float: left;
     margin: 6px 0px 0px 20px;
 }
 
-.album-user-title-upload-icon {
+.album-user-header-title-upload-icon {
     font-size: 14px;
     margin-right: 7px;
 }
 
-#album-user-title-bottom-line {
+#album-user-header-title-bottom-line {
     border-bottom: 1px solid lightgray;
     padding: 0px 0px 6px 0px;
     margin: 0px 0px 10px 0px;
 }
 
+#album-user-content {
+    padding: 10px 20px 20px 20px;
+}
+
 #album-user-navigation {
     font-size: 15px;
-    margin: 0px 0px 20px 0px;
+    margin: 30px 0px 20px 12px;
 }
 
 #album-user-navigation-each {
@@ -4126,22 +4140,39 @@ html, body {
 }
 
 #album-user-box {
-    float: left;
-    margin: 0px 50px 50px 0px;
-    width: 180px;
+    display: inline-block;
+    vertical-align: top;
+    width: calc(20% - 22.5px);
+    margin: 0px 25px 25px 0px;
 }
 
-#album-user-photo-box {
-    width: 180px;
-    height: 180px;
-    border: 1px solid #e1e1e1;
-    background-color: whitesmoke;
+#album-user-box:nth-child(5n) {
+    margin-right: 0px;
+    margin-bottom: 25px;
 }
 
-#album-user-photo-box img {
-    width: 180px;
-    height: 180px;
-    object-fit: cover; 
+#album-user-box:nth-last-child(-n+5) {
+    margin-bottom: 0px;
+}
+
+#album-user-box-photo-box {
+    width: 100%;
+    padding-top: 100%;
+    position: relative;
+}
+
+#album-user-box-photo-box img {
+    max-height: 100%;  
+    max-width: 100%; 
+    width: 100%;
+    height: 100%;
+    position: absolute;  
+    top: 0;  
+    bottom: 0;  
+    left: 0;  
+    right: 0;  
+    margin: auto;
+    object-fit: cover;
     object-position: center;
 }
 
@@ -4150,6 +4181,7 @@ html, body {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    width: 100%;
 }
 
 #album-user-main-title a {
@@ -4177,12 +4209,20 @@ html, body {
 }
 
 #album-user-info {
+    font-size: 15px;
     margin: 10px 0px 0px 0px;
 }
 
-#album-user-upload-by {
-    margin: 10px 0px 0px 0px;
-    font-size: 15px
+#album-user-info-count {
+    float: left;
+}
+
+#album-user-info-edit {
+    float: right;
+}
+
+#album-user-info-edit i {
+    padding: 0px 5px 0px 0px;
 }
 
 #album-user-empty {
@@ -4191,6 +4231,41 @@ html, body {
     color: gray;
 }
 
+/*********************************************
+ ** MAIN ALBUM CHANGE
+ *********************************************/
+
+#main-album-change-sub-menu {
+    margin: 25px 0px 0px -10px;
+}
+
+#main-album-change-content {
+    margin: 20px 0px 0px 0px;
+}
+
+#main-album-change-form {
+    width: 215px;
+}
+
+#main-album-change-form-each-label {
+    margin: 10px 0px 10px 0px;
+}
+
+#main-album-change-form-each-label-icon {
+    margin: 0px 0px 0px 7px;
+    font-size: 16px;
+    color: #4a4a4a;
+}
+
+#main-album-change-form-each-input input[type='text'] {
+    height: 25px;
+    width: 100%;
+    margin: 0px 0px 10px 0px;
+}
+
+#main-album-change-form-submit {
+    margin: 10px 0px 0px 0px;
+}
 
 
 
@@ -4577,7 +4652,6 @@ html, body {
 }
 
 #notification-table table {
-    width: 100%;
     table-layout: fixed;
 }
 
@@ -4587,15 +4661,6 @@ html, body {
     
 #notification-table table td:first-child {
     width: 40px;
-}
-
-#notification-table table td:nth-child(2) {
-    width: 180px;
-    padding: 0px 5px 0px 0px;
-}
-
-#notification-table table td:nth-child(5) {
-    width: 15px;
 }
 
 #notification-table tr:first-child {
@@ -4611,8 +4676,8 @@ html, body {
 }
 
 #notification-table-photo-box {
-    width: 30px;
     height: 30px;
+    width: 30px;
     border: 1px solid lightgray;
     background-color: whitesmoke;
 }
@@ -4628,6 +4693,7 @@ html, body {
     overflow: hidden; 
     white-space: nowrap; 
     text-overflow: ellipsis;
+    padding: 0px 5px 0px 10px;
 }
 
 #notification-table-name a {
@@ -4643,6 +4709,7 @@ html, body {
     overflow: hidden; 
     white-space: nowrap; 
     text-overflow: ellipsis;
+    padding: 0px 10px 0px 5px;
 }
 
 #notification-table-message a {
@@ -4655,6 +4722,7 @@ html, body {
 
 #notification-table-delete button {
     color: black;
+    padding: 0px 10px 0px 5px;
 }
 
 #notification-table-delete button:hover {

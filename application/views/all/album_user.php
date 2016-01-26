@@ -1,7 +1,4 @@
 <?php
-//CONFIG DATA
-$page_name = $this->router->fetch_method();
-
 //USER ID
 $user_id = $this->uri->segment(3);
 $album_id = $this->uri->segment(4);
@@ -9,43 +6,47 @@ $album_title = $this->m_custom->get_one_field_by_key('main_album', 'album_id', $
 $user_name = $this->m_custom->display_users($user_id);
 $user_url = base_url() . 'all/user_dashboard/' . $user_id . '#dashboard-navigation';
 $title = "<a href='$user_url' style='color:#244964' >$user_name Album</a>";
+
+//CHECK LOGIN
 if (check_correct_login_type($this->config->item('group_id_user')))
 {
     $login_id = $this->ion_auth->user()->row()->id;
-    if($login_id == $user_id){
+    if($login_id == $user_id)
+    {
         $title = 'My Album';
     }
 }
 ?>
 
-<div id="album-user-combine"></div>
-
 <div id="album-user">
-    <div id='album-user-title'><?php echo $title ?> - <?php echo $album_title ?></div>
-    <?php
-    if (check_correct_login_type($this->config->item('group_id_user')))
-    {
-        ?>
-        <div id='album-user-title-upload'>
-            <a href='<?php echo base_url() ?>user/upload_image/<?php echo $album_id ?>'><i class="fa fa-upload album-user-title-upload-icon"></i>Upload Picture</a>
+    <div id='album-user-header'>
+        <div id='album-user-header-title'>
+            <?php echo $title ?> - <?php echo $album_title ?>
         </div>
         <?php
-    }
+        if (check_correct_login_type($this->config->item('group_id_user')))
+        {
+            ?>
+            <div id='album-user-header-title-upload'>
+                <a href='<?php echo base_url() ?>user/upload_image/<?php echo $album_id ?>'>
+                    <i class="fa fa-upload album-user-header-title-upload-icon"></i>Upload Picture
+                </a>
+            </div>
+            <?php
+        }
+        ?>
+        <div class='float-fix'></div>
+        <div id='album-user-header-title-bottom-line'></div>
+    </div>
+    
+    <?php
+    //ALBUM USER NAVIGATION
+    $this->load->view('all/album_user_sub_menu');
     ?>
-    <div id='float-fix'></div>
-    <div id='album-user-title-bottom-line'></div>
     
     <div id="album-user-content">
-        <?php
-        $this->load->view('all/album_user_sub_menu');
-        ?>
-        
         <?php        
-        if(empty($album_list))
-        {            
-            ?><div id='empty-message'>No Picture</div><?php
-        }
-        else
+        if(!empty($album_list))
         {
             foreach ($album_list as $row)
             {
@@ -63,13 +64,10 @@ if (check_correct_login_type($this->config->item('group_id_user')))
                         <a href='<?php echo $picture_detail_url ?>'><?php echo $row['title'] ?></a> 
                     </div>
                     <a href='<?php echo $picture_detail_url ?>'>
-                        <div id='album-user-photo'>
-                            <div id='album-user-photo-box'>
-                                <img src='<?php echo base_url($this->album_user . $row['image']) ?>'>
-                            </div>
+                        <div id='album-user-box-photo-box'>
+                            <img src='<?php echo base_url($this->album_user . $row['image']) ?>'>
                         </div>
                     </a>
-                    <div id='album-user-sub-title'></div>
                     <div id="album-user-info">
                         <table border="0" cellpadding="4px" cellspacing="0px">
                             <tr>
@@ -101,10 +99,10 @@ if (check_correct_login_type($this->config->item('group_id_user')))
                 </div>
                 <?php
             }
-            ?>
-            <div id='float-fix'></div>
-            <div id='album-user-bottom-empty-fix'>&nbsp;</div>
-            <?php
+        }
+        else
+        {            
+            ?><div id='empty-message'>No Picture</div><?php
         }
         ?>
     </div>

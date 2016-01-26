@@ -52,7 +52,7 @@ if($this->ion_auth->user()->num_rows())
     $dashboard_user_group_id = $this->albert_model->read_user($where_read_user)->row()->main_group_id;
 }
 ?>
-
+        
 <div id="dashboard">
     <div id="dashboard-content">
         <h1>Dashboard</h1>

@@ -250,15 +250,15 @@
             <div id="hot-deal-information-people-reach">
                 <?php echo "People Reached " . $this->m_custom->activity_view_count($advertise_id) . " users"; ?>
             </div>
-        </div>
-        <div class="float-fix"></div>
-        <!--HOT DEAL TAB BOX-->
-        <div id="hot-deal-tab-box">
-            <div id="hot-deal-tab-box-title">User Comment</div>
-            <div id="hot-deal-tab-box-user-comment">
-                <?php $this->load->view('all/comment_form') ?>
+            <!--TAB BOX-->
+            <div id="hot-deal-information-tab-box">
+                <div id="hot-deal-information-tab-box-title">User Comment</div>
+                <div id="hot-deal-information-tab-box-user-comment">
+                    <?php $this->load->view('all/comment_form') ?>
+                </div>
             </div>
         </div>
+        <div class="float-fix"></div>
     </div>
 </div>
 
