@@ -3234,7 +3234,7 @@ class Admin extends CI_Controller
             $search_month = get_part_of_date('month');
             $search_year = get_part_of_date('year');
             $candie_point = check_is_positive_numeric($this->input->post('candie_point'));
-            $candie_worth = check_is_positive_numeric($this->input->post('candie_worth'));
+            $candie_worth = check_is_positive_decimal($this->input->post('candie_worth'));
             $expire_date = validateDate($this->input->post('expire_date'));
             $candie_extra_term = $this->input->post('candie_extra_term');
             $image_data = NULL;
@@ -3429,7 +3429,7 @@ class Admin extends CI_Controller
                 'name' => 'candie_category',
                 'id' => 'candie_category',
             );
-            $this->data['candie_category_selected'] = empty($result) ? '0' : $result['sub_category_id'];
+            $this->data['candie_category_selected'] = empty($result) ? $this->config->item('category_epay') : $result['sub_category_id'];  //Preselect epay first
         }
         else
         {

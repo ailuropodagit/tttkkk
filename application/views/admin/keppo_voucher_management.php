@@ -24,7 +24,7 @@ if (isset($message))
 <div id="payment-charge">
     <h1>Keppo Voucher Management</h1>
     <div id="payment-charge-content">
-        <div id="payment-charge-go" style="float:left">
+        <div id="payment-charge-go" style="float:left;display:none">
             <?php echo form_open(uri_string()); ?>
                 <span id="payment-charge-go-label"><?php echo "Filter "; ?></span>
                 <span id="payment-charge-go-dropdown"><?php echo form_dropdown($sub_category_id, $sub_category_list, $sub_category_selected); ?></span>
