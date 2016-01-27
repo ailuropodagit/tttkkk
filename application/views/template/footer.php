@@ -87,15 +87,16 @@
                         <div id="footer-navigation-block-title-bottom-line"></div>
                         <br/>
                         <div id="fb-root"></div>
-            <script>
-    var fb_appID = "<?php echo fb_appID(); ?>";            
-    (function(d, s, id) {
-              var js, fjs = d.getElementsByTagName(s)[0];
-              if (d.getElementById(id)) return;
-              js = d.createElement(s); js.id = id;
-              js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.5&appId=1682555468669559";
-              fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));</script>
+                        <script>
+                        var fb_appID = "<?php echo fb_appID(); ?>";            
+                        (function(d, s, id) {
+                          var js, fjs = d.getElementsByTagName(s)[0];
+                          if (d.getElementById(id)) return;
+                          js = d.createElement(s); js.id = id;
+                          js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.5&appId=1682555468669559";
+                          fjs.parentNode.insertBefore(js, fjs);
+                        }(document, 'script', 'facebook-jssdk'));
+                        </script>
 
             <div class="fb-page" data-href="https://www.facebook.com//keppo.my" data-small-header="true" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/keppo.my"><a href="https://www.facebook.com/keppo.my">Keppo.my</a></blockquote></div></div>
                     </div>

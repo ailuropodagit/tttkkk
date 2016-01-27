@@ -368,8 +368,8 @@ $this->album_admin = $this->config->item('album_admin');
     </div>
 </div>
 
-<div id="home-bottom-background">
-    <div id="home-bottom-background-text">
-        JOIN THE KEPPO
+    <div id="home-bottom-background">
+        <div id="home-bottom-background-text">
+            JOIN THE KEPPO
+        </div>
     </div>
-</div>

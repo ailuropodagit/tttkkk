@@ -673,6 +673,7 @@ html, body {
 
 #footer-navigation-block2 {
     position: relative;
+    z-index: 44;
 }
 
 #footer-navigation-block2-up {
@@ -687,7 +688,6 @@ html, body {
     box-shadow: inset 7px 0 9px -7px rgba(0,0,0,0.2);
     box-sizing: border-box;
     padding: 25px 20px 25px 20px;
-    z-index: 99;
 }
 
 #footer-navigation-block2-row1, #footer-navigation-block2-row2 {
@@ -1159,7 +1159,11 @@ html, body {
     background-position: -285px 0px;
     background-color: #00bcd4;
     position: relative;
-    z-index: -299;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    z-index: 299;
 } 
 
 #home-bottom-background-text {
@@ -3533,7 +3537,7 @@ html, body {
  *********************************************/
 
 #redemption {
-    margin: 20px 0px 0px 0px;
+    margin: 20px 0px 60px 0px;
     background: white;
     -webkit-box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
     -moz-box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
@@ -5036,26 +5040,40 @@ html, body {
 /* UPLOAD FOR MERCHANT
 ******************************/
 
-#upload-for-merchant-content {
-    margin: 20px 0px 0px 0px;
+#upload-for-merchant {
+    background-color: white;
+    -webkit-box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
+    -moz-box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
+    box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
+    margin: 0px 0px 70px 0px;
 }
 
-#upload-for-merchant-upload-image-note {
-    font-size: smaller;
-    font-style: italic;
-    margin: 15px 0px 20px 0px;
+#upload-for-merchant-title {
+    padding: 20px 20px 0px 20px;
+}
+
+#upload-for-merchant-multiple-upload {
+    margin: 30px 30px 30px 30px; 
+}
+
+#upload-for-merchant-content {
+    padding: 0px 30px 30px 30px;
 }
 
 #upload-for-merchant-form {
     vertical-align: top;
     display: inline-block;
-    width: 180px; 
-    margin: 0px 50px 50px 0px;
+    width: 190px; 
+    margin: 0px 48px 48px 0px;
+}
+
+#upload-for-merchant-form:nth-child(5) {
+    margin-right: 0px;
 }
 
 #upload-for-merchant-form-photo-box {
-    width: 180px;
-    height: 180px;
+    width: 188px;
+    height: 188px;
     border: 1px solid lightgray;
     background-color: whitesmoke;
     margin: 0px 0px 20px 0px;

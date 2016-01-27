@@ -1929,20 +1929,16 @@ class User extends CI_Controller
         {
             redirect('/', 'refresh');
         }
-
         $message_info = '';
         $user_id = $this->ion_auth->user()->row()->id;
         $login_type = $this->session->userdata('user_group_id');
         $user_data = $this->m_custom->get_one_table_record('users', 'id', $user_id);
-
         if (!IsNullOrEmptyString($slug))
         {
             $merchant_data = $this->m_custom->get_one_table_record('users', 'slug', $slug, 1);
             $merchant_id = $merchant_data['id'];
         }
-
         $this->data['box_number'] = $this->box_number;
-
         if (isset($_POST) && !empty($_POST))
         {
             if ($this->input->post('button_action') == "upload_image")
@@ -2108,7 +2104,7 @@ class User extends CI_Controller
         $this->data['empty_image'] = $this->config->item('empty_image');
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'user/upload_for_merchant';
-        $this->load->view('template/index', $this->data);
+        $this->load->view('template/index_background_blank', $this->data);
     }
 
     public function get_merchant_by_category($i, $selected_category = NULL)
@@ -2515,7 +2511,7 @@ class User extends CI_Controller
         $this->data['empty_image'] = $this->config->item('empty_image');
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'user/upload_image';
-        $this->load->view('template/index', $this->data);
+        $this->load->view('template/index_background_blank', $this->data);
     }
 
     // edit a user, no use
