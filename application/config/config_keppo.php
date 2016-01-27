@@ -50,6 +50,7 @@ $config['keppo_format_date_time_display'] = 'd-m-Y H:i';
 $config['keppo_format_date_db'] = 'Y-m-d';
 $config['keppo_format_date_time_db'] = 'Y-m-d H:i:s';
 $config['keppo_format_year_month_db'] = 'Y-m';
+$config['keppo_format_time_display'] = 'H:i';
 
 $config['merchant_upload_box_per_page'] = 5;
 $config['user_upload_box_per_page'] = 5;
