@@ -68,6 +68,7 @@ $fetch_method = $this->router->fetch_method();
             $price_after = $row['price_after'];
             $end_time = $row['end_time'];
             $post_hour = $row['post_hour'];
+            $candie = $row['voucher_candie'];
             $average_rating = $this->m_custom->activity_rating_average($advertise_id, 'adv');
             if ($advertise_type == 'adm')
             {
@@ -151,16 +152,24 @@ $fetch_method = $this->router->fetch_method();
                         </div>
                         <div class="share-hot-deal-grid-list4-box-information-rating">
                             <?php
-                            for ($i = 1; $i <= 5; $i++)
-                            {
-                                if ($i == round($average_rating))
+                            if ($fetch_method != 'redemption_list'){
+                                for ($i = 1; $i <= 5; $i++)
                                 {
-                                    echo "<input class='star' type='radio' name='a-rating-$advertise_id' disabled='disabled' value='" . $i . "' checked='checked'/>";
+                                    if ($i == round($average_rating))
+                                    {
+                                        echo "<input class='star' type='radio' name='a-rating-$advertise_id' disabled='disabled' value='" . $i . "' checked='checked'/>";
+                                    }
+                                    else
+                                    {
+                                        echo "<input class='star' type='radio' name='a-rating-$advertise_id' disabled='disabled' value='" . $i . "'/>";
+                                    }
                                 }
-                                else
-                                {
-                                    echo "<input class='star' type='radio' name='a-rating-$advertise_id' disabled='disabled' value='" . $i . "'/>";
-                                }
+                            }else{
+                             ?>
+                        <div class="share-redemption-grid-list4-box-information-candie">
+                            <?php echo $candie ?> Candy
+                        </div>
+                        <?php
                             }
                             ?>
                             <div class="float-fix"></div>

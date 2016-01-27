@@ -1410,7 +1410,7 @@ class Merchant extends CI_Controller
             {
                 if ($this->input->post('button_action') == "search")
                 {
-                    $search_word = $this->input->post('search_word');
+                    $search_word = $this->input->post('search_word2');
                 }
             }
             $this->data['search_word'] = $search_word;

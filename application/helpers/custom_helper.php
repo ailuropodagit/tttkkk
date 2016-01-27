@@ -1097,6 +1097,19 @@ if (!function_exists('validateDate'))
     }
 }
 
+if (!function_exists('displayTime'))
+{
+   function displayTime( $time)
+    {
+       if(IsNullOrEmptyString($time)){
+           return '';
+       }
+        $ci = & get_instance();
+        $return_time = date_create($time);
+        return $return_time->format($ci->config->item('keppo_format_time_display'));
+   }
+}
+
 if ( ! function_exists('fb_appID'))
 {
 	/**

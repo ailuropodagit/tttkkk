@@ -1178,7 +1178,7 @@ class Admin extends CI_Controller
                     $can_redirect_to = 2;
                 }
             }
-            
+
             direct_go:
             if ($message_info != NULL)
             {
@@ -1245,7 +1245,7 @@ class Admin extends CI_Controller
         }
 
         $user = $this->m_custom->getUser($user_id, $this->group_id_user);
-       
+
         if (isset($_POST) && !empty($_POST))
         {
             if ($this->input->post('button_action') == "back")
@@ -1253,7 +1253,7 @@ class Admin extends CI_Controller
                 redirect('admin/user_management', 'refresh');
             }
         }
-    
+
         $this->data['image_path'] = $this->album_user_profile;
         $this->data['image'] = $user['profile_image'];
         // display the edit user form
@@ -1265,7 +1265,7 @@ class Admin extends CI_Controller
         $this->data['title'] = "User View";
         $this->data['can_edit'] = 0;
         $this->data['user_id'] = $user_id;
-        
+
         $the_date = explode('-', $user['us_birthday']);
         $this->data['b_year'] = $the_date[0];
         $this->data['b_month'] = $the_date[1];
@@ -1298,9 +1298,9 @@ class Admin extends CI_Controller
 //        );
 //        $this->data['promo_code_url'] = $this->m_custom->generate_promo_code_list_link($promo_code, 32);
         $this->data['description'] = array(
-                'name' => 'description',
-                'id' => 'description',
-                'value' => $this->form_validation->set_value('description', $user['description']),
+            'name' => 'description',
+            'id' => 'description',
+            'value' => $this->form_validation->set_value('description', $user['description']),
         );
         $this->data['email'] = array(
             'name' => 'email',
@@ -1336,7 +1336,7 @@ class Admin extends CI_Controller
             'id' => 'gender_id',
         );
         $this->data['us_gender_id'] = $user['us_gender_id'];
-                
+
         $this->data['race_list'] = $this->ion_auth->get_static_option_list('race');
         $this->data['race_id'] = array(
             'name' => 'race_id',
@@ -1344,7 +1344,7 @@ class Admin extends CI_Controller
             'onchange' => 'showraceother()',
         );
         $this->data['us_race_id'] = $user['us_race_id'];
-        
+
         $this->data['race_other'] = array(
             'name' => 'race_other',
             'id' => 'race_other',
@@ -1362,8 +1362,8 @@ class Admin extends CI_Controller
             'type' => 'text',
             'value' => $this->form_validation->set_value('phone', $user['phone']),
             'class' => 'phone_blur',
-        );     
-        
+        );
+
         $this->data['instagram_url'] = array(
             'name' => 'instagram_url',
             'id' => 'instagram_url',
@@ -1376,54 +1376,54 @@ class Admin extends CI_Controller
             'type' => 'text',
             'value' => $this->form_validation->set_value('facebook_url', $user['us_facebook_url']),
         );
-        
+
         //Blogger Function
         $us_is_blogger = $user['us_is_blogger'];
         $this->data['us_is_blogger'] = $us_is_blogger;
         $this->data['is_blogger'] = array(
             'name' => 'is_blogger',
             'id' => 'is_blogger',
-            'checked' => $us_is_blogger == "1"? TRUE : FALSE,
+            'checked' => $us_is_blogger == "1" ? TRUE : FALSE,
             'onclick' => "checkbox_showhide('is_blogger','profile-blogger-div')",
-            'value' => $this->form_validation->set_value('is_blogger', $us_is_blogger),           
+            'value' => $this->form_validation->set_value('is_blogger', $us_is_blogger),
         );
-        
+
         $this->data['blog_url'] = array(
             'name' => 'blog_url',
             'id' => 'blog_url',
             'type' => 'text',
             'value' => $this->form_validation->set_value('blog_url', $user['us_blog_url']),
         );
-        
+
         $this->data['blogger_list'] = $this->m_custom->get_dynamic_option_array('photography');
         $this->data['blogger_current'] = empty($user) ? array() : $this->m_custom->many_get_childlist('blogger', $user['id']);
-        
+
         //Photographer Function
         $us_is_photographer = $user['us_is_photographer'];
         $this->data['us_is_photographer'] = $us_is_photographer;
         $this->data['is_photographer'] = array(
             'name' => 'is_photographer',
             'id' => 'is_photographer',
-            'checked' => $us_is_photographer == "1"? TRUE : FALSE,
+            'checked' => $us_is_photographer == "1" ? TRUE : FALSE,
             'onclick' => "checkbox_showhide('is_photographer','profile-photographer-div')",
-            'value' => $this->form_validation->set_value('is_photographer', $us_is_photographer),           
+            'value' => $this->form_validation->set_value('is_photographer', $us_is_photographer),
         );
-        
+
         $this->data['photography_url'] = array(
             'name' => 'photography_url',
             'id' => 'photography_url',
             'type' => 'text',
             'value' => $this->form_validation->set_value('photography_url', $user['us_photography_url']),
         );
-        
+
         $this->data['photography_list'] = $this->m_custom->get_dynamic_option_array('photography');
         $this->data['photography_current'] = empty($user) ? array() : $this->m_custom->many_get_childlist('photography', $user['id']);
-        
-        $this->data['temp_folder'] = $this->temp_folder;  
+
+        $this->data['temp_folder'] = $this->temp_folder;
         $this->data['page_path_name'] = 'user/profile';
         $this->load->view('template/index', $this->data);
     }
-    
+
     function user_management()
     {
         if (!$this->m_admin->check_is_any_admin(65))
@@ -1622,7 +1622,7 @@ class Admin extends CI_Controller
             // validate form input
             $this->form_validation->set_rules('amount_change', 'Balance Adjust Amount (RM)', 'required|numeric');
             $this->form_validation->set_rules('trans_remark', 'Adjust Reason', 'required');
-            
+
             if ($this->input->post('button_action') == "save")
             {
                 if ($request_msg_id != NULL)  //if have link to user withdraw request then need check this
@@ -1643,7 +1643,7 @@ class Admin extends CI_Controller
                             );
                             $this->m_custom->simple_update('user_message', $data, 'msg_id', $request_msg_id);  //To update also the message to reply to user
                         }
-                        
+
                         $message_info = add_message_info($message_info, 'Succes adjust ' . $user_name . ' user balance.');
                         $can_redirect_to = 1;
                     }
@@ -1710,7 +1710,7 @@ class Admin extends CI_Controller
             'id' => 'msg_reply',
             'value' => $this->form_validation->set_value('msg_reply'),
         );
-        
+
         $result_list = $this->m_custom->get_many_table_record('transaction_extra', 'trans_conf_id', '23', 1, 'user_id', $user_id);
         $this->data['the_result'] = $result_list;
         $this->data['page_path_name'] = 'admin/user_balance_adjust';
@@ -1728,14 +1728,14 @@ class Admin extends CI_Controller
         $login_id = $this->login_id;
         $main_table = 'user_message';
         $main_table_id_column = 'msg_id';
-        
+
         if (isset($_POST) && !empty($_POST))
         {
             $can_redirect_to = 0;
             $view_status = $this->input->post('view_status_id');
             $id = $this->input->post('id');
             $display_name = $this->m_custom->display_users($this->input->post('msg_from_id'));
-            
+
             if ($this->input->post('button_action') == "success")
             {
                 $data = array(
@@ -1762,7 +1762,7 @@ class Admin extends CI_Controller
                     $can_redirect_to = 1;
                 }
             }
-            
+
             if ($message_info != NULL)
             {
                 $this->session->set_flashdata('message', $message_info);
@@ -1772,22 +1772,22 @@ class Admin extends CI_Controller
                 redirect(uri_string(), 'refresh');
             }
         }
-        
+
         $this->data['view_status_list'] = array('0' => 'Show New Only', '1' => 'Show Success Only', '2' => 'Show Fail Only', '3' => 'Show All');
         $this->data['view_status_id'] = array(
             'name' => 'view_status_id',
             'id' => 'view_status_id',
         );
         $this->data['view_status_selected'] = $view_status;
-        
-        $result_list = $this->m_admin->user_withdraw_request(0, $view_status);     
+
+        $result_list = $this->m_admin->user_withdraw_request(0, $view_status);
         $this->data['the_result'] = $result_list;
-        
+
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
         $this->data['page_path_name'] = 'admin/user_withdraw';
         $this->load->view('template/index', $this->data);
     }
-    
+
     function merchant_management($low_balance_only = 0)
     {
         if (!$this->m_admin->check_is_any_admin(65))
@@ -2033,7 +2033,7 @@ class Admin extends CI_Controller
         {
             redirect('/', 'refresh');
         }
-        
+
         $message_info = '';
         $login_id = $this->login_id;
         $login_type = $this->login_type;
@@ -2162,7 +2162,7 @@ class Admin extends CI_Controller
         $this->data['page_path_name'] = 'admin/merchant_edit';
         $this->load->view('template/index', $this->data);
     }
-    
+
     function check_state_id($dropdown_selection)
     {
         if ($dropdown_selection == 0)
@@ -2266,7 +2266,7 @@ class Admin extends CI_Controller
         $this->data['page_path_name'] = 'admin/merchant_feecharge';
         $this->load->view('template/index', $this->data);
     }
-    
+
     function merchant_feecharge_add($merchant_id, $low_balance_only = 0)
     {
         if (!$this->m_admin->check_is_any_admin(67))
@@ -2389,7 +2389,7 @@ class Admin extends CI_Controller
         $this->data['page_path_name'] = 'admin/merchant_feecharge_change';
         $this->load->view('template/index', $this->data);
     }
-    
+
     function check_merchant_fee_id($dropdown_selection)
     {
         if ($dropdown_selection == 0)
@@ -2399,7 +2399,7 @@ class Admin extends CI_Controller
         }
         return TRUE;
     }
-    
+
     function merchant_topup($merchant_id, $low_balance_only = 0)
     {
         if (!$this->m_admin->check_is_any_admin(67))
@@ -2779,11 +2779,11 @@ class Admin extends CI_Controller
             $tables = $this->config->item('tables', 'ion_auth');
 
             $this->form_validation->set_rules('first_name', $this->lang->line('create_user_validation_fname_label'), 'required');
-            $this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'));     
+            $this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'));
             $this->form_validation->set_rules('us_ic', $this->lang->line('worker_ic_label'), 'required');
             $this->form_validation->set_rules('wo_worker_id', $this->lang->line('worker_id_label'), 'required');
             $this->form_validation->set_rules('wo_department', $this->lang->line('worker_department_label'));
-            $this->form_validation->set_rules('phone', $this->lang->line('create_user_validation_phone_label'), 'required|valid_contact_number');           
+            $this->form_validation->set_rules('phone', $this->lang->line('create_user_validation_phone_label'), 'required|valid_contact_number');
             $this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'trim|required|valid_email|is_unique[' . $tables['users'] . '.email]');
             $this->form_validation->set_rules('wo_join_date', $this->lang->line('worker_joindate_label'), 'trim|required');
             $this->form_validation->set_rules('username', $this->lang->line('create_user_validation_username_label'), 'trim|required|is_unique[' . $tables['users'] . '.username]');
@@ -2968,7 +2968,7 @@ class Admin extends CI_Controller
             $this->form_validation->set_rules('phone', $this->lang->line('create_user_phone_label'), 'required|valid_contact_number');
             $this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'trim|required|valid_email|is_unique_edit[' . $tables['users'] . '.email.' . $edit_id . ']');
             $this->form_validation->set_rules('wo_join_date', $this->lang->line('worker_joindate_label'), 'trim|required');
-            $this->form_validation->set_rules('username', $this->lang->line('create_user_validation_username_label'), 'trim|required|is_unique_edit[' . $tables['users'] . '.username.' . $edit_id . ']');         
+            $this->form_validation->set_rules('username', $this->lang->line('create_user_validation_username_label'), 'trim|required|is_unique_edit[' . $tables['users'] . '.username.' . $edit_id . ']');
             $this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']');
 
             if ($this->input->post('button_action') == "save")
@@ -3141,9 +3141,9 @@ class Admin extends CI_Controller
         $login_id = $this->ion_auth->user()->row()->id;
         $do_by_type = $this->main_group_id;
         $main_table = 'advertise';
-        
+
         $search_category = 0;
-        
+
         if (isset($_POST) && !empty($_POST))
         {
             $id = $this->input->post('id');
@@ -3234,7 +3234,7 @@ class Admin extends CI_Controller
             $search_month = get_part_of_date('month');
             $search_year = get_part_of_date('year');
             $candie_point = check_is_positive_numeric($this->input->post('candie_point'));
-            $candie_worth = check_is_positive_numeric($this->input->post('candie_worth'));
+            $candie_worth = check_is_positive_decimal($this->input->post('candie_worth'));
             $expire_date = validateDate($this->input->post('expire_date'));
             $candie_extra_term = $this->input->post('candie_extra_term');
             $image_data = NULL;
@@ -3429,7 +3429,7 @@ class Admin extends CI_Controller
                 'name' => 'candie_category',
                 'id' => 'candie_category',
             );
-            $this->data['candie_category_selected'] = empty($result) ? '0' : $result['sub_category_id'];
+            $this->data['candie_category_selected'] = empty($result) ? $this->config->item('category_epay') : $result['sub_category_id'];  //Preselect epay first
         }
         else
         {
@@ -3777,7 +3777,7 @@ class Admin extends CI_Controller
         $this->data['page_path_name'] = 'admin/promo_code_management_user';
         $this->load->view('template/index', $this->data);
     }
-    
+
     function promo_code_change_event($edit_id = NULL)
     {
         if (!$this->m_admin->check_is_any_admin(77))
@@ -4534,7 +4534,7 @@ class Admin extends CI_Controller
     //to do, add admin redemption page
     public function keppo_voucher_redemption_page($show_used = 0)
     {
-        if (!$this->m_admin->check_is_any_admin(69))
+        if (!$this->m_admin->check_is_any_admin(71))
         {
             redirect('/', 'refresh');
         }
@@ -4546,7 +4546,7 @@ class Admin extends CI_Controller
         {
             if ($this->input->post('button_action') == "search")
             {
-                $search_word = $this->input->post('search_word');
+                $search_word = $this->input->post('search_word2');
             }
         }
         $this->data['search_word'] = $search_word;
@@ -4601,10 +4601,10 @@ class Admin extends CI_Controller
         }
         redirect($current_url, 'refresh');
     }
-    
+
     function keppo_voucher_redeem_change($edit_id)
     {
-        if (!$this->m_admin->check_is_any_admin(69))
+        if (!$this->m_admin->check_is_any_admin(71))
         {
             redirect('/', 'refresh');
         }
@@ -4615,6 +4615,8 @@ class Admin extends CI_Controller
         $main_table = 'user_redemption';
         $main_table_id_column = 'redeem_id';
         $result = $this->m_custom->get_one_table_record($main_table, $main_table_id_column, $edit_id, 1);
+        $status_id_active = $this->config->item('voucher_active');
+        $status_id_used = $this->config->item('voucher_used');
 
         if (empty($result))
         {
@@ -4624,13 +4626,16 @@ class Admin extends CI_Controller
         if (isset($_POST) && !empty($_POST))
         {
             $can_redirect_to = 0;
-            $id = $this->input->post('id');       
+            $id = $this->input->post('id');
             $top_up_serial_code = $this->input->post('top_up_serial_code');
-            $top_up_date = validateDate($this->input->post('top_up_date'));    
+            $top_up_already = $this->input->post('top_up_already') == NULL ? $status_id_active : $status_id_used;
+            $top_up_date = validateDate($this->input->post('top_up_date'));
+            $top_up_time = $this->input->post('top_up_time') == NULL ? NULL : $this->input->post('top_up_time');
 
             $this->form_validation->set_rules('top_up_serial_code', 'Serial Code');
             $this->form_validation->set_rules('top_up_date', 'Top Up Date');
-            
+            $this->form_validation->set_rules('top_up_time', 'Top Up Time');
+
             if ($this->input->post('button_action') == "save")
             {
                 if ($this->form_validation->run() === TRUE)
@@ -4638,10 +4643,20 @@ class Admin extends CI_Controller
                     $data = array(
                         'top_up_serial_code' => $top_up_serial_code,
                         'top_up_date' => $top_up_date,
+                        'top_up_time' => $top_up_time,
                     );
 
                     if ($this->m_custom->simple_update($main_table, $data, $main_table_id_column, $id))
                     {
+                        if ($top_up_already == $status_id_used)  //If user tick the Top Up Used Already? check box
+                        {
+                            $this->m_admin->promotion_admin_redemption_done($id);
+                        }
+                        else if ($top_up_already == $status_id_active)  //If user un-tick the Top Up Used Already? check box
+                        {
+                            $this->m_admin->promotion_admin_redemption_done($id, 0, 1);
+                        }
+
                         $message_info = add_message_info($message_info, 'Record success update.');
                         $can_redirect_to = 2;
                     }
@@ -4684,7 +4699,16 @@ class Admin extends CI_Controller
             'id' => 'top_up_serial_code',
             'type' => 'text',
             'value' => $result['top_up_serial_code'],
-        );     
+        );
+
+        $top_up_already_value = $result['status_id'];
+        $this->data['top_up_already_value'] = $top_up_already_value;
+        $this->data['top_up_already'] = array(
+            'name' => 'top_up_already',
+            'id' => 'top_up_already',
+            'checked' => $top_up_already_value == $status_id_used ? TRUE : FALSE,
+            'value' => $result['status_id'],
+        );
 
         $this->data['top_up_date'] = array(
             'name' => 'top_up_date',
@@ -4692,11 +4716,17 @@ class Admin extends CI_Controller
             'readonly' => 'true',
             'value' => empty($result) ? '' : displayDate($result['top_up_date']),
         );
-        
+
+        $this->data['top_up_time'] = array(
+            'name' => 'top_up_time',
+            'id' => 'top_up_time',
+            'value' => empty($result) ? '' : $result['top_up_time'],
+        );
+
         $this->data['page_path_name'] = 'admin/keppo_voucher_redeem_change';
         $this->load->view('template/index', $this->data);
     }
-    
+
     function manage_web_setting()
     {
         if (!$this->m_admin->check_is_any_admin(73))
@@ -4722,7 +4752,7 @@ class Admin extends CI_Controller
             $popular_hotdeal_number = check_is_positive_numeric($this->input->post('popular_hotdeal_number'));
             $popular_redemption_number = check_is_positive_numeric($this->input->post('popular_redemption_number'));
             $min_rating_get_for_sort_list = check_is_positive_numeric($this->input->post('min_rating_get_for_sort_list'));
-            
+
             // validate form input
             $this->form_validation->set_rules('keppo_company_name', $this->lang->line('web_setting_keppo_company_name'), 'trim|required');
             $this->form_validation->set_rules('keppo_admin_email', $this->lang->line('web_setting_keppo_admin_email'), 'trim|required|valid_emails');
@@ -4735,7 +4765,7 @@ class Admin extends CI_Controller
             $this->form_validation->set_rules('popular_hotdeal_number', $this->lang->line('web_setting_popular_hotdeal_number'), 'trim|required|integer');
             $this->form_validation->set_rules('popular_redemption_number', $this->lang->line('web_setting_popular_redemption_number'), 'trim|required|integer');
             $this->form_validation->set_rules('min_rating_get_for_sort_list', $this->lang->line('web_setting_min_rating_get_for_sort_list'), 'trim|required|integer');
-            
+
             if ($this->input->post('button_action') == "save")
             {
                 if ($this->form_validation->run() === TRUE)
@@ -4751,7 +4781,7 @@ class Admin extends CI_Controller
                     $this->m_custom->web_setting_set('popular_hotdeal_number', $popular_hotdeal_number);
                     $this->m_custom->web_setting_set('popular_redemption_number', $popular_redemption_number);
                     $this->m_custom->web_setting_set('min_rating_get_for_sort_list', $min_rating_get_for_sort_list);
-                    
+
                     $message_info = add_message_info($message_info, 'Web Setting success update.');
                     $can_redirect_to = 1;
                 }
@@ -4837,7 +4867,7 @@ class Admin extends CI_Controller
             'type' => 'text',
             'value' => $this->form_validation->set_value('min_rating_get_for_sort_list', $this->m_custom->web_setting_get('min_rating_get_for_sort_list')),
         );
-        
+
         $this->data['page_path_name'] = 'admin/manage_web_setting';
         $this->load->view('template/index', $this->data);
     }
@@ -5292,7 +5322,7 @@ class Admin extends CI_Controller
         $this->data['page_path_name'] = 'admin/manage_merchant_fee';
         $this->load->view('template/index', $this->data);
     }
-    
+
     function manage_merchant_fee_change($edit_id = NULL)
     {
         if (!$this->m_admin->check_is_any_admin(76))
@@ -5330,7 +5360,7 @@ class Admin extends CI_Controller
             // validate form input
             $this->form_validation->set_rules('option_desc', 'Merchant Fee Charge Type Name', 'required');
             $this->form_validation->set_rules('option_value', 'Amount (RM)', 'required|numeric');
-            
+
             if ($edit_id == 0)
             {
                 $is_edit = 0;
@@ -5430,18 +5460,18 @@ class Admin extends CI_Controller
             'style' => 'width:500px',
             'value' => empty($result) ? $this->form_validation->set_value('option_desc') : $this->form_validation->set_value('option_desc', $result['option_desc']),
         );
-        
+
         $this->data['option_value'] = array(
-                'name' => 'option_value',
-                'id' => 'option_value',
-                'type' => 'text',
-                'value' => empty($result) ? $this->form_validation->set_value('option_value') : $this->form_validation->set_value('option_value', $result['option_value']),
+            'name' => 'option_value',
+            'id' => 'option_value',
+            'type' => 'text',
+            'value' => empty($result) ? $this->form_validation->set_value('option_value') : $this->form_validation->set_value('option_value', $result['option_value']),
         );
 
         $this->data['page_path_name'] = 'admin/manage_merchant_fee_change';
         $this->load->view('template/index', $this->data);
     }
-    
+
     function manage_trans_config()
     {
         if (!$this->m_admin->check_is_any_admin(76))

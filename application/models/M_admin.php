@@ -622,7 +622,7 @@ class M_admin extends CI_Model
         return $final_result;
     }
 
-    public function promotion_admin_redemption_done($redeem_id, $mark_expired = 0)
+    public function promotion_admin_redemption_done($redeem_id, $mark_expired = 0, $mark_active = 0)
     {
         if ($this->m_admin->check_is_any_admin(71))
         {
@@ -634,7 +634,11 @@ class M_admin extends CI_Model
             {
                 $status_id = $this->config->item('voucher_expired');
             }
-
+            if ($mark_active == 1)
+            {
+                $status_id = $this->config->item('voucher_active');
+            }
+            
             $the_data = array(
                 'status_id' => $status_id,
                 'redeem_at_date' => get_part_of_date('all'),
