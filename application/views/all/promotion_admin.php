@@ -99,9 +99,23 @@ if(isset($message))
             <div id="redemption-information-title">
                 <a href="#"><?php echo $sub_title ?></a>
             </div>
+            <div id="float-fix"></div>
+            <!--REQUIRED CANDIES-->
+            <div id="redemption-information-required-candies">
+                Require <?php echo $voucher_candie ?> Candy
+            </div>
             <div class="float-fix"></div>
+            <br/>
             
             <?php
+            if(!empty($voucher_worth)){
+                ?>
+                <div id="redemption-information-extra-info-general">
+                            <?php echo "Worth RM " . $voucher_worth ?>
+               </div>
+            <?php
+            }
+            
             //EXTRA INFO
             if($show_extra_info)
             {

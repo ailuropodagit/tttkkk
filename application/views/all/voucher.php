@@ -46,11 +46,12 @@
                 <div id="redemption-voucher-barcode">
                     <?php
                     //if ($default_barcode_url != $voucher_barcode && $voucher_not_need == 0)  //if epay not need voucher then add this
-                    $default_barcode_url = base_url('barcode/generate');
+                    echo 'Voucher No. : ' . $voucher . '<br/><br/>';
+                    $default_barcode_url = base_url('barcode/generate2');
                     if ($default_barcode_url != $voucher_barcode)
                     {
                         ?>
-                        <img src="<?php echo $voucher_barcode ?>" alt='no barcode'/>
+                        <img src='<?php echo $voucher_barcode; ?>' alt='No voucher barcode'/>
                         <?php
                     }
                     ?>
@@ -60,7 +61,7 @@
                     <?php if ($advertise_type == "adm")
                     { 
                         ?>
-                        <a href='#'><?php echo $sub_category; ?></a>
+                        <a href='#'><?php echo $title; ?></a>
                         <?php
                     }
                     else
@@ -78,7 +79,9 @@
                 </div>
                 <!--SUB TITLE-->
                 <div id="redemption-information-sub-title">
-                    <?php echo $title ?>
+                    <?php if ($advertise_type == "pro"){
+                        echo $title; 
+                    }?>
                 </div>
                 <?php if ($advertise_type == "pro")
                 { 
