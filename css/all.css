@@ -373,7 +373,19 @@ table {
 }
 
 table.dataTable.display tbody td{
+    -webkit-word-wrap: break-word !important;
+    -ms-word-wrap: break-word !important;
     word-wrap: break-word !important; 
-    word-break: break-word !important; 
+    
+    -webkit-word-break: break-all;
+    -ms-word-break: break-all;
+    word-break: break-all; 
+    
+    -webkit-overflow-wrap: break-word !important;
+    -ms-overflow-wrap: break-word !important;
     overflow-wrap: break-word !important;
+    
+    -webkit-hyphens: auto !important;
+    -moz-hyphens: auto !important;
+    hyphens: auto !important;
 }

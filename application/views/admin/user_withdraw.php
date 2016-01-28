@@ -10,13 +10,6 @@
     });
 </script>
 
-<style>
-    table.dataTable.display tbody td{
-        word-wrap: break-word !important; 
-        word-break: break-word !important; 
-        overflow-wrap: break-word !important;
-    }
-</style>
 <?php
 //MESSAGE
 if (isset($message))
