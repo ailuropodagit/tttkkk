@@ -3547,7 +3547,11 @@ html, body {
 
 #redemption-print {
     float: left;
-    margin: 20px 0px 0px 0px;
+    font-size: 15px;
+}
+
+#redemption-print i {
+    margin: 0px 5px 0px 0px;
 }
 
 #redemption-edit-link {
@@ -3566,6 +3570,10 @@ html, body {
 #redemption-edit-link-label {
     display: inline;
     margin: 0px 0px 0px 5px;
+}
+
+#redemption-print-area-content {
+    margin: 30px 0px 0px 0px;
 }
 
 #redemption-table {

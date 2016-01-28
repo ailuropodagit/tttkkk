@@ -139,8 +139,8 @@ $fetch_method = $this->router->fetch_method();
                             </div>
                         </div>
                     </div>
-                    <div id='redemption-table-row-cell' class='redemption-left-cell'>
-                        <div id='redemption-left'>
+                    <div id='redemption-table-row-cell' class='redemption-right-cell'>
+                        <div id='redemption-right'>
                             <?php
                             if (!empty($next_url))
                             {

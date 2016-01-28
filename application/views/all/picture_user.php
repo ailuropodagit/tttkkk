@@ -96,8 +96,8 @@ $fetch_method = $this->router->fetch_method();
                             ?>
                         </div>
                     </div>
+                    <div id='picture-user-table-row-cell' class='picture-user-right-cell'></div>
                 </div>
-                <div id='picture-user-table-row-cell' class='picture-user-right-cell'></div>
             </div>
         </div>
         <div id="redemption-information">
