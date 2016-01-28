@@ -316,7 +316,6 @@ class All extends CI_Controller
                 array('property' => 'og:image', 'content' => $image_url)
             );
             $this->data['meta_fb'] = meta_fb($meta);
-
             $this->load->view('template/index_background_blank', $this->data);
         }
         else
@@ -452,7 +451,6 @@ class All extends CI_Controller
         if($advertise_id == NULL || $redeem_id == NULL){
             redirect('/', 'refresh');
         }
-        
         if ($this->ion_auth->logged_in())
         {
             $login_id = $this->ion_auth->user()->row()->id;
@@ -462,7 +460,6 @@ class All extends CI_Controller
         {
             redirect('/', 'refresh');
         }
-
         $the_row = $this->m_custom->getOneAdvertise($advertise_id, 0, 0, 0, 1);
         if ($the_row)
         {
@@ -471,11 +468,9 @@ class All extends CI_Controller
             {
                 redirect('/', 'refresh');
             }
-
             $merchant_row = $this->m_merchant->getMerchant($the_row['merchant_id']);
             $this->data['merchant_dashboard_url'] = base_url() . "all/merchant-dashboard/" . $merchant_row['slug'];
             $redeem_row = $this->m_custom->getOneUserRedemption($redeem_id);
-            
 //            if (check_correct_login_type($this->group_id_user)) 
 //            {
 //                $this->data['user_id'] = $login_id;
@@ -484,7 +479,6 @@ class All extends CI_Controller
 //                $this->data['user_email'] = $login_data['email'];
 //                $this->data['current_candie'] = $this->m_user->candie_check_balance($login_id);
 //            }
-
             $this->data['advertise_type'] = $advertise_type;
             $this->data['advertise_id'] = $advertise_id;
             $this->data['merchant_name'] = $merchant_row['company'];
@@ -503,7 +497,6 @@ class All extends CI_Controller
             $this->data['start_date'] = displayDate($the_row['start_time']);
             $this->data['end_date'] = displayDate($the_row['end_time']);
             $this->data['message'] = $this->session->flashdata('message');
-            
             $this->data['voucher'] = $redeem_row['voucher'];
             $this->data['voucher_not_need'] = $the_row['voucher_not_need'];
             $this->data['voucher_worth'] = $the_row['voucher_worth'];           
@@ -512,15 +505,13 @@ class All extends CI_Controller
             $this->data['expire_date'] = displayDate($the_row['voucher_expire_date']);
             $this->data['candie_term'] = $this->m_custom->many_get_childlist_detail('candie_term', $advertise_id, 'dynamic_option');
             $this->data['candie_branch'] = $this->m_custom->many_get_childlist_detail('candie_branch', $advertise_id, 'merchant_branch');
-            
             $this->data['page_path_name'] = 'all/voucher';
-            $template_used = 'template/index';
+            $template_used = 'template/index_background_blank';
             $this->load->library('user_agent');
             if ($this->agent->is_browser('Safari'))
             {
                 $template_used = 'template/body';
             }
-
             $this->load->view($template_used, $this->data);
         }
         else
@@ -609,7 +600,6 @@ class All extends CI_Controller
                     $this->data['next_url'] = base_url() . "all/merchant_user_picture/" . $next_id . "/" . $user_id . "/" . $merchant_id;
                 }
             }
-
             $meta = array(
                 array('property' => 'og:type', 'content' => 'article'),
                 array('property' => 'og:title', 'content' => $the_row['title']),
@@ -617,22 +607,13 @@ class All extends CI_Controller
                 array('property' => 'og:image', 'content' => base_url($this->album_user_merchant . $the_row['image']))
             );
             $this->data['meta_fb'] = meta_fb($meta);
-            
-            if ($this->ion_auth->logged_in())
-            {
-                $this->load->view('template/index', $this->data);
-            }
-            else
-            {
-                $this->load->view('template/layout', $this->data);
-            }
+            $this->data['page_path_name'] = 'all/picture';
+            $this->load->view('template/index_background_blank', $this->data);
         }
         else
         {
             redirect('/', 'refresh');
         }
-
-        $this->data['page_path_name'] = 'all/picture';
     }
 
     function user_picture($picture_id, $user_id = NULL, $album_id = NULL)
@@ -710,22 +691,13 @@ class All extends CI_Controller
                 array('property' => 'og:image', 'content' => base_url($this->album_user . $the_row['image']))
             );
             $this->data['meta_fb'] = meta_fb($meta);
-            
-            if ($this->ion_auth->logged_in())
-            {
-                $this->load->view('template/index', $this->data);
-            }
-            else
-            {
-                $this->load->view('template/layout', $this->data);
-            }
+            $this->data['page_path_name'] = 'all/picture_user';
+            $this->load->view('template/index_background_blank', $this->data);
         }
         else
         {
             redirect('/', 'refresh');
         }
-
-        $this->data['page_path_name'] = 'all/picture_user';
     }
 
     function album_user_merchant($user_id = NULL, $merchant_id = NULL)

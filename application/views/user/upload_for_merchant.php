@@ -1,9 +1,8 @@
 <script type="text/javascript" src="<?php echo base_url() ?>js/chosen/chosen.jquery.min.js"></script>
-<?php echo link_tag('js/chosen/chosen.min.css') ?>
+<?php echo link_tag('js/chosen/chosen.css') ?>
 <script type="text/javascript" src="<?php echo base_url() ?>js/jquery.ajaxfileupload.js"></script>
 <script type="text/javascript" src="<?php echo base_url() ?>js/multiple-upload/jquery.fileuploadmulti.min.js"></script>
 <link rel="stylesheet" href="<?php echo base_url('js/multiple-upload/uploadfilemulti.css') ?>">
-
 <script type="text/javascript">
     function get_Merchant(the_I)
     {
@@ -123,23 +122,21 @@ if(isset($message))
 ?>
 
 <div id="upload-for-merchant">
-    <h1>Upload Picture for Merchant Album</h1>
+    <div id="upload-for-merchant-title">
+        <h1>Upload Picture for Merchant Album</h1>
+    </div>
+    
+    <?php
+    //UPLOAD FOR MERCHANT NAVIGATION
+    $this->load->view('all/album_user_sub_menu');
+    ?>
+
+    <div id="upload-for-merchant-multiple-upload">
+          Upload Multiple (Max 5) : <div id="mulitplefileuploader">Upload</div>
+          <div id="status"></div>
+    </div>     
+        
     <div id="upload-for-merchant-content">
-        
-        <div id="upload-for-merchant-merchant-album" style="float:left">
-            <?php
-            $this->load->view('all/album_user_sub_menu');
-            ?>
-        </div>
-        <div style="float:right">
-              Upload Multiple (Max 5) : <div id="mulitplefileuploader">Upload</div>
-              <div id="status"></div>
-        </div>
-        <div id="float-fix"></div>
-        <div id="upload-for-merchant-upload-image-note" style="display:none">
-            Upload Image Rule : <?php echo $this->config->item('upload_guide_image') ?>
-        </div>
-        
         <?php 
         //OPEN FORM
         echo form_open_multipart(uri_string());

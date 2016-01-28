@@ -34,13 +34,19 @@ if(isset($message))
 
 <div id='hot-deal-advertise'>
     <h1>Edit Picture For Merchant</h1>
-    <div id='hot-deal-advertise-content'>
+    
+    <div style="margin: 0px 0px 30px -20px;">
         <?php
-            $this->load->view('all/album_user_sub_menu');
+        $this->load->view('all/album_user_sub_menu');
         ?>
+    </div>
+    
+    <div id='hot-deal-advertise-content'>
+        
         <div id='hot-deal-advertise-today'>
             Picture Date : <?php echo $picture_date ?>
         </div>
+        <br/>
         
         <div id='hot-deal-advertise-upload-image-note' style="display:none">
             Upload Picture Rule : <?php echo $this->config->item('upload_guide_image') ?>

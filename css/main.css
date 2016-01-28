@@ -673,6 +673,7 @@ html, body {
 
 #footer-navigation-block2 {
     position: relative;
+    
 }
 
 #footer-navigation-block2-up {
@@ -687,7 +688,6 @@ html, body {
     box-shadow: inset 7px 0 9px -7px rgba(0,0,0,0.2);
     box-sizing: border-box;
     padding: 25px 20px 25px 20px;
-    z-index: 99;
 }
 
 #footer-navigation-block2-row1, #footer-navigation-block2-row2 {
@@ -772,15 +772,6 @@ html, body {
  *********************************************/
 
 #index-background-blank {
-    position: relative;
-    z-index: 99;
-}
-
-/*********************************************
- ** HOME
- *********************************************/
-
-#index-home {
     position: relative;
     z-index: 99;
 }
@@ -1158,8 +1149,11 @@ html, body {
     background-size: cover;
     background-position: -285px 0px;
     background-color: #00bcd4;
-    position: relative;
-    z-index: -299;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    width: 100%;
 } 
 
 #home-bottom-background-text {
@@ -1170,6 +1164,7 @@ html, body {
     margin: 0px 0px 0px -110px;
     color: white;
     font-weight: bold;
+    z-index: -9999;
 }
 
 /*********************************************
@@ -3241,7 +3236,7 @@ html, body {
  *********************************************/
 
 #hot-deal {
-    margin: 20px 0px 60px 0px;
+    margin: 20px 0px 0px 0px;
     background: white;
     -webkit-box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
     -moz-box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
@@ -3552,12 +3547,16 @@ html, body {
 
 #redemption-print {
     float: left;
-    margin: 20px 0px 0px 0px;
+    font-size: 15px;
+}
+
+#redemption-print i {
+    margin: 0px 5px 0px 0px;
 }
 
 #redemption-edit-link {
     float: right;
-    padding: 0px 0px 25px 0px;
+    padding: 0px 0px 0px 0px;
 }
 
 #redemption-edit-link a {
@@ -3571,6 +3570,14 @@ html, body {
 #redemption-edit-link-label {
     display: inline;
     margin: 0px 0px 0px 5px;
+}
+
+#redemption-print-area-content {
+    margin: 30px 0px 0px 0px;
+}
+
+#redemption-redeem-button {
+    margin: 0px 0px 30px 0px;
 }
 
 #redemption-table {
@@ -3620,6 +3627,7 @@ html, body {
 #redemption-photo {
     float: left;
     width: 40%;
+    margin: 0px 0px 30px 0px;
 }
 
 #redemption-photo-box {
@@ -3914,6 +3922,10 @@ html, body {
 
 #redemption-suggestion {
     margin: 30px 0px 0px 0px;
+}
+
+#redemption-bottom-spacing {
+    margin: 0px 0px 70px 0px;
 }
 
 /*********************************************
@@ -4810,158 +4822,6 @@ html, body {
     margin: 0px 0px -50px 0px;
 }
 
-/* PICTURE USER
-******************************/
-
-#picture-user-content {
-    margin: 20px 0px 0px 0px;
-}
-
-#picture-user-edit-link {
-    float: right;
-}
-
-#picture-user-table {
-    display: table;
-    width: 100%;
-    margin: 20px 0px 0px 0px;
-}
-
-#picture-user-table-row {
-    display: table-row;
-}
-
-#picture-user-table-row-cell {
-    display: table-cell;
-    text-align: center;
-    vertical-align: middle;
-}
-
-.picture-user-center-cell {
-    width: 100%;
-}
-
-#picture-user-center {
-    margin: 0px auto 0px auto;
-}
-
-#picture-user-right, #picture-user-left {
-    font-size: 45px;
-    width: 50px;
-}
-
-#picture-user-left {
-    text-align: left;
-}
-
-#picture-user-right {
-    text-align: right;
-}
-
-#picture-user-left-gray, #picture-user-right-gray {
-    color: #ebebeb;
-}
-
-#picture-user-right a, #picture-user-left a {
-    color: #b6b6b6;
-}
-
-#picture-user-right a:hover, #picture-user-left a:hover {
-    color: #919191;
-}
-
-#picture-user-title {
-    margin: 0px 0px 10px 0px;
-    color: black;
-    font-size: 28px;
-    font-weight: bold;
-    text-align: left;
-}
-
-#picture-user-title a {
-    color: black;
-    font-size: 25px;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-#picture-user-photo-box {
-    border: 1px solid lightgray;
-    background-color: whitesmoke;
-    margin: 10px auto 10px auto;
-}
-
-#picture-user-photo-box img {
-    max-width: 100%;
-}
-
-#picture-user-sub-title {
-    margin: 20px 0px 0px 0px;
-    font-weight: bold;
-    font-size: 23px;
-    color: black;
-}
-
-#picture-user-rate-upload-by {
-    margin: 20px 0px 0px 0px;
-}
-
-#picture-user-rate {
-    margin: 4px 0px 0px 0px;
-    float: left;
-}
-
-#picture-user-upload-by {
-    float: right;
-    font-size: 17px;
-}
-
-#picture-user-description {
-    margin: 20px 0px 0px 0px;
-    padding: 7px;
-    text-align: left;
-    border-radius: 4px;
-    border: 1px solid #a9a9a9;
-    height: 200px;
-    overflow-y: scroll;
-    line-height: 25px;
-    text-align: justify;
-}
-
-#picture-user-like-comment-share {
-    margin: 20px 0px 0px 0px;
-}
-
-#picture-user-like {
-    float: left;
-    margin: 0px 30px 0px 0px;
-}
-
-#picture-user-comment {
-    float: left;
-}
-
-#picture-user-share {
-    float: right;
-}
-
-#picture-user-share-facebook {
-    color: #4a5e91;
-    font-size: 22px;
-    margin: 0px 3px 0px 3px;
-    cursor: pointer;
-}
-
-#picture-user-people-reach {
-    margin: 30px 0px 0px 0px;
-    text-align: left;
-}
-
-#picture-user-comment-list {
-    margin: 10px 0px 0px 0px;
-    text-align: left;
-}
-
 /* HOT DEAL ADVERTISE
 ******************************/
 
@@ -5036,26 +4896,40 @@ html, body {
 /* UPLOAD FOR MERCHANT
 ******************************/
 
-#upload-for-merchant-content {
-    margin: 20px 0px 0px 0px;
+#upload-for-merchant {
+    background-color: white;
+    -webkit-box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
+    -moz-box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
+    box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
+    margin: 0px 0px 70px 0px;
 }
 
-#upload-for-merchant-upload-image-note {
-    font-size: smaller;
-    font-style: italic;
-    margin: 15px 0px 20px 0px;
+#upload-for-merchant-title {
+    padding: 20px 20px 0px 20px;
+}
+
+#upload-for-merchant-multiple-upload {
+    margin: 30px 30px 30px 30px; 
+}
+
+#upload-for-merchant-content {
+    padding: 0px 30px 30px 30px;
 }
 
 #upload-for-merchant-form {
     vertical-align: top;
     display: inline-block;
-    width: 180px; 
-    margin: 0px 50px 50px 0px;
+    width: 190px; 
+    margin: 0px 48px 48px 0px;
+}
+
+#upload-for-merchant-form:nth-child(5) {
+    margin-right: 0px;
 }
 
 #upload-for-merchant-form-photo-box {
-    width: 180px;
-    height: 180px;
+    width: 188px;
+    height: 188px;
     border: 1px solid lightgray;
     background-color: whitesmoke;
     margin: 0px 0px 20px 0px;
