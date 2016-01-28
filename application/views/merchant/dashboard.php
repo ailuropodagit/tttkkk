@@ -19,7 +19,7 @@
             }
         });
     });
-    document.title = "<?php echo $browser_title; ?>";
+    document.title = "<?php echo $browser_title; ?>";  //Second Level To Set Tab Title
 </script>
 
 <?php

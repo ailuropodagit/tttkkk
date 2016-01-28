@@ -1177,3 +1177,19 @@ if (!function_exists('meta_fb'))
 
 }
 
+if (!function_exists('tab_title'))
+{
+
+    function tab_title($title)
+    {
+        if (empty($title))
+        {
+            echo 'Keppo';
+        }
+        else
+        {
+            echo $title;
+        }
+    }
+
+}

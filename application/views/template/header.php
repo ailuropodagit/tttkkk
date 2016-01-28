@@ -4,7 +4,26 @@
     <head>       
         <meta charset="UTF-8">
         <meta property="fb:app_id" content="1682555468669559" />
-        <title>Keppo</title>
+        <title>
+            <?php           
+            if (isset($this->data['title']))   //First Level To Set Tab Title
+            {
+                tab_title($this->data['title']);
+            }
+            else if (isset($this->data['sub_title']))
+            {
+                tab_title($this->data['sub_title']);
+            }
+            else if (isset($this->data['page_title']))
+            {
+                tab_title($this->data['page_title']);
+            }
+            else
+            {
+                echo 'Keppo';
+            }
+            ?>
+        </title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" href="<?php echo base_url('image/favicon.ico') ?>">
         <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,700,900' rel='stylesheet' type='text/css'>
@@ -92,7 +111,16 @@
                 document.getElementById("general_form_login").action = submit_to_where;
                 document.getElementById("general_form_login").submit();
             }
-
+            
+            //Third Level To Set Tab Title
+            $(document).ready(function () {
+            if(document.title == 'Keppo'){
+            var h1s = document.getElementsByTagName("h1");
+                for (var i = 0; i < h1s.length; i++) {
+                    document.title = h1s[i].innerText;
+                }   
+            }
+            });
         </script>
         <?php
         if (isset($meta_fb))

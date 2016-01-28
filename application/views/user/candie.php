@@ -85,7 +85,7 @@ if (isset($message))
                                 <td><?php echo $the_month_selected_text; ?> Candy Gain</td>
                                 <td></td><td></td><td></td><td></td><td></td>
                                 <td style="text-align:right">
-                                    <a href="#" onclick="toggle_visibility('candie-how-gain');">+ <?php echo $this_month_candie_gain ?></a>
+                                    <a href="#candie-how-gain" onclick="toggle_visibility('candie-how-gain');">+ <?php echo $this_month_candie_gain ?></a>
                                 </td>
                             </tr>
                             <?php
