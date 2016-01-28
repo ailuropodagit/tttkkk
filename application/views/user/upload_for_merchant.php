@@ -1,9 +1,8 @@
 <script type="text/javascript" src="<?php echo base_url() ?>js/chosen/chosen.jquery.min.js"></script>
-<?php echo link_tag('js/chosen/chosen.min.css') ?>
+<?php echo link_tag('js/chosen/chosen.css') ?>
 <script type="text/javascript" src="<?php echo base_url() ?>js/jquery.ajaxfileupload.js"></script>
 <script type="text/javascript" src="<?php echo base_url() ?>js/multiple-upload/jquery.fileuploadmulti.min.js"></script>
 <link rel="stylesheet" href="<?php echo base_url('js/multiple-upload/uploadfilemulti.css') ?>">
-
 <script type="text/javascript">
     function get_Merchant(the_I)
     {

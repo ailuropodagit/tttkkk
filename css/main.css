@@ -673,7 +673,7 @@ html, body {
 
 #footer-navigation-block2 {
     position: relative;
-    z-index: 44;
+    
 }
 
 #footer-navigation-block2-up {
@@ -772,15 +772,6 @@ html, body {
  *********************************************/
 
 #index-background-blank {
-    position: relative;
-    z-index: 99;
-}
-
-/*********************************************
- ** HOME
- *********************************************/
-
-#index-home {
     position: relative;
     z-index: 99;
 }
@@ -1158,12 +1149,11 @@ html, body {
     background-size: cover;
     background-position: -285px 0px;
     background-color: #00bcd4;
-    position: relative;
     top: 0px;
     left: 0px;
     right: 0px;
     bottom: 0px;
-    z-index: 299;
+    width: 100%;
 } 
 
 #home-bottom-background-text {
@@ -1174,6 +1164,7 @@ html, body {
     margin: 0px 0px 0px -110px;
     color: white;
     font-weight: bold;
+    z-index: -9999;
 }
 
 /*********************************************
