@@ -609,7 +609,6 @@ class All extends CI_Controller
                     $this->data['next_url'] = base_url() . "all/merchant_user_picture/" . $next_id . "/" . $user_id . "/" . $merchant_id;
                 }
             }
-
             $meta = array(
                 array('property' => 'og:type', 'content' => 'article'),
                 array('property' => 'og:title', 'content' => $the_row['title']),
@@ -617,22 +616,13 @@ class All extends CI_Controller
                 array('property' => 'og:image', 'content' => base_url($this->album_user_merchant . $the_row['image']))
             );
             $this->data['meta_fb'] = meta_fb($meta);
-            
-            if ($this->ion_auth->logged_in())
-            {
-                $this->load->view('template/index', $this->data);
-            }
-            else
-            {
-                $this->load->view('template/layout', $this->data);
-            }
+            $this->data['page_path_name'] = 'all/picture';
+            $this->load->view('template/index_background_blank', $this->data);
         }
         else
         {
             redirect('/', 'refresh');
         }
-
-        $this->data['page_path_name'] = 'all/picture';
     }
 
     function user_picture($picture_id, $user_id = NULL, $album_id = NULL)
@@ -710,22 +700,13 @@ class All extends CI_Controller
                 array('property' => 'og:image', 'content' => base_url($this->album_user . $the_row['image']))
             );
             $this->data['meta_fb'] = meta_fb($meta);
-            
-            if ($this->ion_auth->logged_in())
-            {
-                $this->load->view('template/index', $this->data);
-            }
-            else
-            {
-                $this->load->view('template/layout', $this->data);
-            }
+            $this->data['page_path_name'] = 'all/picture_user';
+            $this->load->view('template/index_background_blank', $this->data);
         }
         else
         {
             redirect('/', 'refresh');
         }
-
-        $this->data['page_path_name'] = 'all/picture_user';
     }
 
     function album_user_merchant($user_id = NULL, $merchant_id = NULL)

@@ -3236,7 +3236,7 @@ html, body {
  *********************************************/
 
 #hot-deal {
-    margin: 20px 0px 60px 0px;
+    margin: 20px 0px 0px 0px;
     background: white;
     -webkit-box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
     -moz-box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
@@ -3528,7 +3528,7 @@ html, body {
  *********************************************/
 
 #redemption {
-    margin: 20px 0px 60px 0px;
+    margin: 20px 0px 0px 0px;
     background: white;
     -webkit-box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
     -moz-box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
@@ -3909,6 +3909,10 @@ html, body {
 
 #redemption-suggestion {
     margin: 30px 0px 0px 0px;
+}
+
+#redemption-bottom-spacing {
+    margin: 0px 0px 70px 0px;
 }
 
 /*********************************************
@@ -4803,158 +4807,6 @@ html, body {
 
 #follow-bottom-empty-fix {
     margin: 0px 0px -50px 0px;
-}
-
-/* PICTURE USER
-******************************/
-
-#picture-user-content {
-    margin: 20px 0px 0px 0px;
-}
-
-#picture-user-edit-link {
-    float: right;
-}
-
-#picture-user-table {
-    display: table;
-    width: 100%;
-    margin: 20px 0px 0px 0px;
-}
-
-#picture-user-table-row {
-    display: table-row;
-}
-
-#picture-user-table-row-cell {
-    display: table-cell;
-    text-align: center;
-    vertical-align: middle;
-}
-
-.picture-user-center-cell {
-    width: 100%;
-}
-
-#picture-user-center {
-    margin: 0px auto 0px auto;
-}
-
-#picture-user-right, #picture-user-left {
-    font-size: 45px;
-    width: 50px;
-}
-
-#picture-user-left {
-    text-align: left;
-}
-
-#picture-user-right {
-    text-align: right;
-}
-
-#picture-user-left-gray, #picture-user-right-gray {
-    color: #ebebeb;
-}
-
-#picture-user-right a, #picture-user-left a {
-    color: #b6b6b6;
-}
-
-#picture-user-right a:hover, #picture-user-left a:hover {
-    color: #919191;
-}
-
-#picture-user-title {
-    margin: 0px 0px 10px 0px;
-    color: black;
-    font-size: 28px;
-    font-weight: bold;
-    text-align: left;
-}
-
-#picture-user-title a {
-    color: black;
-    font-size: 25px;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-#picture-user-photo-box {
-    border: 1px solid lightgray;
-    background-color: whitesmoke;
-    margin: 10px auto 10px auto;
-}
-
-#picture-user-photo-box img {
-    max-width: 100%;
-}
-
-#picture-user-sub-title {
-    margin: 20px 0px 0px 0px;
-    font-weight: bold;
-    font-size: 23px;
-    color: black;
-}
-
-#picture-user-rate-upload-by {
-    margin: 20px 0px 0px 0px;
-}
-
-#picture-user-rate {
-    margin: 4px 0px 0px 0px;
-    float: left;
-}
-
-#picture-user-upload-by {
-    float: right;
-    font-size: 17px;
-}
-
-#picture-user-description {
-    margin: 20px 0px 0px 0px;
-    padding: 7px;
-    text-align: left;
-    border-radius: 4px;
-    border: 1px solid #a9a9a9;
-    height: 200px;
-    overflow-y: scroll;
-    line-height: 25px;
-    text-align: justify;
-}
-
-#picture-user-like-comment-share {
-    margin: 20px 0px 0px 0px;
-}
-
-#picture-user-like {
-    float: left;
-    margin: 0px 30px 0px 0px;
-}
-
-#picture-user-comment {
-    float: left;
-}
-
-#picture-user-share {
-    float: right;
-}
-
-#picture-user-share-facebook {
-    color: #4a5e91;
-    font-size: 22px;
-    margin: 0px 3px 0px 3px;
-    cursor: pointer;
-}
-
-#picture-user-people-reach {
-    margin: 30px 0px 0px 0px;
-    text-align: left;
-}
-
-#picture-user-comment-list {
-    margin: 10px 0px 0px 0px;
-    text-align: left;
 }
 
 /* HOT DEAL ADVERTISE
