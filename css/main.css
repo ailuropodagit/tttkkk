@@ -3556,7 +3556,7 @@ html, body {
 
 #redemption-edit-link {
     float: right;
-    padding: 0px 0px 25px 0px;
+    padding: 0px 0px 0px 0px;
 }
 
 #redemption-edit-link a {
@@ -3574,6 +3574,10 @@ html, body {
 
 #redemption-print-area-content {
     margin: 30px 0px 0px 0px;
+}
+
+#redemption-redeem-button {
+    margin: 0px 0px 30px 0px;
 }
 
 #redemption-table {
@@ -3623,6 +3627,7 @@ html, body {
 #redemption-photo {
     float: left;
     width: 40%;
+    margin: 0px 0px 30px 0px;
 }
 
 #redemption-photo-box {
