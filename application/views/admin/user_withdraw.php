@@ -10,6 +10,13 @@
     });
 </script>
 
+<style>
+    table.dataTable.display tbody td{
+        word-wrap: break-word !important; 
+        word-break: break-word !important; 
+        overflow-wrap: break-word !important;
+    }
+</style>
 <?php
 //MESSAGE
 if (isset($message))
@@ -85,7 +92,7 @@ if (isset($message))
                             <button name="button_action" type="submit" value="success" title='Success Withdraw' class='normal-btn-submit'>
                                 <img src='<?php echo base_url() . "/image/btn-approve.png"; ?>' title='Success Withdraw' alt='Success Withdraw' class='normal-btn-image'></button>
                             <button name="button_action" type="submit" value="fail" title='Fail Withdraw' class='normal-btn-submit'>
-                                <img src='<?php echo base_url() . "/image/btn-remove.png"; ?>' title='Fail Withdraw' alt='Fail Withdraw' class='normal-btn-image'></button>    
+                                <img src='<?php echo base_url() . "/image/btn-reject.png"; ?>' title='Fail Withdraw' alt='Fail Withdraw' class='normal-btn-image'></button>    
                             <?php
                             echo form_close(); 
                         echo "</td>";

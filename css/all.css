@@ -371,3 +371,9 @@ table {
     -o-transform:scale(1.5); /* Opera */
      transform:scale(1.5);
 }
+
+table.dataTable.display tbody td{
+    word-wrap: break-word !important; 
+    word-break: break-word !important; 
+    overflow-wrap: break-word !important;
+}
