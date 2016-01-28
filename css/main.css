@@ -3385,7 +3385,34 @@ html, body {
 
 #hot-deal-information-countdown-time {
     display: inline;
-    font-size: 17px;
+    font-size: 26px;
+}
+
+#hot-deal-information-countdown-time-day,
+#hot-deal-information-countdown-time-hour,
+#hot-deal-information-countdown-time-month,
+#hot-deal-information-countdown-time-second {
+    float: left;
+    background-image: url('../image/countdown-timer.png');
+    background-size: 80px 50px;
+    background-repeat: no-repeat;
+    color: white;
+    padding: 15px 6px 15px 6px;
+    width: 70px;
+    height: 22px;
+    text-align: center;
+    border-radius: 5px;
+    letter-spacing: 26px;
+    margin: 0px 10px 0px 0px;
+}
+
+#hot-deal-information-countdown-time-day-text,
+#hot-deal-information-countdown-time-hour-text,
+#hot-deal-information-countdown-time-month-text,
+#hot-deal-information-countdown-time-second-text {
+    float: left;
+    margin: -6px 0px 0px 6px;
+    color: whitesmoke;
 }
 
 #hot-deal-information-sub-title {
