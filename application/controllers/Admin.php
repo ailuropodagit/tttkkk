@@ -1788,6 +1788,90 @@ class Admin extends CI_Controller
         $this->load->view('template/index', $this->data);
     }
 
+    function user_withdraw_change($edit_id)
+    {
+        if (!$this->m_admin->check_is_any_admin(75))
+        {
+            redirect('/', 'refresh');
+        }
+
+        $message_info = '';
+        $login_id = $this->login_id;
+        $login_type = $this->login_type;
+        $main_table = 'user_message';
+        $main_table_id_column = 'msg_id';
+        $result = $this->m_custom->get_one_table_record($main_table, $main_table_id_column, $edit_id, 1);
+
+        if (empty($result))
+        {
+            redirect('/', 'refresh');
+        }
+
+        if (isset($_POST) && !empty($_POST))
+        {
+            $can_redirect_to = 0;
+            $id = $this->input->post('id');
+            $msg_reply = $this->input->post('msg_reply');
+
+            $this->form_validation->set_rules('msg_reply', 'Admin Reply', 'required');
+
+            if ($this->input->post('button_action') == "save")
+            {
+                if ($this->form_validation->run() === TRUE)
+                {
+                    $data = array(
+                        'msg_reply' => $msg_reply,
+                    );
+
+                    if ($this->m_custom->simple_update($main_table, $data, $main_table_id_column, $id))
+                    {
+                        $message_info = add_message_info($message_info, 'Record success update.');
+                        $can_redirect_to = 2;
+                    }
+                    else
+                    {
+                        $message_info = add_message_info($message_info, $this->ion_auth->errors());
+                        $can_redirect_to = 1;
+                    }
+                }
+            }
+            if ($this->input->post('button_action') == "back")
+            {
+                $can_redirect_to = 2;
+            }
+
+            direct_go:
+            if ($message_info != NULL)
+            {
+                $this->session->set_flashdata('message', $message_info);
+            }
+            if ($can_redirect_to == 1)
+            {
+                redirect(uri_string(), 'refresh');
+            }
+            elseif ($can_redirect_to == 2)
+            {
+                redirect('admin/user_withdraw', 'refresh');
+            }
+        }
+
+        // set the flash data error message if there is one
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+
+        $this->data['result'] = $result;
+        $this->data['title'] = "User Redemption Edit";
+        $this->data['can_edit'] = 1;
+
+        $this->data['msg_reply'] = array(
+            'name' => 'msg_reply',
+            'id' => 'msg_reply',
+            'value' => $result['msg_reply'],
+        );      
+
+        $this->data['page_path_name'] = 'admin/user_withdraw_change';
+        $this->load->view('template/index', $this->data);
+    }
+    
     function merchant_management($low_balance_only = 0)
     {
         if (!$this->m_admin->check_is_any_admin(65))

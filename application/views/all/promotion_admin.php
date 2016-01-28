@@ -41,16 +41,7 @@ if(isset($message))
         </div>
         <div id="float-fix"></div>
         
-        <?php
-        if (check_correct_login_type($this->config->item('group_id_user')))
-        {
-            ?>
-            <div id='redemption-redeem-button'>
-                <button type="submit" data-toggle="modal" data-target="#myModal_Redeem">Redeem</button>
-            </div>
-            <?php
-        }
-        ?>
+
             
         <div id="redemption-photo">
             <div id='redemption-table'>
@@ -183,6 +174,17 @@ if(isset($message))
                 ?>
                 <div id="redemption-information-description">
                     <?php echo $description ?>
+                </div>
+                <?php
+            }
+            ?>
+            <br/>
+            <?php
+            if (check_correct_login_type($this->config->item('group_id_user')))
+            {
+                ?>
+                <div id='redemption-redeem-button'>
+                    <button type="submit" data-toggle="modal" data-target="#myModal_Redeem">Redeem</button>
                 </div>
                 <?php
             }
