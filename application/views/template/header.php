@@ -410,7 +410,7 @@
                                     <li>
                                         <a>My Account</a>
                                         <ul>
-                                            <li><a href='<?php echo base_url('admin/admin_dashboard') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'admin_dashboard'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Dashboard Notification</a></li>
+                                            <li><a href='<?php echo base_url('admin/admin_dashboard') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'admin_dashboard' || $fetch_method == 'monitor_remove' || $fetch_method == 'user_withdraw'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Dashboard Notification</a></li>
                                             <li><a href='<?php echo base_url('admin/profile') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'profile'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Profile</a></li>
                                             <li><a href='<?php echo base_url('admin/change_password') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'change_password'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Change Password</a></li>
                                             <li><a href='<?php echo base_url('admin/user_management') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'user_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Manage User</a></li>
@@ -418,11 +418,11 @@
                                             <li><a href='<?php echo base_url('admin/worker_management') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'worker_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Manage Worker</a></li>
                                             <li><a href='<?php echo base_url('admin/category_management') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'category_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Manage Category</a></li>
                                             <li><a href='<?php echo base_url('admin/banner_management') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'banner_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Manage Banner</a></li>
-                                            <li><a href='<?php echo base_url('admin/promo_code_management') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'promo_code_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Manage Promo Codes</a></li>
+                                            <li><a href='<?php echo base_url('admin/promo_code_management') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'promo_code_management' || $fetch_method == 'promo_code_management_user' || $fetch_method == 'promo_code_management_merchant'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Manage Promo Codes</a></li>
                                             <li><a href='<?php echo base_url('admin/keppo_voucher_management') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'keppo_voucher_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Manage Keppo Voucher</a></li>
                                             <li><a href='<?php echo base_url('admin/keppo_voucher_redemption_page') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'keppo_voucher_redemption_page'){ echo "layout-inner-right-menu-bar-active"; } ?>'>User's Redeem Keppo Voucher</a></li>
-                                            <li><a href='<?php echo base_url('admin/analysis_report') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'analysis_report'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Insights</a></li>
-                                            <li><a href='<?php echo base_url('admin/manage_web_setting') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'manage_web_setting'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Web Setting</a></li>
+                                            <li><a href='<?php echo base_url('admin/analysis_report') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'analysis_report' || $fetch_method == 'analysis_report_user'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Insights</a></li>
+                                            <li><a href='<?php echo base_url('admin/manage_web_setting') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'manage_web_setting' || $fetch_method == 'manage_candie_term' || $fetch_method == 'manage_photography' || $fetch_method == 'manage_trans_config' || $fetch_method == 'manage_merchant_fee'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Web Setting</a></li>
                                         </ul>
                                     </li>
                                     <li>
@@ -438,7 +438,7 @@
                                     <li>
                                         <a>My Account worker</a>
                                         <ul>
-                                            <li><a href='<?php echo base_url('admin/admin_dashboard') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'admin_dashboard'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Dashboard</a></li>
+                                            <li><a href='<?php echo base_url('admin/admin_dashboard') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'admin_dashboard' || $fetch_method == 'monitor_remove' || $fetch_method == 'user_withdraw'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Dashboard</a></li>
                                             <li><a href='<?php echo base_url('admin/profile') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'profile'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Profile</a></li>
                                             <?php 
                                             if($this->m_admin->check_worker_role(65)) 
@@ -469,7 +469,7 @@
                                             if($this->m_admin->check_worker_role(77))
                                             { 
                                                 ?>
-                                                <li><a href='<?php echo base_url(); ?>admin/promo_code_management' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'promo_code_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Manage Promo Code</a></li>
+                                                <li><a href='<?php echo base_url(); ?>admin/promo_code_management' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'promo_code_management' || $fetch_method == 'promo_code_management_user' || $fetch_method == 'promo_code_management_merchant'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Manage Promo Code</a></li>
                                                 <?php
                                             }
                                             if($this->m_admin->check_worker_role(70))
@@ -487,13 +487,13 @@
                                             if($this->m_admin->check_worker_role(63))
                                             { 
                                                 ?>
-                                                <li><a href='<?php echo base_url(); ?>admin/analysis_report' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'analysis_report'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Insights</a></li>
+                                                <li><a href='<?php echo base_url(); ?>admin/analysis_report' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'analysis_report' || $fetch_method == 'analysis_report_user'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Insights</a></li>
                                                 <?php
                                             }
                                             if($this->m_admin->check_worker_role(73))
                                             { 
                                                 ?>
-                                                <li><a href='<?php echo base_url(); ?>admin/manage_web_setting' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'manage_web_setting'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Web Setting</a></li>
+                                                <li><a href='<?php echo base_url(); ?>admin/manage_web_setting' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'manage_web_setting' || $fetch_method == 'manage_candie_term' || $fetch_method == 'manage_photography' || $fetch_method == 'manage_trans_config' || $fetch_method == 'manage_merchant_fee'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Web Setting</a></li>
                                                 <?php
                                             }
                                             ?>

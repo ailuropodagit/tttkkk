@@ -62,7 +62,8 @@ if (isset($message))
                         $admin_name = $this->m_custom->display_users($row['status_change_by']);
                         $user_balance_text = $this->m_user->user_check_balance($row['msg_from_id']);
                         $url_balance_adjust = base_url() . "admin/user_balance_adjust/" . $row['msg_from_id'] . "/" . $row['msg_id'];
-                        $url_special_action = base_url() . "admin/user_withdraw";
+                        $url_withdraw_change = base_url() . "admin/user_withdraw_change/" . $row['msg_id'];
+                        $url_special_action = base_url() . "admin/user_withdraw";                       
                         echo '<tr>';
                         echo "<td>" . displayDate($row['msg_time']) . "</td>";
                         echo "<td>" . $user_name . "</td>";
@@ -71,10 +72,14 @@ if (isset($message))
                         echo "<td>" . $row['msg_remark'] . "</td>";                       
                         echo "<td>" . $msg_status_text . "</td>";
                         echo "<td>" . $admin_name . "</td>";
-                        echo "<td>" . $row['msg_reply'] . "</td>";
+                        echo "<td><a href='". $url_withdraw_change . "' target='_blank'>" . $row['msg_reply'] . "</a></td>";
                         echo "<td style='text-align:right'>" . $user_balance_text . "</td>";
                         echo "<td>";       
-                            echo form_open($url_special_action); 
+                            $confirm_message = "Confirm that you want to do this?";
+                            //echo form_open($url_special_action); 
+                            ?>
+                            <form action="<?php echo $url_special_action; ?>" onSubmit="return confirm('<?php echo $confirm_message ?>')" method="post" accept-charset="utf-8">
+                            <?php
                             echo form_hidden('id', $row['msg_id']); 
                             echo form_hidden('msg_from_id', $row['msg_from_id']); 
                             if($this->m_admin->check_worker_role(75)) {
@@ -85,7 +90,7 @@ if (isset($message))
                             <button name="button_action" type="submit" value="success" title='Success Withdraw' class='normal-btn-submit'>
                                 <img src='<?php echo base_url() . "/image/btn-approve.png"; ?>' title='Success Withdraw' alt='Success Withdraw' class='normal-btn-image'></button>
                             <button name="button_action" type="submit" value="fail" title='Fail Withdraw' class='normal-btn-submit'>
-                                <img src='<?php echo base_url() . "/image/btn-remove.png"; ?>' title='Fail Withdraw' alt='Fail Withdraw' class='normal-btn-image'></button>    
+                                <img src='<?php echo base_url() . "/image/btn-reject.png"; ?>' title='Fail Withdraw' alt='Fail Withdraw' class='normal-btn-image'></button>    
                             <?php
                             echo form_close(); 
                         echo "</td>";

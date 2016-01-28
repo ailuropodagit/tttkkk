@@ -41,16 +41,7 @@ if(isset($message))
         </div>
         <div id="float-fix"></div>
         
-        <?php
-        if (check_correct_login_type($this->config->item('group_id_user')))
-        {
-            ?>
-            <div id='redemption-redeem-button'>
-                <button type="submit" data-toggle="modal" data-target="#myModal_Redeem">Redeem</button>
-            </div>
-            <?php
-        }
-        ?>
+
             
         <div id="redemption-photo">
             <div id='redemption-table'>
@@ -99,9 +90,23 @@ if(isset($message))
             <div id="redemption-information-title">
                 <a href="#"><?php echo $sub_title ?></a>
             </div>
+            <div id="float-fix"></div>
+            <!--REQUIRED CANDIES-->
+            <div id="redemption-information-required-candies">
+                Require <?php echo $voucher_candie ?> Candy
+            </div>
             <div class="float-fix"></div>
+            <br/>
             
             <?php
+            if(!empty($voucher_worth)){
+                ?>
+                <div id="redemption-information-extra-info-general">
+                            <?php echo "Worth RM " . $voucher_worth ?>
+               </div>
+            <?php
+            }
+            
             //EXTRA INFO
             if($show_extra_info)
             {
@@ -169,6 +174,17 @@ if(isset($message))
                 ?>
                 <div id="redemption-information-description">
                     <?php echo $description ?>
+                </div>
+                <?php
+            }
+            ?>
+            <br/>
+            <?php
+            if (check_correct_login_type($this->config->item('group_id_user')))
+            {
+                ?>
+                <div id='redemption-redeem-button'>
+                    <button type="submit" data-toggle="modal" data-target="#myModal_Redeem">Redeem</button>
                 </div>
                 <?php
             }
