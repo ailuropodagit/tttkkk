@@ -292,6 +292,9 @@ $lang['keppo_redeem_send_email_success']      = 'Success redeem a voucher.';
 // Web Setting
 $lang['web_setting_keppo_company_name']    = 'Keppo Company Name';
 $lang['web_setting_keppo_admin_email']    = 'Keppo Admin Email (Separate by comma)';
+$lang['web_setting_keppo_company_address']    = 'Keppo Company Address';
+$lang['web_setting_keppo_company_phone']    = 'Keppo Company Phone';
+$lang['web_setting_keppo_company_fax']    = 'Keppo Company Fax';
 $lang['web_setting_merchant_minimum_balance']    = 'Merchant Minimum Balance (RM)';
 $lang['web_setting_merchant_max_hotdeal_per_day']    = 'Merchant Max Hotdeal per day';
 $lang['web_setting_user_max_picture_per_day']    = 'User Max Picture per day';

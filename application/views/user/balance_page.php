@@ -1,4 +1,15 @@
 <script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>js/datatables/js/jquery.dataTables.min.js"></script>
+<?php echo link_tag('js/datatables/css/jquery.dataTables.min.css') ?>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#myTable').DataTable({
+            "paging": false,
+            "order": []
+        });
+    });
+</script>
 
 <?php
 //MESSAGE
@@ -63,7 +74,15 @@ if(isset($message))
                             echo '<tr >';
                             echo "<td>".$conf_row['conf_name']."</td>";
                             echo "<td>".$amount_change."</td>";
-                            echo "<td>".$row['quantity']."</td>";
+                            if($row['trans_conf_id'] == 23){    //If is User Balance Adjust/Withdraw need see detail transaction
+                                ?>
+                                <td>
+                                <a href="#payment-charge-table" onclick="toggle_visibility('payment-charge-table');"><?php echo $row['quantity'] ?></a>
+                                </td>
+                                <?php
+                            }else{
+                                echo "<td>".$row['quantity']."</td>";
+                            }
                             echo "<td>".number_format($row['plus'] - $row['minus'],2)."</td>";
                             echo '</tr>';
                         }
@@ -79,8 +98,38 @@ if(isset($message))
                 If your balance reach RM50. You can <a href="contact_admin">contact keppo admin</a> to get a cash back.
             </div>
             <div id='payment-assistance'>
-                If need further assistance please contact us: xxx-xxxxxxxx
+                <?php
+                $keppo_company_phone = $this->m_custom->web_setting_get('keppo_company_phone', 'set_desc');
+                echo "If need further assistance please contact us: " . $keppo_company_phone;
+                ?>
             </div>
+            <br/>
+            <div id='payment-charge-table' style="display:none;">
+                 <h2>User Balance Adjust/Withdraw History:</h2>
+                <table border='1px' cellspacing='0px' cellpadding='0px' id="myTable" class="display">
+                    <thead>
+                        <tr style="text-align:center">
+                            <th>Date Time</th>                           
+                            <th>Adjust/Withdraw Reason</th> 
+                            <th>Amount (RM)</th> 
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        foreach ($this_month_transaction_user_balance as $row)
+                        {
+                            $trans_time = displayDate($row['trans_time'], 1);
+                            echo '<tr>';
+                            echo "<td>" . $trans_time . "</td>";                            
+                            echo "<td>" . $row['trans_remark'] . "</td>";
+                            echo "<td style='text-align:right'>" . $row['amount_change'] . "</td>";
+                            echo '</tr>';
+                        }
+                        ?>
+                    </tbody>    
+                </table>
+            </div>
+            
         </div>
         
     </div>

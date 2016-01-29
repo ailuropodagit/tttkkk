@@ -17,13 +17,28 @@
     <div id='float-fix'></div>
     
     <p>
-        <b>Fuyoo Advertising & services</b> ( 002422825-U) <br/>
-        No. 4, Jalan Industris Mas 5, Taman Mas, 47170, Puchong, Selangor.
+        <b><?php
+            $keppo_company_name = $this->m_custom->web_setting_get('keppo_company_name', 'set_desc');
+            echo $keppo_company_name;
+        ?></b> ( 002422825-U) <br/>
+        <?php
+            $keppo_company_address = $this->m_custom->web_setting_get('keppo_company_address', 'set_desc');
+            echo $keppo_company_address;
+        ?>
     </p>
     <p>
-        Tel: 03- 8061 9491 <br/>
-        Fax: 03-8061 9257 <br/>
-        E-mail: jimmysee2005@gmail.com <br/>
+        Tel: <?php
+                $keppo_company_phone = $this->m_custom->web_setting_get('keppo_company_phone', 'set_desc');
+                echo $keppo_company_phone;
+            ?> <br/>
+        Fax: <?php
+                $keppo_company_fax = $this->m_custom->web_setting_get('keppo_company_fax', 'set_desc');
+                echo $keppo_company_fax;
+            ?> <br/>
+        E-mail: <?php
+                $keppo_admin_email = $this->m_custom->web_setting_get('keppo_admin_email', 'set_desc');
+                echo $keppo_admin_email;
+            ?> <br/>
         Website: <a href='home'>www.keppo.my</a>
     </p>
     <div id="contact-us-left-social-media-icon">

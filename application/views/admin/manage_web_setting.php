@@ -26,6 +26,18 @@ if(isset($message))
                     <div id='profile-info-form-each-input'><?php echo form_input($keppo_admin_email); ?></div>
                 </div>  
                 <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><?php echo lang('web_setting_keppo_company_address', 'keppo_company_address'); ?></div>
+                    <div id='profile-info-form-each-input'><?php echo form_input($keppo_company_address); ?></div>
+                </div>
+                <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><?php echo lang('web_setting_keppo_company_phone', 'keppo_company_phone'); ?></div>
+                    <div id='profile-info-form-each-input'><?php echo form_input($keppo_company_phone); ?></div>
+                </div>
+                <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><?php echo lang('web_setting_keppo_company_fax', 'keppo_company_fax'); ?></div>
+                    <div id='profile-info-form-each-input'><?php echo form_input($keppo_company_fax); ?></div>
+                </div>
+                <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('web_setting_merchant_minimum_balance', 'merchant_minimum_balance'); ?></div>
                     <div id='profile-info-form-each-input'><?php echo form_input($merchant_minimum_balance); ?></div>
                 </div>  

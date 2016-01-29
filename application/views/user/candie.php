@@ -1,15 +1,8 @@
+<script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script>
 <script type="text/javascript" src="<?php echo base_url() ?>js/datatables/js/jquery.dataTables.min.js"></script>
 <?php echo link_tag('js/datatables/css/jquery.dataTables.min.css') ?>
 
 <script type="text/javascript">
-    function toggle_visibility(id) {
-        var e = document.getElementById(id);
-        if (e.style.display == 'block') {
-            e.style.display = 'none';
-        } else {
-            e.style.display = 'block';
-        }
-    }
         $(document).ready(function () {
         $('#myTable').DataTable({
             "order": [],
@@ -114,7 +107,7 @@ if (isset($message))
             </div>
                 
             <div id="candie-how-gain" style="display:none;">
-                <h1>How Candie Gain:</h1>
+                <h2>How Candie Gain:</h2>
                 <div id="candie-how-gain-content">
                     <div id='table-all'>                   
                         <table border='1px' cellspacing='0px' cellpadding='0px'>

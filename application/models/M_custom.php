@@ -695,12 +695,17 @@ class M_custom extends CI_Model
     }
 
     //To find many records in DB with one keyword
-    public function get_many_table_record($the_table, $the_column, $the_value, $want_array = 0, $second_column = NULL, $second_value = NULL)
+    public function get_many_table_record($the_table, $the_column, $the_value, $want_array = 0, $second_column = NULL, $second_value = NULL, $order_by = NULL, $order_sequence = 'asc')
     {
         if (!IsNullOrEmptyString($second_column) && !IsNullOrEmptyString($second_value))
         {
             $this->db->where($second_column, $second_value);
         }
+        
+        if ($order_by != NULL)
+        {
+            $this->db->order_by($order_by, $order_sequence);
+        }   
         
         $query = $this->db->get_where($the_table, array($the_column => $the_value));
 
@@ -1165,6 +1170,33 @@ class M_custom extends CI_Model
         return $original_result;
     }
     
+    function getPromotionAdminRedeemCount($sub_category_id = 0)
+    {
+        $voucher_active = $this->config->item('voucher_active');
+        if ($sub_category_id != 0)
+        {
+            $this->db->where('sub_category_id', $sub_category_id);
+        }
+
+        $this->db->order_by("title");
+        $this->db->where('start_time is not null AND end_time is not null');
+
+        $original_query = $this->db->get_where('advertise', array('advertise_type' => 'adm'));
+        $original_result = $original_query->result_array();
+
+        $counter = 0;
+        foreach ($original_result as $promotion_row)
+        {          
+            $redeem_list = $this->m_merchant->getUserRedemption($promotion_row['advertise_id'], $voucher_active);
+            foreach ($redeem_list as $redeem_row)
+            {
+                $counter++;
+            }
+        }
+
+        return $counter;
+    }
+
     function getAlbumUserMerchant($user_id = NULL, $merchant_id = NULL)
     {
         if (!IsNullOrEmptyString($user_id))

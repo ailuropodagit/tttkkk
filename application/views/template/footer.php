@@ -18,21 +18,36 @@
                                     <div id='footer-navigation-block2-icon'><i class="fa fa-envelope"></i></div>
                                     <div id='footer-navigation-block2-text'>
                                         <div id='footer-navigation-block2-text-label'>E-mail</div>
-                                        <div id='footer-navigation-block2-text-data'>jimmysee2005@gmail.com</div>
+                                        <div id='footer-navigation-block2-text-data'>
+                                        <?php
+                                            $keppo_admin_email = $this->m_custom->web_setting_get('keppo_admin_email', 'set_desc');
+                                            echo $keppo_admin_email;
+                                        ?>
+                                        </div>
                                     </div>
                                 </div>
                                 <div id='footer-navigation-block2-row2'>
                                     <div id='footer-navigation-block2-icon'><i class="fa fa-phone"></i></div>
                                     <div id='footer-navigation-block2-text'>
                                         <div id='footer-navigation-block2-text-label'>Phone</div>
-                                        <div id='footer-navigation-block2-text-data'>03 8061 9491</div>
+                                        <div id='footer-navigation-block2-text-data'>
+                                        <?php
+                                            $keppo_company_phone = $this->m_custom->web_setting_get('keppo_company_phone', 'set_desc');
+                                            echo $keppo_company_phone;
+                                        ?>
+                                        </div>
                                     </div>
                                 </div>
                                 <div id='footer-navigation-block2-row3'>
                                     <div id='footer-navigation-block2-icon'><i class="fa fa-home"></i></div>
                                     <div id='footer-navigation-block2-text'>
                                         <div id='footer-navigation-block2-text-label'>Address</div>
-                                        <div id='footer-navigation-block2-text-data'>No. 4, Jalan Industris Mas 5, Taman Mas, 47170, Puchong, Selangor.</div>
+                                        <div id='footer-navigation-block2-text-data'>
+                                        <?php
+                                            $keppo_company_address = $this->m_custom->web_setting_get('keppo_company_address', 'set_desc');
+                                            echo $keppo_company_address;
+                                        ?>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

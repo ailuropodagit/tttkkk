@@ -291,7 +291,8 @@
                 else if($this->m_admin->check_is_any_admin())
                 {
                     $header_profile_login_user_name = "";
-                    $header_profile_login_profile_image = "";
+                    $header_album_user_profile_path = $this->config->item('album_admin_profile');
+                    $header_profile_login_profile_image = $this->m_custom->get_one_field_by_key('users', 'id', $login_user_id, 'profile_image');
                     $header_profile_login_user_name = $this->m_custom->display_users($login_user_id);
                     $header_profile_login_company_name = "";
                 }
@@ -434,6 +435,7 @@
                                 }
                                 else if (check_correct_login_type($this->config->item('group_id_admin')))
                                 {
+                                    $redeem_count = $this->m_custom->getPromotionAdminRedeemCount($this->config->item('category_epay'));
                                     ?>
                                     <li>
                                         <a>My Account</a>
@@ -448,7 +450,7 @@
                                             <li><a href='<?php echo base_url('admin/banner_management') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'banner_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Manage Banner</a></li>
                                             <li><a href='<?php echo base_url('admin/promo_code_management') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'promo_code_management' || $fetch_method == 'promo_code_management_user' || $fetch_method == 'promo_code_management_merchant'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Manage Promo Codes</a></li>
                                             <li><a href='<?php echo base_url('admin/keppo_voucher_management') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'keppo_voucher_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Manage Keppo Voucher</a></li>
-                                            <li><a href='<?php echo base_url('admin/keppo_voucher_redemption_page') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'keppo_voucher_redemption_page'){ echo "layout-inner-right-menu-bar-active"; } ?>'>User's Redeem Keppo Voucher</a></li>
+                                            <li><a href='<?php echo base_url('admin/keppo_voucher_redemption_page') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'keppo_voucher_redemption_page'){ echo "layout-inner-right-menu-bar-active"; } ?>'>User's Redeem Keppo Voucher (<?php echo $redeem_count ?>)</a></li>
                                             <li><a href='<?php echo base_url('admin/analysis_report') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'analysis_report' || $fetch_method == 'analysis_report_user'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Insights</a></li>
                                             <li><a href='<?php echo base_url('admin/manage_web_setting') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'manage_web_setting' || $fetch_method == 'manage_candie_term' || $fetch_method == 'manage_photography' || $fetch_method == 'manage_trans_config' || $fetch_method == 'manage_merchant_fee'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Web Setting</a></li>
                                         </ul>
@@ -462,6 +464,7 @@
                                 }
                                 else if (check_correct_login_type($this->config->item('group_id_worker')))
                                 {
+                                    $redeem_count = $this->m_custom->getPromotionAdminRedeemCount($this->config->item('category_epay'));
                                     ?>
                                     <li>
                                         <a>My Account worker</a>
@@ -509,7 +512,7 @@
                                             if($this->m_admin->check_worker_role(71))
                                             { 
                                                 ?>
-                                                <li><a href='<?php echo base_url(); ?>admin/keppo_voucher_redemption_page' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'keppo_voucher_redemption_page'){ echo "layout-inner-right-menu-bar-active"; } ?>'>User's Redeem Keppo Voucher</a></li>
+                                                <li><a href='<?php echo base_url(); ?>admin/keppo_voucher_redemption_page' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'keppo_voucher_redemption_page'){ echo "layout-inner-right-menu-bar-active"; } ?>'>User's Redeem Keppo Voucher (<?php echo $redeem_count ?>)</a></li>
                                                 <?php
                                             }
                                             if($this->m_admin->check_worker_role(63))

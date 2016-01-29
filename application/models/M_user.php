@@ -195,6 +195,16 @@ class M_user extends CI_Model
         return $result;
     }
 
+    public function get_transaction_extra($user_id, $trans_conf_id, $search_year_month = NULL)
+    {
+        $search_date = $search_year_month == NULL ? date_for_db_search() : $search_year_month;
+        $condition = "trans_time like '%" . $search_date . "%'";
+        $this->db->where($condition);
+        $this->db->order_by('trans_time', 'desc');
+        $query = $this->db->get_where('transaction_extra', array('user_id' => $user_id, 'trans_conf_id' => $trans_conf_id));
+        return $query->result_array();
+    }
+    
     public function get_candie_history_from_redemption($redeem_id)
     {
         $query = $this->db->get_where('candie_history', array('get_from_table_id' => $redeem_id, 'get_from_table' => 'user_redemption'));

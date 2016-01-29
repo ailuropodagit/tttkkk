@@ -1578,7 +1578,7 @@ class Admin extends CI_Controller
             'value' => $this->form_validation->set_value('trans_remark'),
         );
 
-        $result_list = $this->m_custom->get_many_table_record('transaction_extra', 'trans_conf_id', '31', 1, 'user_id', $user_id);
+        $result_list = $this->m_custom->get_many_table_record('transaction_extra', 'trans_conf_id', '31', 1, 'user_id', $user_id, 'trans_time', 'desc');
         $this->data['the_result'] = $result_list;
         $this->data['page_path_name'] = 'admin/user_bonus_candie_change';
         $this->load->view('template/index', $this->data);
@@ -1711,7 +1711,7 @@ class Admin extends CI_Controller
             'value' => $this->form_validation->set_value('msg_reply'),
         );
 
-        $result_list = $this->m_custom->get_many_table_record('transaction_extra', 'trans_conf_id', '23', 1, 'user_id', $user_id);
+        $result_list = $this->m_custom->get_many_table_record('transaction_extra', 'trans_conf_id', '23', 1, 'user_id', $user_id, 'trans_time', 'desc');
         $this->data['the_result'] = $result_list;
         $this->data['page_path_name'] = 'admin/user_balance_adjust';
         $this->load->view('template/index', $this->data);
@@ -4827,6 +4827,9 @@ class Admin extends CI_Controller
             $can_redirect_to = 0;
             $keppo_company_name = $this->input->post('keppo_company_name');
             $keppo_admin_email = strtolower($this->input->post('keppo_admin_email'));
+            $keppo_company_address = $this->input->post('keppo_company_address');
+            $keppo_company_phone = $this->input->post('keppo_company_phone');
+            $keppo_company_fax = $this->input->post('keppo_company_fax');
             $merchant_minimum_balance = check_is_positive_decimal($this->input->post('merchant_minimum_balance'));
             $merchant_max_hotdeal_per_day = check_is_positive_numeric($this->input->post('merchant_max_hotdeal_per_day'));
             $user_max_picture_per_day = check_is_positive_numeric($this->input->post('user_max_picture_per_day'));
@@ -4840,6 +4843,9 @@ class Admin extends CI_Controller
             // validate form input
             $this->form_validation->set_rules('keppo_company_name', $this->lang->line('web_setting_keppo_company_name'), 'trim|required');
             $this->form_validation->set_rules('keppo_admin_email', $this->lang->line('web_setting_keppo_admin_email'), 'trim|required|valid_emails');
+            $this->form_validation->set_rules('keppo_company_address', $this->lang->line('web_setting_keppo_company_address'), 'trim|required');
+            $this->form_validation->set_rules('keppo_company_phone', $this->lang->line('web_setting_keppo_company_phone'), 'trim|required');
+            $this->form_validation->set_rules('keppo_company_fax', $this->lang->line('web_setting_keppo_company_fax'), 'trim|required');
             $this->form_validation->set_rules('merchant_minimum_balance', $this->lang->line('web_setting_merchant_minimum_balance'), 'trim|required|numeric');
             $this->form_validation->set_rules('merchant_max_hotdeal_per_day', $this->lang->line('web_setting_merchant_max_hotdeal_per_day'), 'trim|required|integer');
             $this->form_validation->set_rules('user_max_picture_per_day', $this->lang->line('web_setting_user_max_picture_per_day'), 'trim|required|integer');
@@ -4856,6 +4862,9 @@ class Admin extends CI_Controller
                 {
                     $this->m_custom->web_setting_set('keppo_company_name', $keppo_company_name, 'set_desc');
                     $this->m_custom->web_setting_set('keppo_admin_email', $keppo_admin_email, 'set_desc');
+                    $this->m_custom->web_setting_set('keppo_company_address', $keppo_company_address, 'set_desc');
+                    $this->m_custom->web_setting_set('keppo_company_phone', $keppo_company_phone, 'set_desc');
+                    $this->m_custom->web_setting_set('keppo_company_fax', $keppo_company_fax, 'set_desc');
                     $this->m_custom->web_setting_set('merchant_minimum_balance', $merchant_minimum_balance, 'set_decimal');
                     $this->m_custom->web_setting_set('merchant_max_hotdeal_per_day', $merchant_max_hotdeal_per_day);
                     $this->m_custom->web_setting_set('user_max_picture_per_day', $user_max_picture_per_day);
@@ -4896,6 +4905,24 @@ class Admin extends CI_Controller
             'id' => 'keppo_admin_email',
             'type' => 'text',
             'value' => $this->form_validation->set_value('keppo_admin_email', $this->m_custom->web_setting_get('keppo_admin_email', 'set_desc')),
+        );
+        $this->data['keppo_company_address'] = array(
+            'name' => 'keppo_company_address',
+            'id' => 'keppo_company_address',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('keppo_company_address', $this->m_custom->web_setting_get('keppo_company_address', 'set_desc')),
+        );
+        $this->data['keppo_company_phone'] = array(
+            'name' => 'keppo_company_phone',
+            'id' => 'keppo_company_phone',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('keppo_company_phone', $this->m_custom->web_setting_get('keppo_company_phone', 'set_desc')),
+        );
+        $this->data['keppo_company_fax'] = array(
+            'name' => 'keppo_company_fax',
+            'id' => 'keppo_company_fax',
+            'type' => 'text',
+            'value' => $this->form_validation->set_value('keppo_company_fax', $this->m_custom->web_setting_get('keppo_company_fax', 'set_desc')),
         );
         $this->data['merchant_minimum_balance'] = array(
             'name' => 'merchant_minimum_balance',
