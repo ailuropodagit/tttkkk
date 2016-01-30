@@ -42,6 +42,9 @@ if (isset($message))
                         <th>Shop Name</th>
                         <th>Email</th>
                         <th>Company Category</th>
+                        <?php if (check_correct_login_type($this->group_id_admin)){ ?> 
+                        <th>Worker Incharge</th>
+                        <?php } ?>
 <!--                        <th>Company Contact</th>   
                         <th>Person Incharge</th>
                         <th>Person Contact</th>-->
@@ -66,7 +69,8 @@ if (isset($message))
                         $url_promo_code = base_url() . "admin/promo_code_change_merchant/" . $row['id'];                       
                         $url_dashboard = base_url() . "all/merchant_dashboard/" . $row['slug'];
                         $url_special_action = base_url() . "admin/merchant_special_action";
-                        
+                        $merchant_worker_list = $this->m_custom->many_get_childlist_detail('merchant_worker',$row['id'],'users','first_name', 1, '<br/>', 0, 'last_name');
+
                         if($low_balance_only == 1){
                             $url_view = base_url() . "admin/merchant_view/" . $row['id'] . "/1";
                             $url_edit = base_url() . "admin/merchant_edit/" . $row['id'] . "/1";
@@ -83,7 +87,10 @@ if (isset($message))
                         echo "<td>" . $row['company_main'] . "</td>";
                         echo "<td><a href='" . $url_dashboard . "' target='_blank' >" . $row['company'] . "</a></td>";
                         echo "<td>" . $row['email'] . "</td>";
-                        echo "<td>" . $main_category_text . "</td>";                       
+                        echo "<td>" . $main_category_text . "</td>";
+                        if (check_correct_login_type($this->group_id_admin)){ 
+                        echo "<td>" . $merchant_worker_list . "</td>";   
+                        }
 //                        echo "<td>" . $row['phone'] . "</td>";
 //                        echo "<td>" . $row['me_person_incharge'] . "</td>";
 //                        echo "<td>" . $row['me_person_contact'] . "</td>";

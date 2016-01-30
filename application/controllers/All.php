@@ -627,7 +627,7 @@ class All extends CI_Controller
             if ($this->ion_auth->logged_in())
             {
                 $login_id = $this->ion_auth->user()->row()->id;
-                $login_data = $this->m_custom->getUser($login_id);
+                //$login_data = $this->m_custom->getUser($login_id);
             }
 
             $user_row = $this->m_custom->getUserInfo($the_row['user_id']);

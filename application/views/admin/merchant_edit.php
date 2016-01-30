@@ -10,9 +10,10 @@ if(isset($message))
 
 <div id="profile">
     <h1><?php echo $title; ?></h1>
-    <div id='profile-content'>            
+    <div id='profile-content'>        
+        <?php echo form_open(uri_string()); ?>
         <div id='profile-info'>
-            <?php echo form_open(uri_string()); ?>
+            
             <div id='profile-info-form'>
                 <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_user_username_label', 'username'); ?></div>
@@ -77,9 +78,40 @@ if(isset($message))
                 <?php } ?>
             </div>
             
-            <?php echo form_close(); ?>
+            
         </div>
-        
+        <?php if (check_correct_login_type($this->group_id_admin) && $can_edit == 1){ ?> 
+        <div id="candie-promotion-form-voucher-checkbox" style="margin-left:400px;padding-top:30px">
+                    <div id="candie-promotion-form-voucher-checkbox-title">Select Which Worker Can Open This Merchant :</div>
+                    <?php
+                    foreach ($merchant_worker as $row)
+                    {
+                        $key = $row['id'];
+                        $value = $row['first_name'] . ' ' . $row['last_name'];
+                        $checked_or_not = '';
+                        if (in_array($key, $merchant_worker_current))
+                        {
+                            $checked_or_not = 'checked';
+                        }
+                        ?>
+                            <div id="candie-promotion-form-voucher-checkbox-each">
+                                    <table border="0" cellpadding="0px" cellspacing="0px">
+                                        <tr>
+                                            <td valign="top"><input type='checkbox' id="merchant-worker-<?php echo $key ?>" name='merchant_worker[]' value='<?php echo $key ?>' <?php echo $checked_or_not; ?>></td>
+                                            <td valign="top">
+                                                <div id="candie-promotion-form-voucher-checkbox-each-label">
+                                                    <label for="merchant-worker-<?php echo $key ?>"><?php echo $value ?></label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                            </div>
+                    <?php
+                    }
+                    ?>  
+        </div>
+        <?php } ?>
+        <?php echo form_close(); ?>
         <div id="float-fix"></div>
         
     </div>

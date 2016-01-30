@@ -1239,7 +1239,7 @@ class Admin extends CI_Controller
 
     function user_view($user_id)
     {
-        if (!$this->m_admin->check_is_any_admin(65))
+        if (!$this->m_admin->check_is_any_admin(86))
         {
             redirect('/', 'refresh');
         }
@@ -1426,7 +1426,7 @@ class Admin extends CI_Controller
 
     function user_management()
     {
-        if (!$this->m_admin->check_is_any_admin(65))
+        if (!$this->m_admin->check_is_any_admin(86))
         {
             redirect('/', 'refresh');
         }
@@ -1441,7 +1441,7 @@ class Admin extends CI_Controller
 
     function user_special_action()
     {
-        if (!$this->m_admin->check_is_any_admin(65))
+        if (!$this->m_admin->check_is_any_admin(86))
         {
             redirect('/', 'refresh');
         }
@@ -1469,7 +1469,7 @@ class Admin extends CI_Controller
                     }
                 }
             }
-            if ($this->input->post('button_action') == "frozen" && $this->m_admin->check_worker_role(64))
+            if ($this->input->post('button_action') == "frozen" && $this->m_admin->check_worker_role(85))
             {
                 $message_info = add_message_info($message_info, $user_display_name . ' success frozen.');
                 $this->m_custom->update_hide_flag(1, 'users', $id);
@@ -1970,10 +1970,27 @@ class Admin extends CI_Controller
                         'phone' => $phone,
                     );
 
+                    if (check_correct_login_type($this->group_id_admin))  //only admin can assign merchant to worker
+                    {
+                        $merchant_worker_selected = array();
+                        $post_merchant_worker = $this->input->post('merchant_worker');
+                        if (!empty($post_merchant_worker))
+                        {
+                            foreach ($post_merchant_worker as $key => $value)
+                            {
+                                $merchant_worker_selected[] = $value;
+                            }
+                        }
+                    }
+                    
                     if ($this->ion_auth->update($edit_id, $data))
                     {
                         $message_info = add_message_info($message_info, $company . ' success update.');
                         $this->m_custom->update_row_log('users', $edit_id, $login_id, $login_type);
+                        if (check_correct_login_type($this->group_id_admin))  //only admin can assign merchant to worker
+                        {
+                            $this->m_custom->many_insert_or_remove('merchant_worker', $edit_id, $merchant_worker_selected);
+                        }
                         $can_redirect_to = 1;
                     }
                     else
@@ -2107,6 +2124,9 @@ class Admin extends CI_Controller
             'value' => $this->form_validation->set_value('phone', $result['phone']),
         );
 
+        $this->data['merchant_worker_current'] = empty($result) ? array() : $this->m_custom->many_get_childlist('merchant_worker', $result['id']);
+        $this->data['merchant_worker'] = $this->m_admin->getAllWorker();
+        
         $this->data['page_path_name'] = 'admin/merchant_edit';
         $this->load->view('template/index', $this->data);
     }

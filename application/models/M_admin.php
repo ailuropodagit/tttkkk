@@ -204,10 +204,9 @@ class M_admin extends CI_Model
         }
     }
     
-    public function merchant_low_balance_count($want_count = 0){
-        
-        $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant')));
-        $the_result = $query->result_array();
+    public function merchant_low_balance_count($want_count = 0)
+    {
+        $the_result = $this->m_custom->getAllMerchant();
 
         $low_balance_count = 0;
         $return_final = array();
@@ -221,13 +220,16 @@ class M_admin extends CI_Model
                 $return_final[] = $row;
             }
         }
-        if($want_count == 1){
+        if ($want_count == 1)
+        {
             return $low_balance_count;
-        }else{
+        }
+        else
+        {
             return $return_final;
         }
     }
-    
+
     public function user_withdraw_request($want_count = 0, $msg_status = 3, $user_id = 0)
     {
         if ($user_id != 0)

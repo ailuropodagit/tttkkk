@@ -1407,21 +1407,47 @@ class M_custom extends CI_Model
         return $result;
     }
     
-    function getAllMerchant(){
-        $this->db->order_by('company');
-        $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant')));
+    function getAllMerchant()
+    {
+        if (check_correct_login_type($this->group_id_worker))  //Worker only can see merchant of itself
+        {
+            $login_id = $this->ion_auth->user()->row()->id;
+            $many_list = $this->m_custom->many_get_parentlist('merchant_worker', $login_id);
+            $this->db->order_by('company');
+            if (!empty($many_list))  //If the worker din't specify assign, then just let it see all merchant
+            {
+                $this->db->where_in('id', $many_list);
+            }
+            $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant')));
+        }
+        else
+        {
+            $this->db->order_by('company');
+            $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant')));
+        }
         $result = $query->result_array();
         return $result;
     }
-    
+
     function getUser($user_id, $main_group_id = NULL)
     {
+        if (check_correct_login_type($this->config->item('group_id_worker')) && $main_group_id == $this->config->item('group_id_merchant'))  //Worker only can see merchant of itself
+        {
+            $login_id = $this->ion_auth->user()->row()->id;
+            $many_list = $this->m_custom->many_get_parentlist('merchant_worker', $login_id);
+            if (!empty($many_list))  //If the worker din't specify assign, then just let it see all merchant
+            {
+                $this->db->where_in('id', $many_list);
+            }
+        }
+
         if (!IsNullOrEmptyString($main_group_id))
         {
             $this->db->where('main_group_id', $main_group_id);
         }
 
         $query = $this->db->get_where('users', array('id' => $user_id));
+
         return $query->row_array();
     }
 
@@ -1622,30 +1648,78 @@ class M_custom extends CI_Model
         return $return;
     }
 
-    //To get the childlist id from many table by the type and parent id
-    public function many_get_childlist_detail($the_type, $parent_id, $child_table, $child_wanted_column = NULL, $want_string = 0, $separator = ',')
-    {        
-        $query = $this->db->get_where('many_to_many', array('many_type' => $the_type, 'many_parent_id' => $parent_id));        
+    //To get the parentlist id from many table by the type and child id
+    public function many_get_parentlist($the_type, $child_id, $want_array = 0)
+    {
+        $query = $this->db->get_where('many_to_many', array('many_type' => $the_type, 'many_child_id' => $child_id));
+
         $return = array();
         if ($query->num_rows() > 0)
         {
-            $child_id_column = $this->m_custom->table_id_column($child_table);            
+            if ($want_array == 0)
+            {
+                foreach ($query->result_array() as $row)
+                {
+                    $return[] = $row['many_parent_id'];
+                }
+            }
+            else
+            {
+                return $query->result_array();
+            }
+        }
+        return $return;
+    }
+
+    //To get the childlist id from many table by the type and parent id
+    public function many_get_childlist_detail($the_type, $parent_id, $child_table, $child_wanted_column = NULL, $want_string = 0, $separator = ',', $reverse_parent_child = 0, $child_wanted_column2 = NULL)
+    {
+        if ($reverse_parent_child == 1)
+        {
+            $query = $this->db->get_where('many_to_many', array('many_type' => $the_type, 'many_child_id' => $parent_id));
+        }
+        else
+        {
+            $query = $this->db->get_where('many_to_many', array('many_type' => $the_type, 'many_parent_id' => $parent_id));
+        }
+        $return = array();
+        if ($query->num_rows() > 0)
+        {
+            $child_id_column = $this->m_custom->table_id_column($child_table);
             foreach ($query->result_array() as $row)
             {
-                $many_child_id = $row['many_child_id'];
+                if ($reverse_parent_child == 1)
+                {
+                    $many_child_id = $row['many_parent_id'];
+                }
+                else
+                {
+                    $many_child_id = $row['many_child_id'];
+                }
                 $child = $this->db->get_where($child_table, array($child_id_column => $many_child_id), 1);
                 if ($child->num_rows() == 1)
                 {
-                    if($child_wanted_column == NULL){
+                    if ($child_wanted_column == NULL)
+                    {
                         $return[$many_child_id] = $child->row_array();
-                    }else{
+                    }
+                    else
+                    {
                         $result = $child->row_array();
-                        $return[$many_child_id] = $result[$child_wanted_column];
+                        if ($child_wanted_column2 != NULL)   //If want to combine example first_name and last_name
+                        {
+                            $return[$many_child_id] = $result[$child_wanted_column] . ' ' . $result[$child_wanted_column2];
+                        }
+                        else
+                        {
+                            $return[$many_child_id] = $result[$child_wanted_column];
+                        }
                     }
                 }
             }
         }
-        if($want_string == 1 && $child_wanted_column != NULL){
+        if ($want_string == 1 && $child_wanted_column != NULL)
+        {
             $return = arraylist_to_string($return, $separator);
         }
         return $return;

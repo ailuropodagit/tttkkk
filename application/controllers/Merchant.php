@@ -1399,10 +1399,10 @@ class Merchant extends CI_Controller
             if (check_correct_login_type($this->group_id_supervisor))
             {
                 $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;
-                $merchant = $this->m_custom->getUser($merchant_id);
+                //$merchant = $this->m_custom->getUser($merchant_id);
                 $is_supervisor = 1;
                 $supervisor_id = $this->ion_auth->user()->row()->id;
-                $supervisor = $this->m_custom->getUser($supervisor_id);
+                //$supervisor = $this->m_custom->getUser($supervisor_id);
             }
 
             $search_word = '';
@@ -2546,7 +2546,7 @@ class Merchant extends CI_Controller
                     {
                         $this->m_custom->remove_row_log('merchant_user_album', $picture_id, $login_id, $login_type);
                         $this->m_merchant->mua_hide($picture_id);
-                        $this->m_user->user_trans_history_insert($upload_by_user_id, 22, $picture_id);
+                        //$this->m_user->user_trans_history_insert($upload_by_user_id, 22, $picture_id);  //Temporary comment this because user upload image for merchant cannot get cash back already 
                     }
                     redirect('all/merchant_dashboard/' . $merchant['slug'] . "/picture", 'refresh');
                 }
@@ -3731,7 +3731,7 @@ class Merchant extends CI_Controller
             $active_array['data'][] = $active_female_count;
 
             $used_array = array();
-            $used_array['name'] = 'Redeem';
+            $used_array['name'] = 'Redeemed';
             $used_array['data'][] = $used_male_count;
             $used_array['data'][] = $used_female_count;
 
