@@ -38,7 +38,7 @@ if (isset($message))
                         <th>Promo Code</th>
                         <th>Candy</th>
                         <th>Event Name</th>
-                        <th>Redeem Count</th>
+                        <th>Redeemed Count</th>
                         <th>Created by Admin/Worker</th>
                         <th>Last Modify</th>
                         <th>Hide Already</th>

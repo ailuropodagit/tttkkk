@@ -55,7 +55,7 @@ if (isset($message))
                         <th>View</th>
                         <th>Like</th>
                         <th>Rating</th>
-                        <th>Redeem</th>
+                        <th>Redeemed</th>
                         <th>User Upload</th>
                         <th>Remove Already</th>
                         <th>Total</th>

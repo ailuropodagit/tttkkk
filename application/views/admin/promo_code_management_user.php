@@ -38,7 +38,7 @@ if (isset($message))
                         <?php if($code_type == 'user'){  ?>
                         <th>Cash Back</th>
                         <?php } ?>
-                        <th>Redeem Count</th>                        
+                        <th>Redeemed Count</th>                        
                         <th>Last Modify</th>
                         <th>Actions</th>
                     </tr>

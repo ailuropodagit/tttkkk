@@ -56,7 +56,7 @@
             success: function (data) {
                 options.series.length = 0;
                 options.title.text = 'Gender Analysis Report';
-                options.xAxis.categories = ['View', 'Like', 'Rating', 'Redeem'];
+                options.xAxis.categories = ['View', 'Like', 'Rating', 'Redeemed'];
                 options.yAxis.title.text = 'Gender';
                 options.chart.renderTo = 'container_gender';
                 //alert(JSON.stringify(data));
@@ -81,7 +81,7 @@
             success: function (data) {
                 options.series.length = 0;
                 options.title.text = 'Race Analysis Report';
-                options.xAxis.categories = ['View', 'Like', 'Rating', 'Redeem'];
+                options.xAxis.categories = ['View', 'Like', 'Rating', 'Redeemed'];
                 options.yAxis.title.text = 'Race';
                 options.chart.renderTo = 'container_race';
                 options.series[0] = data[0];
@@ -106,7 +106,7 @@
             success: function (data) {
                 options.series.length = 0;
                 options.title.text = 'Age Analysis Report';
-                options.xAxis.categories = ['View', 'Like', 'Rating', 'Redeem'];
+                options.xAxis.categories = ['View', 'Like', 'Rating', 'Redeemed'];
                 options.yAxis.title.text = 'Age';
                 options.chart.renderTo = 'container_age';
                 options.series[0] = data[0];
@@ -131,9 +131,9 @@
             data: "&the_year=" + the_year + "&the_month=" + the_month + "&the_adv_type=" + the_adv_type + "&the_new_user=" + the_new_user,
             success: function (data) {
                 options.series.length = 0;
-                options.title.text = 'Redeem Status Analysis Report';
+                options.title.text = 'Redeemed Status Analysis Report';
                 options.xAxis.categories = ['Male', 'Female'];
-                options.yAxis.title.text = 'Redeem';
+                options.yAxis.title.text = 'Redeemed';
                 options.chart.renderTo = 'container_redeem';
                 options.series[0] = data[0];
                 options.series[1] = data[1];

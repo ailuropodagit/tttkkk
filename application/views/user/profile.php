@@ -75,11 +75,11 @@ if(isset($message))
                     </div>
                     <div id="dashboard-photo-input-file">                      
                         <div class="fileUpload btn btn-primary" style="float:left">
-                            <span>Choose Image</span>
+                            <span>Choose</span>
                             <input type="file" name="userfile" id="userfile" accept='image/*' class="upload"/>
                         </div>
                         <div id="dashboard-photo-button" style="float:right">
-                            <button name="button_action" type="submit" value="change_image" >Save Image</button>
+                            <button name="button_action" type="submit" value="change_image" >Save</button>
                         </div>
                         <div id="float-fix"></div>
                     </div>

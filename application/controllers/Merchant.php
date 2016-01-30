@@ -3731,7 +3731,7 @@ class Merchant extends CI_Controller
             $active_array['data'][] = $active_female_count;
 
             $used_array = array();
-            $used_array['name'] = 'Redeem';
+            $used_array['name'] = 'Redeemed';
             $used_array['data'][] = $used_male_count;
             $used_array['data'][] = $used_female_count;
 
