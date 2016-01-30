@@ -2546,7 +2546,7 @@ class Merchant extends CI_Controller
                     {
                         $this->m_custom->remove_row_log('merchant_user_album', $picture_id, $login_id, $login_type);
                         $this->m_merchant->mua_hide($picture_id);
-                        $this->m_user->user_trans_history_insert($upload_by_user_id, 22, $picture_id);
+                        //$this->m_user->user_trans_history_insert($upload_by_user_id, 22, $picture_id);  //Temporary comment this because user upload image for merchant cannot get cash back already 
                     }
                     redirect('all/merchant_dashboard/' . $merchant['slug'] . "/picture", 'refresh');
                 }
