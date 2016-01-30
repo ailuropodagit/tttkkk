@@ -103,7 +103,7 @@ if (isset($message))
                         <button name="button_action" type="submit" value="log_in_as" title='Log In As User' class='normal-btn-submit'>
                             <img src='<?php echo base_url() . "/image/btn-login-as.png"; ?>' title='Log In As User' alt='Log In As User' class='normal-btn-image'></button>
                         <?php } ?>
-                        <?php if($this->m_admin->check_worker_role(64)) { ?>
+                        <?php if($this->m_admin->check_worker_role(85)) { ?>
                         <button name="button_action" type="submit" value="<?php echo $ror; ?>" onclick="return confirm('Are you sure want to <?php echo $ror_text; ?> it?')" title='<?php echo $ror_text; ?>' class='normal-btn-submit'>
                         <img src='<?php echo $ror_image; ?>' title='<?php echo $ror_text; ?>' alt='<?php echo $ror_text; ?>' class='normal-btn-image'></button> 
                         <?php } ?>

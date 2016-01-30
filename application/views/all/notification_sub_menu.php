@@ -12,14 +12,21 @@
                 $notification_url = base_url() . "admin/admin_dashboard";
             }
             $notification_count = $this->m_custom->notification_count($noti_to_id);
+            if(check_correct_login_type($this->config->item('group_id_worker')) && !$this->m_admin->check_worker_role(79)){
+                
+            }else{
             ?>
             <div id='candie-navigation-each'><a href='<?php echo $notification_url; ?>' >Notification (<?php echo $notification_count; ?> new)</a></div>
             <?php
+            }
             if (check_correct_login_type($this->group_id_merchant) || $this->m_admin->check_is_any_admin(68))
             {
-                $monitor_count = $this->m_custom->display_row_monitor(1);               
+                $monitor_count = $this->m_custom->display_row_monitor(1);       
+                if(check_correct_login_type($this->config->item('group_id_worker')) && !$this->m_admin->check_worker_role(79)){
+                }else{
             ?>
                 <div id='candie-navigation-each-separator'>|</div>
+                <?php } ?>
                 <div id='candie-navigation-each'><a href='<?php echo base_url() . "all/monitor-remove" ?>' >Monitoring Remove Action (<?php echo $monitor_count; ?> new)</a></div>
             <?php } ?>
             <?php

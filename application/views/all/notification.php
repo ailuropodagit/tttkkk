@@ -1,3 +1,7 @@
+<script type="text/javascript">
+    document.title = "Notification";
+</script>
+
 <?php
 //CONFIG DATA
 $empty_image = $this->config->item('empty_image');
@@ -91,6 +95,8 @@ $image_path_user_profile = $this->config->item('album_user_profile');
                                 ?>
                             </div>
                         </td>
+                        <?php if(check_correct_login_type($this->config->item('group_id_worker')) && !$this->m_admin->check_worker_role(79)){ 
+                        }else{ ?>
                         <td>
                             <div id='notification-table-delete'>
                                 <?php echo form_open("all/notification_process") ?>
@@ -120,6 +126,7 @@ $image_path_user_profile = $this->config->item('album_user_profile');
                                 <?php echo form_close() ?>
                             </div>
                         </td>
+                        <?php } ?>
                     </tr>
                     <?php
                 }

@@ -117,7 +117,7 @@
             if(document.title == 'Keppo'){
             var h1s = document.getElementsByTagName("h1");
                 for (var i = 0; i < h1s.length; i++) {
-                    document.title = h1s[i].innerText;
+                    document.title = h1s[i].textContent;
                 }   
             }
             });
@@ -469,13 +469,25 @@
                                     <li>
                                         <a>My Account worker</a>
                                         <ul>
-                                            <li><a href='<?php echo base_url('admin/admin_dashboard') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'admin_dashboard' || $fetch_method == 'monitor_remove' || $fetch_method == 'user_withdraw'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Dashboard</a></li>
+                                            <?php 
+                                            if($this->m_admin->check_worker_role(68) && !$this->m_admin->check_worker_role(79)) 
+                                            {
+                                                ?>
+                                            <li><a href='<?php echo base_url('all/monitor-remove') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'monitor_remove' || $fetch_method == 'user_withdraw'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Dashboard Notification</a></li>
+                                            <?php }elseif($this->m_admin->check_worker_role(79)){ ?>
+                                            <li><a href='<?php echo base_url('admin/admin_dashboard') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'admin_dashboard' || $fetch_method == 'monitor_remove' || $fetch_method == 'user_withdraw'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Dashboard Notification</a></li>
+                                            <?php } ?>
                                             <li><a href='<?php echo base_url('admin/profile') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'profile'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Profile</a></li>
                                             <?php 
-                                            if($this->m_admin->check_worker_role(65)) 
+                                            if($this->m_admin->check_worker_role(86)) 
                                             {
                                                 ?>
                                                 <li><a href='<?php echo base_url(); ?>admin/user_management' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'user_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Manage User</a></li>
+                                                <?php
+                                            }
+                                            if($this->m_admin->check_worker_role(65)) 
+                                            {
+                                                ?>
                                                 <li><a href='<?php echo base_url(); ?>admin/merchant_management' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'merchant_management'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Manage Merchant</a></li>
                                                 <?php
                                             }

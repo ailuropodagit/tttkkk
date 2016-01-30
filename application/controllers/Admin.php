@@ -1239,7 +1239,7 @@ class Admin extends CI_Controller
 
     function user_view($user_id)
     {
-        if (!$this->m_admin->check_is_any_admin(65))
+        if (!$this->m_admin->check_is_any_admin(86))
         {
             redirect('/', 'refresh');
         }
@@ -1426,7 +1426,7 @@ class Admin extends CI_Controller
 
     function user_management()
     {
-        if (!$this->m_admin->check_is_any_admin(65))
+        if (!$this->m_admin->check_is_any_admin(86))
         {
             redirect('/', 'refresh');
         }
@@ -1441,7 +1441,7 @@ class Admin extends CI_Controller
 
     function user_special_action()
     {
-        if (!$this->m_admin->check_is_any_admin(65))
+        if (!$this->m_admin->check_is_any_admin(86))
         {
             redirect('/', 'refresh');
         }
@@ -1469,7 +1469,7 @@ class Admin extends CI_Controller
                     }
                 }
             }
-            if ($this->input->post('button_action') == "frozen" && $this->m_admin->check_worker_role(64))
+            if ($this->input->post('button_action') == "frozen" && $this->m_admin->check_worker_role(85))
             {
                 $message_info = add_message_info($message_info, $user_display_name . ' success frozen.');
                 $this->m_custom->update_hide_flag(1, 'users', $id);

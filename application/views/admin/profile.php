@@ -22,7 +22,7 @@
             }
         });
     });
-    
+    document.title = "Admin Profile";
 </script>
 
 <?php
