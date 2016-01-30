@@ -1481,7 +1481,7 @@ class User extends CI_Controller
             redirect('/', 'refresh');
         }
 
-        $user_data = $this->m_custom->getUser($user_id);
+        //$user_data = $this->m_custom->getUser($user_id);
 
         if (isset($_POST) && !empty($_POST))
         {
@@ -1630,7 +1630,7 @@ class User extends CI_Controller
             redirect('/', 'refresh');
         }
 
-        $user_data = $this->m_custom->getUser($user_id);
+        //$user_data = $this->m_custom->getUser($user_id);
 
         if (isset($_POST) && !empty($_POST))
         {
@@ -2374,7 +2374,7 @@ class User extends CI_Controller
         }
         $message_info = '';
         $user_id = $this->ion_auth->user()->row()->id;
-        $user_data = $this->m_custom->getUser($user_id);
+        //$user_data = $this->m_custom->getUser($user_id);
         $this->data['box_number'] = $this->box_number;
         if (isset($_POST) && !empty($_POST))
         {

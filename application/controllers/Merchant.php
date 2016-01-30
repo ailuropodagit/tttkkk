@@ -1399,10 +1399,10 @@ class Merchant extends CI_Controller
             if (check_correct_login_type($this->group_id_supervisor))
             {
                 $merchant_id = $this->ion_auth->user()->row()->su_merchant_id;
-                $merchant = $this->m_custom->getUser($merchant_id);
+                //$merchant = $this->m_custom->getUser($merchant_id);
                 $is_supervisor = 1;
                 $supervisor_id = $this->ion_auth->user()->row()->id;
-                $supervisor = $this->m_custom->getUser($supervisor_id);
+                //$supervisor = $this->m_custom->getUser($supervisor_id);
             }
 
             $search_word = '';
