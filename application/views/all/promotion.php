@@ -333,7 +333,7 @@ if(isset($message))
                             <div id="redemption-information-available-branch-name"><?php echo $value['name'] ?></div>
                             <div id="redemption-information-available-branch-address"><?php echo $value['address'] ?></div>
                             <div id="redemption-information-available-branch-tel"><a href='tel: <?php echo $value['phone'] ?>'><?php echo $value['phone'] ?></a></div>
-                            <div id="redemption-information-available-branch-view-map"><a href='<?php echo base_url() ?>all/merchant-map/<?php echo $value['branch_id'] ?>' target='_blank'>View Map</a></div>
+                            <div id="redemption-information-available-branch-view-map"><a href='<?php echo base_url() ?>all/merchant-map/<?php echo $value['branch_id'] ?>#dashboard' target='_blank'>View Map</a></div>
                         </li>
                         <?php
                     }

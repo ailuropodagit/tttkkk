@@ -272,4 +272,14 @@ if(isset($message))
     </div>
 </div>
 
-<div id="redemption-bottom-spacing"></div>
+<!--<div id="redemption-bottom-spacing"></div>-->
+<div id='redemption-suggestion'>
+    <?php
+    if (!empty($advertise_suggestion_list))
+    {     
+        $data['share_hotdeal_redemption_list'] = $advertise_suggestion_list;
+        $data['title'] = "Redemption Suggestion";
+        $this->load->view('share/redemption_grid_list5', $data);
+    }
+    ?>
+</div>

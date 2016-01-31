@@ -80,13 +80,24 @@ if(isset($message))
                 <b>Your current balance RM<?php echo $current_balance; ?></b>
             </div>
             <div id='payment-your-balance'>
-                Your balance cannot less then RM50. System will auto frozen your account until top-up with value.
+                Your balance cannot less then RM<?php
+                                            $merchant_minimum_balance = $this->m_custom->web_setting_get('merchant_minimum_balance', 'set_decimal');
+                                            echo $merchant_minimum_balance;
+                                        ?>. System will auto frozen your account until top-up with value.
             </div>
             <div id='payment-reload'>
-                Please reload to this account: xxxxxxxxxxx
+                Please reload to this account: <br/>
+                <i>    <?php
+                                            $keppo_company_bank = $this->m_custom->web_setting_get('keppo_company_bank', 'set_desc');
+                                            echo nl2br($keppo_company_bank);
+                                        ?> </i>
             </div>
             <div id='payment-assistance'>
-                If need further assistance please contact us: xxx-xxxxxxxx
+                If need further assistance please contact us: 
+                                        <?php
+                                            $keppo_company_phone = $this->m_custom->web_setting_get('keppo_company_phone', 'set_desc');
+                                            echo $keppo_company_phone;
+                                        ?>
             </div>
         </div>
         

@@ -36,10 +36,15 @@ $uri_segment_4 = $this->uri->segment(4);
                 $merchant_dashboard_url = $this->m_custom->generate_merchant_link($merchant_id);
                 $candie = $row['voucher_candie'];
                 $advertise_type = $row['advertise_type'];
-                $price_before_show = $row['price_before_show'];
+                $show_extra_info = $row['show_extra_info'];
                 $price_before = $row['price_before'];
-                $price_after_show = $row['price_after_show'];
+                $price_before_show = $row['price_before_show'];
                 $price_after = $row['price_after'];
+                $price_after_show = $row['price_after_show'];
+                $voucher_worth = $row['voucher_worth'];
+                $get_off_percent = $row['get_off_percent'];
+                $how_many_buy = $row['how_many_buy'];
+                $how_many_get = $row['how_many_get'];
                 $average_rating = $this->m_custom->activity_rating_average($advertise_id, 'adv');
                 $redeem_count = $this->m_custom->promotion_redeem_count($advertise_id);
                 if ($advertise_type == 'adm')
@@ -96,6 +101,7 @@ $uri_segment_4 = $this->uri->segment(4);
                             <div class="share-redemption-grid-list5-box-information-rating">
                                 <div class="share-redemption-grid-list5-box-information-rating">
                                     <?php
+                                    if($row['advertise_type']!='adm'){
                                     for ($i = 1; $i <= 5; $i++)
                                     {
                                         if ($i == round($average_rating))
@@ -107,6 +113,7 @@ $uri_segment_4 = $this->uri->segment(4);
                                             echo "<input class='star' type='radio' name='a-rating-$advertise_id' disabled='disabled' value='" . $i . "'/>";
                                         }
                                     }
+                                    }
                                     ?>
                                     <div class="float-fix"></div>
                                 </div>
@@ -114,24 +121,69 @@ $uri_segment_4 = $this->uri->segment(4);
                             <div class="share-redemption-grid-list5-box-information-candie">
                                 <?php echo $candie ?> Candy
                             </div>
-                            <div class="share-redemption-grid-list5-box-information-price">
-                                <div class="share-redemption-grid-list5-box-information-price-after">
-                                    <?php
-                                    if ($price_after)
-                                    {
-                                        echo 'RM ' . $price_after;
-                                    }
+                            <?php
+                        //EXTRA INFO
+                        if($show_extra_info)
+                        {
+                            ?>
+                            <div class="share-redemption-grid-list4-box-information-extra-info">
+                                <?php
+                                //PRICE
+                                if($show_extra_info == 121)
+                                {
                                     ?>
-                                </div>
-                                <div class="share-redemption-grid-list5-box-information-price-before">
+                                    <div class="share-redemption-grid-list4-box-information-extra-info-price">
+                                        <div class="share-redemption-grid-list4-box-information-extra-info-price-after">
+                                            <?php
+                                            if ($price_after_show == 1)
+                                            {
+                                                echo 'RM ' . $price_after;
+                                            }
+                                            ?>
+                                        </div>
+                                        <div class="share-redemption-grid-list4-box-information-extra-info-price-before">
+                                            <?php
+                                            if ($price_before_show == 1)
+                                            {
+                                                echo 'RM ' . $price_before;
+                                            }
+                                            ?>
+                                        </div>
+                                    </div>
                                     <?php
-                                    if ($price_before)
-                                    {
-                                        echo 'RM ' . $price_before;
-                                    }
+                                }          
+                                //VOUCHER WORTH
+                                if ($show_extra_info == 122)
+                                {
                                     ?>
-                                </div>
+                                    <div class="share-redemption-grid-list4-box-information-extra-info-general">
+                                        <?php echo "Worth RM " . $voucher_worth ?>
+                                    </div>
+                                    <?php
+                                }
+                                //GET OFF PERCENTAGE
+                                if ($show_extra_info == 123)
+                                {
+                                    ?>
+                                    <div class="share-redemption-grid-list4-box-information-extra-info-general">
+                                        <?php echo "Get off - " . $get_off_percent . "%" ?>
+                                    </div>
+                                    <?php
+                                }
+                                //BUY X GET X
+                                if ($show_extra_info == 124)
+                                {
+                                    ?>
+                                    <div class="share-redemption-grid-list4-box-information-extra-info-general">
+                                        <?php echo "Buy " . $how_many_buy . " Get " . $how_many_get ?>
+                                    </div>
+                                    <?php
+                                } 
+                                ?>
                             </div>
+                            <?php
+                        }
+                        ?>
                         </div>
                     </a>
                 </div>

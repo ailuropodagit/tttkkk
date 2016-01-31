@@ -38,6 +38,10 @@ if(isset($message))
                     <div id='profile-info-form-each-input'><?php echo form_input($keppo_company_fax); ?></div>
                 </div>
                 <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><?php echo lang('web_setting_keppo_company_bank', 'keppo_company_bank'); ?></div>
+                    <div id='profile-info-form-each-input'><?php echo form_textarea($keppo_company_bank); ?></div>
+                </div>
+                <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('web_setting_merchant_minimum_balance', 'merchant_minimum_balance'); ?></div>
                     <div id='profile-info-form-each-input'><?php echo form_input($merchant_minimum_balance); ?></div>
                 </div>  
