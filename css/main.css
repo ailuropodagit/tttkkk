@@ -945,7 +945,7 @@ html, body {
 
 #home-row2-column2-like-notification {
     overflow-y: auto;
-    height: 595px;
+    height: 583px;
 }
 
 #home-row2-column2-like-notification-user-image {
@@ -1035,7 +1035,7 @@ html, body {
 
 #home-row2-column2-user-picture-notification {
     overflow-y: auto;
-    height: 595px;
+    height: 583px;
 }
 
 #home-row2-column2-user-picture-notification-user-image {
@@ -2358,7 +2358,8 @@ html, body {
 
 .share-redemption-grid-list4-box-information {
     padding: 18px 18px 18px 18px;
-    min-height: 120px;
+    min-height: 95px;
+    position: relative;
 }
 
 .share-redemption-grid-list4-box-information-title {
@@ -2374,15 +2375,8 @@ html, body {
     margin: 10px 0px 0px 0px;
 }
 
-.share-redemption-grid-list4-box-information-candie {
-    color: #d92222;
-    font-size: 18px;
-    font-weight: bold;
-    margin: 10px 0px 0px 0px;
-}
-
 .share-redemption-grid-list4-box-information-extra-info {
-    margin: 5px 0px 0px 0px;
+    margin: 10px 0px 0px 0px;
 }
 
 .share-redemption-grid-list4-box-information-extra-info-price-after {
@@ -2401,6 +2395,33 @@ html, body {
     color: #d92222;
     font-size: 18px;
     font-weight: bold;
+}
+
+.share-redemption-grid-list4-box-information-candie {
+    margin: 10px 0px 0px 0px;
+    color: black;
+    font-size: 16px;
+    position: absolute;
+    right: 10px;
+    top: 90px;
+}
+
+.share-redemption-grid-list4-box-information-candie-label {
+    float: right;
+}
+
+.share-redemption-grid-list4-box-information-candie-icon {
+    float: right;
+    margin: 0px 8px 0px 0px;
+}
+
+#share-redemption-grid-list4-pagination {
+    padding: 20px;
+    margin: 0px 0px 60px 0px;
+    background-color: white;
+    -webkit-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
+    -moz-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
+    box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
 }
 
 #share-redemption-grid-list4-pagination {
@@ -2515,7 +2536,8 @@ html, body {
 
 .share-redemption-grid-list5-box-information {
     padding: 18px 18px 18px 18px;
-    min-height: 120px;
+    min-height: 95px;
+    position: relative;
 }
 
 .share-redemption-grid-list5-box-information-title {
@@ -2528,13 +2550,6 @@ html, body {
 }
 
 .share-redemption-grid-list5-box-information-rating {
-    margin: 10px 0px 0px 0px;
-}
-
-.share-redemption-grid-list5-box-information-candie {
-    color: #d92222;
-    font-size: 18px;
-    font-weight: bold;
     margin: 10px 0px 0px 0px;
 }
 
@@ -2552,6 +2567,24 @@ html, body {
     color: #666666;
     text-decoration: line-through;
     margin: 3px 0px 0px 0px;
+}
+
+.share-redemption-grid-list5-box-information-candie {
+    margin: 10px 0px 0px 0px;
+    color: black;
+    font-size: 16px;
+    position: absolute;
+    right: 10px;
+    top: 90px;
+}
+
+.share-redemption-grid-list5-box-information-candie-label {
+    float: right;
+}
+
+.share-redemption-grid-list5-box-information-candie-icon {
+    float: right;
+    margin: 0px 8px 0px 0px;
 }
 
 #share-redemption-grid-list5-pagination {
@@ -2906,7 +2939,8 @@ html, body {
 
 .share-redemption-row-list4-box-information {
     padding: 20px 18px 20px 18px;
-    min-height: 120px;
+    min-height: 95px;
+    position: relative;
 }
 
 .share-redemption-row-list4-box-information-title {
@@ -2922,27 +2956,44 @@ html, body {
     margin: 10px 0px 0px 0px;
 }
 
-.share-redemption-row-list4-box-information-candie {
-    color: #d92222;
-    font-size: 18px;
-    font-weight: bold;
+.share-redemption-row-list4-box-information-extra-info {
     margin: 10px 0px 0px 0px;
 }
 
-.share-redemption-row-list4-box-information-price {
-    margin: 5px 0px 0px 0px;
-}
-
-.share-redemption-row-list4-box-information-price-after {
+.share-redemption-row-list4-box-information-extra-info-price-after {
     color: #d92222;
     font-size: 18px;
     font-weight: bold;
 }
 
-.share-redemption-row-list4-box-information-price-before {
+.share-redemption-row-list4-box-information-extra-info-price-before {
     color: #666666;
     text-decoration: line-through;
     margin: 3px 0px 0px 0px;
+}
+
+.share-redemption-row-list4-box-information-extra-info-general {
+    color: #d92222;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.share-redemption-row-list4-box-information-candie {
+    margin: 10px 0px 0px 0px;
+    color: black;
+    font-size: 16px;
+    position: absolute;
+    right: 10px;
+    top: 95px
+}
+
+.share-redemption-row-list4-box-information-candie-label {
+    float: right;
+}
+
+.share-redemption-row-list4-box-information-candie-icon {
+    float: right;
+    margin: 5px 8px 0px 0px;
 }
 
 /*********************************************
@@ -3243,32 +3294,35 @@ html, body {
     box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
 }
 
+#hot-deal-header {
+    padding: 20px 20px 0px 20px;
+}
+
+#hot-deal-header-title {
+    color: #244964;
+    font-size: 25px;
+    letter-spacing: 1px;
+    font-weight: bold;
+    float: left;
+}
+
+#hot-deal-header-edit-link {
+    float: right;
+    margin: 0px 0px 10px 0px;
+}
+
+#hot-deal-header-title-bottom-line {
+    border-bottom: 1px solid lightgray;
+    padding: 0px 0px 6px 0px;
+}
+
 #hot-deal-content {
     padding: 20px;
 }
 
 #hot-deal-category {
-    float: left;
     font-size: 16px;
     padding: 0px 0px 25px 0px;
-}
-
-#hot-deal-edit-link {
-    float: right;
-    padding: 0px 0px 25px 0px;
-}
-
-#hot-deal-edit-link a {
-    font-size: 16px;
-}
-
-#hot-deal-edit-link-icon {
-    display: inline;
-}
-
-#hot-deal-edit-link-label {
-    display: inline;
-    margin: 0px 0px 0px 5px;
 }
 
 #hot-deal-table {
@@ -3555,11 +3609,33 @@ html, body {
  *********************************************/
 
 #redemption {
-    margin: 20px 0px 0px 0px;
+    margin: 20px 0px 70px 0px;
     background: white;
     -webkit-box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
     -moz-box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
     box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
+}
+
+#redemption-header {
+    padding: 20px 20px 0px 20px;
+}
+
+#redemption-header-title {
+    color: #244964;
+    font-size: 25px;
+    letter-spacing: 1px;
+    font-weight: bold;
+    float: left;
+}
+
+#redemption-header-edit-link {
+    float: right;
+    margin: 0px 0px 10px 0px;
+}
+
+#redemption-header-title-bottom-line {
+    border-bottom: 1px solid lightgray;
+    padding: 0px 0px 6px 0px;
 }
 
 #redemption-content {
@@ -3567,7 +3643,6 @@ html, body {
 }
 
 #redemption-category {
-    float: left;
     font-size: 16px;
     padding: 0px 0px 25px 0px;
 }
@@ -3579,24 +3654,6 @@ html, body {
 
 #redemption-print i {
     margin: 0px 5px 0px 0px;
-}
-
-#redemption-edit-link {
-    float: right;
-    padding: 0px 0px 0px 0px;
-}
-
-#redemption-edit-link a {
-    font-size: 16px;
-}
-
-#redemption-edit-link-icon {
-    display: inline;
-}
-
-#redemption-edit-link-label {
-    display: inline;
-    margin: 0px 0px 0px 5px;
 }
 
 #redemption-print-area-content {
@@ -3967,8 +4024,30 @@ html, body {
     box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
 }
 
+#dashboard-header {
+    padding: 20px 20px 0px 20px;
+}
+
+#dashboard-header-title {
+    color: #244964;
+    font-size: 25px;
+    letter-spacing: 1px;
+    font-weight: bold;
+    float: left;
+}
+
+#dashboard-header-edit-link {
+    float: right;
+    margin: 0px 0px 10px 0px;
+}
+
+#dashboard-header-title-bottom-line {
+    border-bottom: 1px solid lightgray;
+    padding: 0px 0px 6px 0px;
+}
+
 #dashboard-content {
-    padding: 20px;
+    padding: 10px 20px 20px 20px;
 }
 
 #dashboard-photo {
@@ -4023,6 +4102,19 @@ html, body {
     height: 32px;
 }
 
+#dashboard-photo-followers-following {
+    font-size: 15px;
+}
+
+#dashboard-photo-followers {
+    float: left;
+    margin: 0px 15px 5px 0px;
+}
+
+#dashboard-photo-following {
+    float: left;
+}
+
 #dashboard-info {
     font-size: 17px;
     float: left;
@@ -4041,14 +4133,8 @@ html, body {
     margin: 0px 15px 0px 0px;
 }
 
-#dashboard-info-edit-link {
-    float: right;
-}
-
 #dashboard-info-promo-code {
     float: right;
-    margin: 0px 25px 0px 0px;
-    line-height: 30px;
 }
 
 #dashboard-info-title-candie {
@@ -4082,22 +4168,9 @@ html, body {
     margin: 18px 0px 0px 0px;
 }
 
-#dashboard-info-followers-following {
-    padding: 20px 0px 30px 0px;
-}
-
-#dashboard-info-followers {
-    float: left;
-    margin: 0px 30px 0px 0px;
-}
-
-#dashboard-info-following {
-    float: left;
-}
-
 #dashboard-navigation {
     font-size: 15px;
-    margin: 15px 0px 0px 0px;
+    margin: 40px 0px 0px 0px;
 }
 
 #dashboard-navigation-each {

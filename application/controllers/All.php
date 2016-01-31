@@ -185,7 +185,7 @@ class All extends CI_Controller
             $this->data['sub_category'] = $this->m_custom->display_category($sub_category_id);
         }
         $this->data['check_is_main_category'] = $this->m_custom->check_is_main_category_id($sub_category_id, 1);
-        $this->data['page_path_name'] = 'share/hot_deal_grid_list4';
+        $this->data['page_path_name'] = 'share/redemption_grid_list4';
         $this->load->view('template/index_left_category', $this->data);
     }
 
@@ -1177,9 +1177,9 @@ class All extends CI_Controller
             //$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
             $this->data['message'] = NULL;
             $this->data['page_path_name'] = 'merchant/dashboard';
-            $this->data['hot_deal'] = base_url() . 'all/merchant-dashboard/' . $slug;
-            $this->data['candie_promotion'] = base_url() . 'all/merchant-dashboard/' . $slug . '/promotion';
-            $this->data['user_picture'] = base_url() . 'all/merchant-dashboard/' . $slug . '/picture';
+            $this->data['hot_deal'] = base_url() . 'all/merchant-dashboard/' . $slug . '#dashboard-navigation';
+            $this->data['candie_promotion'] = base_url() . 'all/merchant-dashboard/' . $slug . '/promotion#dashboard-navigation';
+            $this->data['user_picture'] = base_url() . 'all/merchant-dashboard/' . $slug . '/picture#dashboard-navigation';
             $this->data['user_upload_for_merchant'] = base_url() . 'user/upload_for_merchant/' . $slug;
             $this->data['show_expired'] = "<a href='" . base_url() . "all/album_merchant/'. $slug>Show Expired</a><br/>";
             $this->data['user_id'] = $user_id;
@@ -1187,7 +1187,6 @@ class All extends CI_Controller
             $this->data['follower_count'] = $this->albert_model->follower_count($user_id);
             $this->data['following_count'] = $this->albert_model->following_count($user_id);
             $this->data['temp_folder'] = $this->temp_folder; 
-            
             $meta = array(
                 array('property' => 'og:type', 'content' => 'article'),
                 array('property' => 'og:title', 'content' => $the_row->company),
@@ -1195,7 +1194,6 @@ class All extends CI_Controller
                 array('property' => 'og:image', 'content' => base_url() . $this->album_merchant_profile . $the_row->profile_image)
             );
             $this->data['meta_fb'] = meta_fb($meta);
-            
             if ($bottom_part == NULL)
             {
                 $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('hot', NULL, $user_id, 1, NULL, NULL, 0, 0, 0, 0, 1);

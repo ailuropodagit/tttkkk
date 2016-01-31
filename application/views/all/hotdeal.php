@@ -46,12 +46,11 @@
 
 <div id='hot-deal'>
     <div id="fb-root"></div>
-    <div id='hot-deal-content'>
-        <h1>Hot Deal</h1>
-        <div id="hot-deal-category">
-            Category: <?php echo $sub_category; ?>
+    <div id="hot-deal-header">
+        <div id="hot-deal-header-title">
+            Redemption
         </div>
-        <div id="hot-deal-edit-link">
+        <div id="hot-deal-header-edit-link">
             <?php
             if (check_is_login())
             {
@@ -64,16 +63,19 @@
                 if (check_correct_login_type($this->config->item('group_id_merchant'), $allowed_list, $advertise_id) || check_correct_login_type($this->config->item('group_id_supervisor'), $allowed_list, $advertise_id))
                 {
                     ?>
-                    <a href='<?php echo base_url() . "merchant/edit_hotdeal/" . $advertise_id ?>' >
-                        <div id="redemption-edit-link-icon"><i class="fa fa-pencil"></i></div>
-                        <div id="redemption-edit-link-label">Edit Hot Deal</div>
-                    </a>
+                    <a href='<?php echo base_url() . "merchant/edit_hotdeal/" . $advertise_id ?>' class="a-href-button">Edit Hot Deal</a>
                     <?php
                 }
             }
             ?>
         </div>
         <div class="float-fix"></div>
+        <div id="hot-deal-header-title-bottom-line"></div>
+    </div>
+    <div id='hot-deal-content'>
+        <div id="hot-deal-category">
+            Category: <?php echo $sub_category; ?>
+        </div>
         <div id='hot-deal-photo'>
             <div id='hot-deal-table'>
                 <div id='hot-deal-table-row'>

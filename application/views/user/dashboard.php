@@ -73,8 +73,17 @@ if($this->ion_auth->user()->num_rows())
 ?>
 
 <div id="dashboard">
+    <div id="dashboard-header">
+        <div id="dashboard-header-title">
+            Dashboard
+        </div>
+        <div id="dashboard-header-edit-link">
+            <a href='<?php echo base_url('user/profile') ?>' class="a-href-button">Edit My Profile</a>
+        </div>
+        <div class="float-fix"></div>
+        <div id="dashboard-header-title-bottom-line"></div>
+    </div>
     <div id="dashboard-content">
-        <h1>Dashboard</h1>
         <?php
         //USERS ROW
         $row_users = $query_users->row_array();
@@ -106,25 +115,39 @@ if($this->ion_auth->user()->num_rows())
                 }
                 ?>
             </div>
-            <?php if (check_correct_login_type($this->config->item('group_id_user')) && $dashboard_users_id == $logged_user_id) { ?>
-                <?php echo form_open_multipart('user/update_profile_image'); ?>
-                    <div id="dashboard-photo-note">
-                        <?php echo $this->config->item('upload_guide_image'); ?>
-                    </div>
-                    <div id="dashboard-photo-input-file">    
-                        <div id="dashboard-photo-choose-button">
-                            <div class="fileUpload btn btn-primary">
-                                <span>Choose</span>
-                                <input type="file" name="userfile" id="userfile" accept='image/*' class="upload"/>
-                            </div>
+            <?php if (check_correct_login_type($this->config->item('group_id_user')) && $dashboard_users_id == $logged_user_id)
+            {
+                //FORM OPEN
+                echo form_open_multipart('user/update_profile_image');
+                ?>
+                <div id="dashboard-photo-note">
+                    <?php echo $this->config->item('upload_guide_image'); ?>
+                </div>
+                <div id="dashboard-photo-input-file">    
+                    <div id="dashboard-photo-choose-button">
+                        <div class="fileUpload btn btn-primary">
+                            <span>Choose</span>
+                            <input type="file" name="userfile" id="userfile" accept='image/*' class="upload"/>
                         </div>
-                        <div id="dashboard-photo-save-button">
-                            <button name="button_action" type="submit" value="change_image" >Save</button>
-                        </div>
-                        <div id="float-fix"></div>
                     </div>
-                <?php echo form_close(); ?>
-            <?php  } ?>
+                    <div id="dashboard-photo-save-button">
+                        <button name="button_action" type="submit" value="change_image" >Save</button>
+                    </div>
+                    <div id="float-fix"></div>
+                </div>
+                <?php
+                //FORM CLOSE
+                echo form_close();
+            } 
+            ?>
+            <div id="dashboard-photo-followers-following">
+                <div id="dashboard-photo-followers">
+                    Followers : <a href='<?php echo base_url() ?>user/follower/user/<?php echo $user_id ?>'><?php echo $follower_count ?></a>
+                </div>
+                <div id="dashboard-photo-following">
+                    Following : <a href='<?php echo base_url() ?>user/following/user/<?php echo $user_id ?>'><?php echo $following_count ?></a>
+                </div>
+            </div>
         </div>
         <div id="dashboard-info">
             <div id="dashboard-info-title">
@@ -137,9 +160,6 @@ if($this->ion_auth->user()->num_rows())
                 {
                     $promo_code = $this->m_custom->promo_code_get('user', $logged_user_id, 1);
                     ?>
-                    <div id="dashboard-info-edit-link">
-                        <a href='<?php echo base_url('user/profile') ?>' class="a-href-button">Edit My Profile</a>
-                    </div>
                     <div id="dashboard-info-promo-code">
                         Promo Code : <?php echo $promo_code ?>
                     </div>
@@ -264,14 +284,6 @@ if($this->ion_auth->user()->num_rows())
                         </td>
                     </tr>
                 </table>
-            </div>
-            <div id="dashboard-info-followers-following">
-                <div id="dashboard-info-followers">
-                    Followers : <a href='<?php echo base_url() ?>user/follower/user/<?php echo $user_id ?>'><?php echo $follower_count ?></a>
-                </div>
-                <div id="dashboard-info-following">
-                    Following : <a href='<?php echo base_url() ?>user/following/user/<?php echo $user_id ?>'><?php echo $following_count ?></a>
-                </div>
             </div>
         </div>
         <div id="float-fix"></div>

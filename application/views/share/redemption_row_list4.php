@@ -110,22 +110,19 @@
                             ?>
                             <div class="float-fix"></div>
                         </div>
-                        <div class="share-redemption-row-list4-box-information-candie">
-                            <?php echo $candie ?> Candies
-                        </div>
                         <?php
                         //EXTRA INFO
                         if($show_extra_info)
                         {
                             ?>
-                            <div class="share-redemption-grid-list4-box-information-extra-info">
+                            <div class="share-redemption-row-list4-box-information-extra-info">
                                 <?php
                                 //PRICE
                                 if($show_extra_info == 121)
                                 {
                                     ?>
-                                    <div class="share-redemption-grid-list4-box-information-extra-info-price">
-                                        <div class="share-redemption-grid-list4-box-information-extra-info-price-after">
+                                    <div class="share-redemption-row-list4-box-information-extra-info-price">
+                                        <div class="share-redemption-row-list4-box-information-extra-info-price-after">
                                             <?php
                                             if ($price_after_show == 1)
                                             {
@@ -133,7 +130,7 @@
                                             }
                                             ?>
                                         </div>
-                                        <div class="share-redemption-grid-list4-box-information-extra-info-price-before">
+                                        <div class="share-redemption-row-list4-box-information-extra-info-price-before">
                                             <?php
                                             if ($price_before_show == 1)
                                             {
@@ -148,7 +145,7 @@
                                 if ($show_extra_info == 122)
                                 {
                                     ?>
-                                    <div class="share-redemption-grid-list4-box-information-extra-info-general">
+                                    <div class="share-redemption-row-list4-box-information-extra-info-general">
                                         <?php echo "Worth RM " . $voucher_worth ?>
                                     </div>
                                     <?php
@@ -157,7 +154,7 @@
                                 if ($show_extra_info == 123)
                                 {
                                     ?>
-                                    <div class="share-redemption-grid-list4-box-information-extra-info-general">
+                                    <div class="share-redemption-row-list4-box-information-extra-info-general">
                                         <?php echo "Get off - " . $get_off_percent . "%" ?>
                                     </div>
                                     <?php
@@ -166,7 +163,7 @@
                                 if ($show_extra_info == 124)
                                 {
                                     ?>
-                                    <div class="share-redemption-grid-list4-box-information-extra-info-general">
+                                    <div class="share-redemption-row-list4-box-information-extra-info-general">
                                         <?php echo "Buy " . $how_many_buy . " Get " . $how_many_get ?>
                                     </div>
                                     <?php
@@ -176,6 +173,15 @@
                             <?php
                         }
                         ?>
+                        <div class="share-redemption-row-list4-box-information-candie">
+                            <div class="share-redemption-row-list4-box-information-candie-label">
+                                <?php echo $candie ?> Candies
+                            </div>
+                            <div class="share-redemption-row-list4-box-information-candie-icon">
+                                <img src="<?php echo base_url('image/candy.png') ?>">
+                            </div>
+                        </div>
+                        <div class="float-fix"></div>
                     </div>
                 </a>
             </div>
