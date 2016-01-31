@@ -182,7 +182,7 @@
                 <div id="hot-deal-information-rate-earn-candie">
                     <?php
 //                    $rate_candie_earn = $this->m_custom->display_trans_config(3);
-//                    echo "Earn : " . $rate_candie_earn . " candy";
+//                    echo "Earn : " . $rate_candie_earn . " candies";
                     ?>
                 </div>    
             </div>
@@ -234,7 +234,7 @@
                 <div id="hot-deal-information-like-comment-earn-candie">
                     <?php
 //                    $like_comment_candie_earn = $this->m_custom->display_trans_config(2);
-//                    echo "Earn : " . $like_comment_candie_earn . " candy"; 
+//                    echo "Earn : " . $like_comment_candie_earn . " candies"; 
                     ?>
                     CLICK BY EARN CANDIES
                 </div>
@@ -249,7 +249,7 @@
                     <img src="<?php echo base_url() . 'image/social-media-facebook-share.png'; ?>" >
                 </div>
                 <div id="hot-deal-information-share-earn-candie">
-                    <?php //echo "Earn : " . $this->m_custom->display_trans_config(10) . " candy"; ?>
+                    <?php //echo "Earn : " . $this->m_custom->display_trans_config(10) . " candies"; ?>
                 </div>
             </div>
             <!--PEOPLE REACH-->

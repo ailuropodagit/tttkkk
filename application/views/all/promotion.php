@@ -131,7 +131,7 @@ if(isset($message))
             <div class="float-fix"></div>
             <!--REQUIRED CANDIES-->
             <div id="redemption-information-required-candies">
-                Require <?php echo $voucher_candie ?> Candy
+                Require <?php echo $voucher_candie ?> Candies
             </div>
             <!--SUB TITLE-->
             <div id="redemption-information-sub-title">
@@ -165,7 +165,7 @@ if(isset($message))
                 <div id="redemption-information-rate-earn-candie">
                     <?php
 //                    $rate_candie_earn = $this->m_custom->display_trans_config(3);
-//                    echo "Earn : " . $rate_candie_earn . " candy";
+//                    echo "Earn : " . $rate_candie_earn . " candies";
                     ?>
                 </div>
             </div>
@@ -253,7 +253,7 @@ if(isset($message))
                     <div id="redemption-information-like-comment-earn-candie">
                         <?php
 //                        $like_comment_candie_earn = $this->m_custom->display_trans_config(2);
-//                        echo "Earn : " . $like_comment_candie_earn . " candy"; 
+//                        echo "Earn : " . $like_comment_candie_earn . " candies"; 
                         ?>
                         CLICK BY EARN CANDIES
                     </div>
@@ -296,7 +296,7 @@ if(isset($message))
                     <img src="<?php echo base_url() . 'image/social-media-facebook-share.png'; ?>" >
                 </div>
                 <div id="redemption-information-share-earn-candie">
-                    <?php //echo "Earn : " . $this->m_custom->display_trans_config(10) . " candy" ?>
+                    <?php //echo "Earn : " . $this->m_custom->display_trans_config(10) . " candies" ?>
                 </div>
             </div>
             <!--TERMS AND CONDITIONS-->
@@ -333,7 +333,7 @@ if(isset($message))
                             <div id="redemption-information-available-branch-name"><?php echo $value['name'] ?></div>
                             <div id="redemption-information-available-branch-address"><?php echo $value['address'] ?></div>
                             <div id="redemption-information-available-branch-tel"><a href='tel: <?php echo $value['phone'] ?>'><?php echo $value['phone'] ?></a></div>
-                            <div id="redemption-information-available-branch-view-map"><a href='<?php echo base_url() ?>all/merchant-map/<?php echo $value['branch_id'] ?>' target='_blank'>View Map</a></div>
+                            <div id="redemption-information-available-branch-view-map"><a href='<?php echo base_url() ?>all/merchant-map/<?php echo $value['branch_id'] ?>#dashboard' target='_blank'>View Map</a></div>
                         </li>
                         <?php
                     }

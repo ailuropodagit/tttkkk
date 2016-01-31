@@ -75,7 +75,7 @@
                 <div class="float-fix"></div>
                 <!--REQUIRED CANDIES-->
                 <div id="redemption-information-required-candies">
-                    Require <?php echo $voucher_candie ?> Candy
+                    Require <?php echo $voucher_candie ?> Candies
                 </div>
                 <!--SUB TITLE-->
                 <div id="redemption-information-sub-title">

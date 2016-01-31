@@ -155,6 +155,20 @@ class M_custom extends CI_Model
         return $have_access;
     }
 
+    //Because got a bug on rating star which that if top grid list contain same advertise with bottom suggestion list, the suggestion list start will go to top grid list
+    //So temporary use this way to check is if it suggestion list, then do some special thing on the rating star naming
+    public function check_is_suggestion_list($title)
+    {
+        if (strpos($title, 'uggest') !== false)
+        {
+            return True;
+        }
+        else
+        {
+            return False;
+        }
+    }
+
     public function check_role($the_table, $the_column, $the_value, $wanted_column)
     {
         $have_role = 0;
@@ -2960,7 +2974,7 @@ class M_custom extends CI_Model
             }
             else
             {
-                $valid_row = 0;
+                $valid_row = 1;
             }
             $valid_row2 = $this->m_custom->check_can_show_advertise($row);
             

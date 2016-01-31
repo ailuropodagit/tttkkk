@@ -111,7 +111,7 @@
                             <div class="float-fix"></div>
                         </div>
                         <div class="share-redemption-row-list4-box-information-candie">
-                            <?php echo $candie ?> Candy
+                            <?php echo $candie ?> Candies
                         </div>
                         <?php
                         //EXTRA INFO

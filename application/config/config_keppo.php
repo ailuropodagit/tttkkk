@@ -61,7 +61,7 @@ $config['froze_account_activate'] = 0;
 $config['notification_auto_mark_as_read'] = 1;
 $config['strong_password'] = 1;
 
-$config['custom_per_page'] = '8';
+$config['custom_per_page'] = '10';
 
 $config['gender_id_male'] = '13';
 $config['gender_id_female'] = '14';

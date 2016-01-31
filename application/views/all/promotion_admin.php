@@ -93,7 +93,7 @@ if(isset($message))
             <div id="float-fix"></div>
             <!--REQUIRED CANDIES-->
             <div id="redemption-information-required-candies">
-                Require <?php echo $voucher_candie ?> Candy
+                Require <?php echo $voucher_candie ?> Candies
             </div>
             <div class="float-fix"></div>
             <br/>
@@ -272,4 +272,14 @@ if(isset($message))
     </div>
 </div>
 
-<div id="redemption-bottom-spacing"></div>
+<!--<div id="redemption-bottom-spacing"></div>-->
+<div id='redemption-suggestion'>
+    <?php
+    if (!empty($advertise_suggestion_list))
+    {     
+        $data['share_hotdeal_redemption_list'] = $advertise_suggestion_list;
+        $data['title'] = "Redemption Suggestion";
+        $this->load->view('share/redemption_grid_list5', $data);
+    }
+    ?>
+</div>
