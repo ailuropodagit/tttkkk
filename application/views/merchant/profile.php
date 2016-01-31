@@ -60,12 +60,14 @@ if(isset($message))
                 <div id="profile-photo-note">
                     <?php echo $this->config->item('upload_guide_image'); ?>
                 </div>
-                <div id="dashboard-photo-input-file">                      
-                    <div class="fileUpload btn btn-primary" style="float:left">
-                        <span>Choose</span>
-                        <input type="file" name="userfile" id="userfile" accept='image/*' class="upload"/>
+                <div id="dashboard-photo-input-file">
+                    <div id="dashboard-photo-choose-button">
+                        <div class="fileUpload btn btn-primary">
+                            <span>Choose</span>
+                            <input type="file" name="userfile" id="userfile" accept='image/*' class="upload"/>
+                        </div>
                     </div>
-                    <div id="dashboard-photo-button" style="float:right">
+                    <div id="dashboard-photo-save-button">
                         <button name="button_action" type="submit" value="change_image" >Save</button>
                     </div>
                     <div id="float-fix"></div>
@@ -212,20 +214,20 @@ if(isset($message))
      ?>
      <div id='profile-bottom-link'>
          <div id='profile-bottom-link-left'>
-             <a href='<?php echo base_url(); ?>merchant/upload_ssm'>Submit SSM forms</a>
+             <a href='<?php echo base_url() ?>merchant/upload_ssm' class="a-href-button">Submit SSM forms</a>
          </div>
          <div id="profile-bottom-link-right">
              <div id="profile-bottom-link-right-each">
-                 <a href="<?php echo base_url() ?>merchant/branch/add">Add Branch</a>
+                 <a href="<?php echo base_url() ?>merchant/branch/add" class="a-href-button">Add Branch</a>
              </div>
              <div id="profile-bottom-link-right-each">
-                 <a href="<?php echo base_url() ?>merchant/branch">View Branch</a>
+                 <a href="<?php echo base_url() ?>merchant/branch" class="a-href-button">View Branch</a>
              </div>
              <div id="profile-bottom-link-right-each">
-                 <a href="<?php echo base_url() ?>merchant/supervisor/add">Add Supervisor</a>
+                 <a href="<?php echo base_url() ?>merchant/supervisor/add" class="a-href-button">Add Supervisor</a>
              </div>
              <div id="profile-bottom-link-right-each">
-                 <a href="<?php echo base_url() ?>merchant/supervisor">View Supervisor</a>
+                 <a href="<?php echo base_url() ?>merchant/supervisor" class="a-href-button">View Supervisor</a>
              </div>
              <div id='float-fix'></div>
          </div>

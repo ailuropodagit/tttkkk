@@ -4019,6 +4019,10 @@ html, body {
     float: left;
 }
 
+#dashboard-photo-save-button button {
+    height: 32px;
+}
+
 #dashboard-info {
     font-size: 17px;
     float: left;
