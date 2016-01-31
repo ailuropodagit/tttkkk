@@ -173,7 +173,7 @@ $fetch_method = $this->router->fetch_method();
                             }else{
                              ?>
                         <div class="share-redemption-grid-list4-box-information-candie">
-                            <?php echo $candie ?> Candy
+                            <?php echo $candie ?> Candies
                         </div>
                         <?php
                             }

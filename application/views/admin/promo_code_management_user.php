@@ -34,7 +34,7 @@ if (isset($message))
                         <th>Name</th>
                         <th>Email</th>
                         <th>Promo Code</th>
-                        <th>Candy</th>
+                        <th>Candies</th>
                         <?php if($code_type == 'user'){  ?>
                         <th>Cash Back</th>
                         <?php } ?>

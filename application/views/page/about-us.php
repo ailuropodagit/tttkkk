@@ -10,7 +10,7 @@
     </p>
     <p>
         Keppo.my is B2B2C marketplace on media social to boots up Malaysia economic. This platform is face-to-face
-        delivering information to user's. User;s able to collect candy from merchants (example: likes, Rating, view 
+        delivering information to user's. User;s able to collect candies from merchants (example: likes, Rating, view 
         advertisement, share on facebook or instagram). 
     </p>    
     
