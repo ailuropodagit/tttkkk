@@ -4007,12 +4007,16 @@ html, body {
     margin: 15px 0px 15px 0px;
 }
 
-#dashboard-photo-input-file input[type='file'] {
-    width: 200px;
+#dashboard-photo-choose-button {
+    width: 74px;
+    margin: 0px 0px 0px -10px;
+    text-align: center;
+    float: left;
 }
-
-#dashboard-photo-button {
-    margin: 10px 0px 20px 0px;
+    
+#dashboard-photo-save-button {
+    margin: 10px 0px 0px 0px;
+    float: left;
 }
 
 #dashboard-info {

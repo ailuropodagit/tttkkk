@@ -131,13 +131,13 @@
     </head>
     <body>
         <?php
-//        if (!isset($_COOKIE['visit_first_time']))
-//        {
-//            //COOKIE NO EXPIRE
-//            setcookie('visit_first_time', 'no');
-//            //BOOSTRAP MODAL
-//            if (!$this->ion_auth->logged_in())
-//            {
+        if (!isset($_COOKIE['visit_first_time']))
+        {
+            //COOKIE NO EXPIRE
+            setcookie('visit_first_time', 'no');
+            //BOOSTRAP MODAL
+            if (!$this->ion_auth->logged_in())
+            {
                 ?>
                 <div class="modal fade" id="visit-first-time-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                     <div class="modal-dialog modal-dialog" role="document">
@@ -250,8 +250,8 @@
                     </div>
                 </div>
                 <?php
-//            }
-//        }
+            }
+        }
         ?>
         <!--HEADER-->
         <div id='header'>

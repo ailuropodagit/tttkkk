@@ -111,17 +111,18 @@ if($this->ion_auth->user()->num_rows())
                     <div id="dashboard-photo-note">
                         <?php echo $this->config->item('upload_guide_image'); ?>
                     </div>
-                    <div id="dashboard-photo-input-file">                      
-                        <div class="fileUpload btn btn-primary" style="float:left">
-                            <span>Choose</span>
-                            <input type="file" name="userfile" id="userfile" accept='image/*' class="upload"/>
+                    <div id="dashboard-photo-input-file">    
+                        <div id="dashboard-photo-choose-button">
+                            <div class="fileUpload btn btn-primary">
+                                <span>Choose</span>
+                                <input type="file" name="userfile" id="userfile" accept='image/*' class="upload"/>
+                            </div>
                         </div>
-                        <div id="dashboard-photo-button" style="float:right">
+                        <div id="dashboard-photo-save-button">
                             <button name="button_action" type="submit" value="change_image" >Save</button>
                         </div>
                         <div id="float-fix"></div>
                     </div>
-                    
                 <?php echo form_close(); ?>
             <?php  } ?>
         </div>
