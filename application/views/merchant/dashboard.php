@@ -40,6 +40,9 @@ $dashboard_merchant_slug = $this->uri->segment(3);
 $where_read_user = array('slug'=>$dashboard_merchant_slug);
 $dashboard_users_id = $this->albert_model->read_user($where_read_user)->row()->id;
 
+//URI
+$uri_segment_4 = $this->uri->segment(4);
+
 //LOGGED
 if($this->ion_auth->user()->num_rows())
 {
@@ -209,20 +212,18 @@ if($this->ion_auth->user()->num_rows())
                 </table>
             </div>
         </div>
-        <div id="float-fix"></div>
+        <div id="float-fix"></div>        
         <div id="dashboard-navigation">
-            <div id="dashboard-navigation-each">
+            <div id="dashboard-navigation-each" <?php if($uri_segment_4 == ""){ echo 'class="dashboard-navigation-each-active"'; } ?>>
                 <a href="<?php echo $hot_deal; ?>"><i class="fa fa-fire dashboard-navigation-each-icon"></i>Hot Deal</a>
             </div>
-            <div id="dashboard-navigation-separater">|</div>
-            <div id="dashboard-navigation-each">
+            <div id="dashboard-navigation-each" <?php if($uri_segment_4 == "promotion"){ echo 'class="dashboard-navigation-each-active"'; } ?>>
                 <a href="<?php echo $candie_promotion; ?>"><i class="fa fa-gift dashboard-navigation-each-icon"></i>Redemption</a>
             </div>
-            <div id="dashboard-navigation-separater">|</div>
-            <div id="dashboard-navigation-each">
+            <div id="dashboard-navigation-each" <?php if($uri_segment_4 == "picture"){ echo 'class="dashboard-navigation-each-active"'; } ?>>
                 <a href="<?php echo $user_picture; ?>" ><i class="fa fa-picture-o dashboard-navigation-each-icon"></i>User's Picture</a>
             </div>
+            <div id="float-fix"></div>
         </div>
-        <div id="float-fix"></div>
     </div>
 </div>

@@ -1056,7 +1056,6 @@ class All extends CI_Controller
                     array('property' => 'og:image', 'content' => $user_data['profile_image_url'])
                 );
                 $data['meta_fb'] = meta_fb($meta);
-
                 $this->load->view('template/index_background_blank', $data);
             }
             else

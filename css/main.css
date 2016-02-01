@@ -2049,9 +2049,9 @@ html, body {
 
 #share-hot-deal-grid-list5-old-combine {
     background: white;
-    height: 20px;
+    height: 12px;
     width: 100%;
-    margin: 0px 0px -18px 0px;
+    margin: -20px 0px -7px 0px;
     position: relative;
     z-index: 299;
 }
@@ -4083,7 +4083,7 @@ html, body {
 }
 
 #dashboard-photo-input-file {
-    margin: 15px 0px 15px 0px;
+    margin: 15px 0px 0px 0px;
 }
 
 #dashboard-photo-choose-button {
@@ -4104,6 +4104,7 @@ html, body {
 
 #dashboard-photo-followers-following {
     font-size: 15px;
+    margin: 15px 0px 0px 0px;
 }
 
 #dashboard-photo-followers {
@@ -4170,21 +4171,50 @@ html, body {
 
 #dashboard-navigation {
     font-size: 15px;
-    margin: 40px 0px 0px 0px;
+    margin: 40px 0px 0px -20px;
+    border-bottom: 1px solid lightgray;
+    width: calc(100% + 40px);
 }
 
 #dashboard-navigation-each {
     float: left;
+    border: 1px solid lightgray;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    margin: 0px 6px -1px 0px;
+    background: whitesmoke;
+}
+
+#dashboard-navigation-each:first-child {
+    margin-left: 20px;
+}
+
+#dashboard-navigation-each a {
+    display: block;
+    padding: 10px 20px 10px 20px;
+    text-decoration: none;
+    color: #a7a7a7;
+}
+
+#dashboard-navigation-each i {
+    color: #a7a7a7;
 }
 
 .dashboard-navigation-each-icon {
     margin-right: 7px;
 }
 
-#dashboard-navigation-separater {
-    color: lightgray;
-    margin: 0px 15px 0px 15px;
-    float: left;
+.dashboard-navigation-each-active {
+    background: white !important;
+    border-bottom: 1px solid white !important;
+}
+
+.dashboard-navigation-each-active a {
+    color: #404041 !important;
+}
+
+.dashboard-navigation-each-active i {
+    color: #00a2e6 !important;
 }
 
 /*********************************************
@@ -4193,9 +4223,9 @@ html, body {
 
 #album-user-combine {
     background: white;
-    height: 20px;
+    height: 12px;
     width: 100%;
-    margin: 0px 0px -18px 0px;
+    margin: -20px 0px -7px 0px;
     position: relative;
     z-index: 299;
 }
@@ -4720,7 +4750,6 @@ html, body {
 
 #profile-bottom-link-right-each {
     display: inline;
-    margin: 0px 10px 0px 0px;
 }
 
 /* CHANGE PASSWORD

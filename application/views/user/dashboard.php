@@ -45,6 +45,9 @@ $album_user_profile = $this->config->item('album_user_profile');
 //DASHBOARD
 $dashboard_users_id = $this->uri->segment(3);
 
+//URI
+$uri_segment_4 = $this->uri->segment(4);
+
 //LOGGED
 if($this->ion_auth->user()->num_rows())
 {  
@@ -288,12 +291,11 @@ if($this->ion_auth->user()->num_rows())
         </div>
         <div id="float-fix"></div>
         <div id="dashboard-navigation">
-            <div id="dashboard-navigation-each">
-                <a href="<?php echo base_url() ?>all/user_dashboard/<?php echo $dashboard_users_id ?>#dashboard-navigation"><i class="fa fa-picture-o dashboard-navigation-each-icon"></i>User Album</a>
+            <div id="dashboard-navigation-each" <?php if($uri_segment_4 == ""){ echo 'class="dashboard-navigation-each-active"'; } ?>>
+                <a href="<?php echo base_url("all/user_dashboard/$dashboard_users_id#dashboard-navigation") ?>"><i class="fa fa-picture-o dashboard-navigation-each-icon"></i>User Album</a>
             </div>
-            <div id="dashboard-navigation-separater">|</div>
-            <div id="dashboard-navigation-each">
-                <a href="<?php echo base_url() ?>all/user_dashboard/<?php echo $dashboard_users_id ?>/merchant_album#dashboard-navigation"><i class="fa fa-file-image-o dashboard-navigation-each-icon"></i>Merchant Album</a>
+            <div id="dashboard-navigation-each" <?php if($uri_segment_4 == "merchant_album"){ echo 'class="dashboard-navigation-each-active"'; } ?>>
+                <a href="<?php echo base_url("all/user_dashboard/$dashboard_users_id/merchant_album#dashboard-navigation") ?>"><i class="fa fa-file-image-o dashboard-navigation-each-icon"></i>Merchant Album</a>
             </div>
             <div id="float-fix"></div>
         </div>

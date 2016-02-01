@@ -15,7 +15,6 @@ if ($fetch_method == 'user_dashboard' || $fetch_method == 'merchant_dashboard')
 ?>
 
 <div id="album-user">
-    
     <div id="album-user-header">
         <div id='album-user-header-title'><?php echo $title ?></div>
         <?php

@@ -1,27 +1,4 @@
 /*********************************************
- ** FOOTER
- *********************************************/
-
-#footer-navigation-block1 {
-    width: 50%;
-}
-
-#footer-navigation-block2 {
-    width: 50%;
-}
-
-#footer-navigation-block3 {
-    width: 50%;
-    -moz-box-shadow: none;
-    -webkit-box-shadow: none;
-    box-shadow: none
-}
-
-#footer-navigation-block4 {
-    width: 50%;
-}
-
-/*********************************************
  ** HOME ROW 2 COLUMN 1
  *********************************************/
 
@@ -71,4 +48,27 @@
     float: none;
     width: 100%;
     margin: 0px;
+}
+
+/*********************************************
+ ** FOOTER
+ *********************************************/
+
+#footer-navigation-block1 {
+    width: 50%;
+}
+
+#footer-navigation-block2 {
+    width: 50%;
+}
+
+#footer-navigation-block3 {
+    width: 50%;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none
+}
+
+#footer-navigation-block4 {
+    width: 50%;
 }
