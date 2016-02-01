@@ -1,6 +1,5 @@
 <script type="text/javascript" src="<?php echo base_url() ?>js/jquery.ajaxfileupload.js"></script>
 <script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script>
-
 <script type="text/javascript">
     function showraceother()
     {
@@ -50,43 +49,57 @@ if(isset($message))
     <h1><?php echo $title; ?></h1>
     <div id='profile-content'>
         
-        <?php if($can_edit == 1){ ?>
-        <div id="profile-photo">
-            <div id="profile-photo-box">
-                <?php            
-                if(IsNullOrEmptyString($image))
-                {
-                    ?>
-                    <img src="<?php echo base_url().$this->config->item('empty_image'); ?>" id="userimage">
+        <?php
+        if ($can_edit == 1)
+        { 
+            ?>
+            <div id="profile-photo">
+                <div id="profile-photo-box">
                     <?php
-                }
-                else
-                {
+                    if (IsNullOrEmptyString($image))
+                    {
+                        ?>
+                        <img src="<?php echo base_url() . $this->config->item('empty_image'); ?>" id="userimage">
+                        <?php
+                    }
+                    else
+                    {
+                        ?>
+                        <img src="<?php echo base_url() . $image_path . $image ?>" id="userimage">
+                        <?php
+                    }
                     ?>
-                    <img src="<?php echo base_url() . $image_path . $image ?>" id="userimage">
-                    <?php
+                </div>
+                <?php 
+                if (check_correct_login_type($this->config->item('group_id_user')))
+                { 
+                    //FORM OPEN
+                    echo form_open_multipart('user/update_profile_image'); 
+                        ?>
+                        <div id="profile-photo-note">
+                            <?php echo $this->config->item('upload_guide_image'); ?>
+                        </div>
+                        <div id="dashboard-photo-input-file">     
+                            <div id="dashboard-photo-choose-button">
+                                <div class="fileUpload btn btn-primary">
+                                    <span>Choose</span>
+                                    <input type="file" name="userfile" id="userfile" accept='image/*' class="upload"/>
+                                </div>
+                            </div>
+                            <div id="dashboard-photo-save-button">
+                                <button name="button_action" type="submit" value="change_image" >Save</button>
+                            </div>
+                            <div id="float-fix"></div>
+                        </div>
+                        <?php 
+                    //FORM CLOSE
+                    echo form_close();
                 }
                 ?>
             </div>
-            <?php if (check_correct_login_type($this->config->item('group_id_user'))) { ?>
-                <?php echo form_open_multipart('user/update_profile_image'); ?>
-                    <div id="profile-photo-note">
-                        <?php echo $this->config->item('upload_guide_image'); ?>
-                    </div>
-                    <div id="dashboard-photo-input-file">                      
-                        <div class="fileUpload btn btn-primary" style="float:left">
-                            <span>Choose</span>
-                            <input type="file" name="userfile" id="userfile" accept='image/*' class="upload"/>
-                        </div>
-                        <div id="dashboard-photo-button" style="float:right">
-                            <button name="button_action" type="submit" value="change_image" >Save</button>
-                        </div>
-                        <div id="float-fix"></div>
-                    </div>
-                <?php echo form_close(); ?>
-            <?php  } ?>
-        </div>
-        <?php } ?>
+            <?php
+        }
+        ?>
         
         <div id='profile-info'> 
             <?php echo form_open(uri_string()); ?>
@@ -99,15 +112,21 @@ if(isset($message))
                     <div id='profile-info-form-each-label'><?php echo lang('create_user_last_name_label', 'last name'); ?></div>
                     <div id='profile-info-form-each-input'><?php echo form_input($last_name); ?></div>
                 </div>
-                <?php if($can_edit == 1){ ?>
-                <div id='profile-info-form-each'>
-                    <div id='profile-info-form-each-label'><?php echo lang('create_user_promo_code_label', 'promo_code_no'); ?></div>
-                    <div id='profile-info-form-each-input'><?php echo form_input($promo_code_no); ?></div>
-                </div>    
-                <div id='profile-info-form-each'>
-                    <div id='profile-info-form-each-label'><?php echo lang('promo_code_redeem_count') . $promo_code_url; ?></div>
-                </div>
-                <?php } ?>
+                
+                <?php if ($can_edit == 1)
+                { 
+                    ?>
+                    <div id='profile-info-form-each'>
+                        <div id='profile-info-form-each-label'><?php echo lang('create_user_promo_code_label', 'promo_code_no'); ?></div>
+                        <div id='profile-info-form-each-input'><?php echo form_input($promo_code_no); ?></div>
+                    </div>    
+                    <div id='profile-info-form-each'>
+                        <div id='profile-info-form-each-label'><?php echo lang('promo_code_redeem_count') . $promo_code_url; ?></div>
+                    </div>
+                    <?php 
+                } 
+                ?>
+                
                 <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_user_description_label', 'description'); ?></div>
                     <div id='profile-info-form-each-input'><?php echo form_textarea($description); ?></div>
@@ -164,10 +183,12 @@ if(isset($message))
                     <div id='profile-info-form-each-label'><?php echo lang('create_user_is_blogger_label', 'is_blogger'); ?>
                         <?php echo form_checkbox($is_blogger); ?></div>
                 </div>
+                
                 <?php 
                 $div_show_hide = "style='display:none'";
-                if($us_is_blogger == 1){ 
-                     $div_show_hide = "style='display:inline'";
+                if ($us_is_blogger == 1)
+                {
+                    $div_show_hide = "style='display:inline'";
                 }
                 ?>
               
@@ -205,16 +226,17 @@ if(isset($message))
                         }
                         ?>  
                     </div>
-                </div>
-                               
+                </div>     
                 <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_user_is_photographer_label', 'is_photographer'); ?>
                         <?php echo form_checkbox($is_photographer); ?></div>
                 </div>
-                <?php 
+                
+                <?php
                 $div_show_hide = "style='display:none'";
-                if($us_is_photographer == 1){ 
-                     $div_show_hide = "style='display:inline'";
+                if ($us_is_photographer == 1)
+                {
+                    $div_show_hide = "style='display:inline'";
                 }
                 ?>
               
@@ -233,25 +255,24 @@ if(isset($message))
                             {
                                 $checked_or_not = 'checked';
                             }
-                                ?>
-                                <div id="candie-promotion-form-voucher-checkbox-each">
-                                    <table border="0" cellpadding="0px" cellspacing="0px">
-                                        <tr>
-                                            <td valign="top"><input type='checkbox' id="photography_list-<?php echo $key ?>" name='photography_list[]' value='<?php echo $key ?>' <?php echo $checked_or_not; ?>></td>
-                                            <td valign="top">
-                                                <div id="candie-promotion-form-voucher-checkbox-each-label">
-                                                    <label for="photography_list-<?php echo $key ?>"><?php echo $value ?></label>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                                <?php                  
+                            ?>
+                            <div id="candie-promotion-form-voucher-checkbox-each">
+                                <table border="0" cellpadding="0px" cellspacing="0px">
+                                    <tr>
+                                        <td valign="top"><input type='checkbox' id="photography_list-<?php echo $key ?>" name='photography_list[]' value='<?php echo $key ?>' <?php echo $checked_or_not; ?>></td>
+                                        <td valign="top">
+                                            <div id="candie-promotion-form-voucher-checkbox-each-label">
+                                                <label for="photography_list-<?php echo $key ?>"><?php echo $value ?></label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <?php                  
                         }
                         ?>  
                     </div>
                 </div>
-
             </div>
             <?php echo form_hidden('id', $user_id); ?>
             <?php echo form_hidden($csrf); ?>

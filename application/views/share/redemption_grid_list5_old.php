@@ -289,5 +289,5 @@ if ($fetch_method != 'album_merchant' && $fetch_method != 'album_redemption')
 {
     $data['share_hotdeal_redemption_list'] = $query_advertise_suggestion;
     $data['title'] = $advertise_suggestion_page_title;
-    $this->load->view('share/hot_deal_grid_list5.php', $data);
+    $this->load->view('share/redemption_grid_list5.php', $data);
 }

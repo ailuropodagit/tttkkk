@@ -40,12 +40,11 @@ if(isset($message))
 
 <div id="redemption">
     <div id="fb-root"></div>
-    <div id="redemption-content">
-        <h1>Redemption</h1>
-        <div id="redemption-category">
-            Category: <?php echo $sub_category; ?>
+    <div id="redemption-header">
+        <div id="redemption-header-title">
+            Redemption
         </div>
-        <div id="redemption-edit-link">
+        <div id="redemption-header-edit-link">
             <?php
             if (check_is_login())
             {
@@ -54,17 +53,19 @@ if(isset($message))
                 if (check_correct_login_type($this->config->item('group_id_merchant'), $allowed_list, $advertise_id))
                 {
                     ?>
-                    <a href='<?php echo base_url() . "merchant/candie_promotion/" . $advertise_id ?>'>
-                        <div id="redemption-edit-link-icon"><i class="fa fa-pencil"></i></div>
-                        <div id="redemption-edit-link-label">Edit Redemption</div>
-                    </a>
+                    <a href='<?php echo base_url() . "merchant/candie_promotion/" . $advertise_id ?>' class="a-href-button">Edit Redemption</a>
                     <?php
                 }
             }
             ?>
         </div>
-        <div id="float-fix"></div>
-        <div id="print-area"></div>
+        <div class="float-fix"></div>
+        <div id="redemption-header-title-bottom-line"></div>
+    </div>
+    <div id="redemption-content">
+        <div id="redemption-category">
+            Category: <?php echo $sub_category; ?>
+        </div>
         <div id="redemption-photo">
             <div id='redemption-table'>
                 <div id='redemption-table-row'>

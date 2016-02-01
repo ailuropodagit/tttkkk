@@ -54,8 +54,17 @@ if($this->ion_auth->user()->num_rows())
 ?>
         
 <div id="dashboard">
+    <div id="dashboard-header">
+        <div id="dashboard-header-title">
+            Dashboard
+        </div>
+        <div id="dashboard-header-edit-link">
+            <a href='<?php echo base_url('merchant/profile') ?>' class="a-href-button">Edit My Profile</a>
+        </div>
+        <div class="float-fix"></div>
+        <div id="dashboard-header-title-bottom-line"></div>
+    </div>
     <div id="dashboard-content">
-        <h1>Dashboard</h1>
         <div id='dashboard-photo'>
             <div id="dashboard-photo-box">
                 <?php            
@@ -73,23 +82,39 @@ if($this->ion_auth->user()->num_rows())
                 }
                 ?>
             </div>
-            <?php if (check_correct_login_type($this->config->item('group_id_merchant')) && $dashboard_users_id == $logged_user_id) { ?>
-                <?php echo form_open_multipart('merchant/update_profile_image'); ?>
+            <?php 
+            if (check_correct_login_type($this->config->item('group_id_merchant')) && $dashboard_users_id == $logged_user_id)
+            { 
+                //FORM OPEN
+                echo form_open_multipart('merchant/update_profile_image'); ?>
                 <div id="profile-photo-note">
-                    <?php echo $this->config->item('upload_guide_image'); ?>
+                <?php echo $this->config->item('upload_guide_image'); ?>
                 </div>
-                <div id="dashboard-photo-input-file">                      
-                    <div class="fileUpload btn btn-primary" style="float:left">
-                        <span>Choose</span>
-                        <input type="file" name="userfile" id="userfile" accept='image/*' class="upload"/>
+                <div id="dashboard-photo-input-file">     
+                    <div id="dashboard-photo-choose-button">
+                        <div class="fileUpload btn btn-primary">
+                            <span>Choose</span>
+                            <input type="file" name="userfile" id="userfile" accept='image/*' class="upload"/>
+                        </div>
                     </div>
-                    <div id="dashboard-photo-button" style="float:right">
+                    <div id="dashboard-photo-save-button">
                         <button name="button_action" type="submit" value="change_image" >Save</button>
                     </div>
                     <div id="float-fix"></div>
                 </div>
-                <?php echo form_close(); ?>
-            <?php  } ?>
+                <?php
+                //FORM CLOSE
+                echo form_close();
+            }
+            ?>
+            <div id="dashboard-photo-followers-following">
+                <div id="dashboard-photo-followers">
+                    User followers : <a href='<?php echo base_url() ?>merchant/follower/user/<?php echo $user_id ?>'><?php echo $follower_count ?></a>
+                </div>
+                <div id="dashboard-photo-following">
+                    Merchants following : <a href='<?php echo base_url() ?>merchant/following/user/<?php echo $user_id ?>'><?php echo $following_count ?></a>
+                </div>
+            </div>
         </div>
         <div id="dashboard-info">
             <div id="dashboard-info-title">
@@ -102,9 +127,6 @@ if($this->ion_auth->user()->num_rows())
                 {
                     $promo_code = $this->m_custom->promo_code_get('merchant', $logged_user_id, 1);
                     ?>
-                    <div id="dashboard-info-edit-link">
-                        <a href='<?php echo base_url('merchant/profile') ?>' class="a-href-button">Edit My Profile</a>
-                    </div>
                     <div id="dashboard-info-promo-code">
                         Promo Code : <?php echo $promo_code ?>
                     </div>
@@ -185,14 +207,6 @@ if($this->ion_auth->user()->num_rows())
                         <td><div class="text-ellipsis"><?php echo "<a target='_blank' href='".$facebook_url."' >".$facebook_url."</a>"; ?></div></td>
                     </tr>
                 </table>
-            </div>
-            <div id="dashboard-info-followers-following">
-                <div id="dashboard-info-followers">
-                    User followers : <a href='<?php echo base_url() ?>merchant/follower/user/<?php echo $user_id ?>'><?php echo $follower_count ?></a>
-                </div>
-                <div id="dashboard-info-following">
-                    Merchants following : <a href='<?php echo base_url() ?>merchant/following/user/<?php echo $user_id ?>'><?php echo $following_count ?></a>
-                </div>
             </div>
         </div>
         <div id="float-fix"></div>

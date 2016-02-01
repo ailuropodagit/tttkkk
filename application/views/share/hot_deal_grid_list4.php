@@ -160,7 +160,8 @@ $fetch_method = $this->router->fetch_method();
                         </div>
                         <div class="share-hot-deal-grid-list4-box-information-rating">
                             <?php
-                            if ($fetch_method != 'redemption_list'){
+                            if ($fetch_method != 'redemption_list')
+                            {
                                 for ($i = 1; $i <= 5; $i++)
                                 {
                                     if ($i == round($average_rating))
@@ -172,12 +173,6 @@ $fetch_method = $this->router->fetch_method();
                                         echo "<input class='star' type='radio' name='a-rating-$advertise_id' disabled='disabled' value='" . $i . "'/>";
                                     }
                                 }
-                            }else{
-                             ?>
-                        <div class="share-redemption-grid-list4-box-information-candie">
-                            <?php echo $candie ?> Candies
-                        </div>
-                        <?php
                             }
                             ?>
                             <div class="float-fix"></div>
