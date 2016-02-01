@@ -65,7 +65,9 @@ $fetch_method = $this->router->fetch_method();
             $merchant_dashboard_url = $this->m_custom->generate_merchant_link($merchant_id);
             $advertise_type = $row['advertise_type'];
             $price_before = $row['price_before'];
+            $price_before_show = $row['price_before_show'];
             $price_after = $row['price_after'];
+            $price_after_show = $row['price_after_show'];
             $end_time = $row['end_time'];
             $post_hour = $row['post_hour'];
             $candie = $row['voucher_candie'];
@@ -183,7 +185,7 @@ $fetch_method = $this->router->fetch_method();
                         <div class="share-hot-deal-grid-list4-box-information-price">
                             <div class="share-hot-deal-grid-list4-box-information-price-after">
                                 <?php
-                                if ($price_after != 0)
+                                if($price_after_show == 1)
                                 {
                                     echo 'RM ' . $price_after;
                                 }
@@ -191,7 +193,7 @@ $fetch_method = $this->router->fetch_method();
                             </div>
                             <div class="share-hot-deal-grid-list4-box-information-price-before">
                                 <?php
-                                if ($price_before != 0)
+                                if($price_before_show == 1)
                                 {
                                     echo 'RM ' . $price_before;
                                 }
