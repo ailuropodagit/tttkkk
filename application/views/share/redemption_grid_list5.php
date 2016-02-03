@@ -11,6 +11,7 @@ $this->album_admin = $this->config->item('album_admin');
 //URI
 $fetch_method = $this->router->fetch_method();
 $uri_segment_4 = $this->uri->segment(4);
+$is_suggestion = $this->m_custom->check_is_suggestion_list($title);
 ?>
 
 <div id="share-redemption-grid-list5">
@@ -101,17 +102,21 @@ $uri_segment_4 = $this->uri->segment(4);
                             <div class="share-redemption-grid-list5-box-information-rating">
                                 <div class="share-redemption-grid-list5-box-information-rating">
                                     <?php
+                                    $postfix = '';
+                                    if($is_suggestion){
+                                        $postfix = 'sgt';
+                                    }
                                     if ($row['advertise_type'] != 'adm')
                                     {
                                         for ($i = 1; $i <= 5; $i++)
                                         {
                                             if ($i == round($average_rating))
                                             {
-                                                echo "<input class='star' type='radio' name='a-rating-$advertise_id' disabled='disabled' value='" . $i . "' checked='checked'/>";
+                                                echo "<input class='star' type='radio' name='a-rating$postfix-$advertise_id' disabled='disabled' value='" . $i . "' checked='checked'/>";
                                             }
                                             else
                                             {
-                                                echo "<input class='star' type='radio' name='a-rating-$advertise_id' disabled='disabled' value='" . $i . "'/>";
+                                                echo "<input class='star' type='radio' name='a-rating$postfix-$advertise_id' disabled='disabled' value='" . $i . "'/>";
                                             }
                                         }
                                     }

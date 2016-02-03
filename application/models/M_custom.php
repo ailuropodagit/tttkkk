@@ -1479,6 +1479,20 @@ class M_custom extends CI_Model
         }
     }
 
+    function getUsersType($id)
+    {
+        $query = $this->db->get_where('users', array('id' => $id));
+        if ($query->num_rows() == 1)
+        {
+            $result = $query->row_array();
+            return $result['main_group_id'];
+        }
+        else
+        {
+            return FALSE;
+        }
+    }
+    
     function getUserInfo($user_id)
     {
         $query = $this->db->get_where('users', array('id' => $user_id, 'main_group_id' => $this->config->item('group_id_user')));
@@ -2723,8 +2737,9 @@ class M_custom extends CI_Model
 
     public function generate_merchant_link($merchant_id = NULL, $with_icon = 0, $want_supervisor = 0, $icon_only = 0)
     {
+        $user_type = $this->m_custom->getUsersType($merchant_id);
         //If is post by admin
-        if ($merchant_id == $this->config->item('keppo_admin_id'))
+        if ($user_type == $this->config->item('group_id_admin') || $user_type == $this->config->item('group_id_worker'))
         {
             return "<a style='color:black'>" . $this->m_custom->web_setting_get('keppo_company_name', 'set_desc') . "</a>";
         }
