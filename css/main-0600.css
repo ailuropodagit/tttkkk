@@ -64,3 +64,16 @@
 #login-form, #register-form {
     width: 100%;
 }
+
+/*********************************************
+ ** DASHBOARD
+ *********************************************/
+
+#dashboard-info-title-name {
+    float: none;
+}
+
+#dashboard-info-promo-code {
+    float: none;
+    margin: 20px 0px 0px 0px;
+}

@@ -1774,7 +1774,6 @@ class User extends CI_Controller
             $album_list = $this->m_custom->getMainAlbum();
         }
         $this->data['album_list'] = $album_list;
-
         $this->data['title'] = "My Album";
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'user/main_album';

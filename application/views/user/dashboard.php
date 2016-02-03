@@ -177,7 +177,7 @@ if($this->ion_auth->user()->num_rows())
                     <div id="float-fix"></div>
                     <div id="dashboard-info-table">
                         <table border="0px" cellspacing="0px" cellpadding="5px" style="width: 100%; table-layout: fixed;">
-                            <colgroup style="width:180px;"></colgroup>
+                            <colgroup style="width:140px;"></colgroup>
                             <colgroup style="width:15px;"></colgroup>
                             <tr>
                                 <td>Photography URL</td>

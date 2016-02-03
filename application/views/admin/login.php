@@ -29,36 +29,33 @@ if(isset($message))
 ?>
 
 <div id="login">
-    <div id='login-link'>
-    </div>
-    <div id='float-fix'></div>
     <div id='login-title'>Admin Log In</div>
     <div id='login-subtitle'></div>
-    <div id='login-horizontal-line'></div>
     
     <?php echo form_open("admin/login"); ?>
-    <div id='login-form'>
-        <div id='login-form-each'>
-            <div id='login-form-each-label'><?php echo lang('login_identity_label', 'identity'); ?></div>
-            <div id='login-form-each-input'><?php echo form_input($identity); ?></div>
+        <div id='login-form'>
+            <div id='login-horizontal-line'></div>
+            <div id='login-form-each'>
+                <div id='login-form-each-label'><?php echo lang('login_identity_label', 'identity'); ?></div>
+                <div id='login-form-each-input'><?php echo form_input($identity); ?></div>
+            </div>
+            <div id='login-form-each'>
+                <div id='login-form-each-label'><?php echo lang('login_password_label', 'password'); ?></div>
+                <div id='login-form-each-input'><?php echo form_input($password); ?> </div>
+            </div>
+            <div id='login-form-show-password'>
+                <input type="checkbox" id="show_password" name="show_password" onclick="showpassword();"/>
+                <span class="checkbox-text"><label for='show_password'>Show Password</label></span>
+            </div>
+            <div id='login-form-remember-me'>
+                <?php echo form_checkbox('remember', '1', FALSE, 'id="remember"'); ?> 
+                <?php echo lang('login_remember_label', 'remember'); ?>
+            </div>
+            <div id='login-form-forgot-password'>
+                <a href="retrieve_password"><?php echo lang('login_forgot_password'); ?></a>
+            </div>
+            <div id='login-form-submit'><?php echo form_submit('submit', lang('login_submit_btn')); ?></div>
         </div>
-        <div id='login-form-each'>
-            <div id='login-form-each-label'><?php echo lang('login_password_label', 'password'); ?></div>
-            <div id='login-form-each-input'><?php echo form_input($password); ?> </div>
-        </div>
-        <div id='login-form-show-password'>
-            <input type="checkbox" id="show_password" name="show_password" onclick="showpassword();"/>
-            <span class="checkbox-text"><label for='show_password'>Show Password</label></span>
-        </div>
-        <div id='login-form-remember-me'>
-            <?php echo form_checkbox('remember', '1', FALSE, 'id="remember"'); ?> 
-            <?php echo lang('login_remember_label', 'remember'); ?>
-        </div>
-        <div id='login-form-forgot-password'>
-            <a href="retrieve_password"><?php echo lang('login_forgot_password'); ?></a>
-        </div>
-        <div id='login-form-submit'><?php echo form_submit('submit', lang('login_submit_btn')); ?></div>
-    </div>
     <?php echo form_close(); ?>
 
     <div id='login-agree'>
