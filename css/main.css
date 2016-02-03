@@ -3914,6 +3914,16 @@ html, body {
     color: #939393;
 }
 
+#redemption-information-upload-by {
+    margin: 25px 0px 0px 0px;
+    font-size: 14px;
+}
+
+#redemption-information-upload-by a {
+    color: #00bcd4 !important;
+    font-size: 14px;
+}
+
 #redemption-information-terms-conditions {
     margin: 30px 0px 0px 0px;
 }
@@ -4258,6 +4268,10 @@ html, body {
 .album-user-header-title-upload-icon {
     font-size: 14px;
     margin-right: 7px;
+}
+
+#album-user-header-edit {
+    float: right;
 }
 
 #album-user-header-title-bottom-line {

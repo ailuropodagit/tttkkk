@@ -34,29 +34,28 @@ $fetch_method = $this->router->fetch_method();
 
 <div id="redemption">
     <div id="fb-root"></div>
-    <div id="redemption-content">
-        <h1><?php echo $page_title; ?></h1>
-        <div id="redemption-edit-link">
-            <?php
-            if (check_is_login())
+    <div id="redemption-header">
+        <div id="redemption-header-title"><?php echo $page_title; ?></div>
+        <?php
+        if (check_is_login())
+        {
+            $user_id = $this->ion_auth->user()->row()->id;
+            $allowed_list = $this->m_custom->get_list_of_allow_id('user_album', 'user_id', $user_id, 'user_album_id');
+            if (check_correct_login_type($this->config->item('group_id_user'), $allowed_list, $picture_id))
             {
-                $user_id = $this->ion_auth->user()->row()->id;
-                $allowed_list = $this->m_custom->get_list_of_allow_id('user_album', 'user_id', $user_id, 'user_album_id');
-                if (check_correct_login_type($this->config->item('group_id_user'), $allowed_list, $picture_id))
-                {
-                    $edit_url = base_url() . "user/edit_user_picture/" . $picture_id;
-                    ?>
-                    <a href="<?php echo $edit_url ?>">
-                        <div id="redemption-edit-link-icon"><i class="fa fa-pencil"></i></div>
-                        <div id="redemption-edit-link-label">Edit Picture</div>
-                    </a>
-                    <?php
-                }
+                $edit_url = base_url() . "user/edit_user_picture/" . $picture_id;
+                ?>
+                <div id="redemption-header-edit-link">
+                    <a href="<?php echo $edit_url ?>" class="a-href-button">Edit Picture</a>
+                </div>
+                <?php
             }
-            ?>
-        </div>
-        <div id="float-fix"></div>
-        
+        }
+        ?>
+        <div class='float-fix'></div>
+        <div id='album-user-header-title-bottom-line'></div>    
+    </div>
+    <div id="redemption-content">
         <div id="print-area"></div>
         <div id="redemption-photo">
             <div id='redemption-table'>
@@ -102,12 +101,12 @@ $fetch_method = $this->router->fetch_method();
         </div>
         <div id="redemption-information">
             <!--TITLE-->
-            <div id="redemption-information-title">
+            <!--<div id="redemption-information-title">
                 <a href="#"><?php echo $title ?></a>
             </div>
-            <div class="float-fix"></div>
+            <div class="float-fix"></div>-->
             <!--RATE-->
-            <div id="redemption-information-rate">
+            <div id="redemption-information-rate" style="margin: 0px;">
                 <div id="redemption-information-rate-star">
                     <?php
                     echo form_input($item_id);
@@ -168,22 +167,22 @@ $fetch_method = $this->router->fetch_method();
                     <?php //echo "Earn : " . $this->m_custom->display_trans_config(10) . " candies" ?>
                 </div>
             </div>
-            
-            <?php 
-            if(check_is_login())
-            {
-                $login_id = $this->ion_auth->user()->row()->id;
-                if($picture_user_id != $login_id)
+            <div id="redemption-information-upload-by">
+                <?php 
+                if(check_is_login())
+                {
+                    $login_id = $this->ion_auth->user()->row()->id;
+                    if($picture_user_id != $login_id)
+                    {
+                        echo 'Upload by : '.$user_name_url;            
+                    }                                                     
+                 }
+                 else
                 {
                     echo 'Upload by : '.$user_name_url;            
-                }                                                     
-             }
-             else
-            {
-                echo 'Upload by : '.$user_name_url;            
-            }
-            ?>
-
+                }
+                ?>
+            </div>
             <!--TAB BOX--> 
             <div id='redemption-information-tab-box'>
                 <div id='redemption-information-tab-box-title'>User Comment</div>

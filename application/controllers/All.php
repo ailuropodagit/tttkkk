@@ -531,7 +531,6 @@ class All extends CI_Controller
 
     function merchant_user_picture($picture_id, $user_id = NULL, $merchant_id = NULL)
     {
-
         $this->data['page_title'] = "Merchant Album";
         $the_row = $this->m_custom->getOneMUA($picture_id);
         if ($the_row)
@@ -547,7 +546,6 @@ class All extends CI_Controller
             //$user_row = $this->m_custom->getUser($the_row['user_id']);    //Temporary hide because no use, but maybe future will use
             $merchant_row = $this->m_merchant->getMerchant($the_row['merchant_id']);
             $this->data['merchant_dashboard_url'] = base_url() . "all/merchant-dashboard/" . $merchant_row['slug'];
-
             $this->data['picture_id'] = $picture_id;
             $this->data['merchant_name'] = $merchant_row['company'];
             $this->data['picture_user_id'] = $the_row['user_id'];
@@ -556,7 +554,6 @@ class All extends CI_Controller
             $this->data['title'] = $the_row['title'];
             $this->data['description'] = $the_row['description'];
             $this->data['image_url'] = base_url($this->album_user_merchant . $the_row['image']);
-
             $this->data['like_url'] = $this->m_custom->generate_like_link($picture_id, 'mua');
             $this->data['comment_url'] = $this->m_custom->generate_comment_link($picture_id, 'mua');
             $this->data['average_rating'] = $this->m_custom->activity_rating_average($picture_id, 'mua');
@@ -582,9 +579,7 @@ class All extends CI_Controller
             {
                 $this->data['radio_level'] = "disabled";
             }
-
             $this->data['page_path_name'] = 'all/picture';
-
             if ($user_id != NULL || $merchant_id != NULL)
             {
                 $current_list = $this->m_custom->getAlbumUserMerchant($user_id, $merchant_id);
