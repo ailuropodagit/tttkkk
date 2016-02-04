@@ -1074,7 +1074,8 @@ html, body {
  *********************************************/
 
 #home-row3-logo-slider {
-    background-color: #4babd4;
+    /*background-color: #4babd4;*/
+    background-color: white;
     padding: 20px 0px 20px 0px;
     margin: 30px 0px 30px 0px;
 }
