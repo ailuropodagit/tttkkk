@@ -307,7 +307,6 @@ class All extends CI_Controller
                     $this->data['next_url'] = base_url() . "all/advertise/" . $next_id . "/" . $advertise_type . "/" . $sub_category_id . "/" . $merchant_id . "/" . $show_expired;
                 }                
             }
-            
             $this->data['image_url'] = $image_url;
             $meta = array(
                 array('property' => 'og:type', 'content' => 'article'),

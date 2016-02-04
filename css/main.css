@@ -796,6 +796,8 @@ html, body {
 
 #home-row1-left-banner-block1, #home-row1-left-banner-block2, #home-row1-left-banner-block3 {
     box-sizing: border-box;
+    height: 137px;
+    overflow: hidden;
 }
 
 #home-row1-left-banner-block2, #home-row1-left-banner-block3 {
@@ -1074,7 +1076,9 @@ html, body {
  *********************************************/
 
 #home-row3-logo-slider {
-    /*background-color: #4babd4;*/
+    -webkit-box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
+    -moz-box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
+    box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
     background-color: white;
     padding: 20px 0px 20px 0px;
     margin: 30px 0px 30px 0px;
@@ -2045,6 +2049,32 @@ html, body {
 }
 
 /*********************************************
+ ** SHARE HOT DEAL SUGGEST LIST 5 OLD
+ *********************************************/
+
+.share-hot-deal-suggestion-list5-box {
+    vertical-align: top;
+    display: inline-block;
+    width: calc(20% - 22.5px);
+    margin: 0px 25px 25px 0px;
+    background-color: white;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    -webkit-box-shadow: 1px 1px 4px 0px rgba(179,179,179,0.80);
+    -moz-box-shadow: 1px 1px 4px 0px rgba(179,179,179,0.80);
+    box-shadow: 1px 1px 4px 0px rgba(179,179,179,0.80);
+    position: relative;
+}
+
+.share-hot-deal-suggestion-list5-box a {
+    text-decoration: none;
+}
+
+.share-hot-deal-suggestion-list5-box:nth-child(5n+0) {
+    margin-right: 0px;
+}
+
+/*********************************************
  ** SHARE HOT DEAL GRID LIST 5 OLD
  *********************************************/
 
@@ -2616,6 +2646,32 @@ html, body {
     -moz-box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
     box-shadow: 1px 1px 5px 0px rgba(179,179,179,1);
     margin: 0px 0px 60px 0px;
+}
+
+/*********************************************
+ ** SHARE REDEMPTION SUGGESTION LIST5
+ *********************************************/
+
+.share-redemption-suggestion-list5-box {
+    vertical-align: top;
+    display: inline-block;
+    width: calc(20% - 22.5px);
+    margin: 0px 25px 25px 0px;
+    background-color: white;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    -webkit-box-shadow: 1px 1px 4px 0px rgba(179,179,179,0.80);
+    -moz-box-shadow: 1px 1px 4px 0px rgba(179,179,179,0.80);
+    box-shadow: 1px 1px 4px 0px rgba(179,179,179,0.80);
+}
+
+.share-redemption-suggestion-list5-box a {
+    text-decoration: none;
+}
+
+.share-redemption-suggestion-list5-box:nth-child(5n+0) {
+    margin-right: 0px;
+    border: 1px solid red;
 }
 
 /*********************************************
@@ -3610,7 +3666,7 @@ html, body {
  *********************************************/
 
 #redemption {
-    margin: 20px 0px 70px 0px;
+    margin: 20px 0px 0px 0px;
     background: white;
     -webkit-box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);
     -moz-box-shadow: 0px 1px 5px 0px rgba(179,179,179,1);

@@ -20,6 +20,7 @@
     float: left;
     width: calc(33.33% - 13.5px);
     margin: 0px 20px 0px 0px;
+    height: auto;
 }
 
 #home-row1-left-banner-block3 {
@@ -80,4 +81,36 @@
 
 .share-redemption-grid-list4-box:nth-child(3n) {
     margin-right: 0px;
+}
+
+/*********************************************
+ ** SHARE HOT DEAL SUGGESTION LIST5
+ *********************************************/
+
+.share-hot-deal-suggestion-list5-box {
+    width: calc(25% - 21px);
+}
+
+.share-hot-deal-suggestion-list5-box:nth-child(4n) {
+    margin-right: 0px;
+}
+
+.share-hot-deal-suggestion-list5-box:nth-child(5n+0) {
+    display: none;
+}
+
+/*********************************************
+ ** SHARE REDEMPTION SUGGESTION LIST5
+ *********************************************/
+
+.share-redemption-suggestion-list5-box {
+    width: calc(25% - 21px);
+}
+
+.share-redemption-suggestion-list5-box:nth-child(4n) {
+    margin-right: 0px;
+}
+
+.share-redemption-suggestion-list5-box:nth-child(5n+0) {
+    display: none;
 }

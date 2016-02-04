@@ -54,6 +54,27 @@
 }
 
 /*********************************************
+ ** HOME ROW 1
+ *********************************************/
+
+#home-row1-left-banner-block1, #home-row1-left-banner-block2, #home-row1-left-banner-block3 {
+    float: none;
+    width: 100%;
+    height: auto;
+    margin: 0px 0px 20px 0px;
+}
+
+/*********************************************
+ ** HOME ROW 2 COLUMN 1 BANNER
+ *********************************************/
+
+#home-row2-column1-banner-block1, #home-row2-column1-banner-block2, #home-row2-column1-banner-block3 {
+    float: none;
+    width: 100%;
+    margin: 0px 0px 10px 0px;
+}
+    
+/*********************************************
  ** LOGIN REGISTER
  *********************************************/
 

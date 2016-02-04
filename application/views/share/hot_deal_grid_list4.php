@@ -4,7 +4,6 @@
 <?php echo link_tag('js/jgrowl/jquery.jgrowl.css') ?>
 <!--COUNTDOWN-->
 <script type="text/javascript" src="<?php echo base_url('js/jquery.countdown.js') ?>"></script>
-
 <script>
     $(function(){
         $('.share-hot-deal-grid-list4-box-timer-box-relative').each(function(){
@@ -146,11 +145,6 @@ $fetch_method = $this->router->fetch_method();
                     <div class="share-hot-deal-grid-list4-box-photo">
                         <div class="share-hot-deal-grid-list4-box-photo-box">
                             <img src='<?php echo $image_url ?>'>
-                            <div class="share-redemption-row-list4-box-photo-box-redemption-count">
-                                <div class="share-redemption-row-list4-box-photo-box-redemption-count-text">
-                                    <?php echo $redeem_count ?><br/>Redeemed
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <div class="share-hot-deal-grid-list4-box-separator"></div>

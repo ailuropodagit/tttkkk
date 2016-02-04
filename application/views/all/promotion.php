@@ -356,10 +356,14 @@ if(isset($message))
 <div id='redemption-suggestion'>
     <?php
     if (!empty($advertise_suggestion_list))
-    {     
+    {
         $data['share_hotdeal_redemption_list'] = $advertise_suggestion_list;
         $data['title'] = "Redemption Suggestion";
-        $this->load->view('share/redemption_grid_list5', $data);
+        $this->load->view('share/redemption_suggestion_list5', $data);
+    }
+    else
+    {
+        ?><br/><br/><br/><?php
     }
     ?>
 </div>

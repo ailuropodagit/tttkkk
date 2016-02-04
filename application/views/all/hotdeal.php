@@ -276,7 +276,11 @@
     {     
         $data['share_hotdeal_redemption_list'] = $advertise_suggestion_list;
         $data['title'] = "Hot Deal Suggestion";
-        $this->load->view('share/hot_deal_grid_list5', $data);
+        $this->load->view('share/hot_deal_suggestion_list5', $data);
+    }
+    else
+    {
+        ?><br/><br/><br/><?php
     }
     ?>
 </div>

@@ -74,23 +74,27 @@
 }
 
 /*********************************************
- ** SHARE REDEMPTION GRID LIST4
+ ** SHARE HOT DEAL SUGGESTION LIST5
  *********************************************/
 
-.share-redemption-grid-list4-box {
+.share-hot-deal-suggestion-list5-box {
     width: calc(50% - 14px);
 }
 
-.share-redemption-grid-list4-box:nth-child(4n) {
-    margin: 0px 25px 25px 0px;
-}
-
-.share-redemption-grid-list4-box:nth-child(3n) {
-    margin: 0px 25px 25px 0px;
-}
-
-.share-redemption-grid-list4-box:nth-child(2n) {
+.share-hot-deal-suggestion-list5-box:nth-child(2n) {
     margin-right: 0px;
+}
+
+.share-hot-deal-suggestion-list5-box:nth-child(3n) {
+    display: none;
+}
+
+.share-hot-deal-suggestion-list5-box:nth-child(4n) {
+    display: none;
+}
+
+.share-hot-deal-suggestion-list5-box:nth-child(5n+0) {
+    display: none;
 }
 
 /*********************************************
@@ -134,6 +138,50 @@
 
 #share-hot-deal-grid-list5-old-box:nth-last-child(-n+2) {
     margin-bottom: 0px;
+}
+
+/*********************************************
+ ** SHARE REDEMPTION GRID LIST4
+ *********************************************/
+
+.share-hot-deal-grid-list4-box {
+    width: calc(50% - 14px);
+}
+
+.share-hot-deal-grid-list4-box:nth-child(4n) {
+    margin: 0px 25px 25px 0px;
+}
+
+.share-hot-deal-grid-list4-box:nth-child(3n) {
+    margin: 0px 25px 25px 0px;
+}
+
+.share-hot-deal-grid-list4-box:nth-child(2n) {
+    margin-right: 0px;
+}
+
+/*********************************************
+ ** SHARE REDEMPTION SUGGESTION LIST5
+ *********************************************/
+
+.share-hot-deal-suggestion-list5-box {
+    width: calc(50% - 14px);
+}
+
+.share-hot-deal-suggestion-list5-box:nth-child(2n) {
+    margin-right: 0px;
+}
+
+.share-hot-deal-suggestion-list5-box:nth-child(3n) {
+    display: none;
+}
+
+.share-hot-deal-suggestion-list5-box:nth-child(4n) {
+    display: none;
+}
+
+.share-hot-deal-suggestion-list5-box:nth-child(5n+0) {
+    display: none;
 }
 
 /*********************************************
