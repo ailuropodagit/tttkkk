@@ -1,4 +1,15 @@
 <script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>js/datatables/js/jquery.dataTables.min.js"></script>
+<?php echo link_tag('js/datatables/css/jquery.dataTables.min.css') ?>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#myTable').DataTable({
+            "paging": false,
+            "order": []
+        });
+    });
+</script>
 
 <?php
 //MESSAGE
@@ -12,7 +23,7 @@ if(isset($message))
     <h1><?php echo $title; ?></h1>
     <div id='profile-content'>        
         <?php echo form_open(uri_string()); ?>
-        <div id='profile-info'>
+        <div id='profile-info' style="float:left">
             
             <div id='profile-info-form'>
                 <div id='profile-info-form-each'>
@@ -84,34 +95,49 @@ if(isset($message))
         //if ($this->m_admin->check_is_any_admin(87) && $can_edit == 1){ 
         if (check_correct_login_type($this->group_id_admin) && $can_edit == 1){ 
             ?> 
-        <div id="candie-promotion-form-voucher-checkbox" style="margin-left:400px;padding-top:30px">
+        <div id="candie-promotion-form-voucher-checkbox" style="margin-left:30px;padding-top:25px;float:left;width:50%;">
                     <div id="candie-promotion-form-voucher-checkbox-title">Select Which Worker Can Open This Merchant :</div>
-                    <?php
+                             <div id="candie-promotion-form-voucher-checkbox-each">
+                                    <table border='1px' cellspacing='0px' cellpadding='0px' id="myTable" class="display">
+                                        <thead>
+                                            <tr style="text-align:center">
+                                                <th></th>
+                                                <th>Name</th> 
+                                                <th>Worker ID</th>
+                                                <th>Department</th>
+                                            </tr>
+                                        </thead>
+                    <?php                    
                     foreach ($merchant_worker as $row)
                     {
                         $key = $row['id'];
-                        $value = $row['first_name'] . ' ' . $row['last_name'];
+                        $name = $row['first_name'] . ' ' . $row['last_name'];
+                        $wo_worker_id = $row['wo_worker_id'];
+                        $wo_department = $row['wo_department'];
                         $checked_or_not = '';
                         if (in_array($key, $merchant_worker_current))
                         {
                             $checked_or_not = 'checked';
                         }
                         ?>
-                            <div id="candie-promotion-form-voucher-checkbox-each">
-                                    <table border="0" cellpadding="0px" cellspacing="0px">
                                         <tr>
                                             <td valign="top"><input type='checkbox' id="merchant-worker-<?php echo $key ?>" name='merchant_worker[]' value='<?php echo $key ?>' <?php echo $checked_or_not; ?>></td>
                                             <td valign="top">
                                                 <div id="candie-promotion-form-voucher-checkbox-each-label">
-                                                    <label for="merchant-worker-<?php echo $key ?>"><?php echo $value ?></label>
+                                                    <label for="merchant-worker-<?php echo $key ?>"><?php echo $name ?></label>
                                                 </div>
                                             </td>
+                                            <?php
+                                            echo "<td>" . $wo_worker_id . "</td>";
+                                            echo "<td>" . $wo_department . "</td>";
+                                            ?>
                                         </tr>
-                                    </table>
-                            </div>
+                                    
                     <?php
                     }
                     ?>  
+                             </table>
+                  </div>
         </div>
         <?php } ?>
         <?php echo form_close(); ?>
