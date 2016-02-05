@@ -31,6 +31,24 @@
 }
 
 /*********************************************
+ ** REDEMPTION
+ *********************************************/
+
+#redemption-photo {
+    float: none;
+    width: 100%;
+}
+
+#redemption-information {
+    margin: 25px 0px 0px 0px;
+    width: 100%;
+}
+
+#redemption-user-comment {
+    width: auto;
+}
+
+/*********************************************
  ** SHARE MERCHANT GRID LIST5
  *********************************************/
 
