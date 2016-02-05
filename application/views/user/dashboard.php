@@ -47,6 +47,7 @@ $dashboard_users_id = $this->uri->segment(3);
 
 //URI
 $uri_segment_4 = $this->uri->segment(4);
+$self_open = 0;
 
 //LOGGED
 if($this->ion_auth->user()->num_rows())
@@ -72,6 +73,10 @@ if($this->ion_auth->user()->num_rows())
         //NOT SUPERVISOR LOGIN
         $logged_main_id = $logged_user_id;
     }
+    
+    if (check_correct_login_type($this->config->item('group_id_user')) && $dashboard_users_id == $logged_user_id){
+        $self_open = 1;
+    }
 }
 ?>
 
@@ -80,9 +85,12 @@ if($this->ion_auth->user()->num_rows())
         <div id="dashboard-header-title">
             Dashboard
         </div>
+        <?php if ($self_open == 1)
+            { ?>
         <div id="dashboard-header-edit-link">
             <a href='<?php echo base_url('user/profile') ?>' class="a-href-button">Edit My Profile</a>
         </div>
+            <?php } ?>
         <div class="float-fix"></div>
         <div id="dashboard-header-title-bottom-line"></div>
     </div>
@@ -118,7 +126,7 @@ if($this->ion_auth->user()->num_rows())
                 }
                 ?>
             </div>
-            <?php if (check_correct_login_type($this->config->item('group_id_user')) && $dashboard_users_id == $logged_user_id)
+            <?php if ($self_open == 1)
             {
                 //FORM OPEN
                 echo form_open_multipart('user/update_profile_image');
@@ -159,7 +167,7 @@ if($this->ion_auth->user()->num_rows())
                 </div>
                 <?php 
                 //CORRECT LOGIN
-                if (check_correct_login_type($this->config->item('group_id_user')) && $dashboard_users_id == $logged_user_id)
+                if ($self_open == 1)
                 {
                     $promo_code = $this->m_custom->promo_code_get('user', $logged_user_id, 1);
                     ?>
