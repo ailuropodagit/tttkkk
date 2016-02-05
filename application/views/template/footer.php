@@ -77,12 +77,6 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href='<?php echo base_url() ?>news'>
-                                        <div id='footer-navigation-block3-navigation-icon'><i class="fa fa-caret-right"></i></div> 
-                                        <div id='footer-navigation-block3-navigation-text'>News</div>
-                                    </a>
-                                </li>
-                                <li>
                                     <a href='<?php echo base_url() ?>terms-of-service'>
                                         <div id='footer-navigation-block3-navigation-icon'><i class="fa fa-caret-right"></i></div> 
                                         <div id='footer-navigation-block3-navigation-text'>Terms of service</div>
