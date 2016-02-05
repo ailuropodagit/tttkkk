@@ -109,7 +109,7 @@ if(isset($message))
                 <table border='1px' cellspacing='0px' cellpadding='0px' id="myTable" class="display">
                     <thead>
                         <tr style="text-align:center">
-                            <th>Date Time</th>                           
+                            <th style='width: 100px;'>Date Time</th>                           
                             <th>Adjust/Withdraw Reason</th> 
                             <th>Amount (RM)</th> 
                         </tr>

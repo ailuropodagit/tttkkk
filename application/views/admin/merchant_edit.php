@@ -80,7 +80,10 @@ if(isset($message))
             
             
         </div>
-        <?php if (check_correct_login_type($this->group_id_admin) && $can_edit == 1){ ?> 
+        <?php 
+        //if ($this->m_admin->check_is_any_admin(87) && $can_edit == 1){ 
+        if (check_correct_login_type($this->group_id_admin) && $can_edit == 1){ 
+            ?> 
         <div id="candie-promotion-form-voucher-checkbox" style="margin-left:400px;padding-top:30px">
                     <div id="candie-promotion-form-voucher-checkbox-title">Select Which Worker Can Open This Merchant :</div>
                     <?php

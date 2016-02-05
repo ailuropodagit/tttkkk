@@ -1970,6 +1970,7 @@ class Admin extends CI_Controller
                         'phone' => $phone,
                     );
 
+                    //if ($this->m_admin->check_is_any_admin(87))
                     if (check_correct_login_type($this->group_id_admin))  //only admin can assign merchant to worker
                     {
                         $merchant_worker_selected = array();
