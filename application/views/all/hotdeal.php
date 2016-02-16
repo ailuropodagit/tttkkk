@@ -132,7 +132,9 @@
             <!--SHOW ME ADDRESS-->
             <div id="hot-deal-information-show-me-address">
                 <?php
-                $show_outlet = base_url() . 'all/merchant_outlet/' . generate_slug($merchant_name) . '#outlet';
+                $merchant_info = $this->m_merchant->getMerchant(0, NULL, $merchant_name);
+                $merchant_info_id = $merchant_info['id'];
+                $show_outlet = base_url() . 'all/merchant_outlet/' . generate_slug($merchant_name) . '/' . $merchant_info_id . '#outlet';
                 ?>
                 <a href="<?php echo $show_outlet ?>" target="_blank">
                     <img src="<?php echo base_url() . "/image/icon-map.png"; ?>"/>Show me Address

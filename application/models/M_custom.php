@@ -666,13 +666,18 @@ class M_custom extends CI_Model
     }
 
     //To find one record in DB with one keyword
-    public function get_one_table_record($the_table, $the_column, $the_value, $want_array = 0, $show_not_hide_only = 0)
+    public function get_one_table_record($the_table, $the_column, $the_value, $want_array = 0, $show_not_hide_only = 0, $second_column = NULL, $second_value = NULL)
     {
         if (empty($the_value))
         {
             return FALSE;
         }
-
+        
+        if (!IsNullOrEmptyString($second_column) && !IsNullOrEmptyString($second_value))
+        {
+            $this->db->where($second_column, $second_value);
+        }
+        
         if ($show_not_hide_only == 1)
         {
             $this->db->where('hide_flag', 0);
@@ -1549,7 +1554,7 @@ class M_custom extends CI_Model
             'me_facebook_url' => $user['me_facebook_url'],
             'me_category_name' => $this->m_custom->display_category($user['me_category_id']),
             'me_state_name' => $this->m_custom->display_static_option($user['me_state_id']),
-            'merchant_dashboard_url' => base_url() . "all/merchant-dashboard/" . $user['slug'],
+            'merchant_dashboard_url' => base_url() . "all/merchant-dashboard/" . $user['slug'] . '//' . $user['id'],
             'merchant_dashboard_link' => $this->m_custom->generate_merchant_link($merchant_id),
         );
         return $merchant;
@@ -2204,7 +2209,7 @@ class M_custom extends CI_Model
                 $noti_url = '';
                 switch ($user_row['main_group_id']){
                     case $this->config->item('group_id_merchant'):
-                        $noti_url = 'all/merchant_dashboard/' . $user_row['slug'];
+                        $noti_url = 'all/merchant_dashboard/' . $user_row['slug'] . '//' . $advertise['merchant_id'];
                         break;
                     case $this->config->item('group_id_user'):
                         $noti_url = 'all/user_dashboard/' . $user_follow_id;
@@ -2732,7 +2737,7 @@ class M_custom extends CI_Model
         $query = $this->db->get_where('users', array('id' => $supervisor_id));
         $user_row = $query->row_array();
         $merchant = $this->m_merchant->getMerchant($user_row['su_merchant_id']);
-        return "<a target='_blank' href='" . base_url() . "all/merchant_dashboard/" . $merchant['slug'] . "' style='color:black'>" . $user_name . "</a>";
+        return "<a target='_blank' href='" . base_url() . "all/merchant_dashboard/" . $merchant['slug'] . '//' . $merchant['id'] . "' style='color:black'>" . $user_name . "</a>";
     }
 
     public function generate_merchant_link($merchant_id = NULL, $with_icon = 0, $want_supervisor = 0, $icon_only = 0)
@@ -2747,7 +2752,7 @@ class M_custom extends CI_Model
         {
             $user_name = $this->m_custom->display_users($merchant_id, $with_icon, $want_supervisor, $icon_only);
             $merchant = $this->m_merchant->getMerchant($merchant_id);
-            return "<a target='_blank' href='" . base_url() . "all/merchant_dashboard/" . $merchant['slug'] . "' style='color:black'>" . $user_name . "</a>";
+            return "<a target='_blank' href='" . base_url() . "all/merchant_dashboard/" . $merchant['slug'] . '//' . $merchant_id . "' style='color:black'>" . $user_name . "</a>";
         }
     }
 

@@ -202,7 +202,7 @@ class All extends CI_Controller
                 $this->m_custom->activity_view($advertise_id, 'adv');
             }
             $merchant_row = $this->m_merchant->getMerchant($the_row['merchant_id']);
-            $this->data['merchant_dashboard_url'] = base_url() . "all/merchant-dashboard/" . $merchant_row['slug'];
+            $this->data['merchant_dashboard_url'] = base_url() . "all/merchant-dashboard/" . $merchant_row['slug'] . '//' . $the_row['merchant_id'];
             $this->data['advertise_id'] = $advertise_id;
             $this->data['merchant_name'] = $merchant_row['company'];
             $this->data['sub_title'] = $the_row['title'];
@@ -468,7 +468,7 @@ class All extends CI_Controller
                 redirect('/', 'refresh');
             }
             $merchant_row = $this->m_merchant->getMerchant($the_row['merchant_id']);
-            $this->data['merchant_dashboard_url'] = base_url() . "all/merchant-dashboard/" . $merchant_row['slug'];
+            $this->data['merchant_dashboard_url'] = base_url() . "all/merchant-dashboard/" . $merchant_row['slug']. '//' . $the_row['merchant_id'];
             $redeem_row = $this->m_custom->getOneUserRedemption($redeem_id);
 //            if (check_correct_login_type($this->group_id_user)) 
 //            {
@@ -544,7 +544,7 @@ class All extends CI_Controller
 
             //$user_row = $this->m_custom->getUser($the_row['user_id']);    //Temporary hide because no use, but maybe future will use
             $merchant_row = $this->m_merchant->getMerchant($the_row['merchant_id']);
-            $this->data['merchant_dashboard_url'] = base_url() . "all/merchant-dashboard/" . $merchant_row['slug'];
+            $this->data['merchant_dashboard_url'] = base_url() . "all/merchant-dashboard/" . $merchant_row['slug']. '//' . $the_row['merchant_id'];
             $this->data['picture_id'] = $picture_id;
             $this->data['merchant_name'] = $merchant_row['company'];
             $this->data['picture_user_id'] = $the_row['user_id'];
@@ -1151,9 +1151,16 @@ class All extends CI_Controller
         redirect($current_url, 'refresh');
     }
 
-    public function merchant_dashboard($slug = NULL, $bottom_part = NULL)
+    public function merchant_dashboard($slug = NULL, $bottom_part = NULL, $user_id = NULL)
     {
-        $the_row = $this->m_custom->get_one_table_record('users', 'slug', $slug);
+        if ($user_id != NULL)
+        {
+            $the_row = $this->m_custom->get_one_table_record('users', 'id', $user_id, 'main_group_id', $this->group_id_merchant);
+        }
+        else
+        {
+            $the_row = $this->m_custom->get_one_table_record('users', 'slug', $slug, 'main_group_id', $this->group_id_merchant);
+        }
         if ($the_row)
         {
             $user_id = $the_row->id;
@@ -1164,16 +1171,16 @@ class All extends CI_Controller
             $this->data['address'] = $the_row->address;
             $this->data['description'] = $the_row->description;
             $this->data['phone'] = $the_row->phone;
-            $this->data['show_outlet'] = base_url() . 'all/merchant_outlet/' . $slug;
+            $this->data['show_outlet'] = base_url() . 'all/merchant_outlet/' . $slug . '/' . $user_id;
             $this->data['website_url'] = $the_row->me_website_url;
             $this->data['facebook_url'] = $the_row->me_facebook_url;
             //$this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
             $this->data['message'] = NULL;
             $this->data['page_path_name'] = 'merchant/dashboard';
-            $this->data['hot_deal'] = base_url() . 'all/merchant-dashboard/' . $slug . '#dashboard-navigation';
-            $this->data['candie_promotion'] = base_url() . 'all/merchant-dashboard/' . $slug . '/promotion#dashboard-navigation';
-            $this->data['user_picture'] = base_url() . 'all/merchant-dashboard/' . $slug . '/picture#dashboard-navigation';
-            $this->data['user_upload_for_merchant'] = base_url() . 'user/upload_for_merchant/' . $slug;
+            $this->data['hot_deal'] = base_url() . 'all/merchant-dashboard/' . $slug . '//' . $user_id . '#dashboard-navigation';
+            $this->data['candie_promotion'] = base_url() . 'all/merchant-dashboard/' . $slug . '/promotion/' . $user_id . '#dashboard-navigation';
+            $this->data['user_picture'] = base_url() . 'all/merchant-dashboard/' . $slug . '/picture/' . $user_id . '#dashboard-navigation';
+            $this->data['user_upload_for_merchant'] = base_url() . 'user/upload_for_merchant/' . $user_id;
             $this->data['show_expired'] = "<a href='" . base_url() . "all/album_merchant/'. $slug>Show Expired</a><br/>";
             $this->data['user_id'] = $user_id;
             //FOLLOWER or FOLLOWING COUNT
@@ -1187,22 +1194,7 @@ class All extends CI_Controller
                 array('property' => 'og:image', 'content' => base_url() . $this->album_merchant_profile . $the_row->profile_image)
             );
             $this->data['meta_fb'] = meta_fb($meta);
-            if ($bottom_part == NULL)
-            {
-                $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('hot', NULL, $user_id, 1, NULL, NULL, 0, 0, 0, 0, 1);
-                $this->data['title'] = "Hot Deal";
-                $this->data['bottom_path_name'] = 'share/hot_deal_grid_list5_old';
-                //ADVERTISE SUGGESTION
-                $where_user = array('slug'=>$slug);
-                $main_category_id = $this->albert_model->read_user($where_user)->row()->me_category_id;
-                $where_read_category2 = array('main_category_id'=>$main_category_id);
-                $result_array_sub_category_id = $this->albert_model->read_category($where_read_category2)->result_array();
-                $array_sub_category_id = array_column($result_array_sub_category_id, 'category_id');  
-                $this->data['query_advertise_suggestion'] = $this->albert_model->read_advertise_hot_deal_suggestion($array_sub_category_id)->result_array();
-                $this->data['advertise_suggestion_page_path_name'] = 'all/hot_deal_list_suggestion';
-                $this->data['advertise_suggestion_page_title'] = 'Hot Deal Suggestion';
-            }
-            else if ($bottom_part == 'promotion')
+            if ($bottom_part == 'promotion')
             {
                 $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('pro', NULL, $user_id, 1, NULL, NULL, 0, 0, 0, 0, 1);
                 $this->data['title'] = "Redemption";
@@ -1223,6 +1215,21 @@ class All extends CI_Controller
                 $this->data['title'] = "User's Pictures";
                 $this->data['bottom_path_name'] = 'all/album_user_merchant';
             }
+            else
+            {
+                $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('hot', NULL, $user_id, 1, NULL, NULL, 0, 0, 0, 0, 1);
+                $this->data['title'] = "Hot Deal";
+                $this->data['bottom_path_name'] = 'share/hot_deal_grid_list5_old';
+                //ADVERTISE SUGGESTION
+                $where_user = array('slug' => $slug);
+                $main_category_id = $this->albert_model->read_user($where_user)->row()->me_category_id;
+                $where_read_category2 = array('main_category_id' => $main_category_id);
+                $result_array_sub_category_id = $this->albert_model->read_category($where_read_category2)->result_array();
+                $array_sub_category_id = array_column($result_array_sub_category_id, 'category_id');
+                $this->data['query_advertise_suggestion'] = $this->albert_model->read_advertise_hot_deal_suggestion($array_sub_category_id)->result_array();
+                $this->data['advertise_suggestion_page_path_name'] = 'all/hot_deal_list_suggestion';
+                $this->data['advertise_suggestion_page_title'] = 'Hot Deal Suggestion';
+            }
             $this->data['message'] = $this->session->flashdata('message');
             $this->load->view('template/index_background_blank', $this->data);
         }
@@ -1232,9 +1239,16 @@ class All extends CI_Controller
         }
     }
 
-    public function merchant_outlet($slug)
+    public function merchant_outlet($slug, $user_id = NULL)
     {
-        $the_row = $this->m_custom->get_one_table_record('users', 'slug', $slug);
+        if ($user_id != NULL)
+        {
+            $the_row = $this->m_custom->get_one_table_record('users', 'id', $user_id, 'main_group_id', $this->group_id_merchant);
+        }
+        else
+        {
+            $the_row = $this->m_custom->get_one_table_record('users', 'slug', $slug, 'main_group_id', $this->group_id_merchant);
+        }
         if ($the_row)
         {
             $this->data['image_path'] = $this->album_merchant_profile;
@@ -1242,10 +1256,11 @@ class All extends CI_Controller
             $this->data['company_name'] = $the_row->company;
             $this->data['address'] = $the_row->address;
             $this->data['phone'] = $the_row->phone;
-            $this->data['show_outlet'] = base_url() . 'merchant_outlet/' . $slug;
+            $this->data['show_outlet'] = base_url() . 'merchant_outlet/' . $slug . '/' . $user_id;
             $this->data['view_map_path'] = 'all/merchant-map/';
             $this->data['website_url'] = $the_row->me_website_url;
             $this->data['facebook_url'] = $the_row->me_facebook_url;
+            $this->data['merchant_id'] = $the_row->id;
             if (isset($_POST) && !empty($_POST))
             {
                 $search_word = $this->input->post('search_word');
@@ -1283,7 +1298,8 @@ class All extends CI_Controller
                 $this->data['image'] = $the_merchant->profile_image;
                 $this->data['company_name'] = $the_merchant->company;
                 $this->data['phone'] = $the_branch->phone;
-
+                $this->data['merchant_id'] = $the_branch->merchant_id;
+                
                 $this->data['address'] = $the_branch->address;
                 $this->data['googlemap_url'] = 'https://www.google.com/maps/place/' . $the_branch->google_map_url;
                 $this->load->library('googlemaps');

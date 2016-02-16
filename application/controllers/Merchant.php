@@ -77,14 +77,14 @@ class Merchant extends CI_Controller
                 $this->update_whole_year_balance();
                 $user_id = $this->session->userdata('user_id');
                 $this->m_custom->promo_code_insert_merchant($user_id);
-                redirect('all/merchant_dashboard/' . $this->session->userdata('company_slug'), 'refresh');
+                redirect('all/merchant_dashboard/' . $this->session->userdata('company_slug'). '//' . $user_id, 'refresh');
             }
             else if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember, $this->group_id_supervisor))
             {
                 //$this->session->set_flashdata('message', $this->ion_auth->messages());
                 $user_id = $this->ion_auth->user()->row()->su_merchant_id;
                 $this->m_custom->promo_code_insert_merchant($user_id);
-                redirect('all/merchant_dashboard/' . $this->session->userdata('company_slug'), 'refresh');
+                redirect('all/merchant_dashboard/' . $this->session->userdata('company_slug'). '//' . $user_id, 'refresh');
             }
             else
             {
@@ -215,7 +215,7 @@ class Merchant extends CI_Controller
                 //if the password was successfully changed
                 $this->session->set_flashdata('message', $this->ion_auth->messages());
                 //$this->logout();
-                set_simple_message('Thank you!', 'Your Password has been saved!', '', 'all/merchant_dashboard/' . $this->session->userdata('company_slug'), 'Back to Dashboard', 'all/simple_message', 1, 3);
+                set_simple_message('Thank you!', 'Your Password has been saved!', '', 'all/merchant_dashboard/' . $this->session->userdata('company_slug') . '//' . $user->id, 'Back to Dashboard', 'all/simple_message', 1, 3);
             }
             else
             {
@@ -1148,7 +1148,7 @@ class Merchant extends CI_Controller
                         // redirect them back to the admin page if admin, or to the base url if non admin
                         $this->session->set_flashdata('message', $this->ion_auth->messages());
                         $user = $this->ion_auth->user($merchant_id)->row();
-                        redirect('all/merchant_dashboard/' . $user->slug, 'refresh');
+                        redirect('all/merchant_dashboard/' . $user->slug . '//' . $user->id, 'refresh');
                     }
                     else
                     {
@@ -1384,7 +1384,7 @@ class Merchant extends CI_Controller
                         $this->session->set_flashdata('message', $this->ion_auth->errors());
                     }
                 }
-                redirect('all/merchant_dashboard/' . $this->session->userdata('company_slug'), 'refresh');
+                redirect('all/merchant_dashboard/' . $this->session->userdata('company_slug') . '//' . $merchant_id, 'refresh');
             }
         }
     }
@@ -2410,7 +2410,7 @@ class Merchant extends CI_Controller
                         $this->m_custom->notification_insert($advertise['merchant_id'], 14, $noti_url, 'advertise', 'advertise_id', $hotdeal_id);
                     }
                     //redirect('merchant/upload_hotdeal', 'refresh');
-                    redirect('all/merchant_dashboard/' . $this->session->userdata('company_slug'), 'refresh');
+                    redirect('all/merchant_dashboard/' . $this->session->userdata('company_slug'). '//' . $merchant_id, 'refresh');
                 }
                 else
                 {
@@ -2548,7 +2548,7 @@ class Merchant extends CI_Controller
                         $this->m_merchant->mua_hide($picture_id);
                         //$this->m_user->user_trans_history_insert($upload_by_user_id, 22, $picture_id);  //Temporary comment this because user upload image for merchant cannot get cash back already 
                     }
-                    redirect('all/merchant_dashboard/' . $merchant['slug'] . "/picture", 'refresh');
+                    redirect('all/merchant_dashboard/' . $merchant['slug'] . "/picture/" . $merchant_id, 'refresh');
                 }
             }
         }
@@ -2782,7 +2782,7 @@ class Merchant extends CI_Controller
                 $this->session->set_flashdata('message', $message_info);
                 $this->m_custom->remove_image_temp();
                 //redirect('merchant/upload_hotdeal', 'refresh');
-                redirect('all/merchant_dashboard/' . $this->session->userdata('company_slug'), 'refresh');
+                redirect('all/merchant_dashboard/' . $this->session->userdata('company_slug'). '//' . $merchant_id, 'refresh');
             }
         }
 

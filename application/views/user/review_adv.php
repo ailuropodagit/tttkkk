@@ -41,7 +41,7 @@ if (isset($message))
             $sub_category_id = $row['sub_category_id'];
             $merchant_id = $row['merchant_id'];
             $merchant_name = $this->m_custom->display_users($merchant_id);
-            $merchant_dashboard_url = base_url() . "all/merchant-dashboard/" . generate_slug($merchant_name);
+            $merchant_dashboard_url = base_url() . "all/merchant-dashboard/" . generate_slug($merchant_name) . '//' . $merchant_id;
             $advertise_detail_url = base_url() . "all/advertise/" . $advertise_id;
             $average_rating = $this->m_custom->activity_rating_average($advertise_id, 'adv');
             $rating_count = $this->m_custom->activity_rating_count($advertise_id, 'adv');

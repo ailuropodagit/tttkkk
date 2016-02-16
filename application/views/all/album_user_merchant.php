@@ -24,7 +24,7 @@ if ($fetch_method == 'user_dashboard' || $fetch_method == 'merchant_dashboard')
             $merchant_slug = '';
             if($fetch_method == 'merchant_dashboard')
             {
-                $merchant_slug = $this->uri->segment(3);
+                $merchant_slug = $this->uri->segment(5);
             }
             ?>
             <div id='album-user-header-title-upload'>
@@ -65,7 +65,7 @@ if ($fetch_method == 'user_dashboard' || $fetch_method == 'merchant_dashboard')
                     $picture_detail_url = base_url() . "all/merchant_user_picture/" . $row['merchant_user_album_id'];
                 }
                 $merchant_name = $this->m_custom->display_users($row['merchant_id']);
-                $merchant_dashboard_url = base_url() . "all/merchant-dashboard/" . generate_slug($merchant_name);
+                $merchant_dashboard_url = base_url() . "all/merchant-dashboard/" . generate_slug($merchant_name). '//' . $row['merchant_id'];
                 ?>
                 <div id='album-user-box'>
                     <div id='album-user-main-title'>

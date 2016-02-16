@@ -1922,7 +1922,7 @@ class User extends CI_Controller
         $this->load->view('template/index_background_blank', $this->data);
     }
     
-    function upload_for_merchant($slug = NULL)
+    function upload_for_merchant($merchant_id_pass = NULL)
     {
         if (!check_correct_login_type($this->main_group_id))
         {
@@ -1932,10 +1932,9 @@ class User extends CI_Controller
         $user_id = $this->ion_auth->user()->row()->id;
         $login_type = $this->session->userdata('user_group_id');
         $user_data = $this->m_custom->get_one_table_record('users', 'id', $user_id);
-        if (!IsNullOrEmptyString($slug))
+        if (!IsNullOrEmptyString($merchant_id_pass))
         {
-            $merchant_data = $this->m_custom->get_one_table_record('users', 'slug', $slug, 1);
-            $merchant_id = $merchant_data['id'];
+            $merchant_id = $merchant_id_pass;
         }
         $this->data['box_number'] = $this->box_number;
         if (isset($_POST) && !empty($_POST))

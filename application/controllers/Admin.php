@@ -2310,7 +2310,7 @@ class Admin extends CI_Controller
                     if ($this->ion_auth->login($user_login_info['username'], $user_login_info['password_visible'], FALSE, $user_login_info['main_group_id'], $login_id, 1))
                     {
                         $this->m_custom->promo_code_insert_merchant($id);
-                        redirect('all/merchant_dashboard/' . $user_login_info['slug'], 'refresh');
+                        redirect('all/merchant_dashboard/' . $user_login_info['slug'] . '//' . $id , 'refresh');
                     }
                     else
                     {

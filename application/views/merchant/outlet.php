@@ -13,7 +13,7 @@ if(isset($message))
             <div id="dashboard-photo-box">
             <?php
             $merchant_slug = $this->uri->segment(3);
-            $merchant_url = base_url() . 'all/merchant_dashboard/' . $merchant_slug;
+            $merchant_url = base_url() . 'all/merchant_dashboard/' . $merchant_slug . '//' . $merchant_id;
             if(IsNullOrEmptyString($image))
             {
                 ?>

@@ -56,7 +56,7 @@ $uri_segment_4 = $this->uri->segment(4);
                     $upload_picture_url = 'merchant/upload_hotdeal';
                 }
                 if (check_correct_login_type($this->config->item('group_id_user'))){
-                    $upload_picture_url = 'user/upload_for_merchant/' . $this->uri->segment(3);
+                    $upload_picture_url = 'user/upload_for_merchant/' . $this->uri->segment(4);
                 }
                 if ($this->m_admin->check_is_any_admin())  //If is admin login, hide it
                 {

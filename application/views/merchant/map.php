@@ -7,7 +7,7 @@
             <div id="dashboard-photo-box">
             <?php    
             $merchant_slug = generate_slug($company_name);
-            $merchant_url = base_url() . 'all/merchant_dashboard/' . $merchant_slug;
+            $merchant_url = base_url() . 'all/merchant_dashboard/' . $merchant_slug . '//' . $merchant_id;
             if(IsNullOrEmptyString($image))
             {
                 ?>

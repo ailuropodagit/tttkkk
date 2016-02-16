@@ -67,7 +67,7 @@ if (isset($message))
                         $url_feecharge = base_url() . "admin/merchant_feecharge/" . $row['id'];         
                         $url_topup = base_url() . "admin/merchant_topup/" . $row['id'];                      
                         $url_promo_code = base_url() . "admin/promo_code_change_merchant/" . $row['id'];                       
-                        $url_dashboard = base_url() . "all/merchant_dashboard/" . $row['slug'];
+                        $url_dashboard = base_url() . "all/merchant_dashboard/" . $row['slug'] . '//' . $row['id'];
                         $url_special_action = base_url() . "admin/merchant_special_action";
                         $merchant_worker_list = $this->m_custom->many_get_childlist_detail('merchant_worker',$row['id'],'users','first_name', 1, '<br/>', 0, 'last_name');
 

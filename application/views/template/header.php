@@ -287,6 +287,7 @@
                     $header_profile_login_slug = $header_row_read_merchant_superviosr_as_merchant->slug;
                     $header_profile_login_profile_image = $header_row_read_merchant_superviosr_as_merchant->profile_image;
                     $header_profile_login_company_name =  $header_row_read_merchant_superviosr_as_merchant->company;
+                    $the_merchant_id = $header_row_read_merchant_superviosr_as_merchant->id;
                 }
                 else if($this->m_admin->check_is_any_admin())
                 {
@@ -381,7 +382,7 @@
                                     <li>
                                         <a>My Account</a>
                                         <ul>
-                                            <li><a href='<?php echo base_url("all/merchant_dashboard/$header_merchant_slug") ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'merchant_dashboard' || $fetch_method == 'merchant_outlet' || $fetch_method == 'map'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Dashboard</a></li>
+                                            <li><a href='<?php echo base_url("all/merchant_dashboard/$header_merchant_slug//$login_user_id") ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'merchant_dashboard' || $fetch_method == 'merchant_outlet' || $fetch_method == 'map'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Dashboard</a></li>
                                             <li><a href='<?php echo base_url('merchant/profile') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'profile' || $fetch_method == 'upload_ssm' || $fetch_method == 'branch' || $fetch_method == 'supervisor'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Profile</a></li>
                                             <li><a href='<?php echo base_url('merchant/change_password') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'change_password'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Change Password</a></li>
                                             <li><a href='<?php echo base_url('all/notification') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'notification'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Notification (<?php echo $notification_count; ?> new)</a></li>
@@ -415,7 +416,7 @@
                                     <li>
                                         <a>My Account</a>
                                         <ul>
-                                            <li><a href='<?php echo base_url("all/merchant_dashboard/$header_merchant_slug") ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'merchant_dashboard' || $fetch_method == 'merchant_outlet' || $fetch_method == 'map'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Dashboard</a></li>
+                                            <li><a href='<?php echo base_url("all/merchant_dashboard/$header_merchant_slug//$login_main_merchant_id") ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'merchant_dashboard' || $fetch_method == 'merchant_outlet' || $fetch_method == 'map'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Dashboard</a></li>
                                             <li><a href='<?php echo base_url('merchant/profile') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'profile'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Profile</a></li>
                                             <li><a href='<?php echo base_url('all/notification') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'notification'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Notification (<?php echo $notification_count; ?> new)</a></li>
                                             <li><a href='<?php echo base_url("merchant/follower/user/$login_user_id") ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'follower' || $fetch_method == 'following'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Follower (<?php echo $follower_count ?>)</a></li>
@@ -642,7 +643,7 @@
                                         else 
                                         {
                                             ?>
-                                            <a href='<?php echo base_url("all/merchant_dashboard/$header_profile_login_slug") ?>'>
+                                            <a href='<?php echo base_url("all/merchant_dashboard/$header_profile_login_slug//$the_merchant_id") ?>'>
                                                 <div id="header-logo-bar-profile-display-photo">
                                                     <div id="header-logo-bar-profile-display-photo-box">
                                                         <?php
