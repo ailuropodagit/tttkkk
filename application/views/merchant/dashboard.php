@@ -36,10 +36,10 @@ $empty_image = $this->config->item('empty_image');
 $album_user_profile = $this->config->item('album_user_profile');
 
 //DASHBOARD
-$dashboard_merchant_slug = $this->uri->segment(3);
-$where_read_user = array('slug'=>$dashboard_merchant_slug);
-$dashboard_users_id = $this->albert_model->read_user($where_read_user)->row()->id;
-
+//$dashboard_merchant_slug = $this->uri->segment(3);
+//$where_read_user = array('slug'=>$dashboard_merchant_slug);
+//$dashboard_users_id = $this->albert_model->read_user($where_read_user)->row()->id;
+$dashboard_users_id = $user_id;
 //URI
 $uri_segment_4 = $this->uri->segment(4);
 $self_open = 0;

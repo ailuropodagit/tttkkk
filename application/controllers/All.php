@@ -1153,14 +1153,27 @@ class All extends CI_Controller
 
     public function merchant_dashboard($slug = NULL, $bottom_part = NULL, $user_id = NULL)
     {
+        $the_row = FALSE;
         if ($user_id != NULL)
         {
             $the_row = $this->m_custom->get_one_table_record('users', 'id', $user_id, 'main_group_id', $this->group_id_merchant);
         }
-        else
+
+        if (!$the_row)
+        {
+            $the_row = $this->m_custom->get_one_table_record('users', 'id', $bottom_part, 'main_group_id', $this->group_id_merchant);
+        }
+
+        if (!$the_row)
+        {
+            $the_row = $this->m_custom->get_one_table_record('users', 'id', $slug, 'main_group_id', $this->group_id_merchant);
+        }
+        
+        if (!$the_row)
         {
             $the_row = $this->m_custom->get_one_table_record('users', 'slug', $slug, 'main_group_id', $this->group_id_merchant);
         }
+        
         if ($the_row)
         {
             $user_id = $the_row->id;
@@ -1200,7 +1213,7 @@ class All extends CI_Controller
                 $this->data['title'] = "Redemption";
                 $this->data['bottom_path_name'] = 'share/redemption_grid_list5_old';
                 //ADVERTISE SUGGESTION
-                $where_user = array('slug'=>$slug);
+                $where_user = array('id'=>$user_id);
                 $main_category_id = $this->albert_model->read_user($where_user)->row()->me_category_id;
                 $where_read_category2 = array('main_category_id'=>$main_category_id);
                 $result_array_sub_category_id = $this->albert_model->read_category($where_read_category2)->result_array();
@@ -1221,7 +1234,7 @@ class All extends CI_Controller
                 $this->data['title'] = "Hot Deal";
                 $this->data['bottom_path_name'] = 'share/hot_deal_grid_list5_old';
                 //ADVERTISE SUGGESTION
-                $where_user = array('slug' => $slug);
+                $where_user = array('id'=>$user_id);
                 $main_category_id = $this->albert_model->read_user($where_user)->row()->me_category_id;
                 $where_read_category2 = array('main_category_id' => $main_category_id);
                 $result_array_sub_category_id = $this->albert_model->read_category($where_read_category2)->result_array();
