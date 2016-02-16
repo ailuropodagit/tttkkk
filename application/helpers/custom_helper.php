@@ -399,7 +399,12 @@ if (!function_exists('generate_options'))
 
     function generate_slug($value = '')
     {
-        return url_title($value, 'dash', TRUE);
+        $slug = url_title($value, 'dash', TRUE);
+//        if (IsNullOrEmptyString($slug))
+//        {
+//            $slug = 'a';
+//        }
+        return $slug;
     }
 
 }
