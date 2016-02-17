@@ -666,7 +666,7 @@ class M_custom extends CI_Model
     }
 
     //To find one record in DB with one keyword
-    public function get_one_table_record($the_table, $the_column, $the_value, $want_array = 0, $show_not_hide_only = 0, $second_column = NULL, $second_value = NULL)
+    public function get_one_table_record($the_table, $the_column, $the_value, $want_array = 0, $show_not_hide_only = 0, $second_column = NULL, $second_value = NULL, $check_remove = 0)
     {
         if (empty($the_value))
         {
@@ -681,6 +681,11 @@ class M_custom extends CI_Model
         if ($show_not_hide_only == 1)
         {
             $this->db->where('hide_flag', 0);
+        }
+
+        if ($check_remove == 1)
+        {
+            $this->db->where('remove_flag', 0);
         }
 
         $query = $this->db->get_where($the_table, array($the_column => $the_value), 1);
@@ -1556,6 +1561,8 @@ class M_custom extends CI_Model
             'me_state_name' => $this->m_custom->display_static_option($user['me_state_id']),
             'merchant_dashboard_url' => base_url() . "all/merchant-dashboard/" . $user['slug'] . '//' . $user['id'],
             'merchant_dashboard_link' => $this->m_custom->generate_merchant_link($merchant_id),
+            'hide_flag' => $user['hide_flag'],
+            'remove_flag' => $user['remove_flag'],
         );
         return $merchant;
     }
@@ -2927,6 +2934,11 @@ class M_custom extends CI_Model
             }
         }
 
+        if (!$this->m_merchant->check_merchant_remove($row['merchant_id']))
+        {
+            $valid_row = 0;
+        }
+
         return $valid_row;
     }
 
@@ -2953,7 +2965,7 @@ class M_custom extends CI_Model
         }
 
         $this->db->order_by("company", "asc");
-        $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant'), 'hide_flag' => 0));
+        $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant'), 'hide_flag' => 0, 'remove_flag' => 0));
         $result = $query->result_array();
         $return = array();
         foreach ($result as $row)
@@ -3741,7 +3753,7 @@ class M_custom extends CI_Model
     {
         $this->db->select('company');
         $this->db->like('company', $search_word);
-        $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant'), 'hide_flag' => 0));
+        $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant'), 'hide_flag' => 0, 'remove_flag' => 0));
         if ($query->num_rows() > 0)
         {
             foreach ($query->result_array() as $row)

@@ -24,7 +24,7 @@ $lang['fail_to_send_email'] = 'Fail to send email!';
 // Login
 $lang['login_heading']         = 'Login';
 $lang['login_subheading']      = 'Please login with your email/username and password below.';
-$lang['login_identity_label']  = 'E-mail / Username';
+$lang['login_identity_label']  = 'E-mail';
 $lang['login_password_label']  = 'Password';
 $lang['login_remember_label']  = 'Remember Me';
 $lang['login_submit_btn']      = 'Log In';
@@ -63,7 +63,7 @@ $lang['create_user_fname_label']                       = 'First Name:';
 $lang['create_user_first_name_label']                  = 'First Name:';
 $lang['create_user_lname_label']                       = 'Last Name:';
 $lang['create_user_last_name_label']                   = 'Last Name:';
-$lang['create_user_promo_code_label2']                 = 'Promo Code: (Also can key in after register)';
+$lang['create_user_promo_code_label2']                 = 'Promo Code:';
 $lang['create_user_promo_code_label']                  = 'Promo Code: (Copy this for friend register)';
 $lang['create_user_description_label']                 = 'Description:';
 $lang['create_user_company_label']                     = 'Company Name:';

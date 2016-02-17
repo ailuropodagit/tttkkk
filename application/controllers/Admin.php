@@ -2333,7 +2333,19 @@ class Admin extends CI_Controller
                 $this->m_custom->update_hide_flag(0, 'users', $id);
                 $can_redirect_to = 1;
             }
-
+            if ($this->input->post('button_action') == "remove" && $this->m_admin->check_worker_role(64))
+            {
+                $message_info = add_message_info($message_info, $user_display_name . ' success hide.');
+                $this->m_custom->update_remove_flag(1, 'users', $id);
+                $can_redirect_to = 1;
+            }
+            if ($this->input->post('button_action') == "recover_remove")
+            {
+                $message_info = add_message_info($message_info, $user_display_name . ' success unhide.');
+                $this->m_custom->update_remove_flag(0, 'users', $id);
+                $can_redirect_to = 1;
+            }
+            
             if ($message_info != NULL)
             {
                 $this->session->set_flashdata('message', $message_info);

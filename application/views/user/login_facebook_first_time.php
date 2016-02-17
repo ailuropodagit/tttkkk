@@ -36,7 +36,7 @@ if(isset($message))
         <div id='register-horizontal-line'></div>
         <form method="POST">
             <div id='register-form-each'>
-                <div id='register-form-each-label'>Active E-mail Address:</div>
+                <div id='register-form-each-label'>Active E-mail:</div>
                 <div id='register-form-each-input'><input type="text" name="email" value="<?php echo $email ?>"></div>
             </div>
             <div id='register-form-each'>
@@ -72,8 +72,8 @@ if(isset($message))
             </div>
             <div id="register-form-agree-checkbox">
                     <input type="checkbox" name="accept_terms" value="1" /> I agree to the Terms of Service and Privacy Policy.
-            </div>
-            <div id="upload-for-merchant-upload-image-note">
+            </div><br/>
+            <div id="upload-for-merchant-upload-image-note" style="text-align:left">
                 Keppo will send a temporary password to your active email. <br/>
                 After login please change the password.  <br/>
                 If you don't want to login using Facebook account next time, <br/>

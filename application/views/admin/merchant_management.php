@@ -65,7 +65,7 @@ if (isset($message))
                         $main_category_text = $this->m_custom->display_category($row['me_category_id']);
                         $state_text = $this->m_custom->display_static_option($row['me_state_id']);
                         $merchant_balance_text = $this->m_merchant->merchant_balance_color($row['id'], 1);
-                        $remove_row = $row['hide_flag'] == 1 ? 'Frozen' : '';
+                        $remove_row = $row['remove_flag'] == 1 ? 'Hide' : ($row['hide_flag'] == 1 ? 'Frozen' : '');
                         $url_view = base_url() . "admin/merchant_view/" . $row['id'];
                         $url_edit = base_url() . "admin/merchant_edit/" . $row['id'];
                         $url_feecharge = base_url() . "admin/merchant_feecharge/" . $row['id'];         
@@ -103,15 +103,17 @@ if (isset($message))
                         echo "<td>" . $remove_row . "</td>";
                         echo "<td>";
                         echo "<a href='" . $url_view . "' ><img src='". base_url() . "/image/btn-view.png' title='View' alt='View' class='normal-btn-image'></a>";
-                        if($this->m_admin->check_worker_role(78)) {
-                            echo "<a href='" . $url_edit . "' ><img src='". base_url() . "/image/btn-edit.png' title='Edit' alt='Edit' class='normal-btn-image'></a>";
-                        }
-                        if($this->m_admin->check_worker_role(67)) {
-                            echo "<a href='" . $url_feecharge . "' ><img src='". base_url() . "/image/btn-fee-charge.png' title='Fee Charge' alt='Fee Charge' class='normal-btn-image'></a>";
-                            echo "<a href='" . $url_topup . "' ><img src='". base_url() . "/image/btn-topup.png' title='Top Up' alt='Top Up' class='normal-btn-image'></a>";
-                        }
-                        if($this->m_admin->check_worker_role(77)) {
-                            echo "<a href='" . $url_promo_code . "' ><img src='". base_url() . "/image/btn-promocode.png' title='Promocode' alt='Promocode' class='normal-btn-image'></a>";
+                        if($row['remove_flag'] == 0){
+                            if($this->m_admin->check_worker_role(78)) {
+                                echo "<a href='" . $url_edit . "' ><img src='". base_url() . "/image/btn-edit.png' title='Edit' alt='Edit' class='normal-btn-image'></a>";
+                            }
+                            if($this->m_admin->check_worker_role(67)) {
+                                echo "<a href='" . $url_feecharge . "' ><img src='". base_url() . "/image/btn-fee-charge.png' title='Fee Charge' alt='Fee Charge' class='normal-btn-image'></a>";
+                                echo "<a href='" . $url_topup . "' ><img src='". base_url() . "/image/btn-topup.png' title='Top Up' alt='Top Up' class='normal-btn-image'></a>";
+                            }
+                            if($this->m_admin->check_worker_role(77)) {
+                                echo "<a href='" . $url_promo_code . "' ><img src='". base_url() . "/image/btn-promocode.png' title='Promocode' alt='Promocode' class='normal-btn-image'></a>";
+                            }
                         }
                         echo "</td>";
                         echo "<td>";                       
@@ -120,14 +122,21 @@ if (isset($message))
                         $ror = $row['hide_flag'] == 1 ? 'recover' : 'frozen';
                         $ror_text = $row['hide_flag'] == 1 ? 'Unfrozen' : 'Frozen';
                         $ror_image = $row['hide_flag'] == 1 ? base_url() . '/image/btn-unfrozen.png' : base_url() . '/image/btn-frozen.png';
+                        $ror2 = $row['remove_flag'] == 1 ? 'recover_remove' : 'remove';
+                        $ror_text2 = $row['remove_flag'] == 1 ? 'Recover' : 'Hide';
+                        $ror_image2 = $row['remove_flag'] == 1 ? base_url() . '/image/btn-recover.png' : base_url() . '/image/btn-hide.png';
                         ?>
-                        <?php if($this->m_admin->check_worker_role(60)) { ?>
+                        <?php if($this->m_admin->check_worker_role(60) && $row['remove_flag'] == 0) { ?>
                         <button name="button_action" type="submit" value="log_in_as" title='Log In As Merchant' class='normal-btn-submit'>
                             <img src='<?php echo base_url() . "/image/btn-login-as.png"; ?>' title='Log In As Merchant' alt='Log In As Merchant' class='normal-btn-image'></button>
                         <?php } ?>
-                        <?php if($this->m_admin->check_worker_role(64)) { ?>
+                        <?php if($this->m_admin->check_worker_role(64) && $row['remove_flag'] == 0) { ?>
                         <button name="button_action" type="submit" value="<?php echo $ror; ?>" onclick="return confirm('Are you sure want to <?php echo $ror_text; ?> it?')" title='<?php echo $ror_text; ?>' class='normal-btn-submit'>
                         <img src='<?php echo $ror_image; ?>' title='<?php echo $ror_text; ?>' alt='<?php echo $ror_text; ?>' class='normal-btn-image'></button> 
+                        <?php } ?>
+                        <?php if($this->m_admin->check_worker_role(64)) { ?>
+                        <button name="button_action" type="submit" value="<?php echo $ror2; ?>" onclick="return confirm('Are you sure want to <?php echo $ror_text2; ?> it?')" title='<?php echo $ror_text2; ?>' class='normal-btn-submit'>
+                        <img src='<?php echo $ror_image2; ?>' title='<?php echo $ror_text2; ?>' alt='<?php echo $ror_text2; ?>' class='normal-btn-image'></button> 
                         <?php } ?>
                         <?php
                         echo form_close(); 

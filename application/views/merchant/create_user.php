@@ -104,11 +104,11 @@ if(isset($message))
                 <div id='register-form-each-input'><?php echo form_input($username); ?></div>
             </div>
             <div id='register-form-each'>
-                <div id='register-form-each-label'><?php echo lang('create_merchant_password_label', 'password'); ?></div>
+                <div id='register-form-each-label'><?php echo lang('create_merchant_password_label', 'password'); ?> (Minimum 8 characteristics)</div>
                 <div id='register-form-each-input'><?php echo form_input($password); ?></div>
             </div>
             <div id='register-form-each'>
-                <div id='register-form-each-label'><?php echo lang('create_merchant_password_confirm_label', 'password_confirm'); ?></div>
+                <div id='register-form-each-label'><?php echo lang('create_merchant_password_confirm_label', 'password_confirm'); ?> (Minimum 8 characteristics)</div>
                 <div id='register-form-each-input'><?php echo form_input($password_confirm); ?></div>
             </div>
             <div id='register-form-forgot-password'>

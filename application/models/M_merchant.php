@@ -31,7 +31,7 @@ class M_merchant extends CI_Model
         {
             $search_word = $this->db->escape('%' . $search_value . '%');
             $this->db->where("(`company` LIKE $search_word OR `slug` LIKE $search_word)");
-            $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant'), 'hide_flag' => 0));
+            $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant'), 'hide_flag' => 0, 'remove_flag' => 0));
             $result = $query->result_array();
 
             if ($want_id == 1)
@@ -169,7 +169,7 @@ class M_merchant extends CI_Model
         $query = $this->db->get_where('users', array('me_category_id' => $category_id));
         if ($query->num_rows() == 0 && $return_empty == 0)
         {
-            $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant'), 'hide_flag' => 0));
+            $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant'), 'hide_flag' => 0, 'remove_flag' => 0));
         }
         return $query->result();
     }
@@ -177,7 +177,7 @@ class M_merchant extends CI_Model
     public function getMerchantList_by_subcategory($sub_category_id = 0)
     {
         $this->db->where('me_sub_category_id', $sub_category_id);
-        $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant'), 'hide_flag' => 0));
+        $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant'), 'hide_flag' => 0, 'remove_flag' => 0));
 
         $result = $query->result_array();
         $return = array();
@@ -191,7 +191,7 @@ class M_merchant extends CI_Model
     public function getMerchantCount_by_subcategory($sub_category_id = 0)
     {
         $this->db->where('me_sub_category_id', $sub_category_id);
-        $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant'), 'hide_flag' => 0));
+        $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant'), 'hide_flag' => 0, 'remove_flag' => 0));
 
         return $query->num_rows();
     }
@@ -607,6 +607,19 @@ class M_merchant extends CI_Model
         
         $merchant_minimum_balance = $this->m_custom->web_setting_get('merchant_minimum_balance', 'set_decimal');
         if ($this->m_merchant->merchant_check_balance($merchant_id) < $merchant_minimum_balance && $this->config->item('froze_account_activate') == 1)
+        {
+            return FALSE;
+        }
+        else
+        {
+            return TRUE;
+        }
+    }
+
+    public function check_merchant_remove($merchant_id)
+    {
+        $merchant_info = $this->m_custom->getMerchantInfo($merchant_id);
+        if ($merchant_info['remove_flag'] == 1)
         {
             return FALSE;
         }
