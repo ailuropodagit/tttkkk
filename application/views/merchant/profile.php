@@ -80,6 +80,10 @@ if(isset($message))
             <?php echo form_open(uri_string()); ?>
             <div id='profile-info-form'>
                 <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><?php echo lang('create_merchant_description_label', 'description'); ?></div>
+                    <div id='profile-info-form-each-input'><?php echo form_textarea($description); ?></div>
+                </div>
+                <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_merchant_company_main_label', 'company_main'); ?></div>
                     <div id='profile-info-form-each-input'><?php echo form_input($company_main); ?></div>
                 </div>
@@ -121,10 +125,6 @@ if(isset($message))
                 <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_merchant_country_label', 'me_country'); ?></div>
                     <div id='profile-info-form-each-input'><?php echo form_dropdown($me_country, $country_list, $country_selected); ?></div>
-                </div>
-                <div id='profile-info-form-each'>
-                    <div id='profile-info-form-each-label'><?php echo lang('create_merchant_description_label', 'description'); ?></div>
-                    <div id='profile-info-form-each-input'><?php echo form_textarea($description); ?></div>
                 </div>
                 <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_merchant_phone_label', 'phone'); ?></div>

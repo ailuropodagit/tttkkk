@@ -153,7 +153,7 @@ if(isset($message))
 
 <div id="register">
     <div id='register-link'>
-        <a href='<?php echo base_url('merchant/register') ?>' class="a-href-button">Merchant Register</a>
+        
     </div>
     <div id='float-fix'></div>
     <div id='register-title'>User Sign Up</div>

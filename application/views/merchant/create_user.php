@@ -94,14 +94,14 @@ if(isset($message))
                 <div id='register-form-each-label'><?php echo lang('create_merchant_phone_label', 'phone'); ?></div>
                 <!--<div id='register-form-each-input-contact-number'>+60 <?php //echo form_input($phone); ?></div>-->
                 <div id='register-form-each-input'><?php echo form_input($phone); ?>
+            </div>           
+            <div id='register-form-each'>
+                <div id='register-form-each-label'><?php echo lang('create_merchant_email_label', 'email'); ?></div>
+                <div id='register-form-each-input'><?php echo form_input($email); ?></div>
             </div>
             <div id='register-form-each'>
                 <div id='register-form-each-label'><?php echo lang('create_merchant_username_label', 'username'); ?></div>
                 <div id='register-form-each-input'><?php echo form_input($username); ?></div>
-            </div>
-            <div id='register-form-each'>
-                <div id='register-form-each-label'><?php echo lang('create_merchant_email_label', 'email'); ?></div>
-                <div id='register-form-each-input'><?php echo form_input($email); ?></div>
             </div>
             <div id='register-form-each'>
                 <div id='register-form-each-label'><?php echo lang('create_merchant_password_label', 'password'); ?></div>

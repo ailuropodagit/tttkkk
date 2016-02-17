@@ -238,7 +238,8 @@ class User extends CI_Controller
             //validation
             //$this->form_validation->set_rules('email', 'E-mail address:', 'required|valid_email|valid_facebook_email['.$fb_email.']'); 
             $this->form_validation->set_rules('email', 'Active E-mail address:', 'required|valid_email'); 
-            $this->form_validation->set_rules('contact_number', 'Contact Number:', 'required|valid_contact_number'); 
+            //$this->form_validation->set_rules('contact_number', 'Contact Number:', 'required|valid_contact_number'); 
+            $this->form_validation->set_rules('contact_number', 'Contact Number:', 'required'); 
             $this->form_validation->set_rules('dob', 'Date of Birth:', 'valid_date');
             $this->form_validation->set_rules('race', 'Race:', 'required_dropdown');
             if($race == '19') { $this->form_validation->set_rules('race_other', 'Race Other:', 'required'); } //19 = other
@@ -918,7 +919,8 @@ class User extends CI_Controller
         // validate form input        
         $this->form_validation->set_rules('first_name', $this->lang->line('create_user_validation_fname_label'), 'required');
         $this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'));
-        $this->form_validation->set_rules('phone', $this->lang->line('create_user_validation_phone_label'), 'required|valid_contact_number');
+        //$this->form_validation->set_rules('phone', $this->lang->line('create_user_validation_phone_label'), 'required|valid_contact_number');
+        $this->form_validation->set_rules('phone', $this->lang->line('create_user_validation_phone_label'), 'required');
         $this->form_validation->set_rules('dob', $this->lang->line('create_user_validation_dob_label'), 'callback_date_check');
         $this->form_validation->set_rules('gender_id', $this->lang->line('create_user_validation_gender_label'), 'callback_check_gender_id');
         $this->form_validation->set_rules('race_id', $this->lang->line('create_user_validation_race_label'), 'callback_check_race_id');
@@ -1151,7 +1153,8 @@ class User extends CI_Controller
         $this->form_validation->set_rules('first_name', $this->lang->line('create_user_fname_label'), 'required');
         $this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'));
         $this->form_validation->set_rules('description', $this->lang->line('create_user_validation_description_label'));
-        $this->form_validation->set_rules('phone', $this->lang->line('create_user_phone_label'), 'required|valid_contact_number');
+        //$this->form_validation->set_rules('phone', $this->lang->line('create_user_phone_label'), 'required|valid_contact_number');
+        $this->form_validation->set_rules('phone', $this->lang->line('create_user_phone_label'), 'required');
         $this->form_validation->set_rules('dob', $this->lang->line('create_user_dob_label'), 'callback_date_check');
         $this->form_validation->set_rules('username', $this->lang->line('create_user_validation_username_label'), 'trim|required|is_unique_edit[' . $tables['users'] . '.username.' . $user_id . ']');
         $this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'trim|required|valid_email|is_unique_edit[' . $tables['users'] . '.email.' . $user_id . ']');

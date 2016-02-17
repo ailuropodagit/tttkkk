@@ -89,6 +89,12 @@
                                     </a>
                                 </li>
                                 <li>
+                                    <a href='<?php echo base_url() ?>merchant/register'>
+                                        <div id='footer-navigation-block3-navigation-icon'><i class="fa fa-caret-right"></i></div> 
+                                        <div id='footer-navigation-block3-navigation-text'>Merchant Register</div>
+                                    </a>
+                                </li>
+                                <li>
                                     <a href='<?php echo base_url() ?>merchant/login'>
                                         <div id='footer-navigation-block3-navigation-icon'><i class="fa fa-caret-right"></i></div> 
                                         <div id='footer-navigation-block3-navigation-text'>Merchant Login</div>

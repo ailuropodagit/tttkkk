@@ -1,9 +1,12 @@
 <script type="text/javascript" src="<?php echo base_url() ?>js/datatables/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>js/datatables/js/moment.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>js/datatables/js/datetime-moment.js"></script>
 <script type="text/javascript" src="<?php echo base_url() ?>js/datatables/js/formatted-numbers.js"></script>
 <?php echo link_tag('js/datatables/css/jquery.dataTables.min.css') ?>
 
 <script type="text/javascript">
     $(document).ready(function () {
+        $.fn.dataTable.moment('DD-MM-YYYY');
         $('#myTable').DataTable({
             "pageLength": 25,
             "order": [],
@@ -38,6 +41,7 @@ if (isset($message))
 <!--                        <th>Username</th> 
                         <th>Password</th>-->
                         <?php //} ?>
+                        <th>Register Date</th>
                         <th>Company Name</th>
                         <th>Shop Name</th>
                         <th>Email</th>
@@ -84,6 +88,7 @@ if (isset($message))
                         //echo "<td>" . $row['username'] . "</td>";    
                         //echo "<td>" . $row['password_visible'] . "</td>";
                         //}
+                        echo "<td>" . date($this->config->item('keppo_format_date_display'), $row['created_on']) . "</td>";
                         echo "<td>" . $row['company_main'] . "</td>";
                         echo "<td><a href='" . $url_dashboard . "' target='_blank' >" . $row['company'] . "</a></td>";
                         echo "<td>" . $row['email'] . "</td>";

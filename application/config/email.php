@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed.');
 $config['protocol'] = 'smtp';
 $config['smtp_host'] = 'ssl://smtp.googlemail.com';
 $config['smtp_user'] = 'kepposend@gmail.com';
-$config['smtp_pass'] = 'keppo123';
+$config['smtp_pass'] = 'keppo12345';
 $config['smtp_port'] = '465';
 $config['from_name'] = 'Keppo';
         

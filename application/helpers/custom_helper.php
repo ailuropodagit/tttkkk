@@ -202,9 +202,15 @@ if (!function_exists('check_is_login'))
 if (!function_exists('send_mail_simple'))
 {
 
-    function send_mail_simple($to_email = '', $to_subject = '', $to_message = '', $success_message = '', $have_session = 1)
+    function send_mail_simple($to_email = '', $to_subject = '', $to_message = '', $success_message = '', $have_session = 1, $cc_admin = 0)
     {
         $ci = & get_instance();
+        
+        if ($cc_admin == 1)
+        {
+            $to_email = $to_email . "," . $ci->m_custom->web_setting_get('keppo_admin_email', 'set_desc');
+        }
+
         $ci->load->library('email'); // Note: no $config param needed
         $ci->email->from($ci->config->item('smtp_user'), $ci->config->item('from_name'));
         $ci->email->to($to_email);

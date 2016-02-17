@@ -1432,7 +1432,7 @@ class M_custom extends CI_Model
         {
             $login_id = $this->ion_auth->user()->row()->id;
             $many_list = $this->m_custom->many_get_parentlist('merchant_worker', $login_id);
-            $this->db->order_by('company');
+            $this->db->order_by('id','desc');
             if (!empty($many_list))  //If the worker din't specify assign, then just let it see all merchant
             {
                 $this->db->where_in('id', $many_list);
@@ -1441,7 +1441,7 @@ class M_custom extends CI_Model
         }
         else
         {
-            $this->db->order_by('company');
+            $this->db->order_by('id','desc');
             $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant')));
         }
         $result = $query->result_array();
@@ -2209,7 +2209,7 @@ class M_custom extends CI_Model
                 $noti_url = '';
                 switch ($user_row['main_group_id']){
                     case $this->config->item('group_id_merchant'):
-                        $noti_url = 'all/merchant_dashboard/' . $user_row['slug'] . '//' . $advertise['merchant_id'];
+                        $noti_url = 'all/merchant_dashboard/' . $user_row['slug'] . '//' . $user_follow_id;
                         break;
                     case $this->config->item('group_id_user'):
                         $noti_url = 'all/user_dashboard/' . $user_follow_id;
@@ -2507,18 +2507,22 @@ class M_custom extends CI_Model
 
             $noti_message = $this->m_custom->display_notification_message($msg_type, $title, $public_show, $noti_to_id);
 
-            $notification_list[] = array(
-                'noti_id' => $notification['noti_id'],
-                'noti_by_id' => $notification['noti_by_id'],
-                'noti_user_url' => $this->m_custom->generate_user_link($notification['noti_by_id'], 0, 1),
-                'noti_user_image' => $this->m_custom->generate_user_link($notification['noti_by_id'], 1, 1, 1),
-                'noti_message' => $noti_message,
-                'noti_url' => $notification['noti_url'],
-                'noti_read_already' => $notification['noti_read_already'],
-                'admin_read_already' => $notification['admin_read_already'],
-                'noti_time' => displayDate($notification['noti_time'], 1),
-                'noti_image_url' => $this->m_custom->get_image_url($notification['noti_refer_table'], $notification['noti_refer_table_id']),
-            );
+            $noti_user_url = $this->m_custom->generate_user_link($notification['noti_by_id'], 0, 1);
+            if ($noti_user_url != 'User Deleted')
+            {
+                $notification_list[] = array(
+                    'noti_id' => $notification['noti_id'],
+                    'noti_by_id' => $notification['noti_by_id'],
+                    'noti_user_url' => $noti_user_url,
+                    'noti_user_image' => $this->m_custom->generate_user_link($notification['noti_by_id'], 1, 1, 1),
+                    'noti_message' => $noti_message,
+                    'noti_url' => $notification['noti_url'],
+                    'noti_read_already' => $notification['noti_read_already'],
+                    'admin_read_already' => $notification['admin_read_already'],
+                    'noti_time' => displayDate($notification['noti_time'], 1),
+                    'noti_image_url' => $this->m_custom->get_image_url($notification['noti_refer_table'], $notification['noti_refer_table_id']),
+                );
+            }
         }
         return $notification_list;
     }

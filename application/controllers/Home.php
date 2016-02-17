@@ -35,6 +35,13 @@ class Home extends CI_Controller
         $data['main_category_id'] = $main_category_id;
         //TEMPLATE
         $data['page_path_name'] = 'home'; 
+        
+        $meta = array(
+            array('property' => 'og:type', 'content' => 'article'),
+            array('property' => 'og:image', 'content' => base_url('image/logo-red-big.png'))
+        );
+        $data['meta_fb'] = meta_fb($meta);
+            
         $this->load->view('template/index_home', $data);
     }
     
