@@ -16,7 +16,17 @@
          xfbml  : true  // parse XFBML
        });
 
-    function fbShare(){        
+    function fbShare(){   
+        
+        var the_id = '<?php echo $advertise_id; ?>';
+        var post_url = '<?php echo base_url(); ?>' + 'all/fb_share';
+        $.ajax({
+            type: "POST",
+            url: post_url,
+            dataType: "json",
+            data: "&advertise_id=" + the_id + "&advertise_type=adv",
+        });
+        
         FB.ui({
             method : 'feed', 
             link   :  '<?php echo base_url() . uri_string(); ?>',
@@ -24,8 +34,7 @@
             picture: '<?php echo $image_url; ?>',
             name:'<?php echo $merchant_name; ?>',
             description: '<?php echo limit_character($description, 150, 1); ?>'
-       });
-       <?php $this->m_custom->activity_share($advertise_id, 'adv'); ?>
+       });     
     }    
 
 </script>

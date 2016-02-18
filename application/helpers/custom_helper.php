@@ -204,7 +204,6 @@ if (!function_exists('send_mail_simple'))
 
     function send_mail_simple($to_email = '', $to_subject = '', $to_message = '', $success_message = '', $have_session = 1, $cc_admin = 0)
     {
-        echo 'here';
         $ci = & get_instance();
         
         if ($cc_admin == 1)

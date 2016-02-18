@@ -26,6 +26,13 @@ class All extends CI_Controller
         }
     }
 
+    function fb_share($advertise_id = NULL, $advertise_type  = NULL)
+    {
+        $advertise_id = $this->input->post("advertise_id", true);
+        $advertise_type = $this->input->post("advertise_type", true);
+        $this->m_custom->activity_share($advertise_id, $advertise_type);
+    }
+    
     function hotdeal_list($sub_category_id)
     {
         //SORTING REQUEST
