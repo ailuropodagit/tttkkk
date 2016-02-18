@@ -1119,9 +1119,9 @@ class Merchant extends CI_Controller
         $this->form_validation->set_rules('description', $this->lang->line('create_merchant_validation_description_label'));
         $this->form_validation->set_rules('website', $this->lang->line('create_merchant_validation_website_label'));
         $this->form_validation->set_rules('facebook_url', $this->lang->line('create_merchant_validation_facebook_url_label'));
-        $this->form_validation->set_rules('person_incharge', $this->lang->line('create_merchant_validation_person_incharge_label'), 'required');
-        //$this->form_validation->set_rules('person_contact', $this->lang->line('create_merchant_validation_person_contact_label'), 'required|valid_contact_number');
-        $this->form_validation->set_rules('person_contact', $this->lang->line('create_merchant_validation_person_contact_label'), 'required');
+        $this->form_validation->set_rules('person_incharge', $this->lang->line('create_merchant_validation_person_incharge_label'));
+        //$this->form_validation->set_rules('person_contact', $this->lang->line('create_merchant_validation_person_contact_label'), 'valid_contact_number');
+        $this->form_validation->set_rules('person_contact', $this->lang->line('create_merchant_validation_person_contact_label'));
         
         if (isset($_POST) && !empty($_POST))
         {
@@ -1399,6 +1399,34 @@ class Merchant extends CI_Controller
         }
     }
 
+    function promo_code()
+    {
+        if (!check_correct_login_type($this->main_group_id))
+        {
+            redirect('/', 'refresh');
+        }
+
+        $message_info = '';
+        $login_id = $this->ion_auth->user()->row()->id;
+        $this->m_custom->promo_code_insert_merchant($login_id);       
+
+        $promo_code = $this->m_custom->promo_code_get('merchant', $login_id, 1);
+        $this->data['promo_code_no'] = array(
+            'name' => 'promo_code_no',
+            'id' => 'promo_code_no',
+            'type' => 'text',
+            'readonly' => 'true',
+            'value' => $promo_code,
+        );
+        $this->data['promo_code_url'] = $this->m_custom->generate_promo_code_list_link($promo_code, 33);
+        
+        // set the flash data error message if there is one
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+
+        $this->data['page_path_name'] = 'merchant/promo_code';
+        $this->load->view('template/index', $this->data);
+    }   
+    
     public function merchant_redemption_page($show_used = 0)
     {
         if (check_correct_login_type($this->group_id_merchant) || check_correct_login_type($this->group_id_supervisor))

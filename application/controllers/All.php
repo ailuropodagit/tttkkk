@@ -1156,22 +1156,22 @@ class All extends CI_Controller
         $the_row = FALSE;
         if ($user_id != NULL)
         {
-            $the_row = $this->m_custom->get_one_table_record('users', 'id', $user_id, 0, 1, 'main_group_id', $this->group_id_merchant, 1);
+            $the_row = $this->m_custom->get_one_table_record('users', 'id', $user_id, 0, 0, 'main_group_id', $this->group_id_merchant, 1);
         }
 
         if (!$the_row)
         {
-            $the_row = $this->m_custom->get_one_table_record('users', 'id', $bottom_part, 0, 1, 'main_group_id', $this->group_id_merchant, 1);
+            $the_row = $this->m_custom->get_one_table_record('users', 'id', $bottom_part, 0, 0, 'main_group_id', $this->group_id_merchant, 1);
         }
 
         if (!$the_row)
         {
-            $the_row = $this->m_custom->get_one_table_record('users', 'id', $slug, 0, 1, 'main_group_id', $this->group_id_merchant, 1);
+            $the_row = $this->m_custom->get_one_table_record('users', 'id', $slug, 0, 0, 'main_group_id', $this->group_id_merchant, 1);
         }
         
         if (!$the_row)
         {
-            $the_row = $this->m_custom->get_one_table_record('users', 'slug', $slug, 0, 1, 'main_group_id', $this->group_id_merchant, 1);
+            $the_row = $this->m_custom->get_one_table_record('users', 'slug', $slug, 0, 0, 'main_group_id', $this->group_id_merchant, 1);
         }
         
         if ($the_row)
@@ -1256,11 +1256,11 @@ class All extends CI_Controller
     {
         if ($user_id != NULL)
         {
-            $the_row = $this->m_custom->get_one_table_record('users', 'id', $user_id, 0, 1, 'main_group_id', $this->group_id_merchant, 1);
+            $the_row = $this->m_custom->get_one_table_record('users', 'id', $user_id, 0, 0, 'main_group_id', $this->group_id_merchant, 1);
         }
         else
         {
-            $the_row = $this->m_custom->get_one_table_record('users', 'slug', $slug, 0, 1, 'main_group_id', $this->group_id_merchant, 1);
+            $the_row = $this->m_custom->get_one_table_record('users', 'slug', $slug, 0, 0, 'main_group_id', $this->group_id_merchant, 1);
         }
         if ($the_row)
         {

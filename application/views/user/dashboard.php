@@ -1,4 +1,5 @@
 <script type="text/javascript" src="<?php echo base_url() ?>js/jquery.ajaxfileupload.js"></script>
+<script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         var keppo_path = '<?php echo $this->config->item('keppo_path'); ?>'; 
@@ -110,7 +111,7 @@ if($this->ion_auth->user()->num_rows())
         $us_photography_url = $row_users['us_photography_url'];
         ?>
         <div id='dashboard-photo'>
-            <div id="dashboard-photo-box">
+            <div id="dashboard-photo-box" class="zoom-image">
                 <?php            
                 if(IsNullOrEmptyString($profile_image))
                 {
