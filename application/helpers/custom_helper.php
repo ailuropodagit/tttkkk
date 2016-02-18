@@ -204,6 +204,7 @@ if (!function_exists('send_mail_simple'))
 
     function send_mail_simple($to_email = '', $to_subject = '', $to_message = '', $success_message = '', $have_session = 1, $cc_admin = 0)
     {
+        echo 'here';
         $ci = & get_instance();
         
         if ($cc_admin == 1)
@@ -212,7 +213,8 @@ if (!function_exists('send_mail_simple'))
         }
 
         $ci->load->library('email'); // Note: no $config param needed
-        $ci->email->from($ci->config->item('smtp_user'), $ci->config->item('from_name'));
+        //$ci->email->from($ci->config->item('smtp_user'), $ci->config->item('from_name'));
+        $ci->email->from('noreply@keppo.my', 'noreply@keppo.my');
         $ci->email->to($to_email);
         $ci->email->subject($to_subject);
         $ci->email->message($to_message);

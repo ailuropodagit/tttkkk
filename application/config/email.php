@@ -1,10 +1,20 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed.');
 
-$config['protocol'] = 'smtp';
+switch($_SERVER["SERVER_NAME"]) {
+case "localhost":
 $config['smtp_host'] = 'ssl://smtp.googlemail.com';
 $config['smtp_user'] = 'kepposend@gmail.com';
 $config['smtp_pass'] = 'keppo12345';
+break;
+case "www.keppo.my":
+$config['smtp_host'] = 'ssl://fuyoo-173-164.fuyoo.com';
+$config['smtp_user'] = 'noreply@keppo.my';
+$config['smtp_pass'] = 'admin123';  
+break;
+}
+
+$config['protocol'] = 'smtp';
 $config['smtp_port'] = '465';
 $config['from_name'] = 'Keppo';
         
