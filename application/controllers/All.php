@@ -26,6 +26,13 @@ class All extends CI_Controller
         }
     }
 
+    function fb_share($advertise_id = NULL, $advertise_type  = NULL)
+    {
+        $advertise_id = $this->input->post("advertise_id", true);
+        $advertise_type = $this->input->post("advertise_type", true);
+        $this->m_custom->activity_share($advertise_id, $advertise_type);
+    }
+    
     function hotdeal_list($sub_category_id)
     {
         //SORTING REQUEST
@@ -1156,22 +1163,22 @@ class All extends CI_Controller
         $the_row = FALSE;
         if ($user_id != NULL)
         {
-            $the_row = $this->m_custom->get_one_table_record('users', 'id', $user_id, 'main_group_id', $this->group_id_merchant);
+            $the_row = $this->m_custom->get_one_table_record('users', 'id', $user_id, 0, 0, 'main_group_id', $this->group_id_merchant, 1);
         }
 
         if (!$the_row)
         {
-            $the_row = $this->m_custom->get_one_table_record('users', 'id', $bottom_part, 'main_group_id', $this->group_id_merchant);
+            $the_row = $this->m_custom->get_one_table_record('users', 'id', $bottom_part, 0, 0, 'main_group_id', $this->group_id_merchant, 1);
         }
 
         if (!$the_row)
         {
-            $the_row = $this->m_custom->get_one_table_record('users', 'id', $slug, 'main_group_id', $this->group_id_merchant);
+            $the_row = $this->m_custom->get_one_table_record('users', 'id', $slug, 0, 0, 'main_group_id', $this->group_id_merchant, 1);
         }
         
         if (!$the_row)
         {
-            $the_row = $this->m_custom->get_one_table_record('users', 'slug', $slug, 'main_group_id', $this->group_id_merchant);
+            $the_row = $this->m_custom->get_one_table_record('users', 'slug', $slug, 0, 0, 'main_group_id', $this->group_id_merchant, 1);
         }
         
         if ($the_row)
@@ -1256,11 +1263,11 @@ class All extends CI_Controller
     {
         if ($user_id != NULL)
         {
-            $the_row = $this->m_custom->get_one_table_record('users', 'id', $user_id, 'main_group_id', $this->group_id_merchant);
+            $the_row = $this->m_custom->get_one_table_record('users', 'id', $user_id, 0, 0, 'main_group_id', $this->group_id_merchant, 1);
         }
         else
         {
-            $the_row = $this->m_custom->get_one_table_record('users', 'slug', $slug, 'main_group_id', $this->group_id_merchant);
+            $the_row = $this->m_custom->get_one_table_record('users', 'slug', $slug, 0, 0, 'main_group_id', $this->group_id_merchant, 1);
         }
         if ($the_row)
         {

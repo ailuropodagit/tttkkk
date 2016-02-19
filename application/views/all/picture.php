@@ -19,6 +19,16 @@
        });
 
     function fbShare(){
+        
+        var the_id = '<?php echo $picture_id; ?>';
+        var post_url = '<?php echo base_url(); ?>' + 'all/fb_share';
+        $.ajax({
+            type: "POST",
+            url: post_url,
+            dataType: "json",
+            data: "&advertise_id=" + the_id + "&advertise_type=mua",
+        });
+        
         FB.ui({
             method : 'feed', 
             link   :  '<?php echo base_url() . uri_string(); ?>',
@@ -27,7 +37,6 @@
             name:'<?php echo $merchant_name; ?>',
             description: '<?php echo limit_character($description, 150, 1); ?>'
        });
-       <?php $this->m_custom->activity_share($picture_id, 'mua'); ?>
     }    
 </script>
 

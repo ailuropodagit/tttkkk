@@ -666,7 +666,7 @@ class M_custom extends CI_Model
     }
 
     //To find one record in DB with one keyword
-    public function get_one_table_record($the_table, $the_column, $the_value, $want_array = 0, $show_not_hide_only = 0, $second_column = NULL, $second_value = NULL)
+    public function get_one_table_record($the_table, $the_column, $the_value, $want_array = 0, $show_not_hide_only = 0, $second_column = NULL, $second_value = NULL, $check_remove = 0)
     {
         if (empty($the_value))
         {
@@ -681,6 +681,11 @@ class M_custom extends CI_Model
         if ($show_not_hide_only == 1)
         {
             $this->db->where('hide_flag', 0);
+        }
+
+        if ($check_remove == 1)
+        {
+            $this->db->where('remove_flag', 0);
         }
 
         $query = $this->db->get_where($the_table, array($the_column => $the_value), 1);
@@ -1432,7 +1437,7 @@ class M_custom extends CI_Model
         {
             $login_id = $this->ion_auth->user()->row()->id;
             $many_list = $this->m_custom->many_get_parentlist('merchant_worker', $login_id);
-            $this->db->order_by('company');
+            $this->db->order_by('id','desc');
             if (!empty($many_list))  //If the worker din't specify assign, then just let it see all merchant
             {
                 $this->db->where_in('id', $many_list);
@@ -1441,7 +1446,7 @@ class M_custom extends CI_Model
         }
         else
         {
-            $this->db->order_by('company');
+            $this->db->order_by('id','desc');
             $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant')));
         }
         $result = $query->result_array();
@@ -1556,6 +1561,8 @@ class M_custom extends CI_Model
             'me_state_name' => $this->m_custom->display_static_option($user['me_state_id']),
             'merchant_dashboard_url' => base_url() . "all/merchant-dashboard/" . $user['slug'] . '//' . $user['id'],
             'merchant_dashboard_link' => $this->m_custom->generate_merchant_link($merchant_id),
+            'hide_flag' => $user['hide_flag'],
+            'remove_flag' => $user['remove_flag'],
         );
         return $merchant;
     }
@@ -2209,7 +2216,7 @@ class M_custom extends CI_Model
                 $noti_url = '';
                 switch ($user_row['main_group_id']){
                     case $this->config->item('group_id_merchant'):
-                        $noti_url = 'all/merchant_dashboard/' . $user_row['slug'] . '//' . $advertise['merchant_id'];
+                        $noti_url = 'all/merchant_dashboard/' . $user_row['slug'] . '//' . $user_follow_id;
                         break;
                     case $this->config->item('group_id_user'):
                         $noti_url = 'all/user_dashboard/' . $user_follow_id;
@@ -2507,18 +2514,22 @@ class M_custom extends CI_Model
 
             $noti_message = $this->m_custom->display_notification_message($msg_type, $title, $public_show, $noti_to_id);
 
-            $notification_list[] = array(
-                'noti_id' => $notification['noti_id'],
-                'noti_by_id' => $notification['noti_by_id'],
-                'noti_user_url' => $this->m_custom->generate_user_link($notification['noti_by_id'], 0, 1),
-                'noti_user_image' => $this->m_custom->generate_user_link($notification['noti_by_id'], 1, 1, 1),
-                'noti_message' => $noti_message,
-                'noti_url' => $notification['noti_url'],
-                'noti_read_already' => $notification['noti_read_already'],
-                'admin_read_already' => $notification['admin_read_already'],
-                'noti_time' => displayDate($notification['noti_time'], 1),
-                'noti_image_url' => $this->m_custom->get_image_url($notification['noti_refer_table'], $notification['noti_refer_table_id']),
-            );
+            $noti_user_url = $this->m_custom->generate_user_link($notification['noti_by_id'], 0, 1);
+            if ($noti_user_url != 'User Deleted')
+            {
+                $notification_list[] = array(
+                    'noti_id' => $notification['noti_id'],
+                    'noti_by_id' => $notification['noti_by_id'],
+                    'noti_user_url' => $noti_user_url,
+                    'noti_user_image' => $this->m_custom->generate_user_link($notification['noti_by_id'], 1, 1, 1),
+                    'noti_message' => $noti_message,
+                    'noti_url' => $notification['noti_url'],
+                    'noti_read_already' => $notification['noti_read_already'],
+                    'admin_read_already' => $notification['admin_read_already'],
+                    'noti_time' => displayDate($notification['noti_time'], 1),
+                    'noti_image_url' => $this->m_custom->get_image_url($notification['noti_refer_table'], $notification['noti_refer_table_id']),
+                );
+            }
         }
         return $notification_list;
     }
@@ -2923,6 +2934,11 @@ class M_custom extends CI_Model
             }
         }
 
+        if (!$this->m_merchant->check_merchant_remove($row['merchant_id']))
+        {
+            $valid_row = 0;
+        }
+
         return $valid_row;
     }
 
@@ -2949,7 +2965,7 @@ class M_custom extends CI_Model
         }
 
         $this->db->order_by("company", "asc");
-        $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant'), 'hide_flag' => 0));
+        $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant'), 'hide_flag' => 0, 'remove_flag' => 0));
         $result = $query->result_array();
         $return = array();
         foreach ($result as $row)
@@ -3737,7 +3753,7 @@ class M_custom extends CI_Model
     {
         $this->db->select('company');
         $this->db->like('company', $search_word);
-        $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant'), 'hide_flag' => 0));
+        $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant'), 'hide_flag' => 0, 'remove_flag' => 0));
         if ($query->num_rows() > 0)
         {
             foreach ($query->result_array() as $row)

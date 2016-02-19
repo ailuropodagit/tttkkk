@@ -797,7 +797,8 @@ class Admin extends CI_Controller
         // validate form input
         $this->form_validation->set_rules('first_name', $this->lang->line('create_user_fname_label'), 'required');
         $this->form_validation->set_rules('last_name', $this->lang->line('create_user_validation_lname_label'));
-        $this->form_validation->set_rules('phone', $this->lang->line('create_user_phone_label'), 'required|valid_contact_number');
+        //$this->form_validation->set_rules('phone', $this->lang->line('create_user_phone_label'), 'required|valid_contact_number');
+        $this->form_validation->set_rules('phone', $this->lang->line('create_user_phone_label'), 'required');
         $this->form_validation->set_rules('username', $this->lang->line('create_user_validation_username_label'), 'trim|required|is_unique_edit[' . $tables['users'] . '.username.' . $user_id . ']');
         $this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'trim|required|valid_email|is_unique_edit[' . $tables['users'] . '.email.' . $user_id . ']');
 
@@ -1942,14 +1943,16 @@ class Admin extends CI_Controller
             $this->form_validation->set_rules('company', $this->lang->line('create_merchant_validation_company_label'), "trim|required|min_length[3]");
             $this->form_validation->set_rules('slug', $this->lang->line('create_merchant_validation_company_label'), 'trim|is_unique_edit[' . $tables['users'] . '.slug.' . $edit_id . ']');
             $this->form_validation->set_rules('me_person_incharge', $this->lang->line('create_merchant_validation_person_incharge_label'), 'required');
-            $this->form_validation->set_rules('me_person_contact', $this->lang->line('create_merchant_validation_person_contact_label'), 'required|valid_contact_number');
+            //$this->form_validation->set_rules('me_person_contact', $this->lang->line('create_merchant_validation_person_contact_label'), 'required|valid_contact_number');
+            $this->form_validation->set_rules('me_person_contact', $this->lang->line('create_merchant_validation_person_contact_label'), 'required');
             $this->form_validation->set_rules('me_ssm', $this->lang->line('create_merchant_validation_companyssm_label'), 'required');
             $this->form_validation->set_rules('me_category_id', $this->lang->line('create_merchant_category_label'), 'callback_check_main_category');
             $this->form_validation->set_rules('address', $this->lang->line('create_merchant_validation_address_label'), 'required');
             $this->form_validation->set_rules('postcode', $this->lang->line('create_merchant_validation_postcode_label'), 'required|numeric');
             $this->form_validation->set_rules('me_state_id', $this->lang->line('create_merchant_validation_state_label'), 'callback_check_state_id');
-            $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required|valid_contact_number');
-
+            //$this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required|valid_contact_number');
+            $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required');
+            
             if ($this->input->post('button_action') == "save")
             {
                 if ($this->form_validation->run() === TRUE)
@@ -2330,7 +2333,19 @@ class Admin extends CI_Controller
                 $this->m_custom->update_hide_flag(0, 'users', $id);
                 $can_redirect_to = 1;
             }
-
+            if ($this->input->post('button_action') == "remove" && $this->m_admin->check_worker_role(64))
+            {
+                $message_info = add_message_info($message_info, $user_display_name . ' success hide.');
+                $this->m_custom->update_remove_flag(1, 'users', $id);
+                $can_redirect_to = 1;
+            }
+            if ($this->input->post('button_action') == "recover_remove")
+            {
+                $message_info = add_message_info($message_info, $user_display_name . ' success unhide.');
+                $this->m_custom->update_remove_flag(0, 'users', $id);
+                $can_redirect_to = 1;
+            }
+            
             if ($message_info != NULL)
             {
                 $this->session->set_flashdata('message', $message_info);
@@ -2888,7 +2903,8 @@ class Admin extends CI_Controller
             $this->form_validation->set_rules('us_ic', $this->lang->line('worker_ic_label'), 'required');
             $this->form_validation->set_rules('wo_worker_id', $this->lang->line('worker_id_label'), 'required');
             $this->form_validation->set_rules('wo_department', $this->lang->line('worker_department_label'));
-            $this->form_validation->set_rules('phone', $this->lang->line('create_user_validation_phone_label'), 'required|valid_contact_number');
+            //$this->form_validation->set_rules('phone', $this->lang->line('create_user_validation_phone_label'), 'required|valid_contact_number');
+            $this->form_validation->set_rules('phone', $this->lang->line('create_user_validation_phone_label'), 'required');
             $this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'trim|required|valid_email|is_unique[' . $tables['users'] . '.email]');
             $this->form_validation->set_rules('wo_join_date', $this->lang->line('worker_joindate_label'), 'trim|required');
             $this->form_validation->set_rules('username', $this->lang->line('create_user_validation_username_label'), 'trim|required|is_unique[' . $tables['users'] . '.username]');
@@ -3070,7 +3086,8 @@ class Admin extends CI_Controller
             $this->form_validation->set_rules('us_ic', $this->lang->line('worker_ic_label'), 'required');
             $this->form_validation->set_rules('wo_worker_id', $this->lang->line('worker_id_label'), 'required');
             $this->form_validation->set_rules('wo_department', $this->lang->line('worker_department_label'));
-            $this->form_validation->set_rules('phone', $this->lang->line('create_user_phone_label'), 'required|valid_contact_number');
+            //$this->form_validation->set_rules('phone', $this->lang->line('create_user_phone_label'), 'required|valid_contact_number');
+            $this->form_validation->set_rules('phone', $this->lang->line('create_user_phone_label'), 'required');
             $this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'trim|required|valid_email|is_unique_edit[' . $tables['users'] . '.email.' . $edit_id . ']');
             $this->form_validation->set_rules('wo_join_date', $this->lang->line('worker_joindate_label'), 'trim|required');
             $this->form_validation->set_rules('username', $this->lang->line('create_user_validation_username_label'), 'trim|required|is_unique_edit[' . $tables['users'] . '.username.' . $edit_id . ']');

@@ -84,7 +84,12 @@ class Merchant extends CI_Controller
                 //$this->session->set_flashdata('message', $this->ion_auth->messages());
                 $user_id = $this->ion_auth->user()->row()->su_merchant_id;
                 $this->m_custom->promo_code_insert_merchant($user_id);
-                redirect('all/merchant_dashboard/' . $this->session->userdata('company_slug'). '//' . $user_id, 'refresh');
+                $merchant_info = $this->m_custom->getMerchantInfo($user_id);
+                if ($merchant_info['hide_flag'] == 1)
+                {
+                    redirect('merchant/logout', 'refresh');
+                }
+                redirect('all/merchant_dashboard/' . $this->session->userdata('company_slug') . '//' . $user_id, 'refresh');
             }
             else
             {
@@ -784,7 +789,8 @@ class Merchant extends CI_Controller
         $this->form_validation->set_rules('me_country', $this->lang->line('create_merchant_validation_country_label'), 'required');
         $this->form_validation->set_rules('me_category_id', $this->lang->line('create_merchant_category_label'), 'callback_check_main_category');
         $this->form_validation->set_rules('me_sub_category_id', $this->lang->line('create_merchant_sub_category_label'), 'callback_check_sub_category');
-        $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required|valid_contact_number');
+        //$this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required|valid_contact_number');
+        $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required');
         $this->form_validation->set_rules('username', $this->lang->line('create_merchant_validation_username_label'), 'trim|required|is_unique[' . $tables['users'] . '.username]');
         $this->form_validation->set_rules('email', $this->lang->line('create_merchant_validation_email_label'), 'trim|required|valid_email|is_unique[' . $tables['users'] . '.email]');
         if ($this->strong_password == 1)
@@ -838,14 +844,14 @@ class Merchant extends CI_Controller
         if ($this->form_validation->run() == true && $this->ion_auth->register($username, $password, $email, $additional_data, $group_ids))
         {
             $this->session->set_flashdata('message', $this->ion_auth->messages());
-            $get_status = send_mail_simple($email, 'Your Keppo Merchant Account Success Created', 'Company Name : ' . $company_main .
+            $get_status = send_mail_simple($email, 'Keppo Merchant Account Success Created', 'Company Name : ' . $company_main .
                     '<br/>Register No(SSM) : ' . $me_ssm .
                     '<br/>Shop Name : ' . $company .
                     '<br/>Company Address : ' . $address .
                     '<br/>Contact Number : ' . $phone .
                     '<br/>Username : ' . $username .
                     '<br/>E-mail : ' . $email .
-                    '<br/>Password : ' . $password, 'create_user_send_email_success');
+                    '<br/>Password : ' . $password, 'create_user_send_email_success', 1, 1);
             if ($get_status)
             {
                 redirect("merchant/login", 'refresh');
@@ -937,12 +943,14 @@ class Merchant extends CI_Controller
                 'name' => 'password',
                 'id' => 'password',
                 'type' => 'password',
+                'placeholder' => '!Keppo123',
                 'value' => $this->form_validation->set_value('password'),
             );
             $this->data['password_confirm'] = array(
                 'name' => 'password_confirm',
                 'id' => 'password_confirm',
                 'type' => 'password',
+                'placeholder' => '!Keppo123',
                 'value' => $this->form_validation->set_value('password_confirm'),
             );
             $this->data['page_path_name'] = 'merchant/create_user';
@@ -1106,12 +1114,14 @@ class Merchant extends CI_Controller
         }
         $user = $this->ion_auth->user($merchant_id)->row();
         $this->form_validation->set_rules('postcode', 'Postcode', 'required|numeric');
-        $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required|valid_contact_number');
+        //$this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required|valid_contact_number');
+        $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required');
         $this->form_validation->set_rules('description', $this->lang->line('create_merchant_validation_description_label'));
         $this->form_validation->set_rules('website', $this->lang->line('create_merchant_validation_website_label'));
         $this->form_validation->set_rules('facebook_url', $this->lang->line('create_merchant_validation_facebook_url_label'));
-        $this->form_validation->set_rules('person_incharge', $this->lang->line('create_merchant_validation_person_incharge_label'), 'required');
-        $this->form_validation->set_rules('person_contact', $this->lang->line('create_merchant_validation_person_contact_label'), 'required|valid_contact_number');
+        $this->form_validation->set_rules('person_incharge', $this->lang->line('create_merchant_validation_person_incharge_label'));
+        //$this->form_validation->set_rules('person_contact', $this->lang->line('create_merchant_validation_person_contact_label'), 'valid_contact_number');
+        $this->form_validation->set_rules('person_contact', $this->lang->line('create_merchant_validation_person_contact_label'));
         
         if (isset($_POST) && !empty($_POST))
         {
@@ -1260,7 +1270,7 @@ class Merchant extends CI_Controller
             'id' => 'me_country',
             'value' => $this->form_validation->set_value('me_country'),
         );
-        $default_desc = 'Operating Hours : ' . PHP_EOL . 'Services : ' . PHP_EOL . 'Specialties : ' . PHP_EOL . 'Payment : ';
+        $default_desc = '<b>Operating Hours : </b>' . PHP_EOL . PHP_EOL . PHP_EOL . '<b>Services : </b>' . PHP_EOL . PHP_EOL . PHP_EOL . '<b>Specialties : </b>' . PHP_EOL . PHP_EOL . PHP_EOL . '<b>Payment : </b>' . PHP_EOL;
         $this->data['description'] = array(
             'name' => 'description',
             'id' => 'description',
@@ -1389,6 +1399,34 @@ class Merchant extends CI_Controller
         }
     }
 
+    function promo_code()
+    {
+        if (!check_correct_login_type($this->main_group_id))
+        {
+            redirect('/', 'refresh');
+        }
+
+        $message_info = '';
+        $login_id = $this->ion_auth->user()->row()->id;
+        $this->m_custom->promo_code_insert_merchant($login_id);       
+
+        $promo_code = $this->m_custom->promo_code_get('merchant', $login_id, 1);
+        $this->data['promo_code_no'] = array(
+            'name' => 'promo_code_no',
+            'id' => 'promo_code_no',
+            'type' => 'text',
+            'readonly' => 'true',
+            'value' => $promo_code,
+        );
+        $this->data['promo_code_url'] = $this->m_custom->generate_promo_code_list_link($promo_code, 33);
+        
+        // set the flash data error message if there is one
+        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+
+        $this->data['page_path_name'] = 'merchant/promo_code';
+        $this->load->view('template/index', $this->data);
+    }   
+    
     public function merchant_redemption_page($show_used = 0)
     {
         if (check_correct_login_type($this->group_id_merchant) || check_correct_login_type($this->group_id_supervisor))
