@@ -943,14 +943,14 @@ class Merchant extends CI_Controller
                 'name' => 'password',
                 'id' => 'password',
                 'type' => 'password',
-                'placeholder' => '!Keppo123',
+                'placeholder' => $this->config->item('password_example'),
                 'value' => $this->form_validation->set_value('password'),
             );
             $this->data['password_confirm'] = array(
                 'name' => 'password_confirm',
                 'id' => 'password_confirm',
                 'type' => 'password',
-                'placeholder' => '!Keppo123',
+                'placeholder' => $this->config->item('password_example'),
                 'value' => $this->form_validation->set_value('password_confirm'),
             );
             $this->data['page_path_name'] = 'merchant/create_user';

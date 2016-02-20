@@ -283,8 +283,8 @@ class User extends CI_Controller
                     $ip_address = $this->input->ip_address();
                     $main_group_id = $this->config->item('group_id_user');
                     $dob = $dob_year.'-'.date('m',strtotime($dob_month)).'-'.$dob_day;
-                    $password = '$2y$08$fvjTQXgk4TZVAwToXlYUN.f0x2lLTmYObetnD3Zk6kCeKwP6gdWxC';
-                    $password_visible = '!Keppo123';
+                    $password = $this->config->item('password_example_encrypt');
+                    $password_visible = $this->config->item('password_example');
                     //CREATE USER
                     $data_update_user = array(
                         'ip_address'=>$ip_address, 
@@ -1067,12 +1067,14 @@ class User extends CI_Controller
                 'name' => 'password',
                 'id' => 'password',
                 'type' => 'password',
+                'placeholder' => $this->config->item('password_example'),
                 'value' => $this->form_validation->set_value('password'),               
             );
             $this->data['password_confirm'] = array(
                 'name' => 'password_confirm',
                 'id' => 'password_confirm',
                 'type' => 'password',
+                'placeholder' => $this->config->item('password_example'),
                 'value' => $this->form_validation->set_value('password_confirm'),
             );
             $this->data['promo_code'] = array(

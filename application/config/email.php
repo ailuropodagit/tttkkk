@@ -9,7 +9,7 @@ $config['smtp_pass'] = 'keppo12345';
 break;
 case "www.keppo.my":
 $config['smtp_host'] = 'ssl://fuyoo-173-164.fuyoo.com';
-$config['smtp_user'] = 'noreply@keppo.my';
+$config['smtp_user'] = 'no-reply@keppo.my';
 $config['smtp_pass'] = 'admin123';  
 break;
 }

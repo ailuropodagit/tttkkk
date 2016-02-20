@@ -1868,17 +1868,22 @@ class M_custom extends CI_Model
             switch ($the_type)
             {
                 case 'like':
-                    $this->m_user->candie_history_insert(2, $insert_id);
+                    if($refer_type != 'usa'){
+                        $this->m_user->candie_history_insert(2, $insert_id);
+                    }
                     //$this->m_merchant->transaction_history_insert($merchant_id, 12, $insert_id);
                     $this->m_custom->notification_process('activity_history', $insert_id);
                     break;
                 case 'rating':
-                    $this->m_user->candie_history_insert(3, $insert_id);
+                    if($refer_type != 'usa'){
+                        $this->m_user->candie_history_insert(3, $insert_id);
+                    }
                     //$this->m_merchant->transaction_history_insert($merchant_id, 13, $insert_id);
                     $this->m_custom->notification_process('activity_history', $insert_id);
                     break;
                 case 'comment':
                     $this->m_custom->notification_process('activity_history', $insert_id);
+                    break;
                 case 'share':
                     $this->m_user->candie_history_insert(10, $insert_id);
                     break;
