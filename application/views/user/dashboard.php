@@ -111,7 +111,7 @@ if($this->ion_auth->user()->num_rows())
         $us_photography_url = $row_users['us_photography_url'];
         ?>
         <div id='dashboard-photo'>
-            <div id="dashboard-photo-box" class="zoom-image">
+            <div id="dashboard-user-photo-box">
                 <?php            
                 if(IsNullOrEmptyString($profile_image))
                 {

@@ -4123,6 +4123,27 @@ html, body {
     margin: 10px 0px 0px 0px;
 }
 
+#dashboard-user-photo-box {
+    width: 100%;
+    padding-top: 100%;
+    position: relative;
+}
+
+#dashboard-user-photo-box img {
+    max-height: 100%;  
+    max-width: 100%; 
+    width: 100%;
+    height: 100%;
+    position: absolute;  
+    top: 0;  
+    bottom: 0;  
+    left: 0;  
+    right: 0;  
+    margin: auto;
+    object-fit: cover;
+    object-position: center;
+}
+
 #dashboard-photo-box {
     width: 100%;
     padding-top: 100%;
