@@ -75,9 +75,7 @@ if(isset($message))
             </div><br/>
             <div id="upload-for-merchant-upload-image-note" style="text-align:left">
                 Keppo will send a temporary password to your active email. <br/>
-                After login please change the password.  <br/>
-                If you don't want to login using Facebook account next time, <br/>
-                you can use your email and password to login.  <br/>
+                You can use your email and password to login.  <br/>
             </div>
             <div id='register-form-submit'>
                 <input type="submit" value="Sign Up">
