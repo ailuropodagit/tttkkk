@@ -213,7 +213,8 @@ if (!function_exists('send_mail_simple'))
 
         $ci->load->library('email'); // Note: no $config param needed
         //$ci->email->from($ci->config->item('smtp_user'), $ci->config->item('from_name'));
-        $ci->email->from('noreply@keppo.my', 'noreply@keppo.my');
+        $no_reply_email = $ci->config->item('no_reply_email');
+        $ci->email->from($no_reply_email, $no_reply_email);
         $ci->email->to($to_email);
         $ci->email->subject($to_subject);
         $ci->email->message($to_message);
