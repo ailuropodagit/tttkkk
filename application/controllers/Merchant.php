@@ -1961,6 +1961,10 @@ class Merchant extends CI_Controller
                 $search_month = $this->input->post('candie_month');
                 $search_year = $this->input->post('candie_year');
                 $candie_point = check_is_positive_numeric($this->input->post('candie_point'));
+                if ($candie_point < 30)
+                {
+                    $candie_point = 30;
+                }
                 $expire_date = validateDate($this->input->post('expire_date'));
                 $show_extra_info = $this->input->post('show_extra_info');
                 $price_before = check_is_positive_decimal($this->input->post('price_before'));

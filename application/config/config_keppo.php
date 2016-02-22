@@ -62,6 +62,7 @@ $config['notification_auto_mark_as_read'] = 1;
 $config['strong_password'] = 1;
 
 $config['custom_per_page'] = '10';
+$config['candie_minimum'] = '30';
 
 $config['gender_id_male'] = '13';
 $config['gender_id_female'] = '14';

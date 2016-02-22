@@ -2466,7 +2466,7 @@ class User extends CI_Controller
                             $new_id = $this->m_custom->get_id_after_insert('user_album', $data);
                             if ($new_id)
                             {
-                                $this->m_user->candie_history_insert(5, $new_id, 'user_album');
+                                //$this->m_user->candie_history_insert(5, $new_id, 'user_album');  //Upload self image not need give candie
                                 //$message_info = add_message_info($message_info, 'Image for user ' . $this->m_custom->display_users($user_id) . ' success create.', $post_title);
                                 $message_info = add_message_info($message_info, 'Image for user ' . $this->m_custom->display_users($user_id) . ' success create.', $post_desc);
                             }

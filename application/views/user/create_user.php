@@ -183,7 +183,7 @@ if(isset($message))
                     <div id='register-form-each-input-dob'>
                         <div id='register-form-each-input-dob-day'><?php echo form_dropdown($day, $day_list); ?></div>
                         <div id='register-form-each-input-dob-month'><?php echo form_dropdown($month, $month_list); ?></div>
-                        <div id='register-form-each-input-dob-year'><?php echo form_dropdown($year, $year_list); ?></div>
+                        <div id='register-form-each-input-dob-year'><?php echo form_dropdown($year, $year_list, '1988'); ?></div>
                         <div id="float-fix"></div>
                     </div>
                 </div>
