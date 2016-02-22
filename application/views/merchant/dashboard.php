@@ -79,7 +79,7 @@ if($this->ion_auth->user()->num_rows())
     </div>
     <div id="dashboard-content">
         <div id='dashboard-photo'>
-            <div id="dashboard-photo-box" class="zoom-image">
+            <div id="dashboard-photo-box">
                 <?php            
                 if(IsNullOrEmptyString($image))
                 {
