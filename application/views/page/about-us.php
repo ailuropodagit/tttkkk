@@ -4,7 +4,7 @@
         <img src="<?php echo base_url(); ?>image/logo-red.png" id="about-us-logo-img">
     </div>
     <p>
-        Keppo.my is publish on 19 July 2015, Founder by Jimmy See. His create this to help's SME Corp to increasing
+        Keppo.my is publish on 01 Jan 2016, Founder by Jimmy See. His create this to help's SME Corp to increasing
         sale on advertising. Keppo.my is used hybird technilogy on media social faster way to user's to know more
         product and services.
     </p>
@@ -19,8 +19,8 @@
     <p>
         <b><?php
             $keppo_company_name = $this->m_custom->web_setting_get('keppo_company_name', 'set_desc');
-            echo $keppo_company_name;
-        ?></b> ( 002422825-U) <br/>
+            //echo $keppo_company_name;
+        ?></b> Keppo eMarketing PLT (LLP0007098-LGN) <br/>
         <?php
             $keppo_company_address = $this->m_custom->web_setting_get('keppo_company_address', 'set_desc');
             echo $keppo_company_address;

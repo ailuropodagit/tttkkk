@@ -4,7 +4,7 @@
                     <div id='footer-navigation-block1'>
                         <div id='footer-navigation-block1-logo'><?php echo img('image/logo-white.png') ?></div>
                         <div id='footer-navigation-block-content'>
-                            Keppo.my is publish on 19 July 2015, Founder by Jimmy See. His create this to help's SME Corp 
+                            Keppo.my is publish on 01 Jan 2016, Founder by Jimmy See. His create this to help's SME Corp 
                             to increasing sale on advertising. Keppo.my is used hybird technilogy on media social faster 
                             way to user's to know more product and services.
                         </div>

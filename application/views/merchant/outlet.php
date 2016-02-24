@@ -50,12 +50,12 @@ if(isset($message))
                 <tr>
                     <td>Website</td>
                     <td>:</td>
-                    <td><div class="text-ellipsis"><?php echo anchor_popup($website_url, $website_url); ?></div></td>
+                    <td><div class="text-ellipsis"><?php echo "<a target='_blank' href='".$website_url."' >".$website_url."</a>";?></div></td>
                 </tr>
                 <tr>
                     <td>Facebook URL</td>
                     <td>:</td>
-                    <td><div class="text-ellipsis"><?php echo anchor_popup($facebook_url, $facebook_url); ?></div></td>
+                    <td><div class="text-ellipsis"><?php echo "<a target='_blank' href='".$facebook_url."' >".$facebook_url."</a>"; ?></div></td>
                 </tr>
             </table>
         </div>

@@ -99,16 +99,8 @@ $uri_segment_4 = $this->uri->segment(4);
             $empty_message = 'No Picture';
             if ($fetch_method == 'merchant_dashboard')
             {
-                if ($uri_segment_4 == '')
-                {
                     $empty_message = 'No Hot Deal';
                     $bottom_empty_message = 'No Hot Deal Suggestion';
-                }
-                else
-                {
-                    $empty_message = 'No Redemption';
-                    $bottom_empty_message = 'No Redemption Suggestion';
-                }
             }
             //EMPTY
             ?><div id='share-hot-deal-grid-list5-old-empty'><?php echo $empty_message ?></div><?php            

@@ -150,7 +150,7 @@
                                     Welcome to keppo.my
                                 </div>
                                 <div id='visit-first-time-modal-title-sub'>
-                                    Get access to restaurants, spas, cloth and much more promotion...
+                                    Get access to restaurants and much more promotion...
                                 </div>
                                 <div id='visit-first-time-modal-horizontal-line'></div>
                                 <div id="visit-first-time-modal-left">
@@ -308,7 +308,7 @@
                 <div id='wrapper'>
                     <div id='header-top-bar-social-media'>
                         <div id='header-top-bar-social-media-each'>
-                            <a href='https://www.facebook.com' target='_blank'><i class="fa fa-facebook"></i></a>
+                            <a href='https://www.facebook.com/keppo.my/' target='_blank'><i class="fa fa-facebook"></i></a>
                         </div>
                         <div id='header-top-bar-social-media-each'>
                             <a href='https://twitter.com/' target='_blank'><i class="fa fa-twitter"></i></a>

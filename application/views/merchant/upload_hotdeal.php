@@ -188,6 +188,7 @@ if(isset($message))
         if($have_role == 1){
         ?>           
                 <button name="button_action" type="submit" value="upload_hotdeal">Save</button>
+                <a href='<?php echo base_url(uri_string()) ?>' class="a-href-button">Clear</a>
         <?php    }
         else {
            echo "You don't have permission to upload hot deal";

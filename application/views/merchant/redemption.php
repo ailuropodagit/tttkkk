@@ -77,11 +77,11 @@ if(isset($message))
                                     Date of Birth
                                 </div>
                             </th>
-                            <th>
+<!--                            <th>
                                 <div class="table-text-overflow-ellipsis">
                                     Email
                                 </div>
-                            </th>
+                            </th>-->
                             <th>
                                 <div class="table-text-overflow-ellipsis">
                                     Voucher
@@ -143,11 +143,11 @@ if(isset($message))
                                         <?php echo displayDate($user_info['us_birthday']) ?>
                                     </div>
                                 </td>
-                                <td>
+<!--                                <td>
                                     <div class="table-text-overflow-ellipsis">
-                                        <?php echo $user_info['email'] ?>
+                                        <?php //echo $user_info['email'] ?>
                                     </div>
-                                </td>
+                                </td>-->
                                 <td>
                                     <div class="table-text-overflow-ellipsis">
                                         <a href='<?php echo $advertise_detail_url; ?>' target='_blank'><?php echo $redeem_row['voucher'] ?></a>

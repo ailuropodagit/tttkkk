@@ -57,7 +57,7 @@
     <div id="fb-root"></div>
     <div id="hot-deal-header">
         <div id="hot-deal-header-title">
-            Redemption
+            Hot Deal
         </div>
         <div id="hot-deal-header-edit-link">
             <?php
