@@ -1699,7 +1699,7 @@ class Merchant extends CI_Controller
             $crud->fields('username', 'password_visible', 'su_branch_id', 'su_can_uploadhotdeal');
             $crud->display_as('password_visible', 'Password');
             $crud->display_as('su_branch_id', 'Branch');
-            $crud->display_as('su_can_uploadhotdeal', 'Able to upload picture');
+            $crud->display_as('su_can_uploadhotdeal', 'Able to upload hotdeal');
             $crud->callback_add_field('su_branch_id', array($this, '_selected_branch_callback'));   //For add page set pre-selected value if got pass in brach id
             $crud->field_type('su_branch_id', 'dropdown', $this->ion_auth->get_merchant_branch_list($id));  //For view show the branch list text
             $crud->callback_insert(array($this, 'supervisor_insert_callback'));

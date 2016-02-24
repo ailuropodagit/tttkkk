@@ -29,9 +29,9 @@ if(isset($message))
 ?>
 
 <div id="login">
-    <div id='login-link'>
-        <a href='<?php echo base_url('user/login') ?>' class="a-href-button">User Login</a>
-    </div>
+<!--    <div id='login-link'>
+        <a href='<?php //echo base_url('user/login') ?>' class="a-href-button">User Login</a>
+    </div>-->
     <div id='float-fix'></div>
     <div id='login-title'>Merchant Log In</div>
     <div id='login-subtitle'>Don't have an account? <a href='<?php echo base_url(); ?>merchant/register'>Sign Up</a></div>

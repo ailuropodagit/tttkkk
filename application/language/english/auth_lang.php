@@ -211,7 +211,7 @@ $lang['main_album_title_label']          = 'Album Title : ';
 $lang['candie_description_label']         = 'Description : ';
 $lang['candie_title_label']               = 'Title : ';
 $lang['candie_sub_category_label']        = 'Category : ';
-$lang['candie_point_label']               = 'Set Point (Minimum 30) : ';
+$lang['candie_point_label']               = 'Set Candie (Minimum 30) : ';
 $lang['candie_start_date_label']          = 'Redemption Period Start Date : ';
 $lang['candie_end_date_label']            = 'Redemption Period End Date : ';
 $lang['candie_expire_date_label']         = 'Voucher Expiry Date : ';
@@ -228,7 +228,7 @@ $lang['candie_buy_get_label']             = 'Buy x Get x : ';
 $lang['candie_validation_description_label']         = 'Description';
 $lang['candie_validation_title_label']               = 'Title';
 $lang['candie_validation_sub_category_label']        = 'Category';
-$lang['candie_validation_point_label']               = 'Set Point';
+$lang['candie_validation_point_label']               = 'Set Candie';
 $lang['candie_validation_extra_term_label']          = 'Extra Terms & Conditions';
 $lang['candie_validation_worth_label']               = 'Voucher Worth';
 
