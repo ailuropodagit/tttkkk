@@ -116,7 +116,7 @@ if(isset($message))
                 <span class="checkbox-text"><label for='show_password'>Show Password</label></span>
             </div>   
             <div id="register-form-agree-checkbox">
-                <input type="checkbox" name="accept_terms" value="1" /> I agree to the Terms of Service and Privacy Policy.
+                <input type="checkbox" name="accept_terms" value="1" /> I agree to the <a href='<?php echo base_url() ?>terms-of-service' target='_blank'>Terms of Service</a> and <a href='<?php echo base_url() ?>privacy-policy' target='_blank'>Privacy Policy</a>.
             </div>
             <div id='register-form-submit'>
                 <?php echo form_submit('submit', 'Sign Up'); ?>
