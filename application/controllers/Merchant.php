@@ -1590,8 +1590,8 @@ class Merchant extends CI_Controller
 		 </script>
 		 <div style="display:none">
 		 '
-            );
-
+            );     
+            
             $crud->set_lang_string('form_save_and_go_back', 'Save and View Branch');
             $crud->set_lang_string('form_update_and_go_back', 'Update and View Branch');
 
@@ -1646,7 +1646,7 @@ class Merchant extends CI_Controller
         return $this->ion_auth->get_branch_supervisor_list($row->branch_id);
     }
 
-    function branch_insert_callback($post_array, $primary_key)
+    function branch_insert_callback($post_array, $primary_key = NULL)
     {
         $post_array['merchant_id'] = $this->ion_auth->user()->row()->id;
         if (check_correct_login_type($this->group_id_supervisor))
@@ -1731,7 +1731,7 @@ class Merchant extends CI_Controller
 		 <div style="display:none">
 		 '
             );
-
+            
             $crud->set_lang_string('form_save_and_go_back', 'Save and View Supervisor');
             $crud->set_lang_string('form_update_and_go_back', 'Update and View Supervisor');
 
@@ -1760,13 +1760,13 @@ class Merchant extends CI_Controller
         return form_dropdown('su_branch_id', $this->ion_auth->get_merchant_branch_list($id), $selected);
     }
 
-    function supervisor_insert_callback($post_array, $primary_key)
+    function supervisor_insert_callback($post_array, $primary_key = NULL)
     {
 
 //        if(!$this->m_custom->check_is_value_unique('users','username',$post_array['username'])){
 //            return FALSE;
 //        }
-        $su_can_uploadhotdeal = $post_array['su_can_uploadhotdeal'] == '1' ? 1 : 0;
+        $su_can_uploadhotdeal = isset($post_array['su_can_uploadhotdeal'])? ($post_array['su_can_uploadhotdeal'] == '1' ? 1 : 0) : 0;
         $additional_data = array(
             'username' => $post_array['username'],
             'su_merchant_id' => $this->ion_auth->user()->row()->id,
@@ -1776,7 +1776,7 @@ class Merchant extends CI_Controller
             'su_can_uploadhotdeal' => $su_can_uploadhotdeal,
         );
 
-        return $this->ion_auth->register($post_array['username'], $post_array['password_visible'], $post_array['username'] . $this->config->item('keppo_email_domain'), $additional_data, $this->group_id_supervisor);
+        return $this->ion_auth->register($post_array['username'], $post_array['password_visible'], $post_array['username'] . $this->config->item('keppo_email_domain'), $additional_data, array($this->group_id_supervisor));
     }
 
     function supervisor_update_callback($post_array, $primary_key)

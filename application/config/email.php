@@ -1,6 +1,9 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed.');
 
+$config['smtp_host'] = 'ssl://fuyoo-173-164.fuyoo.com';
+$config['smtp_user'] = 'no-reply@keppo.my';
+$config['smtp_pass'] = 'admin123';  
 switch($_SERVER["SERVER_NAME"]) {
 case "localhost":
 $config['smtp_host'] = 'ssl://smtp.googlemail.com';

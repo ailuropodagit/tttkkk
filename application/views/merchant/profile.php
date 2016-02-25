@@ -215,6 +215,7 @@ if(isset($message))
      <div id='profile-bottom-link'>
          <div id='profile-bottom-link-left'>
              <a href='<?php echo base_url() ?>merchant/upload_ssm' class="a-href-button">Submit SSM forms</a>
+             <a href='<?php echo base_url() ?>image/Merchants_Menu_Guide.pdf' class="a-href-button" target="_blank" >Download Guide</a>
          </div>
          <div id="profile-bottom-link-right">
              <div id="profile-bottom-link-right-each">

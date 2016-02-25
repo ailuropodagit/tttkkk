@@ -3126,17 +3126,37 @@ class M_custom extends CI_Model
 
     public function remove_image_temp()
     {
-        //$temp_folder = $this->config->item('folder_image_temp_phy');  //For security purpose i don't use the config temp folder name, but hard code again in code, for prevent hacking
-        $temp_folder = realpath(APPPATH . '..\folder_upload\temp_image');
-        $files = glob($temp_folder . '\*');
-        //var_dump($files);
-        $this->load->helper('file');
-        foreach ($files as $file)
+        switch ($_SERVER["SERVER_NAME"])
         {
-            if (is_file($file))
-            {
-                unlink($file); // delete file
-            }
+            case "localhost":
+                //$temp_folder = $this->config->item('folder_image_temp_phy');  //For security purpose i don't use the config temp folder name, but hard code again in code, for prevent hacking
+                $temp_folder = realpath(APPPATH . '..\folder_upload\temp_image');
+                $files = glob($temp_folder . '\*');
+                //var_dump($files);
+                $this->load->helper('file');
+                foreach ($files as $file)
+                {
+                    if (is_file($file))
+                    {
+                        unlink($file); // delete file
+                    }
+                }
+                break;
+            default:
+                $temp_folder = $_SERVER['DOCUMENT_ROOT'] . '/folder_upload/temp_image/';
+                $files = scandir($temp_folder);
+                //var_dump($files);
+
+                $this->load->helper('file');
+                foreach ($files as $file)
+                {
+                    $remove_file = $temp_folder . $file;
+                    if (is_file($remove_file))
+                    {
+                        unlink($remove_file); // delete file
+                    }
+                }
+                break;
         }
     }
 

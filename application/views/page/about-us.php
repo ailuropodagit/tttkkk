@@ -19,8 +19,8 @@
     <p>
         <b><?php
             $keppo_company_name = $this->m_custom->web_setting_get('keppo_company_name', 'set_desc');
-            //echo $keppo_company_name;
-        ?></b> Keppo eMarketing PLT (LLP0007098-LGN) <br/>
+            echo $keppo_company_name;
+        ?></b> (LLP0007098-LGN) <br/>
         <?php
             $keppo_company_address = $this->m_custom->web_setting_get('keppo_company_address', 'set_desc');
             echo $keppo_company_address;
