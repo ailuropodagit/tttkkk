@@ -29,7 +29,7 @@
             playPause: false,
             thumbnails: false,
             fx: 'scrollLeft',
-            height: '460px'
+//            height: '480px'
         });
         
         $('#camera_wrap_2').camera({
@@ -39,7 +39,8 @@
             navigationHover: false,
             playPause: false,
             thumbnails: false,
-            fx: 'scrollLeft'
+            fx: 'scrollLeft',
+//            height: '280px'
         });
         
         $('#home-row3-logo-slider-box').slick({
