@@ -1085,7 +1085,6 @@ class All extends CI_Controller
             if (IsNullOrEmptyString($comment))
             {
                 $message_info = add_message_info($message_info, 'Comment cannot be empty.');
-                $current_url = '/';
             }
             else
             {
