@@ -459,7 +459,7 @@
         If you believe that Keppo.my has not adhered to this Privacy Policy, you may contact us online or write to us at the
         following address: <br/> Fuyoo Advertising & Service (002422825-U) (Keppo.my)
     </p>
-    <p style="color: red; margin: 0px; font-weight: bold;">
+    <p style="color: black; margin: 0px; font-weight: bold;">
         No. 4, Jalan Industri Mas 5, <br/>
         Taman Mas, 47170, <br/>
         Puchong, Selangor. <br/>
