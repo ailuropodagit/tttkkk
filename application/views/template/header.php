@@ -150,7 +150,7 @@
                                     Welcome to keppo.my
                                 </div>
                                 <div id='visit-first-time-modal-title-sub'>
-                                    Get access to restaurants and much more promotion...
+                                    Get access to restaurants, great offer and much more promotion...
                                 </div>
                                 <div id='visit-first-time-modal-horizontal-line'></div>
                                 <div id="visit-first-time-modal-left">
