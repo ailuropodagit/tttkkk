@@ -232,7 +232,8 @@ class Merchant extends CI_Controller
 
     function password_check($str)
     {
-        if (preg_match('#[0-9]#', $str) && preg_match('#[a-z]#', $str) && preg_match('#[A-Z]#', $str))
+        //if (preg_match('#[0-9]#', $str) && preg_match('#[a-z]#', $str) && preg_match('#[A-Z]#', $str))
+        if (preg_match('#[0-9]#', $str) && preg_match('#[a-z]#', $str))
         {
             return TRUE;
         }

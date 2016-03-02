@@ -129,6 +129,12 @@
         }
         ?>
     </head>
+    <style type="text/css">
+        #ui-id-1{
+            max-height:300px;
+            overflow-y:auto;
+        }
+    </style>
     <body>
         <?php
         if (!isset($_COOKIE['visit_first_time']))

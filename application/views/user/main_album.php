@@ -16,7 +16,7 @@ if ($fetch_method == 'user_dashboard')
 
 <div id="album-user">
     <div id="album-user-header">
-        <div id='album-user-header-title'><?php echo $title ?> (All)</div>
+        <div id='album-user-header-title'><?php echo $title ?></div>
         <?php
         if (check_correct_login_type($this->config->item('group_id_user')))
         {

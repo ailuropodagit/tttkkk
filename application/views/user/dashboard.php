@@ -251,15 +251,15 @@ if($this->ion_auth->user()->num_rows())
                                 </div>
                             </td>
                         </tr>
-                        <tr>
+<!--                        <tr>
                             <td>Photography Type</td>
                             <td>:</td>
                             <td>
                                 <div class="text-ellipsis">
-                                    <?php echo $photography_list ?>
+                                    <?php //echo $photography_list ?>
                                 </div>
                             </td>
-                        </tr>
+                        </tr>-->
                         <?php 
                     }
                     ?>
@@ -296,7 +296,7 @@ if($this->ion_auth->user()->num_rows())
         <div id="float-fix"></div>
         <div id="dashboard-navigation">
             <div id="dashboard-navigation-each" <?php if($uri_segment_4 == ""){ echo 'class="dashboard-navigation-each-active"'; } ?>>
-                <a href="<?php echo base_url("all/user_dashboard/$dashboard_users_id#dashboard-navigation") ?>"><i class="fa fa-picture-o dashboard-navigation-each-icon"></i>User Album</a>
+                <a href="<?php echo base_url("all/user_dashboard/$dashboard_users_id#dashboard-navigation") ?>"><i class="fa fa-picture-o dashboard-navigation-each-icon"></i>My Album</a>
             </div>
             <div id="dashboard-navigation-each" <?php if($uri_segment_4 == "merchant_album"){ echo 'class="dashboard-navigation-each-active"'; } ?>>
                 <a href="<?php echo base_url("all/user_dashboard/$dashboard_users_id/merchant_album#dashboard-navigation") ?>"><i class="fa fa-file-image-o dashboard-navigation-each-icon"></i>Merchant Album</a>

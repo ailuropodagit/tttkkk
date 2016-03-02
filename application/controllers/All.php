@@ -1030,7 +1030,7 @@ class All extends CI_Controller
                 if (!$page)
                 {
                     //USER ALBUM
-                    $data['title'] = "User Album";
+                    $data['title'] = "My Album";
                     //$data['bottom_path_name'] = 'all/album_user';
                     $data['bottom_path_name'] = 'user/main_album';
                     $where_user_album = array('user_id' => $user_id, 'hide_flag' => '0');
