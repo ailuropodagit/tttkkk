@@ -204,21 +204,27 @@ if($this->ion_auth->user()->num_rows())
                 <table border="0px" cellspacing="0px" cellpadding="5px" style="width: 100%; table-layout: fixed;">
                     <colgroup style="width:125px;"></colgroup>
                     <colgroup style="width:15px;"></colgroup>
+                    <?php if(!IsNullOrEmptyString($phone)){ ?>
                     <tr>
                         <td>Phone</td>
                         <td>:</td>
                         <td><div class="text-ellipsis"><?php echo "<a href='tel:".$phone."' >".$phone."</a>"; ?></div></td>
                     </tr>
-                    <tr>
-                        <td>Website</td>
-                        <td>:</td>
-                        <td><div class="text-ellipsis"><?php echo "<a target='_blank' href='".$website_url."' >".$website_url."</a>";?></div></td>
-                    </tr>
+                    <?php } ?>
+                    <?php if(!IsNullOrEmptyString($facebook_url)){ ?>
                     <tr>
                         <td>Facebook URL</td>
                         <td>:</td>
                         <td><div class="text-ellipsis"><?php echo "<a target='_blank' href='".$facebook_url."' >".$facebook_url."</a>"; ?></div></td>
                     </tr>
+                    <?php } ?>
+                    <?php if(!IsNullOrEmptyString($website_url)){ ?>
+                    <tr>
+                        <td>Website</td>
+                        <td>:</td>
+                        <td><div class="text-ellipsis"><?php echo "<a target='_blank' href='".$website_url."' >".$website_url."</a>";?></div></td>
+                    </tr>  
+                    <?php } ?>
                 </table>
             </div>
         </div>

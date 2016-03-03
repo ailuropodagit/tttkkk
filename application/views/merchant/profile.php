@@ -139,13 +139,13 @@ if(isset($message))
                     <div id='profile-info-form-each-input'><?php echo form_input($person_contact); ?></div>
                 </div>
                 <div id='profile-info-form-each'>
-                    <div id='profile-info-form-each-label'><?php echo lang('create_merchant_website_label', 'website'); ?></div>
-                    <div id='profile-info-form-each-input'><?php echo form_input($website); ?></div>
-                </div>
-                <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_merchant_facebook_url_label', 'facebook_url'); ?><a href="<?php echo base_url() ?>image/exclamation-facebook-url.jpg" target="_blank"><span id="profile-info-form-each-label-icon"><i class="fa fa-exclamation-circle"></i></span></a></div>
                     <div id='profile-info-form-each-input'><?php echo form_input($facebook_url); ?></div>
                 </div>
+                <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><?php echo lang('create_merchant_website_label', 'website'); ?></div>
+                    <div id='profile-info-form-each-input'><?php echo form_input($website); ?></div>
+                </div>               
                 <?php echo form_hidden('id', $user->id); ?>
                 <?php echo form_hidden($csrf); ?>
                 <div id='profile-info-form-submit'>

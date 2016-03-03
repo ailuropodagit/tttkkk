@@ -232,7 +232,8 @@ class Merchant extends CI_Controller
 
     function password_check($str)
     {
-        if (preg_match('#[0-9]#', $str) && preg_match('#[a-z]#', $str) && preg_match('#[A-Z]#', $str))
+        //if (preg_match('#[0-9]#', $str) && preg_match('#[a-z]#', $str) && preg_match('#[A-Z]#', $str))
+        if (preg_match('#[0-9]#', $str) && preg_match('#[a-z]#', $str))
         {
             return TRUE;
         }
@@ -790,7 +791,7 @@ class Merchant extends CI_Controller
         $this->form_validation->set_rules('me_category_id', $this->lang->line('create_merchant_category_label'), 'callback_check_main_category');
         $this->form_validation->set_rules('me_sub_category_id', $this->lang->line('create_merchant_sub_category_label'), 'callback_check_sub_category');
         //$this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required|valid_contact_number');
-        $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required');
+        $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'));
         $this->form_validation->set_rules('username', $this->lang->line('create_merchant_validation_username_label'), 'trim|required|is_unique[' . $tables['users'] . '.username]');
         $this->form_validation->set_rules('email', $this->lang->line('create_merchant_validation_email_label'), 'trim|required|valid_email|is_unique[' . $tables['users'] . '.email]');
         if ($this->strong_password == 1)
@@ -1115,7 +1116,7 @@ class Merchant extends CI_Controller
         $user = $this->ion_auth->user($merchant_id)->row();
         $this->form_validation->set_rules('postcode', 'Postcode', 'required|numeric');
         //$this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required|valid_contact_number');
-        $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required');
+        $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'));
         $this->form_validation->set_rules('description', $this->lang->line('create_merchant_validation_description_label'));
         $this->form_validation->set_rules('website', $this->lang->line('create_merchant_validation_website_label'));
         $this->form_validation->set_rules('facebook_url', $this->lang->line('create_merchant_validation_facebook_url_label'));

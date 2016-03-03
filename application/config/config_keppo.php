@@ -86,6 +86,6 @@ $config['category_mytaxsi'] = '29';
 $config['category_uber'] = '30';
 
 $config['suggest_list_number'] = '5';
-$config['password_example'] = 'Keppo123';
-$config['password_example_encrypt'] = '$2y$08$bu07UDFm0FlNM9OsriY5zePIC4k1KaPq2KnErG17ldI9df9TuuKAa';
+$config['password_example'] = 'keppo123';
+$config['password_example_encrypt'] = '$2y$08$xZgTvC/QvRc0xeqzncsJ3O8q.EO/ik2Gqvaz.IT9d8LD1UF.HySM6';
 $config['no_reply_email'] = 'no-reply@keppo.my';

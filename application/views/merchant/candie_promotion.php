@@ -127,7 +127,7 @@ if(isset($message))
                     </div>
                 </div>
                 <div id='candie-promotion-form-each'>
-                    <div id='candie-promotion-form-each-label'><?php echo lang('candie_point_label'); ?></div>
+                    <div id='candie-promotion-form-each-label'><?php echo lang('candie_point_label') . ' (Min 30 candies)'; ?></div>
                     <div id='candie-promotion-form-each-input'>
                         <?php echo form_input($candie_point); ?>
                     </div>

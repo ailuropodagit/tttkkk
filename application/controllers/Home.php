@@ -38,7 +38,7 @@ class Home extends CI_Controller
         
         $meta = array(
             array('property' => 'og:type', 'content' => 'article'),
-            array('property' => 'og:image', 'content' => base_url('image/logo-black.png'))
+            array('property' => 'og:image', 'content' => base_url('image/logo-keppo-fb.png'))
         );
         $data['meta_fb'] = meta_fb($meta);
             

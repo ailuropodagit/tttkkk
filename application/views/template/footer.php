@@ -126,7 +126,7 @@
             </div>
             <div id="footer-bar">
                 <div id="wrapper">
-                    &copy 2015 Fuyoo Advertising and Services. All Rights Reserved.
+                    &copy 2016 Fuyoo Advertising and Services. All Rights Reserved.
                 </div>
             </div>
         </div>

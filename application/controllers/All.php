@@ -182,9 +182,9 @@ class All extends CI_Controller
             'id' => 'view_status_id2',
         );
         $this->data['view_status_selected2'] = $view_status2;
-        
+
         $sub_category_id = $this->uri->segment(3);
-        $this->data['share_hotdeal_redemption_list'] = $this->m_custom->getAdvertise('adm', $sub_category_id);
+        $this->data['share_hotdeal_redemption_list'] = $this->m_custom->getAdvertise('adm', $sub_category_id, NULL, 0, NULL, NULL, 0, 0, 0, 0, 1);
         $this->data['title'] = "Redemption";
         if (!IsNullOrEmptyString($sub_category_id))
         {
@@ -1030,7 +1030,7 @@ class All extends CI_Controller
                 if (!$page)
                 {
                     //USER ALBUM
-                    $data['title'] = "User Album";
+                    $data['title'] = "My Album";
                     //$data['bottom_path_name'] = 'all/album_user';
                     $data['bottom_path_name'] = 'user/main_album';
                     $where_user_album = array('user_id' => $user_id, 'hide_flag' => '0');

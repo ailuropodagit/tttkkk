@@ -129,6 +129,12 @@
         }
         ?>
     </head>
+    <style type="text/css">
+        #ui-id-1{
+            max-height:300px;
+            overflow-y:auto;
+        }
+    </style>
     <body>
         <?php
         if (!isset($_COOKIE['visit_first_time']))
@@ -150,7 +156,7 @@
                                     Welcome to keppo.my
                                 </div>
                                 <div id='visit-first-time-modal-title-sub'>
-                                    Get access to restaurants and much more promotion...
+                                    Get access to restaurants, great offer and much more promotion...
                                 </div>
                                 <div id='visit-first-time-modal-horizontal-line'></div>
                                 <div id="visit-first-time-modal-left">

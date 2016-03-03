@@ -1951,7 +1951,7 @@ class Admin extends CI_Controller
             $this->form_validation->set_rules('postcode', $this->lang->line('create_merchant_validation_postcode_label'), 'required|numeric');
             $this->form_validation->set_rules('me_state_id', $this->lang->line('create_merchant_validation_state_label'), 'callback_check_state_id');
             //$this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required|valid_contact_number');
-            $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'), 'required');
+            $this->form_validation->set_rules('phone', $this->lang->line('create_merchant_validation_phone_label'));
             
             if ($this->input->post('button_action') == "save")
             {

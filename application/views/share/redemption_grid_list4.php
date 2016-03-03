@@ -22,6 +22,9 @@ $fetch_method = $this->router->fetch_method();
             </div>
         </div>
     </div>
+    <?php if ($fetch_method != 'redemption_list')
+    {
+        ?>
     <div id="share-redemption-grid-list4-sort">
         <?php echo form_open(uri_string()); ?>
         <span id="share-redemption-grid-list4-sort-label"><?php echo "Sort : "; ?></span>
@@ -30,6 +33,9 @@ $fetch_method = $this->router->fetch_method();
         <span id="share-redemption-grid-list4-sort-button"><button name="button_action" type="submit" value="filter_result">Go</button></span>
         <?php echo form_close();  ?>
     </div>
+    <?php
+    } 
+    ?>
     <div id="float-fix"></div>
     <div id="share-redemption-grid-list4-container">
         <?php
