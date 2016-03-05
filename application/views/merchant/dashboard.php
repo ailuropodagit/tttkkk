@@ -238,7 +238,7 @@ if($this->ion_auth->user()->num_rows())
                 <a href="<?php echo $candie_promotion; ?>"><i class="fa fa-gift dashboard-navigation-each-icon"></i>Redemption</a>
             </div>
             <div id="dashboard-navigation-each" <?php if($uri_segment_4 == "picture"){ echo 'class="dashboard-navigation-each-active"'; } ?>>
-                <a href="<?php echo $user_picture; ?>" ><i class="fa fa-picture-o dashboard-navigation-each-icon"></i>User's Picture</a>
+                <a href="<?php echo $user_picture; ?>" ><i class="fa fa-picture-o dashboard-navigation-each-icon"></i>Customers Picture</a>
             </div>
             <div id="float-fix"></div>
         </div>

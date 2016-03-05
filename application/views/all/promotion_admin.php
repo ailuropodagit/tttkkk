@@ -173,7 +173,7 @@ if(isset($message))
             {
                 ?>
                 <div id="redemption-information-description">
-                    <?php echo $description ?>
+                    <?php echo nl2br($description) ?>
                 </div>
                 <?php
             }

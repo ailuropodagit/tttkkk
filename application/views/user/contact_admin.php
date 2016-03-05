@@ -29,10 +29,14 @@ if (isset($message))
             <?php $back_url = base_url() . 'user/balance_page'; ?>           
             <div><a href='<?php echo $back_url; ?>' class="a-href-button">Back</a></div>
         </div>
-        <div style="float:right">
+        <?php 
+        $minimum_withdraw = $this->config->item('minimum_withdraw_amount');
+        if($current_balance >= $minimum_withdraw) { ?>
+        <div style="float:right">            
             <?php $add_new_url = base_url() . 'user/contact_admin_change'; ?>           
             <div><a href='<?php echo $add_new_url; ?>' class="a-href-button">New Withdraw Request</a></div>
         </div>
+        <?php } ?>
         <div id="float-fix"></div>
         <div id='payment-charge-table'>
             <table border='1px' cellspacing='0px' cellpadding='0px' id="myTable" class="display">

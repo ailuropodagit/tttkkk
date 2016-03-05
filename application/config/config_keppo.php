@@ -84,6 +84,7 @@ $config['category_keppo_voucher'] = '27';
 $config['category_epay'] = '28';
 $config['category_mytaxsi'] = '29';
 $config['category_uber'] = '30';
+$config['minimum_withdraw_amount'] = '50';
 
 $config['suggest_list_number'] = '5';
 $config['password_example'] = 'keppo123';
