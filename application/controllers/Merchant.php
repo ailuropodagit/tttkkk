@@ -117,6 +117,13 @@ class Merchant extends CI_Controller
                 'id' => 'password',
                 'type' => 'password',
             );
+            
+            $meta = array(
+                array('property' => 'og:type', 'content' => 'article'),
+                array('property' => 'og:image', 'content' => base_url('image/logo-keppo-fb.png'))
+            );
+            $this->data['meta_fb'] = meta_fb($meta);
+        
             $this->data['page_path_name'] = 'merchant/login';
             $this->load->view('template/layout', $this->data);
         }
@@ -954,6 +961,13 @@ class Merchant extends CI_Controller
                 'placeholder' => $this->config->item('password_example'),
                 'value' => $this->form_validation->set_value('password_confirm'),
             );
+            
+            $meta = array(
+                array('property' => 'og:type', 'content' => 'article'),
+                array('property' => 'og:image', 'content' => base_url('image/logo-keppo-fb.png'))
+            );
+            $this->data['meta_fb'] = meta_fb($meta);
+            
             $this->data['page_path_name'] = 'merchant/create_user';
             $this->load->view('template/layout', $this->data);
         }
