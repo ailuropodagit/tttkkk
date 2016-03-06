@@ -1,5 +1,7 @@
 <script type="text/javascript" src="<?php echo base_url() ?>js/jquery.ajaxfileupload.js"></script>
 <script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script>
+<script type="text/javascript" src="http://connect.facebook.net/en_US/all.js"></script>
+
 <script type="text/javascript">
     $(document).ready(function () {
     var keppo_path = '<?php echo $this->config->item('keppo_path'); ?>';
@@ -21,6 +23,25 @@
         });
     });
     document.title = "<?php echo $browser_title; ?>";  //Second Level To Set Tab Title
+    
+     //FB SHARE
+    FB.init({
+         appId  : '<?php echo fb_appID(); ?>',
+         status : true, // check login status
+         cookie : true, // enable cookies to allow the server to access the session
+         xfbml  : true  // parse XFBML
+       });
+
+    function fbShare(){                 
+        FB.ui({ 
+            method: 'feed', 
+            link: '<?php echo base_url() . uri_string(); ?>',
+            caption: 'KEPPO.MY',
+            picture: '<?php echo base_url() . $image_path . $image; ?>',
+            name: '<?php echo $company_name; ?>',
+            description: '<?php echo limit_character($description, 150, 1); ?>'
+        });
+    }    
 </script>
 
 <?php
@@ -64,16 +85,20 @@ if($this->ion_auth->user()->num_rows())
 ?>
         
 <div id="dashboard">
+    <div id="fb-root"></div>
     <div id="dashboard-header">
         <div id="dashboard-header-title">
             Dashboard
-        </div>
+        </div>    
          <?php if ($self_open == 1)
             { ?>
         <div id="dashboard-header-edit-link">
             <a href='<?php echo base_url('merchant/profile') ?>' class="a-href-button">Edit My Profile</a>
         </div>
         <?php } ?>
+        <div id="dashboard-header-edit-link" onclick="fbShare(); return false;">
+            <img src="<?php echo base_url() . 'image/social-media-facebook-share.png'; ?>" style="padding-top:5px" > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
         <div class="float-fix"></div>
         <div id="dashboard-header-title-bottom-line"></div>
     </div>

@@ -1049,6 +1049,23 @@ class All extends CI_Controller
                 }
 
                 $user_data = $this->m_custom->getUserInfo($user_id);
+                
+                $data['user_full_name'] = $user_data['name'];
+                $data['user_dashboard_url'] = $user_data['user_dashboard_url'];
+                $data['profile_image_url'] = $user_data['profile_image_url'];
+                
+                $fb_description = limit_character($user_data['description'], 150, 1);
+                if ($this->ion_auth->logged_in())
+                {
+                    $login_id = $this->ion_auth->user()->row()->id;
+                    if ($user_id == $login_id)
+                    {
+                        $promo_code = $this->m_custom->promo_code_get('user', $login_id, 1);
+                        $fb_description = '(Promo Code: ' . $promo_code . ') ' . limit_character($user_data['description'], 150, 1);
+                    }
+                }
+                $data['fb_description'] = $fb_description;
+
                 $meta = array(
                     array('property' => 'og:type', 'content' => 'article'),
                     array('property' => 'og:title', 'content' => $user_data['name']),
