@@ -86,6 +86,7 @@ $config['category_mytaxsi'] = '29';
 $config['category_uber'] = '30';
 $config['minimum_withdraw_amount'] = '50';
 $config['first_candie_remind'] = 30;
+$config['first_candie_remind_time'] = 2;
 
 $config['suggest_list_number'] = '5';
 $config['password_example'] = 'keppo123';

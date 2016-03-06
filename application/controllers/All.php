@@ -1069,7 +1069,8 @@ class All extends CI_Controller
                         $us_first_candie_remind = $user_data['us_first_candie_remind'];
                         $current_candie = $this->m_user->candie_check_balance($user_id);
                         $first_candie_remind = $this->config->item('first_candie_remind');
-                        if ($current_candie >= $first_candie_remind && $us_first_candie_remind < 3 && $admin_login_as == 0)
+                        $first_candie_remind_time = $this->config->item('first_candie_remind_time');                        
+                        if ($current_candie >= $first_candie_remind && $us_first_candie_remind < $first_candie_remind_time && $admin_login_as == 0)
                         {
                             $can_first_candie_remind = 1;
                             $data3 = array(
