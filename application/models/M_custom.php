@@ -1534,6 +1534,7 @@ class M_custom extends CI_Model
             'us_fb_id' => $user['us_fb_id'],
             'user_dashboard_url' => base_url() . "all/user-dashboard/" . $user_id,
             'user_dashboard_link' => $this->m_custom->generate_user_link($user_id),
+            'us_first_candie_remind' => $user['us_first_candie_remind'],
         );
         return $user_info;
     }
@@ -2539,7 +2540,7 @@ class M_custom extends CI_Model
         return $notification_list;
     }
 
-    public function user_message_insert($msg_to_id, $msg_type, $msg_content = NULL, $msg_desc = NULL, $msg_remark = NULL)
+    public function user_message_insert($msg_to_id, $msg_type, $msg_content = NULL, $msg_desc = NULL, $msg_remark = NULL, $msg_bank_id = NULL)
     {
         if ($this->ion_auth->logged_in())
         {
@@ -2553,14 +2554,15 @@ class M_custom extends CI_Model
                 'msg_type' => $msg_type,
                 'msg_desc' => $msg_desc,
                 'msg_remark' => $msg_remark,
+                'msg_bank_id' => $msg_bank_id,
             );
             $this->db->insert('user_message', $the_data);
         }
     }
 
-    public function user_message_insert_withdraw_request($msg_content = NULL, $msg_desc = NULL, $msg_remark = NULL)
+    public function user_message_insert_withdraw_request($msg_content = NULL, $msg_desc = NULL, $msg_remark = NULL, $msg_bank_id = NULL)
     {
-        $this->m_custom->user_message_insert(0, 'withdraw', $msg_content, $msg_desc, $msg_remark);
+        $this->m_custom->user_message_insert(0, 'withdraw', $msg_content, $msg_desc, $msg_remark, $msg_bank_id);
     }
     
     public function user_message_withdraw_request_done($msg_id, $msg_reply = NULL, $msg_status = '1')

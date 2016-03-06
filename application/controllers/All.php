@@ -1050,6 +1050,7 @@ class All extends CI_Controller
 
                 $user_data = $this->m_custom->getUserInfo($user_id);
                 
+                $can_first_candie_remind = 0;
                 $data['user_full_name'] = $user_data['name'];
                 $data['user_dashboard_url'] = $user_data['user_dashboard_url'];
                 $data['profile_image_url'] = $user_data['profile_image_url'];
@@ -1058,12 +1059,27 @@ class All extends CI_Controller
                 if ($this->ion_auth->logged_in())
                 {
                     $login_id = $this->ion_auth->user()->row()->id;
+                    $admin_login_as = $this->session->userdata('admin_login_as');
                     if ($user_id == $login_id)
-                    {
+                    {                        
                         $promo_code = $this->m_custom->promo_code_get('user', $login_id, 1);
                         $fb_description = '(Promo Code: ' . $promo_code . ') ' . limit_character($user_data['description'], 150, 1);
+
+                        //To check want to remind user that already get 30 candie or not
+                        $us_first_candie_remind = $user_data['us_first_candie_remind'];
+                        $current_candie = $this->m_user->candie_check_balance($user_id);
+                        $first_candie_remind = $this->config->item('first_candie_remind');
+                        if ($current_candie >= $first_candie_remind && $us_first_candie_remind < 3 && $admin_login_as == 0)
+                        {
+                            $can_first_candie_remind = 1;
+                            $data3 = array(
+                                'us_first_candie_remind' => ($us_first_candie_remind + 1),
+                            );
+                            $this->m_custom->simple_update('users', $data3, 'id', $login_id);
+                        }
                     }
                 }
+                $data['can_first_candie_remind'] = $can_first_candie_remind;
                 $data['fb_description'] = $fb_description;
 
                 $meta = array(

@@ -38,7 +38,8 @@ if (isset($message))
                     <tr style="text-align:center">
                         <th>Request Date</th> 
                         <th>User Name</th> 
-                        <th>Bank Name</th> 
+                        <th>Account Holder Name</th> 
+                        <th>Bank Name</th>
                         <th>Bank Account</th>
                         <th>Extra Info</th>                        
                         <th>Withdraw Status</th>
@@ -58,6 +59,7 @@ if (isset($message))
                         }else if($row['msg_status'] == 2){
                             $msg_status_text = 'Fail Withdraw';
                         }
+                        $bank_name = $this->m_custom->display_dynamic_option($row['msg_bank_id']);
                         $user_name = $this->m_custom->generate_user_link($row['msg_from_id']);
                         $admin_name = $this->m_custom->display_users($row['status_change_by']);
                         $user_balance_text = $this->m_user->user_check_balance($row['msg_from_id']);
@@ -68,6 +70,7 @@ if (isset($message))
                         echo "<td>" . displayDate($row['msg_time']) . "</td>";
                         echo "<td>" . $user_name . "</td>";
                         echo "<td>" . $row['msg_content'] . "</td>";
+                        echo "<td>" . $bank_name . "</td>";
                         echo "<td>" . $row['msg_desc'] . "</td>";
                         echo "<td>" . $row['msg_remark'] . "</td>";                       
                         echo "<td>" . $msg_status_text . "</td>";

@@ -469,6 +469,24 @@ class M_user extends CI_Model
         return $total_count;
     }
 
+    public function get_last_user_bank_info($user_id)
+    {
+        $condition = "msg_bank_id is not null";
+        $this->db->where($condition);
+        $this->db->order_by('msg_id', 'desc');
+        $this->db->limit(1);
+        $query = $this->db->get_where('user_message', array('msg_from_id' => $user_id, 'msg_type' => 'withdraw'));
+
+        if ($query->num_rows() == 1)
+        {
+            return $query->row_array();
+        }
+        else
+        {
+            return NULL;
+        }
+    }
+
     public function candie_history_insert($trans_conf_id, $get_from_table_id, $get_from_table = 'activity_history', $allow_duplicate = 0, $candie_overwrite = 0, $user_id_overwrite = 0)
     {
         if (check_correct_login_type($this->config->item('group_id_user')) || $this->m_admin->check_is_any_admin())
