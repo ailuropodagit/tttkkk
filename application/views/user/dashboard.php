@@ -21,6 +21,11 @@
                 $('img#' + response[1]).attr('src', post_image);
             }
         });
+        
+        var can_first_candie_remind = '<?php echo $can_first_candie_remind ?>';
+        if(can_first_candie_remind == 1){
+            alert('Congratulation! You earn enough candie to have your first Redemption!');
+        }
     });
     document.title = "<?php echo $browser_title; ?>";   //Second Level To Set Tab Title
     

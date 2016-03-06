@@ -2868,11 +2868,13 @@ class User extends CI_Controller
         {
             $can_redirect_to = 0;
             $msg_content = $this->input->post('msg_content');
+            $bank_list_id = $this->input->post('bank_list_id');
             $msg_desc = $this->input->post('msg_desc');
             $msg_remark = $this->input->post('msg_remark');
 
             // validate form input
-            $this->form_validation->set_rules('msg_content', 'Bank Name', 'required');
+            $this->form_validation->set_rules('msg_content', 'Account Holder Name', 'required');
+            $this->form_validation->set_rules('bank_list_id', 'Bank Name', 'callback_check_bank_list_id');
             $this->form_validation->set_rules('msg_desc', 'Bank Account No', 'required');
             $this->form_validation->set_rules('msg_remark', 'Extra Info');
             
@@ -2880,7 +2882,7 @@ class User extends CI_Controller
             {
                 if ($this->form_validation->run() === TRUE)
                 {
-                    $this->m_custom->user_message_insert_withdraw_request($msg_content, $msg_desc, $msg_remark);
+                    $this->m_custom->user_message_insert_withdraw_request($msg_content, $msg_desc, $msg_remark, $bank_list_id);
                     $message_info = add_message_info($message_info, 'Withdraw request send.');
                     $can_redirect_to = 2;
                 }
@@ -2907,17 +2909,25 @@ class User extends CI_Controller
 
         // set the flash data error message if there is one
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+        $previous_bank_list_selected = $this->m_user->get_last_user_bank_info($login_id);
         
         $this->data['msg_content'] = array(
             'name' => 'msg_content',
             'id' => 'msg_content',
-            'value' => $this->form_validation->set_value('msg_content'),
+            'value' => $previous_bank_list_selected == NULL ? $this->form_validation->set_value('msg_content') : $previous_bank_list_selected['msg_content'],
         );
+              
+        $this->data['bank_list'] = $this->m_custom->get_dynamic_option_array('bank_name');
+        $this->data['bank_list_id'] = array(
+            'name' => 'bank_list_id',
+            'id' => 'bank_list_id',
+        );
+        $this->data['bank_list_selected'] = $previous_bank_list_selected == NULL ? $this->form_validation->set_value('bank_list_id') : $previous_bank_list_selected['msg_bank_id'];
         
         $this->data['msg_desc'] = array(
             'name' => 'msg_desc',
             'id' => 'msg_desc',
-            'value' => $this->form_validation->set_value('msg_desc'),
+            'value' => $previous_bank_list_selected == NULL ? $this->form_validation->set_value('msg_desc') : $previous_bank_list_selected['msg_desc'],
         );
         
         $minimum_withdraw = $this->config->item('minimum_withdraw_amount');
@@ -2929,6 +2939,16 @@ class User extends CI_Controller
 
         $this->data['page_path_name'] = 'user/contact_admin_change';
         $this->load->view('template/index', $this->data);
+    }
+    
+    function check_bank_list_id($dropdown_selection)
+    {
+        if ($dropdown_selection == 0)
+        {
+            $this->form_validation->set_message('check_bank_list_id', 'The Bank Name Field is required');
+            return FALSE;
+        }
+        return TRUE;
     }
     
     function promo_code()
