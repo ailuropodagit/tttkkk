@@ -1,6 +1,6 @@
 <div id='terms-of-service'>
     
-    <h1>Privacy Policy</h1>
+    <h1>Terms of Service</h1>
     <p>
         These terms and conditions are effective immediately for those registering accounts after that date and
         will become effective December 27, 2015 for those with pre-existing accounts. To review the previous terms,

@@ -282,6 +282,7 @@
                     $header_query_read_user = $this->albert_model->read_user($header_where_read_user);
                     $header_row_read_user = $header_query_read_user->row();
                     $header_profile_login_profile_image = $header_row_read_user->profile_image;
+                    $header_profile_login_us_gender_id = $header_row_read_user->us_gender_id;
                     $header_profile_login_user_name = $header_row_read_user->first_name . ' ' . $header_row_read_user->last_name;
                 }
                 else if($this->m_custom->check_is_any_merchant())
@@ -612,7 +613,14 @@
                                                         }
                                                         else
                                                         {
-                                                            echo img($header_empty_image);
+                                                            if($header_profile_login_us_gender_id == '13')
+                                                            {
+                                                                ?><img src="<?php echo base_url('image/default-image-user-gender-male.png') ?>" id="userimage"><?php
+                                                            }
+                                                            if($header_profile_login_us_gender_id == '14')
+                                                            {
+                                                                ?><img src="<?php echo base_url('image/default-image-user-gender-female.png') ?>" id="userimage"><?php
+                                                            }
                                                         }
                                                         ?>
                                                     </div>

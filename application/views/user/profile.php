@@ -58,9 +58,14 @@ if(isset($message))
                     <?php
                     if (IsNullOrEmptyString($image))
                     {
-                        ?>
-                        <img src="<?php echo base_url() . $this->config->item('empty_image'); ?>" id="userimage">
-                        <?php
+                        if($us_gender_id == 13)
+                        {
+                            ?><img src="<?php echo base_url('image/default-image-user-gender-male.png') ?>" id="userimage"><?php
+                        }
+                        if($us_gender_id == 14)
+                        {
+                            ?><img src="<?php echo base_url('image/default-image-user-gender-female.png') ?>" id="userimage"><?php
+                        }
                     }
                     else
                     {

@@ -73,7 +73,7 @@ $self_open = 0;
 
 //LOGGED
 if($this->ion_auth->user()->num_rows())
-{  
+{
     //LOGGED
     $logged_main_group_id = $this->ion_auth->user()->row()->main_group_id; 
     $logged_user_id = $this->session->userdata('user_id');
@@ -134,15 +134,21 @@ if($this->ion_auth->user()->num_rows())
         $facebook_url = $row_users['us_facebook_url'];
         $us_is_photographer = $row_users['us_is_photographer'];
         $us_photography_url = $row_users['us_photography_url'];
+        $us_gender_id = $row_users['us_gender_id'];
         ?>
         <div id='dashboard-photo'>
             <div id="dashboard-user-photo-box">
                 <?php            
                 if(IsNullOrEmptyString($profile_image))
                 {
-                    ?>
-                    <img src="<?php echo base_url() . $empty_image ?>" id="userimage">
-                    <?php
+                    if($us_gender_id == 13)
+                    {
+                        ?><img src="<?php echo base_url('image/default-image-user-gender-male.png') ?>" id="userimage"><?php
+                    }
+                    if($us_gender_id == 14)
+                    {
+                        ?><img src="<?php echo base_url('image/default-image-user-gender-female.png') ?>" id="userimage"><?php
+                    }
                 }
                 else
                 {
