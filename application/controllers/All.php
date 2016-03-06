@@ -1063,7 +1063,7 @@ class All extends CI_Controller
                     if ($user_id == $login_id)
                     {                        
                         $promo_code = $this->m_custom->promo_code_get('user', $login_id, 1);
-                        $fb_description = '(Promo Code: ' . $promo_code . ') ' . limit_character($user_data['description'], 150, 1);
+                        $fb_description = 'Promo Code: ' . $promo_code . ' - ' . limit_character($user_data['description'], 150, 1);
 
                         //To check want to remind user that already get 30 candie or not
                         $us_first_candie_remind = $user_data['us_first_candie_remind'];
