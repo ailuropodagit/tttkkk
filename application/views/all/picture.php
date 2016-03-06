@@ -205,7 +205,7 @@ $fetch_method = $this->router->fetch_method();
             {
                 ?>
                 <div id="redemption-information-description">
-                    <?php echo $description ?>
+                    <?php echo nl2br($description) ?>
                 </div>
                 <?php
             }

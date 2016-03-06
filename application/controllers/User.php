@@ -2920,10 +2920,11 @@ class User extends CI_Controller
             'value' => $this->form_validation->set_value('msg_desc'),
         );
         
+        $minimum_withdraw = $this->config->item('minimum_withdraw_amount');
         $this->data['msg_remark'] = array(
             'name' => 'msg_remark',
             'id' => 'msg_remark',
-            'value' => $this->form_validation->set_value('msg_remark', 'I want to withdraw RM50.'),
+            'value' => $this->form_validation->set_value('msg_remark', 'I want to withdraw RM' . $minimum_withdraw . '.'),
         );
 
         $this->data['page_path_name'] = 'user/contact_admin_change';

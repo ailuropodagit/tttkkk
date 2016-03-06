@@ -2192,10 +2192,11 @@ class Merchant extends CI_Controller
             'maxlength' => '20'
         );
 
+        $default_desc = PHP_EOL . PHP_EOL . PHP_EOL . PHP_EOL . '<b>Original Price RM</b>';
         $this->data['candie_desc'] = array(
             'name' => 'candie_desc',
             'id' => 'candie_desc',
-            'value' => empty($this_month_candie) ? '' : $this_month_candie['description'],
+            'value' => empty($this_month_candie) ? $default_desc : $this_month_candie['description'],
         );
 
         $this->data['candie_image'] = empty($this_month_candie) ? $this->config->item('empty_image') : $this->album_merchant . $this_month_candie['image'];
@@ -2873,10 +2874,11 @@ class Merchant extends CI_Controller
             $hotdeal_category_selected = 'hotdeal_category_selected' . $i;
             $this->data[$hotdeal_category_selected] = empty($hotdeal_today_result[$i]) ? $merchant_data->me_sub_category_id : $hotdeal_today_result[$i]['sub_category_id'];
 
+            $default_desc = PHP_EOL . PHP_EOL . PHP_EOL . '<b>Original Price RM</b>';
             $hotdeal_desc = 'hotdeal_desc' . $i;
             $this->data[$hotdeal_desc] = 'desc-' . $i;
             $hotdeal_desc_value = 'hotdeal_desc_value' . $i;
-            $this->data[$hotdeal_desc_value] = empty($hotdeal_today_result[$i]) ? '' : $hotdeal_today_result[$i]['description'];
+            $this->data[$hotdeal_desc_value] = empty($hotdeal_today_result[$i]) ? $default_desc : $hotdeal_today_result[$i]['description'];
 //            $hotdeal_desc = 'hotdeal_desc' . $i;
 //            $this->data[$hotdeal_desc] = array(
 //                'name' => 'desc-' . $i,

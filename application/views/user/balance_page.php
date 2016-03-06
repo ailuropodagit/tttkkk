@@ -94,9 +94,14 @@ if(isset($message))
             <div id='payment-your-current-balance'>
                 <b>Your current balance RM<?php echo $current_balance; ?></b>
             </div>
-            <div id='payment-your-balance'>
-                If your balance reach RM50. You can <a href="contact_admin">contact keppo admin</a> to get a cash back.
+            <?php $minimum_withdraw = $this->config->item('minimum_withdraw_amount'); ?>
+            <div id='payment-your-balance' style="float:left">
+                If your balance reach RM<?php echo $minimum_withdraw; ?>. You can contact keppo admin to get a cash back.
             </div>
+            <div style="float:right">
+            <a href='<?php echo base_url(); ?>user/contact_admin' class="a-href-button">Payout</a>
+            </div>
+            <div id='float-fix'></div>
             <div id='payment-assistance'>
                 <?php
                 $keppo_company_phone = $this->m_custom->web_setting_get('keppo_company_phone', 'set_desc');

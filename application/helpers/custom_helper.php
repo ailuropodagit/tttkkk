@@ -324,6 +324,7 @@ if (!function_exists('limit_character'))
 
     function limit_character($text, $limit, $remove_invalid = 0)
     {
+        $text = strip_tags($text);
         if ($remove_invalid == 1)
         {
             $text = preg_replace("/[^\p{L} 0-9.!]/u", '', $text);
