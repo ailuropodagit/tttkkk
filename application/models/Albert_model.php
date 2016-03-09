@@ -240,7 +240,7 @@ class Albert_model extends CI_Model
         $this->db->select('*');
         $this->db->from('users');
         $this->db->where('us_is_blogger =', "1");
-        
+        $this->db->where('remove_flag =', "0");
         //SEARCH
         if($search)
         {
@@ -290,6 +290,7 @@ class Albert_model extends CI_Model
         $this->db->select('*');
         $this->db->from('users');
         $this->db->where('us_is_photographer =', "1");
+        $this->db->where('remove_flag =', "0");
         //SEARCH
         if($search)
         {

@@ -1425,7 +1425,8 @@ class M_custom extends CI_Model
     }
     
     function getAllUser(){
-        $this->db->order_by('first_name');
+        //$this->db->order_by('first_name');
+        $this->db->order_by('id','desc');
         $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_user')));
         $result = $query->result_array();
         return $result;

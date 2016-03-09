@@ -1013,7 +1013,7 @@ class All extends CI_Controller
         if ($user_id)
         {
             //QUERY USERS
-            $query_users_where = array('id' => $user_id, 'main_group_id' => $this->config->item('group_id_user'));
+            $query_users_where = array('id' => $user_id, 'main_group_id' => $this->config->item('group_id_user'), 'remove_flag' => '0');
             $data['query_users'] = $this->albert_model->read_user($query_users_where);
             $num_rows_users = $data['query_users']->num_rows();
             //USER EXISTS

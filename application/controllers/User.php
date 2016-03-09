@@ -1582,6 +1582,12 @@ class User extends CI_Controller
                 );
                 if ($this->m_custom->simple_update('merchant_user_album', $data, 'merchant_user_album_id', $picture_id))
                 {
+                    $previous_image_name = $this->m_custom->get_one_table_record('merchant_user_album', 'merchant_user_album_id', $picture_id)->image;
+                    if (!IsNullOrEmptyString($previous_image_name))
+                    {
+                        delete_file($this->album_user_merchant . $previous_image_name);
+                    }
+                    
                     $this->m_custom->remove_row_log('merchant_user_album', $picture_id, $do_by_id, $do_by_type);
                     //$message_info = add_message_info($message_info, 'Picture for merchant success remove.', $post_title);
                     $message_info = add_message_info($message_info, 'Picture for merchant success remove.', $post_desc);
@@ -1731,6 +1737,12 @@ class User extends CI_Controller
                 );
                 if ($this->m_custom->simple_update('user_album', $data, 'user_album_id', $picture_id))
                 {
+                    $previous_image_name = $this->m_custom->get_one_table_record('user_album', 'user_album_id', $picture_id)->image;
+                    if (!IsNullOrEmptyString($previous_image_name))
+                    {
+                        delete_file($this->album_user . $previous_image_name);
+                    }
+                    
                     $this->m_custom->remove_row_log('user_album', $picture_id, $do_by_id, $do_by_type);
                     //$message_info = add_message_info($message_info, 'Picture for user success remove.', $post_title);
                     $message_info = add_message_info($message_info, 'Picture for user success remove.', $post_desc);
