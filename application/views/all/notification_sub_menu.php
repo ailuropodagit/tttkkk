@@ -60,7 +60,7 @@
                 $merchant_hotdeal_expired_count = $this->m_custom->getAdvertise_expired($noti_to_id, 1);               
             ?>
                 <div id='candie-navigation-each-separator'>|</div>
-                <div id='candie-navigation-each'><a href='<?php echo base_url() . "merchant/hotdeal-expired/1" ?>' >Merchant Hot Deal Expired (<?php echo $merchant_hotdeal_expired_count; ?>)</a></div>
+                <div id='candie-navigation-each'><a href='<?php echo base_url() . "merchant/hotdeal-expired/1" ?>' >Merchant Advertisement Expired (<?php echo $merchant_hotdeal_expired_count; ?>)</a></div>
             <?php } ?>   
 </div>        
         <div id="float-fix"></div>

@@ -3477,7 +3477,7 @@ class Admin extends CI_Controller
                             }
                         }
 
-                        //To update previous hot deal
+                        //To update previous advertisement
                         $data = array(
                             'title' => $title,
                             'description' => $description,

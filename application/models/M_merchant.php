@@ -460,7 +460,7 @@ class M_merchant extends CI_Model
                 }
                 elseif ($row['advertise_type'] == 'hot')
                 {
-                    $type_text = 'Hot Deal Advertise';
+                    $type_text = 'Advertisement';
                 }
                 $return[] = array(
                     'create_date' => $row['create_date'],

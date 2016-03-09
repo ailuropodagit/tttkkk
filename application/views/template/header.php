@@ -393,8 +393,8 @@
                                             <li><a href='<?php echo base_url('merchant/change_password') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'change_password'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Change Password</a></li>
                                             <li><a href='<?php echo base_url('all/notification') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'notification'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Notification (<?php echo $notification_count; ?> new)</a></li>
                                             <li><a href='<?php echo base_url("merchant/follower/user/$login_user_id") ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'follower' || $fetch_method == 'following'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Follower (<?php echo $follower_count ?>)</a></li>
-                                            <li><a href='<?php echo base_url('merchant/upload_hotdeal') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'upload_hotdeal' || $fetch_method == 'edit_hotdeal'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Hot Deal Advertise <span class="layout-inner-right-menu-bar-click">Click</span></a></li>
-                                            <li><a href='<?php echo base_url("all/album_merchant/$header_merchant_slug") ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'album_merchant'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Hot Deal Advertise's Album</a></li>
+                                            <li><a href='<?php echo base_url('merchant/upload_hotdeal') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'upload_hotdeal' || $fetch_method == 'edit_hotdeal'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Advertisement <span class="layout-inner-right-menu-bar-click">Click</span></a></li>
+                                            <li><a href='<?php echo base_url("all/album_merchant/$header_merchant_slug") ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'album_merchant'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Advertisement's Album</a></li>
                                             <li><a href='<?php echo base_url('merchant/candie_promotion') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'candie_promotion'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Candie Voucher <span class="layout-inner-right-menu-bar-click">Click</span></a></li>
                                             <li><a href='<?php echo base_url("all/album_redemption/$header_merchant_slug") ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'album_redemption'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Candie Voucher's Album</a></li>
                                             <li><a href='<?php echo base_url('merchant/merchant_redemption_page') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'merchant_redemption_page'){ echo "layout-inner-right-menu-bar-active"; } ?>'>User's Redemption</a></li>
@@ -427,8 +427,8 @@
                                             <li><a href='<?php echo base_url('merchant/profile') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'profile'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Profile</a></li>
                                             <li><a href='<?php echo base_url('all/notification') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'notification'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Notification (<?php echo $notification_count; ?> new)</a></li>
                                             <li><a href='<?php echo base_url("merchant/follower/user/$login_user_id") ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'follower' || $fetch_method == 'following'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Follower (<?php echo $follower_count ?>)</a></li>
-                                            <li><a href='<?php echo base_url('merchant/upload_hotdeal') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'upload_hotdeal' || $fetch_method == 'edit_hotdeal'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Hot Deal Advertise <span class="layout-inner-right-menu-bar-click">Click</span></a></li>
-                                            <li><a href='<?php echo base_url("all/album_merchant/$header_merchant_slug") ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'album_merchant'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Hot Deal Advertise's Album</a></li>
+                                            <li><a href='<?php echo base_url('merchant/upload_hotdeal') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'upload_hotdeal' || $fetch_method == 'edit_hotdeal'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Advertisement <span class="layout-inner-right-menu-bar-click">Click</span></a></li>
+                                            <li><a href='<?php echo base_url("all/album_merchant/$header_merchant_slug") ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'album_merchant'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Advertisement's Album</a></li>
                                             <li><a href='<?php echo base_url('merchant/candie_promotion') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'candie_promotion'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Candie Voucher <span class="layout-inner-right-menu-bar-click">Click</span></a></li>
                                             <li><a href='<?php echo base_url("all/album_redemption/$header_merchant_slug") ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'album_redemption'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Candie Voucher's Album</a></li>
                                             <li><a href='<?php echo base_url('merchant/merchant_redemption_page') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'merchant_redemption_page'){ echo "layout-inner-right-menu-bar-active"; } ?>'>User's Redemption</a></li>
@@ -743,7 +743,7 @@
                             </li>
                             <li <?php if($header_fetch_method == 'hotdeal_list' || $header_uri_segment4 == 'hot'){ echo "class='header-navigation-bar-active'"; } ?>>
                                 <a href='<?php echo base_url('all/hotdeal-list/1') ?>'>
-                                    <i class="fa fa-fire header-navigation-bar-left-icon"></i> Hot Deal
+                                    <i class="fa fa-fire header-navigation-bar-left-icon"></i> Advertisement
                                 </a>
                             </li>
                             <li <?php if($header_fetch_method == 'promotion_list' || $header_uri_segment4 == 'pro'){ echo "class='header-navigation-bar-active'"; } ?>>
@@ -821,7 +821,7 @@
                             </ul>
                         </li>
                         <li>
-                            <a href='<?php echo base_url('all/hotdeal-list/26') ?>'>Hot Deal</a>
+                            <a href='<?php echo base_url('all/hotdeal-list/26') ?>'>Advertisement</a>
                         </li>
                         <li>
                             <a href="<?php echo base_url('all/promotion-list/26') ?>">Redemption</a>

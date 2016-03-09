@@ -191,7 +191,7 @@ $lang['branch_state_label']                  = 'Branch State:';
 $lang['supervisor_username_label']           = 'Supervisor Username:';
 $lang['supervisor_password_label']           = 'Supervisor Password:';
 
-// Hot Deal
+// Advertisement
 $lang['hotdeal_description_label']         = 'Description : ';
 $lang['hotdeal_hour_label']                = 'Countdown Day(0 to 60) : ';
 $lang['hotdeal_title_label']               = 'Title : ';
@@ -303,7 +303,7 @@ $lang['web_setting_user_max_share_get_candie_per_day']    = 'User Max Share Get 
 $lang['web_setting_friend_success_register_get_money']    = 'Default Friend Success Register get Cash Back';
 $lang['web_setting_register_promo_code_get_candie']    = 'Default Register Promo Code get Candie';
 $lang['web_setting_merchant_promo_code_get_candie']    = 'Default Merchant Promo Code get Candie';
-$lang['web_setting_popular_hotdeal_number']    = 'Number of Like to become Hot Deal';
+$lang['web_setting_popular_hotdeal_number']    = 'Number of Like to become Advertisement';
 $lang['web_setting_popular_redemption_number']    = 'Number of Redeem to become Hot Redemption';
 $lang['web_setting_min_rating_get_for_sort_list']    = 'Minimum Rating Review for Rating Sort List';
 

@@ -68,7 +68,7 @@ class All extends CI_Controller
         
         //GET LIST
         $this->data['share_hotdeal_redemption_list'] = $this->m_custom->getAdvertise('hot', $sub_category_id, NULL, 0, NULL, NULL, 0, 0, 0, 0, 1, $have_sort, $view_status, $view_status2);       
-        $this->data['title'] = "Hot Deal";
+        $this->data['title'] = "Advertisement";
         if (!IsNullOrEmptyString($sub_category_id))
         {
             $this->data['main_category'] = $this->m_custom->display_main_category($sub_category_id);
@@ -85,7 +85,7 @@ class All extends CI_Controller
         $array_sub_category_id_exclude = array_diff($array_sub_category_id_all, array($sub_category_id));
         $this->data['query_advertise_suggestion'] = $this->albert_model->read_advertise_hot_deal_suggestion($array_sub_category_id_exclude);
         $this->data['advertise_suggestion_page_path_name'] = 'all/hot_deal_list_suggestion';
-        $this->data['advertise_suggestion_page_title'] = 'Hot Deal Suggestion';
+        $this->data['advertise_suggestion_page_title'] = 'Advertisement Suggestion';
         //NORMAL PAGE
         $this->data['page_path_name'] = 'share/hot_deal_grid_list4';
         $this->load->view('template/index_left_category', $this->data);
@@ -144,7 +144,7 @@ class All extends CI_Controller
         $array_sub_category_id_exclude = array_diff($array_sub_category_id_all, array($sub_category_id));
         $this->data['query_advertise_suggestion'] = $this->albert_model->read_advertise_redemption_suggestion($array_sub_category_id_exclude);
         $this->data['advertise_suggestion_page_path_name'] = 'all/hot_deal_list_suggestion';
-        $this->data['advertise_suggestion_page_title'] = 'Hot Deal Suggestion';
+        $this->data['advertise_suggestion_page_title'] = 'Advertisement Suggestion';
         //NORMAL PAGE
         $this->data['page_path_name'] = 'share/redemption_grid_list4';
         $this->load->view('template/index_left_category', $this->data);
@@ -769,7 +769,7 @@ class All extends CI_Controller
         $start_index = $page == 1 ? $page : (($page - 1) * $config["per_page"]);  //For calculate page number to start index
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['share_hotdeal_redemption_list'] = $this->m_custom->getAdvertise('hot', NULL, $merchant_id, 1, $config["per_page"], $start_index);   //To get the limited result only for that current page
-        $this->data['title'] = "Hot Deal Advertise's Album";
+        $this->data['title'] = "Advertisement's Album";
         $this->data['page_path_name'] = 'share/hot_deal_grid_list5';
         $this->load->view('template/index_background_blank', $this->data);
     }
@@ -1271,7 +1271,7 @@ class All extends CI_Controller
             else
             {
                 $this->data['hotdeal_list'] = $this->m_custom->getAdvertise('hot', NULL, $user_id, 1, NULL, NULL, 0, 0, 0, 0, 1);
-                $this->data['title'] = "Hot Deal";
+                $this->data['title'] = "Advertisement";
                 $this->data['bottom_path_name'] = 'share/hot_deal_grid_list5_old';
                 //ADVERTISE SUGGESTION
                 $where_user = array('id'=>$user_id);
@@ -1281,7 +1281,7 @@ class All extends CI_Controller
                 $array_sub_category_id = array_column($result_array_sub_category_id, 'category_id');
                 $this->data['query_advertise_suggestion'] = $this->albert_model->read_advertise_hot_deal_suggestion($array_sub_category_id)->result_array();
                 $this->data['advertise_suggestion_page_path_name'] = 'all/hot_deal_list_suggestion';
-                $this->data['advertise_suggestion_page_title'] = 'Hot Deal Suggestion';
+                $this->data['advertise_suggestion_page_title'] = 'Advertisement Suggestion';
             }
             $this->data['message'] = $this->session->flashdata('message');
             $this->load->view('template/index_background_blank', $this->data);

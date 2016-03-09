@@ -29,7 +29,7 @@
 
 <?php echo form_open('all/home_search') ?>
     <div id="header-logo-bar-search-block1">
-        <input type="text" placeholder="Search: hot deal, redemption" name="search_word" id="search_word">
+        <input type="text" placeholder="Search: advertisement, redemption" name="search_word" id="search_word">
     </div>
     <div id="header-logo-bar-search-block2">
         <?php

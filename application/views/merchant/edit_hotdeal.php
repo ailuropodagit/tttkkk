@@ -36,11 +36,11 @@ if(isset($message))
 ?>
 
 <div id='hot-deal-advertise'>
-    <h1>Hot Deal Edit</h1>
+    <h1>Advertisement Edit</h1>
     <div id='hot-deal-advertise-content'>
         
         <div id='hot-deal-advertise-today'>
-            Hot Deal Date : <?php echo $hotdeal_date ?>
+            Advertisement Date : <?php echo $hotdeal_date ?>
         </div>
         
         <div id='hot-deal-advertise-upload-image-note' style="display:none">
@@ -127,7 +127,7 @@ if(isset($message))
             <button name="button_action" type="submit" value="remove_hotdeal" onclick="return confirm('Are you sure want to remove it? It cannot be recover.')" >Remove</button>
             <?php    }
             else {
-               echo "You don't have permission to edit hot deal";
+               echo "You don't have permission to edit advertisement";
             }
             ?>
         <?php echo form_close(); ?>

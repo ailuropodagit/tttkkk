@@ -73,7 +73,7 @@ if(isset($message))
 ?>
 
 <div id='hot-deal-advertise'>
-    <h1>Hot Deal Advertise</h1>
+    <h1>Advertisement</h1>
     <div id='hot-deal-advertise-content'>       
         <div style="float:right">
               Upload Multiple (Max 5) : <div id="mulitplefileuploader">Upload</div>
@@ -81,10 +81,10 @@ if(isset($message))
         </div>
         <div id="float-fix"></div>
         <div id='hot-deal-advertise-today' style="display:none">
-            Today Hot Deal <?php echo $hotdeal_today_count . ' / ' . $hotdeal_per_day ?> per day
+            Today Advertisement <?php echo $hotdeal_today_count . ' / ' . $hotdeal_per_day ?> per day
             <?php
             if($hotdeal_today_count_removed!=0){
-                echo "(".$hotdeal_today_count_removed. " hot deal today already removed.)";
+                echo "(".$hotdeal_today_count_removed. " advertisement today already removed.)";
             }
             ?>
         </div>
@@ -191,7 +191,7 @@ if(isset($message))
                 <a href='<?php echo base_url(uri_string()) ?>' class="a-href-button">Clear</a>
         <?php    }
         else {
-           echo "You don't have permission to upload hot deal";
+           echo "You don't have permission to upload advertisement";
         }
         ?>
         </div>
