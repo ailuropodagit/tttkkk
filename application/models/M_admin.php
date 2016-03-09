@@ -59,20 +59,22 @@ class M_admin extends CI_Model
 
     function banner_select($ignore_hide = 0, $want_count = 0)
     {
+        $this->db->select('banner.*, static_option.option_value');
         if ($ignore_hide == 0)
         {
-            $this->db->where('hide_flag', 0);
+            $this->db->where('banner.hide_flag', 0);
         }
         else if ($ignore_hide == 1)  //show expire only
         {
             $this->db->where('end_time <=', get_part_of_date('all'));
-            $this->db->where('hide_flag', 0);
+            $this->db->where('banner.hide_flag', 0);
         }
         else if ($ignore_hide == 2)
         {
-            $this->db->where('hide_flag', 1);
+            $this->db->where('banner.hide_flag', 1);
         }
-        $this->db->order_by('banner_position');
+        $this->db->order_by('static_option.option_value');
+        $this->db->join('static_option', 'banner.banner_position = static_option.option_id');
         $query = $this->db->get_where('banner');
         $result = $query->result_array();
 
