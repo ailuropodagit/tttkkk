@@ -446,6 +446,21 @@ if (!function_exists('generate_code'))
 
 }
 
+if (!function_exists('generate_random_string'))
+{
+
+    function generate_random_string($string, $add_email = 0)
+    {
+        $random_word = generate_code($string) . random_string('alnum', 5);
+        if ($add_email == 1)
+        {
+            $random_word = $random_word . '@keppo.my';
+        }
+        return strtolower($random_word);
+    }
+
+}
+
 if (!function_exists('generate_options'))
 {
 

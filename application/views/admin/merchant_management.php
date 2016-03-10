@@ -17,6 +17,18 @@
     });
 </script>
 
+<style type="text/css">
+    .temporary_merchant{
+        position:relative;
+        top:29px;
+        left:200px;
+        color:red;
+        text-decoration:underline;
+        z-index:1;
+        display:none;
+    }
+</style>
+
 <?php
 //MESSAGE
 if (isset($message))
@@ -24,9 +36,15 @@ if (isset($message))
     ?><div id="message"><?php echo $message; ?></div><?php
 }
 ?>
-
 <div id="payment-charge">
-    <h1>Merchant Management</h1>
+    <h1>Merchant Management</h1> 
+    <div style="height:1px">
+    <?php if ($show_notyet_active == 1){ ?>       
+        <a href='<?php echo base_url() ?>admin/merchant-management' class="temporary_merchant">Normal Merchants account</a>
+    <?php }else{  ?>
+        <a href='<?php echo base_url() ?>admin/merchant-management/0/1' class="temporary_merchant">Temporary Merchants account</a>
+    <?php } ?>
+    </div>
     <div id="payment-charge-content">
          <?php 
         if($low_balance_only == 1){

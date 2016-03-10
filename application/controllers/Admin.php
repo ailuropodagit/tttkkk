@@ -1885,7 +1885,7 @@ class Admin extends CI_Controller
         $this->load->view('template/index', $this->data);
     }
     
-    function merchant_management($low_balance_only = 0)
+    function merchant_management($low_balance_only = 0, $show_notyet_active = 0)
     {
         if (!$this->m_admin->check_is_any_admin(65))
         {
@@ -1898,11 +1898,12 @@ class Admin extends CI_Controller
         }
         else
         {
-            $user_list = $this->m_custom->getAllMerchant();
+            $user_list = $this->m_custom->getAllMerchant($show_notyet_active);
         }
         $this->data['the_result'] = $user_list;
         $this->data['low_balance_only'] = $low_balance_only;
-
+        $this->data['show_notyet_active'] = $show_notyet_active;
+        
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
         $this->data['page_path_name'] = 'admin/merchant_management';
         $this->load->view('template/index', $this->data);

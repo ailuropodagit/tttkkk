@@ -1432,12 +1432,20 @@ class M_custom extends CI_Model
         return $result;
     }
     
-    function getAllMerchant()
+    function getAllMerchant($show_notyet_active = 0)
     {
         if (check_correct_login_type($this->group_id_worker))  //Worker only can see merchant of itself
         {
             $login_id = $this->ion_auth->user()->row()->id;
             $many_list = $this->m_custom->many_get_parentlist('merchant_worker', $login_id);
+            if ($show_notyet_active == 0)
+            {
+                $this->db->where('me_notyet_active', 0);
+            }
+            else
+            {
+                $this->db->where('me_notyet_active', 1);
+            }
             $this->db->order_by('id','desc');
             if (!empty($many_list))  //If the worker din't specify assign, then just let it see all merchant
             {
@@ -1447,6 +1455,14 @@ class M_custom extends CI_Model
         }
         else
         {
+            if ($show_notyet_active == 0)
+            {
+                $this->db->where('me_notyet_active', 0);
+            }
+            else
+            {
+                $this->db->where('me_notyet_active', 1);
+            }
             $this->db->order_by('id','desc');
             $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant')));
         }
