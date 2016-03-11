@@ -2358,7 +2358,16 @@ class Admin extends CI_Controller
                 $this->m_custom->update_remove_flag(0, 'users', $id);
                 $can_redirect_to = 1;
             }
-            
+            if ($this->input->post('button_action') == "active_merchant" && $this->m_admin->check_worker_role(87))
+            {
+                $message_info = add_message_info($message_info, $user_display_name . ' success active. Please remember change this merchant to real email and username.');
+                $data = array(
+                    'me_notyet_active' => 0,
+                );
+                $this->m_custom->simple_update('users', $data, 'id', $id);
+                $can_redirect_to = 1;
+            }
+
             if ($message_info != NULL)
             {
                 $this->session->set_flashdata('message', $message_info);

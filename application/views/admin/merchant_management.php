@@ -25,7 +25,6 @@
         color:red;
         text-decoration:underline;
         z-index:1;
-        display:none;
     }
 </style>
 
@@ -37,13 +36,14 @@ if (isset($message))
 }
 ?>
 <div id="payment-charge">
-    <h1>Merchant Management</h1> 
+    <h1><?php if ($show_notyet_active == 1){ echo 'Temporary '; } ?> Merchant Management</h1> 
     <div style="height:1px">
-    <?php if ($show_notyet_active == 1){ ?>       
-        <a href='<?php echo base_url() ?>admin/merchant-management' class="temporary_merchant">Normal Merchants account</a>
-    <?php }else{  ?>
-        <a href='<?php echo base_url() ?>admin/merchant-management/0/1' class="temporary_merchant">Temporary Merchants account</a>
-    <?php } ?>
+    <?php if ($this->m_admin->check_worker_role(87) && $low_balance_only == 0){ ?>
+        <?php if ($show_notyet_active == 1){ ?>       
+            <a href='<?php echo base_url() ?>admin/merchant-management' class="temporary_merchant">Normal Merchants account</a>
+        <?php }else{  ?>
+            <a href='<?php echo base_url() ?>admin/merchant-management/0/1' class="temporary_merchant">Temporary Merchants account</a>
+    <?php } } ?>
     </div>
     <div id="payment-charge-content">
          <?php 
@@ -147,7 +147,7 @@ if (isset($message))
                         <?php if($this->m_admin->check_worker_role(60) && $row['remove_flag'] == 0) { ?>
                         <button name="button_action" type="submit" value="log_in_as" title='Log In As Merchant' class='normal-btn-submit'>
                             <img src='<?php echo base_url() . "/image/btn-login-as.png"; ?>' title='Log In As Merchant' alt='Log In As Merchant' class='normal-btn-image'></button>
-                        <?php } ?>
+                        <?php } ?>               
                         <?php if($this->m_admin->check_worker_role(64) && $row['remove_flag'] == 0) { ?>
                         <button name="button_action" type="submit" value="<?php echo $ror; ?>" onclick="return confirm('Are you sure want to <?php echo $ror_text; ?> it?')" title='<?php echo $ror_text; ?>' class='normal-btn-submit'>
                         <img src='<?php echo $ror_image; ?>' title='<?php echo $ror_text; ?>' alt='<?php echo $ror_text; ?>' class='normal-btn-image'></button> 
@@ -155,6 +155,10 @@ if (isset($message))
                         <?php if($this->m_admin->check_worker_role(64)) { ?>
                         <button name="button_action" type="submit" value="<?php echo $ror2; ?>" onclick="return confirm('Are you sure want to <?php echo $ror_text2; ?> it?')" title='<?php echo $ror_text2; ?>' class='normal-btn-submit'>
                         <img src='<?php echo $ror_image2; ?>' title='<?php echo $ror_text2; ?>' alt='<?php echo $ror_text2; ?>' class='normal-btn-image'></button> 
+                        <?php } ?>
+                        <?php if($this->m_admin->check_worker_role(87) && $show_notyet_active == 1) { ?>
+                         <button name="button_action" type="submit" value="active_merchant" title='Active Merchant' class='normal-btn-submit'>
+                            <img src='<?php echo base_url() . "/image/btn-approve.png"; ?>' title='Active Merchant' alt='Active Merchant' class='normal-btn-image'></button>
                         <?php } ?>
                         <?php
                         echo form_close(); 

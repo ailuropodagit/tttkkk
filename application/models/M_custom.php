@@ -1432,7 +1432,7 @@ class M_custom extends CI_Model
         return $result;
     }
     
-    function getAllMerchant($show_notyet_active = 0)
+    function getAllMerchant($show_notyet_active = 0, $want_count = 0)
     {
         if (check_correct_login_type($this->group_id_worker))  //Worker only can see merchant of itself
         {
@@ -1465,6 +1465,10 @@ class M_custom extends CI_Model
             }
             $this->db->order_by('id','desc');
             $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant')));
+        }
+        if ($want_count == 1)
+        {
+            return $query->num_rows();
         }
         $result = $query->result_array();
         return $result;
