@@ -1242,6 +1242,7 @@ class User extends CI_Controller
             $new_id = $this->ion_auth->register($username, $password, $email, $additional_data, $group_ids);
             if ($new_id)
             {
+                $this->m_user->candie_history_insert(35, $new_id, 'users');
                 $this->session->set_flashdata('message', 'Merchant account successfully created, Please add a photo for this merchant. Thank You.');
                 redirect("user/upload_for_merchant/" . $new_id, 'refresh');
             }
