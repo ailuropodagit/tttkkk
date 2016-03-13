@@ -57,7 +57,7 @@ if (isset($message))
                         $birthday_text = displayDate($row['us_birthday']);
                         $user_candie_text = $this->m_user->candie_check_balance($row['id']);
                         $user_balance_text = $this->m_user->user_check_balance($row['id']);
-                        $remove_row = $row['hide_flag'] == 1 ? 'Frozen' : '';
+                        $remove_row = $row['remove_flag'] == 1 ? 'Hide' : ($row['hide_flag'] == 1 ? 'Frozen' : '');
                         $url_view = base_url() . "admin/user_view/" . $row['id'];
                         //$url_edit = base_url() . "admin/user_edit/" . $row['id'];
                         $url_bonus_candie = base_url() . "admin/user_bonus_candie/" . $row['id'];
