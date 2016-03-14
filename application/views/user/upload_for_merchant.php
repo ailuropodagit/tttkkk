@@ -113,6 +113,17 @@
     });
 </script>
 
+<style type="text/css">
+    .add-merchant select{
+        width:85% !important;
+    }
+    .normal-btn-image{
+        width:20px;
+        position:relative;
+        top:7px;
+    }
+</style>
+
 <?php
 //MESSAGE
 if(isset($message))
@@ -175,9 +186,10 @@ if(isset($message))
                     </div>  
                     <div id='upload-for-merchant-form-each'>
                         <div id='upload-for-merchant-form-each-label'><?php echo lang("album_category_label"); ?></div>
-                        <div id='upload-for-merchant-form-each-input'>
+                        <div id='upload-for-merchant-form-each-input' class="add-merchant">
                             <?php
                             echo form_dropdown(${'image_category' . $i}, $category_list);
+                            echo "<a href='" . base_url() . "user/add_merchant' ><img src='". base_url() . "/image/btn-add.png' title='Add Merchant' alt='Add Merchant' class='normal-btn-image'></a>";
                             ?>
                         </div>
                     </div>

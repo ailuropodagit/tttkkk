@@ -1482,7 +1482,19 @@ class Admin extends CI_Controller
                 $this->m_custom->update_hide_flag(0, 'users', $id);
                 $can_redirect_to = 1;
             }
-
+            if ($this->input->post('button_action') == "remove" && $this->m_admin->check_worker_role(85))
+            {
+                $message_info = add_message_info($message_info, $user_display_name . ' success hide.');
+                $this->m_custom->update_remove_flag(1, 'users', $id);
+                $can_redirect_to = 1;
+            }
+            if ($this->input->post('button_action') == "recover_remove")
+            {
+                $message_info = add_message_info($message_info, $user_display_name . ' success unhide.');
+                $this->m_custom->update_remove_flag(0, 'users', $id);
+                $can_redirect_to = 1;
+            }
+            
             if ($message_info != NULL)
             {
                 $this->session->set_flashdata('message', $message_info);
@@ -1873,7 +1885,7 @@ class Admin extends CI_Controller
         $this->load->view('template/index', $this->data);
     }
     
-    function merchant_management($low_balance_only = 0)
+    function merchant_management($low_balance_only = 0, $show_notyet_active = 0)
     {
         if (!$this->m_admin->check_is_any_admin(65))
         {
@@ -1886,11 +1898,12 @@ class Admin extends CI_Controller
         }
         else
         {
-            $user_list = $this->m_custom->getAllMerchant();
+            $user_list = $this->m_custom->getAllMerchant($show_notyet_active);
         }
         $this->data['the_result'] = $user_list;
         $this->data['low_balance_only'] = $low_balance_only;
-
+        $this->data['show_notyet_active'] = $show_notyet_active;
+        
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
         $this->data['page_path_name'] = 'admin/merchant_management';
         $this->load->view('template/index', $this->data);
@@ -2345,7 +2358,16 @@ class Admin extends CI_Controller
                 $this->m_custom->update_remove_flag(0, 'users', $id);
                 $can_redirect_to = 1;
             }
-            
+            if ($this->input->post('button_action') == "active_merchant" && $this->m_admin->check_worker_role(87))
+            {
+                $message_info = add_message_info($message_info, $user_display_name . ' success active. Please remember change this merchant to real email and username.');
+                $data = array(
+                    'me_notyet_active' => 0,
+                );
+                $this->m_custom->simple_update('users', $data, 'id', $id);
+                $can_redirect_to = 1;
+            }
+
             if ($message_info != NULL)
             {
                 $this->session->set_flashdata('message', $message_info);
@@ -3465,7 +3487,7 @@ class Admin extends CI_Controller
                             }
                         }
 
-                        //To update previous hot deal
+                        //To update previous advertisement
                         $data = array(
                             'title' => $title,
                             'description' => $description,

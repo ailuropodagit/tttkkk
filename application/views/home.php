@@ -89,7 +89,7 @@ $this->album_admin = $this->config->item('album_admin');
     <div id='home'>
         <div id='home-row1'>
             <?php 
-            for($i = 101; $i <= 104; $i++)
+            for($i = 151; $i <= 160; $i++)
             {
                 ${'slider_info' . $i} = $this->m_admin->banner_select_one($i);
                 ${'slider_image_url' . $i} = ${'slider_info' . $i}['banner_image_url'];
@@ -100,7 +100,7 @@ $this->album_admin = $this->config->item('album_admin');
             <div id='home-row1-banner-main'>
                 <div class="camera_wrap camera_azure_skin" id="camera_wrap_1">
                     <?php 
-                    for($i = 101; $i <= 104; $i++)
+                    for($i = 151; $i <= 160; $i++)
                     {
                         if(${'slider_no_image' . $i} == 0){
                             echo "<div data-src=" . ${'slider_image_url' . $i} . " data-link=" . ${'slider_website_url' . $i} . " data-target='_blank' ></div>";
@@ -113,7 +113,7 @@ $this->album_admin = $this->config->item('album_admin');
             <div id='home-row1-banner-main2'>
                 <div class="camera_wrap camera_azure_skin" id="camera_wrap_2">
                     <?php 
-                    for($i = 101; $i <= 104; $i++)
+                    for($i = 151; $i <= 160; $i++)
                     {
                         if(${'slider_no_image' . $i} == 0){
                             echo "<div data-src=" . ${'slider_image_url' . $i} . " data-link=" . ${'slider_website_url' . $i} . " data-target='_blank' ></div>";

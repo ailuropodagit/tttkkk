@@ -192,7 +192,7 @@ $is_suggestion = $this->m_custom->check_is_suggestion_list($title);
         {
             ?>
             <div id="share-hot-deal-grid-list5-empty">
-                No Hot Deal
+                No Advertisement
             </div>
             <?php
         }

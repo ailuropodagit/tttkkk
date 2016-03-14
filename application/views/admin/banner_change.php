@@ -54,11 +54,11 @@ if(isset($message))
     <?php
     if ($is_edit == 0)
     {
-        echo '<h1>Banner Add</h1>';
+        echo '<h1>Banner New Assign</h1>';
     }
     else
     {
-        echo '<h1>Banner Edit</h1>';
+        echo '<h1>Banner Edit Assign</h1>';
     }                       
     ?>
     <div id='profile-content'>       

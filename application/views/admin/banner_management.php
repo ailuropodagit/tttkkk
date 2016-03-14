@@ -38,7 +38,7 @@ if (isset($message))
         </div>
         <div style="float:right">
             <?php $add_new_url = base_url() . 'admin/banner_change'; ?>           
-            <div><a href='<?php echo $add_new_url; ?>' class="a-href-button">Add New</a></div>
+            <div><a href='<?php echo $add_new_url; ?>' class="a-href-button">Assign Banner</a></div>
         </div>
         <div id="float-fix"></div>
         <div id='payment-charge-table'>

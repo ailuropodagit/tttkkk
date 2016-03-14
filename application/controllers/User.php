@@ -1,4 +1,5 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 class User extends CI_Controller
 {
@@ -14,9 +15,10 @@ class User extends CI_Controller
         $this->album_user_profile = $this->config->item('album_user_profile');
         $this->album_user = $this->config->item('album_user');
         $this->album_user_merchant = $this->config->item('album_user_merchant');
+        $this->album_merchant_profile = $this->config->item('album_merchant_profile');
         $this->folder_image = $this->config->item('folder_image');
         $this->box_number = $this->config->item('user_upload_box_per_page');
-        $this->temp_folder = $this->config->item('folder_image_temp');    
+        $this->temp_folder = $this->config->item('folder_image_temp');
         $this->temp_folder_cut = $this->config->item('folder_image_temp_cut');
         $this->strong_password = $this->config->item('strong_password');
     }
@@ -59,7 +61,7 @@ class User extends CI_Controller
         $this->form_validation->set_rules('identity', 'Identity', 'required');
         $this->form_validation->set_rules('password', 'Password', 'required');
         setcookie('visit_first_time', 'no');
-        
+
         if ($this->form_validation->run() == true)
         {
             // check to see if the user is logging in
@@ -75,7 +77,7 @@ class User extends CI_Controller
                 $user_id = $this->session->userdata('user_id');
                 $this->m_user->check_birthday_candie();
                 $this->m_custom->promo_code_insert_user($user_id);
-                redirect('all/user_dashboard/'.$user_id, 'refresh');
+                redirect('all/user_dashboard/' . $user_id, 'refresh');
             }
             else
             {
@@ -99,21 +101,21 @@ class User extends CI_Controller
                 'id' => 'password',
                 'type' => 'password',
             );
-            
+
             $meta = array(
                 array('property' => 'og:type', 'content' => 'article'),
                 array('property' => 'og:image', 'content' => base_url('image/logo-keppo-fb.png'))
             );
             $this->data['meta_fb'] = meta_fb($meta);
-            
+
             $this->data['page_path_name'] = 'user/login';
             $this->load->view('template/layout', $this->data);
         }
     }
-        
+
     //LOGIN FACEBOOK CHECK
     function login_facebook_check()
-    {        
+    {
         //CONFIG VALUE
         $group_id_merchant = $this->config->item('group_id_merchant');
         //POST VALUE
@@ -121,9 +123,9 @@ class User extends CI_Controller
         $fb_email = $this->input->post('fb_email');
         $fb_first_name = $this->input->post('fb_first_name');
         $fb_last_name = $this->input->post('fb_last_name');
-        
+
         //READ USERS
-        $where_user = array('email'=>$fb_email, 'main_group_id'=>$group_id_merchant);
+        $where_user = array('email' => $fb_email, 'main_group_id' => $group_id_merchant);
         $query_user = $this->albert_model->read_user($where_user);
         $num_rows_user = $query_user->num_rows();
         if ($num_rows_user)
@@ -138,9 +140,9 @@ class User extends CI_Controller
             //FB LOGIN NOT MERCHANT EMAIL
             //READ USERS
             $where_user = array('us_fb_id' => $fb_id, 'us_register_type' => 'fbr');
-            $query_user = $this->albert_model->read_user($where_user);        
+            $query_user = $this->albert_model->read_user($where_user);
             $num_rows_user = $query_user->num_rows();
-            if($num_rows_user)
+            if ($num_rows_user)
             {
                 $hide_flag = $query_user->row()->hide_flag;
                 if ($hide_flag)
@@ -157,23 +159,23 @@ class User extends CI_Controller
                     $remember = 0;
                     if ($this->ion_auth->login($username, $password, $remember, $this->main_group_id))
                     {
-                    ?>
-                    <!--LOGIN USER ID-->
-                    <div id="login-user-id"><?php echo $this->session->userdata('user_id') ?></div>
-                    <!--LOGIN SUCCESS-->
-                    <div id="login-fb-id-success">1</div>
-                    <?php
-                }
+                        ?>
+                        <!--LOGIN USER ID-->
+                        <div id="login-user-id"><?php echo $this->session->userdata('user_id') ?></div>
+                        <!--LOGIN SUCCESS-->
+                        <div id="login-fb-id-success">1</div>
+                        <?php
+                    }
                 }
             }
             else
             {
                 //FB ID NOT EXISTS
                 $post_value_array = array(
-                    'fb_id'=>$fb_id, 
-                    'fb_email'=>$fb_email,
-                    'fb_first_name'=>$fb_first_name,
-                    'fb_last_name'=>$fb_last_name
+                    'fb_id' => $fb_id,
+                    'fb_email' => $fb_email,
+                    'fb_first_name' => $fb_first_name,
+                    'fb_last_name' => $fb_last_name
                 );
                 $this->session->set_flashdata('post_value_array', $post_value_array);
                 //RESPONSE
@@ -181,12 +183,12 @@ class User extends CI_Controller
             }
         }
     }
-    
+
     // login facebook first time
     function login_facebook_first_time()
     {
         $post_value_array_temp = $this->session->flashdata('post_value_array');
-        if(empty($post_value_array_temp))
+        if (empty($post_value_array_temp))
         {
             redirect('./', 'refresh');
         }
@@ -204,14 +206,14 @@ class User extends CI_Controller
         $data['dob_month_associative_array'] = $this->albert_model->read_static_option_month_associative_array();
         $data['dob_year_array'] = range_two_digit_associative_array(1930, 2010);
         $data['race_associative_array'] = $this->albert_model->read_static_option_race_associative_array();
-        $data['gender_associative_array'] = $this->albert_model->read_static_option_gender_associative_array(); 
+        $data['gender_associative_array'] = $this->albert_model->read_static_option_gender_associative_array();
         //flash data
         $this->session->keep_flashdata('post_value_array');
         $post_value_array = $this->session->flashdata('post_value_array');
         $fb_id = $post_value_array['fb_id'];
         $fb_email = $post_value_array['fb_email'];
         $fb_first_name = $post_value_array['fb_first_name'];
-        $fb_last_name = $post_value_array['fb_last_name']; 
+        $fb_last_name = $post_value_array['fb_last_name'];
         //post
         if ($this->input->post())
         {
@@ -221,10 +223,10 @@ class User extends CI_Controller
             $dob_day = $this->input->post('dob_day');
             $dob_month = $this->input->post('dob_month');
             $dob_year = $this->input->post('dob_year');
-            $dob = $dob_day.'-'.$dob_month.'-'.$dob_year;
+            $dob = $dob_day . '-' . $dob_month . '-' . $dob_year;
             $_POST['dob'] = $dob;
             $race = $this->input->post('race');
-            if($race == '19') //19 = other
+            if ($race == '19') //19 = other
             {
                 $race_other = $this->input->post('race_other');
             }
@@ -245,35 +247,38 @@ class User extends CI_Controller
             //validation
             //$this->form_validation->set_rules('email', 'E-mail address:', 'required|valid_email|valid_facebook_email['.$fb_email.']'); 
             $tables = $this->config->item('tables', 'ion_auth');
-            $this->form_validation->set_rules('email', 'Active E-mail:', 'trim|required|valid_email|is_unique[' . $tables['users'] . '.email]'); 
+            $this->form_validation->set_rules('email', 'Active E-mail:', 'trim|required|valid_email|is_unique[' . $tables['users'] . '.email]');
             //$this->form_validation->set_rules('email', 'Active E-mail:', 'required|valid_email'); 
             //$this->form_validation->set_rules('contact_number', 'Contact Number:', 'required|valid_contact_number'); 
-            $this->form_validation->set_rules('contact_number', 'Contact Number:', 'required'); 
+            $this->form_validation->set_rules('contact_number', 'Contact Number:', 'required');
             $this->form_validation->set_rules('dob', 'Date of Birth:', 'valid_date');
             $this->form_validation->set_rules('race', 'Race:', 'required_dropdown');
-            if($race == '19') { $this->form_validation->set_rules('race_other', 'Race Other:', 'required'); } //19 = other
-            $this->form_validation->set_rules('gender', 'Gender:', 'required_dropdown');     
+            if ($race == '19')
+            {
+                $this->form_validation->set_rules('race_other', 'Race Other:', 'required');
+            } //19 = other
+            $this->form_validation->set_rules('gender', 'Gender:', 'required_dropdown');
             $this->form_validation->set_rules('accept_terms', '...', 'callback_accept_terms');
-            
-            if ($this->form_validation->run() == TRUE) 
+
+            if ($this->form_validation->run() == TRUE)
             {
                 //FORM VALIDATION TRUE
                 //READ USERS
                 //$where_read_user = array('email'=>$fb_email);  //If put like this will have error, user normal register with a email first, then fb email is the same, will have error only 1 user is created
-                $where_read_user = array('email'=>$email);
-                $query_read_user = $this->albert_model->read_user($where_read_user);               
+                $where_read_user = array('email' => $email);
+                $query_read_user = $this->albert_model->read_user($where_read_user);
                 $num_rows_read_user = $query_read_user->num_rows();
-                if($num_rows_read_user)
-                {                    
+                if ($num_rows_read_user)
+                {
                     $password_visible = $this->albert_model->read_user($where_read_user)->row()->password_visible;
                     //UPDATE USER
                     //$where_update_user = array('email'=>$fb_email);   //If put like this will have error, user normal register with a email first, then fb email is the same, will have error only 1 user is created
-                    $where_update_user = array('email'=>$email);
-                    $data_update_user = array('us_fb_id'=>$fb_id);
-                    $this->albert_model->update_user($where_update_user, $data_update_user);     
+                    $where_update_user = array('email' => $email);
+                    $data_update_user = array('us_fb_id' => $fb_id);
+                    $this->albert_model->update_user($where_update_user, $data_update_user);
                     //LOG USER IN
                     //$email = $fb_email;  //If put like this will have error, user normal register with a email first, then fb email is the same, will have error only 1 user is created
-                    $remember = 0;                        
+                    $remember = 0;
                     if ($this->ion_auth->login($email, $password_visible, $remember, $this->main_group_id))
                     {
                         $user_id = $this->session->userdata('user_id');
@@ -289,59 +294,59 @@ class User extends CI_Controller
                     //DATA
                     $ip_address = $this->input->ip_address();
                     $main_group_id = $this->config->item('group_id_user');
-                    $dob = $dob_year.'-'.date('m',strtotime($dob_month)).'-'.$dob_day;
+                    $dob = $dob_year . '-' . date('m', strtotime($dob_month)) . '-' . $dob_day;
                     $password = $this->config->item('password_example_encrypt');
                     $password_visible = $this->config->item('password_example');
                     //CREATE USER
                     $data_update_user = array(
-                        'ip_address'=>$ip_address, 
-                        'username'=>$email, 
-                        'password'=>$password,
-                        'password_visible'=>$password_visible,
-                        'main_group_id'=>$main_group_id, 
-                        'email'=>$email, 
-                        'created_on'=>time(),
-                        'active'=>'1',
-                        'first_name'=>$fb_first_name,
-                        'last_name'=>$fb_last_name,
-                        'phone'=>$contact_number,
-                        'us_birthday'=>$dob, 
-                        'us_race_id'=>$race, 
-                        'us_race_other'=>$race_other, 
-                        'us_gender_id'=>$gender, 
-                        'us_register_type'=>'fbr', 
-                        'us_fb_id'=>$fb_id
+                        'ip_address' => $ip_address,
+                        'username' => $email,
+                        'password' => $password,
+                        'password_visible' => $password_visible,
+                        'main_group_id' => $main_group_id,
+                        'email' => $email,
+                        'created_on' => time(),
+                        'active' => '1',
+                        'first_name' => $fb_first_name,
+                        'last_name' => $fb_last_name,
+                        'phone' => $contact_number,
+                        'us_birthday' => $dob,
+                        'us_race_id' => $race,
+                        'us_race_other' => $race_other,
+                        'us_gender_id' => $gender,
+                        'us_register_type' => 'fbr',
+                        'us_fb_id' => $fb_id
                     );
                     $this->albert_model->create_user($data_update_user);
-                    if($this->db->affected_rows() > 0)
+                    if ($this->db->affected_rows() > 0)
                     {
-                        $remember = 0;                        
+                        $remember = 0;
                         if ($this->ion_auth->login($email, $password_visible, $remember, $this->main_group_id))
                         {
                             $user_id = $this->session->userdata('user_id');
                             $this->m_custom->promo_code_insert_user($user_id);
                             $get_status = send_mail_simple($email, 'Your Keppo User Account Success Created', 'Name : ' . $fb_first_name . ' ' . $fb_last_name .
-                                '<br/>Contact Number : ' . $contact_number .
-                                '<br/>Username : ' . $email .
-                                '<br/>E-mail : ' . $email .
-                                '<br/>Temporary Password : ' . $password_visible .
-                                '<br/><br/>Please change this temporary password to your own password after login.', 'create_user_send_email_success', 0);
-                                if ($get_status)
-                                {
-                                     redirect("all/user_dashboard/$user_id", 'refresh');
-                                }
-                                else
-                                {
-                                    $this->session->set_flashdata('message', $this->ion_auth->errors());
-                                    redirect("user/register", 'refresh');
-                                }                          
+                                    '<br/>Contact Number : ' . $contact_number .
+                                    '<br/>Username : ' . $email .
+                                    '<br/>E-mail : ' . $email .
+                                    '<br/>Temporary Password : ' . $password_visible .
+                                    '<br/><br/>Please change this temporary password to your own password after login.', 'create_user_send_email_success', 0);
+                            if ($get_status)
+                            {
+                                redirect("all/user_dashboard/$user_id", 'refresh');
+                            }
+                            else
+                            {
+                                $this->session->set_flashdata('message', $this->ion_auth->errors());
+                                redirect("user/register", 'refresh');
+                            }
                         }
                         else
                         {
                             $data['message'] = $this->ion_auth->errors();
                         }
                     }
-                }                
+                }
 //                //valid
 //                echo $email;
 //                echo "<br/>";
@@ -466,7 +471,7 @@ class User extends CI_Controller
                 //if the password was successfully changed
                 $this->session->set_flashdata('message', $this->ion_auth->messages());
                 //$this->logout();
-                set_simple_message('Thank you!', 'Your Password has been saved!', '', 'all/user_dashboard/'.$user->id, 'Back to Dashboard', 'all/simple_message', 1, 3);
+                set_simple_message('Thank you!', 'Your Password has been saved!', '', 'all/user_dashboard/' . $user->id, 'Back to Dashboard', 'all/simple_message', 1, 3);
             }
             else
             {
@@ -475,11 +480,11 @@ class User extends CI_Controller
             }
         }
     }
-    
+
     function password_check($str)
     {
         //if (preg_match('#[0-9]#', $str) && preg_match('#[a-z]#', $str) && preg_match('#[A-Z]#', $str))
-        if (preg_match('#[0-9]#', $str) && preg_match('#[a-z]#', $str))        
+        if (preg_match('#[0-9]#', $str) && preg_match('#[a-z]#', $str))
         {
             return TRUE;
         }
@@ -493,7 +498,7 @@ class User extends CI_Controller
         //CONFIG DATA
         $group_id_user = $this->config->item('group_id_user');
         //POST
-        if($this->input->post('search'))
+        if ($this->input->post('search'))
         {
             //POST VALUE
             $keyword = $this->input->post('keyword');
@@ -505,12 +510,12 @@ class User extends CI_Controller
         }
         //FORM DATA
         $data['keyword'] = array(
-            'name'=>'keyword',
-            'placeholder'=>'Search',
-            'value'=>$keyword
+            'name' => 'keyword',
+            'placeholder' => 'Search',
+            'value' => $keyword
         );
         //READ USER
-        $where_read_user = array('id'=>$user_id);
+        $where_read_user = array('id' => $user_id);
         $query_read_user = $this->albert_model->read_user($where_read_user);
         $user_name = $query_read_user->row()->first_name . ' ' . $query_read_user->row()->last_name;
         //USER
@@ -535,7 +540,7 @@ class User extends CI_Controller
         $data['user_follower_count'] = $this->albert_model->user_follower_count($user_id);
         $data['user_following_count'] = $this->albert_model->user_following_count($user_id);
         $data['merchant_follower_count'] = $this->albert_model->merchant_follower_count($user_id);
-        $data['merchant_following_count'] = $this->albert_model->merchant_following_count($user_id);        
+        $data['merchant_following_count'] = $this->albert_model->merchant_following_count($user_id);
         //DATA
         $data['user_id'] = $user_id;
         //TEMPLATE
@@ -551,14 +556,14 @@ class User extends CI_Controller
             $this->load->view('template/layout', $data);
         }
     }
-    
+
     //FOLLOWING
     function following($user_type, $user_id)
     {
         //CONFIG DATA
         $group_id_user = $this->config->item('group_id_user');
         //POST
-        if($this->input->post('search'))
+        if ($this->input->post('search'))
         {
             //POST VALUE
             $keyword = $this->input->post('keyword');
@@ -570,12 +575,12 @@ class User extends CI_Controller
         }
         //FORM DATA
         $data['keyword'] = array(
-            'name'=>'keyword',
-            'placeholder'=>'Search',
-            'value'=>$keyword
+            'name' => 'keyword',
+            'placeholder' => 'Search',
+            'value' => $keyword
         );
         //READ USER
-        $where_read_user = array('id'=>$user_id);
+        $where_read_user = array('id' => $user_id);
         $query_read_user = $this->albert_model->read_user($where_read_user);
         $user_name = $query_read_user->row()->first_name . ' ' . $query_read_user->row()->last_name;
         //USER
@@ -629,7 +634,7 @@ class User extends CI_Controller
             }
         }
     }
-    
+
     function retrieve_password()
     {
         $this->form_validation->set_rules('username_email', $this->lang->line('forgot_password_username_email_label'), 'required');
@@ -938,7 +943,7 @@ class User extends CI_Controller
         $this->form_validation->set_rules('race_id', $this->lang->line('create_user_validation_race_label'), 'callback_check_race_id');
         $this->form_validation->set_rules('race_other', $this->lang->line('create_user_race_other_label'));
         $this->form_validation->set_rules('email', $this->lang->line('create_user_validation_email_label'), 'trim|required|valid_email|is_unique[' . $tables['users'] . '.email]');
-        $this->form_validation->set_rules('username', $this->lang->line('create_user_validation_username_label'), 'trim|required|is_unique[' . $tables['users'] . '.username]');       
+        $this->form_validation->set_rules('username', $this->lang->line('create_user_validation_username_label'), 'trim|required|is_unique[' . $tables['users'] . '.username]');
         if ($this->strong_password == 1)
         {
             $this->form_validation->set_rules('password', $this->lang->line('create_user_validation_password_label'), 'required|matches[password_confirm]|min_length[8]|callback_password_check');
@@ -950,7 +955,7 @@ class User extends CI_Controller
         $this->form_validation->set_rules('password_confirm', $this->lang->line('create_user_validation_password_confirm_label'), 'required');
         $this->form_validation->set_rules('promo_code', $this->lang->line('create_user_promo_code_label2'));
         $this->form_validation->set_rules('accept_terms', '...', 'callback_accept_terms');
-        
+
         if ($this->form_validation->run() == true)
         {
             $first_name = $this->input->post('first_name');
@@ -1076,7 +1081,7 @@ class User extends CI_Controller
                 'id' => 'password',
                 'type' => 'password',
                 'placeholder' => $this->config->item('password_example'),
-                'value' => $this->form_validation->set_value('password'),               
+                'value' => $this->form_validation->set_value('password'),
             );
             $this->data['password_confirm'] = array(
                 'name' => 'password_confirm',
@@ -1091,13 +1096,13 @@ class User extends CI_Controller
                 'type' => 'text',
                 'value' => $this->form_validation->set_value('promo_code'),
             );
-            
+
             $meta = array(
                 array('property' => 'og:type', 'content' => 'article'),
                 array('property' => 'og:image', 'content' => base_url('image/logo-keppo-fb.png'))
             );
             $this->data['meta_fb'] = meta_fb($meta);
-            
+
             $this->data['page_path_name'] = 'user/create_user';
             $this->load->view('template/layout', $this->data);
         }
@@ -1105,13 +1110,14 @@ class User extends CI_Controller
 
     function accept_terms()
     {
-        if (isset($_POST['accept_terms'])){
+        if (isset($_POST['accept_terms']))
+        {
             return true;
         }
         $this->form_validation->set_message('accept_terms', 'Please read and accept our Terms of Service and Privacy Policy.');
         return false;
     }
-    
+
     //validate is the date is correct
     public function date_check()
     {
@@ -1135,7 +1141,7 @@ class User extends CI_Controller
         }
         return TRUE;
     }
-    
+
     function check_race_id($dropdown_selection)
     {
         if ($dropdown_selection == 0)
@@ -1145,7 +1151,190 @@ class User extends CI_Controller
         }
         return TRUE;
     }
-    
+
+    // create a new merchant by user
+    function add_merchant()
+    {
+        if (!check_correct_login_type($this->main_group_id))
+        {
+            redirect('/', 'refresh');
+        }
+
+        $login_id = $this->ion_auth->user()->row()->id;
+        $tables = $this->config->item('tables', 'ion_auth');
+        if (isset($_POST) && !empty($_POST))
+        {
+            $_POST['slug'] = generate_slug($_POST['company']);
+            $slug = $_POST['slug'];
+        }
+        // validate form input
+        if (empty($_FILES['userfile']['name']))
+        {
+            $this->form_validation->set_rules('userfile', 'Merchant Logo', 'required');
+        }
+        $this->form_validation->set_rules('company_main', $this->lang->line('create_merchant_validation_company_main_label'), "trim|required|min_length[3]");
+        $this->form_validation->set_rules('company', $this->lang->line('create_merchant_validation_company_label'), "trim|required|min_length[3]");
+        $this->form_validation->set_rules('slug', $this->lang->line('create_merchant_validation_company_label'), 'trim|is_unique[' . $tables['users'] . '.slug]');
+        $this->form_validation->set_rules('address', $this->lang->line('create_merchant_validation_address_label'), 'required');
+        $this->form_validation->set_rules('postcode', $this->lang->line('create_merchant_validation_postcode_label'), 'required|numeric');
+        $this->form_validation->set_rules('me_state_id', $this->lang->line('create_merchant_validation_state_label'), 'callback_check_state_id');
+        $this->form_validation->set_rules('me_category_id', $this->lang->line('create_merchant_category_label'), 'callback_check_main_category');
+        $this->form_validation->set_rules('me_sub_category_id', $this->lang->line('create_merchant_sub_category_label'), 'callback_check_sub_category');
+
+        if ($this->form_validation->run() == true)
+        {
+            $username = generate_random_string($slug);
+            $email = generate_random_string($slug, 1);
+            $password = $this->config->item('password_example');
+            $company_main = $this->input->post('company_main');
+            $company = $this->input->post('company');
+            $address = $this->input->post('address');
+            $postcode = $this->input->post('postcode');
+            $state = $this->input->post('me_state_id');
+            $country = 'Malaysia';
+            $profile_image = NULL;
+
+            if (!empty($_FILES['userfile']['name']))
+            {
+                $upload_rule = array(
+                    'upload_path' => $this->album_merchant_profile,
+                    'allowed_types' => $this->config->item('allowed_types_image'),
+                    'max_size' => $this->config->item('max_size'),
+                    'max_width' => $this->config->item('max_width'),
+                    'max_height' => $this->config->item('max_height'),
+                );
+
+                $this->load->library('upload', $upload_rule);
+                if (!$this->upload->do_upload())
+                {
+                    $this->session->set_flashdata('message', $this->upload->display_errors());
+                }
+                else
+                {
+                    //$image_data = array('upload_data' => $this->upload->data());
+                    $profile_image = $this->upload->data('file_name');
+                }
+            }
+
+            $additional_data = array(
+                'username' => $username,
+                'company_main' => $company_main,
+                'company' => $company,
+                'slug' => $slug,
+                'address' => $address,
+                'postcode' => $postcode,
+                'country' => $country,
+                'me_state_id' => $state,
+                'me_category_id' => $this->input->post('me_category_id'),
+                'me_sub_category_id' => $this->input->post('me_sub_category_id'),
+                //'profile_image' => $this->config->item(''),
+                'main_group_id' => $this->config->item('group_id_merchant'),
+                'password_visible' => $password,
+                'me_addby_user' => $login_id,
+                'me_notyet_active' => 1,
+                'profile_image' => $profile_image
+            );
+
+            $group_ids = array(
+                $this->config->item('group_id_merchant')
+            );
+
+            $new_id = $this->ion_auth->register($username, $password, $email, $additional_data, $group_ids);
+            if ($new_id)
+            {
+                $this->m_user->candie_history_insert(35, $new_id, 'users');
+                $this->session->set_flashdata('message', 'Merchant account successfully created, Please add a photo for this merchant. Thank You.');
+                redirect("user/upload_for_merchant/" . $new_id, 'refresh');
+            }
+            else
+            {
+                goto add_merchant_fail;
+            }
+        }
+        else
+        {
+            add_merchant_fail:
+            $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+            $this->data['company_main'] = array(
+                'name' => 'company_main',
+                'id' => 'company_main',
+                'type' => 'text',
+                'value' => $this->form_validation->set_value('company_main'),
+            );
+            $this->data['company'] = array(
+                'name' => 'company',
+                'id' => 'company',
+                'type' => 'text',
+                'value' => $this->form_validation->set_value('company'),
+            );
+            $this->data['address'] = array(
+                'name' => 'address',
+                'id' => 'address',
+                'value' => $this->form_validation->set_value('address'),
+            );
+            $this->data['postcode'] = array(
+                'name' => 'postcode',
+                'id' => 'postcode',
+                'type' => 'text',
+                'value' => $this->form_validation->set_value('postcode'),
+            );
+            $this->data['state_list'] = $this->m_custom->get_static_option_array('state', '0', 'Please Select');
+            $this->data['me_state_id'] = array(
+                'name' => 'me_state_id',
+                'id' => 'me_state_id',
+                'value' => $this->form_validation->set_value('me_state_id'),
+            );
+            $me_category_id = $this->form_validation->set_value('me_category_id') == '' ? '' : $this->form_validation->set_value('me_category_id');
+            $this->data['category_list'] = $this->m_custom->getCategoryList('0', 'Please Select');
+            $this->data['me_category_id'] = array(
+                'name' => 'me_category_id',
+                'id' => 'me_category_id',
+                'value' => $me_category_id,
+                'onChange' => "get_SubCategory()",
+            );
+            $this->data['sub_category_list'] = $this->m_custom->getSubCategoryList(NULL, NULL, $me_category_id);
+            $this->data['me_sub_category_id'] = array(
+                'name' => 'me_sub_category_id',
+                'id' => 'me_sub_category_id',
+                'value' => $this->form_validation->set_value('me_sub_category_id'),
+            );
+
+            $this->data['temp_folder'] = $this->temp_folder;
+            $this->data['page_path_name'] = 'user/add_merchant';
+            $this->load->view('template/layout', $this->data);
+        }
+    }
+
+    function check_state_id($dropdown_selection)
+    {
+        if ($dropdown_selection == 0)
+        {
+            $this->form_validation->set_message('check_state_id', 'The State field is required');
+            return FALSE;
+        }
+        return TRUE;
+    }
+
+    function check_main_category($dropdown_selection)
+    {
+        if ($dropdown_selection == 0)
+        {
+            $this->form_validation->set_message('check_main_category', 'The Company Category field is required');
+            return FALSE;
+        }
+        return TRUE;
+    }
+
+    function check_sub_category($dropdown_selection)
+    {
+        if ($dropdown_selection == 0)
+        {
+            $this->form_validation->set_message('check_sub_category', 'The Default Sub Category field is required');
+            return FALSE;
+        }
+        return TRUE;
+    }
+
     //user profile view and edit page
     function profile()
     {
@@ -1157,7 +1346,7 @@ class User extends CI_Controller
         $user = $this->ion_auth->user($user_id)->row();
         $this->m_custom->promo_code_insert_user($user_id);
         $this->m_custom->promo_code_temp_register($user_id);
-        
+
         if (isset($_POST) && !empty($_POST))
         {
             if ($this->input->post('button_action') == "confirm")
@@ -1184,7 +1373,7 @@ class User extends CI_Controller
         $this->form_validation->set_rules('facebook_url', $this->lang->line('create_user_validation_facebook_label'));
         $this->form_validation->set_rules('blog_url', $this->lang->line('create_user_validation_blogger_url_label'));
         $this->form_validation->set_rules('photography_url', $this->lang->line('create_user_validation_photography_url_label'));
-        
+
         if (isset($_POST) && !empty($_POST))
         {
             if ($this->input->post('button_action') == "confirm")
@@ -1208,7 +1397,7 @@ class User extends CI_Controller
                     $is_photographer = $this->input->post('is_photographer');
                     $photography_url = $this->input->post('photography_url');
                     $age = age_count($this->input->post('dob'));
-                    
+
                     $blogger_list_selected = array();
                     $post_blogger_list = $this->input->post('blogger_list');
                     if (!empty($post_blogger_list))
@@ -1218,7 +1407,7 @@ class User extends CI_Controller
                             $blogger_list_selected[] = $value;
                         }
                     }
-                    
+
                     $photography_list_selected = array();
                     $post_photography_list = $this->input->post('photography_list');
                     if (!empty($post_photography_list))
@@ -1257,7 +1446,7 @@ class User extends CI_Controller
                         $this->m_custom->many_insert_or_remove('photography', $user_id, $photography_list_selected);
                         $this->session->set_flashdata('message', $this->ion_auth->messages());
                         $user = $this->ion_auth->user($user_id)->row();
-                        redirect('all/user_dashboard/'.$user_id, 'refresh');
+                        redirect('all/user_dashboard/' . $user_id, 'refresh');
                     }
                     else
                     {
@@ -1278,7 +1467,7 @@ class User extends CI_Controller
         $this->data['title'] = "Profile";
         $this->data['can_edit'] = 1;
         $this->data['user_id'] = $user_id;
-        
+
         $the_date = explode('-', $user->us_birthday);
         $this->data['b_year'] = $the_date[0];
         $this->data['b_month'] = $the_date[1];
@@ -1311,9 +1500,9 @@ class User extends CI_Controller
         );
         $this->data['promo_code_url'] = $this->m_custom->generate_promo_code_list_link($promo_code, 32);
         $this->data['description'] = array(
-                'name' => 'description',
-                'id' => 'description',
-                'value' => $this->form_validation->set_value('description', $user->description),
+            'name' => 'description',
+            'id' => 'description',
+            'value' => $this->form_validation->set_value('description', $user->description),
         );
         $this->data['email'] = array(
             'name' => 'email',
@@ -1349,7 +1538,7 @@ class User extends CI_Controller
             'id' => 'gender_id',
         );
         $this->data['us_gender_id'] = $user->us_gender_id;
-        
+
         $this->data['race_list'] = $this->ion_auth->get_static_option_list('race');
         $this->data['race_id'] = array(
             'name' => 'race_id',
@@ -1357,7 +1546,7 @@ class User extends CI_Controller
             'onchange' => 'showraceother()',
         );
         $this->data['us_race_id'] = $user->us_race_id;
-        
+
         $this->data['race_other'] = array(
             'name' => 'race_other',
             'id' => 'race_other',
@@ -1375,8 +1564,8 @@ class User extends CI_Controller
             'type' => 'text',
             'value' => $this->form_validation->set_value('phone', $user->phone),
             'class' => 'phone_blur',
-        );     
-        
+        );
+
         $this->data['instagram_url'] = array(
             'name' => 'instagram_url',
             'id' => 'instagram_url',
@@ -1389,50 +1578,50 @@ class User extends CI_Controller
             'type' => 'text',
             'value' => $this->form_validation->set_value('facebook_url', $user->us_facebook_url),
         );
-        
+
         //Blogger Function
         $us_is_blogger = $user->us_is_blogger;
         $this->data['us_is_blogger'] = $us_is_blogger;
         $this->data['is_blogger'] = array(
             'name' => 'is_blogger',
             'id' => 'is_blogger',
-            'checked' => $us_is_blogger == "1"? TRUE : FALSE,
+            'checked' => $us_is_blogger == "1" ? TRUE : FALSE,
             'onclick' => "checkbox_showhide('is_blogger','profile-blogger-div')",
-            'value' => $this->form_validation->set_value('is_blogger', $us_is_blogger),           
+            'value' => $this->form_validation->set_value('is_blogger', $us_is_blogger),
         );
-        
+
         $this->data['blog_url'] = array(
             'name' => 'blog_url',
             'id' => 'blog_url',
             'type' => 'text',
             'value' => $this->form_validation->set_value('blog_url', $user->us_blog_url),
         );
-        
+
         $this->data['blogger_list'] = $this->m_custom->get_dynamic_option_array('photography');
         $this->data['blogger_current'] = empty($user) ? array() : $this->m_custom->many_get_childlist('blogger', $user->id);
-        
+
         //Photographer Function
         $us_is_photographer = $user->us_is_photographer;
         $this->data['us_is_photographer'] = $us_is_photographer;
         $this->data['is_photographer'] = array(
             'name' => 'is_photographer',
             'id' => 'is_photographer',
-            'checked' => $us_is_photographer == "1"? TRUE : FALSE,
+            'checked' => $us_is_photographer == "1" ? TRUE : FALSE,
             'onclick' => "checkbox_showhide('is_photographer','profile-photographer-div')",
-            'value' => $this->form_validation->set_value('is_photographer', $us_is_photographer),           
+            'value' => $this->form_validation->set_value('is_photographer', $us_is_photographer),
         );
-        
+
         $this->data['photography_url'] = array(
             'name' => 'photography_url',
             'id' => 'photography_url',
             'type' => 'text',
             'value' => $this->form_validation->set_value('photography_url', $user->us_photography_url),
         );
-        
+
         $this->data['photography_list'] = $this->m_custom->get_dynamic_option_array('photography');
         $this->data['photography_current'] = empty($user) ? array() : $this->m_custom->many_get_childlist('photography', $user->id);
-        
-        $this->data['temp_folder'] = $this->temp_folder;  
+
+        $this->data['temp_folder'] = $this->temp_folder;
         $this->data['page_path_name'] = 'user/profile';
         $this->load->view('template/index', $this->data);
     }
@@ -1582,6 +1771,12 @@ class User extends CI_Controller
                 );
                 if ($this->m_custom->simple_update('merchant_user_album', $data, 'merchant_user_album_id', $picture_id))
                 {
+                    $previous_image_name = $this->m_custom->get_one_table_record('merchant_user_album', 'merchant_user_album_id', $picture_id)->image;
+                    if (!IsNullOrEmptyString($previous_image_name))
+                    {
+                        delete_file($this->album_user_merchant . $previous_image_name);
+                    }
+
                     $this->m_custom->remove_row_log('merchant_user_album', $picture_id, $do_by_id, $do_by_type);
                     //$message_info = add_message_info($message_info, 'Picture for merchant success remove.', $post_title);
                     $message_info = add_message_info($message_info, 'Picture for merchant success remove.', $post_desc);
@@ -1677,7 +1872,7 @@ class User extends CI_Controller
             $post_title = $this->input->post('picture-title');
             $post_desc = $this->input->post('picture-desc');
             $post_album_id = $this->input->post('picture-main-album');
-             
+
             if ($this->input->post('button_action') == "edit_picture")
             {
                 $image_data = NULL;
@@ -1731,6 +1926,12 @@ class User extends CI_Controller
                 );
                 if ($this->m_custom->simple_update('user_album', $data, 'user_album_id', $picture_id))
                 {
+                    $previous_image_name = $this->m_custom->get_one_table_record('user_album', 'user_album_id', $picture_id)->image;
+                    if (!IsNullOrEmptyString($previous_image_name))
+                    {
+                        delete_file($this->album_user . $previous_image_name);
+                    }
+
                     $this->m_custom->remove_row_log('user_album', $picture_id, $do_by_id, $do_by_type);
                     //$message_info = add_message_info($message_info, 'Picture for user success remove.', $post_title);
                     $message_info = add_message_info($message_info, 'Picture for user success remove.', $post_desc);
@@ -1772,7 +1973,7 @@ class User extends CI_Controller
         );
         $this->data['main_album_list'] = $this->m_custom->getMainAlbum($user_id, NULL, 1);
         $this->data['picture_main_album_selected'] = empty($picture_result) ? '' : $picture_result['album_id'];
-        
+
         $usa_id = empty($picture_result) ? '0' : $picture_result['user_album_id'];
         //$this->data['usa_id_value'] = $usa_id;
 
@@ -1803,7 +2004,7 @@ class User extends CI_Controller
         $this->data['page_path_name'] = 'user/main_album';
         $this->load->view('template/index_background_blank', $this->data);
     }
-    
+
     function main_album_change($edit_id = NULL)
     {
         if (!check_correct_login_type($this->main_group_id))
@@ -1903,7 +2104,7 @@ class User extends CI_Controller
                 $this->m_custom->update_hide_flag(1, $main_table, $edit_id);
                 $can_redirect_to = 2;
             }
-            
+
             direct_go:
             if ($message_info != NULL)
             {
@@ -1945,7 +2146,7 @@ class User extends CI_Controller
         $this->data['page_path_name'] = 'user/main_album_change';
         $this->load->view('template/index_background_blank', $this->data);
     }
-    
+
     function upload_for_merchant($merchant_id_pass = NULL)
     {
         if (!check_correct_login_type($this->main_group_id))
@@ -2002,7 +2203,7 @@ class User extends CI_Controller
                         $have_hidden_image = 1;
                         goto HiddenImageSkip;
                     }
-                    
+
                     if (!empty($_FILES[$post_file]['name']))
                     {
                         //to do todo if want to add auto populate back
@@ -2035,11 +2236,11 @@ class User extends CI_Controller
                             else   //For Multiple Image Upload
                             {
                                 $from_path = $this->temp_folder_cut . $post_hidden_image;
-                                $to_path = $this->album_user_merchant . $post_hidden_image;   
+                                $to_path = $this->album_user_merchant . $post_hidden_image;
                                 rename($from_path, $to_path);
                                 $image_file_name = $post_hidden_image;
                             }
-                            
+
                             $data = array(
                                 'post_type' => 'mer',
                                 'user_id' => $user_id,
@@ -2121,8 +2322,8 @@ class User extends CI_Controller
             );
         }
 
-        $this->data['temp_folder'] = $this->temp_folder;  
-        $this->data['temp_folder_cut'] = $this->temp_folder_cut;     
+        $this->data['temp_folder'] = $this->temp_folder;
+        $this->data['temp_folder_cut'] = $this->temp_folder_cut;
         $this->data['empty_image'] = $this->config->item('empty_image');
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'user/upload_for_merchant';
@@ -2162,8 +2363,8 @@ class User extends CI_Controller
                     $search_month = $this->input->post('the_month');
                 }
             }
-            
-            $month_list = limited_month_select(2,1);
+
+            $month_list = limited_month_select(2, 1);
             $this->data['month_list'] = $month_list;
             $this->data['the_month'] = array(
                 'name' => 'the_month',
@@ -2175,7 +2376,7 @@ class User extends CI_Controller
             $this->data['the_month_selected_text'] = $selected_month_text['month_year_text'];
             $month_last_date = $selected_month_text['month_last_date'];
             $this->data['previous_month_selected_text'] = $this->m_custom->explode_year_month(month_previous($month_last_date, 1));
-            
+
             $user_id = $this->ion_auth->user()->row()->id;
             $this->m_user->candie_balance_update($user_id);
             $this->data['previous_end_month_balance'] = $this->m_user->candie_check_balance($user_id, 1, month_previous($month_last_date));
@@ -2183,12 +2384,12 @@ class User extends CI_Controller
             $this->data['current_balance'] = $this->m_user->candie_check_balance($user_id, 0, $month_last_date);
             $this->data['this_month_redemption'] = $this->m_user->user_this_month_redemption($user_id, $selected_month);
             $this->data['this_month_candie_gain'] = $this->m_user->user_this_month_candie_gain($user_id, $selected_month);
-            $this->data['this_month_candie'] = $this->m_user->user_this_month_candie($user_id, $selected_month);          
-            
-            $this->data['voucher_active_count'] = 'Active Voucher ('.count($this->m_user->user_redemption($user_id, $this->config->item('voucher_active'))).')';
-            $this->data['voucher_used_count'] = 'Used Voucher ('.count($this->m_user->user_redemption($user_id, $this->config->item('voucher_used'))).')';
-            $this->data['voucher_expired_count'] = 'Expired Voucher ('.count($this->m_user->user_redemption($user_id, $this->config->item('voucher_expired'))).')';
-            
+            $this->data['this_month_candie'] = $this->m_user->user_this_month_candie($user_id, $selected_month);
+
+            $this->data['voucher_active_count'] = 'Active Voucher (' . count($this->m_user->user_redemption($user_id, $this->config->item('voucher_active'))) . ')';
+            $this->data['voucher_used_count'] = 'Used Voucher (' . count($this->m_user->user_redemption($user_id, $this->config->item('voucher_used'))) . ')';
+            $this->data['voucher_expired_count'] = 'Expired Voucher (' . count($this->m_user->user_redemption($user_id, $this->config->item('voucher_expired'))) . ')';
+
             $this->data['candie_url'] = base_url() . "user/candie_page";
             $this->data['voucher_active_url'] = base_url() . "user/redemption/" . $this->config->item('voucher_active');
             $this->data['voucher_used_url'] = base_url() . "user/redemption/" . $this->config->item('voucher_used');
@@ -2204,9 +2405,10 @@ class User extends CI_Controller
         }
     }
 
-    function balance_page(){
+    function balance_page()
+    {
         if (check_correct_login_type($this->main_group_id))
-        {        
+        {
             if (isset($_POST) && !empty($_POST))
             {
                 if ($this->input->post('button_action') == "search_history")
@@ -2236,7 +2438,7 @@ class User extends CI_Controller
             $this->data['this_month_transaction'] = $this->m_user->user_this_month_transaction($user_id, $selected_month);
 
             $this->data['this_month_transaction_user_balance'] = $this->m_user->get_transaction_extra($user_id, 23, $selected_month);
-            
+
             $this->data['message'] = $this->session->flashdata('message');
             $this->data['page_path_name'] = 'user/balance_page';
             $this->load->view('template/index', $this->data);
@@ -2246,7 +2448,7 @@ class User extends CI_Controller
             redirect('/', 'refresh');
         }
     }
-    
+
     function redemption($status_id = NULL, $sub_category = NULL, $merchant = NULL)
     {
         if (!check_correct_login_type($this->main_group_id))
@@ -2265,7 +2467,7 @@ class User extends CI_Controller
                 $expire_search_month = $this->input->post('expire_the_month');
             }
         }
-        
+
         $redeem_month_list = limited_month_select(5, 1, '0', 'All Redemption Month');
         $this->data['redeem_month_list'] = $redeem_month_list;
         $this->data['redeem_the_month'] = array(
@@ -2302,18 +2504,18 @@ class User extends CI_Controller
         );
         $this->data['sub_category_selected'] = empty($sub_category) ? "" : $sub_category;
 
-        $merchant_list = $this->m_user->user_redemption_merchant_list($user_id, $status_id);       
+        $merchant_list = $this->m_user->user_redemption_merchant_list($user_id, $status_id);
         $this->data['merchant_list'] = $merchant_list;
         $this->data['merchant'] = array(
             'name' => 'merchant',
             'id' => 'merchant',
         );
         $this->data['merchant_selected'] = empty($merchant) ? "" : $merchant;
-        
-        $this->data['voucher_active_count'] = 'Active Voucher ('.count($this->m_user->user_redemption($user_id, $this->config->item('voucher_active'), $sub_category, $merchant, $redeem_selected_month, $expire_selected_month)).')';
-        $this->data['voucher_used_count'] = 'Used Voucher ('.count($this->m_user->user_redemption($user_id, $this->config->item('voucher_used'), $sub_category, $merchant, $redeem_selected_month, $expire_selected_month)).')';
-        $this->data['voucher_expired_count'] = 'Expired Voucher ('.count($this->m_user->user_redemption($user_id, $this->config->item('voucher_expired'), $sub_category, $merchant, $redeem_selected_month, $expire_selected_month)).')';
-        
+
+        $this->data['voucher_active_count'] = 'Active Voucher (' . count($this->m_user->user_redemption($user_id, $this->config->item('voucher_active'), $sub_category, $merchant, $redeem_selected_month, $expire_selected_month)) . ')';
+        $this->data['voucher_used_count'] = 'Used Voucher (' . count($this->m_user->user_redemption($user_id, $this->config->item('voucher_used'), $sub_category, $merchant, $redeem_selected_month, $expire_selected_month)) . ')';
+        $this->data['voucher_expired_count'] = 'Expired Voucher (' . count($this->m_user->user_redemption($user_id, $this->config->item('voucher_expired'), $sub_category, $merchant, $redeem_selected_month, $expire_selected_month)) . ')';
+
         $this->data['candie_url'] = base_url() . "user/candie_page";
         $this->data['voucher_active_url'] = base_url() . "user/redemption/" . $this->config->item('voucher_active');
         $this->data['voucher_used_url'] = base_url() . "user/redemption/" . $this->config->item('voucher_used');
@@ -2387,7 +2589,7 @@ class User extends CI_Controller
         $data['category_list'] = $category_list;
         $this->load->view('template/index_background_blank', $data);
     }
-    
+
     function upload_image($album_id = NULL)
     {
         if (!check_correct_login_type($this->main_group_id))
@@ -2426,7 +2628,7 @@ class User extends CI_Controller
                     $post_title = $this->input->post('image-title-' . $i);
                     $post_desc = $this->input->post('image-desc-' . $i);
                     $post_album_id = $this->input->post('image-main-album-' . $i);
-                    
+
                     //For Multiple Image Upload
                     $have_hidden_image = 0;
                     $post_hidden_image = $this->input->post('hideimage-' . $i);
@@ -2445,7 +2647,7 @@ class User extends CI_Controller
                             $message_info = add_message_info($message_info, 'Main Album cannot be empty.', $post_desc);
                             goto ValidateFail;
                         }
-                        
+
                         if (!$this->upload->do_upload($post_file))
                         {
                             $validate_fail = 1;
@@ -2464,7 +2666,7 @@ class User extends CI_Controller
                             else  //For Multiple Image Upload
                             {
                                 $from_path = $this->temp_folder_cut . $post_hidden_image;
-                                $to_path = $this->album_user . $post_hidden_image;   
+                                $to_path = $this->album_user . $post_hidden_image;
                                 rename($from_path, $to_path);
                                 $image_file_name = $post_hidden_image;
                             }
@@ -2511,7 +2713,7 @@ class User extends CI_Controller
                 'id' => 'image-title-' . $i,
                 'value' => $this->form_validation->set_value('image-title-' . $i),
             );
-            
+
             $image_url = 'image_url' . $i;
             $this->data[$image_url] = $this->config->item('empty_image');
             $image_desc = 'image_desc' . $i;
@@ -2520,7 +2722,7 @@ class User extends CI_Controller
                 'id' => 'image-desc-' . $i,
                 'value' => $this->form_validation->set_value('image-desc-' . $i),
             );
-            
+
             $image_main_album = 'image_main_album' . $i;
             $this->data[$image_main_album] = array(
                 'name' => 'image-main-album-' . $i,
@@ -2530,8 +2732,8 @@ class User extends CI_Controller
             $image_main_album_selected = 'image_main_album_selected' . $i;
             $this->data[$image_main_album_selected] = empty($album_id) ? '' : $album_id;
         }
-        $this->data['temp_folder'] = $this->temp_folder;   
-        $this->data['temp_folder_cut'] = $this->temp_folder_cut;     
+        $this->data['temp_folder'] = $this->temp_folder;
+        $this->data['temp_folder_cut'] = $this->temp_folder_cut;
         $this->data['empty_image'] = $this->config->item('empty_image');
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['page_path_name'] = 'user/upload_image';
@@ -2707,19 +2909,19 @@ class User extends CI_Controller
 
         $this->_render_page('user/edit_user', $this->data);
     }
-    
+
     function invite_friend()
     {
         //SESSION LOGGED DATA
         $logged_main_group_id = $this->session->userdata('user_group_id');
         //CONFIG ITEM
         $group_id_user = $this->config->item('group_id_user');
-        if($logged_main_group_id == $group_id_user)
+        if ($logged_main_group_id == $group_id_user)
         {
             //LOGGED CORRECT
             $data['message'] = $this->session->flashdata('message');
             //POST SUBMIT
-            if($this->input->post())
+            if ($this->input->post())
             {
                 //LOGGED
                 $logged_user_id = $this->session->userdata('user_id');
@@ -2813,7 +3015,7 @@ class User extends CI_Controller
         $data['page_path_name'] = 'user/invite_friend';
         $this->load->view('template/index', $data);
     }
-    
+
     //SEND INVITATION EMAIL 
     function invite_friend_send_email($input_email, $logged_user_email)
     {
@@ -2845,15 +3047,15 @@ class User extends CI_Controller
         $main_table_filter_column = 'msg_type';
         $main_table_fiter_value = 'withdraw';
 
-        $result_list = $this->m_admin->user_withdraw_request(0, 3, $login_id);     
+        $result_list = $this->m_admin->user_withdraw_request(0, 3, $login_id);
         $this->data['the_result'] = $result_list;
         $this->data['current_balance'] = $this->m_user->user_check_balance($login_id);
-        
+
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
         $this->data['page_path_name'] = 'user/contact_admin';
         $this->load->view('template/index', $this->data);
     }
-    
+
     function contact_admin_change()
     {
         if (!check_correct_login_type($this->main_group_id))
@@ -2877,7 +3079,7 @@ class User extends CI_Controller
             $this->form_validation->set_rules('bank_list_id', 'Bank Name', 'callback_check_bank_list_id');
             $this->form_validation->set_rules('msg_desc', 'Bank Account No', 'required');
             $this->form_validation->set_rules('msg_remark', 'Extra Info');
-            
+
             if ($this->input->post('button_action') == "save")
             {
                 if ($this->form_validation->run() === TRUE)
@@ -2904,32 +3106,32 @@ class User extends CI_Controller
             elseif ($can_redirect_to == 2)
             {
                 redirect('user/contact_admin', 'refresh');
-            }       
+            }
         }
 
         // set the flash data error message if there is one
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
         $previous_bank_list_selected = $this->m_user->get_last_user_bank_info($login_id);
-        
+
         $this->data['msg_content'] = array(
             'name' => 'msg_content',
             'id' => 'msg_content',
             'value' => $previous_bank_list_selected == NULL ? $this->form_validation->set_value('msg_content') : $previous_bank_list_selected['msg_content'],
         );
-              
+
         $this->data['bank_list'] = $this->m_custom->get_dynamic_option_array('bank_name');
         $this->data['bank_list_id'] = array(
             'name' => 'bank_list_id',
             'id' => 'bank_list_id',
         );
         $this->data['bank_list_selected'] = $previous_bank_list_selected == NULL ? $this->form_validation->set_value('bank_list_id') : $previous_bank_list_selected['msg_bank_id'];
-        
+
         $this->data['msg_desc'] = array(
             'name' => 'msg_desc',
             'id' => 'msg_desc',
             'value' => $previous_bank_list_selected == NULL ? $this->form_validation->set_value('msg_desc') : $previous_bank_list_selected['msg_desc'],
         );
-        
+
         $minimum_withdraw = $this->config->item('minimum_withdraw_amount');
         $this->data['msg_remark'] = array(
             'name' => 'msg_remark',
@@ -2940,7 +3142,7 @@ class User extends CI_Controller
         $this->data['page_path_name'] = 'user/contact_admin_change';
         $this->load->view('template/index', $this->data);
     }
-    
+
     function check_bank_list_id($dropdown_selection)
     {
         if ($dropdown_selection == 0)
@@ -2950,7 +3152,7 @@ class User extends CI_Controller
         }
         return TRUE;
     }
-    
+
     function promo_code()
     {
         if (!check_correct_login_type($this->main_group_id))
@@ -2961,7 +3163,7 @@ class User extends CI_Controller
         $message_info = '';
         $login_id = $this->ion_auth->user()->row()->id;
         $this->m_custom->promo_code_insert_user($login_id);
-        
+
         if (isset($_POST) && !empty($_POST))
         {
             $can_redirect_to = 0;
@@ -2999,14 +3201,14 @@ class User extends CI_Controller
             'value' => $promo_code,
         );
         $this->data['promo_code_url'] = $this->m_custom->generate_promo_code_list_link($promo_code, 32);
-        
+
         // set the flash data error message if there is one
         $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 
         $this->data['page_path_name'] = 'user/promo_code';
         $this->load->view('template/index', $this->data);
-    }   
-    
+    }
+
     function _get_csrf_nonce()
     {
         $this->load->helper('string');

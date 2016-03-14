@@ -42,7 +42,7 @@ $is_suggestion = $this->m_custom->check_is_suggestion_list($title);
         //UPLOAD BUTTON
         if ($this->ion_auth->logged_in())
         {
-            //To check is supervisor have role to upload hot deal
+            //To check is supervisor have role to upload advertisement
             $have_role = $this->m_custom->check_role_su_can_uploadhotdeal();
             if ($have_role == 1)
             {
@@ -102,8 +102,8 @@ $is_suggestion = $this->m_custom->check_is_suggestion_list($title);
             {
                 if ($uri_segment_4 == '')
                 {
-                    $empty_message = 'No Hot Deal';
-                    $bottom_empty_message = 'No Hot Deal Suggestion';
+                    $empty_message = 'No Advertisement';
+                    $bottom_empty_message = 'No Advertisement Suggestion';
                 }
                 else
                 {
