@@ -32,7 +32,8 @@
   margin-right: auto;
 }
 .jGrowl-notification {
-  background-color: orangered;
+  background-color: #8FC3DB;
+  background: #8FC3DB;
   opacity: 1;
   -ms-filter: progid:DXImageTransform.Microsoft.Alpha(90);
   filter: progid:DXImageTransform.Microsoft.Alpha(90);

@@ -209,6 +209,15 @@ $fetch_method = $this->router->fetch_method();
                             ?>
                             <?php
                         }
+                        if ($fetch_method == 'redemption_list'){
+                                ?>
+                        <div class="share-redemption-grid-list4-box-information-extra-info">
+                                    <div class="share-redemption-grid-list4-box-information-extra-info-general">
+                                        <?php echo "Worth RM " . $voucher_worth ?>
+                                    </div>
+                        </div>
+                                <?php
+                            }
                         ?>
                         <div class="share-redemption-grid-list4-box-information-candie">
                             <div class="share-redemption-grid-list4-box-information-candie-label">

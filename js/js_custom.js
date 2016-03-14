@@ -50,7 +50,7 @@ $(document).ready(function () {
                     dataType: "json",
                     data: "&refer_id=" + item_id + "&rate_val=" + value + "&refer_type=" + item_type,
                     success: function (e) {
-                        $.jGrowl(e.code + "<br>" + e.msg, {position: 'center'});
+                        $.jGrowl(e.code + "<br>" + e.msg, {position: 'center',life: 30000});
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         //alert(textStatus);
@@ -75,7 +75,7 @@ function click_like(user_id) {
         url: post_url,
         dataType: "json",
         success: function (e) {
-            $.jGrowl(e.code + "<br>" + e.msg, {position: 'center'});
+            $.jGrowl(e.code + "<br>" + e.msg, {position: 'center',life: 30000});
             $('.like-it').replaceWith(e.like_url);
         },
         error: function (jqXHR, textStatus, errorThrown) {
