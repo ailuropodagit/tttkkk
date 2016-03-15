@@ -196,6 +196,7 @@ $lang['hotdeal_description_label']         = 'Description : ';
 $lang['hotdeal_hour_label']                = 'Countdown Day(0 to 60) : ';
 $lang['hotdeal_title_label']               = 'Title : ';
 $lang['hotdeal_sub_category_label']        = 'Category : ';
+$lang['hotdeal_original_price_label']      = 'Original Price (RM) : ';
 $lang['hotdeal_price_before_label']        = 'Price Before (RM) : ';
 $lang['hotdeal_price_after_label']         = 'Price After (RM) : ';
 

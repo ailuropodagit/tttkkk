@@ -1981,6 +1981,7 @@ class Merchant extends CI_Controller
                     $candie_point = 30;
                 }
                 $expire_date = validateDate($this->input->post('expire_date'));
+                $original_price = check_is_positive_decimal($this->input->post('original_price'));
                 $show_extra_info = $this->input->post('show_extra_info');
                 $price_before = check_is_positive_decimal($this->input->post('price_before'));
                 $price_after = check_is_positive_decimal($this->input->post('price_after'));
@@ -2050,6 +2051,7 @@ class Merchant extends CI_Controller
                         //'voucher' => $this->m_merchant->generate_voucher($merchant_id),
                         'voucher_candie' => $candie_point,
                         'voucher_expire_date' => $expire_date,
+                        'original_price' => $original_price,
                         'show_extra_info' => $show_extra_info,
                         'price_before' => $price_before,
                         'price_after' => $price_after,
@@ -2108,6 +2110,7 @@ class Merchant extends CI_Controller
                         'end_time' => $end_date,
                         'voucher_candie' => $candie_point,
                         'voucher_expire_date' => $expire_date,
+                        'original_price' => $original_price,
                         'show_extra_info' => $show_extra_info,
                         'price_before' => $price_before,
                         'price_after' => $price_after,
@@ -2192,11 +2195,11 @@ class Merchant extends CI_Controller
             'maxlength' => '20'
         );
 
-        $default_desc = PHP_EOL . PHP_EOL . PHP_EOL . PHP_EOL . '<b>Original Price RM</b>';
+        //$default_desc = PHP_EOL . PHP_EOL . PHP_EOL . PHP_EOL . '<b>Original Price RM</b>';
         $this->data['candie_desc'] = array(
             'name' => 'candie_desc',
             'id' => 'candie_desc',
-            'value' => empty($this_month_candie) ? $default_desc : $this_month_candie['description'],
+            'value' => empty($this_month_candie) ? '' : $this_month_candie['description'],
         );
 
         $this->data['candie_image'] = empty($this_month_candie) ? $this->config->item('empty_image') : $this->album_merchant . $this_month_candie['image'];
@@ -2242,6 +2245,13 @@ class Merchant extends CI_Controller
             'value' => empty($this_month_candie) ? '' : displayDate($this_month_candie['voucher_expire_date']),
         );
 
+        $this->data['original_price'] = array(
+            'name' => 'original_price',
+            'id' => 'original_price',
+            'value' => empty($this_month_candie) ? '' : $this_month_candie['original_price'],
+            'onkeypress' => 'return isNumber(event)',
+        );
+        
         $this->data['show_extra_info_list'] = $this->m_custom->get_static_option_array('adv_extra_info', '0', 'Select Extra Info To Show', 0, NULL, 1);
         $this->data['show_extra_info'] = array(
             'name' => 'show_extra_info',
@@ -2381,6 +2391,7 @@ class Merchant extends CI_Controller
             $description = $this->input->post('desc');
             $hotdeal_hour = check_is_positive_numeric($this->input->post('hour'));
             $hotdeal_hour = $hotdeal_hour * 24;
+            $original_price = check_is_positive_decimal($this->input->post('original_price'));
             $hotdeal_price_before = check_is_positive_decimal($this->input->post('price_before'));
             $hotdeal_price_after = check_is_positive_decimal($this->input->post('price_after'));
             $price_before_show = $this->input->post('price_before_show');
@@ -2425,6 +2436,7 @@ class Merchant extends CI_Controller
                     'description' => $description,
                     'image' => empty($image_data) ? $previous_image_name : $image_data['upload_data']['file_name'],
                     'post_hour' => $hotdeal_hour,
+                    'original_price' => $original_price,
                     'price_before' => $hotdeal_price_before,
                     'price_after' => $hotdeal_price_after,
                     'price_before_show' => $price_before_show,
@@ -2532,6 +2544,13 @@ class Merchant extends CI_Controller
             'name' => 'price_before',
             'id' => 'price_before',
             'value' => empty($hotdeal_result) ? '' : $hotdeal_result['price_before'],
+            'onkeypress' => 'return isNumber(event)',
+        );
+        
+        $this->data['original_price'] = array(
+            'name' => 'original_price',
+            'id' => 'original_price',
+            'value' => empty($hotdeal_result) ? '' : $hotdeal_result['original_price'],
             'onkeypress' => 'return isNumber(event)',
         );
         
@@ -2678,6 +2697,7 @@ class Merchant extends CI_Controller
                     $description = $this->input->post('desc-' . $i);
                     $hotdeal_hour = check_is_positive_numeric($this->input->post('hour-' . $i));
                     $hotdeal_hour = $hotdeal_hour * 24;
+                    $original_price = check_is_positive_decimal($this->input->post('original_price-' . $i));
                     $hotdeal_price_before = check_is_positive_decimal($this->input->post('price_before-' . $i));
                     $hotdeal_price_after = check_is_positive_decimal($this->input->post('price_after-' . $i));
                     $price_before_show = $this->input->post('price_before_show-' . $i) == null? 0 : 1;
@@ -2742,6 +2762,7 @@ class Merchant extends CI_Controller
                                     'description' => $description,
                                     'image' => $image_file_name,
                                     'post_hour' => $hotdeal_hour,
+                                    'original_price' => $original_price,
                                     'price_before' => $hotdeal_price_before,
                                     'price_after' => $hotdeal_price_after,
                                     'price_before_show' => $price_before_show,
@@ -2802,6 +2823,7 @@ class Merchant extends CI_Controller
                             'description' => $description,
                             'image' => empty($image_data) ? $previous_image_name : $image_data['upload_data']['file_name'],
                             'post_hour' => $hotdeal_hour,
+                            'original_price' => $original_price,
                             'price_before' => $hotdeal_price_before,
                             'price_after' => $hotdeal_price_after,
                             'price_before_show' => $price_before_show,
@@ -2880,11 +2902,11 @@ class Merchant extends CI_Controller
             $hotdeal_category_selected = 'hotdeal_category_selected' . $i;
             $this->data[$hotdeal_category_selected] = empty($hotdeal_today_result[$i]) ? $merchant_data->me_sub_category_id : $hotdeal_today_result[$i]['sub_category_id'];
 
-            $default_desc = PHP_EOL . PHP_EOL . PHP_EOL . '<b>Original Price RM</b>';
+            //$default_desc = PHP_EOL . PHP_EOL . PHP_EOL . '<b>Original Price RM</b>';
             $hotdeal_desc = 'hotdeal_desc' . $i;
             $this->data[$hotdeal_desc] = 'desc-' . $i;
             $hotdeal_desc_value = 'hotdeal_desc_value' . $i;
-            $this->data[$hotdeal_desc_value] = empty($hotdeal_today_result[$i]) ? $default_desc : $hotdeal_today_result[$i]['description'];
+            $this->data[$hotdeal_desc_value] = empty($hotdeal_today_result[$i]) ? '' : $hotdeal_today_result[$i]['description'];
 //            $hotdeal_desc = 'hotdeal_desc' . $i;
 //            $this->data[$hotdeal_desc] = array(
 //                'name' => 'desc-' . $i,
@@ -2903,6 +2925,14 @@ class Merchant extends CI_Controller
             //$hotdeal_hour_selected = 'hotdeal_hour_selected' . $i;
             //$this->data[$hotdeal_hour_selected] = empty($hotdeal_today_result[$i]) ? '' : $hotdeal_today_result[$i]['post_hour'];
 
+            $hotdeal_original_price = 'original_price' . $i;
+            $this->data[$hotdeal_original_price] = array(
+                'name' => 'original_price-'. $i,
+                'id' => 'original_price-'. $i,
+                'value' => empty($hotdeal_today_result[$i]) ? '' : $hotdeal_today_result[$i]['original_price'],
+                'onkeypress' => 'return isNumber(event)',
+            );
+            
             $hotdeal_price_before = 'hotdeal_price_before' . $i;
             $this->data[$hotdeal_price_before] = array(
                 'name' => 'price_before-'. $i,

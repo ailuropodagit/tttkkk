@@ -260,6 +260,15 @@ if(isset($message))
                 <?php
             }
             ?>
+            <br/>
+            <div id="redemption-information-description" style="font-weight: bold">
+                <?php
+                if($original_price && $original_price != 0)
+                {
+                    echo 'Original Price : RM ' . $original_price;
+                }        
+                ?>
+            </div>
             <!--LIKE COMMENT-->
             <div id="redemption-information-like-comment">
                 <div id="redemption-information-like-comment">

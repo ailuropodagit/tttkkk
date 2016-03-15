@@ -138,6 +138,14 @@ if(isset($message))
                         <?php echo form_textarea($candie_desc); ?>
                     </div>
                 </div>
+                <div id='candie-promotion-form-each'>
+                    <div id='candie-promotion-form-each-label'><?php echo lang("hotdeal_original_price_label"); ?></div>
+                    <div id='candie-promotion-form-each-input'>
+                        <?php
+                        echo form_input($original_price);
+                        ?>
+                    </div>
+                </div>
                 <!--<div id='candie-promotion-form-each'>
                     <div id='candie-promotion-form-each-label'><?php //echo lang('candie_vender_label');  ?></div>
                     <div id='candie-promotion-form-each-input'>

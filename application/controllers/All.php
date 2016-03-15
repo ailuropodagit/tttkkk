@@ -223,6 +223,7 @@ class All extends CI_Controller
             $this->data['average_rating'] = $this->m_custom->activity_rating_average($advertise_id, 'adv');
             $this->data['phone_required'] = $the_row['phone_required'];
             $this->data['extra_term'] = $the_row['extra_term'];
+            $this->data['original_price'] = $the_row['original_price'];
             $this->data['show_extra_info'] = $the_row['show_extra_info'];
             $this->data['price_before'] = $the_row['price_before'];
             $this->data['price_before_show'] = $the_row['price_before_show'];

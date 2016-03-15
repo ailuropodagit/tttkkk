@@ -243,6 +243,15 @@
                 <?php
             }
             ?>
+            <br/>
+            <div id="hot-deal-information-description" style="font-weight: bold">
+                <?php
+                if($original_price && $original_price != 0)
+                {
+                    echo 'Original Price : RM ' . $original_price;
+                }        
+                ?>
+            </div>
             <!--LIKE COMMENT-->
             <div id="hot-deal-information-like-comment">
                 <div id="hot-deal-information-like">

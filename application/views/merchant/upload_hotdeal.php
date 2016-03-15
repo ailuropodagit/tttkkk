@@ -141,6 +141,14 @@ if(isset($message))
                     </div>
                 </div>
                 <div id='hot-deal-advertise-form-each'>
+                    <div id='hot-deal-advertise-form-each-label'><?php echo lang("hotdeal_original_price_label"); ?></div>
+                    <div id='hot-deal-advertise-form-each-input'>
+                        <?php
+                        echo form_input(${'original_price' . $i});
+                        ?>
+                    </div>
+                </div>
+                <div id='hot-deal-advertise-form-each'>
                     <div id='hot-deal-advertise-form-each-label'><?php echo lang("hotdeal_hour_label"); ?></div>
                     <div id='hot-deal-advertise-form-each-input'>
                         <?php
