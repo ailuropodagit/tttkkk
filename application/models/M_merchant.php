@@ -176,6 +176,11 @@ class M_merchant extends CI_Model
 
     public function getMerchantList_by_subcategory($sub_category_id = 0)
     {
+        if ($this->session->userdata('is_halal'))
+        {
+            $is_halal = $this->session->userdata('is_halal');
+            $this->db->where('me_is_halal', $is_halal);
+        }
         $this->db->where('me_sub_category_id', $sub_category_id);
         $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant'), 'hide_flag' => 0, 'remove_flag' => 0));
 
@@ -190,6 +195,11 @@ class M_merchant extends CI_Model
 
     public function getMerchantCount_by_subcategory($sub_category_id = 0)
     {
+        if ($this->session->userdata('is_halal'))
+        {
+            $is_halal = $this->session->userdata('is_halal');
+            $this->db->where('me_is_halal', $is_halal);
+        }
         $this->db->where('me_sub_category_id', $sub_category_id);
         $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant'), 'hide_flag' => 0, 'remove_flag' => 0));
 
@@ -386,7 +396,7 @@ class M_merchant extends CI_Model
 
     public function merchant_check_balance($merchant_id, $exclude_this_month = 0, $search_year_month = NULL)
     {
-        $this->m_merchant->merchant_balance_update($merchant_id);
+        $this->m_merchant->merchant_balance_update($merchant_id);             
         if ($exclude_this_month == 0)
         {
             $history_query = $this->db->get_where('merchant_balance', array('merchant_id' => $merchant_id));

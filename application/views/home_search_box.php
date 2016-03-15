@@ -19,6 +19,26 @@
                     }
                 });
             });  
+            
+    function set_halal()
+    {
+        var dep_selected = $('select[name=is_halal]').val();
+        var post_url = "<?php echo base_url(); ?>" + 'all/set_halal/' + dep_selected;
+        $.ajax({
+            type: 'POST',
+            url: post_url,
+            dataType: 'html',
+            success: function (data) 
+            {
+                $(location).attr('href', '<?php echo base_url() . uri_string(); ?>')
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                //alert(textStatus);
+                //alert(errorThrown);
+            }
+        });
+    }
 </script>
 
 <style>
@@ -47,9 +67,21 @@
         {
             echo form_dropdown($header_search_me_state_id, $header_search_state_list);
         }
+        $is_halal = 0;
+        if ($this->session->userdata('is_halal'))
+        {
+            $is_halal = $this->session->userdata('is_halal');
+        }
+        $is_all_text = $is_halal == 0 ? 'selected="selected"' : '';
+        $is_halal_text = $is_halal == 1 ? 'selected="selected"' : '';
         ?>
     </div>
     <div id="header-logo-bar-search-block3">
         <button name="button_action" type="submit" value="search">Search</button>
     </div>
-<?php echo form_close() ?>
+<select name="is_halal" id="is_halal" style="width:150px" onchange="set_halal()">
+    <option value="0" <?php echo $is_all_text; ?> >Halal & Non-Halal</option>
+    <option value="1" <?php echo $is_halal_text; ?> >Halal Only</option>
+</select>
+<?php echo form_close(); ?>
+

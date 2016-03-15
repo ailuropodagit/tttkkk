@@ -33,6 +33,12 @@ class All extends CI_Controller
         $this->m_custom->activity_share($advertise_id, $advertise_type);
     }
     
+    function set_halal($is_halal = NULL)
+    {
+        $this->session->unset_userdata('is_halal');
+        $this->session->set_userdata("is_halal",$is_halal);
+    }
+    
     function hotdeal_list($sub_category_id)
     {
         //SORTING REQUEST

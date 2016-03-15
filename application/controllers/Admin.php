@@ -2111,7 +2111,8 @@ class Admin extends CI_Controller
         );
 
         $this->data['category_selected'] = $result['me_category_id'];
-        $this->data['category_list'] = $this->ion_auth->get_main_category_list();
+        //$this->data['category_list'] = $this->ion_auth->get_main_category_list();
+        $this->data['category_list'] = $this->m_custom->getCategoryList();
         $this->data['me_category_id'] = array(
             'name' => 'me_category_id',
             'id' => 'me_category_id',
@@ -2258,7 +2259,8 @@ class Admin extends CI_Controller
         );
 
         $this->data['category_selected'] = $result['me_category_id'];
-        $this->data['category_list'] = $this->ion_auth->get_main_category_list();
+        $this->data['category_list'] = $this->m_custom->getCategoryList();
+        //$this->data['category_list'] = $this->ion_auth->get_main_category_list();
         $this->data['me_category_id'] = array(
             'name' => 'me_category_id',
             'id' => 'me_category_id',
@@ -2290,6 +2292,14 @@ class Admin extends CI_Controller
             'value' => $this->form_validation->set_value('phone', $result['phone']),
         );
 
+        $me_is_halal = $result['me_is_halal'];
+        $this->data['me_is_halal'] = array(
+            'name' => 'me_is_halal',
+            'id' => 'me_is_halal',
+            'checked' => $me_is_halal == "1" ? TRUE : FALSE,
+            'value' => $result['me_is_halal'],
+        );
+        
         $this->data['page_path_name'] = 'admin/merchant_edit';
         $this->load->view('template/index', $this->data);
     }

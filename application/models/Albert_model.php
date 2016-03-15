@@ -23,7 +23,7 @@ class Albert_model extends CI_Model
     /* READ ADVERTISE REDEMPTION SUGGESTION
     ***************************************************/
     public function read_advertise_redemption_suggestion($array_sub_category_id)
-    {      
+    {   
         //QUERY        
         $this->db->select('*');
         $this->db->from('advertise');

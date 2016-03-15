@@ -1054,6 +1054,23 @@ class M_custom extends CI_Model
                     }
                 }
             }
+            
+            if ($this->session->userdata('is_halal') && $valid_row == 1)
+            {
+                $is_halal = $this->session->userdata('is_halal');
+                if ($is_halal == '1')
+                {
+                    $merchant_info = $this->m_custom->getMerchantInfo($row['merchant_id']);
+                    if ($merchant_info['me_is_halal'] == '1')
+                    {
+                        $valid_row = 1;
+                    }
+                    else
+                    {
+                        $valid_row = 0;
+                    }
+                }
+            }
 
             if($valid_row == 1){
                 $return_final[] = $row;
@@ -1585,6 +1602,7 @@ class M_custom extends CI_Model
             'merchant_dashboard_link' => $this->m_custom->generate_merchant_link($merchant_id),
             'hide_flag' => $user['hide_flag'],
             'remove_flag' => $user['remove_flag'],
+            'me_is_halal' => $user['me_is_halal'],
         );
         return $merchant;
     }
