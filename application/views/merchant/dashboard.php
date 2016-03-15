@@ -44,6 +44,16 @@
     }    
 </script>
 
+<style type="text/css">
+    #logo-halal{
+        float:right;
+    }
+    #logo-halal img{
+        width:20px;
+        margin:3px 0px 0px 7px;
+    }
+</style>
+
 <?php
 //MESSAGE
 if(isset($message))
@@ -158,6 +168,11 @@ if($this->ion_auth->user()->num_rows())
             <div id="dashboard-info-title">
                 <div id="dashboard-info-title-name">
                     <?php echo $company_name; ?>
+                    <?php if($me_is_halal == 1){ ?>
+                    <div id="logo-halal">                  
+                        <img src="<?php echo base_url() . "/image/logo-halal.png"; ?>"/>                    
+                    </div>
+                    <?php } ?>
                 </div>
                 <?php
                 //CORRECT LOGIN

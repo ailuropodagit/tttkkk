@@ -1942,7 +1942,8 @@ class Admin extends CI_Controller
             $postcode = $this->input->post('postcode');
             $me_state_id = $this->input->post('me_state_id');
             $phone = $this->input->post('phone');
-
+            $me_is_halal = $this->input->post('me_is_halal') == NULL ? 0 : 1;
+                    
             // to generate company slug for check is it unique
             $_POST['slug'] = generate_slug($_POST['company']);
             $slug = $_POST['slug'];
@@ -1984,6 +1985,7 @@ class Admin extends CI_Controller
                         'postcode' => $postcode,
                         'me_state_id' => $me_state_id,
                         'phone' => $phone,
+                        'me_is_halal' => $me_is_halal,
                     );
 
                     //if ($this->m_admin->check_is_any_admin(87))
@@ -2140,7 +2142,15 @@ class Admin extends CI_Controller
             'type' => 'text',
             'value' => $this->form_validation->set_value('phone', $result['phone']),
         );
-
+        
+        $me_is_halal = $result['me_is_halal'];
+        $this->data['me_is_halal'] = array(
+            'name' => 'me_is_halal',
+            'id' => 'me_is_halal',
+            'checked' => $me_is_halal == "1" ? TRUE : FALSE,
+            'value' => $result['me_is_halal'],
+        );
+        
         $this->data['merchant_worker_current'] = empty($result) ? array() : $this->m_custom->many_get_childlist('merchant_worker', $result['id']);
         $this->data['merchant_worker'] = $this->m_admin->getAllWorker();
         

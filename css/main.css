@@ -327,7 +327,7 @@ html, body {
 #header-logo-bar-search-block1 {
     display: inline-block;
     vertical-align: top;
-    width: calc(100% - 350px);
+    width: calc(100% - 400px);
 }
 
 #header-logo-bar-search-block2, #header-logo-bar-search2-block2 {

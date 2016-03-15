@@ -131,6 +131,10 @@ if(isset($message))
                     <div id='profile-info-form-each-input'><?php echo form_input($phone); ?></div>
                 </div>
                 <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><?php echo lang('create_merchant_halal_label'); ?>
+                        <?php echo form_checkbox($me_is_halal); ?></div>
+                </div>  
+                <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_merchant_person_incharge_label', 'person_incharge'); ?></div>
                     <div id='profile-info-form-each-input'><?php echo form_input($person_incharge); ?></div>
                 </div>

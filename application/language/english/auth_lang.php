@@ -164,6 +164,7 @@ $lang['create_merchant_website_label']                     = 'Website:';
 $lang['create_merchant_facebook_url_label']                = 'Facebook URL:';
 $lang['create_merchant_person_incharge_label']             = 'Person Incharge:';
 $lang['create_merchant_person_contact_label']              = 'Person Contact:';
+$lang['create_merchant_halal_label']                       = 'Is Halal:';
 
 $lang['create_merchant_validation_company_main_label']                = 'Company Name';
 $lang['create_merchant_validation_company_label']                     = 'Shop Name';

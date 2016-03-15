@@ -1237,6 +1237,7 @@ class All extends CI_Controller
             $this->data['user_upload_for_merchant'] = base_url() . 'user/upload_for_merchant/' . $user_id;
             $this->data['show_expired'] = "<a href='" . base_url() . "all/album_merchant/'. $slug>Show Expired</a><br/>";
             $this->data['user_id'] = $user_id;
+            $this->data['me_is_halal'] = $the_row->me_is_halal;
             //FOLLOWER or FOLLOWING COUNT
             $this->data['follower_count'] = $this->albert_model->follower_count($user_id);
             $this->data['following_count'] = $this->albert_model->following_count($user_id);

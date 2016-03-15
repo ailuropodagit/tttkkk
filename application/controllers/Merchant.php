@@ -825,6 +825,8 @@ class Merchant extends CI_Controller
             $country = $this->input->post('me_country');
             //$phone = '+60' . $this->input->post('phone');    
             $phone = $this->input->post('phone'); 
+            $me_is_halal = $this->input->post('me_is_halal') == NULL ? 0 : 1; 
+            
             $additional_data = array(
                 'username' => $username,
                 'company_main' => $company_main,
@@ -841,7 +843,8 @@ class Merchant extends CI_Controller
                 //'profile_image' => $this->config->item(''),
                 //'me_website_url' => $this->input->post('website'),
                 'main_group_id' => $this->main_group_id,
-                'password_visible' => $password
+                'password_visible' => $password,
+                'me_is_halal' => $me_is_halal,
             );
         }
 
@@ -960,6 +963,11 @@ class Merchant extends CI_Controller
                 'type' => 'password',
                 'placeholder' => $this->config->item('password_example'),
                 'value' => $this->form_validation->set_value('password_confirm'),
+            );
+            $this->data['me_is_halal'] = array(
+                'name' => 'me_is_halal',
+                'id' => 'me_is_halal',
+                'value' => '1', //Just to have some value, checkbox have to have value
             );
             
             $meta = array(
@@ -1165,6 +1173,7 @@ class Merchant extends CI_Controller
                         'me_person_contact' => $this->input->post('person_contact'),
                         'me_website_url' => $this->input->post('website'),
                         'me_facebook_url' => $this->input->post('facebook_url'),
+                        'me_is_halal' => $this->input->post('me_is_halal') == NULL ? 0 : 1,
                     );
 
                     // check to see if we are updating the user
@@ -1358,6 +1367,14 @@ class Merchant extends CI_Controller
             'id' => 'supervisor_password',
             'readonly' => 'true',
             'value' => $is_supervisor == 1 ? $supervisor->password_visible : $user->password_visible,
+        );
+
+        $me_is_halal = $user->me_is_halal;
+        $this->data['me_is_halal'] = array(
+            'name' => 'me_is_halal',
+            'id' => 'me_is_halal',
+            'checked' => $me_is_halal == "1" ? TRUE : FALSE,
+            'value' => $user->me_is_halal,
         );
 
         $this->data['temp_folder'] = $this->temp_folder;
