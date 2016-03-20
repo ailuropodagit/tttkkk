@@ -1017,6 +1017,7 @@ class M_custom extends CI_Model
         {
             $valid_row = 0;
             $get_row = $this->m_custom->check_can_show_advertise($row);
+            $the_advertise_type = $row['advertise_type'];
             if ($get_row == 1)
             {
                 $valid_row = 1;
@@ -1024,7 +1025,7 @@ class M_custom extends CI_Model
                 if ($hot_popular_only == 1)
                 {
                     $the_advertise_id = $row['advertise_id'];
-                    $the_advertise_type = $row['advertise_type'];
+                    
                     switch ($the_advertise_type)
                     {
                         case 'hot':
@@ -1055,7 +1056,7 @@ class M_custom extends CI_Model
                 }
             }
             
-            if ($this->session->userdata('is_halal') && $valid_row == 1)
+            if ($this->session->userdata('is_halal') && $valid_row == 1 && $the_advertise_type != 'adm')
             {
                 $is_halal = $this->session->userdata('is_halal');
                 if ($is_halal == '1')
