@@ -74,10 +74,10 @@ if(isset($message))
         </div>
     <div id='profile-info'> 
         <div id='profile-info-form'>
-            <div id='profile-info-form-each'>
-                <div id='profile-info-form-each-label'><?php echo lang('create_merchant_company_main_label', 'company_main'); ?></div>
-                <div id='profile-info-form-each-input'><?php echo form_input($company_main); ?></div>
-            </div>
+<!--            <div id='profile-info-form-each'>
+                <div id='profile-info-form-each-label'><?php //echo lang('create_merchant_company_main_label', 'company_main'); ?></div>
+                <div id='profile-info-form-each-input'><?php //echo form_input($company_main); ?></div>
+            </div>-->
             <div id='profile-info-form-each'>
                 <div id='profile-info-form-each-label'><?php echo lang('create_merchant_company_label', 'company'); ?></div>
                 <div id='profile-info-form-each-input'><?php echo form_input($company); ?></div>
@@ -86,22 +86,26 @@ if(isset($message))
                 <div id='profile-info-form-each-label'><?php echo lang('create_merchant_address_label', 'address'); ?></div>
                 <div id='profile-info-form-each-input'><?php echo form_textarea($address); ?></div>
             </div>
-            <div id='profile-info-form-each'>
-                <div id='profile-info-form-each-label'><?php echo lang('create_merchant_postcode_label', 'postcode'); ?></div>
-                <div id='profile-info-form-each-input'><?php echo form_input($postcode); ?></div>
-            </div>
+<!--            <div id='profile-info-form-each'>
+                <div id='profile-info-form-each-label'><?php //echo lang('create_merchant_postcode_label', 'postcode'); ?></div>
+                <div id='profile-info-form-each-input'><?php //echo form_input($postcode); ?></div>
+            </div>-->
             <div id='profile-info-form-each'>
                 <div id='profile-info-form-each-label'><?php echo lang('create_merchant_state_label', 'me_state_id'); ?></div>
                 <div id='profile-info-form-each-input'><?php echo form_dropdown($me_state_id, $state_list); ?></div>
             </div>
-            <div id='profile-info-form-each'>
-                <div id='profile-info-form-each-label'><?php echo lang('create_merchant_category_label', 'me_category_id'); ?></div>
-                <div id='profile-info-form-each-input'><?php echo form_dropdown($me_category_id, $category_list); ?></div>
-            </div>
+<!--            <div id='profile-info-form-each'>
+                <div id='profile-info-form-each-label'><?php //echo lang('create_merchant_category_label', 'me_category_id'); ?></div>
+                <div id='profile-info-form-each-input'><?php //echo form_dropdown($me_category_id, $category_list, 1); ?></div>
+            </div>-->
             <div id='profile-info-form-each'>
                 <div id='profile-info-form-each-label'><?php echo lang('create_merchant_sub_category_label', 'me_sub_category_id'); ?></div>
                 <div id='profile-info-form-each-input'><?php echo form_dropdown($me_sub_category_id, $sub_category_list); ?></div>
-            </div>         
+            </div>      
+            <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'><?php echo lang('create_merchant_halal_label'); ?>
+                        <?php echo form_checkbox($me_is_halal); ?></div>
+            </div>  
             <div id='profile-info-form-submit'>
                 <?php echo form_submit('submit', 'Add Merchant'); ?>
             </div>
