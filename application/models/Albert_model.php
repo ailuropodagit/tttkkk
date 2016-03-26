@@ -2,6 +2,18 @@
 
 class Albert_model extends CI_Model
 {
+    /* READ FAQ
+    ***************************************************/
+    public function read_faq()
+    {
+        $this->db->select('*');
+        $this->db->from('faq');
+        $this->db->order_by('faq_sequence', 'ASC');
+        $query = $this->db->get();
+        //RETURN
+        return $query;
+    }
+    
     /* READ ADVERTISE HOT DEAL SUGGESTION
     ***************************************************/
     public function read_advertise_hot_deal_suggestion($array_sub_category_id)

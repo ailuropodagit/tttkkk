@@ -5757,6 +5757,26 @@ html, body {
     margin: 20px 40px 20px 0px;
 }
 
+#about-us {
+    font-size: 14px;
+}
+
+#about-us-title {
+    padding: 0px;
+    margin: 0px 0px 5px 0px;
+}
+
+#about-us-title b {
+    font-size: 15px;
+    color: #5B9DB5;
+}
+
+#about-us-content {
+    padding: 0px; 
+    margin: 0px 0px 15px 0px;
+    font-size: 14px;
+}
+
 /*********************************************
  ** CONTACT US
  *********************************************/
@@ -5894,4 +5914,27 @@ html, body {
   color: #fff;
   background-color: #286090;
   border-color: #204d74;
+}
+
+/*********************************************
+ ** FAQ
+ *********************************************/
+
+#faq {
+    font-size: 14px;
+}
+
+#faq-question {
+    padding: 0px;
+    margin: 0px 0px 5px 0px;
+}
+
+#faq-question b {
+    font-size: 15px;
+}
+
+#faq-answer {
+    padding: 0px; 
+    margin: 0px 0px 15px 0px;
+    font-size: 14px;
 }
