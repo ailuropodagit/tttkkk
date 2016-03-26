@@ -97,7 +97,7 @@ if(isset($message))
                     </div>
                 </div>
                 <div id='hot-deal-advertise-form-each'>
-                    <div id='hot-deal-advertise-form-each-label'><?php echo lang("hotdeal_price_before_label"); ?><?php echo form_checkbox($price_before_show); ?>Show</div>
+                    <div id='hot-deal-advertise-form-each-label'><?php echo lang("hotdeal_price_before_label"); ?><?php echo form_checkbox($price_before_show); ?><span class="smaller-font">Show</span></div>
                     <div id='hot-deal-advertise-form-each-input'>
                         <?php
                         echo form_input($hotdeal_price_before);
@@ -105,7 +105,7 @@ if(isset($message))
                     </div>
                 </div>
                 <div id='hot-deal-advertise-form-each'>
-                    <div id='hot-deal-advertise-form-each-label'><?php echo lang("hotdeal_price_after_label"); ?><?php echo form_checkbox($price_after_show); ?>Show</div>
+                    <div id='hot-deal-advertise-form-each-label'><?php echo lang("hotdeal_price_after_label"); ?><?php echo form_checkbox($price_after_show); ?><span class="smaller-font">Show</span></div>
                     <div id='hot-deal-advertise-form-each-input'>
                         <?php
                         echo form_input($hotdeal_price_after);

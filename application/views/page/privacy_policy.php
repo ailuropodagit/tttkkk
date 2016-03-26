@@ -5,7 +5,7 @@
         This Privacy Policy describes our policies on the collection, use, and disclosure of information about 
         you in connection with your use of our services, including those offered through our websites, emails,
         and mobile applications (collectively, the "<b>Service</b>"). The terms "<b>we</b>", "<b>us</b>", and "<b>Keppo.my</b>" refer to 
-        Fuyoo advertising & services (002422825-U) No. 4, Jalan Industri Mas 5, Taman Mas, 47170, Puchong, Selangor.
+        Keppo eMarketing PLT (LLP0007098-LGN) No. 4, Jalan Industri Mas 5, Taman Mas, 47170, Puchong, Selangor.
         When you use the Service, you consent to our collection, use, and disclosure of information about you as 
         described in this Privacy Policy.
     <p>
@@ -457,7 +457,7 @@
     <h3 style="margin: 20px 0px 0px 0px;">10. DISPUTE RESOLUTION</h3>
     <p>
         If you believe that Keppo.my has not adhered to this Privacy Policy, you may contact us online or write to us at the
-        following address: <br/> Fuyoo Advertising & Service (002422825-U) (Keppo.my)
+        following address: <br/> Keppo eMarketing PLT (LLP0007098-LGN) (Keppo.my)
     </p>
     <p style="color: black; margin: 0px; font-weight: bold;">
         No. 4, Jalan Industri Mas 5, <br/>

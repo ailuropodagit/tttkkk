@@ -9,7 +9,7 @@
     <p>
         These terms and conditions (the <b>"Terms"</b>) govern your access to and use of Keppo.my's websites and mobile 
         applications that is linked to or referred to by these Terms (<b>"Site"</b>). By accessing or using the Site, you 
-        are agreeing to these Terms and concluding a legally binding contract with Fuyoo advertising & Service (keppo.my),
+        are agreeing to these Terms and concluding a legally binding contract with Keppo eMarketing PLT (keppo.my),
         a business in corporate in Malaysia under the laws of Malaysia. Do not access or use the Site if you are unwilling
         or unable to be bound by the Terms.
     </p>

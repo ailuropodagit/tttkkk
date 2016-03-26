@@ -88,6 +88,8 @@ $config['minimum_withdraw_amount'] = '50';
 $config['first_candie_remind'] = 30;
 $config['first_candie_remind_time'] = 2;
 
+$config['food_category_id'] = 1;
+
 $config['suggest_list_number'] = '5';
 $config['password_example'] = 'keppo123';
 $config['password_example_encrypt'] = '$2y$08$xZgTvC/QvRc0xeqzncsJ3O8q.EO/ik2Gqvaz.IT9d8LD1UF.HySM6';

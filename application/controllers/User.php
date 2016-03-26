@@ -1172,13 +1172,13 @@ class User extends CI_Controller
         {
             $this->form_validation->set_rules('userfile', 'Merchant Logo', 'required');
         }
-        $this->form_validation->set_rules('company_main', $this->lang->line('create_merchant_validation_company_main_label'), "trim|required|min_length[3]");
+        //$this->form_validation->set_rules('company_main', $this->lang->line('create_merchant_validation_company_main_label'), "trim|required|min_length[3]");
         $this->form_validation->set_rules('company', $this->lang->line('create_merchant_validation_company_label'), "trim|required|min_length[3]");
         $this->form_validation->set_rules('slug', $this->lang->line('create_merchant_validation_company_label'), 'trim|is_unique[' . $tables['users'] . '.slug]');
         $this->form_validation->set_rules('address', $this->lang->line('create_merchant_validation_address_label'), 'required');
-        $this->form_validation->set_rules('postcode', $this->lang->line('create_merchant_validation_postcode_label'), 'required|numeric');
+        //$this->form_validation->set_rules('postcode', $this->lang->line('create_merchant_validation_postcode_label'), 'required|numeric');
         $this->form_validation->set_rules('me_state_id', $this->lang->line('create_merchant_validation_state_label'), 'callback_check_state_id');
-        $this->form_validation->set_rules('me_category_id', $this->lang->line('create_merchant_category_label'), 'callback_check_main_category');
+        //$this->form_validation->set_rules('me_category_id', $this->lang->line('create_merchant_category_label'), 'callback_check_main_category');
         $this->form_validation->set_rules('me_sub_category_id', $this->lang->line('create_merchant_sub_category_label'), 'callback_check_sub_category');
 
         if ($this->form_validation->run() == true)
@@ -1186,14 +1186,17 @@ class User extends CI_Controller
             $username = generate_random_string($slug);
             $email = generate_random_string($slug, 1);
             $password = $this->config->item('password_example');
-            $company_main = $this->input->post('company_main');
+            //$company_main = $this->input->post('company_main');
+            $company_main = '';
             $company = $this->input->post('company');
             $address = $this->input->post('address');
-            $postcode = $this->input->post('postcode');
+            //$postcode = $this->input->post('postcode');
+            $postcode = '';
             $state = $this->input->post('me_state_id');
             $country = 'Malaysia';
             $profile_image = NULL;
-
+            $me_is_halal = $this->input->post('me_is_halal') == NULL ? 0 : 1; 
+            
             if (!empty($_FILES['userfile']['name']))
             {
                 $upload_rule = array(
@@ -1225,14 +1228,16 @@ class User extends CI_Controller
                 'postcode' => $postcode,
                 'country' => $country,
                 'me_state_id' => $state,
-                'me_category_id' => $this->input->post('me_category_id'),
+                //'me_category_id' => $this->input->post('me_category_id'),
+                'me_category_id' => $this->config->item('food_category_id'),
                 'me_sub_category_id' => $this->input->post('me_sub_category_id'),
                 //'profile_image' => $this->config->item(''),
                 'main_group_id' => $this->config->item('group_id_merchant'),
                 'password_visible' => $password,
                 'me_addby_user' => $login_id,
                 'me_notyet_active' => 1,
-                'profile_image' => $profile_image
+                'profile_image' => $profile_image,
+                'me_is_halal' => $me_is_halal,
             );
 
             $group_ids = array(
@@ -1292,13 +1297,19 @@ class User extends CI_Controller
                 'value' => $me_category_id,
                 'onChange' => "get_SubCategory()",
             );
-            $this->data['sub_category_list'] = $this->m_custom->getSubCategoryList(NULL, NULL, $me_category_id);
+            $this->data['sub_category_list'] = $this->m_custom->getSubCategoryList('0', 'Please Select', 1);
+            //$this->data['sub_category_list'] = $this->m_custom->getSubCategoryList(NULL, NULL, $me_category_id);
             $this->data['me_sub_category_id'] = array(
                 'name' => 'me_sub_category_id',
                 'id' => 'me_sub_category_id',
                 'value' => $this->form_validation->set_value('me_sub_category_id'),
             );
-
+            $this->data['me_is_halal'] = array(
+                'name' => 'me_is_halal',
+                'id' => 'me_is_halal',
+                'value' => '1', //Just to have some value, checkbox have to have value
+            );
+            
             $this->data['temp_folder'] = $this->temp_folder;
             $this->data['page_path_name'] = 'user/add_merchant';
             $this->load->view('template/layout', $this->data);
