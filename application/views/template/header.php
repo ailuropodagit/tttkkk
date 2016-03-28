@@ -203,9 +203,10 @@
                                                 <div id='visit-first-time-modal-left-login-form-submit-user'>
                                                     <input type="submit" value="User Login" onclick="myfunction('<?php echo $user_login; ?>')"/>
                                                 </div>
-<!--                                                <div id='visit-first-time-modal-left-login-form-submit-merchant'>
-                                                    <input type="submit" value="Merchant Login" onclick="myfunction('<?php //echo $merchant_login; ?>')"/>
-                                                </div>-->
+                                                <div id='visit-first-time-modal-left-login-form-submit-merchant' style='float:right'>
+                                                    <a href='<?php echo base_url() ?>user/login'>Facebook Login</a>
+  <!--                                                  <input type="submit" value="Merchant Login" onclick="myfunction('<?php //echo $merchant_login; ?>')"/> -->
+                                                </div>
                                             </div>
                                         </div>
                                     </form>

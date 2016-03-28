@@ -3861,6 +3861,30 @@ class Merchant extends CI_Controller
         }
     }
 
+    //Fail to use it on server, not sure why
+    public function halal_change($halal_desire)
+    {
+        if (check_correct_login_type($this->main_group_id))
+        {
+            $halal_desire = $this->input->post("halal_desire", true);
+            $login_id = $this->ion_auth->user()->row()->id;
+            if ($halal_desire == '0')
+            {
+                $halal_desire = 0;
+            }
+            if ($halal_desire == '1')
+            {
+                $halal_desire = 1;
+            }
+            
+            $update_data = array(
+                'me_is_halal' => $halal_desire,
+            );
+
+            $this->m_custom->simple_update('users', $update_data, 'id', $login_id);
+        }
+    }
+
     function _get_csrf_nonce()
     {
         $this->load->helper('string');

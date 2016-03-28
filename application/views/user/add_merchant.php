@@ -103,8 +103,9 @@ if(isset($message))
                 <div id='profile-info-form-each-input'><?php echo form_dropdown($me_sub_category_id, $sub_category_list); ?></div>
             </div>      
             <div id='profile-info-form-each'>
-                    <div id='profile-info-form-each-label'><?php echo lang('create_merchant_halal_label'); ?>
-                        <?php echo form_checkbox($me_is_halal); ?></div>
+                    <div id='profile-info-form-each-label'>
+                         <img src="<?php echo base_url() . "/image/logo-halal.png"; ?>" class="logo-halal2"/>  : <?php echo form_checkbox($me_is_halal); ?>
+                    </div>
             </div>  
             <div id='profile-info-form-submit'>
                 <?php echo form_submit('submit', 'Add Merchant'); ?>
