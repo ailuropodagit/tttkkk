@@ -96,8 +96,9 @@ if(isset($message))
                 <div id='register-form-each-input'><?php echo form_input($phone); ?>
             </div>           
             <div id='register-form-each'>
-                    <div id='register-form-each-label'><?php echo lang('create_merchant_halal_label'); ?>
-                        <?php echo form_checkbox($me_is_halal); ?></div>
+                    <div id='register-form-each-label'>
+                         <img src="<?php echo base_url() . "/image/logo-halal.png"; ?>" class="logo-halal2"/>  : <?php echo form_checkbox($me_is_halal); ?>
+                    </div>
             </div>    
             <div id='register-form-each'>
                 <div id='register-form-each-label'><?php echo lang('create_merchant_email_label', 'email'); ?></div>

@@ -137,7 +137,8 @@
     </style>
     <body>
         <?php
-        if (!isset($_COOKIE['visit_first_time']))
+        $fetch_method = $this->router->fetch_method();
+        if (!isset($_COOKIE['visit_first_time']) && $fetch_method != 'login')
         {
             //COOKIE NO EXPIRE
             setcookie('visit_first_time', 'no');
@@ -203,9 +204,10 @@
                                                 <div id='visit-first-time-modal-left-login-form-submit-user'>
                                                     <input type="submit" value="User Login" onclick="myfunction('<?php echo $user_login; ?>')"/>
                                                 </div>
-<!--                                                <div id='visit-first-time-modal-left-login-form-submit-merchant'>
-                                                    <input type="submit" value="Merchant Login" onclick="myfunction('<?php //echo $merchant_login; ?>')"/>
-                                                </div>-->
+                                                <div id='visit-first-time-modal-left-login-form-submit-merchant' style='float:right'>
+                                                    <a href='<?php echo base_url() ?>user/login'>Facebook Login</a>
+  <!--                                                  <input type="submit" value="Merchant Login" onclick="myfunction('<?php //echo $merchant_login; ?>')"/> -->
+                                                </div>
                                             </div>
                                         </div>
                                     </form>
@@ -270,7 +272,7 @@
             //URI
             $header_fetch_class = $this->router->fetch_class();
             $header_fetch_method = $this->router->fetch_method();
-            $fetch_method = $this->router->fetch_method();
+            
             $header_uri_segment4 = $this->uri->segment(4);
             if (check_is_login())
             {

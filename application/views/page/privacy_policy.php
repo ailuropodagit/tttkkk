@@ -34,10 +34,6 @@
             <td>Information We Collect and How We Use It</td>
         </tr>
         <tr>
-            <td style="text-align: center;">5</td>
-            <td>Information We Collect and How We Use It</td>
-        </tr>
-        <tr>
             <td style="text-align: center;">6</td>
             <td>Data Retention and Account Termination</td>
         </tr>

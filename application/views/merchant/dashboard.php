@@ -42,6 +42,37 @@
             description: '<?php echo limit_character($description, 150, 1); ?>'
         });
     }    
+    
+    $(document).ready(function () {
+        var halal_url = '<?php echo base_url(); ?>' + 'merchant/halal_change';
+        $("#checkbox_halal").click(function() {
+
+        if($("#checkbox_halal").is(':checked')) { 
+            $.ajax({
+             url:halal_url,
+             type: 'post',
+             data: "&halal_desire=1",
+             success : function(resp){
+                                 if (resp)
+                                 {}
+                             },
+                             error: function (resp) {
+                             }
+                         });
+                     } else {
+             $.ajax({
+             url:halal_url,
+             type: 'post',
+             data: "&halal_desire=0",
+             success : function(resp){
+                                 if (resp)
+                                 {}
+                             }
+                         });
+                     }
+                     location.reload();
+                 });
+        });
 </script>
 
 <style type="text/css">
@@ -172,7 +203,18 @@ if($this->ion_auth->user()->num_rows())
                     <div id="logo-halal">                  
                         <img src="<?php echo base_url() . "/image/logo-halal.png"; ?>"/>                    
                     </div>
-                    <?php } ?>
+                    <?php } ?>                    
+                </div>
+                <div style='display:none'>
+                 <?php 
+                    if ($self_open == 1)
+                    {                      
+                        echo '<span style="font-size:x-small;vertical-align:middle">Halal?</span>';  
+                        echo '<span>';
+                        echo form_checkbox($checkbox_halal);     
+                        echo '</span>';                       
+                    }
+                ?>
                 </div>
                 <?php
                 //CORRECT LOGIN
