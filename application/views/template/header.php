@@ -137,7 +137,8 @@
     </style>
     <body>
         <?php
-        if (!isset($_COOKIE['visit_first_time']))
+        $fetch_method = $this->router->fetch_method();
+        if (!isset($_COOKIE['visit_first_time']) && $fetch_method != 'login')
         {
             //COOKIE NO EXPIRE
             setcookie('visit_first_time', 'no');
@@ -271,7 +272,7 @@
             //URI
             $header_fetch_class = $this->router->fetch_class();
             $header_fetch_method = $this->router->fetch_method();
-            $fetch_method = $this->router->fetch_method();
+            
             $header_uri_segment4 = $this->uri->segment(4);
             if (check_is_login())
             {
