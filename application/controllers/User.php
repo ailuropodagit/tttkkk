@@ -218,7 +218,7 @@ class User extends CI_Controller
         if ($this->input->post())
         {
             //post value
-            $email = $this->input->post('email');
+            $email = strtolower($this->input->post('email'));
             $contact_number = $this->input->post('contact_number');
             $dob_day = $this->input->post('dob_day');
             $dob_month = $this->input->post('dob_month');
@@ -311,6 +311,7 @@ class User extends CI_Controller
                         'last_name' => $fb_last_name,
                         'phone' => $contact_number,
                         'us_birthday' => $dob,
+                        'us_age' => age_count($dob),
                         'us_race_id' => $race,
                         'us_race_other' => $race_other,
                         'us_gender_id' => $gender,
