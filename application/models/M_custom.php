@@ -407,7 +407,7 @@ class M_custom extends CI_Model
 
     public function display_user_profile_image($user_id)
     {
-        $this->db->select('main_group_id,profile_image,su_merchant_id');
+        $this->db->select('main_group_id,profile_image,su_merchant_id,us_gender_id');
         $query = $this->db->get_where('users', array('id' => $user_id));
         if ($query->num_rows() > 0)
         {
@@ -415,7 +415,21 @@ class M_custom extends CI_Model
             if($return['profile_image'] == '' && $return['main_group_id'] != $this->config->item('group_id_supervisor'))
             {
                 $image_path = '';
-                $image = $this->config->item('empty_image');
+                if ($return['main_group_id'] == $this->config->item('group_id_user'))
+                {
+                    if ($return['us_gender_id'] == $this->config->item('gender_id_male'))
+                    {
+                        $image = $this->config->item('empty_image_male');
+                    }
+                    else
+                    {
+                        $image = $this->config->item('empty_image_female');
+                    }
+                }
+                else
+                {
+                    $image = $this->config->item('empty_image');
+                }
             }
             else
             {

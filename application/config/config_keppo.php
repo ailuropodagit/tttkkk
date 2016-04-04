@@ -34,6 +34,8 @@ $config['folder_image_temp_cut'] = 'folder_upload/temp_image_cut/';
 $config['user_default_image'] = 'demo-profile-user.png';
 $config['empty_image'] = 'image/image-empty.jpg';
 $config['merchant_default_image'] = 'demo-logo-company.png';
+$config['empty_image_male'] = 'image/default-image-user-gender-male.png';
+$config['empty_image_female'] = 'image/default-image-user-gender-female.png';
 
 $config['max_size'] = 10240;  //10mb = 10240kb
 $config['max_width'] = 2736;
