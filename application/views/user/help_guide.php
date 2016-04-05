@@ -54,7 +54,7 @@ elseif ($page == 7)
 elseif ($page == 8)
 {
     ?>
-    <img src="<?php echo base_url() ?>image/help_guide/user/user-8.png" style="width: 100%;">
+    <img src="<?php echo base_url() ?>image/help_guide/user/user-8.png" style="width: 80%;">
     <?php
 }
 elseif ($page == 9)

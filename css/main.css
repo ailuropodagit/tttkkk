@@ -5957,7 +5957,8 @@ html, body {
 }
 
 #help-guide-modal-dialog {
-    width: 50%;
+    width: 60%;
+    text-align: center;
 }
 
 #help-guide-step {
