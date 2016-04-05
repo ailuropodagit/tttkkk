@@ -164,7 +164,7 @@ if($num_rows_read_users_help_guide != NULL)
                 </button>
                 <div id="help-guide">
                     <div id="help-guide-step">
-                        <img src="<?php echo base_url() ?>image/help_guide/user/user-0.png" style="width: 100%;">
+                        <img src="<?php echo base_url() ?>image/help_guide/merchant/merchant-0.png" style="width: 100%;">
                     </div>
                     <div id="help-guide-navigation">
                         <div id="help-guide-navigation-previous">Previous</div>
