@@ -729,4 +729,21 @@ class Albert_model extends CI_Model
         }
         return $associative_array;
     }
+    
+    /* READ USERS LAST LOGIN
+    *************************************************************/
+    public function read_users_help_guide($where) {
+        //QUERY
+        $this->db->select('*');
+        $this->db->from('users');
+        $this->db->where('help_guide', NULL);
+        //WHERE
+        if($where)
+        {
+            $this->db->where($where);
+        }
+        $query = $this->db->get();
+        //RETURN
+        return $query;
+    }
 }
