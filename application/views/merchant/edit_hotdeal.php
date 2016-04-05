@@ -128,7 +128,7 @@ if(isset($message))
              ?>  
             <button name="button_action" type="submit" value="edit_hotdeal" >Save</button>
             <?php if($hotdeal_frozen == 0){ ?>
-            <button name="button_action" type="submit" value="frozen_hotdeal" onclick="return confirm('Are you sure want to temporary frozen this hotdeal? After frozen then it will not show publicly until you unfrozen it.')" >Frozen</button>
+            <button name="button_action" type="submit" value="frozen_hotdeal" onclick="return confirm('Are you sure want to temporary frozen this advertisement? After frozen then it will not show publicly until you unfrozen it.')" >Frozen</button>
             <?php }else{ ?>
             <button name="button_action" type="submit" value="unfrozen_hotdeal" >Unfrozen</button>
             <?php } ?>
