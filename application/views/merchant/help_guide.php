@@ -36,7 +36,7 @@ elseif ($page == 4)
 elseif ($page == 5)
 {
     ?>
-    <img src="<?php echo base_url() ?>image/help_guide/merchant/merchant-5.png" style="width: 100%;">
+    <img src="<?php echo base_url() ?>image/help_guide/merchant/merchant-5.png" style="width: 80%;">
     <?php
 }
 elseif ($page == 6)
