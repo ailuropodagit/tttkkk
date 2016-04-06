@@ -782,8 +782,8 @@ html, body {
  *********************************************/
 
 #index-background-blank {
-    position: relative;
-    z-index: 99;
+/*    position: relative;
+    z-index: 99;*/
 }
 
 /*********************************************
@@ -4112,6 +4112,15 @@ html, body {
     float: left;
 }
 
+#dashboard-header-help-guide-link {
+    float: left;
+    cursor: pointer;
+    color: #0067bf;
+    font-weight: bold;
+    font-size: 15px;
+    margin: 5px 0px 0px 15px;
+}
+
 #dashboard-header-edit-link {
     float: right;
     margin: 0px 0px 10px 0px;
@@ -5937,4 +5946,47 @@ html, body {
     padding: 0px; 
     margin: 0px 0px 15px 0px;
     font-size: 14px;
+}
+
+/*********************************************
+** HELP GUIDE
+*********************************************/
+
+#help-guide {
+    margin: 25px 0px 0px 0px;
+}
+
+#help-guide-modal-dialog {
+    width: 60%;
+    text-align: center;
+}
+
+#help-guide-step {
+    min-height: 300px;
+}
+
+#help-guide-step-loading {
+    height: 300px;
+    text-align: center;
+    line-height: 300px;
+}
+
+#help-guide-step-loading img {
+    width: 40px;
+}
+
+#help-guide-navigation {
+    margin: 15px 0px 0px 0px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#help-guide-navigation-previous {
+    float: left;
+    cursor: pointer;
+}
+
+#help-guide-navigation-next {
+    float: right;
+    cursor: pointer;
 }
