@@ -716,14 +716,14 @@ if (!function_exists('delete_file'))
 
     function delete_file($path)
     {
-        if (unlink($path))
+        if (file_exists($path))
         {
-            return TRUE;
+            if (unlink($path))
+            {
+                return TRUE;
+            }
         }
-        else
-        {
-            return FALSE;
-        }
+        return FALSE;
     }
 
 }

@@ -2767,7 +2767,10 @@ class Merchant extends CI_Controller
                                 {
                                     $from_path = $this->temp_folder_cut . $post_hidden_image;
                                     $to_path = $this->album_merchant . $post_hidden_image;   
-                                    rename($from_path, $to_path);
+                                    if (file_exists($from_path))
+                                    {
+                                        rename($from_path, $to_path);
+                                    }
                                     $image_file_name = $post_hidden_image;
                                 }
 
