@@ -79,7 +79,7 @@
     <div id="header-logo-bar-search-block3">
         <button name="button_action" type="submit" value="search">Search</button>
     </div>
-<select name="is_halal" id="is_halal" style="width:100px" onchange="set_halal()">
+<select name="is_halal" id="is_halal" style="width:100px;background-color:#9BED99" onchange="set_halal()">
     <option value="0" <?php echo $is_all_text; ?> >Non-Halal</option>
     <option value="1" <?php echo $is_halal_text; ?> >Halal</option>
 </select>
