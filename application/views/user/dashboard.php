@@ -46,109 +46,8 @@
             name: '<?php echo $user_full_name; ?>',
             description: '<?php echo $fb_description; ?>'
         });
-    }    
-    
-    $(function(){
-        var $page = 0;
-        if ($page == 0){
-            $("#help-guide-navigation-previous").hide();
-        }
-        
-        $("#help-guide-navigation-previous").click(function(){
-            if ($page != 0){
-                $page = $page - 1;
-                
-                $.ajax({
-                    url: "<?php echo base_url() ?>help_guide/user",
-                    type: 'post',
-                    data: {page: $page},
-                    beforeSend: function() {
-                        $("#help-guide-step").html("<div id='help-guide-step-loading'><img src='<?php echo base_url() ?>image/loading.gif'></div>");
-                    },
-                    success: function(data){
-                        $("#help-guide-step").html(data);
-                    }
-                });
-                
-                if ($page == 0){
-                    $("#help-guide-navigation-previous").hide();
-                }
-                if ($page != 11){
-                    $("#help-guide-navigation-next").show();
-                }
-            }
-        });
-        
-        $("#help-guide-navigation-next").click(function(){
-            if ($page != 11){
-                $page = $page + 1;
-                
-                $.ajax({
-                    url: "<?php echo base_url() ?>help_guide/user",
-                    type: 'post',
-                    data: {page: $page},
-                    beforeSend: function() {
-                        $("#help-guide-step").html("<div id='help-guide-step-loading'><img src='<?php echo base_url() ?>image/loading.gif'></div>");
-                    },
-                    success: function(data){
-                        $("#help-guide-step").html(data);
-                    }
-                });
-                
-                if ($page != 0){
-                    $("#help-guide-navigation-previous").show();
-                }
-                if ($page == 11){
-                    $("#help-guide-navigation-next").hide();
-                }
-            }
-        });
-    });
+    }
 </script>
-
-<?php
-//HELP GUIDE NULL
-$where_read_users_help_guide = array('id' => $user_id);
-$query_read_users_help_guide = $this->albert_model->read_users_help_guide($where_read_users_help_guide);
-$num_rows_read_users_help_guide = $query_read_users_help_guide->num_rows();
-if($num_rows_read_users_help_guide != NULL)
-{
-    ?>
-    <script>
-        $(function(){
-            $('#help-guide-modal').modal('show');
-        });
-    </script>
-    <?php
-    $where_update_user = array('id' => $user_id);
-    $data_update_user = array('help_guide' => '1');
-    $this->albert_model->update_user($where_update_user, $data_update_user);
-}
-?>
-
-<!--HELP GUIDE MODAL-->
-<div id="help-guide-modal" class="modal fade" role="dialog">
-    <div class="modal-dialog" id="help-guide-modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-body">
-                <button type="button" class="bootstrap-close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <div id="help-guide">
-                    <div id="help-guide-step">
-                        <img src="<?php echo base_url() ?>image/help_guide/user/user-0.png" style="width: 100%;">
-                    </div>
-                    <div id="help-guide-navigation">
-                        <div id="help-guide-navigation-previous">Previous</div>
-                        <div id="help-guide-navigation-next">Next</div>
-                        <div class="float-fix"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <?php
 if($this->session->flashdata('message'))
@@ -207,6 +106,117 @@ if($this->ion_auth->user()->num_rows())
     }
 }
 ?>
+    
+<?php
+if ($self_open == 1)
+{ 
+    ?>
+    <?php
+    //HELP GUIDE NULL
+    $where_read_users_help_guide = array('id' => $user_id);
+    $query_read_users_help_guide = $this->albert_model->read_users_help_guide($where_read_users_help_guide);
+    $num_rows_read_users_help_guide = $query_read_users_help_guide->num_rows();
+    if($num_rows_read_users_help_guide != NULL)
+    {
+        ?>
+        <script>
+            $(function(){
+                $('#help-guide-modal').modal('show');
+            });
+        </script>
+        <?php
+        $where_update_user = array('id' => $user_id);
+        $data_update_user = array('help_guide' => '1');
+        $this->albert_model->update_user($where_update_user, $data_update_user);
+    }
+    ?>
+
+    <!--HELP GUIDE MODAL-->
+    <div id="help-guide-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog" id="help-guide-modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-body">
+
+                    <script>
+                        $(function(){
+                            var $page = 0;
+                            if ($page == 0){
+                                $(".help-guide-navigation-previous").hide();
+                            }
+
+                            $(".help-guide-navigation-previous").click(function(){
+                                if ($page != 0){
+                                    $page = $page - 1;
+
+                                    $.ajax({
+                                        url: "<?php echo base_url() ?>help_guide/user",
+                                        type: 'post',
+                                        data: {page: $page},
+                                        beforeSend: function() {
+                                            $("#help-guide-step").html("<div id='help-guide-step-loading'><img src='<?php echo base_url() ?>image/loading.gif'></div>");
+                                        },
+                                        success: function(data){
+                                            $("#help-guide-step").html(data);
+                                        }
+                                    });
+
+                                    if ($page == 0){
+                                        $(".help-guide-navigation-previous").hide();
+                                    }
+                                    if ($page != 11){
+                                        $(".help-guide-navigation-next").show();
+                                    }
+                                }
+                            });
+
+                            $(".help-guide-navigation-next").click(function(){
+                                if ($page != 11){
+                                    $page = $page + 1;
+
+                                    $.ajax({
+                                        url: "<?php echo base_url() ?>help_guide/user",
+                                        type: 'post',
+                                        data: {page: $page},
+                                        beforeSend: function() {
+                                            $("#help-guide-step").html("<div id='help-guide-step-loading'><img src='<?php echo base_url() ?>image/loading.gif'></div>");
+                                        },
+                                        success: function(data){
+                                            $("#help-guide-step").html(data);
+                                        }
+                                    });
+
+                                    if ($page != 0){
+                                        $(".help-guide-navigation-previous").show();
+                                    }
+                                    if ($page == 11){
+                                        $(".help-guide-navigation-next").hide();
+                                    }
+                                }
+                            });
+                        }); 
+                    </script>
+
+                    <button type="button" class="bootstrap-close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <div id="help-guide">
+                        <div id="help-guide-step">
+                            <img src="<?php echo base_url() ?>image/help_guide/user/user-0.png" style="width: 100%;">
+                        </div>
+                        <div id="help-guide-navigation">
+                            <div class="help-guide-navigation-previous">Previous</div>
+                            <div class="help-guide-navigation-next">Next</div>
+                            <div class="float-fix"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php
+}
+?>
 
 <div id="dashboard">
     <div id="fb-root"></div>
@@ -214,15 +224,19 @@ if($this->ion_auth->user()->num_rows())
         <div id="dashboard-header-title">
             Dashboard
         </div>
-        <div id="dashboard-header-help-guide-link">
-            <div data-toggle="modal" data-target="#help-guide-modal">You Need Help?</div>
-        </div>
-        <?php if ($self_open == 1)
-            { ?>
-        <div id="dashboard-header-edit-link">
-            <a href='<?php echo base_url('user/profile') ?>' class="a-href-button">Edit My Profile</a>
-        </div>
-            <?php } ?>
+        <?php
+        if ($self_open == 1)
+        { 
+            ?>
+            <div id="dashboard-header-help-guide-link">
+                <div data-toggle="modal" data-target="#help-guide-modal">You Need Help?</div>
+            </div>
+            <div id="dashboard-header-edit-link">
+                <a href='<?php echo base_url('user/profile') ?>' class="a-href-button">Edit My Profile</a>
+            </div>
+            <?php 
+        } 
+        ?>
         <div id="dashboard-header-edit-link" onclick="fbShare(); return false;">
             <img src="<?php echo base_url() . 'image/social-media-facebook-share.png'; ?>" style="padding-top:5px" > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </div>

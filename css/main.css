@@ -5981,12 +5981,12 @@ html, body {
     font-weight: bold;
 }
 
-#help-guide-navigation-previous {
+.help-guide-navigation-previous {
     float: left;
     cursor: pointer;
 }
 
-#help-guide-navigation-next {
+.help-guide-navigation-next {
     float: right;
     cursor: pointer;
 }
