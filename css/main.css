@@ -327,7 +327,7 @@ html, body {
 #header-logo-bar-search-block1 {
     display: inline-block;
     vertical-align: top;
-    width: calc(100% - 400px);
+    width: calc(100% - 420px);
 }
 
 #header-logo-bar-search-block2, #header-logo-bar-search2-block2 {
@@ -340,7 +340,7 @@ html, body {
 
 #header-logo-bar-search-block3, #header-logo-bar-search2-block3 {
     display: inline-block;
-    margin: 0px 0px 0px -3px;
+    margin: 0px 20px 0px -3px;
     vertical-align: top;
     width: 120px;
 }
