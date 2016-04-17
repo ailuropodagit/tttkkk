@@ -1270,7 +1270,13 @@ class M_custom extends CI_Model
         $return = $query->result_array();
         $return_final = array();
         foreach ($return as $row)
-        {
+        {           
+            $user_info = $this->m_custom->getUserInfo($row['user_id']);
+            if ($user_info && $user_info['remove_flag'] == '1')
+            {
+                continue;
+            }
+            
             if ($this->m_merchant->have_money($row['merchant_id']))
             {
                 $return_final[] = $row;
@@ -1588,6 +1594,7 @@ class M_custom extends CI_Model
             'user_dashboard_url' => base_url() . "all/user-dashboard/" . $user_id,
             'user_dashboard_link' => $this->m_custom->generate_user_link($user_id),
             'us_first_candie_remind' => $user['us_first_candie_remind'],
+            'remove_flag' => $user['remove_flag'],
         );
         return $user_info;
     }
@@ -2575,6 +2582,12 @@ class M_custom extends CI_Model
             $noti_message = $this->m_custom->display_notification_message($msg_type, $title, $public_show, $noti_to_id);
 
             $noti_user_url = $this->m_custom->generate_user_link($notification['noti_by_id'], 0, 1);
+            $user_info = $this->m_custom->getUserInfo($notification['noti_by_id']);
+            if ($user_info && $user_info['remove_flag'] == '1')
+            {
+                continue;
+            }
+            
             if ($noti_user_url != 'User Deleted')
             {
                 $notification_list[] = array(
