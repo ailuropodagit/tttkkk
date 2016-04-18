@@ -8,7 +8,7 @@
         <b>How it all Began</b>
     </p>
     <p id="about-us-content">
-        Jimmy See served as main founder. This page was created for SME corps to enhance sales
+        This page was created for SME corps to enhance sales
         via advertising. Keppo.my currently using latest-faster hybrid technology on social media
         that can factitive users to discover more product and services.
     </p>
