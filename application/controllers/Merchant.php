@@ -1151,10 +1151,10 @@ class Merchant extends CI_Controller
             if ($this->input->post('button_action') == "confirm")
             {
                 // do we have a valid request?
-                if ($this->_valid_csrf_nonce() === FALSE || $merchant_id != $this->input->post('id'))
-                {
-                    show_error($this->lang->line('error_csrf'));
-                }
+//                if ($this->_valid_csrf_nonce() === FALSE || $merchant_id != $this->input->post('id'))
+//                {
+//                    show_error($this->lang->line('error_csrf'));
+//                }
                 if ($this->form_validation->run() === TRUE)
                 {
 
