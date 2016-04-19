@@ -1388,6 +1388,16 @@ class User extends CI_Controller
 
         if (isset($_POST) && !empty($_POST))
         {
+            $upload_rule = array(
+                'upload_path' => $this->album_user_profile,
+                'allowed_types' => $this->config->item('allowed_types_image'),
+                'max_size' => $this->config->item('max_size'),
+                'max_width' => $this->config->item('max_width'),
+                'max_height' => $this->config->item('max_height'),
+            );
+
+            $this->load->library('upload', $upload_rule);
+
             if ($this->input->post('button_action') == "confirm")
             {
                 // do we have a valid request?
@@ -1430,6 +1440,20 @@ class User extends CI_Controller
                         }
                     }
 
+                    $current_profile = $user->profile_image;
+                    if (!empty($_FILES['userfile']['name']))
+                    {
+                        if (!$this->upload->do_upload())
+                        {
+                            $error = array('error' => $this->upload->display_errors());
+                            $this->session->set_flashdata('message', $this->upload->display_errors());
+                        }
+                        else
+                        {
+                            $current_profile = $this->upload->data('file_name');
+                        }
+                    }
+                    
                     $data = array(
                         'first_name' => $first_name,
                         'last_name' => $last_name,
@@ -1448,6 +1472,7 @@ class User extends CI_Controller
                         'us_facebook_url' => $facebook_url,
                         'us_is_photographer' => $is_photographer,
                         'us_photography_url' => $photography_url,
+                        'profile_image' => $current_profile,
                     );
 
                     // check to see if we are updating the user
@@ -1466,6 +1491,36 @@ class User extends CI_Controller
                         $this->session->set_flashdata('message', $this->ion_auth->errors());
                     }
                 }
+            }
+            
+            if ($this->input->post('button_action') == "change_image")
+            {
+                if (!$this->upload->do_upload())
+                {
+                    $error = array('error' => $this->upload->display_errors());
+                    $this->session->set_flashdata('message', $this->upload->display_errors());
+                }
+                else
+                {
+                    $image_data = array('upload_data' => $this->upload->data());
+                    //$this->ion_auth->set_message('image_upload_successful');
+
+                    $data = array(
+                        'profile_image' => $this->upload->data('file_name'),
+                    );
+
+                    if ($this->ion_auth->update($user_id, $data))
+                    {
+                        $this->session->set_flashdata('message', 'User profile image success update.');
+                    }
+                    else
+                    {
+
+                        $this->session->set_flashdata('message', $this->ion_auth->errors());
+                    }
+                }
+
+                redirect('all/user_dashboard/' . $user_id, 'refresh');
             }
         }
         $this->data['image_path'] = $this->album_user_profile;

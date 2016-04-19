@@ -54,8 +54,10 @@ if(isset($message))
                 }
                 ?>  
             </div>          
-            <?php if (check_correct_login_type($this->config->item('group_id_merchant'))) { ?>
-                <?php echo form_open_multipart('merchant/update_profile_image'); ?>
+            <?php 
+            echo form_open_multipart(uri_string()); 
+            if (check_correct_login_type($this->config->item('group_id_merchant'))) { 
+                ?>
             
                 <div id="profile-photo-note">
                     <?php echo $this->config->item('upload_guide_image'); ?>
@@ -72,12 +74,11 @@ if(isset($message))
                     </div>
                     <div id="float-fix"></div>
                 </div>
-                <?php echo form_close(); ?>
+
             <?php  } ?>
         </div>
 
         <div id='profile-info'> 
-            <?php echo form_open(uri_string()); ?>
             <div id='profile-info-form'>
                 <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_merchant_description_label', 'description'); ?></div>

@@ -50,6 +50,7 @@ if(isset($message))
     <div id='profile-content'>
         
         <?php
+           echo form_open_multipart(uri_string());
         if ($can_edit == 1)
         { 
             ?>
@@ -78,8 +79,6 @@ if(isset($message))
                 <?php 
                 if (check_correct_login_type($this->config->item('group_id_user')))
                 { 
-                    //FORM OPEN
-                    echo form_open_multipart('user/update_profile_image'); 
                         ?>
                         <div id="profile-photo-note">
                             <?php echo $this->config->item('upload_guide_image'); ?>
@@ -97,8 +96,7 @@ if(isset($message))
                             <div id="float-fix"></div>
                         </div>
                         <?php 
-                    //FORM CLOSE
-                    echo form_close();
+
                 }
                 ?>
             </div>
@@ -107,7 +105,7 @@ if(isset($message))
         ?>
         
         <div id='profile-info'> 
-            <?php echo form_open(uri_string()); ?>
+         
             <div id='profile-info-form'>
                 <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_user_first_name_label', 'first name'); ?></div>
