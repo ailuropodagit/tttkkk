@@ -53,14 +53,14 @@ if(isset($message))
                 <tr>
                     <td>Facebook URL</td>
                     <td>:</td>
-                    <td><div class="text-ellipsis"><?php echo "<a target='_blank' href='".$facebook_url."' >".$facebook_url."</a>"; ?></div></td>
+                    <td><div class="text-ellipsis"><?php echo "<a target='_blank' href='".display_url($facebook_url)."' >".$facebook_url."</a>"; ?></div></td>
                 </tr>
                 <?php } ?>
                 <?php if(!IsNullOrEmptyString($website_url)){ ?>
                 <tr>
                     <td>Website</td>
                     <td>:</td>
-                    <td><div class="text-ellipsis"><?php echo "<a target='_blank' href='".$website_url."' >".$website_url."</a>";?></div></td>
+                    <td><div class="text-ellipsis"><?php echo "<a target='_blank' href='".display_url($website_url)."' >".$website_url."</a>";?></div></td>
                 </tr>  
                 <?php } ?>
             </table>

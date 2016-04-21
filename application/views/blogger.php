@@ -42,7 +42,15 @@ $empty_image = $this->config->item('empty_image');
                                 }
                                 else
                                 {
-                                    echo img("$empty_image");
+                                    if ($blogger['us_gender_id'] == $this->config->item('gender_id_male'))
+                                    {
+                                        $image = $this->config->item('empty_image_male');
+                                    }
+                                    else
+                                    {
+                                        $image = $this->config->item('empty_image_female');
+                                    }
+                                    echo img($image);
                                 }
                                 ?>
                             </a>
@@ -54,7 +62,7 @@ $empty_image = $this->config->item('empty_image');
                                 </a>
                             </div>
                             <div id="blogger-box-each-info-blog-url">
-                                <a href='<?php echo $user_blog_url ?>' target="_blank"><?php echo $user_blog_url ?></a>
+                                <a href='<?php echo display_url($user_blog_url) ?>' target="_blank"><?php echo $user_blog_url ?></a>
                             </div>
                             <div id="blogger-box-each-info-blog-url" style='white-space:initial'>
                                 <?php echo $blogger_list ?>

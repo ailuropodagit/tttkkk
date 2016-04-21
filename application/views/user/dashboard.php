@@ -401,7 +401,7 @@ if ($self_open == 1)
                             <td>:</td>
                             <td>
                                 <div class="text-ellipsis">
-                                    <a href='<?php echo $us_photography_url; ?>' target='_blank'><?php echo $us_photography_url; ?></a>
+                                    <a href='<?php echo display_url($us_photography_url); ?>' target='_blank'><?php echo $us_photography_url; ?></a>
                                 </div>
                             </td>
                         </tr>
@@ -422,7 +422,7 @@ if ($self_open == 1)
                         <td>:</td>
                         <td>
                             <div class="text-ellipsis">
-                                <a href='<?php echo $blog_url ?>'><?php echo $blog_url ?></a>
+                                <a href='<?php echo display_url($blog_url) ?>'><?php echo $blog_url ?></a>
                             </div>
                         </td>
                     </tr>
@@ -431,7 +431,7 @@ if ($self_open == 1)
                         <td>:</td>
                         <td>
                             <div class="text-ellipsis">
-                                <a href='<?php echo $instagram_url ?>'><?php echo $instagram_url ?></a>
+                                <a href='<?php echo display_url($instagram_url) ?>'><?php echo $instagram_url ?></a>
                             </div>
                         </td>
                     </tr>
@@ -440,7 +440,7 @@ if ($self_open == 1)
                         <td>:</td>
                         <td>
                             <div class="text-ellipsis">
-                                <a href='<?php echo $facebook_url ?>'><?php echo $facebook_url ?></a>
+                                <a href='<?php echo display_url($facebook_url) ?>'><?php echo $facebook_url ?></a>
                             </div>
                         </td>
                     </tr>

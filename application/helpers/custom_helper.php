@@ -57,6 +57,31 @@ if (!function_exists('display_simple_message'))
     }
 
 }
+
+if (!function_exists('display_url'))
+{
+
+    function display_url($url)
+    {
+
+        if (strpos($url, "http://") !== false)
+        {
+            return $url;
+        }
+        else if (strpos($url, "https://") !== false)
+        {
+            return $url;
+        }
+        else
+        {
+            return "http://" . $url;
+        }
+        //$url_return = 'http://' . preg_replace( '~^http://~', '', $url );
+        //return $url_return;
+    }
+
+}
+
 if (!function_exists('check_is_positive_numeric'))
 {
 
