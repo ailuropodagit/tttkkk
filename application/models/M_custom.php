@@ -960,6 +960,8 @@ class M_custom extends CI_Model
             $this->db->where('frozen_flag', 0);
         }
         
+        $this->db->limit(500);  //Default limit to 500 maximum show
+        
         if (!IsNullOrEmptyString($limit) && !IsNullOrEmptyString($start))
         {
             if ($start == 1)
@@ -1091,7 +1093,7 @@ class M_custom extends CI_Model
                 $return_final[] = $row;
             }
         }
-        
+
         return $return_final;
     }
 
