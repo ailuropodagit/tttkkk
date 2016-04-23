@@ -320,13 +320,13 @@
                             <a href='https://www.facebook.com/keppo.my/' target='_blank'><i class="fa fa-facebook"></i></a>
                         </div>
                         <div id='header-top-bar-social-media-each'>
-                            <a href='https://twitter.com/' target='_blank'><i class="fa fa-twitter"></i></a>
+                            <a href='https://twitter.com/keppom' target='_blank'><i class="fa fa-twitter"></i></a>
                         </div>
                         <div id='header-top-bar-social-media-each'>
                             <a href='https://plus.google.com' target='_blank'><i class="fa fa-google-plus"></i></a>
                         </div>
                         <div id='header-top-bar-social-media-each'>
-                            <a href='https://www.linkedin.com/' target='_blank'><i class="fa fa-linkedin"></i></a>
+                            <a href='https://www.instagram.com/keppomy/' target='_blank'><i class="fa fa-instagram"></i></a>
                         </div>
                         <div id='header-top-bar-social-media-each'>
                             <a href='https://www.pinterest.com/' target='_blank'><i class="fa fa-pinterest"></i></a>
