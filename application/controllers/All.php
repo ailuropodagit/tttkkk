@@ -1090,12 +1090,26 @@ class All extends CI_Controller
                 $data['can_first_candie_remind'] = $can_first_candie_remind;
                 $data['fb_description'] = $fb_description;
 
+                $dashboard_share_facebook_profile_image = $user_data['profile_image'];
+                $dashboard_share_facebook_gender_id = $user_data['us_gender_id'];
+                if($dashboard_share_facebook_profile_image == NULL)
+                {
+                    if($dashboard_share_facebook_gender_id == 13)
+                    {
+                        $data['profile_image_url'] = base_url() . 'image/default-image-user-gender-male.png';
+                    }
+                    elseif($dashboard_share_facebook_gender_id == 14)
+                    {
+                        $data['profile_image_url'] = base_url() . 'image/default-image-user-gender-female.png';
+                    }
+                }
+                
                 $meta = array(
                     array('property' => 'og:type', 'content' => 'article'),
                     array('property' => 'og:title', 'content' => $user_data['name']),
                     //array('property' => 'og:url', 'content' => $user_data['user_dashboard_url']),
                     array('property' => 'og:description', 'content' => limit_character($user_data['description'], 150)),
-                    array('property' => 'og:image', 'content' => $user_data['profile_image_url'])
+                    array('property' => 'og:image', 'content' => $data['profile_image_url'])
                 );
                 $data['meta_fb'] = meta_fb($meta);
                 $this->load->view('template/index_background_blank', $data);
