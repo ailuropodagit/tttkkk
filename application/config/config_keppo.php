@@ -38,8 +38,8 @@ $config['empty_image_male'] = 'image/default-image-user-gender-male.png';
 $config['empty_image_female'] = 'image/default-image-user-gender-female.png';
 
 $config['max_size'] = 10240;  //10mb = 10240kb
-$config['max_width'] = 2736;
-$config['max_height'] = 2648;
+$config['max_width'] = 6000;
+$config['max_height'] = 6000;
 
 $config['allowed_types_image'] = 'gif|jpg|png|bmp|ico|jpeg|jpe';
 $config['upload_guide_image'] = '10MB, '.$config['max_width'].'x'.$config['max_height'].' size image file';
