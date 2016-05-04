@@ -96,3 +96,5 @@ $config['suggest_list_number'] = '5';
 $config['password_example'] = 'keppo123';
 $config['password_example_encrypt'] = '$2y$08$xZgTvC/QvRc0xeqzncsJ3O8q.EO/ik2Gqvaz.IT9d8LD1UF.HySM6';
 $config['no_reply_email'] = 'no-reply@keppo.my';
+
+$config['sensitive_word'] = array("fuck", "sex", "gay", "hemosexual", "lanci", "cibai", "dick", "virgin");

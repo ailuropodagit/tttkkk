@@ -683,6 +683,20 @@ if (!function_exists('format_year_month_server'))
 
 }
 
+if (!function_exists('sensitive_word'))
+{
+
+    function sensitive_word($text)
+    {
+        $ci = & get_instance();
+        $sensitive = $ci->config->item('sensitive_word');
+        $text_filter = str_ireplace($sensitive, "", $text);
+
+        return $text_filter;
+    }
+
+}
+
 if (!function_exists('date_server_format'))
 {
 

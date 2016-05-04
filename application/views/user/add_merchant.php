@@ -52,7 +52,7 @@ if(isset($message))
 ?>
 
 <div id='profile'>
-    <h1>Add Merchant</h1>
+    <h1>Add Shop</h1>
     <?php echo form_open_multipart(uri_string()); ?>
         <div id="profile-photo">
             <div id='profile-info-form-each-label'><?php echo 'Merchant Logo : '; ?></div><br/>
@@ -108,7 +108,7 @@ if(isset($message))
                     </div>
             </div>  
             <div id='profile-info-form-submit'>
-                <?php echo form_submit('submit', 'Add Merchant'); ?>
+                <?php echo form_submit('submit', 'Add Shop'); ?>
             </div>
         </div>
     </div>
