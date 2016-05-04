@@ -25,6 +25,7 @@
             ?>
         </title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <link rel="icon" href="<?php echo base_url('image/favicon.ico') ?>">
         <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,700,900' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="<?php echo base_url('css/all.css') ?>">
@@ -136,6 +137,14 @@
         }
     </style>
     <body>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-76880426-1', 'auto');
+      ga('send', 'pageview');
+    </script>
         <?php
         $fetch_method = $this->router->fetch_method();
         if (!isset($_COOKIE['visit_first_time']) && $fetch_method != 'login')
