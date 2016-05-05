@@ -2819,6 +2819,8 @@ class Merchant extends CI_Controller
                                     $image_file_name = $post_hidden_image;
                                 }
 
+                                resize_image($this->album_merchant . $image_file_name);
+                                
                                 $data = array(
                                     'advertise_type' => 'hot',
                                     'merchant_id' => $merchant_id,

@@ -2310,7 +2310,9 @@ class User extends CI_Controller
                                 }
                                 $image_file_name = $post_hidden_image;
                             }
-
+                            
+                            resize_image($this->album_user_merchant . $image_file_name);
+                            
                             $data = array(
                                 'post_type' => 'mer',
                                 'user_id' => $user_id,
@@ -2743,7 +2745,9 @@ class User extends CI_Controller
                                 }
                                 $image_file_name = $post_hidden_image;
                             }
-
+                            
+                            resize_image($this->album_user . $image_file_name);
+                            
                             $data = array(
                                 'user_id' => $user_id,
                                 //'title' => $post_title,

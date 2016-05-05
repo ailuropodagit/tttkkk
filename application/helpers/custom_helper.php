@@ -82,6 +82,41 @@ if (!function_exists('display_url'))
 
 }
 
+if (!function_exists('resize_image'))
+{
+
+    function resize_image($path)
+    {
+        $max_value = 1000;
+        $size = getimagesize($path);
+        if ($size[0] > $max_value && $size[1] > $max_value)
+        {
+            $ci = & get_instance();
+            $ci->load->library('image_lib');
+            
+            //GD, GD2, ImageMagick, NetPBM; ImageMagick, NetPBM need to special library path
+            
+            $resize_rule = array(
+                'image_library' => 'GD2',
+                //'library_path' => 'C:\\ImageMagick\\',
+                'source_image' => $path,
+                'create_thumb' => FALSE,
+                'maintain_ratio' => TRUE,
+                'width' => $max_value,
+                'height' => $max_value,
+            );
+
+            $ci->image_lib->clear();
+            $ci->image_lib->initialize($resize_rule);
+            if (!$ci->image_lib->resize())
+            {
+                echo $ci->image_lib->display_errors();
+            }
+        }
+    }
+
+}
+
 if (!function_exists('check_is_positive_numeric'))
 {
 
