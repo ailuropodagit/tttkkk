@@ -93,18 +93,31 @@ if (!function_exists('resize_image'))
         {
             $ci = & get_instance();
             $ci->load->library('image_lib');
-            
+
             //GD, GD2, ImageMagick, NetPBM; ImageMagick, NetPBM need to special library path
-            
             $resize_rule = array(
-                'image_library' => 'GD2',
-                //'library_path' => 'C:\\ImageMagick\\',
+                'image_library' => 'ImageMagick',
+                'library_path' => '/usr/bin/convert',
                 'source_image' => $path,
                 'create_thumb' => FALSE,
                 'maintain_ratio' => TRUE,
                 'width' => $max_value,
                 'height' => $max_value,
             );
+            
+            switch ($_SERVER["SERVER_NAME"])
+            {
+                case "localhost":
+                    $resize_rule = array(
+                        'image_library' => 'GD2',
+                        'source_image' => $path,
+                        'create_thumb' => FALSE,
+                        'maintain_ratio' => TRUE,
+                        'width' => $max_value,
+                        'height' => $max_value,
+                    );
+                    break;
+            }
 
             $ci->image_lib->clear();
             $ci->image_lib->initialize($resize_rule);
