@@ -1804,6 +1804,7 @@ class User extends CI_Controller
                         {
                             delete_file($this->album_user_merchant . $previous_image_name);
                         }
+                        resize_image($this->album_user_merchant . $image_data['upload_data']['file_name']);
                     }
                 }
 
@@ -1960,6 +1961,7 @@ class User extends CI_Controller
                         {
                             delete_file($this->album_user . $previous_image_name);
                         }
+                        resize_image($this->album_user . $image_data['upload_data']['file_name']);
                     }
                 }
 

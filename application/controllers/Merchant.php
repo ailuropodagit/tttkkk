@@ -2097,6 +2097,7 @@ class Merchant extends CI_Controller
                         else
                         {
                             $image_data = array('upload_data' => $this->upload->data());
+                            resize_image($this->album_merchant . $image_data['upload_data']['file_name']);
                         }
                     }
                     $data = array(
@@ -2159,6 +2160,7 @@ class Merchant extends CI_Controller
                             {
                                 delete_file($this->album_merchant . $previous_image_name);
                             }
+                            resize_image($this->album_merchant . $image_data['upload_data']['file_name']);
                         }
                     }
 
@@ -2486,6 +2488,7 @@ class Merchant extends CI_Controller
                         {
                             delete_file($this->album_merchant . $previous_image_name);
                         }
+                        resize_image($this->album_merchant . $image_data['upload_data']['file_name']);
                     }
                 }
 
