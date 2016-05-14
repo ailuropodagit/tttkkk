@@ -78,6 +78,7 @@ class User extends CI_Controller
                 $this->m_user->check_birthday_candie();
                 $this->m_custom->promo_code_insert_user($user_id);
                 redirect('all/user_dashboard/' . $user_id, 'refresh');
+                //redirect('/', 'refresh');
             }
             else
             {
@@ -190,7 +191,7 @@ class User extends CI_Controller
         $post_value_array_temp = $this->session->flashdata('post_value_array');
         if (empty($post_value_array_temp))
         {
-            redirect('./', 'refresh');
+            redirect('/', 'refresh');
         }
         //preserve value
         $data['email'] = '';
@@ -334,7 +335,8 @@ class User extends CI_Controller
                                     '<br/><br/>Please change this temporary password to your own password after login.', 'create_user_send_email_success', 0);
                             if ($get_status)
                             {
-                                redirect("all/user_dashboard/$user_id", 'refresh');
+                                //redirect("all/user_dashboard/$user_id", 'refresh');
+                                redirect('/', 'refresh');
                             }
                             else
                             {
