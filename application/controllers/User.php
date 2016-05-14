@@ -77,8 +77,8 @@ class User extends CI_Controller
                 $user_id = $this->session->userdata('user_id');
                 $this->m_user->check_birthday_candie();
                 $this->m_custom->promo_code_insert_user($user_id);
-                redirect('all/user_dashboard/' . $user_id, 'refresh');
-                //redirect('/', 'refresh');
+                //redirect('all/user_dashboard/' . $user_id, 'refresh');
+                redirect('/', 'refresh');
             }
             else
             {
@@ -283,7 +283,8 @@ class User extends CI_Controller
                     if ($this->ion_auth->login($email, $password_visible, $remember, $this->main_group_id))
                     {
                         $user_id = $this->session->userdata('user_id');
-                        redirect("all/user_dashboard/$user_id", 'refresh');
+                        //redirect("all/user_dashboard/$user_id", 'refresh');
+                        redirect('/', 'refresh');
                     }
                     else
                     {
