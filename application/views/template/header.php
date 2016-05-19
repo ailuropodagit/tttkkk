@@ -380,7 +380,7 @@
                                             <!--<li><a href='<?php //echo base_url('user/invite_friend') ?>' class='layout-inner-right-menu-bar <?php //if ($fetch_method == 'invite_friend'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Invite Friend</a></li>-->
                                             <li><a href='<?php echo base_url('user/promo_code') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'promo_code'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Promo Code <span class="layout-inner-right-menu-bar-click">Click</span></a></li>
                                             <li><a href='<?php echo base_url('user/balance_page') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'balance_page'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Balance (<?php echo 'RM '.$this->m_user->user_check_balance($login_user_id); ?>)</a></li>
-                                            <li><a href='<?php echo base_url('user/add_merchant') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'add_merchant'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Add Merchants</a></li>
+                                            <li><a href='<?php echo base_url('user/add_merchant') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'add_merchant'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Add Shop</a></li>
                                         </ul>
                                     </li>
                                     <li>
@@ -412,7 +412,7 @@
                                             <li><a href='<?php echo base_url('merchant/merchant_redemption_page') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'merchant_redemption_page'){ echo "layout-inner-right-menu-bar-active"; } ?>'>User's Redemption</a></li>
                                             <li><a href='<?php echo base_url('merchant/analysis_report') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'analysis_report'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Insights <span class="layout-inner-right-menu-bar-click">Click</span></a></li>
                                             <li><a href='<?php echo base_url('merchant/promo_code') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'promo_code'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Promo Code</a></li>
-                                            <li><a href='<?php echo base_url('merchant/payment_page') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'payment_page' || $fetch_method == 'payment_charge_page'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Payment <?php echo $merchant_balance_text; ?></a></li>
+                                            <li style="display:none"><a href='<?php echo base_url('merchant/payment_page') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'payment_page' || $fetch_method == 'payment_charge_page'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Payment <?php echo $merchant_balance_text; ?></a></li>
                                         </ul>
                                     </li>
                                     <li>

@@ -77,7 +77,8 @@ class User extends CI_Controller
                 $user_id = $this->session->userdata('user_id');
                 $this->m_user->check_birthday_candie();
                 $this->m_custom->promo_code_insert_user($user_id);
-                redirect('all/user_dashboard/' . $user_id, 'refresh');
+                //redirect('all/user_dashboard/' . $user_id, 'refresh');
+                redirect('/', 'refresh');
             }
             else
             {
@@ -190,7 +191,7 @@ class User extends CI_Controller
         $post_value_array_temp = $this->session->flashdata('post_value_array');
         if (empty($post_value_array_temp))
         {
-            redirect('./', 'refresh');
+            redirect('/', 'refresh');
         }
         //preserve value
         $data['email'] = '';
@@ -282,7 +283,8 @@ class User extends CI_Controller
                     if ($this->ion_auth->login($email, $password_visible, $remember, $this->main_group_id))
                     {
                         $user_id = $this->session->userdata('user_id');
-                        redirect("all/user_dashboard/$user_id", 'refresh');
+                        //redirect("all/user_dashboard/$user_id", 'refresh');
+                        redirect('/', 'refresh');
                     }
                     else
                     {
@@ -334,7 +336,8 @@ class User extends CI_Controller
                                     '<br/><br/>Please change this temporary password to your own password after login.', 'create_user_send_email_success', 0);
                             if ($get_status)
                             {
-                                redirect("all/user_dashboard/$user_id", 'refresh');
+                                //redirect("all/user_dashboard/$user_id", 'refresh');
+                                redirect('/', 'refresh');
                             }
                             else
                             {
@@ -1804,6 +1807,7 @@ class User extends CI_Controller
                         {
                             delete_file($this->album_user_merchant . $previous_image_name);
                         }
+                        resize_image($this->album_user_merchant . $image_data['upload_data']['file_name']);
                     }
                 }
 
@@ -1960,6 +1964,7 @@ class User extends CI_Controller
                         {
                             delete_file($this->album_user . $previous_image_name);
                         }
+                        resize_image($this->album_user . $image_data['upload_data']['file_name']);
                     }
                 }
 
@@ -2310,7 +2315,9 @@ class User extends CI_Controller
                                 }
                                 $image_file_name = $post_hidden_image;
                             }
-
+                            
+                            resize_image($this->album_user_merchant . $image_file_name);
+                            
                             $data = array(
                                 'post_type' => 'mer',
                                 'user_id' => $user_id,
@@ -2743,7 +2750,9 @@ class User extends CI_Controller
                                 }
                                 $image_file_name = $post_hidden_image;
                             }
-
+                            
+                            resize_image($this->album_user . $image_file_name);
+                            
                             $data = array(
                                 'user_id' => $user_id,
                                 //'title' => $post_title,

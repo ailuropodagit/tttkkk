@@ -1136,7 +1136,7 @@ class All extends CI_Controller
             $current_url = $this->input->post('current_url');
             $refer_id = $this->input->post('item_id');
             $refer_type = $this->input->post('item_type');
-            $comment = $this->input->post('comment');
+            $comment = sensitive_word($this->input->post('comment'));
             if (IsNullOrEmptyString($comment))
             {
                 $message_info = add_message_info($message_info, 'Comment cannot be empty.');
@@ -1160,6 +1160,23 @@ class All extends CI_Controller
             {
                 redirect('/', 'refresh');
             }
+            
+            $url_middle = "advertise/";
+            $activity_query = $this->db->get_where('activity_history', array('act_history_id' => $act_history_id));
+            if ($activity_query->num_rows() == 1)
+            {
+                $activity_row = $activity_query->row_array();
+                $act_refer_type = $activity_row['act_refer_type'];
+                if ($act_refer_type == 'mua')
+                {
+                    $url_middle = "merchant_user_picture/";
+                }
+                if ($act_refer_type == 'usa')
+                {
+                    $url_middle = "user_picture/";                 
+                }
+            }
+
             $data['act_history_id'] = array(
                 'type' => 'hidden',
                 'name' => 'act_history_id',
@@ -1175,8 +1192,8 @@ class All extends CI_Controller
                 'type' => 'hidden',
                 'name' => 'return_url',
                 'id' => 'return_url',
-                'value' => base_url() . "all/advertise/" . $the_comment['act_refer_id'],
-            );
+                'value' => base_url() . "all/" . $url_middle . $the_comment['act_refer_id'],
+            );                                  
             $data['post_title'] = 'Edit Comment';
             $data['page_path_name'] = 'all/comment_edit';
             $this->load->view('template/index', $data);
@@ -1194,7 +1211,7 @@ class All extends CI_Controller
         {
             $return_url = $this->input->post('return_url');
             $act_history_id = $this->input->post('act_history_id');
-            $comment = $this->input->post('comment');
+            $comment = sensitive_word($this->input->post('comment'));
             $this->m_custom->activity_comment_update($act_history_id, $comment);
         }
         redirect($return_url, 'refresh');

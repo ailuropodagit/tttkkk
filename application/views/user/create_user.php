@@ -68,7 +68,7 @@
                                             window.location.replace("<?php echo base_url() ?>user/login_facebook_first_time");
                                         }
                                         if (login_fb_id_success) {
-                                            window.location.replace("<?php echo base_url() ?>user/profile");
+                                            window.location.replace("<?php echo base_url() ?>home");
                                         }
                                     }
                                 });

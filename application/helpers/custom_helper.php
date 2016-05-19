@@ -82,6 +82,54 @@ if (!function_exists('display_url'))
 
 }
 
+if (!function_exists('resize_image'))
+{
+
+    function resize_image($path)
+    {
+        $max_value = 1000;
+        $size = getimagesize($path);
+        if ($size[0] > $max_value && $size[1] > $max_value)
+        {
+            $ci = & get_instance();
+            $ci->load->library('image_lib');
+
+            //GD, GD2, ImageMagick, NetPBM; ImageMagick, NetPBM need to special library path
+            $resize_rule = array(
+                'image_library' => 'ImageMagick',
+                'library_path' => '/usr/bin/convert',
+                'source_image' => $path,
+                'create_thumb' => FALSE,
+                'maintain_ratio' => TRUE,
+                'width' => $max_value,
+                'height' => $max_value,
+            );
+            
+            switch ($_SERVER["SERVER_NAME"])
+            {
+                case "localhost":
+                    $resize_rule = array(
+                        'image_library' => 'GD2',
+                        'source_image' => $path,
+                        'create_thumb' => FALSE,
+                        'maintain_ratio' => TRUE,
+                        'width' => $max_value,
+                        'height' => $max_value,
+                    );
+                    break;
+            }
+
+            $ci->image_lib->clear();
+            $ci->image_lib->initialize($resize_rule);
+            if (!$ci->image_lib->resize())
+            {
+                echo $ci->image_lib->display_errors();
+            }
+        }
+    }
+
+}
+
 if (!function_exists('check_is_positive_numeric'))
 {
 
@@ -679,6 +727,20 @@ if (!function_exists('format_year_month_server'))
     {
         $ci = & get_instance();
         return $ci->config->item('keppo_format_year_month_db');
+    }
+
+}
+
+if (!function_exists('sensitive_word'))
+{
+
+    function sensitive_word($text)
+    {
+        $ci = & get_instance();
+        $sensitive = $ci->config->item('sensitive_word');
+        $text_filter = str_ireplace($sensitive, "", $text);
+
+        return $text_filter;
     }
 
 }
