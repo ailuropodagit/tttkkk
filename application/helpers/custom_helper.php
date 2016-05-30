@@ -1162,6 +1162,25 @@ if (!function_exists('displayDate'))
    }
 }
 
+if (!function_exists('displayDateEng'))
+{
+   function displayDateEng( $date , $with_time = 0)
+    {
+       if(IsNullOrEmptyString($date)){
+           return '';
+       }
+        $ci = & get_instance();
+        $return_date = date_create($date);
+        if($with_time == 0){
+            return $return_date->format($ci->config->item('keppo_format_date_display_eng'));
+        }else if($with_time != 0){
+            return $return_date->format($ci->config->item('keppo_format_date_time_display_eng'));
+        }else{
+            return '';
+        }
+   }
+}
+
 if (!function_exists('validateDate'))
 {
    function validateDate( $date, $format='DD-MM-YYYY')

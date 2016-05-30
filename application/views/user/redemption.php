@@ -89,7 +89,7 @@ if(isset($message))
                                 <td>Expire Date</td>
                                 <td>:</td>
                                 <td>
-                                    <?php echo displayDate($row['expired_date']) ?>
+                                    <?php echo displayDateEng($row['expired_date']) ?>
                                 </td>
                             </tr>
                             <?php 

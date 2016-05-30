@@ -290,12 +290,12 @@ if(isset($message))
             <!--REDEMPTION PERIOD-->
             <div id="redemption-information-redemption-period">
                 <div id="redemption-information-redemption-period-icon"><i class="fa fa-gift header-menu-icon"></i></div>
-                <div id="redemption-information-redemption-period-label">Redeem Period: <?php echo $start_date ?> to <?php echo $end_date ?></div>
+                <div id="redemption-information-redemption-period-label">Redeem Period: <?php echo displayDateEng($start_date) ?> to <?php echo displayDateEng($end_date) ?></div>
             </div>
             <!--EXPIRED DATE-->
             <div id='redemption-information-expired-date'>
                 <div id='redemption-information-expired-date-icon'><i class="fa fa-calendar-o"></i></div>
-                <div id='redemption-information-expired-date-label'>Expiry Date: <?php echo $expire_date ?></div>
+                <div id='redemption-information-expired-date-label'>Expiry Date: <?php echo displayDateEng($expire_date) ?></div>
             </div>
             <!--REDEEM-->
             <div id='redemption-information-submit'>
