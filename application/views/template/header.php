@@ -382,9 +382,10 @@
                                             <li><a href='<?php echo base_url('user/promo_code') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'promo_code'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Promo Code <span class="layout-inner-right-menu-bar-click">Click</span></a></li>
                                             <li><a href='<?php echo base_url('user/balance_page') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'balance_page'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Balance (<?php echo 'RM '.$this->m_user->user_check_balance($login_user_id); ?>)</a></li>
                                             <li><a href='<?php echo base_url('user/add_merchant') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'add_merchant'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Add Shop</a></li>
+                                            <li><a href='<?php echo base_url('user/logout') ?>'>Logout</a>
                                         </ul>
                                     </li>
-                                    <li>
+                                    <li style="display:none">
                                          <a href='<?php echo base_url('user/logout') ?>'  onclick="fbLogout()">
                                              <i class='fa fa-sign-out header-top-bar-navigation-icon'></i> Logout
                                          </a>
@@ -414,9 +415,10 @@
                                             <li><a href='<?php echo base_url('merchant/analysis_report') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'analysis_report'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Insights <span class="layout-inner-right-menu-bar-click">Click</span></a></li>
                                             <li><a href='<?php echo base_url('merchant/promo_code') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'promo_code'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Promo Code</a></li>
                                             <li style="display:none"><a href='<?php echo base_url('merchant/payment_page') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'payment_page' || $fetch_method == 'payment_charge_page'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Payment <?php echo $merchant_balance_text; ?></a></li>
+                                            <li><a href='<?php echo base_url('merchant/logout') ?>'>Logout</a>
                                         </ul>
                                     </li>
-                                    <li>
+                                    <li style="display:none">
                                         <a href='<?php echo base_url('merchant/logout') ?>'>
                                             <i class='fa fa-sign-out header-top-bar-navigation-icon'></i> Logout
                                         </a>
@@ -445,9 +447,10 @@
                                             <li><a href='<?php echo base_url('merchant/candie_promotion') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'candie_promotion'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Create Candie Voucher <span class="layout-inner-right-menu-bar-click">Click</span></a></li>
                                             <li><a href='<?php echo base_url("all/album_redemption/$header_merchant_slug") ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'album_redemption'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Candie Voucher's Album</a></li>
                                             <li><a href='<?php echo base_url('merchant/merchant_redemption_page') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'merchant_redemption_page'){ echo "layout-inner-right-menu-bar-active"; } ?>'>User's Redemption</a></li>
+                                            <li><a href='<?php echo base_url('merchant/logout') ?>'>Logout</a>
                                         </ul>
                                     </li>
-                                    <li>
+                                    <li style="display:none">
                                         <a href='<?php echo base_url('merchant/logout') ?>'>
                                             <i class='fa fa-sign-out header-top-bar-navigation-icon'></i> Logout
                                         </a>
@@ -474,9 +477,10 @@
                                             <li><a href='<?php echo base_url('admin/keppo_voucher_redemption_page') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'keppo_voucher_redemption_page'){ echo "layout-inner-right-menu-bar-active"; } ?>'>User's Redeem Keppo Voucher (<?php echo $redeem_count ?>)</a></li>
                                             <li><a href='<?php echo base_url('admin/analysis_report') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'analysis_report' || $fetch_method == 'analysis_report_user'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Insights</a></li>
                                             <li><a href='<?php echo base_url('admin/manage_web_setting') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'manage_web_setting' || $fetch_method == 'manage_candie_term' || $fetch_method == 'manage_photography' || $fetch_method == 'manage_trans_config' || $fetch_method == 'manage_merchant_fee'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Web Setting</a></li>
+                                            <li><a href='<?php echo base_url('admin/logout') ?>'>Logout</a></li>
                                         </ul>
                                     </li>
-                                    <li>
+                                    <li style="display:none">
                                         <a href='<?php echo base_url('admin/logout') ?>'>
                                             <i class='fa fa-sign-out header-top-bar-navigation-icon'></i> Logout
                                         </a>
@@ -559,11 +563,12 @@
                                                 ?>
                                                 <li><a href='<?php echo base_url(); ?>admin/manage_web_setting' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'manage_web_setting' || $fetch_method == 'manage_candie_term' || $fetch_method == 'manage_photography' || $fetch_method == 'manage_trans_config' || $fetch_method == 'manage_merchant_fee'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Web Setting</a></li>
                                                 <?php
-                                            }
+                                            }                                          
                                             ?>
+                                                <li><a href='<?php echo base_url('admin/logout') ?>'>Logout</a>
                                         </ul>
                                     </li>
-                                    <li>
+                                    <li style="display:none">
                                         <a href='<?php echo base_url('admin/logout') ?>'>
                                             <i class='fa fa-sign-out header-top-bar-navigation-icon'></i> Logout
                                         </a>
