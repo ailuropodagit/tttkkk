@@ -11,6 +11,24 @@
 }
 
 /*********************************************
+ ** VISIT FIRST TIME MODEL
+ *********************************************/
+
+#visit-first-time-modal-left-login-form-submit-login-with-fb {
+    display: block;
+    margin: 15px 0px 0px 0px;
+}
+
+#visit-first-time-modal-right-image-each {
+    width: 100%;
+    margin: 0px 0px 10px 0px;
+}
+
+#visit-first-time-modal-right-image-each:nth-child(3) {
+    margin: 0px 0px 10px 0px;
+}
+
+/*********************************************
  ** SHARE MERCHANT GRID LIST5
  *********************************************/
 

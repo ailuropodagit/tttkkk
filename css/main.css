@@ -598,9 +598,13 @@ html, body {
     margin: 20px 0px 0px 0px;
 }
 
-#visit-first-time-modal-left-login-form-submit-user, #visit-first-time-modal-left-login-form-submit-merchant {
+#visit-first-time-modal-left-login-form-submit-login, #visit-first-time-modal-left-login-form-submit-login-with-fb {
     display: inline-block;
-    margin: 0px 0px 5px 0px;
+    vertical-align: top;
+}
+
+#visit-first-time-modal-left-login-form-submit-login-with-fb {
+    margin: 0px 0px 0px 10px;
 }
 
 #visit-first-time-modal-right {
