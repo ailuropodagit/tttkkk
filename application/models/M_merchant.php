@@ -179,7 +179,7 @@ class M_merchant extends CI_Model
         if ($this->session->userdata('is_halal'))
         {
             $is_halal = $this->session->userdata('is_halal');
-            $this->db->where('me_is_halal', $is_halal);
+            $this->db->where('me_halal_way', $is_halal);
         }
         $this->db->where('me_sub_category_id', $sub_category_id);
         $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant'), 'hide_flag' => 0, 'remove_flag' => 0));
@@ -198,7 +198,7 @@ class M_merchant extends CI_Model
         if ($this->session->userdata('is_halal'))
         {
             $is_halal = $this->session->userdata('is_halal');
-            $this->db->where('me_is_halal', $is_halal);
+            $this->db->where('me_halal_way', $is_halal);
         }
         $this->db->where('me_sub_category_id', $sub_category_id);
         $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_merchant'), 'hide_flag' => 0, 'remove_flag' => 0));

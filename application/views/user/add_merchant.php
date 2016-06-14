@@ -102,9 +102,15 @@ if(isset($message))
                 <div id='profile-info-form-each-label'><?php echo lang('create_merchant_sub_category_label', 'me_sub_category_id'); ?></div>
                 <div id='profile-info-form-each-input'><?php echo form_dropdown($me_sub_category_id, $sub_category_list); ?></div>
             </div>      
+<!--            <div id='profile-info-form-each'>
+                    <div id='profile-info-form-each-label'>
+                         <img src="<?php //echo base_url() . "/image/logo-halal.png"; ?>" class="logo-halal2"/>  : <?php //echo form_checkbox($me_is_halal); ?>
+                    </div>
+            </div>  -->
             <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'>
-                         <img src="<?php echo base_url() . "/image/logo-halal.png"; ?>" class="logo-halal2"/>  : <?php echo form_checkbox($me_is_halal); ?>
+                        <?php echo $this->m_custom->display_halal_label(); ?>  : 
+                        <?php echo form_dropdown($me_halal_way, $halal_way_list); ?>
                     </div>
             </div>  
             <div id='profile-info-form-submit'>

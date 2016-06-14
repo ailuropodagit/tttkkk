@@ -1274,15 +1274,16 @@ class All extends CI_Controller
             $this->data['user_upload_for_merchant'] = base_url() . 'user/upload_for_merchant/' . $user_id;
             $this->data['show_expired'] = "<a href='" . base_url() . "all/album_merchant/'. $slug>Show Expired</a><br/>";
             $this->data['user_id'] = $user_id;
-            $this->data['me_is_halal'] = $the_row->me_is_halal;
+            //$this->data['me_is_halal'] = $the_row->me_is_halal;
+            $this->data['me_halal_way'] = $the_row->me_halal_way;
             
-            $me_is_halal = $the_row->me_is_halal;
-            $this->data['checkbox_halal'] = array(
-                'name' => 'checkbox_halal',
-                'id' => 'checkbox_halal',
-                'checked' => $me_is_halal == "1" ? TRUE : FALSE,
-                'value' => $the_row->me_is_halal,
-            );
+//            $me_is_halal = $the_row->me_is_halal;
+//            $this->data['checkbox_halal'] = array(
+//                'name' => 'checkbox_halal',
+//                'id' => 'checkbox_halal',
+//                'checked' => $me_is_halal == "1" ? TRUE : FALSE,
+//                'value' => $the_row->me_is_halal,
+//            );
 
             //FOLLOWER or FOLLOWING COUNT
             $this->data['follower_count'] = $this->albert_model->follower_count($user_id);

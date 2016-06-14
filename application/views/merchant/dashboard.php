@@ -43,36 +43,36 @@
         });
     }    
     
-    $(document).ready(function () {
-        var halal_url = '<?php echo base_url(); ?>' + 'merchant/halal_change';
-        $("#checkbox_halal").click(function() {
-
-        if($("#checkbox_halal").is(':checked')) { 
-            $.ajax({
-             url:halal_url,
-             type: 'post',
-             data: "&halal_desire=1",
-             success : function(resp){
-                                 if (resp)
-                                 {}
-                             },
-                             error: function (resp) {
-                             }
-                         });
-                     } else {
-             $.ajax({
-             url:halal_url,
-             type: 'post',
-             data: "&halal_desire=0",
-             success : function(resp){
-                                 if (resp)
-                                 {}
-                             }
-                         });
-                     }
-                     location.reload();
-                 });
-        });
+//    $(document).ready(function () {
+//        var halal_url = '<?php //echo base_url(); ?>' + 'merchant/halal_change';
+//        $("#checkbox_halal").click(function() {
+//
+//        if($("#checkbox_halal").is(':checked')) { 
+//            $.ajax({
+//             url:halal_url,
+//             type: 'post',
+//             data: "&halal_desire=1",
+//             success : function(resp){
+//                                 if (resp)
+//                                 {}
+//                             },
+//                             error: function (resp) {
+//                             }
+//                         });
+//                     } else {
+//             $.ajax({
+//             url:halal_url,
+//             type: 'post',
+//             data: "&halal_desire=0",
+//             success : function(resp){
+//                                 if (resp)
+//                                 {}
+//                             }
+//                         });
+//                     }
+//                     location.reload();
+//                 });
+//        });
 </script>
 
 <style type="text/css">
@@ -317,23 +317,27 @@ if ($self_open == 1)
             <div id="dashboard-info-title">
                 <div id="dashboard-info-title-name">
                     <?php echo $company_name; ?>
-                    <?php if($me_is_halal == 1){ ?>
+                    <?php if($me_halal_way == 191){ ?>
                     <div id="logo-halal">                  
                         <img src="<?php echo base_url() . "/image/logo-halal.png"; ?>"/>                    
                     </div>
-                    <?php } ?>                    
+                    <?php }else if($me_halal_way == 192){ ?>                  
+                    <div id="logo-halal">                  
+                        <img src="<?php echo base_url() . "/image/logo-pork-free.png"; ?>"/>                    
+                    </div>
+                    <?php } ?>   
                 </div>
-                <div style='display:none'>
+<!--                <div style='display:none'>
                  <?php 
-                    if ($self_open == 1)
-                    {                      
-                        echo '<span style="font-size:x-small;vertical-align:middle">Halal?</span>';  
-                        echo '<span>';
-                        echo form_checkbox($checkbox_halal);     
-                        echo '</span>';                       
-                    }
+//                    if ($self_open == 1)
+//                    {                      
+//                        echo '<span style="font-size:x-small;vertical-align:middle">Halal?</span>';  
+//                        echo '<span>';
+//                        echo form_checkbox($checkbox_halal);     
+//                        echo '</span>';                       
+//                    }
                 ?>
-                </div>
+                </div>-->
                 <?php
                 //CORRECT LOGIN
                 if ($self_open == 1)

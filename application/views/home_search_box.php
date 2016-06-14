@@ -2,11 +2,12 @@
             var keppo_path = '<?php echo $this->config->item('keppo_path'); ?>'; 
             $(function(){
                 //AUTO COMPLETE
-                $("#search_word").autocomplete({
+$(".search_word_input").each(function(){
+                $(this).autocomplete({
                     source: function(request, response) {
                         $.ajax({
                             url: keppo_path + "search_suggestion/get_merchant_list/",
-                            data: { term: $("#search_word").val()},
+                            data: { term: request.term},
                             dataType: "json",
                             type: "POST",
                             success: function(data){
@@ -18,11 +19,12 @@
                         });
                     }
                 });
-            });  
+            }); 
+}); 
             
-    function set_halal()
+    function set_halal(dep_selected)
     {
-        var dep_selected = $('select[name=is_halal]').val();
+        //var dep_selected = $('select[name=is_halal]').val();
         var post_url = "<?php echo base_url(); ?>" + 'all/set_halal/' + dep_selected;
         $.ajax({
             type: 'POST',
@@ -49,7 +51,7 @@
 
 <?php echo form_open('all/home_search') ?>
     <div id="header-logo-bar-search-block1">
-        <input type="text" placeholder="Search: advertisement, redemption" name="search_word" id="search_word">
+        <input type="text" placeholder="Search: advertisement, redemption" name="search_word" id="search_word" class="search_word_input">
     </div>
     <div id="header-logo-bar-search-block2">
         <?php
@@ -67,21 +69,24 @@
         {
             echo form_dropdown($header_search_me_state_id, $header_search_state_list);
         }
+        
         $is_halal = 0;
         if ($this->session->userdata('is_halal'))
         {
             $is_halal = $this->session->userdata('is_halal');
         }
         $is_all_text = $is_halal == 0 ? 'selected="selected"' : '';
-        $is_halal_text = $is_halal == 1 ? 'selected="selected"' : '';
+        $is_halal_text = $is_halal == 191 ? 'selected="selected"' : '';
+        $is_porkfree_text = $is_halal == 192 ? 'selected="selected"' : '';
         ?>
     </div>
     <div id="header-logo-bar-search-block3">
         <button name="button_action" type="submit" value="search">Search</button>
     </div>
-<select name="is_halal" id="is_halal" style="width:100px;background-color:#9BED99" onchange="set_halal()">
+<select name="is_halal" id="is_halal" style="width:100px;background-color:#9BED99" onchange="set_halal(this.value)">
     <option value="0" <?php echo $is_all_text; ?> >Non-Halal</option>
-    <option value="1" <?php echo $is_halal_text; ?> >Halal</option>
+    <option value="191" <?php echo $is_halal_text; ?> >Halal</option>
+    <option value="192" <?php echo $is_porkfree_text; ?> >Pork-Free</option>
 </select>
 <?php echo form_close(); ?>
 

@@ -825,7 +825,8 @@ class Merchant extends CI_Controller
             $country = $this->input->post('me_country');
             //$phone = '+60' . $this->input->post('phone');    
             $phone = $this->input->post('phone'); 
-            $me_is_halal = $this->input->post('me_is_halal') == NULL ? 0 : 1; 
+            //$me_is_halal = $this->input->post('me_is_halal') == NULL ? 0 : 1; 
+            $me_halal_way = $this->input->post('me_halal_way');
             
             $additional_data = array(
                 'username' => $username,
@@ -844,7 +845,8 @@ class Merchant extends CI_Controller
                 //'me_website_url' => $this->input->post('website'),
                 'main_group_id' => $this->main_group_id,
                 'password_visible' => $password,
-                'me_is_halal' => $me_is_halal,
+                //'me_is_halal' => $me_is_halal,
+                'me_halal_way' => $me_halal_way,
             );
         }
 
@@ -964,10 +966,17 @@ class Merchant extends CI_Controller
                 'placeholder' => $this->config->item('password_example'),
                 'value' => $this->form_validation->set_value('password_confirm'),
             );
-            $this->data['me_is_halal'] = array(
-                'name' => 'me_is_halal',
-                'id' => 'me_is_halal',
-                'value' => '1', //Just to have some value, checkbox have to have value
+            
+//            $this->data['me_is_halal'] = array(
+//                'name' => 'me_is_halal',
+//                'id' => 'me_is_halal',
+//                'value' => '1', //Just to have some value, checkbox have to have value
+//            );
+            
+            $this->data['halal_way_list'] = $this->ion_auth->get_static_option_list('halal_way');
+            $this->data['me_halal_way'] = array(
+                'name' => 'me_halal_way',
+                'id' => 'me_halal_way',
             );
             
             $meta = array(
@@ -1190,7 +1199,8 @@ class Merchant extends CI_Controller
                         'me_person_contact' => $this->input->post('person_contact'),
                         'me_website_url' => $this->input->post('website'),
                         'me_facebook_url' => $this->input->post('facebook_url'),
-                        'me_is_halal' => $this->input->post('me_is_halal') == NULL ? 0 : 1,
+                        //'me_is_halal' => $this->input->post('me_is_halal') == NULL ? 0 : 1,
+                        'me_halal_way' => $this->input->post('me_halal_way'),
                         'profile_image' => $current_profile,
                     );
 
@@ -1414,14 +1424,21 @@ class Merchant extends CI_Controller
             'value' => $is_supervisor == 1 ? $supervisor->password_visible : $user->password_visible,
         );
 
-        $me_is_halal = $user->me_is_halal;
-        $this->data['me_is_halal'] = array(
-            'name' => 'me_is_halal',
-            'id' => 'me_is_halal',
-            'checked' => $me_is_halal == "1" ? TRUE : FALSE,
-            'value' => $user->me_is_halal,
-        );
+//        $me_is_halal = $user->me_is_halal;
+//        $this->data['me_is_halal'] = array(
+//            'name' => 'me_is_halal',
+//            'id' => 'me_is_halal',
+//            'checked' => $me_is_halal == "1" ? TRUE : FALSE,
+//            'value' => $user->me_is_halal,
+//        );
 
+        $this->data['halal_way_selected'] = $user->me_halal_way;
+        $this->data['halal_way_list'] = $this->ion_auth->get_static_option_list('halal_way');
+        $this->data['me_halal_way'] = array(
+            'name' => 'me_halal_way',
+            'id' => 'me_halal_way',
+        );
+        
         $this->data['temp_folder'] = $this->temp_folder;
         $this->data['page_path_name'] = 'merchant/profile';
         $this->load->view('template/index', $this->data);
@@ -3915,28 +3932,28 @@ class Merchant extends CI_Controller
     }
 
     //Fail to use it on server, not sure why
-    public function halal_change($halal_desire)
-    {
-        if (check_correct_login_type($this->main_group_id))
-        {
-            $halal_desire = $this->input->post("halal_desire", true);
-            $login_id = $this->ion_auth->user()->row()->id;
-            if ($halal_desire == '0')
-            {
-                $halal_desire = 0;
-            }
-            if ($halal_desire == '1')
-            {
-                $halal_desire = 1;
-            }
-            
-            $update_data = array(
-                'me_is_halal' => $halal_desire,
-            );
-
-            $this->m_custom->simple_update('users', $update_data, 'id', $login_id);
-        }
-    }
+//    public function halal_change($halal_desire)
+//    {
+//        if (check_correct_login_type($this->main_group_id))
+//        {
+//            $halal_desire = $this->input->post("halal_desire", true);
+//            $login_id = $this->ion_auth->user()->row()->id;
+//            if ($halal_desire == '0')
+//            {
+//                $halal_desire = 0;
+//            }
+//            if ($halal_desire == '1')
+//            {
+//                $halal_desire = 1;
+//            }
+//            
+//            $update_data = array(
+//                'me_is_halal' => $halal_desire,
+//            );
+//
+//            $this->m_custom->simple_update('users', $update_data, 'id', $login_id);
+//        }
+//    }
 
     function _get_csrf_nonce()
     {

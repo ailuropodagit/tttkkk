@@ -1199,7 +1199,8 @@ class User extends CI_Controller
             $state = $this->input->post('me_state_id');
             $country = 'Malaysia';
             $profile_image = NULL;
-            $me_is_halal = $this->input->post('me_is_halal') == NULL ? 0 : 1; 
+            //$me_is_halal = $this->input->post('me_is_halal') == NULL ? 0 : 1; 
+            $me_halal_way = $this->input->post('me_halal_way');
             
             if (!empty($_FILES['userfile']['name']))
             {
@@ -1241,7 +1242,8 @@ class User extends CI_Controller
                 'me_addby_user' => $login_id,
                 'me_notyet_active' => 1,
                 'profile_image' => $profile_image,
-                'me_is_halal' => $me_is_halal,
+                //'me_is_halal' => $me_is_halal,
+                 'me_halal_way' => $me_halal_way,
             );
 
             $group_ids = array(
@@ -1308,10 +1310,17 @@ class User extends CI_Controller
                 'id' => 'me_sub_category_id',
                 'value' => $this->form_validation->set_value('me_sub_category_id'),
             );
-            $this->data['me_is_halal'] = array(
-                'name' => 'me_is_halal',
-                'id' => 'me_is_halal',
-                'value' => '1', //Just to have some value, checkbox have to have value
+            
+//            $this->data['me_is_halal'] = array(
+//                'name' => 'me_is_halal',
+//                'id' => 'me_is_halal',
+//                'value' => '1', //Just to have some value, checkbox have to have value
+//            );
+            
+             $this->data['halal_way_list'] = $this->ion_auth->get_static_option_list('halal_way');
+            $this->data['me_halal_way'] = array(
+                'name' => 'me_halal_way',
+                'id' => 'me_halal_way',
             );
             
             $this->data['temp_folder'] = $this->temp_folder;

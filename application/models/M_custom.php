@@ -1075,10 +1075,22 @@ class M_custom extends CI_Model
             if ($this->session->userdata('is_halal') && $valid_row == 1 && $the_advertise_type != 'adm')
             {
                 $is_halal = $this->session->userdata('is_halal');
-                if ($is_halal == '1')
+                if ($is_halal == '191')
                 {
                     $merchant_info = $this->m_custom->getMerchantInfo($row['merchant_id']);
-                    if ($merchant_info['me_is_halal'] == '1')
+                    if ($merchant_info['me_halal_way'] == '191')
+                    {
+                        $valid_row = 1;
+                    }
+                    else
+                    {
+                        $valid_row = 0;
+                    }
+                }
+                else if ($is_halal == '192')
+                {
+                    $merchant_info = $this->m_custom->getMerchantInfo($row['merchant_id']);
+                    if ($merchant_info['me_halal_way'] == '192')
                     {
                         $valid_row = 1;
                     }
@@ -1626,9 +1638,48 @@ class M_custom extends CI_Model
             'merchant_dashboard_link' => $this->m_custom->generate_merchant_link($merchant_id),
             'hide_flag' => $user['hide_flag'],
             'remove_flag' => $user['remove_flag'],
-            'me_is_halal' => $user['me_is_halal'],
+            //'me_is_halal' => $user['me_is_halal'],  //No use this already
+            'me_halal_way' => $user['me_halal_way'],
+            'me_halal_way_s' => $this->m_custom->display_static_option($user['me_halal_way']),
+            'me_halal_way_image_url' => $this->m_custom->display_halal_image_url($user['me_halal_way']),
         );
         return $merchant;
+    }
+
+    function display_halal_image_url($me_halal_way)
+    {
+        if ($me_halal_way == 191)
+        {
+            return base_url() . "image/logo-halal.png";
+        }
+        else if ($me_halal_way == 192)
+        {
+            return base_url() . "image/logo-pork-free.png";
+        }
+        else
+        {
+            return "#";
+        }      
+    }
+
+    function display_halal_label($me_halal_way = NULL)
+    {
+        if ($me_halal_way == 191)
+        {
+            return "<img src='" . base_url() . "/image/logo-halal.png' class='logo-halal2'/>";
+        }
+        else if ($me_halal_way == 192)
+        {
+            return "<img src='" . base_url() . "/image/logo-pork-free.png' class='logo-halal2'/>";
+        }
+        else if ($me_halal_way == 190)
+        {
+            return "";
+        }
+        else
+        {
+            return "<img src='" . base_url() . "/image/logo-halal.png' class='logo-halal2'/> / <img src='" . base_url() . "/image/logo-pork-free.png' class='logo-halal2'/>";
+        }
     }
 
     //To get related sub category by pass in the main category id
