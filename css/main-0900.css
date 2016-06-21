@@ -119,3 +119,15 @@
 .share-redemption-suggestion-list5-box:nth-child(5n+0) {
     display: none;
 }
+
+/*********************************************
+ ** ZOOM IMAGE
+ *********************************************/
+
+.zoom-image:hover img {
+    -webkit-transform:scale(1) /* Safari and Chrome */
+    -moz-transform:scale(1); /* Firefox */
+    -ms-transform:scale(1); /* IE 9 */
+    -o-transform:scale(1); /* Opera */
+     transform:scale(1);
+}
