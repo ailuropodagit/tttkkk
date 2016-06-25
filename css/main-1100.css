@@ -52,3 +52,19 @@
 #album-user-box:nth-last-child(-n+4) {
     margin-bottom: 0px;
 }
+
+/*********************************************
+ ** BLOGGER / PHOTOGRAPHER
+ *********************************************/
+
+#blogger-box-each, #photographer-box-each {
+    width: 33%;
+}
+
+#blogger-box-each:nth-child(4n), #photographer-box-each:nth-child(4n) {
+    margin-right: 15px;
+}
+
+#blogger-box-each:nth-child(3n), #photographer-box-each:nth-child(3n) {
+    margin-right: -35px;
+}

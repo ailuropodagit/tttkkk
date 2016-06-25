@@ -101,6 +101,30 @@
 }
 
 /*********************************************
+ ** SHARE MERCHANT GRID LIST4
+ *********************************************/
+
+.share-merchant-grid-list4-box {
+    width: 100%;
+}
+
+.share-merchant-grid-list4-box:nth-child(4n) {
+    margin: 0px 25px 25px 0px;
+}
+
+.share-merchant-grid-list4-box:nth-child(3n) {
+    margin: 0px 25px 25px 0px;
+}
+
+.share-merchant-grid-list4-box:nth-child(2n) {
+    margin: 0px 25px 25px 0px;
+}
+
+.share-merchant-grid-list4-box:nth-child(2n) {
+    margin: 0px 25px 25px 0px;
+}
+
+/*********************************************
  ** SHARE REDEMPTION SUGGESTION LIST5
  *********************************************/
 

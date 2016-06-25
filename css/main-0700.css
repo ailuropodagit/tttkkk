@@ -54,22 +54,22 @@
 }
 
 /*********************************************
- ** SHARE HOT DEAL GRID LIST4
+ ** SHARE MERCHANT GRID LIST4
  *********************************************/
 
-.share-hot-deal-grid-list4-box {
+.share-merchant-grid-list4-box {
     width: calc(50% - 14px);
 }
 
-.share-hot-deal-grid-list4-box:nth-child(4n) {
+.share-merchant-grid-list4-box:nth-child(4n) {
     margin: 0px 25px 25px 0px;
 }
 
-.share-hot-deal-grid-list4-box:nth-child(3n) {
+.share-merchant-grid-list4-box:nth-child(3n) {
     margin: 0px 25px 25px 0px;
 }
 
-.share-hot-deal-grid-list4-box:nth-child(2n) {
+.share-merchant-grid-list4-box:nth-child(2n) {
     margin-right: 0px;
 }
 
@@ -161,6 +161,26 @@
 }
 
 /*********************************************
+ ** SHARE REDEMPTION GRID LIST4
+ *********************************************/
+
+.share-hot-deal-grid-list4-box {
+    width: calc(50% - 14px);
+}
+
+.share-hot-deal-grid-list4-box:nth-child(4n) {
+    margin: 0px 25px 25px 0px;
+}
+
+.share-hot-deal-grid-list4-box:nth-child(3n) {
+    margin: 0px 25px 25px 0px;
+}
+
+.share-hot-deal-grid-list4-box:nth-child(2n) {
+    margin-right: 0px;
+}
+
+/*********************************************
  ** SHARE REDEMPTION SUGGESTION LIST5
  *********************************************/
 
@@ -226,4 +246,63 @@
 
 #album-user-box:nth-last-child(-n+2) {
     margin-bottom: 0px;
+}
+
+/*********************************************
+ ** BLOGGER / PHOTOGRAPHER
+ *********************************************/
+
+#blogger-search-input, #photographer-search-input {
+    width: 100%;
+}
+
+#blogger-search-input input[type='text'], #photographer-search-input input[type='text'] {
+    width: 100%;
+}
+
+#blogger-search-dropdown, #photographer-search-dropdown {
+    margin: 5px 0px 0px 0px;
+    display: block;
+}
+
+#blogger-search-dropdown select, #photographer-search-dropdown select {
+    width: 100%;
+}
+
+#blogger-search-submit, #photographer-search-submit {
+    margin: 5px 0px 0px 0px;
+    display: block;
+}
+
+#blogger-search-submit input[type='submit'], #photographer-search-submit input[type='submit'] {
+    width: 100%;
+}
+
+#blogger-search-clear, #photographer-search-clear {
+    margin: 5px 0px 0px 0px;
+    display: block;
+}
+
+#blogger-search-clear .a-href-button, #photographer-search-clear .a-href-button  {
+    width: calc(100% - 28px);
+}
+
+#blogger-box-each, #photographer-box-each {
+    width: 99%;
+}
+
+#blogger-box-each:nth-child(4n), #photographer-box-each:nth-child(4n) {
+    margin-right: 15px;
+}
+
+#blogger-box-each:nth-child(3n), #photographer-box-each:nth-child(3n) {
+    margin-right: 15px;
+}
+
+#blogger-box-each:nth-child(2n), #photographer-box-each:nth-child(2n) {
+    margin-right: 15px;
+}
+
+#blogger-box-each:nth-child(1n), #photographer-box-each:nth-child(1n) {
+    margin-right: -35px;
 }

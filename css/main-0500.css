@@ -40,21 +40,6 @@
 }
 
 /*********************************************
- ** DASHBOARD
- *********************************************/
-
-#dashboard-navigation-each {
-    border-radius: 0px;
-    width: 100%;
-    border: 1px solid lightgray;
-    background: whitesmoke !important;
-}
-
-#dashboard-navigation-each:first-child {
-    margin-left: 0px;
-}
-
-/*********************************************
  ** SHARE HOT DEAL GRID LIST 5 OLD
  *********************************************/
 

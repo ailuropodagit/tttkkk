@@ -122,6 +122,26 @@
 }
 
 /*********************************************
+ ** BLOGGER / PHOTOGRAPHER
+ *********************************************/
+
+#blogger-box-each, #photographer-box-each {
+    width: 49%;
+}
+
+#blogger-box-each:nth-child(4n), #photographer-box-each:nth-child(4n) {
+    margin-right: 15px;
+}
+
+#blogger-box-each:nth-child(3n), #photographer-box-each:nth-child(3n) {
+    margin-right: 15px;
+}
+
+#blogger-box-each:nth-child(2n), #photographer-box-each:nth-child(2n) {
+    margin-right: -35px;
+}
+
+/*********************************************
  ** FOOTER
  *********************************************/
 

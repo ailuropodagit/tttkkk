@@ -98,3 +98,14 @@
     float: none;
     margin: 20px 0px 0px 0px;
 }
+
+#dashboard-navigation-each {
+    border-radius: 0px;
+    width: 100%;
+    border: 1px solid lightgray;
+    background: whitesmoke !important;
+}
+
+#dashboard-navigation-each:first-child {
+    margin-left: 0px;
+}
