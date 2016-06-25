@@ -191,7 +191,7 @@
 #album-user-box {
     display: inline-block;
     vertical-align: top;
-    width: calc(33% - 21px);
+    width: calc(50% - 20px);
     margin: 0px 25px 25px 0px;
 }
 

@@ -118,8 +118,7 @@
                           fjs.parentNode.insertBefore(js, fjs);
                         }(document, 'script', 'facebook-jssdk'));
                         </script>
-
-            <div class="fb-page" data-href="https://www.facebook.com//keppo.my" data-small-header="true" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/keppo.my"><a href="https://www.facebook.com/keppo.my">Keppo.my</a></blockquote></div></div>
+                        <div class="fb-page" data-href="https://www.facebook.com//keppo.my" data-width="250" data-small-header="true" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/keppo.my"><a href="https://www.facebook.com/keppo.my">Keppo.my</a></blockquote></div></div>
                     </div>
                     <div id="float-fix"></div>                    
                 </div>
@@ -130,9 +129,7 @@
                 </div>
             </div>
         </div>
-
         <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
         <script type="text/javascript" src="<?php echo base_url('js/slick-slider/slick.min.js') ?>"></script>
-
     </body>
 </html>

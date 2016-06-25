@@ -40,6 +40,21 @@
 }
 
 /*********************************************
+ ** DASHBOARD
+ *********************************************/
+
+#dashboard-navigation-each {
+    border-radius: 0px;
+    width: 100%;
+    border: 1px solid lightgray;
+    background: whitesmoke !important;
+}
+
+#dashboard-navigation-each:first-child {
+    margin-left: 0px;
+}
+
+/*********************************************
  ** SHARE HOT DEAL GRID LIST 5 OLD
  *********************************************/
 
@@ -97,7 +112,7 @@
 #album-user-box {
     display: inline-block;
     vertical-align: top;
-    width: calc(33% - 21px);
+    width: 100%;
     margin: 0px 25px 25px 0px;
 }
 

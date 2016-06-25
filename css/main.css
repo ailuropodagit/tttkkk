@@ -327,7 +327,7 @@ html, body {
 #header-logo-bar-search-block1 {
     display: inline-block;
     vertical-align: top;
-    width: calc(100% - 420px);
+    width: calc(100% - 370px);
 }
 
 #header-logo-bar-search-block2, #header-logo-bar-search2-block2 {
@@ -340,7 +340,19 @@ html, body {
 
 #header-logo-bar-search-block3, #header-logo-bar-search2-block3 {
     display: inline-block;
-    margin: 0px 20px 0px -3px;
+    margin: 0px 0px 0px -3px;
+    vertical-align: top;
+    width: 120px;
+}
+
+#header-logo-bar-search-block3 select, #header-logo-bar-search2-block3 select {
+    width: 100%;
+    background-color: #9BED99;
+}
+
+#header-logo-bar-search-block4, #header-logo-bar-search2-block4 {
+    display: inline-block;
+    margin: 0px 0px 0px -3px;
     vertical-align: top;
     width: 120px;
 }

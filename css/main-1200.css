@@ -1,4 +1,37 @@
 /*********************************************
+ ** HEADER
+ *********************************************/
+
+#header-logo-bar-search {
+    text-align: right;
+    /*width: calc(100% - 220px);*/
+}
+
+#header-logo-bar-search-content {
+    display: none;
+}
+
+#header-logo-bar-search2 {
+    display: inline;
+}
+
+#header-logo-bar-search-block1 {
+    width: calc(100% - 361px);
+}
+
+#header-logo-bar-search-block1 input[type='text'] {
+    width: 100%;
+}
+
+.header-logo-bar-table-row-cell-mobile-navigation {
+    visibility: visible;
+}
+
+#header-navigation-bar {
+    display: none;
+}
+
+/*********************************************
  ** HOME ROW 1
  *********************************************/
 

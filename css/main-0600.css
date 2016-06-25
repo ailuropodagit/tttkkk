@@ -40,14 +40,14 @@
     display: block;
 }
 
-#header-logo-bar-search-block1, #header-logo-bar-search-block2 {
+#header-logo-bar-search-block1, #header-logo-bar-search-block2, #header-logo-bar-search-block3 {
     width: 100%;
     margin: 0px;
     border: 1px solid lightgray;
     box-sizing: border-box;
 }
 
-#header-logo-bar-search-block3 {
+#header-logo-bar-search-block4 {
     width: 100%;
     margin: 0px;
     box-sizing: border-box;
