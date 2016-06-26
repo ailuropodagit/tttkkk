@@ -47,6 +47,9 @@
         <link rel="stylesheet" href="<?php echo base_url('js/bootstrap-3.3.5/dist/css/custom-bootstrap-modal.css') ?>">
         <link rel="stylesheet" href="<?php echo base_url('js/bootstrap-3.3.5/dist/css/custom-bootstrap-modal-center.css') ?>">
         <script type="text/javascript" src="<?php echo base_url('js/bootstrap-3.3.5/dist/js/bootstrap.min.js') ?>"></script>
+        <link rel="stylesheet" href="//releases.flowplayer.org/6.0.5/skin/minimalist.css">
+        <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+        <script src="//releases.flowplayer.org/6.0.5/flowplayer.min.js"></script>
         <script>
             $(function(){
                 //BOOSTRAP MODAL
@@ -862,3 +865,5 @@
             </div>
             <div id="header-mobile-navigation-block"></div>
         </div>
+        
+        <!--<div class="flowplayer"><video><source type="video/flv" src="video/how-to-share.flv"></video></div>-->
