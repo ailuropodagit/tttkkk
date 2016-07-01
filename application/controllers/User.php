@@ -1889,6 +1889,7 @@ class User extends CI_Controller
         $this->data['picture_merchant'] = array(
             'name' => 'picture-merchant',
             'id' => 'picture-merchant',
+            'class' => 'chosen-select',
         );
         $this->data['merchant_list'] = $this->m_merchant->getMerchantList();
         $this->data['picture_merchant_selected'] = empty($picture_result) ? '' : $picture_result['merchant_id'];

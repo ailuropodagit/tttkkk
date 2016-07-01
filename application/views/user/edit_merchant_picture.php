@@ -1,3 +1,5 @@
+<script type="text/javascript" src="<?php echo base_url() ?>js/chosen/chosen.jquery.min.js"></script>
+<?php echo link_tag('js/chosen/chosen.css') ?>
 <script type="text/javascript" src="<?php echo base_url() ?>js/jquery.ajaxfileupload.js"></script>
 
 <script type="text/javascript">
@@ -19,8 +21,8 @@
         $('img#'+ response[1]).attr('src', post_image);
       }
     });
-
     
+    $(".chosen-select").chosen();     
     });
 </script>
 
