@@ -105,7 +105,7 @@ if($this->ion_auth->user()->num_rows())
         $self_open = 1;
     }
 }
-?>
+?> 
     
 <?php
 if ($self_open == 1)
@@ -130,85 +130,59 @@ if ($self_open == 1)
         $this->albert_model->update_user($where_update_user, $data_update_user);
     }
     ?>
-
+        
     <!--HELP GUIDE MODAL-->
     <div id="help-guide-modal" class="modal fade" role="dialog">
         <div class="modal-dialog" id="help-guide-modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-body">
-
                     <script>
                         $(function(){
-                            var $page = 0;
-                            if ($page == 0){
-                                $(".help-guide-navigation-previous").hide();
-                            }
-
-                            $(".help-guide-navigation-previous").click(function(){
-                                if ($page != 0){
-                                    $page = $page - 1;
-
-                                    $.ajax({
-                                        url: "<?php echo base_url() ?>help_guide/user",
-                                        type: 'post',
-                                        data: {page: $page},
-                                        beforeSend: function() {
-                                            $("#help-guide-step").html("<div id='help-guide-step-loading'><img src='<?php echo base_url() ?>image/loading.gif'></div>");
-                                        },
-                                        success: function(data){
-                                            $("#help-guide-step").html(data);
-                                        }
-                                    });
-
-                                    if ($page == 0){
-                                        $(".help-guide-navigation-previous").hide();
-                                    }
-                                    if ($page != 11){
-                                        $(".help-guide-navigation-next").show();
-                                    }
-                                }
+                            $('#dashboard-header-help-guide-link').click(function(){
+                                $("#help-guide-list").show();
+                                $("#help-guide-video").hide();
                             });
-
-                            $(".help-guide-navigation-next").click(function(){
-                                if ($page != 11){
-                                    $page = $page + 1;
-
-                                    $.ajax({
-                                        url: "<?php echo base_url() ?>help_guide/user",
-                                        type: 'post',
-                                        data: {page: $page},
-                                        beforeSend: function() {
-                                            $("#help-guide-step").html("<div id='help-guide-step-loading'><img src='<?php echo base_url() ?>image/loading.gif'></div>");
-                                        },
-                                        success: function(data){
-                                            $("#help-guide-step").html(data);
-                                        }
-                                    });
-
-                                    if ($page != 0){
-                                        $(".help-guide-navigation-previous").show();
+                            
+                            $('.help-guide-click').click(function(){
+                                $("#help-guide-list").hide();
+                                $("#help-guide-video").show();
+                                var video_link = $(this).attr('video');
+                                
+                                $.ajax({
+                                    url: "<?php echo base_url() ?>you_need_help",
+                                    type: 'post',
+                                    data: {video_link: video_link},
+                                    beforeSend: function() {
+                                        $("#help-guide-video").html("<div id='help-guide-step-loading'><img src='<?php echo base_url() ?>image/loading.gif'></div>");
+                                    },
+                                    success: function(data){
+                                        $("#help-guide-video").html(data);
                                     }
-                                    if ($page == 11){
-                                        $(".help-guide-navigation-next").hide();
-                                    }
-                                }
+                                });
                             });
                         }); 
                     </script>
-
+                    
                     <button type="button" class="bootstrap-close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                     <div id="help-guide">
-                        <div id="help-guide-step">
-                            <img src="<?php echo base_url() ?>image/help_guide/user/user-0.png" style="width: 100%;">
+                        <div id="help-guide-list">
+                            <ul>
+                                <li video="1-how-to-edit-profile-picture.flv" class="help-guide-click">How to edit profile picture</li>
+                                <li video="2-how-to-view.flv" class="help-guide-click">How to view</li>
+                                <li video="3-how-to-earn-candie.flv" class="help-guide-click">How to earn candies</li>
+                                <li video="4-how-to-upload-pictures.flv" class="help-guide-click">How to upload pictures</li>
+                                <li video="5-how-to-share.flv" class="help-guide-click">How to share</li>
+                                <li video="6-how-to-redeem.flv" class="help-guide-click">How to redeem</li>
+                                <li video="7-how-to-add-shop.flv" class="help-guide-click">How to add shop</li>
+                                <li video="8-how-to-make-follower.flv" class="help-guide-click">How to make follower</li>
+                                <li video="9-how-to-edit-profile-description.flv" class="help-guide-click">How to edit profile description</li>
+                                <li video="10-important-things-under-my-account.flv" class="help-guide-click">Important things under my account</li>
+                            </ul>
                         </div>
-                        <div id="help-guide-navigation">
-                            <div class="help-guide-navigation-previous">Previous</div>
-                            <div class="help-guide-navigation-next">Next</div>
-                            <div class="float-fix"></div>
-                        </div>
+                        <div id="help-guide-video"></div>
                     </div>
                 </div>
             </div>

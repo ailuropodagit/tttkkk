@@ -48,7 +48,6 @@
         <link rel="stylesheet" href="<?php echo base_url('js/bootstrap-3.3.5/dist/css/custom-bootstrap-modal-center.css') ?>">
         <script type="text/javascript" src="<?php echo base_url('js/bootstrap-3.3.5/dist/js/bootstrap.min.js') ?>"></script>
         <link rel="stylesheet" href="//releases.flowplayer.org/6.0.5/skin/minimalist.css">
-        <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
         <script src="//releases.flowplayer.org/6.0.5/flowplayer.min.js"></script>
         <script>
             $(function(){
@@ -141,12 +140,12 @@
     </style>
     <body>
     <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-      ga('create', 'UA-76880426-1', 'auto');
-      ga('send', 'pageview');
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-76880426-1', 'auto');
+        ga('send', 'pageview');
     </script>
         <?php
         $fetch_method = $this->router->fetch_method();
@@ -866,4 +865,8 @@
             <div id="header-mobile-navigation-block"></div>
         </div>
         
-        <!--<div class="flowplayer"><video><source type="video/flv" src="video/how-to-share.flv"></video></div>-->
+<!--        <div class="flowplayer">
+            <video>
+                <source type="video/flv" src="<?php echo base_url() ?>video/5-how-to-share.flv">
+            </video>
+        </div>-->
