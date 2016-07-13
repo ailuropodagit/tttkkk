@@ -132,7 +132,7 @@ if(isset($message))
         ?>
 
         <div id="float-fix"></div>
-        <button name="button_action" type="submit" value="upload_image" >Upload</button>
+        <button name="button_action" type="submit" value="upload_image" onclick="return confirm('Confirm that information is correct before save it?')">Upload</button>
         <a href='<?php echo base_url(uri_string()) ?>' class="a-href-button">Clear</a>
         <?php
         //CLOSE FORM 

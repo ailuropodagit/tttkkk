@@ -195,7 +195,7 @@ if(isset($message))
         $have_role = $this->m_custom->check_role_su_can_uploadhotdeal();       
         if($have_role == 1){
         ?>           
-                <button name="button_action" type="submit" value="upload_hotdeal">Save</button>
+                <button name="button_action" type="submit" value="upload_hotdeal" onclick="return confirm('Confirm that information is correct before save it?')">Save</button>
                 <a href='<?php echo base_url(uri_string()) ?>' class="a-href-button">Clear</a>
         <?php    }
         else {
