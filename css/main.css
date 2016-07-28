@@ -1854,28 +1854,6 @@ html, body {
     width: calc(20% - 22.5px);
     margin: 0px 25px 25px 0px;
     background-color: white;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-    -webkit-box-shadow: 1px 1px 4px 0px rgba(179,179,179,0.80);
-    -moz-box-shadow: 1px 1px 4px 0px rgba(179,179,179,0.80);
-    box-shadow: 1px 1px 4px 0px rgba(179,179,179,0.80);
-    position: relative;
-}
-
-.share-hot-deal-grid-list5-box a {
-    text-decoration: none;
-}
-
-.share-hot-deal-grid-list5-box:nth-child(5n+0) {
-    margin-right: 0px;
-}
-
-.share-hot-deal-grid-list5-box {
-    vertical-align: top;
-    display: inline-block;
-    width: calc(20% - 22.5px);
-    margin: 0px 25px 25px 0px;
-    background-color: white;
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
     -webkit-box-shadow: 1px 1px 3px 0px rgba(179,179,179,0.80);
