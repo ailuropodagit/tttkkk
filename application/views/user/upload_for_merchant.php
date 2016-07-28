@@ -48,7 +48,10 @@
         }
         if (validate_fail == 0) 
         {
-            return true;
+             if (confirm("Confirm that information is correct before save it?")) 
+             { 
+                 return true; 
+             }
         }
         return false;
     }

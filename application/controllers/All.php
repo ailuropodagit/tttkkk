@@ -1314,7 +1314,7 @@ class All extends CI_Controller
             else if ($bottom_part == 'picture')
             {
                 $this->data['album_list'] = $this->m_custom->getAlbumUserMerchant(NULL, $user_id);
-                $this->data['title'] = "Customers Pictures";
+                $this->data['title'] = "User's Pictures";
                 $this->data['bottom_path_name'] = 'all/album_user_merchant';
             }
             else

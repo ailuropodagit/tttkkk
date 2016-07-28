@@ -3121,6 +3121,9 @@ class M_custom extends CI_Model
         $this->db->where('end_time >=', get_part_of_date('all'));
         $this->db->where('start_time is not null AND end_time is not null');
         $this->db->order_by("advertise_id", "desc");
+        
+        $this->db->limit(500);  //Default limit to 500 maximum show
+        
         $query = $this->db->get_where('advertise', array('advertise_type' => 'hot', 'hide_flag' => 0));
         $result = $query->result_array();
         $return = array();
