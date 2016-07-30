@@ -22,7 +22,7 @@ if (isset($message))
 ?>
 
 <div id="payment-charge">
-    <h1>Notification Advertisement Expired</h1>
+    <h1>Notification Food & Beverage Expired</h1>
     <div id="payment-charge-content">
         <?php 
             $this->load->view('all/notification_sub_menu');
@@ -74,7 +74,7 @@ if (isset($message))
                             echo form_close(); 
                         }
                         else {
-                           echo "You don't have permission to edit advertisement";
+                           echo "You don't have permission to edit food & beverage";
                         }
                         echo "</td>";
                         echo '</tr>';

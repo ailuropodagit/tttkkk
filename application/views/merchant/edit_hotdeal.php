@@ -36,11 +36,11 @@ if(isset($message))
 ?>
 
 <div id='hot-deal-advertise'>
-    <h1>Advertisement Edit</h1>
+    <h1>Food & Beverage Edit</h1>
     <div id='hot-deal-advertise-content'>
         
         <div id='hot-deal-advertise-today'>
-            Advertisement Date : <?php echo $hotdeal_date ?>
+            Food & Beverage Date : <?php echo $hotdeal_date ?>
         </div>
         
         <div id='hot-deal-advertise-upload-image-note' style="display:none">
@@ -128,14 +128,14 @@ if(isset($message))
              ?>  
             <button name="button_action" type="submit" value="edit_hotdeal" >Save</button>
             <?php if($hotdeal_frozen == 0){ ?>
-            <button name="button_action" type="submit" value="frozen_hotdeal" onclick="return confirm('Are you sure want to temporary frozen this advertisement? After frozen then it will not show publicly until you unfrozen it.')" >Frozen</button>
+            <button name="button_action" type="submit" value="frozen_hotdeal" onclick="return confirm('Are you sure want to temporary frozen this food & beverage? After frozen then it will not show publicly until you unfrozen it.')" >Frozen</button>
             <?php }else{ ?>
             <button name="button_action" type="submit" value="unfrozen_hotdeal" >Unfrozen</button>
             <?php } ?>
             <button name="button_action" type="submit" value="remove_hotdeal" onclick="return confirm('Are you sure want to remove it? It cannot be recover.')" >Remove</button>
             <?php    }
             else {
-               echo "You don't have permission to edit advertisement";
+               echo "You don't have permission to edit food & beverage";
             }
             ?>
         <?php echo form_close(); ?>
