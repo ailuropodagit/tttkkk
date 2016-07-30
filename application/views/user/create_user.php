@@ -125,9 +125,9 @@
             version: 'v2.5'
         });
         //Get if logged in
-        FB.getLoginStatus(function (response) {
-            statusChangeCallback(response);
-        });
+//        FB.getLoginStatus(function (response) {
+//            statusChangeCallback(response);
+//        });
     };
 
     // Load the SDK asynchronously
