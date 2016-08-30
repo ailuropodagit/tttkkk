@@ -148,14 +148,14 @@
         ga('send', 'pageview');
     </script>
         <?php
-        $fetch_method = $this->router->fetch_method();
-        if (!isset($_COOKIE['visit_first_time']) && $fetch_method != 'login')
-        {
-            //COOKIE NO EXPIRE
-            setcookie('visit_first_time', 'no');
-            //BOOSTRAP MODAL
-            if (!$this->ion_auth->logged_in())
-            {
+//        $fetch_method = $this->router->fetch_method();
+//        if (!isset($_COOKIE['visit_first_time']) && $fetch_method != 'login')
+//        {
+//            //COOKIE NO EXPIRE
+//            setcookie('visit_first_time', 'no');
+//            //BOOSTRAP MODAL
+//            if (!$this->ion_auth->logged_in())
+//            {
                 ?>
                 <div class="modal fade" id="visit-first-time-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                     <div class="modal-dialog modal-dialog" role="document">
@@ -212,12 +212,13 @@
                                                 <div id='visit-first-time-modal-left-login-form-password-input'><?php echo form_input($password); ?></div>
                                             </div>
                                             <div id='visit-first-time-modal-left-login-form-submit'>
-                                                <div id='visit-first-time-modal-left-login-form-submit-user'>
+                                                <div id='visit-first-time-modal-left-login-form-submit-button'>
                                                     <input type="submit" value="User Login" onclick="myfunction('<?php echo $user_login; ?>')"/>
                                                 </div>
-                                                <div id='visit-first-time-modal-left-login-form-submit-merchant' style='float:right'>
-                                                    <a href='<?php echo base_url() ?>user/login'><img style='width:140px' src='<?php echo base_url('image/social-media-facebook-login.png') ?>'></a>
-  <!--                                                  <input type="submit" value="Merchant Login" onclick="myfunction('<?php //echo $merchant_login; ?>')"/> -->
+                                                <div id='visit-first-time-modal-left-login-form-submit-login-with-facebook'>
+                                                    <a href='<?php echo base_url() ?>user/login'>
+                                                        <img style='width:140px' src='<?php echo base_url('image/social-media-facebook-login.png') ?>'>
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
@@ -269,8 +270,8 @@
                     </div>
                 </div>
                 <?php
-            }
-        }
+//            }
+//        }
         ?>
         <!--HEADER-->
         <div id='header'>

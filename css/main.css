@@ -611,12 +611,12 @@ html, body {
     margin: 20px 0px 0px 0px;
 }
 
-#visit-first-time-modal-left-login-form-submit-login, #visit-first-time-modal-left-login-form-submit-login-with-fb {
+#visit-first-time-modal-left-login-form-submit-button, #visit-first-time-modal-left-login-form-submit-login-with-facebook {
     display: inline-block;
     vertical-align: top;
 }
 
-#visit-first-time-modal-left-login-form-submit-login-with-fb {
+#visit-first-time-modal-left-login-form-submit-login-with-facebook {
     margin: 0px 0px 0px 10px;
 }
 
