@@ -148,14 +148,14 @@
         ga('send', 'pageview');
     </script>
         <?php
-//        $fetch_method = $this->router->fetch_method();
-//        if (!isset($_COOKIE['visit_first_time']) && $fetch_method != 'login')
-//        {
-//            //COOKIE NO EXPIRE
-//            setcookie('visit_first_time', 'no');
-//            //BOOSTRAP MODAL
-//            if (!$this->ion_auth->logged_in())
-//            {
+        $fetch_method = $this->router->fetch_method();
+        if (!isset($_COOKIE['visit_first_time']) && $fetch_method != 'login')
+        {
+            //COOKIE NO EXPIRE
+            setcookie('visit_first_time', 'no');
+            //BOOSTRAP MODAL
+            if (!$this->ion_auth->logged_in())
+            {
                 ?>
                 <div class="modal fade" id="visit-first-time-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                     <div class="modal-dialog modal-dialog" role="document">
@@ -212,13 +212,12 @@
                                                 <div id='visit-first-time-modal-left-login-form-password-input'><?php echo form_input($password); ?></div>
                                             </div>
                                             <div id='visit-first-time-modal-left-login-form-submit'>
-                                                <div id='visit-first-time-modal-left-login-form-submit-button'>
+                                                <div id='visit-first-time-modal-left-login-form-submit-user'>
                                                     <input type="submit" value="User Login" onclick="myfunction('<?php echo $user_login; ?>')"/>
                                                 </div>
-                                                <div id='visit-first-time-modal-left-login-form-submit-login-with-facebook'>
-                                                    <a href='<?php echo base_url() ?>user/login'>
-                                                        <img style='width:140px' src='<?php echo base_url('image/social-media-facebook-login.png') ?>'>
-                                                    </a>
+                                                <div id='visit-first-time-modal-left-login-form-submit-merchant' style='float:right'>
+                                                    <a href='<?php echo base_url() ?>user/login'><img style='width:140px' src='<?php echo base_url('image/social-media-facebook-login.png') ?>'></a>
+  <!--                                                  <input type="submit" value="Merchant Login" onclick="myfunction('<?php //echo $merchant_login; ?>')"/> -->
                                                 </div>
                                             </div>
                                         </div>
@@ -270,8 +269,8 @@
                     </div>
                 </div>
                 <?php
-//            }
-//        }
+            }
+        }
         ?>
         <!--HEADER-->
         <div id='header'>
@@ -383,7 +382,7 @@
                                             <li><a href='<?php echo base_url("user/redemption/$header_voucher_active") ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'redemption'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Vouchers <span class="layout-inner-right-menu-bar-click">Click</span></a></li>
                                             <!--<li><a href='<?php //echo base_url('user/invite_friend') ?>' class='layout-inner-right-menu-bar <?php //if ($fetch_method == 'invite_friend'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Invite Friend</a></li>-->
                                             <li><a href='<?php echo base_url('user/promo_code') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'promo_code'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Promo Code <span class="layout-inner-right-menu-bar-click">Click</span></a></li>
-                                            <li><a href='<?php echo base_url('user/balance_page') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'balance_page'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Balance (<?php echo 'RM '.$this->m_user->user_check_balance($login_user_id); ?>)</a></li>
+                                            <li><a href='<?php echo base_url('user/balance_page') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'balance_page'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Keppo Wallet (<?php echo 'RM '.$this->m_user->user_check_balance($login_user_id); ?>)</a></li>
                                             <li><a href='<?php echo base_url('user/add_merchant') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'add_merchant'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Add Shop</a></li>
                                             <li><a href='<?php echo base_url('user/logout') ?>'>Logout</a>
                                         </ul>
@@ -410,8 +409,8 @@
                                             <li><a href='<?php echo base_url('merchant/change_password') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'change_password'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Change Password</a></li>
                                             <li><a href='<?php echo base_url('all/notification') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'notification'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Notification (<?php echo $notification_count; ?> new)</a></li>
                                             <li><a href='<?php echo base_url("merchant/follower/user/$login_user_id") ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'follower' || $fetch_method == 'following'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Follower (<?php echo $follower_count ?>)</a></li>
-                                            <li><a href='<?php echo base_url('merchant/upload_hotdeal') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'upload_hotdeal' || $fetch_method == 'edit_hotdeal'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Create Advertisement <span class="layout-inner-right-menu-bar-click">Click</span></a></li>
-                                            <li><a href='<?php echo base_url("all/album_merchant/$header_merchant_slug") ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'album_merchant'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Advertisement's Album</a></li>
+                                            <li><a href='<?php echo base_url('merchant/upload_hotdeal') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'upload_hotdeal' || $fetch_method == 'edit_hotdeal'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Create Food & Beverage <span class="layout-inner-right-menu-bar-click">Click</span></a></li>
+                                            <li><a href='<?php echo base_url("all/album_merchant/$header_merchant_slug") ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'album_merchant'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Food & Beverage's Album</a></li>
                                             <li><a href='<?php echo base_url('merchant/candie_promotion') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'candie_promotion'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Create Candie Voucher <span class="layout-inner-right-menu-bar-click">Click</span></a></li>
                                             <li><a href='<?php echo base_url("all/album_redemption/$header_merchant_slug") ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'album_redemption'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Candie Voucher's Album</a></li>
                                             <li><a href='<?php echo base_url('merchant/merchant_redemption_page') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'merchant_redemption_page'){ echo "layout-inner-right-menu-bar-active"; } ?>'>User's Redemption</a></li>
@@ -445,8 +444,8 @@
                                             <li><a href='<?php echo base_url('merchant/profile') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'profile'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Profile</a></li>
                                             <li><a href='<?php echo base_url('all/notification') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'notification'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Notification (<?php echo $notification_count; ?> new)</a></li>
                                             <li><a href='<?php echo base_url("merchant/follower/user/$login_user_id") ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'follower' || $fetch_method == 'following'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Follower (<?php echo $follower_count ?>)</a></li>
-                                            <li><a href='<?php echo base_url('merchant/upload_hotdeal') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'upload_hotdeal' || $fetch_method == 'edit_hotdeal'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Create Advertisement <span class="layout-inner-right-menu-bar-click">Click</span></a></li>
-                                            <li><a href='<?php echo base_url("all/album_merchant/$header_merchant_slug") ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'album_merchant'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Advertisement's Album</a></li>
+                                            <li><a href='<?php echo base_url('merchant/upload_hotdeal') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'upload_hotdeal' || $fetch_method == 'edit_hotdeal'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Create Food & Beverage <span class="layout-inner-right-menu-bar-click">Click</span></a></li>
+                                            <li><a href='<?php echo base_url("all/album_merchant/$header_merchant_slug") ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'album_merchant'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Food & Beverage's Album</a></li>
                                             <li><a href='<?php echo base_url('merchant/candie_promotion') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'candie_promotion'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Create Candie Voucher <span class="layout-inner-right-menu-bar-click">Click</span></a></li>
                                             <li><a href='<?php echo base_url("all/album_redemption/$header_merchant_slug") ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'album_redemption'){ echo "layout-inner-right-menu-bar-active"; } ?>'>Candie Voucher's Album</a></li>
                                             <li><a href='<?php echo base_url('merchant/merchant_redemption_page') ?>' class='layout-inner-right-menu-bar <?php if ($fetch_method == 'merchant_redemption_page'){ echo "layout-inner-right-menu-bar-active"; } ?>'>User's Redemption</a></li>
@@ -771,7 +770,7 @@
                             </li>
                             <li <?php if($header_fetch_method == 'hotdeal_list' || $header_uri_segment4 == 'hot'){ echo "class='header-navigation-bar-active'"; } ?>>
                                 <a href='<?php echo base_url('all/hotdeal-list/1') ?>'>
-                                    <i class="fa fa-fire header-navigation-bar-left-icon"></i> Advertisement
+                                    <i class="fa fa-fire header-navigation-bar-left-icon"></i> Food & Beverage
                                 </a>
                             </li>
                             <li <?php if($header_fetch_method == 'promotion_list' || $header_uri_segment4 == 'pro'){ echo "class='header-navigation-bar-active'"; } ?>>
@@ -849,7 +848,7 @@
                             </ul>
                         </li>
                         <li>
-                            <a href='<?php echo base_url('all/hotdeal-list/26') ?>'>Advertisement</a>
+                            <a href='<?php echo base_url('all/hotdeal-list/26') ?>'>Food & Beverage</a>
                         </li>
                         <li>
                             <a href="<?php echo base_url('all/promotion-list/26') ?>">Redemption</a>

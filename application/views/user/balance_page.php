@@ -20,7 +20,7 @@ if(isset($message))
 ?>
 
 <div id="payment">
-    <h1>Payment Balance</h1>
+    <h1>Keppo Wallet</h1>
     <div id='payment-content'>
         <!--PAYMENT GO-->
         <div id="payment-go">

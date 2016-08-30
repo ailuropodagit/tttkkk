@@ -64,7 +64,7 @@
     <div id="fb-root"></div>
     <div id="hot-deal-header">
         <div id="hot-deal-header-title">
-            Advertisement
+            Food & Beverage
         </div>
         <div id="hot-deal-header-edit-link">
             <?php
@@ -79,7 +79,7 @@
                 if (check_correct_login_type($this->config->item('group_id_merchant'), $allowed_list, $advertise_id) || check_correct_login_type($this->config->item('group_id_supervisor'), $allowed_list, $advertise_id))
                 {
                     ?>
-                    <a href='<?php echo base_url() . "merchant/edit_hotdeal/" . $advertise_id ?>' class="a-href-button">Edit Advertisement</a>
+                    <a href='<?php echo base_url() . "merchant/edit_hotdeal/" . $advertise_id ?>' class="a-href-button">Edit Food & Beverage</a>
                     <?php
                 }
             }
@@ -302,7 +302,7 @@
     if (!empty($advertise_suggestion_list))
     {     
         $data['share_hotdeal_redemption_list'] = $advertise_suggestion_list;
-        $data['title'] = "Advertisement Suggestion";
+        $data['title'] = "Food & Beverage Suggestion";
         $this->load->view('share/hot_deal_suggestion_list5', $data);
     }
     else

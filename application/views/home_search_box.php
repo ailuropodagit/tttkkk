@@ -51,7 +51,7 @@
 
 <?php echo form_open('all/home_search') ?>
     <div id="header-logo-bar-search-block1">
-        <input type="text" placeholder="Search: advertisement, redemption" name="search_word" id="search_word" class="search_word_input">
+        <input type="text" placeholder="Search: food & beverage, redemption" name="search_word" id="search_word" class="search_word_input">
     </div>
     <div id="header-logo-bar-search-block2">
         <?php

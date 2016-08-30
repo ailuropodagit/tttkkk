@@ -63,7 +63,7 @@ $lang['create_user_fname_label']                       = 'First Name:';
 $lang['create_user_first_name_label']                  = 'First Name:';
 $lang['create_user_lname_label']                       = 'Last Name:';
 $lang['create_user_last_name_label']                   = 'Last Name:';
-$lang['create_user_promo_code_label2']                 = 'Promo Code:';
+$lang['create_user_promo_code_label2']                 = 'Promo Code/Reward Code:';
 $lang['create_user_promo_code_label']                  = 'Promo Code: (Copy this for friend register)';
 $lang['create_user_description_label']                 = 'Description:';
 $lang['create_user_company_label']                     = 'Company Name:';
@@ -192,7 +192,7 @@ $lang['branch_state_label']                  = 'Branch State:';
 $lang['supervisor_username_label']           = 'Supervisor Username:';
 $lang['supervisor_password_label']           = 'Supervisor Password:';
 
-// Advertisement
+// Food & Beverage
 $lang['hotdeal_description_label']         = 'Description : ';
 $lang['hotdeal_hour_label']                = 'Countdown Day(0 to 60) : ';
 $lang['hotdeal_title_label']               = 'Title : ';
@@ -299,13 +299,13 @@ $lang['web_setting_keppo_company_phone']    = 'Keppo Company Phone';
 $lang['web_setting_keppo_company_fax']    = 'Keppo Company Fax';
 $lang['web_setting_keppo_company_bank']    = 'Keppo Company Bank & Account';
 $lang['web_setting_merchant_minimum_balance']    = 'Merchant Minimum Balance (RM)';
-$lang['web_setting_merchant_max_hotdeal_per_day']    = 'Merchant Max Advertisement per day';
+$lang['web_setting_merchant_max_hotdeal_per_day']    = 'Merchant Max Food & Beverage per day';
 $lang['web_setting_user_max_picture_per_day']    = 'User Max Picture per day';
 $lang['web_setting_user_max_share_get_candie_per_day']    = 'User Max Share Get Gandie per day';
 $lang['web_setting_friend_success_register_get_money']    = 'Default Friend Success Register get Cash Back';
 $lang['web_setting_register_promo_code_get_candie']    = 'Default Register Promo Code get Candie';
 $lang['web_setting_merchant_promo_code_get_candie']    = 'Default Merchant Promo Code get Candie';
-$lang['web_setting_popular_hotdeal_number']    = 'Number of Like to become Advertisement';
+$lang['web_setting_popular_hotdeal_number']    = 'Number of Like to become Food & Beverage';
 $lang['web_setting_popular_redemption_number']    = 'Number of Redeem to become Hot Redemption';
 $lang['web_setting_min_rating_get_for_sort_list']    = 'Minimum Rating Review for Rating Sort List';
 

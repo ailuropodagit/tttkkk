@@ -46,7 +46,7 @@
         <div id='share-hot-deal-row-list4-header-table'>
             <div id='share-hot-deal-row-list4-header-table-row'>
                 <div id='share-hot-deal-row-list4-header-table-row-cell'>
-                    <div id='share-hot-deal-row-list4-header-title'>Today's Advertisement</div>
+                    <div id='share-hot-deal-row-list4-header-title'>Today's Food & Beverage</div>
                 </div>
                 <div id='share-hot-deal-row-list4-header-table-row-cell'>
                     <div id='share-hot-deal-row-list4-header-navigation'>

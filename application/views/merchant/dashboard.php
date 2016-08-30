@@ -436,7 +436,7 @@ if ($self_open == 1)
 
         <div id="dashboard-navigation">
             <div id="dashboard-navigation-each" <?php if($uri_segment_4 != "promotion" && $uri_segment_4 != "picture"){ echo 'class="dashboard-navigation-each-active"'; } ?>>
-                <a href="<?php echo $hot_deal; ?>"><i class="fa fa-fire dashboard-navigation-each-icon"></i>Advertisement</a>
+                <a href="<?php echo $hot_deal; ?>"><i class="fa fa-fire dashboard-navigation-each-icon"></i>Food & Beverage</a>
             </div>
             <div id="dashboard-navigation-each" <?php if($uri_segment_4 == "promotion"){ echo 'class="dashboard-navigation-each-active"'; } ?>>
                 <a href="<?php echo $candie_promotion; ?>"><i class="fa fa-gift dashboard-navigation-each-icon"></i>Redemption</a>

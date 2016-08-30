@@ -444,7 +444,7 @@ class Merchant extends CI_Controller
 
             $adv_type_list = array(
                 '' => 'All Type',
-                'hot' => 'Advertisement',
+                'hot' => 'Food & Beverage',
                 'pro' => 'Candie Voucher',
                 'mua' => 'User Upload Picture'
             );
@@ -1083,7 +1083,7 @@ class Merchant extends CI_Controller
 
                 if ($this->m_custom->simple_update('advertise', $data, 'advertise_id', $id))
                 {
-                    $message_info = add_message_info($message_info, $display_name . ' success change to normal preview advertisement.');
+                    $message_info = add_message_info($message_info, $display_name . ' success change to normal preview food & beverage.');
                     $this->m_custom->update_row_log('advertise', $id, $login_id, $do_by_type);
                     $can_redirect_to = 1;
                 }
@@ -1793,7 +1793,7 @@ class Merchant extends CI_Controller
             $crud->fields('username', 'password_visible', 'su_branch_id', 'su_can_uploadhotdeal');
             $crud->display_as('password_visible', 'Password');
             $crud->display_as('su_branch_id', 'Branch');
-            $crud->display_as('su_can_uploadhotdeal', 'Able to upload advertisement');
+            $crud->display_as('su_can_uploadhotdeal', 'Able to upload food & beverage');
             $crud->callback_add_field('su_branch_id', array($this, '_selected_branch_callback'));   //For add page set pre-selected value if got pass in brach id
             $crud->field_type('su_branch_id', 'dropdown', $this->ion_auth->get_merchant_branch_list($id));  //For view show the branch list text
             $crud->callback_insert(array($this, 'supervisor_insert_callback'));
@@ -2181,7 +2181,7 @@ class Merchant extends CI_Controller
                         }
                     }
 
-                    //To update previous advertisement
+                    //To update previous food & beverage
                     $data = array(
                         'sub_category_id' => $sub_category_id,
                         'title' => $title,
@@ -2482,7 +2482,7 @@ class Merchant extends CI_Controller
             {
                 if ($hotdeal_hour > 1440)
                 {
-                    $message_info = add_message_info($message_info, 'Advertisement please put in a valid hour between 0 to 60(Max 2 months only).', $title);
+                    $message_info = add_message_info($message_info, 'Food & Beverage please put in a valid hour between 0 to 60(Max 2 months only).', $title);
                     $hotdeal_hour = 0;
                 }
 
@@ -2511,7 +2511,7 @@ class Merchant extends CI_Controller
 
                 $previous_start_time = $this->m_custom->get_one_table_record('advertise', 'advertise_id', $hotdeal_id)->start_time;
 
-                //To update previous advertisement
+                //To update previous food & beverage
                 $data = array(
                     //'sub_category_id' => $sub_category_id,  //merchant cannot change sub category anymore
                     'title' => $title,
@@ -2529,7 +2529,7 @@ class Merchant extends CI_Controller
                 if ($this->m_custom->simple_update('advertise', $data, 'advertise_id', $hotdeal_id))
                 {
                     $this->m_custom->update_row_log('advertise', $hotdeal_id, $do_by_id, $do_by_type);
-                    $message_info = add_message_info($message_info, 'Advertisement success update.', $title);
+                    $message_info = add_message_info($message_info, 'Food & Beverage success update.', $title);
                     if ($do_by_type == $this->group_id_supervisor)
                     {
                         $noti_url = 'all/advertise/' . $hotdeal_id;
@@ -2558,7 +2558,7 @@ class Merchant extends CI_Controller
                     }
                     
                     $this->m_custom->remove_row_log('advertise', $hotdeal_id, $do_by_id, $do_by_type);
-                    $message_info = add_message_info($message_info, 'Advertisement success remove.', $title);
+                    $message_info = add_message_info($message_info, 'Food & Beverage success remove.', $title);
                     $this->session->set_flashdata('message', $message_info);
                     if ($do_by_type == $this->group_id_supervisor)
                     {
@@ -2578,12 +2578,12 @@ class Merchant extends CI_Controller
             if ($this->input->post('button_action') == "frozen_hotdeal")
             {
                 $this->m_custom->update_frozen_flag(1, 'advertise', $hotdeal_id);
-                $message_info = add_message_info($message_info, 'Advertisement success frozen.', $title);
+                $message_info = add_message_info($message_info, 'Food & Beverage success frozen.', $title);
             }
             if ($this->input->post('button_action') == "unfrozen_hotdeal")
             {
                 $this->m_custom->update_frozen_flag(0, 'advertise', $hotdeal_id);
-                $message_info = add_message_info($message_info, 'Advertisement success unfrozen.', $title);
+                $message_info = add_message_info($message_info, 'Food & Beverage success unfrozen.', $title);
             }
             $this->session->set_flashdata('message', $message_info);
         }
@@ -2787,16 +2787,16 @@ class Merchant extends CI_Controller
 
                     if ($hotdeal_hour > 1440)
                     {
-                        $message_info = add_message_info($message_info, 'Advertisement please put in a valid hour between 0 to 60(Max 2 months only).', $title);
+                        $message_info = add_message_info($message_info, 'Food & Beverage please put in a valid hour between 0 to 60(Max 2 months only).', $title);
                         $hotdeal_hour = 0;
                     }
 
-                    //To check is this an old advertisement or new advertisement, if new advertisement is 0
+                    //To check is this an old food & beverage or new food & beverage, if new food & beverage is 0
                     if ($hotdeal_id == 0)
                     {
                         if ($hotdeal_today_count_update >= $hotdeal_per_day)
                         {
-                            $message_info = add_message_info($message_info, 'Already reach max ' . $hotdeal_per_day . ' advertisement per day.');
+                            $message_info = add_message_info($message_info, 'Already reach max ' . $hotdeal_per_day . ' food & beverage per day.');
                             //redirect('merchant/upload_hotdeal', 'refresh');
                             goto direct_go;
                         }
@@ -2810,7 +2810,7 @@ class Merchant extends CI_Controller
                             goto HiddenImageSkip;
                         }
 
-                        //To check new advertisement is it got image upload or not
+                        //To check new food & beverage is it got image upload or not
                         if (!empty($_FILES[$hotdeal_file]['name']))
                         {
 
@@ -2868,7 +2868,7 @@ class Merchant extends CI_Controller
                                     {
                                         $this->m_custom->notification_process('advertise', $new_id);
                                     }
-                                    $message_info = add_message_info($message_info, 'Advertisement success create.', $title);
+                                    $message_info = add_message_info($message_info, 'Food & Beverage success create.', $title);
                                 }
                                 else
                                 {
@@ -2903,7 +2903,7 @@ class Merchant extends CI_Controller
 
                         $previous_start_time = $this->m_custom->get_one_table_record('advertise', 'advertise_id', $hotdeal_id)->start_time;
 
-                        //To update previous advertisement
+                        //To update previous food & beverage
                         $data = array(
                             'sub_category_id' => $sub_category_id,
                             'title' => $title,
@@ -2925,7 +2925,7 @@ class Merchant extends CI_Controller
                             if ($this->m_custom->simple_update('advertise', $data, 'advertise_id', $hotdeal_id))
                             {
                                 $this->m_custom->update_row_log('advertise', $hotdeal_id, $do_by_id, $do_by_type);
-                                $message_info = add_message_info($message_info, 'Advertisement success update.', $title);
+                                $message_info = add_message_info($message_info, 'Food & Beverage success update.', $title);
                             }
                             else
                             {
@@ -2934,7 +2934,7 @@ class Merchant extends CI_Controller
                         }
                         else
                         {
-                            //If this advertisement is being remove by tick the remove check box
+                            //If this food & beverage is being remove by tick the remove check box
                             $data = array(
                                 'hide_flag' => 1,
                             );
@@ -2942,7 +2942,7 @@ class Merchant extends CI_Controller
                             {
                                 $this->m_custom->remove_row_log('advertise', $hotdeal_id, $do_by_id, $do_by_type);
                                 $this->m_merchant->hotdeal_hide($hotdeal_id);
-                                $message_info = add_message_info($message_info, 'Advertisement success remove.', $title);
+                                $message_info = add_message_info($message_info, 'Food & Beverage success remove.', $title);
                             }
                             else
                             {
@@ -2959,14 +2959,14 @@ class Merchant extends CI_Controller
             }
         }
 
-        //To get today advertisement result row
+        //To get today food & beverage result row
         $hotdeal_today_result = $this->m_merchant->get_merchant_today_hotdeal($merchant_id, 0, $search_date);
         $this->data['hotdeal_today_count'] = $this->m_merchant->get_merchant_today_hotdeal($merchant_id, 1, $search_date, 1);
         $this->data['hotdeal_today_count_removed'] = $this->m_merchant->get_merchant_today_hotdeal_removed($merchant_id, $search_date);
         //$this->data['hour_list'] = generate_number_option(1, 24);
         $this->data['sub_category_list'] = $this->m_custom->getSubCategoryList(NULL, NULL, $merchant_data->me_category_id);
         
-        //To dynamic create the advertisement box
+        //To dynamic create the food & beverage box
         for ($i = 0; $i < $box_number_update; $i++)
         {
             $hotdeal_title = 'hotdeal_title' . $i;
@@ -3290,7 +3290,7 @@ class Merchant extends CI_Controller
 
             $adv_type_list = array(
                 '' => 'All Advertise',
-                'hot' => 'Advertisement',
+                'hot' => 'Food & Beverage',
                 'pro' => 'Promotion'
             );
             $this->data['adv_type_list'] = $adv_type_list;

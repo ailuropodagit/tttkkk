@@ -3523,7 +3523,7 @@ class Admin extends CI_Controller
                             }
                         }
 
-                        //To update previous advertisement
+                        //To update previous food & beverage
                         $data = array(
                             'title' => $title,
                             'description' => $description,

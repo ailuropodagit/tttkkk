@@ -9,13 +9,24 @@ $this->load->view('template/header');
     <div id="index-left-category">
         <div id="index-left-category-title">
             <span id="index-left-category-title-icon"><i class="fa fa-bars"></i></span>
-            <span id="index-left-category-title-label">Categories</span>
+            <?php 
+            $fetch_method = $this->router->fetch_method();
+            $left_category_title = 'Categories';
+            if ($fetch_method == 'hotdeal_list')
+            {
+                $left_category_title = 'Food & Beverage';
+            }else if($fetch_method == 'promotion_list')
+            {
+                $left_category_title = 'Redemption';
+            }
+                    ?>
+            <span id="index-left-category-title-label"><?php echo $left_category_title; ?></span>
         </div>
         <div id="index-left-category-content">
             <?php
             //GET CURRENT CATEGORY ID
             $page_category_id = $this->uri->segment('3');
-            $fetch_method = $this->router->fetch_method();
+            
             //GET MAIN CATEGORY
             if ($fetch_method == 'promotion_list' || $fetch_method == 'redemption_list')
             {

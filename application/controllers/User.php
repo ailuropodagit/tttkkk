@@ -2242,6 +2242,11 @@ class User extends CI_Controller
         if (!IsNullOrEmptyString($merchant_id_pass))
         {
             $merchant_id = $merchant_id_pass;
+            $merchant_info = $this->m_custom->getMerchantInfo($merchant_id);
+            if ($merchant_info)
+            {
+                $merchant_category = $merchant_info['me_category_id'];
+            }
         }
         $this->data['box_number'] = $this->box_number;
         if (isset($_POST) && !empty($_POST))
@@ -2391,6 +2396,9 @@ class User extends CI_Controller
                 'onChange' => "get_Merchant(" . $i . ")",
             );
 
+            $image_category_selected = 'image_category_selected' . $i;
+            $this->data[$image_category_selected] = empty($merchant_category) ? '' : $merchant_category;
+            
             $image_merchant = 'image_merchant' . $i;
             $this->data[$image_merchant] = array(
                 'name' => 'image-merchant-' . $i,

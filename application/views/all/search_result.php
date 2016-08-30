@@ -12,7 +12,7 @@
         <!--HOT DEAL RESULT-->
         <div id="search-result-hot-deal">
             <?php
-            $data['title'] = 'Advertisement';            
+            $data['title'] = 'Food & Beverage';            
             $data['share_hotdeal_redemption_list'] = $home_search_hotdeal;
             $this->load->view('share/hot_deal_grid_list5', $data);
             ?>

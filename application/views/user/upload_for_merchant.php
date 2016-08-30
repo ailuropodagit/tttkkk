@@ -190,8 +190,15 @@ if(isset($message))
                     <div id='upload-for-merchant-form-each'>
                         <div id='upload-for-merchant-form-each-label'><?php echo lang("album_category_label"); ?></div>
                         <div id='upload-for-merchant-form-each-input' class="add-merchant">
-                            <?php
-                            echo form_dropdown(${'image_category' . $i}, $category_list);
+                            <?php                           
+                            if (empty(${'image_category_selected' . $i}))
+                            {
+                                echo form_dropdown(${'image_category' . $i}, $category_list);
+                            }
+                            else
+                            {
+                                echo form_dropdown(${'image_category' . $i}, $category_list, ${'image_category_selected' . $i});
+                            }
                             echo "<a href='" . base_url() . "user/add_merchant' ><img src='". base_url() . "/image/btn-add.png' title='Add Merchant' alt='Add Merchant' class='normal-btn-image'></a>";
                             ?>
                         </div>
