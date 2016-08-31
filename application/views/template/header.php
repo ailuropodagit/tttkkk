@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
     <html xmlns="https://www.w3.org/1999/xhtml" xmlns:og="https://ogp.me/ns#" xmlns:fb="https://www.facebook.com/2008/fbml">
-    <head>       
+    <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/> <!--320-->
         <meta property="fb:app_id" content="1682555468669559" />
         <title>
             <?php           
@@ -34,7 +35,7 @@
         <link rel="stylesheet" href="<?php echo base_url('css/main-1100.css') ?>" media="screen and (max-width: 1100px)">
         <link rel="stylesheet" href="<?php echo base_url('css/main-1000.css') ?>" media="screen and (max-width: 1000px)">
         <link rel="stylesheet" href="<?php echo base_url('css/main-0900.css') ?>" media="screen and (max-width: 0900px)">
-        <link rel="stylesheet" href="<?php echo base_url('css/main-0800.css') ?>" media="screen and (max-width: 0900px)">
+        <link rel="stylesheet" href="<?php echo base_url('css/main-0800.css') ?>" media="screen and (max-width: 0800px)">
         <link rel="stylesheet" href="<?php echo base_url('css/main-0700.css') ?>" media="screen and (max-width: 0700px)">
         <link rel="stylesheet" href="<?php echo base_url('css/main-0600.css') ?>" media="screen and (max-width: 0600px)">
         <link rel="stylesheet" href="<?php echo base_url('css/main-0500.css') ?>" media="screen and (max-width: 0500px)">

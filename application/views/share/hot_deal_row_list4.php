@@ -3,6 +3,8 @@
         $('#share-hot-deal-row-list4-container').slick({
             slidesToShow: 4,
             slidesToScroll: 1,
+            autoplay:true,
+            autoplaySpeed:2500,
             prevArrow: '#share-hot-deal-row-list4-header-navigation-prev',
             nextArrow: '#share-hot-deal-row-list4-header-navigation-next',
             responsive: [

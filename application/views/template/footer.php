@@ -4,9 +4,10 @@
                     <div id='footer-navigation-block1'>
                         <div id='footer-navigation-block1-logo'><?php echo img('image/logo-white.png') ?></div>
                         <div id='footer-navigation-block-content'>
-                            Keppo.my is publish on 01 Jan 2016. His create this to help's SME Corp 
-                            to increasing sale on advertising. Keppo.my is used hybrid technology on media social faster 
-                            way to user's to know more product and services.
+                            Keppo.my was established on 01 Jan 2016. <br/><br/>
+                            Jimmy, the founder of Keppo.my created this to help SME Corp to increase in sales through advertising. <br/><br/>
+                            Keppo.my utilizes hybrid technology, combined with social media platforms, delivers information
+                            to users about the offered products and services.
                         </div>
                     </div>
                     <div id='footer-navigation-block2'>

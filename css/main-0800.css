@@ -13,3 +13,11 @@
 .share-hot-deal-redemption-list-box-each:nth-child(2n+0) {
     margin-right: 0px;
 }
+
+/*********************************************
+ ** FOOTER
+ *********************************************/
+
+#footer {
+    display: none;
+}
