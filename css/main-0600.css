@@ -90,6 +90,27 @@
  ** DASHBOARD
  *********************************************/
 
+#dashboard-header-title {
+    display: block;
+    float: left;
+}
+
+#dashboard-header-help-guide-link {
+    display: block;
+    float: left;
+}
+
+#dashboard-header-share-button {
+    float: left;
+    margin: 10px 0px 0px 15px;
+}
+
+#dashboard-header-edit-link {
+    clear: left;
+    float: left;
+    margin: 10px 0px 10px 0px;
+}
+
 #dashboard-info-title-name {
     float: none;
 }
@@ -108,4 +129,25 @@
 
 #dashboard-navigation-each:first-child {
     margin-left: 0px;
+}
+
+/*********************************************
+ ** MY ALBUM
+ *********************************************/
+
+#album-user-header-title-upload {
+    float: none;
+    display: block;
+    clear: both;
+    margin: 0px;
+    padding: 10px 0px 10px 0px;
+}
+
+/*********************************************
+ ** PAYMENT
+ *********************************************/
+
+#payment-balance-payout-button {
+    float: none;
+    padding: 10px 0px 0px 0px;
 }

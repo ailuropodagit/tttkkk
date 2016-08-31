@@ -1,7 +1,6 @@
 <script type="text/javascript" src="<?php echo base_url() ?>js/jquery.ajaxfileupload.js"></script>
 <script type="text/javascript" src="<?php echo base_url() ?>js/js_custom.js"></script>
 <script type="text/javascript" src="http://connect.facebook.net/en_US/all.js"></script>
-
 <script type="text/javascript">
     $(document).ready(function () {
         var keppo_path = '<?php echo $this->config->item('keppo_path'); ?>'; 
@@ -170,16 +169,16 @@ if ($self_open == 1)
                     <div id="help-guide">
                         <div id="help-guide-list">
                             <ul>
-                                <li video="1-how-to-edit-profile-picture.flv" class="help-guide-click">How to edit profile picture</li>
-                                <li video="2-how-to-view.flv" class="help-guide-click">How to view</li>
-                                <li video="3-how-to-earn-candie.flv" class="help-guide-click">How to earn candies</li>
-                                <li video="4-how-to-upload-pictures.flv" class="help-guide-click">How to upload pictures</li>
-                                <li video="5-how-to-share.flv" class="help-guide-click">How to share</li>
-                                <li video="6-how-to-redeem.flv" class="help-guide-click">How to redeem</li>
-                                <li video="7-how-to-add-shop.flv" class="help-guide-click">How to add shop</li>
-                                <li video="8-how-to-make-follower.flv" class="help-guide-click">How to make follower</li>
-                                <li video="9-how-to-edit-profile-description.flv" class="help-guide-click">How to edit profile description</li>
-                                <li video="10-important-things-under-my-account.flv" class="help-guide-click">Important things under my account</li>
+                                <li video="1" class="help-guide-click">How to edit profile picture</li>
+                                <li video="2" class="help-guide-click">How to view</li>
+                                <li video="3" class="help-guide-click">How to earn candies</li>
+                                <li video="4" class="help-guide-click">How to upload pictures</li>
+                                <li video="5" class="help-guide-click">How to share</li>
+                                <li video="6" class="help-guide-click">How to redeem</li>
+                                <li video="7" class="help-guide-click">How to add shop</li>
+                                <li video="8" class="help-guide-click">How to make follower</li>
+                                <li video="9" class="help-guide-click">How to edit profile description</li>
+                                <li video="10" class="help-guide-click">Important things under my account</li>
                             </ul>
                         </div>
                         <div id="help-guide-video"></div>
@@ -211,7 +210,7 @@ if ($self_open == 1)
             <?php 
         } 
         ?>
-        <div id="dashboard-header-edit-link" onclick="fbShare(); return false;">
+        <div id="dashboard-header-share-button" onclick="fbShare(); return false;">
             <img src="<?php echo base_url() . 'image/social-media-facebook-share.png'; ?>" style="padding-top:5px" > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </div>
         <div class="float-fix"></div>

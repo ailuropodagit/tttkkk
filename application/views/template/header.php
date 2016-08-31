@@ -3,7 +3,6 @@
     <html xmlns="https://www.w3.org/1999/xhtml" xmlns:og="https://ogp.me/ns#" xmlns:fb="https://www.facebook.com/2008/fbml">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/> <!--320-->
         <meta property="fb:app_id" content="1682555468669559" />
         <title>
             <?php           
@@ -48,13 +47,14 @@
         <link rel="stylesheet" href="<?php echo base_url('js/bootstrap-3.3.5/dist/css/custom-bootstrap-modal.css') ?>">
         <link rel="stylesheet" href="<?php echo base_url('js/bootstrap-3.3.5/dist/css/custom-bootstrap-modal-center.css') ?>">
         <script type="text/javascript" src="<?php echo base_url('js/bootstrap-3.3.5/dist/js/bootstrap.min.js') ?>"></script>
-        <link rel="stylesheet" href="//releases.flowplayer.org/6.0.5/skin/minimalist.css">
-        <script src="//releases.flowplayer.org/6.0.5/flowplayer.min.js"></script>
         <script>
-            $(function(){
-                //BOOSTRAP MODAL
-                $('#visit-first-time-modal').modal('show');
+            $(function(){     
                 
+                setTimeout(function(){
+                    //BOOSTRAP MODAL
+                    $('#visit-first-time-modal').modal('show');
+                }, 10000);
+
                 //MOBILE MENU
                 var mobile_menu_show = 0;
                 $('#header-logo-bar-mobile-navigation-icon').click(function(){
@@ -70,12 +70,47 @@
                         $("body").css({'overflow': 'scroll'});
                     }
                 });
-                $("#header-mobile-navigation-block").click(function(){
+                
+                //HIDE SUB MENU
+                var sub_menu_status = 0;
+                //$(".header-mobile-navigation-bar-box-each-merchant").css({'display':'none'});
+                $(".header-mobile-navigation-food-n-beverage").click(function(){                    
+                    if(sub_menu_status == 0){
+                        $(".header-mobile-navigation-food-n-beverage").next().css({'display':'block'});
+                        sub_menu_status = 1;
+                    }else{
+                        $(".header-mobile-navigation-food-n-beverage").next().css({'display':'none'});
+                        sub_menu_status = 0;
+                    }
+                });
+                $(".header-mobile-navigation-keppo-voucher").click(function(){                    
+                    if(sub_menu_status == 0){
+                        $(".header-mobile-navigation-keppo-voucher").next().css({'display':'block'});
+                        sub_menu_status = 1;
+                    }else{
+                        $(".header-mobile-navigation-keppo-voucher").next().css({'display':'none'});
+                        sub_menu_status = 0;
+                    }
+                });
+                $(".header-mobile-navigation-others").click(function(){
+                    if(sub_menu_status == 0){
+                        $(".header-mobile-navigation-others").next().css({'display':'block'});
+                        sub_menu_status = 1;
+                    }else{
+                        $(".header-mobile-navigation-others").next().css({'display':'none'});
+                        sub_menu_status = 0;
+                    }
+                });
+                
+                //CLOSE MOBILE MENU
+                $("#header-mobile-navigation-block, #header-mobile-navigation-close-icon").click(function(){
                     mobile_menu_show = 0;
                     $("#header-mobile-navigation").css({display: 'none'});                        
                     $("#header-mobile-navigation-block").css({display: 'none'});
                     $("body").css({'overflow': 'auto'});
                 });
+                
+                
             });
                         
             //FB LOGOUT
@@ -213,10 +248,10 @@
                                                 <div id='visit-first-time-modal-left-login-form-password-input'><?php echo form_input($password); ?></div>
                                             </div>
                                             <div id='visit-first-time-modal-left-login-form-submit'>
-                                                <div id='visit-first-time-modal-left-login-form-submit-user'>
+                                                <div id='visit-first-time-modal-left-login-form-submit-button'>
                                                     <input type="submit" value="User Login" onclick="myfunction('<?php echo $user_login; ?>')"/>
                                                 </div>
-                                                <div id='visit-first-time-modal-left-login-form-submit-merchant' style='float:right'>
+                                                <div id='visit-first-time-modal-left-login-form-submit-login-with-facebook'>
                                                     <a href='<?php echo base_url() ?>user/login'><img style='width:140px' src='<?php echo base_url('image/social-media-facebook-login.png') ?>'></a>
   <!--                                                  <input type="submit" value="Merchant Login" onclick="myfunction('<?php //echo $merchant_login; ?>')"/> -->
                                                 </div>
@@ -770,12 +805,12 @@
                                 </ul>
                             </li>
                             <li <?php if($header_fetch_method == 'hotdeal_list' || $header_uri_segment4 == 'hot'){ echo "class='header-navigation-bar-active'"; } ?>>
-                                <a href='<?php echo base_url('all/hotdeal-list/1') ?>'>
+                                <a href='<?php echo base_url('all/hotdeal-list/3') ?>'>
                                     <i class="fa fa-fire header-navigation-bar-left-icon"></i> Food & Beverage
                                 </a>
                             </li>
                             <li <?php if($header_fetch_method == 'promotion_list' || $header_uri_segment4 == 'pro'){ echo "class='header-navigation-bar-active'"; } ?>>
-                                <a href="<?php echo base_url('all/promotion-list/1') ?>">
+                                <a href="<?php echo base_url('all/promotion-list/3') ?>">
                                     <i class="fa fa-gift header-navigation-bar-left-icon"></i> Redemption
                                 </a>
                             </li>
@@ -800,6 +835,7 @@
             </div>            
             <!--MOBILE NAVIGATION-->
             <div id="header-mobile-navigation">
+                <div id="header-mobile-navigation-close-icon">x</div>
                 <div id="header-mobile-navigation-content">
                     <ul>
                         <li>
@@ -818,8 +854,14 @@
                                             $main_category_label = $main_category->category_label;
                                             ?>
                                             <div id="header-mobile-navigation-bar-box-each">
-                                                <div id="header-mobile-navigation-bar-box-each-title"><?php echo $main_category_label ?></div>
-                                                <div id="header-mobile-navigation-bar-box-each-merchant">
+                                                <div id="header-mobile-navigation-bar-box-each-title"
+                                                <?php if(strtolower($main_category_label) == 'food & beverage'){ echo 'class="header-mobile-navigation-food-n-beverage"'; } ?>
+                                                <?php if(strtolower($main_category_label) == 'others'){ echo 'class="header-mobile-navigation-others"'; } ?>
+                                                >
+                                                    <?php echo $main_category_label ?> 
+                                                    <span style="font-size: 17px; margin-left: 3px;">+</span>
+                                                </div>
+                                                <div class="header-mobile-navigation-bar-box-each-merchant">
                                                     <?php
                                                     $sub_category_object = $this->m_custom->getSubCategory($main_category_id); 
                                                     foreach ($sub_category_object as $sub_category)
@@ -849,10 +891,10 @@
                             </ul>
                         </li>
                         <li>
-                            <a href='<?php echo base_url('all/hotdeal-list/26') ?>'>Food & Beverage</a>
+                            <a href='<?php echo base_url('all/hotdeal-list/3') ?>'>Food & Beverage</a>
                         </li>
                         <li>
-                            <a href="<?php echo base_url('all/promotion-list/26') ?>">Redemption</a>
+                            <a href="<?php echo base_url('all/promotion-list/3') ?>">Redemption</a>
                         </li>
                         <li>
                             <a href="<?php echo base_url('blogger') ?>">Blogger</a>
@@ -865,9 +907,10 @@
             </div>
             <div id="header-mobile-navigation-block"></div>
         </div>
-        
-<!--        <div class="flowplayer">
-            <video>
-                <source type="video/flv" src="<?php echo base_url() ?>video/5-how-to-share.flv">
-            </video>
-        </div>-->
+        <!--MOBILE SCALE NONE-->
+        <script>
+             var meta = document.createElement("meta");
+             meta.setAttribute('name','viewport');
+             meta.setAttribute('content','width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no');
+             document.getElementsByTagName('head')[0].appendChild(meta);
+        </script>

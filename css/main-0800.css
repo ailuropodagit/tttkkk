@@ -1,4 +1,37 @@
 /*********************************************
+ ** USER PROFILE
+ *********************************************/
+
+#profile-photo {
+    float: none;
+}
+
+#profile-info {
+    float: none;
+    margin: 0px;
+    width: 100%;
+}
+
+#profile-info input[type='text'] {
+    width: 100%;
+}
+
+#profile-info-form-each-input-dob {
+    width: 100%;
+}
+
+#profile-info-form-each-input-dob-day select, #profile-info-form-each-input-dob-month select, #profile-info-form-each-input-dob-year select {
+    display: block;
+    float: none;
+    width: 100%;
+    margin: 0px;
+}
+
+#profile-info textarea {
+    width: 100%;
+}
+
+/*********************************************
  ** SHARE HOT DEAL REDEMPTION LIST TITLE
  *********************************************/
 
@@ -14,6 +47,122 @@
     margin-right: 0px;
 }
 
+/*********************************************
+ ** FOLLOW
+ *********************************************/
+
+#follow-navigation-each {
+    float: none;
+    margin: 0px 0px 10px 0px;
+}
+
+#follow-navigation-each:last-child {
+    margin: 0px;
+}
+
+#follow-navigation-separator {
+    display: none;
+}
+
+#follow-search-input input[type='text'] {
+    width: 100%;
+}
+
+#follow-search-submit {
+    margin: 0px 0px 0px 0px;
+    float: none;
+}
+
+#follow-search-submit input[type='submit'] {
+    width: 100%;
+    margin: 5px 0px 0px 0px;
+}
+
+#follow-search-clear {
+    margin: 0px 0px 0px 0px;
+    float: none;
+}
+
+#follow-search-clear a {
+    width: calc(100% - 28px);
+    margin: 5px 0px 0px 0px;
+}
+
+/*********************************************
+ ** MY ALBUM
+ *********************************************/
+
+#album-user-navigation-each {
+    float: none;
+    margin: 0px 0px 10px 0px;
+}
+
+#album-user-navigation-each:last-child {
+    margin: 0px;
+}
+
+#album-user-navigation-separater {
+    display: none;
+}
+
+/*********************************************
+ ** CANDIE
+ *********************************************/
+
+#candie-navigation-each {
+    float: none;
+    margin: 0px 0px 10px 0px;
+}
+
+#candie-navigation-each:last-child {
+    margin: 0px;
+}
+
+#candie-navigation-each-separator {
+    display: none;
+}
+
+/*********************************************
+ ** USER REDEMPTION
+ *********************************************/
+
+#voucher-navigation-each {
+    float: none;
+    margin: 0px 0px 10px 0px;
+}
+
+#voucher-navigation-each:last-child {
+    margin: 0px;
+}
+
+#voucher-navigation-each-separator {
+    display: none;
+}
+
+/*********************************************
+ ** BALANCE PAGE
+ *********************************************/
+
+#payment-go {
+    width: 100%;
+}
+
+#payment-go-dropdown select {
+    width: 100%;
+}
+
+#payment-go-button {
+    margin: 0px;
+}
+
+#payment-go-button button {
+    width: 100%;
+}
+
+#payment-balance {
+    margin: 10px 0px 0px 0px;
+}
+    
 /*********************************************
  ** FOOTER
  *********************************************/

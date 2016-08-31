@@ -96,6 +96,7 @@ input[type='submit'], input[type='button'], button[type='submit'], .a-href-butto
 .a-href-button {
     padding: 8px 14px 8px 14px;
     height: auto;
+    text-align: center;
 }
 
 .a-href-button:hover {

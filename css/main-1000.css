@@ -34,6 +34,12 @@
     max-height: 300px;
 }
 
+#home-row3-logo-slider {
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+}
+
 /*********************************************
  ** INDEX LEFT CATEGORY
  *********************************************/
@@ -42,6 +48,10 @@
     float: none;
     width: 100%;
     margin: 0px 0px 30px 0px;
+}
+
+#index-left-category-label-sub-label {
+    display: none;
 }
 
 #index-left-category-right-content {
@@ -82,6 +92,41 @@
 }
 
 #share-hot-deal-grid-list5-old-box:nth-last-child(-n+3) {
+    margin-bottom: 0px;
+}
+
+/*********************************************
+ ** ADVERTIST LIST
+ *********************************************/
+
+#advertise-list-box {
+    vertical-align: top;
+    display: inline-block;
+    width: calc(33.33% - 22px);
+    margin: 0px 30px 30px 0px;
+}
+
+#advertise-list-box:nth-child(5n) {
+    margin-right: 30px;
+}
+
+#advertise-list-box:nth-last-child(-n+5) {
+    margin-bottom: 30px;
+}
+
+#advertise-list-box:nth-child(4n) {
+    margin-right: 30px;
+}
+
+#advertise-list-box:nth-last-child(-n+4) {
+    margin-bottom: 30px;
+}
+
+#advertise-list-box:nth-child(3n) {
+    margin-right: 0px;
+}
+
+#advertise-list-box:nth-last-child(-n+3) {
     margin-bottom: 0px;
 }
 
@@ -139,6 +184,26 @@
 
 #blogger-box-each:nth-child(2n), #photographer-box-each:nth-child(2n) {
     margin-right: -35px;
+}
+
+/*********************************************
+ ** USER REDEMPTION
+ *********************************************/
+
+#voucher-go-label {
+    display: block;
+}
+
+#voucher-go-dropdown select {
+    width: 100%;
+}
+
+#voucher-go-button {
+    margin: 0px;
+}
+
+#voucher-go-button button {
+    width: 100%;
 }
 
 /*********************************************

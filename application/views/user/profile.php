@@ -83,7 +83,7 @@ if(isset($message))
                         <div id="profile-photo-note">
                             <?php echo $this->config->item('upload_guide_image'); ?>
                         </div>
-                        <div id="dashboard-photo-input-file">     
+                        <div id="shboard-photo-input-file">     
                             <div id="dashboard-photo-choose-button">
                                 <div class="fileUpload btn btn-primary">
                                     <span>Choose</span>
@@ -105,7 +105,6 @@ if(isset($message))
         ?>
         
         <div id='profile-info'> 
-         
             <div id='profile-info-form'>
                 <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('create_user_first_name_label', 'first name'); ?></div>

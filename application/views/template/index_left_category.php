@@ -61,45 +61,57 @@ $this->load->view('template/header');
                     $main_navigate_to = base_url() . "all/merchant-category/" . $main_category_id;
                 }
                 ?>
-                <div id="index-left-category-label" <?php if($main_category_id == $page_category_id){ echo 'class="index-left-category-label-active"'; } ?>>
-                    <a href="<?php echo $main_navigate_to ?>"><?php echo $main_category_label ?></a>
+                <div id="index-left-category-label"
+                    <?php if($main_category_id == $page_category_id){ echo 'class="index-left-category-label-active"'; } ?>
+                    <?php if(strtolower($main_category_label) == 'food & beverage'){ echo 'class="header-mobile-navigation-food-n-beverage"'; } ?>
+                    <?php if(strtolower($main_category_label) == 'keppo voucher'){ echo 'class="header-mobile-navigation-keppo-voucher"'; } ?>
+                    <?php if(strtolower($main_category_label) == 'others'){ echo 'class="header-mobile-navigation-others"'; } ?>
+                >
+                    <!--<a href="<?php echo $main_navigate_to ?>">-->
+                        <?php echo $main_category_label ?>
+                        <span style="font-size: 17px; margin-left: 3px;">+</span>
+                    <!--</a>-->
                 </div>
-                <?php
-                //GET SUB CATEGORY
-                $subcat_list = $this->m_custom->getSubCategory($main_category_id);
-                foreach ($subcat_list as $t_subcat)
-                {
-                    $sub_category_id = $t_subcat->category_id;
-                    $sub_category_label = $t_subcat->category_label;
-                    //NAVIGATE TO
-                    if ($fetch_method == 'promotion_list' || $fetch_method == 'redemption_list')
-                    {
-                        //PROMOTION LIST
-                        $navigate_to = base_url() . "all/promotion-list/" . $sub_category_id;
-                        if ($t_subcat->hide_special == 1)
-                        {
-                            $navigate_to = base_url() . "all/redemption-list/" . $sub_category_id;
-                        }
-                    }
-                    if ($fetch_method == 'hotdeal_list')
-                    {
-                        //HOTDEAL LIST
-                        $navigate_to = base_url() . "all/hotdeal-list/" . $sub_category_id;
-                    }
-                    if ($fetch_method == 'merchant_category')
-                    {
-                        //MERCHANT LIST
-                        $navigate_to = base_url() . "all/merchant-category/" . $sub_category_id;
-                    }
-                    ?>                    
-                    <div id="index-left-category-nav" class="<?php if ($page_category_id == $sub_category_id){ echo 'index-left-category-nav-active'; } ?>">
-                        <a href="<?php echo $navigate_to ?>">
-                            <span id="index-left-category-nav-icon"><i class="fa fa-caret-right"></i></span>
-                            <?php echo $sub_category_label ?>
-                        </a>                        
-                    </div>
+                <div id="index-left-category-label-sub-label">
                     <?php
-                }
+                    //GET SUB CATEGORY
+                    $subcat_list = $this->m_custom->getSubCategory($main_category_id);
+                    foreach ($subcat_list as $t_subcat)
+                    {
+                        $sub_category_id = $t_subcat->category_id;
+                        $sub_category_label = $t_subcat->category_label;
+                        //NAVIGATE TO
+                        if ($fetch_method == 'promotion_list' || $fetch_method == 'redemption_list')
+                        {
+                            //PROMOTION LIST
+                            $navigate_to = base_url() . "all/promotion-list/" . $sub_category_id;
+                            if ($t_subcat->hide_special == 1)
+                            {
+                                $navigate_to = base_url() . "all/redemption-list/" . $sub_category_id;
+                            }
+                        }
+                        if ($fetch_method == 'hotdeal_list')
+                        {
+                            //HOTDEAL LIST
+                            $navigate_to = base_url() . "all/hotdeal-list/" . $sub_category_id;
+                        }
+                        if ($fetch_method == 'merchant_category')
+                        {
+                            //MERCHANT LIST
+                            $navigate_to = base_url() . "all/merchant-category/" . $sub_category_id;
+                        }
+                        ?>                    
+                        <div id="index-left-category-nav" class="<?php if ($page_category_id == $sub_category_id){ echo 'index-left-category-nav-active'; } ?>">
+                            <a href="<?php echo $navigate_to ?>">
+                                <span id="index-left-category-nav-icon"><i class="fa fa-caret-right"></i></span>
+                                <?php echo $sub_category_label ?>
+                            </a>                        
+                        </div>
+                        <?php
+                    }
+                    ?>
+                </div>
+            <?php
             }
             ?>
         </div>

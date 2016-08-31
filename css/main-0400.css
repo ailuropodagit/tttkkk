@@ -14,9 +14,13 @@
  ** VISIT FIRST TIME MODEL
  *********************************************/
 
-#visit-first-time-modal-left-login-form-submit-login-with-fb {
+#visit-first-time-modal-left-login-form-submit-button, #visit-first-time-modal-left-login-form-submit-login-with-facebook {
     display: block;
     margin: 15px 0px 0px 0px;
+}
+
+#visit-first-time-modal-left-login-form-submit-button input[type='submit'] {
+    width: 140px;
 }
 
 #visit-first-time-modal-right-image-each {
@@ -202,4 +206,38 @@
 
 .share-redemption-suggestion-list5-box:nth-child(5n+0) {
     display: none;
+}
+
+/*********************************************
+ ** DASHBOARD
+ *********************************************/
+
+#dashboard-header-title {
+    float: none;
+    display: block;
+}
+
+#dashboard-header-help-guide-link {
+    float: none;
+    display: block;
+    margin: 10px 0px 0px 0px;
+}
+
+#dashboard-header-share-button {
+    float: none;
+    margin: 10px 0px 10px 0px;
+}
+
+#dashboard-header-edit-link {
+    float: none;
+    margin: 10px 0px 0px 0px;
+}
+
+/*********************************************
+ ** PROFILE
+ *********************************************/
+
+#profile-photo-box {
+    width: 200px;
+    height: 200px;
 }

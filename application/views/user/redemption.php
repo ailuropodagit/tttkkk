@@ -64,7 +64,7 @@ if(isset($message))
                     <div id="advertise-list-dynamic-time">
                         <i class="fa fa-bullseye"></i><span id="advertise-list-dynamic-time-label"><?php echo $row['voucher_candie'] ?> candies</span>
                     </div>
-                    <div id="advertise-list-dynamic-time">
+                    <div id="advertise-list-voucher-code">
                         <span id="advertise-list-dynamic-time-label"><?php echo "Voucher : ".$row['voucher'] ?></span>
                     </div>
                     <div id="advertise-list-info">
