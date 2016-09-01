@@ -6028,3 +6028,11 @@ html, body {
     padding: 0px 0px 0px 10px;
     cursor: pointer;
 }
+
+/*********************************************
+** YOU NEED HELP INNER
+*********************************************/
+
+#you-need-help-inner iframe {
+    height: 500px;    
+}

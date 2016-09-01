@@ -349,3 +349,19 @@
 #blogger-box-each:nth-child(1n), #photographer-box-each:nth-child(1n) {
     margin-right: -35px;
 }
+
+/*********************************************
+** HELP GUIDE
+*********************************************/
+
+#help-guide-modal-dialog {
+    width: 95%;
+}
+
+/*********************************************
+** YOU NEED HELP INNER
+*********************************************/
+
+#you-need-help-inner iframe {
+    height: 300px;    
+}
