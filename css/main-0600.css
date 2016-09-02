@@ -151,3 +151,31 @@
     float: none;
     padding: 10px 0px 0px 0px;
 }
+
+/*********************************************
+ ** MERCHANT USER REDEMPTION
+ *********************************************/
+
+#user-redemption-search-input input[type='text'] {
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+#user-redemption-search-submit {
+    float: none;
+    margin: 0px;
+}
+
+#user-redemption-clear-button {
+    float: none;
+    margin: 0px;
+}
+
+#user-redemption-search button {
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+#user-redemption-search a {
+    width: calc(100% - 28px);
+}

@@ -21,7 +21,7 @@ if(isset($message))
             <?php echo form_open(uri_string()); ?>
             <div id="user-redemption-search-input"><input type="text" placeholder="Search: User ID, User Name, Email, Voucher Code" name="search_word2" id="search_word2"></div>
             <div id="user-redemption-search-submit"><button name="button_action" type="submit" value="search">Search</button></div>
-            <div id="blogger-search-clear"><a href='<?php echo current_url() ?>' class="a-href-button">Clear</a></div>
+            <div id="user-redemption-clear-button"><a href='<?php echo current_url() ?>' class="a-href-button">Clear</a></div>
             <?php echo form_close(); ?>
         </div>
         
@@ -181,6 +181,7 @@ if(isset($message))
             <div id="user-redemption-navigation-each">
                 <a href='<?php echo base_url() . "merchant/merchant_redemption_page/1" ?>'>Used History</a>
             </div>
+            <div class="float-fix"></div>
         </div>
         
     </div>

@@ -69,7 +69,7 @@ $this->load->view('template/header');
                 >
                     <!--<a href="<?php echo $main_navigate_to ?>">-->
                         <?php echo $main_category_label ?>
-                        <span style="font-size: 17px; margin-left: 3px;">+</span>
+                        <span id="index-left-category-label-plus">+</span>
                     <!--</a>-->
                 </div>
                 <div id="index-left-category-label-sub-label">

@@ -162,6 +162,20 @@
 #payment-balance {
     margin: 10px 0px 0px 0px;
 }
+
+/*********************************************
+ ** ANALYSIS REPORT
+ *********************************************/
+
+#analysis-report-go-each select {
+    width: 100%;
+    margin-top: 5px;
+}
+
+#analysis-report-go button {
+    width: 100%;
+    margin-top: 5px;
+}
     
 /*********************************************
  ** FOOTER

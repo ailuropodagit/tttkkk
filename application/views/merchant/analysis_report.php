@@ -176,11 +176,23 @@
         </div>
         <div id='float-fix'></div>
         
-        <div id="print-area">
-            <div id="container_gender" style="min-width: 400px; height: 400px; margin: 0 auto"></div><br/><br/><br/>
-            <div id="container_race" style="min-width: 400px; height: 400px; margin: 0 auto"></div><br/><br/><br/>
-            <div id="container_age" style="min-width: 400px; height: 400px; margin: 0 auto"></div><br/><br/><br/>
-            <div id="container_redeem" style="min-width: 400px; height: 400px; margin: 0 auto"></div><br/><br/><br/>
+        <div id="analysis-report-google-report">
+            <div id="print-area">
+                <div id="analysis-report-google-report-gender">
+                    <div id="container_gender" style="min-width: 400px; height: 400px; margin: 0 auto"></div><br/><br/><br/>
+                </div>
+                <div id="analysis-report-google-report-race">
+                    <div id="container_race" style="min-width: 400px; height: 400px; margin: 0 auto"></div><br/><br/><br/>
+                </div>
+                <div id="analysis-report-google-report-age">
+                    <div id="container_age" style="min-width: 400px; height: 400px; margin: 0 auto"></div><br/><br/><br/>
+                </div>
+                <div id="analysis-report-google-report-redeem">
+                    <div id="container_redeem" style="min-width: 400px; height: 400px; margin: 0 auto"></div><br/><br/><br/>
+                </div>
+            </div>
+        </div>
+            
         </div>
         
     </div>
