@@ -2,6 +2,9 @@
 <?php echo link_tag('js/chosen/chosen.css') ?>
 <script type="text/javascript" src="<?php echo base_url() ?>js/jquery.ajaxfileupload.js"></script>
 
+<script type="text/javascript" src="<?php echo base_url() ?>js/chosen/select2.min.js"></script>
+<?php echo link_tag('js/chosen/select2.min.css') ?>
+
 <script type="text/javascript">
     $(document).ready(function () {
         var keppo_path = '<?php echo $this->config->item('keppo_path'); ?>';       
@@ -22,7 +25,8 @@
       }
     });
     
-    $(".chosen-select").chosen();     
+    //$(".chosen-select").chosen();    
+    $(".chosen-select").select2();   
     });
 </script>
 

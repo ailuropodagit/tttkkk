@@ -4,6 +4,9 @@
 <?php echo link_tag('js/chosen/chosen.min.css') ?>
 <script type="text/javascript" src="<?php echo base_url() ?>js/jquery.ajaxfileupload.js"></script>
 
+<script type="text/javascript" src="<?php echo base_url() ?>js/chosen/select2.min.js"></script>
+<?php echo link_tag('js/chosen/select2.min.css') ?>
+
 <script type="text/javascript">   
     $(document).ready(function () {    
         $(function () {
@@ -19,7 +22,8 @@
 //                buttonImageOnly: true,
                 dateFormat: "dd-mm-yy",
             });
-            $(".chosen-select").chosen();
+            //$(".chosen-select").chosen();
+            $(".chosen-select").select2(); 
         });
         
         var keppo_path = '<?php echo $this->config->item('keppo_path'); ?>';

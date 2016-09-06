@@ -3,6 +3,10 @@
 <script type="text/javascript" src="<?php echo base_url() ?>js/jquery.ajaxfileupload.js"></script>
 <script type="text/javascript" src="<?php echo base_url() ?>js/multiple-upload/jquery.fileuploadmulti.min.js"></script>
 <link rel="stylesheet" href="<?php echo base_url('js/multiple-upload/uploadfilemulti.css') ?>">
+
+<script type="text/javascript" src="<?php echo base_url() ?>js/chosen/select2.min.js"></script>
+<?php echo link_tag('js/chosen/select2.min.css') ?>
+
 <script type="text/javascript">
     function get_Merchant(the_I)
     {
@@ -16,7 +20,8 @@
             {
                 $('#image_merchant-' + the_I).empty();
                 $('#image_merchant-' + the_I).html(data);
-                $(".chosen-select").chosen();        
+                //$(".chosen-select").chosen();       
+                $(".chosen-select").select2();   
             },
             error: function (jqXHR, textStatus, errorThrown)
             {
@@ -24,6 +29,16 @@
                 alert(errorThrown);
             }
         });
+    }
+
+    function js_hide_if_no_image()
+    {
+        var image_empty_url = '<?php echo base_url() . $this->config->item('empty_image') ?>';
+        alert($(window).width());
+        if ($(window).width() < 400) { 
+        $(".hide_if_no_image").find("img[src='" + image_empty_url + "']").parent().hide();
+        $(".hide_if_no_image").find("img[src!='" + image_empty_url + "']").parent().show();
+    }
     }
 
     function JSFunctionValidate()
@@ -56,7 +71,9 @@
         return false;
     }
     $(document).ready(function () {
-        $(".chosen-select").chosen();
+        //js_hide_if_no_image();
+        //$(".chosen-select").chosen();        
+        $(".chosen-select").select2();   
         var keppo_path = '<?php echo $this->config->item('keppo_path'); ?>';         
         var temp_folder = '<?php echo $temp_folder ?>';
         for (var counter = 0; counter < <?php echo $box_number ?>; counter++) {
@@ -73,6 +90,7 @@
         var post_image = post_url + response[0];
         //$( '#upload-for-merchant-form-photo-box' ).html(post_image);
         $('img#'+ response[1]).attr('src', post_image);
+        //js_hide_if_no_image();
       }
     });
     }
@@ -100,6 +118,7 @@
                         break;
                     }                
                 }
+                //js_hide_if_no_image();
                 
         },
         afterUploadAll:function()
@@ -162,7 +181,7 @@ if(isset($message))
             ?>
             <div id="upload-for-merchant-form">
                 <div id="upload-for-merchant-form-each">
-                    <div id='upload-for-merchant-form-photo-box'>
+                    <div id='upload-for-merchant-form-photo-box' class="hide_if_no_image">
                         <?php 
                         echo "<img src='" . base_url(${'image_url' . $i}) . "' id='image_url-" . $i . "'>"; 
                         echo "<input type='hidden' name='hideimage-" . $i . "' >"; 
