@@ -255,7 +255,7 @@ if ($self_open == 1)
             <?php
         }
         ?>
-        <div id="dashboard-header-edit-link" onclick="fbShare(); return false;">
+        <div id="dashboard-header-share-button" onclick="fbShare(); return false;">
             <img src="<?php echo base_url() . 'image/social-media-facebook-share.png'; ?>" style="padding-top:5px" > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </div>
         <div class="float-fix"></div>

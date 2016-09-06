@@ -26,7 +26,34 @@
 }
 
 /*********************************************
- ** ADVERTISE LIST
+ ** SHARE REDEMPTION GRID LIST 5
+ *********************************************/
+
+.share-redemption-grid-list5-box {
+    vertical-align: top;
+    display: inline-block;
+    width: calc(25% - 25px);
+    margin: 0px 30px 30px 0px;
+}
+
+.share-redemption-grid-list5-box:nth-child(5n) {
+    margin-right: 30px;
+}
+
+.share-redemption-grid-list5-box:nth-last-child(-n+5) {
+    margin-bottom: 30px;
+}
+
+.share-redemption-grid-list5-box:nth-child(4n) {
+    margin-right: 0px;
+}
+
+.share-redemption-grid-list5-box:nth-last-child(-n+4) {
+    margin-bottom: 0px;
+}
+
+/*********************************************
+ ** ADVERTISE LIST 
  *********************************************/
 
 #advertise-list-box {

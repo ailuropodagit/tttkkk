@@ -77,6 +77,7 @@ html, body {
     display: block;
     text-transform: uppercase;
     text-decoration: none;
+    font-size: 17px;
 }
 
 #header-mobile-navigation ul ul {
@@ -87,11 +88,12 @@ html, body {
     border: 0px;
     text-transform: uppercase;
     color: lightgray;
+    font-size: 16px;
 }
 
 #header-mobile-navigation ul li ul li a {
     padding: 7px 0px 0px 0px;
-    font-size: 12px;
+    font-size: 16px;
     color: lightgray;
 }
 
@@ -1261,6 +1263,12 @@ html, body {
     text-transform: uppercase;
     color: #244964;
     cursor: default;
+}
+
+#index-left-category-label-plus {
+    font-size: 17px;
+    margin-left: 3px;
+    display: none;
 }
 
 #index-left-category-label:first-child {
@@ -3462,11 +3470,9 @@ html, body {
 }
 
 #hot-deal-information-title a {
-    color: #00bcd4;
+    color: black;
     font-size: 22px;
     font-weight: bold;
-    text-transform: uppercase;
-    font-family: 'Helvetica Neue';
 }
 
 #hot-deal-information-show-me-address {
@@ -3802,11 +3808,9 @@ html, body {
 }
 
 #redemption-information-title a {
-    color: #00bcd4;
+    color: black;
     font-size: 22px;
     font-weight: bold;
-    text-transform: uppercase;
-    font-family: 'Helvetica Neue';
 }
 
 #redemption-information-show-me-address {
@@ -4314,6 +4318,202 @@ html, body {
 }
 
 .dashboard-navigation-each-active i {
+    color: #00a2e6 !important;
+}
+
+/*********************************************
+ ** OUTLET DASHBOARD
+ *********************************************/
+
+#outlet-dashboard-content {
+    padding: 0px 0px 0px 0px;
+}
+
+#outlet-dashboard-user-photo-box {
+    width: 100%;
+    padding-top: 100%;
+    border: 1px solid lightgray;
+    position: relative;
+}
+
+#outlet-dashboard-user-photo-box img {
+    max-height: 100%;  
+    max-width: 100%; 
+    width: 100%;
+    height: 100%;
+    position: absolute;  
+    top: 0;  
+    bottom: 0;  
+    left: 0;  
+    right: 0;  
+    margin: auto;
+    object-fit: cover;
+    object-position: center;
+}
+
+#outlet-dashboard-photo {
+    float: left;
+    width: 17%;
+    margin: 10px 0px 0px 0px;
+}
+
+#outlet-dashboard-photo-box {
+    width: 100%;
+    padding-top: 100%;
+    border: 1px solid lightgray;
+    position: relative;
+}
+
+#outlet-dashboard-photo-box img {
+    max-height: 100%;  
+    max-width: 100%; 
+    width: auto;
+    height: auto;
+    position: absolute;  
+    top: 0;  
+    bottom: 0;  
+    left: 0;  
+    right: 0;  
+    margin: auto;
+}
+
+#outlet-dashboard-photo-note {
+    font-size: smaller;
+    font-style: italic;
+    margin: 5px 0px 15px 0px;
+}
+
+#outlet-dashboard-photo-input-file {
+    margin: 15px 0px 0px 0px;
+}
+
+#outlet-dashboard-photo-choose-button {
+    width: 74px;
+    margin: 0px 0px 0px -10px;
+    text-align: center;
+    float: left;
+}
+    
+#outlet-dashboard-photo-save-button {
+    margin: 10px 0px 0px 0px;
+    float: left;
+}
+
+#outlet-dashboard-photo-save-button button {
+    height: 32px;
+}
+
+#outlet-dashboard-photo-followers-following {
+    font-size: 15px;
+    margin: 15px 0px 0px 0px;
+}
+
+#outlet-dashboard-photo-followers {
+    float: left;
+    margin: 0px 15px 5px 0px;
+}
+
+#outlet-dashboard-photo-following {
+    float: left;
+}
+
+#outlet-dashboard-info {
+    font-size: 17px;
+    float: left;
+    margin: 0px 0px 0px 30px;
+    width: calc(83% - 30px);
+}
+
+#outlet-dashboard-info-title {
+    padding: 10px 0px 5px 0px;
+}
+
+#outlet-dashboard-info-title a {
+    color: black;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+#outlet-dashboard-info-promo-code {
+    float: right;
+}
+
+#outlet-dashboard-info-title-candie {
+    float: left;
+    margin: -5px 0px 0px 15px;
+}
+
+#outlet-dashboard-info-address {
+    margin: 18px 0px 18px 0px;
+}
+
+#outlet-dashboard-info-outlet-address {
+    margin: 18px 0px 0px 0px;
+}
+
+#outlet-dashboard-info-company-description {
+    width: 100%;
+    border: 1px solid lightgray;
+    margin: 20px 0px 0px 0px;
+    padding: 7px;
+    text-align: left;
+    border-radius: 4px;
+    height: 150px;
+    overflow-y: auto;
+    line-height: 25px;
+    text-align: justify;
+    box-sizing: border-box;
+}
+
+#outlet-dashboard-info-table {
+    margin: 18px 0px 0px 0px;
+}
+
+#outlet-dashboard-navigation {
+    font-size: 15px;
+    margin: 40px 0px 0px -20px;
+    border-bottom: 1px solid lightgray;
+    width: calc(100% + 40px);
+}
+
+#outlet-dashboard-navigation-each {
+    float: left;
+    border: 1px solid lightgray;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    margin: 0px 6px -1px 0px;
+    background: whitesmoke;
+}
+
+#outlet-dashboard-navigation-each:first-child {
+    margin-left: 20px;
+}
+
+#outlet-dashboard-navigation-each a {
+    display: block;
+    padding: 10px 20px 10px 20px;
+    text-decoration: none;
+    color: #a7a7a7;
+}
+
+#outlet-dashboard-navigation-each i {
+    color: #a7a7a7;
+}
+
+.outlet-dashboard-navigation-each-icon {
+    margin-right: 7px;
+}
+
+.outlet-dashboard-navigation-each-active {
+    background: white !important;
+    border-bottom: 1px solid white !important;
+}
+
+.outlet-dashboard-navigation-each-active a {
+    color: #404041 !important;
+}
+
+.outlet-dashboard-navigation-each-active i {
     color: #00a2e6 !important;
 }
 
@@ -4944,9 +5144,25 @@ html, body {
     margin: 20px 0px 0px 0px;
 }
 
+#notification-content ::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+}
+
+#notification-content ::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0,0,0,.5);
+    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+}
+
 #notification-monitoring-remove-action {
     float: right;
     margin: 0px 0px 20px 0px;
+}
+
+#notification-table {
+    overflow-x: scroll;
+    width: 100%
 }
 
 #notification-table table {
@@ -5111,11 +5327,18 @@ html, body {
     margin: 0px 0px -50px 0px;
 }
 
-/* HOT DEAL ADVERTISE
-******************************/
+/*********************************************
+ ** HOT DEAL ADVERTISE
+ *********************************************/
 
 #hot-deal-advertise-content {
     margin: 20px 0px 0px 0px;
+}
+
+#hot-deal-advertise-upload-button {
+    margin-bottom: 20px;
+    width: 100%;
+    overflow: hidden;
 }
 
 #hot-deal-advertise-form {
@@ -5145,9 +5368,7 @@ html, body {
 }
 
 #hot-deal-advertise-form-each-label {
-    width: 285px;
-    text-align: left;
-    margin: 20px auto 0px auto;
+    margin: 20px 0px 0px 0px;
     font-size: 14px;
 }
 
@@ -5282,12 +5503,16 @@ html, body {
     margin: 0px 0px 20px 0px;
 }
 
+#user-redemption-clear-button {
+    display: inline;
+}
+
 #user-redemption-search-input {
     display: inline;
 }
 
 #user-redemption-search-input input[type='text'] {
-    width: calc(100% - 160px);
+    width: calc(100% - 145px);
 }
 
 #user-redemption-search-submit {
@@ -5323,8 +5548,9 @@ html, body {
     color: lightgray;
 }
 
-/* ANALYSIS REPORT
-******************************/
+/*********************************************
+ ** ANALYSIS REPORT
+ *********************************************/
 
 #analysis-report-content {
     margin: 20px 0px 0px 0px;
@@ -5346,6 +5572,17 @@ html, body {
     font-size: 20px;
     margin: 0px 0px 20px 0px;
     font-weight: bold;
+}
+
+#analysis-report-google-report ::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+}
+
+#analysis-report-google-report ::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0,0,0,.5);
+    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
 }
 
 /*********************************************
@@ -5466,8 +5703,9 @@ html, body {
     border-collapse: collapse;
 }
 
-/* CANDIE PROMOTION
-******************************/
+/*********************************************
+ ** CANDIE PROMOTION
+ *********************************************/
 
 #candie-promotion-content {
     margin: 20px 0px 0px 0px;

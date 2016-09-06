@@ -6,11 +6,11 @@ if(isset($message))
 }
 ?>
 
-<div id="dashboard">
+<div id="outlet-dashboard">
     <h1>Headquaters</h1>
-    <div id="dashboard-content">
-        <div id="dashboard-photo">
-            <div id="dashboard-photo-box">
+    <div id="outlet-dashboard-content">
+        <div id="outlet-dashboard-photo">
+            <div id="outlet-dashboard-photo-box">
             <?php
             $merchant_slug = $this->uri->segment(3);
             $merchant_url = base_url() . 'all/merchant_dashboard/' . $merchant_slug . '//' . $merchant_id;
@@ -29,11 +29,12 @@ if(isset($message))
             ?>
             </div>
         </div>    
-        <div id="dashboard-info">
-            <div id="dashboard-info-title">
+        <div id="outlet-dashboard-info">
+            <div id="outlet-dashboard-info-title">
                 <?php echo "<a href='".$merchant_url."'>".$company_name."</a>"; ?>
+                <div class="float-fix"></div>
             </div>
-            <div id="dashboard-info-address">
+            <div id="outlet-dashboard-info-address">
                 <?php echo $address; ?>
             </div>
             <!--<div id="dashboard-info-outlet-address">
