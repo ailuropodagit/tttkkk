@@ -805,12 +805,12 @@
                                 </ul>
                             </li>
                             <li <?php if($header_fetch_method == 'hotdeal_list' || $header_uri_segment4 == 'hot'){ echo "class='header-navigation-bar-active'"; } ?>>
-                                <a href='<?php echo base_url('all/hotdeal-list/3') ?>'>
+                                <a href='<?php echo base_url('all/hotdeal-list/1') ?>'>
                                     <i class="fa fa-fire header-navigation-bar-left-icon"></i> Food & Beverage
                                 </a>
                             </li>
                             <li <?php if($header_fetch_method == 'promotion_list' || $header_uri_segment4 == 'pro'){ echo "class='header-navigation-bar-active'"; } ?>>
-                                <a href="<?php echo base_url('all/promotion-list/3') ?>">
+                                <a href="<?php echo base_url('all/promotion-list/1') ?>">
                                     <i class="fa fa-gift header-navigation-bar-left-icon"></i> Redemption
                                 </a>
                             </li>
@@ -891,10 +891,10 @@
                             </ul>
                         </li>
                         <li>
-                            <a href='<?php echo base_url('all/hotdeal-list/3') ?>'>Food & Beverage</a>
+                            <a href='<?php echo base_url('all/hotdeal-list/1') ?>'>Food & Beverage</a>
                         </li>
                         <li>
-                            <a href="<?php echo base_url('all/promotion-list/3') ?>">Redemption</a>
+                            <a href="<?php echo base_url('all/promotion-list/1') ?>">Redemption</a>
                         </li>
                         <li>
                             <a href="<?php echo base_url('blogger') ?>">Blogger</a>
