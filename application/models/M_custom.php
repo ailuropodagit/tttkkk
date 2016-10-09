@@ -833,7 +833,21 @@ class M_custom extends CI_Model
                     }
                     else if ($result['main_group_id'] == $this->config->item('group_id_user'))
                     {
-                        $image_url = base_url($this->config->item('album_user_profile') . $image_name);
+                        if ($image_name)
+                        {
+                            $image_url = base_url($this->config->item('album_user_profile') . $image_name);
+                        }
+                        else
+                        {
+                            if ($result['us_gender_id'] == $this->config->item('gender_id_male'))
+                            {
+                                $image_url = base_url($this->config->item('empty_image_male'));
+                            }
+                            else
+                            {
+                                $image_url = base_url($this->config->item('empty_image_female'));
+                            }
+                        }
                     }
             }
 
