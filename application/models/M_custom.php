@@ -1490,6 +1490,24 @@ class M_custom extends CI_Model
         }
     }
     
+    function update_user_age()
+    {
+        $query = $this->db->get_where('users', array('main_group_id' => $this->config->item('group_id_user')));
+        $result = $query->result_array();
+        foreach ($result as $row)
+        {
+            $correct_age = age_count($row['us_birthday']);
+            if($correct_age != $row['us_age']){
+                //echo $correct_age . $row['first_name'] . $row['us_age'] . '  '. $row['us_birthday'] . '<br/>';
+                $data = array(
+                    'us_age' => $correct_age,
+                );
+                $this->m_custom->simple_update('users', $data, 'id', $row['id']);
+            }
+        }
+        return TRUE;
+    }
+
     function getAllUser(){
         //$this->db->order_by('first_name');
         $this->db->order_by('id','desc');

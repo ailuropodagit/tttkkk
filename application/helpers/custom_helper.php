@@ -845,15 +845,25 @@ if (!function_exists('age_count'))
 {
 
 // input $date string format: YYYY-MM-DD
-    function age_count($date)
+    function age_count($userDob)
     {
-        list($year, $month, $day) = explode("-", $date);
-        $year_diff = date("Y") - $year;
-        $month_diff = date("m") - $month;
-        $day_diff = date("d") - $day;
-        if ($day_diff < 0 || $month_diff < 0)
-            $year_diff--;
-        return $year_diff;
+//        list($year, $month, $day) = explode("-", $date);
+//        $year_diff = date("Y") - $year;
+//        $month_diff = date("m") - $month;
+//        $day_diff = date("d") - $day;
+//        if ($day_diff < 0 || $month_diff < 0)
+//            $year_diff--;
+//        return $year_diff;
+//        
+        //Create a DateTime object using the user's date of birth.
+        $dob = new DateTime($userDob);
+        //We need to compare the user's date of birth with today's date.
+        $now = new DateTime();
+        //Calculate the time difference between the two dates.
+        $difference = $now->diff($dob);
+        //Get the difference in years, as we are looking for the user's age.
+        $age = $difference->y;
+        return $age;
     }
 
 }

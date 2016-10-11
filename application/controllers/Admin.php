@@ -1431,7 +1431,8 @@ class Admin extends CI_Controller
         {
             redirect('/', 'refresh');
         }
-
+        
+        $this->m_custom->update_user_age();
         $user_list = $this->m_custom->getAllUser();
         $this->data['the_result'] = $user_list;
 
