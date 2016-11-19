@@ -102,6 +102,10 @@ if(isset($message))
                     <div id='profile-info-form-each-label'><?php echo lang('promo_code_candie', 'code_candie'); ?></div>
                     <div id='profile-info-form-each-input'><?php echo form_input($code_candie); ?></div>
                 </div> 
+                <div id='profile-info-form-each'>  <!-- if promo code type is event, key in the cash give that user can get when redeem this special promo code -->
+                    <div id='profile-info-form-each-label'><?php echo lang('promo_code_money_event', 'code_money'); ?></div>
+                    <div id='profile-info-form-each-input'><?php echo form_input($code_money); ?></div>
+                </div> 
                 <div id='profile-info-form-each'>
                     <div id='profile-info-form-each-label'><?php echo lang('promo_code_event_name', 'code_event_name'); ?></div>
                     <div id='profile-info-form-each-input'><?php echo form_input($code_event_name); ?></div>

@@ -312,6 +312,7 @@ $lang['web_setting_min_rating_get_for_sort_list']    = 'Minimum Rating Review fo
 // Promo Code
 $lang['promo_code_no']             = 'Promo Code';
 $lang['promo_code_candie']         = 'Candie Give';
+$lang['promo_code_money_event']    = 'Cash Give';
 $lang['promo_code_money']          = 'Cash Back Give (RM)';
 $lang['promo_code_event_name']     = 'Special Event Name';
 $lang['promo_code_remark']         = 'Remark';

@@ -37,6 +37,7 @@ if (isset($message))
                     <tr style="text-align:center">
                         <th>Promo Code</th>
                         <th>Candies</th>
+                        <th>Cash Give</th>
                         <th>Event Name</th>
                         <th>Redeemed Count</th>
                         <th>Created by Admin/Worker</th>
@@ -58,7 +59,8 @@ if (isset($message))
                         $url_special_action = base_url() . "admin/promo_code_management";
                         echo '<tr>';
                         echo "<td>" . $row['code_no'] . "</td>";
-                        echo "<td>" . $row['code_candie'] . "</td>";       
+                        echo "<td>" . $row['code_candie'] . "</td>";   
+                        echo "<td>" . $row['code_money'] . "</td>";       
                         echo "<td>" . $row['code_event_name'] . "</td>";
                         echo "<td>" . $redeem_count . "</td>";
                         echo "<td>" . $admin_name . "</td>";

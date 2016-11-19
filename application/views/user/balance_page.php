@@ -74,7 +74,7 @@ if(isset($message))
                             echo '<tr >';
                             echo "<td>".$conf_row['conf_name']."</td>";
                             echo "<td>".$amount_change."</td>";
-                            if($row['trans_conf_id'] == 23){    //If is User Balance Adjust/Withdraw need see detail transaction
+                            if($row['trans_conf_id'] == 23 || $row['trans_conf_id'] == 26){    //If is User Balance Adjust/Withdraw need see detail transaction
                                 ?>
                                 <td>
                                 <a href="#payment-charge-table" onclick="toggle_visibility('payment-charge-table');"><?php echo $row['quantity'] ?></a>

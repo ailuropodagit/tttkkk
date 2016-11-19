@@ -3705,16 +3705,33 @@ class M_custom extends CI_Model
                     }
                     break;
                 case 'event':
-                    $new_id = $this->m_custom->promo_code_trans_extra_insert($login_id, 34, $code_candie, $code_id);
-                    if ($new_id)
+                    if ($code_candie > 0)
                     {
-                        $this->m_user->candie_history_insert(34, $new_id, 'transaction_extra', 0, $code_candie);
-                        $message_info = 'Success get ' . $code_candie . ' candie from event ' . $code_event_name . ' special promo code';
+                        $new_id = $this->m_custom->promo_code_trans_extra_insert($login_id, 34, $code_candie, $code_id);
+                        if ($new_id)
+                        {
+                            $this->m_user->candie_history_insert(34, $new_id, 'transaction_extra', 0, $code_candie);
+                            $message_info = 'Success get ' . $code_candie . ' candie from event ' . $code_event_name . ' special promo code.<br/>';
+                        }
+                        else
+                        {
+                            $message_info = 'Cannot get special promo code candie again from event ' . $code_event_name . ' , only can get 1 time from same event.<br/>';
+                        }
                     }
-                    else
+                    if ($code_money > 0)
                     {
-                        $message_info = 'Cannot get special promo code candie again from event ' . $code_event_name . ' , only can get 1 time from same event';
+                        $new_id2 = $this->m_custom->promo_code_trans_extra_insert($login_id, 26, $code_money, $code_id, 0, $code_event_name);
+                        if ($new_id2)
+                        {
+                            $this->m_user->user_trans_history_insert($login_id, 26, $new_id2, 'transaction_extra', 0, $code_money);
+                            $message_info = $message_info . 'Success get ' . $code_money . ' cash from event ' . $code_event_name . ' special promo code.';
+                        }
+                        else
+                        {
+                            $message_info = $message_info . 'Cannot get special promo code cash again from event ' . $code_event_name . ' , only can get 1 time from same event.';
+                        }
                     }
+
                     break;
             }
         }

@@ -2532,8 +2532,10 @@ class User extends CI_Controller
             $this->data['current_balance'] = $this->m_user->user_check_balance($user_id, 0, $month_last_date);
             $this->data['this_month_transaction'] = $this->m_user->user_this_month_transaction($user_id, $selected_month);
 
-            $this->data['this_month_transaction_user_balance'] = $this->m_user->get_transaction_extra($user_id, 23, $selected_month);
-
+            $this_month_transaction_user_balance_23 = $this->m_user->get_transaction_extra($user_id, 23, $selected_month);
+            $this_month_transaction_user_balance_26 = $this->m_user->get_transaction_extra($user_id, 26, $selected_month);
+            $this->data['this_month_transaction_user_balance'] = array_merge($this_month_transaction_user_balance_23, $this_month_transaction_user_balance_26);
+            
             $this->data['message'] = $this->session->flashdata('message');
             $this->data['page_path_name'] = 'user/balance_page';
             $this->load->view('template/index', $this->data);

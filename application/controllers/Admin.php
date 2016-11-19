@@ -3992,6 +3992,7 @@ class Admin extends CI_Controller
             $edit_id = $this->input->post('edit_id');
             $code_no = $this->input->post('code_no');
             $code_candie = $this->input->post('code_candie');
+            $code_money = $this->input->post('code_money');
             $code_event_name = $this->input->post('code_event_name');
 
             if ($edit_id == 0)
@@ -4008,6 +4009,7 @@ class Admin extends CI_Controller
                 // validate form input
                 $this->form_validation->set_rules('code_no', $this->lang->line('promo_code_no'), 'trim|required');
                 $this->form_validation->set_rules('code_candie', $this->lang->line('promo_code_candie'), 'trim|required|integer');
+                $this->form_validation->set_rules('code_money', $this->lang->line('promo_code_money_event'), 'trim|required|numeric');
                 $this->form_validation->set_rules('code_event_name', $this->lang->line('promo_code_event_name'), 'trim|required');
 
                 if ($this->form_validation->run() === TRUE)
@@ -4022,7 +4024,7 @@ class Admin extends CI_Controller
                             goto direct_go;
                         }
 
-                        $new_id = $this->m_custom->promo_code_insert_event($code_no, $code_candie, NULL, $code_event_name);
+                        $new_id = $this->m_custom->promo_code_insert_event($code_no, $code_candie, $code_money, $code_event_name);
                         if ($new_id)
                         {
                             $message_info = add_message_info($message_info, $code_event_name . ' success create.');
@@ -4048,6 +4050,7 @@ class Admin extends CI_Controller
                         $data = array(
                             'code_no' => $code_no,
                             'code_candie' => $code_candie,
+                            'code_money' => $code_money,
                             'code_event_name' => $code_event_name,
                             'last_modify_by' => $login_id,
                         );
@@ -4116,6 +4119,12 @@ class Admin extends CI_Controller
             'value' => empty($result) ? $this->form_validation->set_value('code_candie') : $this->form_validation->set_value('code_candie', $result['code_candie']),
         );
 
+        $this->data['code_money'] = array(
+            'name' => 'code_money',
+            'id' => 'code_money',
+            'value' => empty($result) ? $this->form_validation->set_value('code_money') : $this->form_validation->set_value('code_money', $result['code_money']),
+        );
+                
         $this->data['code_event_name'] = array(
             'name' => 'code_event_name',
             'id' => 'code_event_name',
