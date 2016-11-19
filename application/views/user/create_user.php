@@ -158,7 +158,8 @@ if(isset($message))
     <div id='float-fix'></div>
     <div id='register-title'>User Sign Up</div>
     <div id='register-subtitle'>Already have register? <a href='<?php echo base_url(); ?>user/login'>Log In</a></div>
-    <div id='login-facebook'>
+    
+    <div id='login-facebook' style="<?php echo ($hide_fb == 1) ? 'display:none' : ''; ?>" >
         <div id="login-facebook-button"><fb:login-button data-size="large" scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button></div>
         <div id="login-facebook-label">Log In with facebook</div>
     </div>

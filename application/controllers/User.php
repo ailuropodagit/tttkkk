@@ -62,6 +62,14 @@ class User extends CI_Controller
         $this->form_validation->set_rules('password', 'Password', 'required');
         setcookie('visit_first_time', 'no');
 
+        $this->load->library('user_agent');
+        $hide_fb = 0;
+        if ($this->agent->is_mobile('android') && $this->agent->is_browser('Chrome'))
+        {
+            $hide_fb = 1;
+        }
+        $this->data['hide_fb'] = $hide_fb;
+
         if ($this->form_validation->run() == true)
         {
             // check to see if the user is logging in
@@ -929,6 +937,15 @@ class User extends CI_Controller
             $function_use_for = 'user/register';
         }
         $this->data['function_use_for'] = $function_use_for;
+        
+        $this->load->library('user_agent');
+        $hide_fb = 0;
+        if ($this->agent->is_mobile('android') && $this->agent->is_browser('Chrome'))
+        {
+            $hide_fb = 1;
+        }
+        $this->data['hide_fb'] = $hide_fb;
+        
         $tables = $this->config->item('tables', 'ion_auth');
         if (isset($_POST) && !empty($_POST))
         {
