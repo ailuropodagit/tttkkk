@@ -3,12 +3,14 @@
                 <div id='wrapper'>
                     <div id='footer-navigation-block1'>
                         <div id='footer-navigation-block1-logo'><?php echo img('image/logo-white.png') ?></div>
-                        <div id='footer-navigation-block-content'>
+                        <br/>
+                        <div id='footer-navigation-block1-logo'><?php echo img('image/logo-fuyoo.png') ?></div>
+<!--                        <div id='footer-navigation-block-content'>                            
                             Keppo.my was established on 01 Jan 2016. <br/><br/>
                             Jimmy, the founder of Keppo.my created this to help SME Corp to increase in sales through advertising. <br/><br/>
                             Keppo.my utilizes hybrid technology, combined with social media platforms, delivers information
                             to users about the offered products and services.
-                        </div>
+                        </div>-->
                     </div>
                     <div id='footer-navigation-block2'>
                         <div id='footer-navigation-block2-up'>
