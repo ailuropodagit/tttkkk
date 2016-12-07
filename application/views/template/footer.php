@@ -2,6 +2,8 @@
             <div id='footer-navigation'>
                 <div id='wrapper'>
                     <div id='footer-navigation-block1'>
+                        <br/>
+                        <br/>
                         <div id='footer-navigation-block1-logo'><?php echo img('image/logo-white.png') ?></div>
                         <br/>
                         <div id='footer-navigation-block1-logo'><?php echo img('image/logo-fuyoo.png') ?></div>
