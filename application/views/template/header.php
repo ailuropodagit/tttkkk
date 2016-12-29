@@ -47,6 +47,24 @@
         <link rel="stylesheet" href="<?php echo base_url('js/bootstrap-3.3.5/dist/css/custom-bootstrap-modal.css') ?>">
         <link rel="stylesheet" href="<?php echo base_url('js/bootstrap-3.3.5/dist/css/custom-bootstrap-modal-center.css') ?>">
         <script type="text/javascript" src="<?php echo base_url('js/bootstrap-3.3.5/dist/js/bootstrap.min.js') ?>"></script>
+        
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+        <link href="<?php echo base_url('js/bootstrap-photo-gallery/jquery.bsPhotoGallery.css') ?>" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <script src="<?php echo base_url('js/bootstrap-photo-gallery/jquery.bsPhotoGallery.js') ?>"></script>
+
+        <script>
+          $(document).ready(function(){
+            $('ul.first').bsPhotoGallery({
+              "classes" : "col-lg-2 col-md-4 col-sm-3 col-xs-4 col-xxs-12",
+              "hasModal" : true,
+              // "fullHeight" : false
+            });
+            $("#pop-up-slide-1").trigger('click'); 
+          });
+        </script>
+
         <script>
             $(function(){     
                 
@@ -172,6 +190,21 @@
         #ui-id-1{
             max-height:300px;
             overflow-y:auto;
+        }
+        #bsPhotoGalleryModal .modal-dialog{
+            position:relative;
+            width:99%;
+            margin:0px;
+        }
+        .glyphicon-chevron-right{
+            right:80%;
+        }
+        .glyphicon-chevron-left{
+            left:80%;
+        }
+        #bsPhotoGalleryModal .bsp-close{
+            right:-5px;
+            top:0px;
         }
     </style>
     <body>
@@ -308,6 +341,38 @@
             }
         }
         ?>
+    
+    <?php 
+
+            if ($this->agent->is_mobile() && $this->agent->is_tablet() === FALSE)
+            { 
+                    if (!isset($_COOKIE['visit_first_time_mobile']))
+                    {
+                    //COOKIE NO EXPIRE
+                    setcookie('visit_first_time_mobile', 'no');
+            
+            ?>
+            <ul id="pop-up-slide" class="row first" style="display:none">
+                    <li>
+                        <img src="<?php echo base_url('image/help_guide/mobile/mobile_slide_1.PNG') ?>" id="pop-up-slide-1">
+                    </li>
+                    <li>
+                        <img src="<?php echo base_url('image/help_guide/mobile/mobile_slide_2.PNG') ?>">
+                    </li>
+                    <li>
+                        <img src="<?php echo base_url('image/help_guide/mobile/mobile_slide_3.PNG') ?>">
+                    </li>
+                    <li>
+                        <img src="<?php echo base_url('image/help_guide/mobile/mobile_slide_4.PNG') ?>">
+                    </li>
+                    <li>
+                        <img src="<?php echo base_url('image/help_guide/mobile/mobile_slide_5.PNG') ?>">
+                    </li>
+                    <li>
+                        <img src="<?php echo base_url('image/help_guide/mobile/mobile_slide_6.PNG') ?>">
+                    </li>
+            </ul>
+            <?php } } ?>
         <!--HEADER-->
         <div id='header'>
             <?php
