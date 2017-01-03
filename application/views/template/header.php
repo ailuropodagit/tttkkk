@@ -48,9 +48,9 @@
         <link rel="stylesheet" href="<?php echo base_url('js/bootstrap-3.3.5/dist/css/custom-bootstrap-modal-center.css') ?>">
         <script type="text/javascript" src="<?php echo base_url('js/bootstrap-3.3.5/dist/js/bootstrap.min.js') ?>"></script>
         
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+        <!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">-->
         <link href="<?php echo base_url('js/bootstrap-photo-gallery/jquery.bsPhotoGallery.css') ?>" rel="stylesheet">
-        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <!--<script src="<?php echo base_url('js/bootstrap-photo-gallery/jquery.bsPhotoGallery.js') ?>"></script>-->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
         <script src="<?php echo base_url('js/bootstrap-photo-gallery/jquery.bsPhotoGallery.js') ?>"></script>
 
@@ -190,6 +190,33 @@
         #ui-id-1{
             max-height:300px;
             overflow-y:auto;
+        }
+        @font-face {
+            font-family: 'Glyphicons Halflings';
+
+            src: url('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/fonts/glyphicons-halflings-regular.eot');
+            src: url('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/fonts/glyphicons-halflings-regular.woff') format('woff'), url('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+        }
+        .glyphicon {
+            position: relative;
+            top: 1px;
+            display: inline-block;
+            font-family: 'Glyphicons Halflings';
+            font-style: normal;
+            font-weight: normal;
+            line-height: 1;
+
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .glyphicon-chevron-left:before {
+            content: "\e079";
+        }
+        .glyphicon-chevron-right:before {
+            content: "\e080";
+        }        
+        .glyphicon-remove-circle:before {
+            content: "\e088";
         }
         #bsPhotoGalleryModal .modal-dialog{
             position:relative;
@@ -348,9 +375,7 @@
             { 
                     if (!isset($_COOKIE['visit_first_time_mobile']))
                     {
-                    //COOKIE NO EXPIRE
-                    setcookie('visit_first_time_mobile', 'no');
-            
+                         
             ?>
             <ul id="pop-up-slide" class="row first" style="display:none">
                     <li>
@@ -372,7 +397,10 @@
                         <img src="<?php echo base_url('image/help_guide/mobile/mobile_slide_6.PNG') ?>">
                     </li>
             </ul>
-            <?php } } ?>
+            <?php }          
+                    } 
+                      setcookie('visit_first_time_mobile', 'no');
+                    ?>
         <!--HEADER-->
         <div id='header'>
             <?php
