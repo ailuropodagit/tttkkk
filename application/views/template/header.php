@@ -370,11 +370,19 @@
         ?>
     
     <?php 
-
+    $cookie_enabled = 1;
+                setcookie('testcookie', "testvalue");
+                    if (isset($_COOKIE['testcookie'])) {
+                        //echo "Cookies are enabled";
+                    } else {
+                        //echo "Cookies are not enabled";
+                        $cookie_enabled = 0;
+                    }
+                    
             if ($this->agent->is_mobile() && $this->agent->is_tablet() === FALSE)
-            { 
-                    if (!isset($_COOKIE['visit_first_time_mobile']))
-                    {
+            {          
+                    if (!isset($_COOKIE['visit_first_time_mobile']) && $cookie_enabled == 1)
+                    {                                         
                          
             ?>
             <ul id="pop-up-slide" class="row first" style="display:none">
@@ -397,9 +405,11 @@
                         <img src="<?php echo base_url('image/help_guide/mobile/mobile_slide_6.PNG') ?>">
                     </li>
             </ul>
-            <?php }          
+            <?php            
+                    setcookie('visit_first_time_mobile', 'no');           
+                    }                     
                     } 
-                      setcookie('visit_first_time_mobile', 'no');
+                      
                     ?>
         <!--HEADER-->
         <div id='header'>
