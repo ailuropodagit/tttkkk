@@ -51,7 +51,7 @@
         <!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">-->
         <link href="<?php echo base_url('js/bootstrap-photo-gallery/jquery.bsPhotoGallery.css') ?>" rel="stylesheet">
         <!--<script src="<?php echo base_url('js/bootstrap-photo-gallery/jquery.bsPhotoGallery.js') ?>"></script>-->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<!--        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
         <script src="<?php echo base_url('js/bootstrap-photo-gallery/jquery.bsPhotoGallery.js') ?>"></script>
 
         <script>
