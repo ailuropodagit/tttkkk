@@ -100,3 +100,10 @@ $config['password_example_encrypt'] = '$2y$08$xZgTvC/QvRc0xeqzncsJ3O8q.EO/ik2Gqv
 $config['no_reply_email'] = 'no-reply@keppo.my';
 
 $config['sensitive_word'] = array("fuck", "sex", "gay", "hemosexual", "lanci", "cibai", "dick", "virgin");
+
+switch($_SERVER["SERVER_NAME"]) {
+case "www.keppo.ml":
+$config['keppo_email_domain'] = '@keppo.ml';
+$config['no_reply_email'] = 'no-reply@keppo.ml';  
+break;
+}

@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed.');
 //$config['smtp_host'] = 'ssl://fuyoo-173-164.fuyoo.com';
 $config['smtp_host'] = 'ssl://mail.keppo.my';
 $config['smtp_user'] = 'no-reply@keppo.my';
-$config['smtp_pass'] = 'admin123';  
+$config['smtp_pass'] = '!admin123!';  
 switch($_SERVER["SERVER_NAME"]) {
 case "localhost":
 $config['smtp_host'] = 'ssl://smtp.googlemail.com';
@@ -15,7 +15,12 @@ case "www.keppo.my":
 //$config['smtp_host'] = 'ssl://fuyoo-173-164.fuyoo.com';
 $config['smtp_host'] = 'ssl://mail.keppo.my';
 $config['smtp_user'] = 'no-reply@keppo.my';
-$config['smtp_pass'] = 'admin123';  
+$config['smtp_pass'] = '!admin123!';  
+break;
+case "www.keppo.ml":
+$config['smtp_host'] = 'ssl://mail.keppo.ml';
+$config['smtp_user'] = 'no-reply@keppo.ml';
+$config['smtp_pass'] = '!admin123!';  
 break;
 }
 

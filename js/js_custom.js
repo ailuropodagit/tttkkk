@@ -39,7 +39,7 @@ $(document).ready(function () {
                 var keppopath = '/keppo/';
                 var hostname = $(location).attr('hostname');
                 if (hostname.indexOf('keppo') >= 0){
-                    keppopath = '/';
+                    keppopath = '/keppo/';
                 }
                 var item_id = $('#item_id').val();
                 var item_type = $('#item_type').val();
@@ -66,7 +66,7 @@ function click_like(user_id) {
     var keppopath = '/keppo/';
     var hostname = $(location).attr('hostname');
     if (hostname.indexOf('keppo') >= 0){
-        keppopath = '/';
+        keppopath = '/keppo/';
     }
     var item_type = $('#item_type').val();
     var post_url = 'http://' + hostname + keppopath + 'all/user_click_like/' + user_id + '/' + item_type;

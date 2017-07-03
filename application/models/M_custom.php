@@ -3299,6 +3299,21 @@ class M_custom extends CI_Model
                     }
                 }
                 break;
+            case "www.keppo.ml":
+                $temp_folder = $_SERVER['DOCUMENT_ROOT'] . '/keppo/folder_upload/temp_image/';
+                $files = scandir($temp_folder);
+                //var_dump($files);
+
+                $this->load->helper('file');
+                foreach ($files as $file)
+                {
+                    $remove_file = $temp_folder . $file;
+                    if (is_file($remove_file))
+                    {
+                        unlink($remove_file); // delete file
+                    }
+                }
+                break;
             default:
                 $temp_folder = $_SERVER['DOCUMENT_ROOT'] . '/folder_upload/temp_image/';
                 $files = scandir($temp_folder);
